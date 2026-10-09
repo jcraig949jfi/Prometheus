@@ -19,6 +19,7 @@
   refs PATH                   who cites PATH and what PATH cites (pivots, lineage)
   dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
+  codebench controls|run M    PAN-33: HumanEval+ pass@1 for a local model (protocol frozen in tests/)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -83,6 +84,11 @@ def main(argv=None):
     p = sub.add_parser("refs")
     p.add_argument("path")
     sub.add_parser("refresh")
+    p = sub.add_parser("codebench")
+    p.add_argument("what", choices=["controls", "run"])
+    p.add_argument("model", nargs="?")
+    p.add_argument("--think", action="store_true")
+    p.add_argument("--budget", type=int, default=1024)
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
     p.add_argument("--pull", action="store_true")
@@ -182,6 +188,12 @@ def main(argv=None):
         print("catalog SHA {}  origin/main {}  commits not yet indexed: {}".format((cat or "?")[:9], head[:9], behind))
         for k, rid, sha, fin, st, secs in runs:
             print("  {:<20} {:<40} {} {} {}s".format(k, rid, str(fin)[:16], st, secs))
+    elif a.cmd == "codebench":
+        from . import codebench
+        if a.what == "controls":
+            codebench.controls()
+        else:
+            codebench.run(a.model, think=a.think, budget=a.budget)
     elif a.cmd == "modelbench":
         from . import modelbench
         modelbench.run(a.models, pull=a.pull, think=a.think, budget=a.budget)

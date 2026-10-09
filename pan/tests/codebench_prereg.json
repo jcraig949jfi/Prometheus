@@ -1,0 +1,32 @@
+{
+  "_prereg": [
+    "PAN-33 local code benchmark, frozen 2026-10-09 BEFORE any model is run on it.",
+    "Question: which locally runnable model writes code that passes hidden tests, at what speed, on M2's 16 GB card --",
+    "the choice the program faces for a code-mutation operator. The 15-probe smoke test could not rank models",
+    "(13/15 has a 95 percent interval of about 0.62-0.96); n = 164 can separate pass rates about 0.1 apart.",
+    "CAVEAT stated in advance: HumanEval (2021) is very likely in every model's training data; read RANKS and speeds,",
+    "not absolute capability. No claim about reasoning is made from this set."
+  ],
+  "dataset": {"hub_repo": "evalplus/humanevalplus", "file": "data/test-00000-of-00001-5973903632b82d40.parquet",
+              "sha256": "4436f5c03d77c17e0cbc57543b90665b5c1266f55a43992a5ed7922cd34a7558", "license": "apache-2.0",
+              "problems": 164},
+  "protocol": {
+    "runtime": "Ollama 0.35.0 on M2, temperature 0, seed 1, num_ctx = budget + 1024",
+    "prompt": "the HumanEval prompt followed by: Complete the function above. Reply with ONLY one Python code block (```python ... ```) containing the complete function, including the signature. No explanation, no tests.",
+    "extraction": "the last ```python block; if none, the whole response",
+    "execution": "imports from the prompt + extracted code + the EvalPlus test + check(entry_point), in a fresh `python -I` subprocess in a temp dir, 60 s timeout; pass = exit 0 and the sentinel printed",
+    "metric": "pass@1 (greedy), with a Wilson 95 percent interval; median tokens/s; truncations counted"
+  },
+  "configurations": [
+    {"model": "gpt-oss:20b", "think": false, "budget": 1024},
+    {"model": "qwen2.5-coder:14b", "think": false, "budget": 1024},
+    {"model": "gemma3:12b", "think": false, "budget": 1024},
+    {"model": "qwen3:8b", "think": false, "budget": 1024}
+  ],
+  "controls": {
+    "POSITIVE": "every canonical solution passes its own tests (164/164), else the harness is broken and NO model result is reported",
+    "CHEAT": "a stub body (`pass`, returns None) passes at most 5 of 164 (problems whose tests expect None are possible), else the tests are not discriminating",
+    "NEGATIVE": "the prompt alone (signature + docstring, no body) passes at most 5 of 164"
+  },
+  "comparison_rule": "two configurations differ only if their Wilson 95 percent intervals do not overlap; otherwise reported as not separable"
+}
