@@ -3,7 +3,7 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T10:15:00Z",
+  "updated_at_utc": "2026-10-09T12:45:00Z",
   "state": "ACTIVE",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
@@ -196,12 +196,28 @@
     {
       "id": "theseus44_inject_timing",
       "prereg": "roles/Theseus/prereg/2026-10-09_inject_timing/PREREG.md",
+      "status": "DONE",
+      "verdict": "content SUPPORTED (M 81 vs random-with-head-start 45); timing INDETERMINATE (81 vs 74)"
+    },
+    {
+      "id": "theseus45_generalise",
+      "status": "DONE",
+      "verdict": "both axes SUPPORTED; alphabet RD .166 > delay .101; not carried by essential law"
+    },
+    {
+      "id": "theseus46_redundancy_generalise",
+      "status": "DONE",
+      "verdict": "INDETERMINATE pooled; law-on redundancy +.13/+.15, no-law negative (descriptive)"
+    },
+    {
+      "id": "theseus47_interaction",
+      "prereg": "roles/Theseus/prereg/2026-10-09_interaction/PREREG.md",
       "status": "RUNNING"
     }
   ],
   "fabric_tasks": [],
   "running": [
-    "THESEUS-44 M0 and R runs (2 workers), then 2 evals"
+    "THESEUS-47 seed-4 task0 + no-law runs, then eval + interaction scoring"
   ],
   "blocked_on": [
     {
@@ -211,8 +227,7 @@
     }
   ],
   "next_actions": [
-    "44 evals + verdict",
-    "45 why law-built solvers generalise (existing samples)",
+    "47 verdict",
     "review packet before loop end 2026-10-10T23:00Z"
   ],
   "operator_decisions_required": [],
