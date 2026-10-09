@@ -669,3 +669,90 @@ def analyze(out=print):
     out(json.dumps(res["agreement"]))
     out("wrote {}".format(p))
     return res
+
+
+def run_test_full(sandbox, test_rel, timeout=120):
+    """run_test with a short traceback kept: (passed, first 'E   Type:' line or the last line)."""
+    tmp = root() / "tmp"
+    tmp.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=str(tmp)) as d:
+        sysroot = os.environ.get("SYSTEMROOT", r"C:\Windows")
+        env = dict(SYSTEMROOT=sysroot, PATH=os.pathsep.join([os.path.dirname(sys.executable), sysroot + r"\System32"]),
+                   PYTHONPATH=str(sandbox), HOME=d, USERPROFILE=d, TEMP=d, TMP=d, PYTHONHASHSEED="0",
+                   PYTHONDONTWRITEBYTECODE="1", PYTHONIOENCODING="utf-8", MPLBACKEND="Agg")
+        try:
+            r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-x", "--tb=short", "-p", "no:cacheprovider",
+                                str(Path(sandbox) / test_rel)], cwd=d, env=env, capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=timeout)
+        except subprocess.TimeoutExpired:
+            return False, "timeout"
+    e = [ln.strip()[1:].strip() for ln in (r.stdout or "").splitlines() if ln.startswith("E   ")]
+    first = next((x for x in e if re.match(r"[A-Za-z_][\w.]*(Error|Exception|Exit|Interrupt)\b", x)), e[0] if e else "")
+    return r.returncode == 0, (first or "rc={}".format(r.returncode))[:200]
+
+
+def diagnose(workers=4, out=print):
+    """EXPLORATORY (never changes a verdict): for every primary-set row that failed with code in hand
+    ("test failed" shape), re-run its test with a short traceback and record the exception type, plus
+    whether the task's prompt was truncated (module context > 12,000 characters)."""
+    from . import db
+    man, base, dirs = load(workers=workers, out=out)
+    by = {t["task_id"]: t for t in man["tasks"]}
+    ex = excluded()
+    trunc = {tid: len(replace_body((base / t["module"]).read_text(encoding="utf-8"), t, "...")) > CTX_CHARS
+             for tid, t in by.items()}
+    with db.cursor() as cur:
+        cur.execute("""select distinct on (b.model) b.model, r.run_id from pan.run r join pan.code_bench b using (run_id)
+                       where r.kind = 'repobench' and r.status = 'OK' order by b.model, r.started_at desc""")
+        runs = cur.fetchall()
+        jobs, keys = [], []
+        for model, rid in runs:
+            cur.execute("select task_id, ok, detail, response from pan.code_bench where run_id = %s", (rid,))
+            for tid, ok, det, resp in cur.fetchall():
+                if tid in ex or shape(ok, det, resp) != "test failed":
+                    continue
+                code, err = extract(resp, by[tid]["name"])
+                jobs.append((by[tid], code, err))
+                keys.append((model, tid))
+    pool = queue.Queue()
+    for w in dirs:
+        pool.put(w)
+
+    def one(job):
+        t, code, err = job
+        w = pool.get()
+        try:
+            restore = spliced(w, t, code)
+            try:
+                return run_test_full(w, t["test"])
+            finally:
+                restore()
+        finally:
+            pool.put(w)
+
+    t0 = time.time()
+    with ThreadPoolExecutor(len(dirs)) as ex_:
+        res = list(ex_.map(one, jobs))
+    table, flips = {}, 0
+    for (model, tid), (ok, first) in zip(keys, res):
+        if ok:
+            flips += 1                                    # a stored failure that now passes: flaky, reported
+            kind = "now passes (flaky?)"
+        else:
+            m = re.match(r"([A-Za-z_][\w.]*(?:Error|Exception|Exit|Interrupt))\b", first)
+            kind = m.group(1).split(".")[-1] if m else ("timeout" if first == "timeout" else "other")
+        row = table.setdefault(model, {})
+        row[kind] = row.get(kind, 0) + 1
+        tk = "truncated_prompt" if trunc[tid] else "full_prompt"
+        row[tk + ":" + kind] = row.get(tk + ":" + kind, 0) + 1
+    out_ = dict(exploratory=True, rows=len(jobs), seconds=round(time.time() - t0, 1), flaky_now_pass=flips,
+                truncated_prompt_tasks=sum(1 for tid, v in trunc.items() if v and tid not in ex), by_model=table)
+    p = REPO / "roles" / "Pan" / "reports" / "repobench" / "DIAGNOSE_{}.json".format(
+        dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+    p.write_text(json.dumps(out_, indent=1), encoding="utf-8", newline="\n")
+    for model, row in table.items():
+        main = {k: v for k, v in row.items() if ":" not in k}
+        out("{:<36} {}".format(model, ", ".join("{} {}".format(k, v) for k, v in sorted(main.items(), key=lambda kv: -kv[1]))))
+    out(json.dumps({k: out_[k] for k in ("rows", "flaky_now_pass", "truncated_prompt_tasks", "seconds")}))
+    out("wrote {}".format(p))
+    return out_
