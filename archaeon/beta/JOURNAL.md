@@ -618,6 +618,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   search with search. Repair B56: identical, but every op-2 instruction is scrubbed (NOP) from generation 0 so the read
   must be BUILT by mutation (verified: 0 op-2 left; smoke test L1 reaches train >= .9 at gen 1). B56 runs after
   B53/B55 free their processes. B55's numbers are kept as the founder-probability readout.
+- B53 RESULT (KV-store organ vs stock, W2_K2-wide, 8 seeds each, G=300): keyed 0/8 and 0/8. KV elites reach the
+  one-value shelf 6/8 (stock 4/8) and carry on average 1.5 STK + 1.5 LDK instructions -- the organ is barely used.
+  PREDICTION (KV >= 3/8) FAILED. KILLED: "the memory wall is the memory PRIMITIVE" -- single-instruction store/read by
+  key does not open keyed memory; consistent with the wiring hypothesis (B54/B55/B56). B56 launched ~01:05Z on the
+  freed 6 processes (started with a shell '&' by mistake -- it writes its own result files; no completion
+  notification, checked on heartbeats).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
