@@ -24,7 +24,14 @@ def seeds():
 
 class Client:
     """One session per source, a minimum interval between calls, a rolling-window cap,
-    and a log row per call."""
+    and a log row per call.
+
+    The interval and window are per SOURCE for the whole process, not per instance: two runs
+    back to back (a control run then a re-poll) once fired 0.571 s apart because each built a
+    fresh Client (PAN-35 RATE control, 2026-10-09)."""
+
+    _last = {}      # source -> end time of its latest call in this process
+    _calls = {}     # source -> call times inside the rolling window
 
     def __init__(self, source, run_id, min_interval_s, window_s=None, max_calls_per_window=None):
         import requests
@@ -32,37 +39,37 @@ class Client:
         self.s.headers["User-Agent"] = UA
         self.source, self.run_id = source, run_id
         self.min_interval, self.window, self.cap = min_interval_s, window_s, max_calls_per_window
-        self.last = 0.0
-        self.calls = []
+        self.last = Client._last.get(source, 0.0)
+        self.calls = Client._calls.setdefault(source, [])
         self.log = []
 
-    def get(self, url, params=None, timeout=60):
+    def get(self, url, params=None, timeout=60, headers=None, ok=(200,)):
         wait = self.min_interval - (time.time() - self.last)
         if wait > 0:
             time.sleep(wait)
         if self.window and self.cap:
             now = time.time()
-            self.calls = [t for t in self.calls if now - t < self.window]
+            self.calls[:] = [t for t in self.calls if now - t < self.window]
             if len(self.calls) >= self.cap:
                 time.sleep(self.window - (now - self.calls[0]) + 1)
         started = dt.datetime.now(dt.timezone.utc)
         t0 = time.time()
         status, n, err, r = None, None, None, None
         try:
-            r = self.s.get(url, params=params, timeout=timeout)
+            r = self.s.get(url, params=params, timeout=timeout, headers=headers)
             status, n = r.status_code, len(r.content)
             if status == 429 or status >= 500:
                 err = "HTTP {}".format(status)
         except Exception as e:
             err = "{}: {}".format(type(e).__name__, e)
-        self.last = time.time()
+        self.last = Client._last[self.source] = time.time()
         self.calls.append(self.last)
         full = r.url if r is not None else url
         self.log.append((self.run_id, self.source, full[:2000], status, n, None, started,
                          int((time.time() - t0) * 1000), err))
         if status == 429:   # back off hard and say so; never retry in a tight loop
             time.sleep(max(60, self.min_interval * 10))
-        return r if (r is not None and status == 200) else None
+        return r if (r is not None and status in ok) else None
 
     def flush(self, cur):
         from psycopg2.extras import execute_values

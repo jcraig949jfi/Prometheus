@@ -26,7 +26,9 @@
   frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
   frontier models QUERY [--fits]        Hugging Face models, optionally only 16 GB-fit
   frontier digest [--days N]  ASCII digest of recent papers by seed topic + new 16 GB-fit models
-  frontier daily [--force]    refresh arXiv/HF daily/HF models + vectors (skips if < 20 h since last)
+  frontier daily [--force]    refresh arXiv/HF daily/HF models/feeds + vectors (skips if < 20 h since last)
+  frontier feeds [--force]    PAN-35: lab blogs, newsletters, GitHub releases (conditional GET, once a day)
+  frontier feeds controls     PAN-35 live controls -> roles/Pan/reports/controls/FEEDS_<ts>.json
   frontier embed              PAN-14: paper vectors in the repository's document-vector space
   frontier like PATH          outside papers nearest to a repository file
 """
@@ -101,7 +103,7 @@ def main(argv=None):
     p.add_argument("--docs", action="store_true", help="whole-file JSON documents -> pan.result_docs")
     p = sub.add_parser("frontier")
     p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like", "daily",
-                                         "digest"])
+                                         "digest", "feeds"])
     p.add_argument("--force", action="store_true")
     p.add_argument("query", nargs="*")
     p.add_argument("--max-results", type=int, default=200)
@@ -225,6 +227,12 @@ def main(argv=None):
             digest.run(days=a.days if a.days != 14 else 3)
         elif a.what == "like":
             query.like_cli(" ".join(a.query), k=a.k)
+        elif a.what == "feeds":
+            from .frontier import feeds
+            if a.query == ["controls"]:
+                feeds.controls()
+            else:
+                feeds.run(force=a.force, only=a.query or None)
     elif a.cmd == "stats":
         from . import db
         with db.cursor() as cur:

@@ -8,7 +8,8 @@ description: Search the Prometheus catalog (Pan's index over the whole repositor
 Pan keeps a catalog of every blob in the repository at a recorded SHA, every
 commit, every relation and column on the M1 cluster, 394,952 searchable text
 chunks with embeddings, and a frontier corpus (arXiv, Hugging Face daily
-papers, Hugging Face models with a 16 GB fit estimate). Measured 2026-10-09:
+papers, lab blogs, newsletters, tracked GitHub releases, Hugging Face
+models with a 16 GB fit estimate). Measured 2026-10-09:
 one ripgrep over the canonical checkout took 333.9 s; a ranked search takes
 about 0.1-2.6 s.
 
@@ -41,9 +42,10 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
     python -m pan cochange PATH          files changed in the same commits as PATH (lineage, pivots)
     python -m pan similar PATH           artifacts nearest to PATH by embedding (M2)
     python -m pan tables NAME            which database.schema.table / column matches NAME
-    python -m pan frontier search "Q"    outside papers (arXiv + HF daily) by full-text
+    python -m pan frontier search "Q"    outside work by full-text: arXiv, HF daily papers, 19 lab blogs /
+                                         newsletters / ALife society, 16 tracked repos' releases ("owner repo release: tag")
     python -m pan frontier models Q [--fits]   HF models, optionally only those estimated to fit 16 GB at Q4
-    python -m pan frontier digest        ASCII digest of recent papers by topic + new 16 GB-fit models
+    python -m pan frontier digest        ASCII digest: recent papers by topic, new 16 GB-fit models, feed entries + feed health
     python -m pan frontier like PATH     outside papers nearest to a repository file (exploratory: the
                                          cited paper is in the top 10 for 34.8 percent of 273 citing files)
     python -m pan stats                  row counts of every Pan table

@@ -110,6 +110,17 @@ Q-009 | PREF (user-level toolchain) | 2026-10-09
   DEFAULT meanwhile: not installed; provers stay catalogued, untested.
   ANSWER:
 
+Q-010 | PREF (shared service on M2) | 2026-10-09
+  The new release feeds show Ollama v0.40.2 (2026-10-08); M2 runs Ollama
+  0.35.0, which every local-model seat on M2 shares. Pan's model numbers
+  (smoke tests, HumanEval+) were measured on 0.35.0. Should Pan upgrade
+  Ollama on M2, leave it to the seat that owns M2's model service, or leave
+  it alone?
+  DEFAULT meanwhile: leave it alone (a shared service; an upgrade can change
+  model behaviour under other seats' runs). Pan now records the version in
+  every benchmark run (pan.run params; today's 8 runs backfilled as 0.35.0).
+  ANSWER:
+
 ## ANSWERED
 
 (none yet)

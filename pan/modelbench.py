@@ -112,6 +112,16 @@ def check(probe, response):
     return check_json(response, probe["want"])
 
 
+def ollama_version():
+    """The serving runtime's version, recorded in every bench run's params: model behaviour is a property
+    of (weights, runtime), and M2's Ollama is shared and upgradable (QUESTIONS.md Q-010)."""
+    try:
+        out = subprocess.run(["ollama", "--version"], capture_output=True, text=True, timeout=30).stdout
+        return out.strip().split()[-1] if out.strip() else None
+    except Exception:
+        return None
+
+
 def generate(model, prompt, timeout=900, think=False, budget=1024):
     import requests
     body = dict(model=model, prompt=prompt, stream=False, think=think,
@@ -145,7 +155,7 @@ def run(models, pull=False, out=print, think=False, budget=1024):
     with db.cursor() as cur:
         cur.execute("insert into pan.run (run_id, kind, host, params) values (%s,'modelbench',%s,%s)",
                     (run_id, host(), json.dumps({"models": models, "probes": len(PROBES), "think": think,
-                                                 "budget": budget})))
+                                                 "budget": budget, "ollama": ollama_version()})))
     cfg = "@{}{}".format("think" if think else "nothink", budget)
     summary = {}
     for model in models:

@@ -71,7 +71,9 @@ P5  CHEAPEST TIER THAT ANSWERS. Measured latencies decide (s6), not taste.
     reference data             lmfdb (392 GB in Postgres),      stays in Postgres          EXISTS; catalogued
                                lmfdb_dump (24 GB json)          (indexed relational)
     frontier corpus            arXiv, HF daily papers,          Postgres pan.frontier_item BUILT (4,702 arXiv
-                               HF models                        + pan.hf_model; Iceberg    items; HF running)
+                               HF models, lab blogs,            + pan.hf_model; Iceberg    items; HF running)
+                               newsletters, GitHub releases     [UPDATE 2026-10-09T20:22Z: 35 feeds, 2,770
+                               (35 feeds, PAN-35)                entries, pan.feed_state; controls FEEDS_*.json]
                                                                 snapshots for history
 
 Why Postgres for the catalog and text: small (2.2 GB for everything Pan
@@ -112,7 +114,9 @@ fsspec FileIO.
     commit_file   (commit, path, status) -- co-change and lineage
     pg_relation   every relation in every program database, sizes, row est.
     pg_column     every column, type, comment
-    frontier_item papers (arXiv, HF daily), Eos type column (UNTYPED default)
+    frontier_item papers (arXiv, HF daily), Eos type column (UNTYPED default);
+                  [UPDATE 2026-10-09T20:22Z: + feed entries, source rss | github]
+    feed_state    per-feed poll state (ETag / Last-Modified, failures) -- migration 009
     hf_model      HF models with a 16 GB local-fit estimate
     intake_call   every external call (rate audit)
 

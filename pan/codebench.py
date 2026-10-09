@@ -99,13 +99,14 @@ def controls(out=print, workers=4):
 def run(model, think=False, budget=1024, out=print, workers=3):
     from psycopg2.extras import execute_values
     from . import db
-    from .modelbench import HF_MAP, generate, strip_thinking
+    from .modelbench import HF_MAP, generate, ollama_version, strip_thinking
     probs = problems()
     cfg = "@{}{}".format("think" if think else "nothink", budget)
     run_id = "codebench-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     with db.cursor() as cur:
         cur.execute("insert into pan.run (run_id, kind, host, params) values (%s,'codebench',%s,%s)",
-                    (run_id, host(), json.dumps({"model": model, "think": think, "budget": budget, "n": len(probs)})))
+                    (run_id, host(), json.dumps({"model": model, "think": think, "budget": budget, "n": len(probs),
+                                                 "ollama": ollama_version()})))
     t0 = time.time()
     gens = []
     for i, p in enumerate(probs):            # generation is sequential (one GPU)

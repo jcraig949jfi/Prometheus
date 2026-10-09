@@ -11,12 +11,14 @@ def search_cli(q, k=15):
                           (select count(*) from lx where f.tsv @@ quote_literal(lx.l)::tsquery) as cov
                    from pan.frontier_item f, tq where f.tsv @@ tq.tq)
           select h.source, h.source_id, h.published_at::date, h.title, h.cov, tq.n, h.query_tags,
-                 h.signals->>'upvotes'
+                 h.signals->>'upvotes', h.url
           from hits h, tq where h.cov >= greatest(1, ceil(tq.n * 0.34))
           order by h.cov desc, h.r desc limit %(k)s""", dict(q=q, k=k))
-        for src, sid, pub, title, cov, n, tags, up in cur.fetchall():
-            print("{} {:<11} {} [{}/{}] {}{}".format(src[:6], sid, pub, cov, n, (title or "")[:95],
-                                                     " (+{} upvotes)".format(up) if up else ""))
+        from .digest import ascii_fold       # the Windows console is cp1252: print ASCII, never crash on a title
+        for src, sid, pub, title, cov, n, tags, up, url in cur.fetchall():
+            ident = sid if src in ("arxiv", "hf_daily") else (url or sid)    # feed ids are long; the link says more
+            print("{} {:<11} {} [{}/{}] {}{}".format(src[:6], ascii_fold(ident)[:90], pub, cov, n,
+                                                     ascii_fold(title)[:95], " (+{} upvotes)".format(up) if up else ""))
             print("      tags: " + ", ".join((tags or [])[:4]))
 
 

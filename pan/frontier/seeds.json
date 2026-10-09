@@ -10,7 +10,7 @@
   "Q_NCA_LENIA": "(cat:cs.NE OR cat:nlin.CG OR cat:nlin.AO OR cat:cs.LG) AND (abs:\"neural cellular automata\" OR abs:\"Lenia\" OR abs:\"cellular automata\")",
   "Q_QUALITY_DIVERSITY": "(cat:cs.NE OR cat:cs.LG OR cat:cs.AI) AND (abs:\"quality-diversity\" OR abs:\"MAP-Elites\" OR abs:\"novelty search\" OR abs:\"dominated novelty search\")",
   "Q_ENV_GENERATION_UED": "(cat:cs.LG OR cat:cs.AI OR cat:cs.NE) AND (abs:\"unsupervised environment design\" OR abs:\"environment generation\" OR abs:\"POET\" OR abs:\"open-ended environment\")",
-  "Q_SELF_MODIFYING": "(cat:cs.AI OR cat:cs.LG OR cat:cs.NE OR cat:math.DS) AND (abs:\"Godel Machine\" OR abs:\"G\u00f6del Machine\" OR abs:\"self-improving agent\" OR abs:\"self-referential\" OR abs:\"autopoiesis\" OR abs:\"autopoietic\")",
+  "Q_SELF_MODIFYING": "(cat:cs.AI OR cat:cs.LG OR cat:cs.NE OR cat:math.DS) AND (abs:\"Godel Machine\" OR abs:\"Gödel Machine\" OR abs:\"self-improving agent\" OR abs:\"self-referential\" OR abs:\"autopoiesis\" OR abs:\"autopoietic\")",
   "Q_WORLD_MODELS": "(cat:cs.LG OR cat:cs.AI) AND (abs:\"JEPA\" OR abs:\"world model\" OR abs:\"Dreamer\")",
   "Q_LATENT_RECURSIVE": "(cat:cs.LG OR cat:cs.AI) AND (abs:\"recursive reasoning\" OR abs:\"Hierarchical Reasoning Model\" OR abs:\"Tiny Recursive\" OR abs:\"looped language model\" OR abs:\"latent reasoning\" OR abs:\"energy-based transformer\" OR abs:\"Continuous Thought Machine\")",
   "Q_COGNITIVE_ARCH": "(cat:cs.AI OR cat:q-bio.NC OR cat:cs.LG) AND (abs:\"active inference\" OR abs:\"Thousand Brains\" OR abs:\"OpenCog\" OR abs:\"Hyperon\" OR abs:\"MeTTa\" OR abs:\"NARS\" OR abs:\"cognitive architecture\")"
@@ -341,6 +341,259 @@
    "window_s": 300,
    "max_calls_per_window": 375,
    "basis": "anonymous 500 / 300 s per IP; 75 percent rule -> 375"
+  },
+  "feeds": {
+   "min_interval_s": 2.0,
+   "per_feed_min_age_h": 20.0,
+   "basis": "published feeds, one conditional GET per feed per day (ETag / If-Modified-Since); 2 s between any two calls; HF blog feed shares the HF anonymous bucket (1 call/day)"
   }
- }
+ },
+ "feeds": [
+  {
+   "feed_id": "deepmind.google",
+   "url": "https://deepmind.google/blog/rss.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "atom:link self-ref wrongly says example.com"
+  },
+  {
+   "feed_id": "openai.com",
+   "url": "https://openai.com/news/rss.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "sakana.ai",
+   "url": "https://sakana.ai/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "mixed Japanese/English entries"
+  },
+  {
+   "feed_id": "research.google",
+   "url": "https://research.google/blog/rss/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "blog.google",
+   "url": "https://blog.google/technology/ai/rss/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "301 -> https://blog.google/innovation-and-ai/technology/ai/rss/"
+  },
+  {
+   "feed_id": "bair.berkeley.edu",
+   "url": "https://bair.berkeley.edu/blog/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "microsoft.com",
+   "url": "https://www.microsoft.com/en-us/research/feed/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "blogs.nvidia.com",
+   "url": "https://blogs.nvidia.com/feed/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "huggingface.co",
+   "url": "https://huggingface.co/blog/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "counts against HF \"pages\" bucket (100/5 min anon)"
+  },
+  {
+   "feed_id": "lilianweng.github.io",
+   "url": "https://lilianweng.github.io/index.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "jack-clark.net",
+   "url": "https://jack-clark.net/feed/",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "importai.substack.com",
+   "url": "https://importai.substack.com/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "interconnects.ai",
+   "url": "https://www.interconnects.ai/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "latent.space",
+   "url": "https://www.latent.space/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "magazine.sebastianraschka.com",
+   "url": "https://magazine.sebastianraschka.com/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "lastweekin.ai",
+   "url": "https://lastweekin.ai/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "thegradient.pub",
+   "url": "https://thegradient.pub/rss/",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "alignmentforum.org",
+   "url": "https://www.alignmentforum.org/feed.xml",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "alife.org",
+   "url": "https://alife.org/feed/",
+   "kind": "society",
+   "verified_live_20261009": true,
+   "note": "ISAL news/announcements"
+  },
+  {
+   "feed_id": "gh:SakanaAI/AI-Scientist",
+   "url": "https://github.com/SakanaAI/AI-Scientist/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": true,
+   "note": "VERIFIED-LIVE"
+  },
+  {
+   "feed_id": "gh:SakanaAI/ShinkaEvolve",
+   "url": "https://github.com/SakanaAI/ShinkaEvolve/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:adaptive-intelligent-robotics/QDax",
+   "url": "https://github.com/adaptive-intelligent-robotics/QDax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:icaros-usc/pyribs",
+   "url": "https://github.com/icaros-usc/pyribs/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:RobertTLange/evosax",
+   "url": "https://github.com/RobertTLange/evosax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:nnaisense/evotorch",
+   "url": "https://github.com/nnaisense/evotorch/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:EMI-Group/evox",
+   "url": "https://github.com/EMI-Group/evox/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:maxencefaldor/cax",
+   "url": "https://github.com/maxencefaldor/cax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:MichaelTMatthews/Craftax",
+   "url": "https://github.com/MichaelTMatthews/Craftax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:FLAIROx/Kinetix",
+   "url": "https://github.com/FLAIROx/Kinetix/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:dunnolab/xland-minigrid",
+   "url": "https://github.com/dunnolab/xland-minigrid/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:chrxh/alien",
+   "url": "https://github.com/chrxh/alien/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:opennars/OpenNARS-for-Applications",
+   "url": "https://github.com/opennars/OpenNARS-for-Applications/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:ollama/ollama",
+   "url": "https://github.com/ollama/ollama/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:ggml-org/llama.cpp",
+   "url": "https://github.com/ggml-org/llama.cpp/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:pytorch/pytorch",
+   "url": "https://github.com/pytorch/pytorch/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  }
+ ],
+ "feeds_provenance": "Copied mechanically from section (c) of the same report (sha256 1856cb48e764796d2727f1765d913dc4c2a8ad9ec9260664d8bd3bef0369d1dc) on 2026-10-09: lab blogs, newsletters, societies, GitHub releases. arXiv RSS rows are omitted (the export API already covers those categories); 'no feed found' rows are omitted (HTML-only)."
 }
