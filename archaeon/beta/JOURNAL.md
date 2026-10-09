@@ -664,6 +664,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (episode 0's), i.e. a narrower training distribution -- consistent with lower entropy and lower uncoupled reward
   (5/6). No niche claim either way. Repair = B60: CONCURRENT co-evaluation (k organisms act in the same episode on
   the same pools, own pos/reward/alive), with a teeth check first (k identical foragers must earn less each than solo).
+- B60 launched 06:00Z (commit is the receipt): concurrent coupling. TEETH CHECK PASSED before launch: content forager
+  solo k=1 .2672 == evaluate_world uncoupled .2672 (evaluator equivalence); 4 identical copies in one episode earn
+  .065-.073 each (competition is real). Arms CONC (random groups of 4 each generation) vs SOLO (k=1, same evaluator),
+  6 seeds each, G=200, P-boom NoClock. PREDICTION: CONC entropy > SOLO by >= .2 bits in >= 4/6 pairs AND CONC finals
+  earn more in 4-groups than SOLO finals in >= 4/6 pairs. Lease lse-78a64fc8d5b2 (TTL to 10:00Z; token not captured
+  -- my slip, acquire output truncated by tail -- so it lapses by TTL instead of an explicit release). Est ~5 core-h;
+  window 3 tally ~24 of 48 on completion.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
