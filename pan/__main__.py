@@ -13,6 +13,7 @@
   comms-index                 PAN-20: comms message history -> searchable artifacts (read-only)
   refresh                     PAN-17: catalog to current origin/main + comms, changed items only
   lexdf                       rebuild lexeme document frequencies (OR full-text cap)
+  pivot PATH                  one screen around an artifact: lineage, co-change, nearest here and outside
   links                       rebuild the reference graph (paths cited in text -> artifacts)
   refs PATH                   who cites PATH and what PATH cites (pivots, lineage)
   dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
@@ -74,6 +75,9 @@ def main(argv=None):
     sub.add_parser("lexdf")
     sub.add_parser("dictionary")
     sub.add_parser("links")
+    p = sub.add_parser("pivot")
+    p.add_argument("path")
+    p.add_argument("-k", type=int, default=8)
     p = sub.add_parser("refs")
     p.add_argument("path")
     sub.add_parser("refresh")
@@ -130,6 +134,9 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "pivot":
+        from . import pivot
+        pivot.run(a.path, k=a.k)
     elif a.cmd == "links":
         from . import links
         links.run()

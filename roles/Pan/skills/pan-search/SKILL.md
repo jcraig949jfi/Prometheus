@@ -33,6 +33,9 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
     python -m pan search "QUESTION" [-k 10] [--mode hybrid|fts|vector]
                          [--seat Archaeon,Nestor] [--kind prereg,result,journal,charter,doc,code,prompt]
                          [--path substring] [--since 2026-09-01] [--json]
+    python -m pan pivot PATH             ONE SCREEN around an experiment artifact: what it is, who cites
+                                         it / what it cites, what changed with it, nearest artifacts
+                                         (its ruling, seal, amendments usually appear), nearest papers
     python -m pan refs PATH              who cites PATH and what PATH cites (paths written in text;
                                          45,122 links incl. comms), oldest first -- prereg -> result -> successors
     python -m pan cochange PATH          files changed in the same commits as PATH (lineage, pivots)
@@ -40,6 +43,7 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
     python -m pan tables NAME            which database.schema.table / column matches NAME
     python -m pan frontier search "Q"    outside papers (arXiv + HF daily) by full-text
     python -m pan frontier models Q [--fits]   HF models, optionally only those estimated to fit 16 GB at Q4
+    python -m pan frontier digest        ASCII digest of recent papers by topic + new 16 GB-fit models
     python -m pan frontier like PATH     outside papers nearest to a repository file (exploratory: the
                                          cited paper is in the top 10 for 34.8 percent of 273 citing files)
     python -m pan stats                  row counts of every Pan table
