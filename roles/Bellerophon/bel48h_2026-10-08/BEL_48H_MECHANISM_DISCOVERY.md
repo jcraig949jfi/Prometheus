@@ -77,6 +77,16 @@ U2-P1 HOLDS. Uptake origins 0 vs 9. Extinction this time LOWER in blocked worlds
 so the origin effect does not follow survival in either direction. Combined U + U2: 167 vs 121 origins over 1,600
 independent seed-pairs. CL-20 net effect REPRODUCED.
 
+## POST-HOC -- which machine shapes the uptake block adds (U + U2 pooled; labelled, not preregistered)
+
+Critical-set shapes of the 121 normal and 167 blocked origins: LD T,0x40 + LDIR 37 vs 39 (unchanged); LD T,0xA0 + LDIR 20
+vs 37 (+17 of the +46); other shapes +29. Reading from the VM semantics: an LD T,0xA0 copier (S = 0) copies itself
+through a staging area at 160; the 256-byte copy wraps and, mid-copy, overwrites the organism's OWN bytes 0-31 with
+window bytes (partner material) -- a self-inflicted import on every execution, which the ablation reverts. So part of
+uptake's suppression is self-damage of staging copiers, not only damage done by importing organisms to precursors
+(UF). PROVISIONAL; a test that blocks only imports performed while copying through a staging area is queued
+(NEXT_EXPERIMENTS #9).
+
 ## UF -- why uptake suppresses origination (prereg s17; 300 runs, 0 voids, 2.67 h)
 
 99,595 uptake events in 300 fresh worlds (PARTIAL 200, PAIR 100). Precursor proxy (LDIR AND LD T present): BREAK 4,124 vs

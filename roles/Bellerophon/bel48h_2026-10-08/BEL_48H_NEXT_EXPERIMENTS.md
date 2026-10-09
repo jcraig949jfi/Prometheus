@@ -25,3 +25,9 @@ Each item names the claim it would move, the design, the artifact that proves it
    (BEL_48H_MECHANISM_DISCOVERY.md M1 field 10). Blocker: their bandwidth.
 8. **Seed independence audit of historical campaigns.** Every historical pooled count built on SEED_BASE + lane*1e9 + k
    (grounding, coupling, multi-day) should be re-stated per distinct seed. Blocker: none (analysis only).
+9. **Split CL-20 into its two components.** Uptake's net suppression has (a) imports that break other organisms'
+   precursors (UF) and (b) self-inflicted wrap-around imports of LD T,0xA0 staging copiers (post-hoc, +17 of +46 origins).
+   Design: three arms on paired seeds -- normal; block all imports; block only imports executed by a FUNC organism's own
+   copy loop (staging self-damage). Prediction under (b): the third arm recovers most of the 0xA0 gain. Blocker: none.
+10. **Specimen-panel generality of the HIGH-mutation architecture effect.** CL-16 is general at MED (P1); at HIGH two
+   pairs disagreed. Run the P1 panel at HIGH. Blocker: none.
