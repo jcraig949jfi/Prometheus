@@ -70,6 +70,16 @@ origination -- removing it raises the origin rate. Hypothesis (untested): import
 importer's own cryptic precursor. Class: CAUSALLY_CONFIRMED (net suppressive effect; paired intervention, 800 pairs, two
 physics); mechanism of suppression PROVISIONAL.
 
+## UF -- why uptake suppresses origination (prereg s17; 300 runs, 0 voids, 2.67 h)
+
+99,595 uptake events in 300 fresh worlds (PARTIAL 200, PAIR 100). Precursor proxy (LDIR AND LD T present): BREAK 4,124 vs
+MAKE 3,194; runs with more breaks 176 vs 71 (sign p < 1e-6) -- UF-P1 HOLDS. Functional replicators destroyed by an
+import 2,363 vs created 418 (5.7x); runs 16 vs 6, p 0.026 -- UF-P2 HOLDS. At the BYTE level imports create slightly
+more copy parts than they destroy (LDIR made 49,644 vs lost 42,906; LD T 71,785 vs 67,544); what they destroy is the
+ARRANGEMENT. Mechanism of CL-20 (net suppression): uptake scrambles working and near-working machines faster than it
+assembles new ones. Class: REPRODUCED as a mechanism-level measurement (observational, preregistered) supporting the
+causal net effect of W6 block 4 U.
+
 ## W6 block 4 X -- the same competition with an INDEPENDENT specimen pair (prereg s13; 192 runs, 0 voids)
 
 E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E share ON 0.07 vs OFF 0.60; ON < OFF in
