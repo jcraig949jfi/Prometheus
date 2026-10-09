@@ -712,6 +712,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   exactly on 15 organisms (diffs 0.0); content forager solo .167 vs 4 copies .029-.047. Arms CONC/SOLO/SHAM x 6401-6406,
   G=200, 12 procs, same lease (lse-78a64fc8d5b2 to 10:00Z). PREDICTION in b64 docstring (all three B62/B63 criteria
   must replicate). Est ~9 core-h -> window 3 ~42 of 48; nothing heavy after this until the window rolls.
+- B64 RESULT (08:03Z, 18/18 + rare test): REPLICATES on B-scatter. CONC-SHAM entropy +.10/+1.20/+.89/+1.56/+.47/+.82
+  (5/6 >= .2); CONC HET>HOM 5/5 testable (+.006..+.030; 6405 has 2 niches only); rare-type advantage in both
+  compositions CONC 4/6 vs SOLO 1/6, SHAM 1/6 (SOLO 6401 / SHAM 6406: minor niche of 8 / 7, small-sample). Shape:
+  SOLO/SHAM pops are monomorphic on pool 0 (166-191/200); CONC pops split ~evenly (110/84, 103/85, 105/90, 96/68).
+  PREDICTION (all three) MET. VERDICT: concurrent competition evolves NEGATIVE-FREQUENCY-DEPENDENT NICHE
+  PARTITIONING on 2/2 worlds tested -> BETA_FINDINGS Finding 4. Open: group size k (2, 8), a third world, and the
+  mechanism by which a specialist's pool choice is encoded (pool identity, not location). Window 3 tally ~42 of 48;
+  lease lse-78a64fc8d5b2 lapses 10:00Z (token not captured). Next heavy run after the window rolls (~00:11Z 10-10).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

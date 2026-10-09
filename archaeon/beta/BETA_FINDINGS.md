@@ -3,7 +3,7 @@
 **Scope.** Proteus v0 player VM organisms (plus variant VMs built from its source with asserted single-branch patches),
 evolved by the CMP3 search (archaeon.wse.evolve) in WSE event worlds and C6 composed worlds. All probes, results and
 reasoning are on branch archaeon/p2b-sfe-2026-10-06:
-- archaeon/beta/ (b01..b57, results/)
+- archaeon/beta/ (b01..b64, results/)
 - JOURNAL.md
 - CAMPAIGN_UPDATE_*.md
 - METHODS_NOTE.md
@@ -71,6 +71,32 @@ clock.
    - Every unreached memory solution in this campaign needs a longer coupled chain.
 4. **One rare exception.** A self-modifying-code state machine that rewrites its own genome per tick solved
    two-value memory at .971, and .062 when locked (B51). It was not reproduced in 8 writable runs (B52).
+
+## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (2/2 worlds)
+
+1. **Sequential coupling has no teeth (B59).** Organisms evaluated one after another on a shared pool see the
+   in-episode regeneration equilibrium. Rewards: .2948, then .2895 x19. Its null says nothing about niches.
+2. **Concurrent coupling (B60).**
+   - Setup: 4 organisms act in the same episode on the same pools. The evaluator equals the standard one at k=1;
+     4 identical foragers earn about 1/4 each.
+   - Result: the population diversifies its dominant pool (+.24 bits mean, 4/6 seeds >= .2).
+3. **Attacks survived (B62, B63 on P-boom; B64 on B-scatter):**
+
+   | test | P-boom | B-scatter |
+   |---|---|---|
+   | entropy CONC > noise-matched SHAM by >= .2 | 4/6 | 5/6 |
+   | mixed-niche groups out-earn same-niche groups (CONC) | 6/6 | 5/5 testable |
+   | rare-type advantage both ways, CONC / SOLO / SHAM | 4 / 1 / 0 | 4 / 1 / 1 |
+
+   - SHAM = residual-shuffle null: same fitness signal/noise as CONC, but the competition component is detached
+     from the organism.
+   - Re-runs reproduce B60 cell-for-cell (determinism).
+4. **Shape.**
+   - CONC organisms are pool-identity specialists (fidelity .95-1.0) in two balanced niches.
+   - Solo and noise-matched populations are monomorphic or dominated by one niche.
+   - Their rare-vs-common pattern is DOMINANCE: one type wins both as rare and as common.
+5. **Limits.** Two worlds and one group size (k=4). The mechanism of the pool-identity encoding is not yet read
+   out.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
