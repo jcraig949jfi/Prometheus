@@ -192,6 +192,10 @@ A6 One group size (k=4) and two C6 named worlds, both with coupling-capable K=4 
 A7 "Pool-identity specialist" might be a location specialist in disguise: pool_node is random per
    episode, so identity != location across episodes. Supported by B65 (dependence on the pool's
    WORD, which is index-ordered) but OPEN for a direct test (permute pool order in observation).
+   ADDENDUM 2026-10-09 ~11:00Z -- RESOLVED: pool_node is drawn per episode; over 64 held-out P-boom
+   episodes each pool sits on all 12 nodes (1-9 eps each). A fixed-location strategy cannot show
+   .95-1.0 fidelity to one pool INDEX, so the niche is pool identity. The permutation test (S2)
+   is not needed.
 A8 PROCESS: lease token lost (acquire output truncated by tail), so lse-78a64fc8d5b2 could not be
    released early. It covered B62/B64 under a purpose string naming B60. RECORDED (journal,
    memory).

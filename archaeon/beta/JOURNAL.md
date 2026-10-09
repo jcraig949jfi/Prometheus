@@ -771,6 +771,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B71 STAGED (b71_third_world.py; k=1 equivalence .351139 == .351139; smoke test passed; prediction in docstring):
   CONC/SOLO/SHAM x 7101-7106, 18 cells ~9 core-h + hardened rare test. QUEUE after the envelope frees: B66, B69, B71
   (~21 core-h total; may span the next window; one new lease per run, token captured).
+- Packet A7 RESOLVED (no run): over 64 held-out episodes each P-boom pool occupies all 12 nodes (1-9 eps each); a
+  location strategy cannot give .95-1.0 pool-index fidelity -> niches are pool IDENTITY. S2 dropped.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
