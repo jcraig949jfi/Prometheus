@@ -13,6 +13,7 @@
   comms-index                 PAN-20: comms message history -> searchable artifacts (read-only)
   refresh                     PAN-17: catalog to current origin/main + comms, changed items only
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
+  modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
   frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
@@ -64,6 +65,9 @@ def main(argv=None):
     sub.add_parser("status")
     sub.add_parser("comms-index")
     sub.add_parser("refresh")
+    p = sub.add_parser("modelbench")
+    p.add_argument("models", nargs="+")
+    p.add_argument("--pull", action="store_true")
     p = sub.add_parser("consolidate")
     p.add_argument("--ext", default=".jsonl")
     p.add_argument("--limit", type=int, default=0)
@@ -131,6 +135,9 @@ def main(argv=None):
         print("catalog SHA {}  origin/main {}  commits not yet indexed: {}".format((cat or "?")[:9], head[:9], behind))
         for k, rid, sha, fin, st, secs in runs:
             print("  {:<20} {:<40} {} {} {}s".format(k, rid, str(fin)[:16], st, secs))
+    elif a.cmd == "modelbench":
+        from . import modelbench
+        modelbench.run(a.models, pull=a.pull)
     elif a.cmd == "consolidate":
         from . import consolidate
         consolidate.run(ext=a.ext, limit=a.limit, typed=not a.no_typed)
