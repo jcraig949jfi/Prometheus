@@ -707,6 +707,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   identity specialists coexisting at balanced frequencies with a rare-type advantage. It survives the noise null,
   the function test and determinism. Tier: SUPPORTED on ONE world (P-boom NoClock); not yet ensemble-invariant.
   Next attack: replicate on a second world (B-scatter) and with k=2/k=8 groups. CORE-HOUR TALLY window 3: ~33 of 48.
+- B64 launched ~07:30Z (commit is the receipt): REPLICATION on B-scatter.T000.d_horizon NoClock (R=5, regime,
+  hidden, non-lethal hazards). Evaluator generalised: regime applied once per tick centrally. TEETH: k=1 == evaluate_world
+  exactly on 15 organisms (diffs 0.0); content forager solo .167 vs 4 copies .029-.047. Arms CONC/SOLO/SHAM x 6401-6406,
+  G=200, 12 procs, same lease (lse-78a64fc8d5b2 to 10:00Z). PREDICTION in b64 docstring (all three B62/B63 criteria
+  must replicate). Est ~9 core-h -> window 3 ~42 of 48; nothing heavy after this until the window rolls.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
