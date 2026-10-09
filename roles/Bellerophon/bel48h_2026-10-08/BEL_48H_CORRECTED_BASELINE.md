@@ -71,3 +71,12 @@ frozen expectation (0/30) ignored both; the instrument reported a real event cor
 Ruler disagreement per birth: LOCAL 8.5-78% (COPY 8.5, PARTIAL 9.9, PAIR 9.0, OVERWRITE 40, VM_COPY 30, BYTECODE32 73,
 CONSTRUCTIVE 78); WELL_MIXED 9.5-94%. Mixed-origin births (>= L/8 bytes from each): <= 5.7% (PARTIAL LOCAL). Constructed
 births: 2-94%. TRB mechanism signatures (DETECTOR level): 5-28 per cell. Geometry v1 vs written: 3/245 disagreements.
+
+## 6. Addendum (2026-10-09) -- historical counts restated per independent initial population (NEXT_EXPERIMENTS #8)
+
+The grounding plan seeded run k of every cell in a lane identically (amendment 2). From its frozen raw rows
+(forensics_2026-09-23/receipts/GROUNDING_RESULTS_RAW.jsonl.gz): G1 2,400 runs = 400 distinct populations; its 55
+spontaneous runs come from 41 populations (9 seeds spontaneous in 2-4 cells). G1T 900 runs = 150 populations; its 32
+spontaneous runs from 9 populations (the report already noted the task cells were run-for-run identical). The G2/G6 set
+of '160 spontaneous origins' is 83 independent populations. No historical row is changed; rates within a cell stand;
+any pooled 'independent origins' figure from that round should be cited per population (41 / 9 / 83).
