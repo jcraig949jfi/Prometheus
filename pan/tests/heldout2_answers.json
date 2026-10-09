@@ -1,0 +1,35 @@
+{
+  "_prereg": [
+    "HELD-OUT set H2 for retrieval v2 (PAN-31), frozen 2026-10-09 BEFORE any v2 code is evaluated.",
+    "The v1 held-out set (heldout_answers.json) was spent by the v1 verdict and is now a DEV set,",
+    "with known_answers.json. v2 is tuned on those two dev sets only; its verdict is read from THIS",
+    "set and from the auto-generated commit benchmark (commit_bench_cb200.json), each run once.",
+    "Thresholds are the original ones (known_answers.json _prereg), unchanged:",
+    "  hybrid recall@10 >= 0.80 over all; fts recall@10 >= 0.60 lexical; vector recall@10 >= 0.60",
+    "  paraphrase; INDETERMINATE below 15 evaluable queries.",
+    "Conflict of interest: written by Pan, which built the index. CB-200 exists to offset that.",
+    "Answer paths verified to exist at d6b2eeeca; no query here has been run through any search."
+  ],
+  "queries": [
+    {"id": "J01", "type": "lexical", "q": "assert_not_canonical git-dir equals git-common-dir", "answers": ["archaeon/workspace.py"]},
+    {"id": "J02", "type": "lexical", "q": "comms messages table recipients kind prompt delegation report question ruling", "answers": ["comms/schema.sql"]},
+    {"id": "J03", "type": "lexical", "q": "work-graph packet fields lifecycle capability classes receipts escalations", "answers": ["workgraph/core.py", "roles/base-role/DISTRIBUTED_WORK.md"]},
+    {"id": "J04", "type": "lexical", "q": "null-bound invariant consecutive non-productive ticks parks itself accountable seat", "answers": ["roles/Atalanta/reference/null_bound.py", "roles/Atalanta/reference/test_null_bound.py", "roles/Atalanta/PROPOSED_INVARIANT_2026-09-11.md"]},
+    {"id": "J05", "type": "lexical", "q": "sagacity anchor charter and continuity", "answers": ["CHARTER_AND_CONTINUITY.md"]},
+    {"id": "J06", "type": "lexical", "q": "strategic initiative pilot evolving not a universal operating mandate", "answers": ["ops/README.md"]},
+    {"id": "J07", "type": "lexical", "q": "Gen-2 authoritative substrate SQLite WAL hash-chained event ledger", "answers": ["SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py"]},
+    {"id": "J08", "type": "lexical", "q": "Hestia audit and roadmap report dossiers engines", "answers": ["roles/Hestia/audit/2026-10-06/REPORT.md", "roles/Hestia/audit/2026-10-06/AUDIT_PLAN.md"]},
+    {"id": "J09", "type": "lexical", "q": "validator cheat control injected defect good seat passes", "answers": ["roles/base-role/seat_kit/controls/validator_cheat_control_2026-10-04.py"]},
+    {"id": "J10", "type": "lexical", "q": "Eos dawn scanner horizon frontier free API resources", "answers": ["agents/eos/README.md", "roles/Eos/RESPONSIBILITIES.md"]},
+    {"id": "K01", "type": "paraphrase", "q": "the check that stops a program from running real work in the main repository folder", "answers": ["archaeon/workspace.py"]},
+    {"id": "K02", "type": "paraphrase", "q": "table definitions for the inter-agent message queue", "answers": ["comms/schema.sql"]},
+    {"id": "K03", "type": "paraphrase", "q": "code that enforces the rules for distributed task bundles and their status transitions", "answers": ["workgraph/core.py"]},
+    {"id": "K04", "type": "paraphrase", "q": "a demonstration that a scheduled job should halt itself after too many idle runs and say who must restart it", "answers": ["roles/Atalanta/reference/null_bound.py", "roles/Atalanta/reference/test_null_bound.py", "roles/Atalanta/PROPOSED_INVARIANT_2026-09-11.md"]},
+    {"id": "K05", "type": "paraphrase", "q": "the founding statement of what the whole project is for and how work carries across sessions", "answers": ["CHARTER_AND_CONTINUITY.md", "roles/base-role/NORTH_STAR.md"]},
+    {"id": "K06", "type": "paraphrase", "q": "caveat that the operations folder is an experiment and does not force seats to change how they work", "answers": ["ops/README.md"]},
+    {"id": "K07", "type": "paraphrase", "q": "why the engine keeps all of its durable state in one single-file database", "answers": ["SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py"]},
+    {"id": "K08", "type": "paraphrase", "q": "an independent critique of every experimental engine with a plan for what to do next", "answers": ["roles/Hestia/audit/2026-10-06/REPORT.md", "roles/Hestia/audit/2026-10-06/AUDIT_PLAN.md"]},
+    {"id": "K09", "type": "paraphrase", "q": "proving that the new-seat checker catches deliberately broken seats", "answers": ["roles/base-role/seat_kit/controls/validator_cheat_control_2026-10-04.py"]},
+    {"id": "K10", "type": "paraphrase", "q": "the daemon that watches outside research and free compute offers", "answers": ["agents/eos/README.md", "roles/Eos/RESPONSIBILITIES.md"]}
+  ]
+}
