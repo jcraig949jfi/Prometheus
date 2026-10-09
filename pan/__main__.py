@@ -12,6 +12,8 @@
   stats                       row counts per table in schema pan
   comms-index                 PAN-20: comms message history -> searchable artifacts (read-only)
   refresh                     PAN-17: catalog to current origin/main + comms, changed items only
+  lexdf                       rebuild lexeme document frequencies (OR full-text cap)
+  dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
@@ -65,6 +67,7 @@ def main(argv=None):
     sub.add_parser("status")
     sub.add_parser("comms-index")
     sub.add_parser("lexdf")
+    sub.add_parser("dictionary")
     sub.add_parser("refresh")
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
@@ -114,6 +117,9 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "dictionary":
+        from . import dictionary
+        dictionary.run()
     elif a.cmd == "lexdf":
         import time
         from . import db

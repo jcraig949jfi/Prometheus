@@ -96,3 +96,52 @@ def tables(namespace=NAMESPACE):
                         records=int(snap.summary.additional_properties.get("total-records", 0)) if snap else 0,
                         location=t.location()))
     return out
+
+
+def register_inventory(run_dir):
+    """Append one inventory run's Parquet tables to Iceberg history tables
+    (pan.inv_repo_blobs, pan.inv_fs_files, pan.inv_pg_relations), each row stamped with
+    run_id, so 'what did the stores look like at run X' is an Iceberg time-travel or a
+    run_id filter. Returns {table: rows appended}."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    from pathlib import Path
+    run_dir = Path(run_dir)
+    run_id = run_dir.name
+    out = {}
+    for src, name in (("repo_blobs.parquet", "inv_repo_blobs"), ("fs_files.parquet", "inv_fs_files"),
+                      ("pg_relations.parquet", "inv_pg_relations")):
+        f = run_dir / src
+        if not f.exists():
+            continue
+        t = pq.read_table(f)
+        t = t.append_column("run_id", pa.array([run_id] * t.num_rows, pa.string()))
+        # timestamps without zone info break Iceberg's type mapping on some columns; normalise to us
+        cols = []
+        for fld in t.schema:
+            c = t.column(fld.name)
+            if pa.types.is_timestamp(fld.type):
+                c = c.cast(pa.timestamp("us", tz="UTC"))
+            elif pa.types.is_decimal(fld.type):
+                c = c.cast(pa.float64())
+            elif pa.types.is_null(fld.type):
+                c = c.cast(pa.string())
+            cols.append(c)
+        t = pa.table(cols, names=t.schema.names)
+        write(name, t)
+        out[name] = t.num_rows
+    return out
+
+
+def register_commits(lake_git_dir):
+    """Overwrite pan.git_commits / pan.git_commit_files from the commit index Parquet;
+    each overwrite is a snapshot, so earlier states stay readable by time travel."""
+    import pyarrow.parquet as pq
+    from pathlib import Path
+    d = Path(lake_git_dir)
+    out = {}
+    for src, name in (("commits.parquet", "git_commits"), ("commit_files.parquet", "git_commit_files")):
+        t = pq.read_table(d / src)
+        write(name, t, mode="overwrite")
+        out[name] = t.num_rows
+    return out
