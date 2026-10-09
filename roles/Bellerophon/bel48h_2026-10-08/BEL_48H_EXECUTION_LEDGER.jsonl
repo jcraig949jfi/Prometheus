@@ -41,3 +41,5 @@
 {"t":"2026-10-09T04:59:50Z","event":"complete","window":"N1","runs":440,"voids":0,"active_s":8273.4}
 {"t":"2026-10-09T05:01:45Z","event":"launch","window":"UF","freeze_commit":"857123cbd","plan":"300 c2fa6a5cef8b4c55f4d7f19e7872a8bf4cac3c8470458cb9e59d9731b4201d00","workers":2}
 {"t":"2026-10-09T07:42:21Z","event":"complete","window":"UF","runs":300,"voids":0,"active_s":9621.1}
+{"t":"2026-10-09T07:43:35Z","event":"queue","window":"P1","freeze_commit":"685604387","plan_sha256":"fe53b694843dd3235d80179bca6188591be7fa03550b8bd0e7a688e3e9db2a22","runs":512,"workers":8,"starts_after":"^U2_DONE","note":"8 workers: prometheus-worker service idle (verified load); revert to 6 if it takes jobs"}
+{"t":"2026-10-09T07:43:48Z","event":"host_note","what":"prometheus-worker.service observed ActiveState=inactive (not stopped by this campaign); P1 may use 8 workers without displacing shared work"}
