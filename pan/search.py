@@ -81,6 +81,29 @@ def load_matrix(model, refresh=False):
         _CACHE[model] = (z["ids"], z["m"])
         return _CACHE[model]
     from . import db
+    with db.cursor() as cur:
+        cur.execute("select count(*) from pan.embedding where model = %s", (model,))
+        n_db = cur.fetchone()[0]
+    shards = lake() / "vectors" / "shards" / model.replace("/", "__")
+    if shards.is_dir():
+        # local Parquet shards written by embed.run; used only when their row count
+        # equals the database's (the database is the cross-host truth)
+        import pyarrow.parquet as pq
+        ids, mats = [], []
+        for f in sorted(shards.glob("*.parquet")):
+            t = pq.read_table(f)
+            ids.append(t.column("chunk_id").to_numpy())
+            mats.append(np.asarray(t.column("vec").combine_chunks().flatten().to_numpy(zero_copy_only=False),
+                                   dtype=np.float16).reshape(t.num_rows, -1))
+        if ids and sum(len(i) for i in ids) == n_db:
+            ids = np.concatenate(ids)
+            m = np.vstack(mats)
+            order = np.argsort(ids)
+            ids, m = ids[order], m[order]
+            p.parent.mkdir(parents=True, exist_ok=True)
+            np.savez(p, ids=ids, m=m)
+            _CACHE[model] = (ids, m)
+            return _CACHE[model]
     conn = db.connect()
     try:
         cur = conn.cursor("pan_vec_dump")

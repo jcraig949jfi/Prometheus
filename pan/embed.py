@@ -27,7 +27,10 @@ _LOADED = {}
 
 
 def default_model():
-    return os.environ.get("PAN_EMBED_MODEL", "Qwen/Qwen3-Embedding-0.6B")
+    # Tier 1 is bge-small: measured 2026-10-09 on the M2 RTX 5060 Ti at ~1,050 chunks/s
+    # versus ~34 chunks/s for Qwen3-Embedding-0.6B (about 6.5 min vs 3.3 GPU-h for the
+    # 394,952-chunk catalog). Which model retrieves better is measured by pan.controls.
+    return os.environ.get("PAN_EMBED_MODEL", "BAAI/bge-small-en-v1.5")
 
 
 def _model(name):

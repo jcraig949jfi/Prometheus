@@ -1,0 +1,34 @@
+{
+  "_prereg": [
+    "HELD-OUT retrieval set, frozen 2026-10-09 AFTER the v0 controls run (CONTROLS_20261009T1117Z.json)",
+    "and BEFORE any v1 change is evaluated. v0 failed its positive thresholds; v1 changes will be",
+    "developed against known_answers.json (now the DEV set, which v1 is tuned on and therefore cannot",
+    "certify). The v1 verdict is read ONLY from this held-out set, with the same frozen thresholds:",
+    "  hybrid recall@10 >= 0.80 over all; fts recall@10 >= 0.60 on lexical; vector recall@10 >= 0.60 on",
+    "  paraphrase. INDETERMINATE below 15 evaluable queries. Every row is written.",
+    "Answer paths were verified to exist at d6b2eeeca before this file was written. No query here was",
+    "run through any search mode before this commit."
+  ],
+  "queries": [
+    {"id": "H01", "type": "lexical", "q": "conformant wake wording fetch rev-parse worktree never pull", "answers": ["roles/base-role/WAKE_DIRECTIVE.md"]},
+    {"id": "H02", "type": "lexical", "q": "ruthless architectural audit of each exploratory engine", "answers": ["roles/Hestia/RESPONSIBILITIES.md"]},
+    {"id": "H03", "type": "lexical", "q": "Build Fabric and CI Engineer removes mechanical work", "answers": ["roles/Eupalamus/RESPONSIBILITIES.md"]},
+    {"id": "H04", "type": "lexical", "q": "Lead RSO Engineer coordinator of campaign C-004", "answers": ["roles/Palamedes/RESPONSIBILITIES.md"]},
+    {"id": "H05", "type": "lexical", "q": "tensor custodian five gates admission MPA", "answers": ["roles/Koios/RESPONSIBILITIES.md"]},
+    {"id": "H06", "type": "lexical", "q": "representation scavenger unusual ways information", "answers": ["roles/Polyhymnia/RESPONSIBILITIES.md"]},
+    {"id": "H07", "type": "lexical", "q": "I don't do science obsolete rhetoric memory substrate", "answers": ["roles/Mnemosyne/INBOX_ARCHAEON_BASE_ROLE_RULINGS_2026-09-11.md"]},
+    {"id": "H08", "type": "lexical", "q": "task packets lifecycle capability class escalation receipt work graph", "answers": ["roles/base-role/DISTRIBUTED_WORK.md", "workgraph/README.md"]},
+    {"id": "H09", "type": "lexical", "q": "PARKED INSTRUMENT_SPECIMEN scorer not revived", "answers": ["roles/Skopos/RESPONSIBILITIES.md"]},
+    {"id": "H10", "type": "lexical", "q": "Evidence and Qualification Engineer observatory evidence justifies", "answers": ["roles/Argus/RESPONSIBILITIES.md"]},
+    {"id": "H11", "type": "paraphrase", "q": "why a seat must work in its own separate checkout and never update the shared one", "answers": ["roles/base-role/WORKING_CONTRACT.md", "roles/base-role/WAKE_DIRECTIVE.md"]},
+    {"id": "H12", "type": "paraphrase", "q": "the engineer who lets very different kinds of minds plug into the experiment without forcing one shape on them", "answers": ["roles/Cadmus/RESPONSIBILITIES.md"]},
+    {"id": "H13", "type": "paraphrase", "q": "the brother seat on the second computer that collects local evidence for the shared experiment history", "answers": ["roles/Atlas-M2/RESPONSIBILITIES.md", "roles/Atlas/SIBLINGS.md"]},
+    {"id": "H14", "type": "paraphrase", "q": "does merging many weak failure signals choose a better next experiment or just fake confidence", "answers": ["roles/Metis/RESPONSIBILITIES.md"]},
+    {"id": "H15", "type": "paraphrase", "q": "which seat organises all of the program's data into a lake and fast indices", "answers": ["roles/Pan/RESPONSIBILITIES.md"]},
+    {"id": "H16", "type": "paraphrase", "q": "the list of seats and what each one inherits from the shared base", "answers": ["roles/base-role/INHERITANCE.md"]},
+    {"id": "H17", "type": "paraphrase", "q": "a script that makes a brand new seat directory in a partial checkout and publishes it", "answers": ["roles/base-role/seat_kit/new_seat.py", "roles/base-role/seat_kit/README.md"]},
+    {"id": "H18", "type": "paraphrase", "q": "cross-machine rules the program learned the hard way that every agent must remember", "answers": ["aporia/doctrine/critical_memories.md"]},
+    {"id": "H19", "type": "paraphrase", "q": "how agents leave messages and tasks for each other in the shared database", "answers": ["comms/README.md"]},
+    {"id": "H20", "type": "paraphrase", "q": "reserving a slice of a machine's processors before a big parallel job", "answers": ["fabric/README.md", "fabric/lease_compat.py"]}
+  ]
+}

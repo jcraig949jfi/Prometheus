@@ -77,6 +77,14 @@ def run(sha: str = "origin/main", out=print):
                          c["body"], c["seat"], c["instance"], c["n_files"]) for c in commits], page_size=2000)
         execute_values(cur, "insert into pan.commit_file (sha, path, status) values %s on conflict do nothing",
                        files, page_size=10000)
+    # Commit the rows, then ANALYZE, before the artifact stamp: without statistics
+    # on freshly loaded tables the planner chose a nested loop over ~73k x ~60k
+    # rows and ran CPU-bound for over 5 minutes (measured 2026-10-09).
+    with db.cursor(autocommit=True) as cur:
+        cur.execute("analyze pan.commit")
+        cur.execute("analyze pan.commit_file")
+        cur.execute("analyze pan.artifact")
+    with db.cursor(statement_timeout_ms=1800000) as cur:
         # oracle: every commit reachable from the SHA is present
         cur.execute("select count(*) from pan.commit where sha = any(%s)", ([c["sha"] for c in commits],))
         have = cur.fetchone()[0]
