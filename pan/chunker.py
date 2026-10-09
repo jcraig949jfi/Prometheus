@@ -150,7 +150,7 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
     from psycopg2.extras import execute_values
     from . import db
     t0 = time.time()
-    run_id = "chunk-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%MZ"), host().lower())
+    run_id = "chunk-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     with db.cursor() as cur:
         q = """select artifact_id, path, blob_sha, ext, size_bytes, repo_sha from pan.artifact
                where source='git' and (indexed_blob is distinct from blob_sha)"""

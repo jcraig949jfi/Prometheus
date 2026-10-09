@@ -10,6 +10,8 @@
   cochange PATH               files that change in the same commits as PATH
   tables QUERY                find tables/columns on the cluster by name
   stats                       row counts per table in schema pan
+  status                      catalog SHA vs origin/main (freshness) and the last run of each kind
+  consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
   frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
   frontier models QUERY [--fits]        Hugging Face models, optionally only 16 GB-fit
@@ -36,6 +38,7 @@ def main(argv=None):
     p.add_argument("--model", default=None)
     p.add_argument("--limit", type=int, default=0)
     p.add_argument("--batch", type=int, default=64)
+    p.add_argument("--docs", action="store_true", help="document-level vectors (v2) instead of chunk vectors")
     p = sub.add_parser("search")
     p.add_argument("query", nargs="+")
     p.add_argument("-k", type=int, default=10)
@@ -54,6 +57,11 @@ def main(argv=None):
     p = sub.add_parser("tables")
     p.add_argument("query")
     sub.add_parser("stats")
+    sub.add_parser("status")
+    p = sub.add_parser("consolidate")
+    p.add_argument("--ext", default=".jsonl")
+    p.add_argument("--limit", type=int, default=0)
+    p.add_argument("--no-typed", action="store_true")
     p = sub.add_parser("frontier")
     p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models"])
     p.add_argument("query", nargs="*")
@@ -78,7 +86,10 @@ def main(argv=None):
         chunker.run(limit=a.limit, kinds=[k for k in a.kinds.split(",") if k])
     elif a.cmd == "embed":
         from . import embed
-        embed.run(model=a.model, limit=a.limit, batch=a.batch)
+        if a.docs:
+            embed.run_docs(model=a.model or embed.DOC_MODEL, limit=a.limit, batch=a.batch)
+        else:
+            embed.run(model=a.model, limit=a.limit, batch=a.batch)
     elif a.cmd == "search":
         from . import search
         search.cli(" ".join(a.query), k=a.k, kind=a.kind, seat=a.seat, path=a.path, since=a.since, mode=a.mode,
@@ -92,6 +103,24 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "status":
+        import subprocess
+        from . import REPO, db
+        with db.cursor() as cur:
+            cur.execute("""select distinct on (kind) kind, run_id, git_sha, finished_at, status, counts->>'seconds'
+                           from pan.run where status in ('OK','PARTIAL') order by kind, started_at desc""")
+            runs = cur.fetchall()
+            cur.execute("select max(repo_sha) from pan.artifact where source='git'")
+            cat = cur.fetchone()[0]
+        head = subprocess.run(["git", "rev-parse", "origin/main"], cwd=REPO, capture_output=True, text=True).stdout.strip()
+        behind = subprocess.run(["git", "rev-list", "--count", "{}..{}".format(cat, head)], cwd=REPO,
+                                capture_output=True, text=True).stdout.strip() if cat and head else "?"
+        print("catalog SHA {}  origin/main {}  commits not yet indexed: {}".format((cat or "?")[:9], head[:9], behind))
+        for k, rid, sha, fin, st, secs in runs:
+            print("  {:<20} {:<40} {} {} {}s".format(k, rid, str(fin)[:16], st, secs))
+    elif a.cmd == "consolidate":
+        from . import consolidate
+        consolidate.run(ext=a.ext, limit=a.limit, typed=not a.no_typed)
     elif a.cmd == "frontier":
         from .frontier import arxiv, hf, query
         if a.what == "arxiv":

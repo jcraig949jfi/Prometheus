@@ -57,7 +57,7 @@ def unplant(aid):
 
 
 def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None, qset=None, fts_semantics="or", rerank=None,
-        label="v1", pool=30):
+        label="v1", pool=30, docvec=None, collapse=False):
     import functools
     import numpy as np
     from . import embed
@@ -65,7 +65,11 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None, qset=None, 
     if qset:
         spec["queries"] = json.loads(Path(qset).read_text(encoding="utf-8"))["queries"]
     fns = dict(fts=functools.partial(search.fts, semantics=fts_semantics), vector=search.vector,
-               hybrid=functools.partial(search.hybrid, rerank=rerank, fts_semantics=fts_semantics, pool=pool))
+               hybrid=functools.partial(search.hybrid, rerank=rerank, fts_semantics=fts_semantics, pool=pool,
+                                        docvec=docvec, collapse=collapse))
+    if docvec:
+        fns["doc"] = functools.partial(search.doc_vector, model=docvec)
+        modes = tuple(modes) + ("doc",) if "doc" not in modes else modes
     model = model or embed.default_model()
     qs = spec["queries"]
     evaluable = chunked_paths({p for q in qs for p in q["answers"]})
@@ -151,7 +155,8 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None, qset=None, 
     verdict["cheat_vector_top3"] = None if v_rank is None and "vector" not in modes else (v_rank is not None)
     verdict["cheat_removed"] = gone
     result = dict(when=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), model=model, label=label,
-                  qset=str(qset or KA), fts_semantics=fts_semantics, rerank=rerank, pool=pool,
+                  qset=str(qset or KA), fts_semantics=fts_semantics, rerank=rerank, pool=pool, docvec=docvec,
+                  collapse=collapse,
                   evaluable_queries=n_eval, summary=summary, negative=neg, positive_vector_top1_p25=p25,
                   cheat=dict(fts_rank=f_rank, vector_rank=v_rank, removed=gone), verdict=verdict, rows=rows,
                   seconds=round(time.time() - t0, 1))
@@ -176,8 +181,11 @@ def main():
     ap.add_argument("--rerank", default=None)
     ap.add_argument("--label", default="v1")
     ap.add_argument("--pool", type=int, default=30)
+    ap.add_argument("--docvec", default=None)
+    ap.add_argument("--collapse", action="store_true")
     a = ap.parse_args()
-    r = run(tuple(a.modes.split(",")), a.out, a.model, a.qset, a.fts, a.rerank, a.label, a.pool)
+    r = run(tuple(a.modes.split(",")), a.out, a.model, a.qset, a.fts, a.rerank, a.label, a.pool, a.docvec,
+            a.collapse)
     print(json.dumps({k: r[k] for k in ("evaluable_queries", "summary", "negative", "positive_vector_top1_p25",
                                          "cheat", "verdict", "seconds", "written") if k in r}, indent=1, default=str))
 

@@ -62,7 +62,7 @@ def run(sha: str = "origin/main", out=print):
             c["seat"], c["instance"] = seats[m.group(1).lower()], m.group(2)
     out("parsed {} commits / {} file changes in {:.1f}s (rev-list says {})".format(len(commits), len(files),
                                                                                    time.time() - t0, expect))
-    run_id = "commits-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%MZ"), host().lower())
+    run_id = "commits-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     d = lake() / "git"
     d.mkdir(parents=True, exist_ok=True)
     pq.write_table(pa.Table.from_pylist(commits), d / "commits.parquet", compression="zstd")

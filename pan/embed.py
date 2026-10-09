@@ -84,7 +84,7 @@ def run(model=None, limit=0, batch=64, page=4096, out=print):
     model = model or default_model()
     dims = MODELS.get(model, {}).get("dims")
     t0 = time.time()
-    run_id = "embed-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%MZ"), host().lower())
+    run_id = "embed-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     with db.cursor() as cur:
         cur.execute("""select count(*) from pan.chunk c where not exists
                        (select 1 from pan.embedding e where e.chunk_id = c.chunk_id and e.model = %s)""", (model,))
@@ -130,6 +130,89 @@ def run(model=None, limit=0, batch=64, page=4096, out=print):
             rate = done / max(time.time() - t0, 1e-6)
             out("  {}/{} embedded, {:.0f}/s, eta {:.0f}s".format(done, todo, rate, (todo - done) / max(rate, 1e-6)))
         counts = dict(embedded=done, model=model, dims=dims, seconds=round(time.time() - t0, 1))
+        cur.execute("update pan.run set finished_at=now(), status='OK', counts=%s where run_id=%s",
+                    (json.dumps(counts), run_id))
+        conn.commit()
+    finally:
+        conn.close()
+    out(json.dumps(counts))
+    return counts
+
+
+# ------------------------------------------------------------------ documents (v2)
+DOC_MODEL = "Qwen/Qwen3-Embedding-0.6B"
+
+
+def doc_profile(path, title, headings, opening, limit=1600):
+    """The text one document vector is computed from: what the file IS (path,
+    title, outline) more than any one passage of it."""
+    hs = " | ".join(h for h in headings if h)[:600]
+    return "{}\n{}\n{}\n{}".format(path, title or "", hs, opening or "")[:limit]
+
+
+def run_docs(model=DOC_MODEL, batch=32, page=2048, max_seq=384, limit=0, out=print):
+    import numpy as np
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    from . import db, lake
+    dims = MODELS.get(model, {}).get("dims")
+    t0 = time.time()
+    run_id = "embed-docs-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
+    m = _model(model)
+    m.max_seq_length = max_seq
+    with db.cursor() as cur:
+        cur.execute("""select count(*) from pan.artifact a where a.source='git' and a.n_chunks > 0 and not exists
+                       (select 1 from pan.doc_embedding d where d.artifact_id=a.artifact_id and d.model=%s
+                        and d.doc_blob = a.blob_sha)""", (model,))
+        todo = cur.fetchone()[0]
+        cur.execute("insert into pan.run (run_id, kind, host, params) values (%s,'embed-docs',%s,%s)",
+                    (run_id, host(), json.dumps({"model": model, "dims": dims, "max_seq": max_seq})))
+    if limit:
+        todo = min(todo, limit)
+    out("{} documents to embed with {} (dims {}, max_seq {})".format(todo, model, dims, max_seq))
+    shard_dir = lake() / "vectors" / "docs" / model.replace("/", "__")
+    shard_dir.mkdir(parents=True, exist_ok=True)
+    done, last, shard = 0, 0, 0
+    conn = db.connect()
+    try:
+        cur = conn.cursor()
+        while done < todo:
+            cur.execute("""
+              select a.artifact_id, a.path, a.title, a.blob_sha,
+                     (select array_agg(h order by o) from (select distinct on (heading) heading as h, ord as o
+                        from pan.chunk c where c.artifact_id=a.artifact_id and heading is not null
+                        order by heading, ord) x),
+                     (select left(body, 1200) from pan.chunk c where c.artifact_id=a.artifact_id order by ord limit 1)
+              from pan.artifact a
+              where a.source='git' and a.n_chunks > 0 and a.artifact_id > %s and not exists
+                    (select 1 from pan.doc_embedding d where d.artifact_id=a.artifact_id and d.model=%s
+                     and d.doc_blob = a.blob_sha)
+              order by a.artifact_id limit %s""", (last, model, min(page, todo - done)))
+            rows = cur.fetchall()
+            if not rows:
+                break
+            texts = [doc_profile(p, t, hs or [], op) for _, p, t, _, hs, op in rows]
+            vecs = encode_docs(texts, model, batch=batch)
+            buf = io.StringIO()
+            for (aid, _, _, blob, _, _), v in zip(rows, vecs):
+                buf.write("{}\t{}\t{}\t{{{}}}\t{}\n".format(aid, model, vecs.shape[1],
+                                                           ",".join("{:.6g}".format(x) for x in v), blob))
+            buf.seek(0)
+            cur.execute("delete from pan.doc_embedding where model=%s and artifact_id = any(%s)",
+                        (model, [r[0] for r in rows]))
+            cur.copy_expert("copy pan.doc_embedding (artifact_id, model, dims, vec, doc_blob) from stdin", buf)
+            conn.commit()
+            ids = [r[0] for r in rows]
+            pq.write_table(pa.table({"artifact_id": pa.array(ids, pa.int64()),
+                                     "vec": pa.FixedSizeListArray.from_arrays(
+                                         pa.array(vecs.astype(np.float16).ravel(), pa.float16()), vecs.shape[1])}),
+                           shard_dir / "shard_{:05d}_{}.parquet".format(shard, run_id), compression="zstd")
+            shard += 1
+            done += len(rows)
+            last = ids[-1]
+            rate = done / max(time.time() - t0, 1e-6)
+            out("  {}/{} docs, {:.1f}/s, eta {:.0f}s".format(done, todo, rate, (todo - done) / max(rate, 1e-6)))
+        counts = dict(embedded=done, model=model, dims=dims, max_seq=max_seq, seconds=round(time.time() - t0, 1))
         cur.execute("update pan.run set finished_at=now(), status='OK', counts=%s where run_id=%s",
                     (json.dumps(counts), run_id))
         conn.commit()

@@ -188,26 +188,152 @@ def vector(query, k=10, model=None, kind=None, seat=None, path=None, since=None,
     return out
 
 
-def hybrid(query, k=10, rerank=None, pool=30, fts_semantics="or", **kw):
-    """Reciprocal-rank fusion of the full-text and vector lists, per artifact path;
-    optionally re-ordered by a cross-encoder over the fused pool (v1)."""
+_DCACHE = {}
+
+
+def load_doc_matrix(model, refresh=False):
+    """(artifact_ids, float16 matrix) of document vectors; from local Parquet shards when
+    their row count equals the database's, else dumped from pan.doc_embedding."""
+    import numpy as np
+    from . import db
+    if model in _DCACHE and not refresh:
+        return _DCACHE[model]
+    with db.cursor() as cur:
+        cur.execute("select count(*) from pan.doc_embedding where model = %s", (model,))
+        n_db = cur.fetchone()[0]
+    shards = lake() / "vectors" / "docs" / model.replace("/", "__")
+    ids, m = None, None
+    if shards.is_dir():
+        import pyarrow.parquet as pq
+        idl, ml = [], []
+        for f in sorted(shards.glob("*.parquet")):
+            t = pq.read_table(f)
+            idl.append(t.column("artifact_id").to_numpy())
+            ml.append(np.asarray(t.column("vec").combine_chunks().flatten().to_numpy(zero_copy_only=False),
+                                 dtype=np.float16).reshape(t.num_rows, -1))
+        if idl:
+            ids, m = np.concatenate(idl), np.vstack(ml)
+            # later shards supersede earlier rows for the same artifact
+            _, last = np.unique(ids[::-1], return_index=True)
+            keep = len(ids) - 1 - last
+            ids, m = ids[keep], m[keep]
+            if len(ids) != n_db:
+                ids, m = None, None
+    if ids is None:
+        with db.cursor() as cur:
+            cur.execute("select artifact_id, vec from pan.doc_embedding where model = %s", (model,))
+            rows = cur.fetchall()
+        ids = np.asarray([r[0] for r in rows], dtype=np.int64)
+        m = np.asarray([r[1] for r in rows], dtype=np.float16) if rows else np.zeros((0, 1), np.float16)
+    _DCACHE[model] = (ids, m)
+    return _DCACHE[model]
+
+
+def doc_vector(query, k=10, model=None, kind=None, seat=None, path=None, since=None, pool=600):
+    """Artifacts ranked by cosine between the query and the document vector; each hit
+    carries its first chunk as the representative passage."""
+    import numpy as np
+    from . import db, embed
+    model = model or embed.DOC_MODEL
+    ids, m = load_doc_matrix(model)
+    if len(ids) == 0:
+        return []
+    q = embed.encode_query(query, model)[: m.shape[1]].astype(np.float16)
+    scores = (m @ q).astype(np.float32)
+    top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
+    top = top[np.argsort(-scores[top])]
+    fsql, fargs = _filters(kind, seat, path, since)
+    with db.cursor(statement_timeout_ms=60000) as cur:
+        cur.execute("""select a.artifact_id, a.path, a.kind, a.seat, a.last_commit_at,
+                              (select chunk_id from pan.chunk c where c.artifact_id=a.artifact_id order by ord limit 1),
+                              a.title
+                       from pan.artifact a where a.artifact_id = any(%s) {f}""".format(f=fsql),
+                    [[int(ids[i]) for i in top]] + fargs)
+        meta = {r[0]: r for r in cur.fetchall()}
+    out = []
+    for i in top:
+        r = meta.get(int(ids[i]))
+        if not r or r[5] is None:
+            continue
+        out.append(dict(chunk_id=r[5], path=r[1], kind=r[2], seat=r[3], last_commit_at=r[4], line_start=1,
+                        line_end=None, heading=r[6], score=float(scores[i]), snippet=r[6] or ""))
+        if len(out) >= k:
+            break
+    return out
+
+
+def hybrid(query, k=10, rerank=None, pool=30, fts_semantics="or", docvec=None, collapse=False, **kw):
+    """Reciprocal-rank fusion of the full-text, chunk-vector and (v2) document-vector
+    lists, per artifact path; optionally re-ordered by a cross-encoder over the fused
+    pool, then (v2) canonical-first collapse of near-duplicate candidates."""
     a = fts(query, k=max(k * 3, pool), semantics=fts_semantics, **kw)
+    lists = [(a, "fts")]
     try:
-        b = vector(query, k=max(k * 3, pool), pool=max(400, 8 * pool), **kw)
+        lists.append((vector(query, k=max(k * 3, pool), pool=max(400, 8 * pool), **kw), "vec"))
     except Exception as e:  # no embeddings yet, or no model on this host: degrade, and say so
-        b = []
         for r in a:
             r["note"] = "vector unavailable: {}".format(type(e).__name__)
+    if docvec:
+        try:
+            lists.append((doc_vector(query, k=max(k * 3, pool), model=docvec, **kw), "doc"))
+        except Exception as e:
+            for r in a:
+                r["note"] = "doc vector unavailable: {}".format(type(e).__name__)
     fused = {}
-    for lst, tag in ((a, "fts"), (b, "vec")):
+    for lst, tag in lists:
         for rank, r in enumerate(lst):
             e = fused.setdefault(r["path"], dict(r, rrf=0.0, via=[]))
             e["rrf"] += 1.0 / (RRF_K + rank + 1)
             e["via"].append("{}#{}".format(tag, rank + 1))
-    rows = sorted(fused.values(), key=lambda r: -r["rrf"])
+    rows = sorted(fused.values(), key=lambda r: -r["rrf"])[:max(pool, k)]
     if rerank:
         rows = rerank_rows(query, rows, rerank)
+    if collapse:
+        rows = collapse_copies(rows)
     return rows[:k]
+
+
+def _shingles(text, n=5):
+    w = [t for t in "".join(ch.lower() if ch.isalnum() else " " for ch in text).split() if t]
+    return {" ".join(w[i:i + n]) for i in range(max(0, len(w) - n + 1))}
+
+
+def collapse_copies(rows, threshold=0.5):
+    """Canonical-first: when two candidates' passages are near-duplicates (5-word
+    shingle Jaccard >= threshold), the one whose file was committed EARLIER is moved
+    directly above the later one. v1's measured failure shape was the canonical
+    document losing to documents that quote it."""
+    from . import db
+    if len(rows) < 2:
+        return rows
+    with db.cursor() as cur:
+        cur.execute("select chunk_id, body from pan.chunk where chunk_id = any(%s)", ([r["chunk_id"] for r in rows],))
+        body = dict(cur.fetchall())
+        cur.execute("select path, first_commit_at from pan.artifact where source='git' and path = any(%s)",
+                    ([r["path"] for r in rows],))
+        first = dict(cur.fetchall())
+    sh = [_shingles(body.get(r["chunk_id"]) or "") for r in rows]
+    out = list(rows)
+    moved = True
+    guard = 0
+    while moved and guard < 50:
+        moved, guard = False, guard + 1
+        for i in range(len(out)):
+            for j in range(i + 1, len(out)):
+                si, sj = sh[rows.index(out[i])], sh[rows.index(out[j])]
+                if not si or not sj:
+                    continue
+                jac = len(si & sj) / len(si | sj)
+                fi, fj = first.get(out[i]["path"]), first.get(out[j]["path"])
+                if jac >= threshold and fi and fj and fj < fi:
+                    r = out.pop(j)
+                    r["via"] = r.get("via", []) + ["canon>{}".format(i + 1)]
+                    out.insert(i, r)
+                    moved = True
+                    break
+            if moved:
+                break
+    return out
 
 
 _RR = {}
