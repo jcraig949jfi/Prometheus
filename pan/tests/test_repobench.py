@@ -111,3 +111,14 @@ def test_first_param_for_cheat2():
 def test_a2_exclusions_are_the_pass_body_passers():
     ex = rb.excluded()
     assert len(ex) == 18 and "RB-119" in ex
+
+
+def test_shapes_and_mcnemar():
+    assert rb.shape(True, "", "x") == "pass"
+    assert rb.shape(False, "TRUNCATED at 1024 tokens; block does not define f at top level", "") == "empty response"
+    assert rb.shape(False, "block does not define f at top level", "code") == "no definition"
+    assert rb.shape(False, "TRUNCATED at 1024 tokens; syntax error in block: x", "code") == "syntax error"
+    assert rb.shape(False, "1 failed, 2 passed in 0.3s", "code") == "test failed"
+    assert rb.mcnemar_p(0, 0) == 1.0
+    assert abs(rb.mcnemar_p(0, 6) - 2 / 64) < 1e-12        # all six discordant one way: p = 2 * 0.5**6
+    assert rb.mcnemar_p(5, 5) == 1.0

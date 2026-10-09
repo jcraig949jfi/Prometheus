@@ -581,3 +581,91 @@ def run(model, think=False, budget=1024, workers=4, out=print):
     subprocess.run(["ollama", "stop", model], capture_output=True, timeout=60)
     out(json.dumps(summ))
     return summ
+
+
+def shape(ok, detail, response):
+    """One failure-shape label per row (reading order: empty, no definition, syntax, timeout, test)."""
+    if ok:
+        return "pass"
+    d = re.sub(r"^TRUNCATED at \d+ tokens; ", "", detail or "")
+    if not (response or "").strip():
+        return "empty response"
+    if d.startswith("block does not define"):
+        return "no definition"
+    if d.startswith("syntax error"):
+        return "syntax error"
+    if d == "timeout":
+        return "test timeout"
+    return "test failed"
+
+
+def mcnemar_p(b, c):
+    """Exact two-sided McNemar (binomial on the discordant pairs)."""
+    from math import comb
+    n = b + c
+    if n == 0:
+        return 1.0
+    k = min(b, c)
+    return min(1.0, 2 * sum(comb(n, i) for i in range(k + 1)) / 2 ** n)
+
+
+def analyze(out=print):
+    """Latest run per configuration -> failure shapes, the A2 primary Wilson table, the preregistered
+    secondary (exact McNemar, Holm over all pairs measured so far) and agreement across configurations.
+    Reads stored rows only; never changes a verdict."""
+    from . import db
+    from .codebench import wilson
+    ex = excluded()
+    with db.cursor() as cur:
+        cur.execute("""select distinct on (b.model) b.model, r.run_id from pan.run r join pan.code_bench b using (run_id)
+                       where r.kind = 'repobench' and r.status = 'OK' order by b.model, r.started_at desc""")
+        runs = cur.fetchall()
+        rows = {}
+        for model, rid in runs:
+            cur.execute("select task_id, ok, detail, response from pan.code_bench where run_id = %s", (rid,))
+            rows[model] = {t: (ok, shape(ok, d, resp)) for t, ok, d, resp in cur.fetchall()}
+    res = dict(runs={m: r for m, r in runs}, configs={}, pairs=[], agreement={})
+    prim = sorted({t for r in rows.values() for t in r if t not in ex})
+    for m, r in rows.items():
+        k = sum(r[t][0] for t in prim)
+        shapes = {}
+        for t in prim:
+            shapes[r[t][1]] = shapes.get(r[t][1], 0) + 1
+        res["configs"][m] = dict(passed=k, of=len(prim), pass_at_1=round(k / len(prim), 3), wilson95=wilson(k, len(prim)),
+                                 shapes=shapes)
+    ms = sorted(rows)
+    pairs = []
+    for i in range(len(ms)):
+        for j in range(i + 1, len(ms)):
+            a, b = ms[i], ms[j]
+            only_a = sum(1 for t in prim if rows[a][t][0] and not rows[b][t][0])
+            only_b = sum(1 for t in prim if rows[b][t][0] and not rows[a][t][0])
+            wa, wb = res["configs"][a]["wilson95"], res["configs"][b]["wilson95"]
+            pairs.append(dict(a=a, b=b, only_a=only_a, only_b=only_b, p=mcnemar_p(only_a, only_b),
+                              wilson_separable=wa[0] > wb[1] or wb[0] > wa[1]))
+    m_tests = 10                                          # Holm over the 10 preregistered pairs, even before all exist
+    for rank, pr in enumerate(sorted(pairs, key=lambda x: x["p"])):
+        pr["holm_threshold"] = round(0.05 / (m_tests - rank), 5)
+    stop = False
+    for pr in sorted(pairs, key=lambda x: x["p"]):
+        pr["holm_reject"] = (not stop) and pr["p"] <= pr["holm_threshold"]
+        stop = stop or not pr["holm_reject"]
+    res["pairs"] = pairs
+    solved = {t: sum(rows[m][t][0] for m in ms) for t in prim}
+    res["agreement"] = dict(solved_by_none=sum(1 for v in solved.values() if v == 0),
+                            solved_by_all=sum(1 for v in solved.values() if v == len(ms)), configs=len(ms))
+    p = REPO / "roles" / "Pan" / "reports" / "repobench" / "ANALYSIS_{}.json".format(
+        dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+    p.write_text(json.dumps(res, indent=1), encoding="utf-8", newline="\n")
+    for m in ms:
+        c = res["configs"][m]
+        out("{:<34} {:>3}/{} {:.3f} [{:.3f}, {:.3f}]  {}".format(m, c["passed"], c["of"], c["pass_at_1"], *c["wilson95"],
+                                                               ", ".join("{} {}".format(k, v) for k, v in
+                                                                         sorted(c["shapes"].items(), key=lambda kv: -kv[1]))))
+    for pr in pairs:
+        out("  {} vs {}: only {} / only {}  McNemar p={:.4f} Holm {} ; Wilson {}".format(
+            pr["a"].split(":", 1)[1], pr["b"].split(":", 1)[1], pr["only_a"], pr["only_b"], pr["p"],
+            "REJECT" if pr["holm_reject"] else "keep", "separable" if pr["wilson_separable"] else "overlap"))
+    out(json.dumps(res["agreement"]))
+    out("wrote {}".format(p))
+    return res
