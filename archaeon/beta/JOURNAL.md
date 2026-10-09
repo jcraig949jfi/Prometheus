@@ -677,6 +677,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   B41 (forced lethal hazards) already trained on regenerating food + lethal hazards; B61 would replicate B41. Not run;
   no compute spent. Named-world transfer stays PARKED (B42). Instrument note for any reopening: B38/B41 named-world
   lifts used E=8 on one seed (below the B45 standard) -- re-score with b46.sc (64 x 4) first.
+- B60 INTERIM (11/12 cells, 06:29Z): entropy CONC-SOLO +.29/+.52/+.21/+.41/-.005 (4/5 >= .2); CONC finals earn
+  more in 4-groups 4/5. NOT BELIEVED YET: random group composition = noisy fitness, and noisy selection alone keeps
+  populations diverse (feedback: diversity is an unsafe observable). B62 launched 06:31Z on 11 procs under the same
+  lease (lse-78a64fc8d5b2, to 10:00Z) while B60's last cell finishes: arms CONC/SOLO/SHAM x 6001-6006, G=200.
+  SHAM = residual-shuffle null (x = a*s + e per generation; fitness a*s_i + e_pi(i)) -- same signal/noise as CONC,
+  competition component detached from the organism. Plus K2 functional test: HET (>=3 niches) vs HOM (one niche)
+  4-groups' per-capita reward on final pops; pops dumped. CONC/SOLO re-run B60 seeds on branch 'b60' -> must
+  reproduce B60 summaries exactly (determinism check). Prediction in b62 docstring (commit adf737ed7). Est ~9 core-h
+  -> window 3 ~33 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
