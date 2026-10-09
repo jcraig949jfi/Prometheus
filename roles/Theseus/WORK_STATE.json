@@ -3,7 +3,7 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T06:45:00Z",
+  "updated_at_utc": "2026-10-09T10:15:00Z",
   "state": "ACTIVE",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
@@ -180,12 +180,28 @@
     {
       "id": "theseus42_syn_reinject_s2",
       "prereg": "roles/Theseus/prereg/2026-10-09_syn_reinject_s2/PREREG.md",
+      "status": "DONE",
+      "verdict": "seed 3 INDETERMINATE 79 vs 74; pooled 2 seeds SUPPORTED narrowly RD .09 [.007,.173]"
+    },
+    {
+      "id": "theseus41_syn_inject_rep",
+      "status": "DONE",
+      "verdict": "NOT SUPPORTED (79 vs 81)"
+    },
+    {
+      "id": "theseus43_transfer_hard",
+      "status": "DONE",
+      "verdict": "SUPPORTED both: selection RD .147, laws RD .263 on held-out V8 k16"
+    },
+    {
+      "id": "theseus44_inject_timing",
+      "prereg": "roles/Theseus/prereg/2026-10-09_inject_timing/PREREG.md",
       "status": "RUNNING"
     }
   ],
   "fabric_tasks": [],
   "running": [
-    "THESEUS-42 second seed for SYN re-injection: INJ-S and INJ-M runs (2 workers each), then eval + pooled (prereg 12b9b0076)"
+    "THESEUS-44 M0 and R runs (2 workers), then 2 evals"
   ],
   "blocked_on": [
     {
@@ -195,8 +211,8 @@
     }
   ],
   "next_actions": [
-    "42 eval + pooled verdict",
-    "41 SYN injection without task selection",
+    "44 evals + verdict",
+    "45 why law-built solvers generalise (existing samples)",
     "review packet before loop end 2026-10-10T23:00Z"
   ],
   "operator_decisions_required": [],
