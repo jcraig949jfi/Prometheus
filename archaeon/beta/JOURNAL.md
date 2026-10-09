@@ -50,6 +50,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B50 | lexicase vs tournament on two stored values | NULL 0/8 vs 0/8; selection explanation KILLED |
 | B51 | coupled write/read pair mutation | PAIR 0/8 (bloat; killed); BASE 1/8 L4 SOLVED (.971, large tape, self-written code) -> memory-law correction |
 | B52 | self-modifying code: the route? (writable vs locked) | 0/8 vs 0/8: a real but RARE route (B51's solver stands) |
+| B53 | KV-store organ (STK/LDK single instructions) | NULL 0/8 vs 0/8: organ barely used |
+| B55/B56 | wiring wall: keyed recall vs read-chain length | GRADED: L1 8/8 (gen ~1), L2 8/8 (~8), L3 2/8 (~100-200) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -624,6 +626,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   key does not open keyed memory; consistent with the wiring hypothesis (B54/B55/B56). B56 launched ~01:05Z on the
   freed 6 processes (started with a shell '&' by mistake -- it writes its own result files; no completion
   notification, checked on heartbeats).
+- B56 RESULT (chain length with the read opcode SCRUBBED from gen 0 -- every solver built by search; 8 seeds each):
+  L1 8/8 keyed, first train >= .9 at gen ~1; L2 8/8, gens 2-27 (median ~8); L3 2/8, gens 95 and 171. B55 (founders keep
+  the opcode) agrees: L1 8/8 and L2 8/8 mostly at gen 0; L3 2/7 so far at gens 139, 203. PREDICTION (L1 >= 6, L2 >= 4,
+  L3 <= 1) held for L1/L2, L3 slightly over (2/8).
+  MECHANISM OF THE MEMORY LAW (strongest result of window 3): the wall is GRADED, not absolute -- each additional
+  register-coupled link in the read chain multiplies the waiting time ~10x (gen ~1 -> ~8 -> ~100-200). Within a
+  300-generation budget a 3-link read is found ~1/4 of the time; the unreached memory solutions of B02-B54 all need
+  longer coupled chains (write AND read, through matched registers, on the right tick kinds), which this search does
+  not complete at these budgets. Founder-probability (B55) and search-building (B56) give the same slope.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
