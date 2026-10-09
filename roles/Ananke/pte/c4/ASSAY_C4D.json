@@ -1,0 +1,244 @@
+[
+ {
+  "name": "FLIP-0000-adbab9bf|GATE|D|01",
+  "fresh_held": {
+   "status": "TRUE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 0.6314697265625,
+    "lo99": 0.6135835362947939,
+    "hi99": 0.6489543744308915,
+    "d_se": 9.489964045360573,
+    "status": "TRUE",
+    "decided": "TRUE"
+   },
+   "late": {
+    "mean": 0.6240234375,
+    "lo99": 0.5952828455575783,
+    "hi99": 0.6504116646514687,
+    "d_se": 4.1313225912480975,
+    "status": "TRUE",
+    "decided": "TRUE"
+   }
+  },
+  "swaps": {
+   "S0": "PARTIAL",
+   "S1": "NO_EFFECT",
+   "S2": "PARTIAL",
+   "Msum": "PARTIAL"
+  },
+  "ablations": {
+   "S2_zeroed": {
+    "status": "FALSE",
+    "role": "RELAY-mh",
+    "all": {
+     "mean": 0.5130615234375,
+     "lo99": 0.5093306441837379,
+     "hi99": 0.5176142471649481,
+     "d_se": -26.438599641991342,
+     "status": "FALSE",
+     "decided": "FALSE"
+    },
+    "late": {
+     "mean": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5,
+     "d_se": NaN,
+     "status": "DEGENERATE",
+     "decided": "FALSE"
+    }
+   },
+   "lib_lines_nop": {
+    "status": "FALSE",
+    "role": "RELAY-mh",
+    "all": {
+     "mean": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5,
+     "d_se": NaN,
+     "status": "DEGENERATE",
+     "decided": "FALSE"
+    },
+    "late": {
+     "mean": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5,
+     "d_se": NaN,
+     "status": "DEGENERATE",
+     "decided": "FALSE"
+    }
+   }
+  },
+  "zero_comm": {
+   "status": "FALSE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "FALSE"
+   },
+   "late": {
+    "mean": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "FALSE"
+   }
+  },
+  "teacher_or_context_off": {
+   "status": "FALSE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 0.51953125,
+    "lo99": 0.49364719128667084,
+    "hi99": 0.5446681543912033,
+    "d_se": -5.743456965949614,
+    "status": "FALSE",
+    "decided": "FALSE"
+   },
+   "late": {
+    "mean": 0.50244140625,
+    "lo99": 0.4641996315166544,
+    "hi99": 0.5373871563059237,
+    "d_se": -6.208486928322335,
+    "status": "FALSE",
+    "decided": "FALSE"
+   }
+  },
+  "REP_DEPENDENT": true,
+  "reg_zero": {
+   "S0": "FALSE",
+   "S1": "TRUE",
+   "S2": "FALSE"
+  },
+  "LIB_CAUSAL": true,
+  "n_lib_lines": 15,
+  "arm": "D",
+  "task": "GATE"
+ },
+ {
+  "name": "FLIP-0099-df143630|GATE|D|02",
+  "fresh_held": {
+   "status": "TRUE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 1.0,
+    "lo99": 1.0,
+    "hi99": 1.0,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "TRUE"
+   },
+   "late": {
+    "mean": 1.0,
+    "lo99": 1.0,
+    "hi99": 1.0,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "TRUE"
+   }
+  },
+  "swaps": {
+   "S0": "NO_EFFECT",
+   "S1": "NO_EFFECT",
+   "S2": "FLIP",
+   "Msum": "EMPTY_SWAP"
+  },
+  "ablations": {
+   "S2_zeroed": {
+    "status": "FALSE",
+    "role": "RELAY-mh",
+    "all": {
+     "mean": 0.53173828125,
+     "lo99": 0.5036040504149834,
+     "hi99": 0.5589704970945373,
+     "d_se": -4.249809645528712,
+     "status": "FALSE",
+     "decided": "FALSE"
+    },
+    "late": {
+     "mean": 0.50390625,
+     "lo99": 0.46394322433835766,
+     "hi99": 0.5457659153833292,
+     "d_se": -5.789432986321222,
+     "status": "FALSE",
+     "decided": "FALSE"
+    }
+   },
+   "lib_lines_nop": {
+    "status": "FALSE",
+    "role": "RELAY-mh",
+    "all": {
+     "mean": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5,
+     "d_se": NaN,
+     "status": "DEGENERATE",
+     "decided": "FALSE"
+    },
+    "late": {
+     "mean": 0.5,
+     "lo99": 0.5,
+     "hi99": 0.5,
+     "d_se": NaN,
+     "status": "DEGENERATE",
+     "decided": "FALSE"
+    }
+   }
+  },
+  "zero_comm": {
+   "status": "FALSE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "FALSE"
+   },
+   "late": {
+    "mean": 0.5,
+    "lo99": 0.5,
+    "hi99": 0.5,
+    "d_se": NaN,
+    "status": "DEGENERATE",
+    "decided": "FALSE"
+   }
+  },
+  "teacher_or_context_off": {
+   "status": "FALSE",
+   "role": "RELAY-mh",
+   "all": {
+    "mean": 0.60546875,
+    "lo99": 0.558808177343345,
+    "hi99": 0.6513079471841219,
+    "d_se": 0.4984535990642231,
+    "status": "INDETERMINATE",
+    "decided": "INDETERMINATE"
+   },
+   "late": {
+    "mean": 0.44140625,
+    "lo99": 0.3679326726467924,
+    "hi99": 0.512604835010598,
+    "d_se": -6.485672688223297,
+    "status": "FALSE",
+    "decided": "FALSE"
+   }
+  },
+  "REP_DEPENDENT": true,
+  "reg_zero": {
+   "S0": "TRUE",
+   "S1": "FALSE",
+   "S2": "FALSE"
+  },
+  "LIB_CAUSAL": true,
+  "n_lib_lines": 24,
+  "arm": "D",
+  "task": "GATE"
+ }
+]

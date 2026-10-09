@@ -102,13 +102,43 @@ correct parts, is decided by the s8 diagnostic (section 5).
 - It shares the gen-0 populations with arms A/B/C.
 - Launched 2026-10-09T06:23:50Z, deadline 09:23:49Z.
 
-Verdict: PENDING (to be added from reduce_c4d.py).
+**Frozen verdict (reduce_c4d.py, REDUCE_C4D.json): INCONCLUSIVE_SPARSE.**
+- 2 of 32 GATE searches are competent, at FLIP-0000 (idx 1) and FLIP-0099 (idx 2). CP95 .008-.208.
+- The bar for REPRESENTABLE_BUT_UNSEARCHABLE (>= 4 across >= 2 cells) is not met.
+- The bar for REPRESENTATION_STILL_INADEQUATE (<= 1) is not met either.
+- Both designed halves were present in 23 of 32 champions. Searches ran 36 generations; the stage completed at 08:59Z.
+
+**Causal assays of the 2 competent D champions (ASSAY_C4D.json; 256 fresh worlds):**
+
+| champion | fresh held | library lines -> NOP | zero_comm | context off | register zeroed (S0 / S1 / S2) | swaps (S0 / S1 / S2 / payload) |
+|---|---|---|---|---|---|---|
+| FLIP-0000 D 01 | TRUE | FALSE | FALSE | FALSE | FALSE / TRUE / FALSE | PARTIAL / NO_EFFECT / PARTIAL / PARTIAL |
+| FLIP-0099 D 02 | TRUE | FALSE | FALSE | FALSE | TRUE / FALSE / FALSE | NO_EFFECT / NO_EFFECT / FLIP / EMPTY |
+
+**Both are genuine two-stage solutions.**
+- Each is competent on fresh worlds.
+- Each loses competence when the designed-half lines are removed, without communication, without the context, and when
+  a non-readout register is zeroed.
+- They are not copies of the plant: only 3 and 7 of the plant's 15 lines appear verbatim. Renaming and later mutation
+  re-wired the halves.
+- FLIP-0099's solution keeps the cue in S2 (swap FLIP) and needs S1; zeroing S0 every tick leaves it competent. Its
+  readout therefore does not go through a persisting S0 value. This is descriptive and not resolved further.
+
+**Reading (descriptive; the frozen label is INCONCLUSIVE_SPARSE):**
+- Evolved one-stage modules gave 0/32 for GATE (arm C). The correct designed parts gave 2/32 (arm D). Both arms share
+  the same gen-0 populations and seeds.
+- So composition is representable, and search can occasionally assemble it from correct parts.
+- It does so rarely, and the evolved modules did not reach even that rate. The gap is not only representation: it is
+  the parts' suitability (the evolved HOLD/RELAY modules are not the context latch and the cue relay that GATE needs),
+  together with low search accessibility.
+- This is close to, but not, a preregistered REPRESENTABLE_BUT_UNSEARCHABLE. Theseus (#1953) and Aphrodite (#1957)
+  report the same pattern on other substrates: inserted or inherited parts do not compose under selection.
 
 ## 6. Files
 
 - **Library stage:** c4L_production/ (rows, pops, logs); LIBRARY_C4.json; PLAN_C4_L.json; FREEZE_C4_L.json.
 - **Target stage:** c4T_production/ (rows_C4T.jsonl.gz, 168 rows; pops_C4T.tar; logs, incident record and un-claimed
   jobs); REDUCE_C4.json; PLAN_C4_T.json; FREEZE_C4_T.json.
-- **s8 diagnostic:** DLIB_C4.json (with its known-answer checks), PLAN_C4_D.json, FREEZE_C4_D.json; production to
-  follow.
+- **s8 diagnostic:** DLIB_C4.json (with its known-answer checks), PLAN_C4_D.json, FREEZE_C4_D.json; c4D_production/
+  (32 rows, pops, logs); REDUCE_C4D.json; ASSAY_C4D.json.
 - **Flights:** c4_flight/.
