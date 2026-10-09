@@ -45,7 +45,7 @@ def man(genome, persist):
             "code_writable": False, "persist": persist, "tick_budget": 64, "out_cap": 1}
 
 
-def group_pulse(ms, w, seed, E, P=None, rng_seed=7):
+def group_pulse(ms, w, seed, E, P=None, rng_seed=7, log=None):
     """B60 concurrent evaluator; with P set: deplete = 1 and pools refill to start amounts every P ticks (no regen)."""
     players = [Player(m) for m in ms]; tot = [0.0] * len(ms); mx = [0.0] * len(ms)
     for ep in range(E):

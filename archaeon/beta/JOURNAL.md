@@ -753,6 +753,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   pulse world is a world where the REACHABLE memory form (latch, Finding 3) is decisive (2-4x). Staged B69 (after
   the window rolls): evolve in pulse P=4, SOLO vs CONC, 6 seeds -- does search find the latch, and does competition
   change the rate? Readout: persist=none ablation + latch-signature (wait-when-empty share at own pool node).
+- B69 STAGED (b69_pulse_evolution.py; smoke test passed; prediction in docstring): SOLO vs CONC on pulse P=4,
+  seeds 6901-6906, 12 cells ~6 core-h. QUEUE after the window rolls (~2026-10-10 00:30Z), new lease each: B66 (k=2/8)
+  then B69. Window 3 tally ~43 of 48 (B65/B67/B68 evaluation-only ~0.3 core-h).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
