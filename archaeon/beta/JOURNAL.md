@@ -642,6 +642,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   reach rate and roughly halves the waiting time, but does not reach L2 -- the remaining cost matches L3f's remaining
   constraint, ORDER (the tag must be the last IN before LDK). Refined mechanism: the cost of a read chain grows with
   each coupling, register naming AND instruction order alike. CORE-HOUR TALLY window 3: ~8.5 of 48.
+- B58 launched ~04:35Z (receipt-free estimate; commit time is the receipt): self-modifying route RATE, 16 writable
+  large-tape seeds, jittered-wide L4, G=600; solvers re-scored locked. Lease lse-d7db40cbb039, 12 procs, est ~8 core-h
+  (window 3 tally then ~17 of 48). PREDICTION: 1-3/16 solvers, each losing >= .5 when locked.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
