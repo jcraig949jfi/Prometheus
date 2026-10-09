@@ -3,8 +3,8 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T12:45:00Z",
-  "state": "ACTIVE",
+  "updated_at_utc": "2026-10-09T14:30:00Z",
+  "state": "ACTIVE (compute paused at the MWO R2 day cap until 2026-10-10T00:00Z)",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
   "threads": [
@@ -212,13 +212,12 @@
     {
       "id": "theseus47_interaction",
       "prereg": "roles/Theseus/prereg/2026-10-09_interaction/PREREG.md",
-      "status": "RUNNING"
+      "status": "DONE",
+      "verdict": "NOT SUPPORTED (z -.17); law-built generalisation replicated V8k8 85% vs 27%"
     }
   ],
   "fabric_tasks": [],
-  "running": [
-    "THESEUS-47 seed-4 task0 + no-law runs, then eval + interaction scoring"
-  ],
+  "running": [],
   "blocked_on": [
     {
       "item": "THESEUS-06",
@@ -227,8 +226,8 @@
     }
   ],
   "next_actions": [
-    "47 verdict",
-    "review packet before loop end 2026-10-10T23:00Z"
+    "from 00:00Z: THESEUS-48 implementation form of law-built solvers (prereg first)",
+    "review packet draft, final at loop end 2026-10-10T23:00Z"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
