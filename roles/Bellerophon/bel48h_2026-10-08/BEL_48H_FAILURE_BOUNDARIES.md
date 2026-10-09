@@ -43,3 +43,5 @@ pilot. Hand-written future timestamps in the prereg (three errata). Calibration 
 | uptake helps origination (implicit in 'uptake is a route') | per specimen, the taken-up bytes are necessary | at population level: blocking uptake RAISES origins 61 -> 84 of 800 pairs (p 0.018) | W6 block 4 U |
 | budget-coupled architecture favoured under payment + HIGH mutation | one specimen pair (W5 block 3) | an independent pair (W6 block 4 X): separated wins 4/4 decided seeds | CL-16 |
 | payment favours compute-first architecture at MED | two independent pairs (23/24, 24/24) | -- | CL-16 |
+| uptake net-suppresses origination (CL-20) | GRID WELL_MIXED, budget 256 (U 84 vs 61; U2 83 vs 60) | SOUP world (37 vs 35) and GRID budget 384 (124 vs 119): no effect | S1 |
+| two-fragment complementation (CL-04) | GRID WELL_MIXED, GRAPH LOCAL, SOUP WELL_MIXED; 3 variants | ENDOGENOUS_COPY in every topology | S1, W6 block 2 |

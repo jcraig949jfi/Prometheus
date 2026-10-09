@@ -104,6 +104,16 @@ E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E
 FALSIFIED (W5-P6's 'E dominates at HIGH' was pair-specific). Generalisable part: paying for the computation favours the
 compute-first architecture (at least at MED mutation) across two independently evolved pairs.
 
+## S1 -- substrate perturbation (prereg s19; 1,760 runs, 0 voids, 6.71 h)
+
+S1-P2 HOLDS: two-fragment complementation (variant V1) survives changed topology -- GRAPH/LOCAL AB 40/40 vs COPY 1/40
+(39 vs 0 discordant), SOUP/WELL_MIXED 40/40 vs 2/40 (38 vs 0). M1 is general across 3 variants x 3 world models.
+S1-P1 FALSIFIED: the uptake-block effect (CL-20) DISAPPEARS in a SOUP world (blocked 37 vs normal 35 of 400 pairs,
+discordant 25 vs 23) and in GRID WELL_MIXED at budget 384 (124 vs 119; 67 vs 62), where origination is ~3x more common.
+FAILURE BOUNDARY for CL-20: net suppression by uptake is real and twice reproduced in GRID WELL_MIXED at budget 256, and
+absent when the world model or the step budget changes. (Consistent with the staging-copier self-damage reading -- a
+larger budget changes what a wrapping copy overwrites -- but not tested here.)
+
 ## P1 -- the architecture-payment effect across a 4 x 4 specimen panel (prereg s18; 512 runs, 0 voids, 2.37 h)
 
 16 pairings of independently evolved machines (4 BUDGET_COUPLED x 4 SEPARATED from W6 block 3, excluding the X pair),
