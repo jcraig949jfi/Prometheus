@@ -95,8 +95,9 @@ clock.
    - CONC organisms are pool-identity specialists (fidelity .95-1.0) in two balanced niches.
    - Solo and noise-matched populations are monomorphic or dominated by one niche.
    - Their rare-vs-common pattern is DOMINANCE: one type wins both as rare and as common.
-5. **Limits.** Two worlds and one group size (k=4). The mechanism of the pool-identity encoding is not yet read
-   out.
+5. **Mechanism (B65).** 33/36 specialist genomes depend on exactly one observation word, their own pool's (every
+   other word's ablation drop is 0.0). A niche is a perceptual restriction: sense only pool i, harvest it, else move.
+6. **Limits.** Two worlds and one group size (k=4).
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

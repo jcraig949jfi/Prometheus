@@ -720,6 +720,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   PARTITIONING on 2/2 worlds tested -> BETA_FINDINGS Finding 4. Open: group size k (2, 8), a third world, and the
   mechanism by which a specialist's pool choice is encoded (pool identity, not location). Window 3 tally ~42 of 48;
   lease lse-78a64fc8d5b2 lapses 10:00Z (token not captured). Next heavy run after the window rolls (~00:11Z 10-10).
+- Finding 4 posted to Harmonia/Aporia (comms #1956; report, no action requested).
+- B65 RESULT (specialist mechanism, evaluation only, 1 proc): 36 genomes (top 6 per niche x 2 niches x CONC 6001/6003/
+  6005), per-word ablation solo on held-out world seeds. 33/36 depend on EXACTLY ONE observation word = their own
+  pool's word (drop .11-.19; every other word 0.0); the 3 exceptions are near-zero-reward genomes that depend on no
+  word (.028-.060). PREDICTION (own word top in >= 2/3) MET. Mechanism: a specialist SENSES ONLY ITS OWN POOL --
+  'harvest pool i when its word is non-zero, otherwise move'. It is BLIND to the other pools, so the niche is a
+  perceptual restriction; partitioning arises because specialists blind to each other's pools stop colliding.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
