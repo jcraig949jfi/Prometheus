@@ -3,7 +3,7 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T03:10:00Z",
+  "updated_at_utc": "2026-10-09T04:50:00Z",
   "state": "ACTIVE",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
@@ -168,12 +168,18 @@
     {
       "id": "theseus39_syn_reinject",
       "prereg": "roles/Theseus/prereg/2026-10-09_syn_reinject/PREREG.md",
+      "status": "DONE",
+      "verdict": "SUPPORTED single seed (INJ-S 85 vs INJ-M 72, p .019); SYN concepts re-derive known store+release (R2 13/3/4)"
+    },
+    {
+      "id": "theseus40_third_seed",
+      "prereg": "roles/Theseus/prereg/2026-10-09_third_seed/PREREG.md",
       "status": "RUNNING"
     }
   ],
   "fabric_tasks": [],
   "running": [
-    "THESEUS-39 SYN re-injection: INJ-S run, then INJ-M, eval; syn_repro pass (prereg 0e93f7ac7)"
+    "THESEUS-40 third seed: S3-TASK0 run, then S3-TASK0-NOLAW, S3-REP, two evals, pooled (prereg 20a608cae)"
   ],
   "blocked_on": [
     {
@@ -183,8 +189,8 @@
     }
   ],
   "next_actions": [
-    "39 INJ-M run + eval + verdict",
-    "40 third-seed size estimate for 36/37",
+    "40 runs + evals + pooled verdict",
+    "42 second seed for 39",
     "41 SYN injection without task selection",
     "review packet before loop end 2026-10-10T23:00Z"
   ],
