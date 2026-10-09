@@ -375,3 +375,11 @@ run (distinct seeds).
 - UF-P1: pooled BREAK > MAKE events (precursor proxy: LDIR AND LD T present), and runs with BREAK > MAKE outnumber the
   reverse (one-sided sign test p < 0.05).
 - UF-P2: pooled FUNC_LOSS > FUNC_GAIN on uptake events, and runs with more losses outnumber the reverse (p < 0.05).
+
+## 18. P1 -- architecture-payment effect across a specimen panel (frozen 2026-10-09T07:43:31Z, before any run)
+
+CL-16's reproduced part (paying for computation lowers the budget-coupled share at MED) rests on two specimen pairs.
+Plan tools/plan_p1.py: 512 runs, sha256 fe53b694843dd3235d80179bca6188591be7fa03550b8bd0e7a688e3e9db2a22; 4 BUDGET_COUPLED x
+4 SEPARATED machines from W6 block 3 K1 (excluding the X pair; first by run id), 16 pairings, MED, ON/OFF x order, 8
+seeds per pairing. Analysis tools/analyze_p1.py (committed with this section). Unit = pairing.
+- P1-P1: across decided pairings, mean E share ON < OFF in more pairings than the reverse (one-sided sign test p < 0.05).
