@@ -773,6 +773,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (~21 core-h total; may span the next window; one new lease per run, token captured).
 - Packet A7 RESOLVED (no run): over 64 held-out episodes each P-boom pool occupies all 12 nodes (1-9 eps each); a
   location strategy cannot give .95-1.0 pool-index fidelity -> niches are pool IDENTITY. S2 dropped.
+- TALLY RE-DERIVED from wall-clock receipts (12:59Z): through B58 ~17 + B59 ~2 + B60 6.6 (33 min x 12) + B62 ~9
+  (49 min x 11) + B64 7.4 (37 min x 12) + evals ~0.5 = ~42.5 of 48 -> ~5.5 left in window 3. B66 SPLIT: k=2 arm now
+  (6 cells, 6 procs, ~3.3 core-h -> ~46); k=8 arm after the window rolls. Lease lse-c2ed7edd7dc3 (TTL 90 min; token
+  captured to scratchpad this time). b66 takes a k-list argument (default 2,8). Prediction unchanged (docstring).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

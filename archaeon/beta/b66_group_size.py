@@ -28,9 +28,10 @@ def main(argv):
                     print(json.dumps(rows[-1]), flush=True)
         (OUT / "B66_rare.json").write_text(json.dumps({"rows": rows}, indent=1), encoding="utf-8"); return 0
     G_ = int(argv[0]) if argv else 200
+    ks = [int(x) for x in argv[2].split(",")] if len(argv) > 2 else [2, 8]
     rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 12) as ex:
-        futs = {ex.submit(B62.cell, {"arm": "CONC%d" % k, "k": k, "seed": 6001 + i, "G": G_}): (k, i) for i in range(6) for k in (2, 8)}
+        futs = {ex.submit(B62.cell, {"arm": "CONC%d" % k, "k": k, "seed": 6001 + i, "G": G_}): (k, i) for i in range(6) for k in ks}
         for f in as_completed(futs):
             try:
                 r = f.result()
