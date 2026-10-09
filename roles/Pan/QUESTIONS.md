@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-09T13:10Z. The operator reviews this file about every 6
+Currency: 2026-10-09T14:37Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with
@@ -98,6 +98,16 @@ Q-008 | PREF (cold data) | 2026-10-09
   and then have the sources archived or removed (your call alone); or (c)
   leave them as they are until a seat asks for them?
   DEFAULT meanwhile: (c). Nothing converted beyond the measured samples.
+  ANSWER:
+
+Q-009 | PREF (user-level toolchain) | 2026-10-09
+  The intake lists small Lean provers that fit the GPU (Goedel-Prover-V2-8B,
+  Kimina, Pythagoras-Prover-4B). Testing them honestly needs a Lean 4
+  toolchain as the verifier (elan, user-level, plus a Mathlib cache of
+  several GB on M2's NVMe); without it a prover test would score the
+  model's own claim of success. May Pan install elan + Mathlib for the
+  user on M2 (no administrator rights, no system change)?
+  DEFAULT meanwhile: not installed; provers stay catalogued, untested.
   ANSWER:
 
 ## ANSWERED
