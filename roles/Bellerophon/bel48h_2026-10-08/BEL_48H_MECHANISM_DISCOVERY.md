@@ -38,6 +38,25 @@ MED brings S to parity (0.45); under HIGH mutation only payment keeps replicator
 architecture payment favours flips with the mutation regime. PROVISIONAL (one specimen pair; attribution by founder tags
 degrades at HIGH mutation).
 
+## N1 -- operator-matched completion, PREDICTIVE test (prereg s14; 440 runs, 0 voids, 2.30 h)
+
+The 55 W6 precursors re-placed in new worlds at mutation VLOW vs HIGH (4 paired seeds each, 100 ticks):
+NEEDLE (39; completed by mutation, 0 move routes): completion 0.14 at VLOW -> 0.78 at HIGH (+0.64); MOVE_RICH (16;
+completed by uptake / self-move, >= 100 move routes): 0.98 -> 1.00 (+0.02). N-P1 HOLDS (+0.64 >= 0.20); N-P2 HOLDS
+(difference of differences 0.62, bootstrap 95% CI [0.50, 0.73]); N-P3 HOLDS (move-rich completions at VLOW: SELF_MOVE 33,
+UPTAKE 27, BORN_ASSEMBLY 3, MUTATION 0). CL-17 PROVISIONAL (post-hoc) -> CAUSALLY_CONFIRMED by a mutation-rate
+intervention: whether a precursor needs point mutation or is completed by the copy dynamics themselves is a property of
+its neighbourhood, measurable beforehand.
+
+## B1 -- budget coupling versus the execution budget (prereg s15; 600 runs, 0 voids, 2.22 h)
+
+Competent dominant machines and BUDGET_COUPLED share: budget 192: 31 machines, 0.52; 256: 28, 0.50; 384: 41, 0.00.
+B-P1 HOLDS (Fisher p < 0.001), B-P2 HOLDS (monotone). When the budget exceeds what an unbounded copy costs, budget-
+dependent criticality vanishes -- the COST component of coupling is a consequence of the shared step budget. Shared
+critical bytes persist at 384 (OTHER_SHARED 31/41): the DAMAGE component (an unbounded copy wrapping over the
+organism's own code) is budget-independent, as noted before freezing. Acquisition is higher at the larger budget (41 vs
+28-31 of 200). CL-11 refined: budget coupling = CAUSALLY_CONFIRMED as a budget phenomenon.
+
 ## W6 block 4 U -- is uptake necessary? (prereg s13; 1,600 runs, 0 voids, 4.95 h)
 
 800 seed-pairs (PARTIAL 400, PAIR 400), normal vs UPTAKE BLOCKED (partner bytes cannot be imported into the own tape;
