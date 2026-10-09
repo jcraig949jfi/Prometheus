@@ -209,6 +209,7 @@ def main(argv=None):
     ap.add_argument("--g0-readers", action="store_true", help="THESEUS-30e: G0 compiled with split writer/reader concepts")
     ap.add_argument("--aligned-binding", action="store_true", help="THESEUS-34: collisions keep parent channel indices")
     ap.add_argument("--master-seed", type=int, default=None, help="THESEUS-35: replication seed")
+    ap.add_argument("--inject", default=None, help="THESEUS-39: jsonl of genomes injected at gen 0 as synthetic parents")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -227,6 +228,7 @@ def main(argv=None):
     cfg["aligned_binding"] = bool(a.aligned_binding)
     if a.master_seed is not None:
         cfg["master_seed"] = a.master_seed
+    cfg["inject"] = a.inject
     sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
@@ -292,6 +294,32 @@ def main(argv=None):
             born_gen[e["id"]] = 0
         e["state"] = state_of(r, assessments.get(e["id"]))
     n_g0 = sum(1 for e in reg.values() if e["origin"] == "human")
+    inject_rows = []
+    if cfg.get("inject"):
+        # THESEUS-39: injected genomes enter as parentless synthetic mechanisms with their recorded
+        # generation (lane INJECT: never sampled as D children; eligible as parents like any
+        # synthetic of that generation). Evaluated exactly as children are; non-viable ones dropped.
+        inj = [json.loads(l) for l in open(cfg["inject"], encoding="utf-8")]
+        with Pool(a.workers, initializer=_init_worker, initargs=(cald,)) as pool:
+            ires = pool.map(_eval_job, [(r["genome"], cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True,
+                                         {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for r in inj])
+        for row, r in zip(inj, ires):
+            e = {"id": row["id"], "origin": "synthetic", "kind": "mechanism", "executableRepresentation": row["genome"],
+                 "parentIds": [], "generation": row["generation"], "metadata": {"injected": row["meta"]},
+                 "lane": "INJECT", "born_step": 0}
+            reg.add(e)
+            e["behavioralFingerprint"] = r["fp"]
+            evals[e["id"]] = r
+            if r["viable"]:
+                assessments[e["id"]] = archive.insert(e["id"], r["fp"], quality_of(r, cfg))
+                qual[e["id"]] = quality_of(r, cfg)
+                active.add(e["id"])
+                field.place(e["id"], r["fp"])
+                born_gen[e["id"]] = 0
+            e["state"] = state_of(r, assessments.get(e["id"]))
+            inject_rows.append({"id": e["id"], "viable": r["viable"], "quality": quality_of(r, cfg) if r["viable"] else None})
+        jl(f"{rdir}/INJECTED.jsonl", inject_rows)
+        print(f"  injected {sum(x['viable'] for x in inject_rows)}/{len(inject_rows)} viable from {cfg['inject']}", flush=True)
 
     # ------------------------------------------------------------------ 1
     with Pool(a.workers) as pool:
@@ -359,6 +387,9 @@ def main(argv=None):
                 e["state"] = state_of(r, asmt)
                 rec.update({"child": eid, "viable": r["viable"], "state": e["state"],
                             "n_rulers_novel": asmt["n_rulers_novel"] if asmt else None})
+                if cfg.get("inject"):  # THESEUS-39: solver-by-generation and injected-ancestry bookkeeping
+                    rec["task_J"] = r.get("task_J")
+                    rec["inject_ancestor"] = any(reg[x].get("lane") == "INJECT" for x in e["ancestry"])
                 tensor.record(pids, eid, rec["law"], {"viable": r["viable"], "state": e["state"]})
                 collisions.append(rec)
                 field.after_collision(pids)
