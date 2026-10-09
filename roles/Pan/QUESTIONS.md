@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-09T13:40Z. The operator reviews this file about every 6
+Currency: 2026-10-09T13:10Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with

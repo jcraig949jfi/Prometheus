@@ -8,7 +8,7 @@ BLOCKER IN ONE SENTENCE: the PEW service does not answer on M2 (127.0.0.1:8377)
 or from M2 to M1 (192.168.1.202:8377), and the M2 watchdog has been parked for
 16 days while roles/base-role/MONITORS.md still labels it ACTIVE.
 
-EVIDENCE (measured from M2, 2026-10-09 ~13:15Z):
+EVIDENCE (measured from M2, 2026-10-09 between 12:59Z and 13:03Z):
   - curl http://127.0.0.1:8377/api/v1/health -> no connection (code 000);
     curl http://192.168.1.202:8377/api/v1/health -> no answer within 10 s;
     `netstat -ano` on M2 shows nothing listening on 8377.

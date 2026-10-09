@@ -60,8 +60,8 @@ P5  CHEAPEST TIER THAT ANSWERS. Measured latencies decide (s6), not taste.
                                (128.8 GB jsonl), logs           demand of a consumer       consumer (s8)
     history of the catalog     inventory runs, frontier         Iceberg (snapshot per      BUILT for the Iceberg
                                snapshots, commit tables         run; time travel)          layer (controls pass)
-                               [CORRECTION 2026-10-09T13:05Z: at v0.1 only the LAYER existed; no history table
-                               did. Created at 13:05Z: pan.inv_repo_blobs 73,037, inv_fs_files 342,019,
+                               [CORRECTION 2026-10-09T13:00Z (commit bafd4af10): at v0.1 only the LAYER existed; no history table
+                               did. Created about 12:59Z: pan.inv_repo_blobs 73,037, inv_fs_files 342,019,
                                inv_pg_relations 345, git_commits 13,128, git_commit_files 143,310 -- each equal
                                to its source count. pan.result_rows 2,253,498 (PAN-16).]
     engine ledgers (SQLite)    SFE engine.db                    owner's store; read-only   NOT PAN'S (SFE point

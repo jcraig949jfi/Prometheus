@@ -1,6 +1,6 @@
 # What converting the cold April JSON Lines to Parquet would buy (measured sample)
 
-Currency: 2026-10-09T13:40Z. Command: `python -m pan.coldsample FULL SAMPLED...`
+Currency: 2026-10-09T13:10Z (commit 7c2d44c15; first written as 13:40Z by estimate, corrected from the commit receipt). Command: `python -m pan.coldsample FULL SAMPLED...`
 (pan/coldsample.py), with `PAN_COLD_FORCE_STRING=1` for the lossless string form.
 Sources were READ only; nothing was moved, deleted or rewritten. Sample Parquet
 lives in <lake>/cold_sample/ (M2 NVMe) and can be deleted.
