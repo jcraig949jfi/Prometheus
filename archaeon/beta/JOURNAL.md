@@ -690,6 +690,23 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   +.238 bits; CONC finals earn more in 4-groups 5/6 (.098-.152 vs .053-.125). PREDICTION MET (entropy part at the
   threshold). Status = PROVISIONAL POSITIVE pending B62 (SHAM noise null + HET/HOM function test). Lease stays with
   B62.
+- B62 RESULT (07:20Z, 18/18): DETERMINISM: CONC/SOLO reproduce B60 cell-for-cell. K1 NOISE: SHAM (residual-shuffle,
+  same signal/noise; mean slope a ~.5-.96) entropy .27-1.46; CONC-SHAM +.72/-.30/-.19/+.61/+1.17/+.80 -> 4/6 >= .2
+  (at the bar). Noise-matched selection does NOT reproduce the diversity (5/6 SHAM pops are dominated by one niche).
+  K2 FUNCTION: CONC HET-HOM per-capita +.057/+.007/+.094/+.045/+.054/+.053 (6/6 > 0); SOLO +.013/n.a./+.022/-.004/
+  -.007/+.037; CONC gap > SOLO gap 5/5 testable. PREDICTION MET on all three parts. Mechanism trace (held-out world
+  seed, 40 orgs): CONC organisms are pool-identity SPECIALISTS (fidelity .95-1.0) in two BALANCED niches (13/20,
+  18/18); SOLO organisms are looser (.72-.85) with one dominant niche (31/40, 28/40).
+- B63 RESULT (07:21Z, evaluation only): RARE-TYPE ADVANTAGE (3A+1B and 1A+3B 4-groups, two largest niches, 24 groups
+  x 16 eps on held-out world seeds s+1000..1003). Rare member beats common members in BOTH compositions: CONC 4/6
+  (6001 .197/.091 & .187/.091; 6003 .192/.087 & .226/.081; 6004; 6005), SOLO 1/6 (6002, whose minor niche has 3
+  members), SHAM 0/6. PREDICTION (CONC >= 4/6, SOLO fewer) MET. Control pops show the DOMINANCE shape instead (one
+  type wins rare AND common = a better forager, not a niche). CONC failures: 6002 (172 vs 14, minor niche weak),
+  6006 (2-in-1 .064 vs .071, near tie). CONC niche sizes 97/84, 87/90, 98/64, 86/81, 99/76 (balanced).
+  VERDICT (B60+B62+B63): CONCURRENT COMPETITION EVOLVES NEGATIVE-FREQUENCY-DEPENDENT NICHE PARTITIONING -- pool-
+  identity specialists coexisting at balanced frequencies with a rare-type advantage. It survives the noise null,
+  the function test and determinism. Tier: SUPPORTED on ONE world (P-boom NoClock); not yet ensemble-invariant.
+  Next attack: replicate on a second world (B-scatter) and with k=2/k=8 groups. CORE-HOUR TALLY window 3: ~33 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
