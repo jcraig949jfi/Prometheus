@@ -686,6 +686,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   4-groups' per-capita reward on final pops; pops dumped. CONC/SOLO re-run B60 seeds on branch 'b60' -> must
   reproduce B60 summaries exactly (determinism check). Prediction in b62 docstring (commit adf737ed7). Est ~9 core-h
   -> window 3 ~33 of 48.
+- B60 RESULT (06:33Z, 12/12): entropy CONC > SOLO by >= .2 in 4/6 (exactly the bar; 6003 -.003, 6006 -.005), mean
+  +.238 bits; CONC finals earn more in 4-groups 5/6 (.098-.152 vs .053-.125). PREDICTION MET (entropy part at the
+  threshold). Status = PROVISIONAL POSITIVE pending B62 (SHAM noise null + HET/HOM function test). Lease stays with
+  B62.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
