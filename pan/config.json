@@ -1,0 +1,25 @@
+{
+  "_comment": [
+    "Pan configuration. Paths are configuration, keyed by host name, never",
+    "assumed by code (base role s2; WORKING_CONTRACT.md s9). Environment",
+    "variables override: PAN_LAKE, PAN_CANONICAL, PAN_DATA_ROOTS (os.pathsep",
+    "separated). On M2 the lake is on the NVMe volume: fsync-heavy or",
+    "small-write work on M2's SMR volume stalled the SFE ledger 2026-09-17.",
+    "Nothing in this file is a credential."
+  ],
+  "hosts": {
+    "SPECTREX5": {
+      "label": "M2",
+      "lake": "C:/Prometheus-data/pan/lake",
+      "canonical_checkout": "D:/Prometheus",
+      "worktrees_root": "D:/Prometheus-worktrees",
+      "data_roots": [
+        "D:/Prometheus/Prometheus_data_backup",
+        "C:/Prometheus-data",
+        "D:/Prometheus-data"
+      ]
+    }
+  },
+  "databases": ["prometheus_fire", "prometheus_sci", "lmfdb"],
+  "environment": "prometheus-canonical"
+}
