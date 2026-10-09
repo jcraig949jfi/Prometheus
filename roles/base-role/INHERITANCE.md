@@ -86,6 +86,7 @@ Every role below carries the banner on its primary document(s):
 | Vivarium | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Themis | RESPONSIBILITIES.md (created 2026-10-04 on the seat's creation pass on SPECTREX5; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Themis/prompts/2026-10-04_creation/ with MANIFEST; no prior use of the name as a seat or agent (3 file mention(s), 0 commit message(s), 0 path(s); recorded and not inherited, see RESPONSIBILITIES.md s1); self-service row per Archaeon ruling #39) |
 | Hades | RESPONSIBILITIES.md (created 2026-10-07 on the seat's creation pass on SKULLPORT; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Hades/prompts/2026-10-07_creation/ with MANIFEST; no prior use of the name as a seat or agent (10 file mention(s), 3 commit message(s), 0 path(s); recorded and not inherited, see RESPONSIBILITIES.md s1); self-service row per Archaeon ruling #39) |
+| Pan | RESPONSIBILITIES.md (created 2026-10-09 on the seat's creation pass on SPECTREX5; new seat named by the operator, charter PENDING; creation directive verbatim in roles/Pan/prompts/2026-10-09_creation/ with MANIFEST; no prior use of the name as a seat or agent (127 file mention(s), 511 commit message(s), 0 path(s); recorded and not inherited, see RESPONSIBILITIES.md s1); self-service row per Archaeon ruling #39) |
 
 Roles with no document received a stub RESPONSIBILITIES.md to fill. Stamping is an annotation on line 2; nothing else in any seat file was changed.
 
@@ -176,6 +177,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Vivarium | RESPONSIBILITIES.md |
 | Themis | RESPONSIBILITIES.md |
 | Hades | RESPONSIBILITIES.md |
+| Pan | RESPONSIBILITIES.md |
 
 ## Shared roles (2026-10-03, operator directive at roles/Achilles/prompts/2026-10-03_rso_builder_cell/)
 
