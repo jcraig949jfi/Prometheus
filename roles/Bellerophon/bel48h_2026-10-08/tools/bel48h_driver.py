@@ -141,6 +141,11 @@ def _run_one(spec):
             k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
         out["end_hash"] = end_state_hash(w)
+    elif kind == "uptake_fate":
+        from uptake_fate import UptakeFateWorld
+        cfg = _cfg(spec)
+        w = UptakeFateWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["origin"] = w.origin_summary(); out["UF"] = dict(w.UF); out["end_hash"] = end_state_hash(w)
     elif kind in ("origin", "origin_block"):
         from origin import OriginWorld
         from uptake_block import UptakeBlockWorld

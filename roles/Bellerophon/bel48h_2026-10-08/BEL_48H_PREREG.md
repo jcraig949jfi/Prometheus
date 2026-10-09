@@ -366,3 +366,12 @@ inputs, so 'coupling' has a COST component (budget) and a DAMAGE component (wrap
 Plan tools/plan_u2.py: the W6 block 4 U design with new seeds (57e12 +), 1,600 runs; sha256 printed at freeze in the
 execution ledger. Analysis tools/analyze_u2.py (committed with this section; same origin endpoint as U).
 - U2-P1: blocked-only discordant seed-pairs exceed normal-only, exact one-sided sign (McNemar) test p < 0.05.
+
+## 17. UF -- mechanism of uptake's net suppression (frozen 2026-10-09T05:01:42Z, before any run)
+
+Hypothesis (from W6 block 4 U): imports mostly destroy the importer's raw copy parts. Plan tools/plan_uf.py: 300 c2fa6a5cef8b4c55f4d7f19e7872a8bf4cac3c8470458cb9e59d9731b4201d00;
+instrument tools/uptake_fate.py (invariance-tested); analysis tools/analyze_uf.py (committed with this section). Unit =
+run (distinct seeds).
+- UF-P1: pooled BREAK > MAKE events (precursor proxy: LDIR AND LD T present), and runs with BREAK > MAKE outnumber the
+  reverse (one-sided sign test p < 0.05).
+- UF-P2: pooled FUNC_LOSS > FUNC_GAIN on uptake events, and runs with more losses outnumber the reverse (p < 0.05).
