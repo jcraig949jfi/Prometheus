@@ -731,6 +731,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (B62 k=4 rows are the reference); b62.cell takes job['k'] (default 4 -> B62 reproducibility unchanged). Smoke test
   passed. ~12 cells ~6 core-h: LAUNCH after the rolling envelope frees (~2026-10-10 00:30Z), under a NEW lease
   (capture the token). Then B67 bridge: does competition make STATE pay (remember which pools others depleted)?
+- B67 RESULT (08:33Z, evaluation only, ~3 min 1 proc): state dependence = reward(own persist) - reward(persist=none),
+  top-30 genomes, 3 pops per arm per world. Mean solo / in-group: P-boom CONC .031/.018, SOLO .074/.032, SHAM
+  .001/-.002; B-scatter CONC .031/.030, SOLO .004/-.001, SHAM .020/-.003. CONC-SOLO = -.043 (P-boom) vs +.027
+  (B-scatter). PREDICTION (|CONC-SOLO| < .02 on both) FAILED BY THE LETTER on B-scatter, but the excess is one
+  population (6403 .088) and P-boom points the OTHER way. Per-population dependence is BIMODAL in every arm (~.09-.12
+  or ~0), i.e. seed-idiosyncratic. VERDICT: NO BRIDGE -- competition does not make state pay in these worlds (n=3
+  pops/arm, underpowered for small effects). Design note: in P-boom regen keeps pools > 0, so the reactive
+  'sense own pool' rule is complete; a world where state COULD pay under competition needs pools that empty and
+  refill (deplete ~1, slow regen) so that remembering where/when to return matters -- verify with hand controls
+  (reactive vs memory specialist, solo vs group) BEFORE any evolution run. Also: the shared SIGNAL word (K=4) is
+  unused by every B65 specialist (ablation 0.0) -- a communication lane is open but not motivated by these worlds.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

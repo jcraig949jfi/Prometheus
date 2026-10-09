@@ -1,0 +1,254 @@
+{
+ "probe": "B67",
+ "summary": {
+  "P-boom/CONC": {
+   "solo": 0.0305,
+   "group": 0.0182
+  },
+  "P-boom/SOLO": {
+   "solo": 0.0739,
+   "group": 0.0322
+  },
+  "P-boom/SHAM": {
+   "solo": 0.0009,
+   "group": -0.0021
+  },
+  "B-scatter/CONC": {
+   "solo": 0.0313,
+   "group": 0.0301
+  },
+  "B-scatter/SOLO": {
+   "solo": 0.0041,
+   "group": -0.0005
+  },
+  "B-scatter/SHAM": {
+   "solo": 0.0195,
+   "group": -0.0029
+  }
+ },
+ "rows": [
+  {
+   "world": "P-boom",
+   "arm": "CONC",
+   "seed": 6001,
+   "solo_state_dep": 0.0,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": -0.0012,
+   "persist_modes": {
+    "none": 18,
+    "tape": 12
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "CONC",
+   "seed": 6003,
+   "solo_state_dep": -0.0065,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": 0.0,
+   "persist_modes": {
+    "tape": 28,
+    "none": 2
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "CONC",
+   "seed": 6005,
+   "solo_state_dep": 0.098,
+   "solo_frac_dep_ge_.02": 0.9,
+   "group_state_dep": 0.0557,
+   "persist_modes": {
+    "regs": 20,
+    "all": 10
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SOLO",
+   "seed": 6001,
+   "solo_state_dep": 0.0012,
+   "solo_frac_dep_ge_.02": 0.267,
+   "group_state_dep": 0.0031,
+   "persist_modes": {
+    "regs": 25,
+    "all": 5
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SOLO",
+   "seed": 6003,
+   "solo_state_dep": 0.1242,
+   "solo_frac_dep_ge_.02": 0.8,
+   "group_state_dep": 0.0656,
+   "persist_modes": {
+    "regs": 27,
+    "tape": 1,
+    "all": 2
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SOLO",
+   "seed": 6005,
+   "solo_state_dep": 0.0962,
+   "solo_frac_dep_ge_.02": 0.733,
+   "group_state_dep": 0.028,
+   "persist_modes": {
+    "all": 25,
+    "regs": 4,
+    "none": 1
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SHAM",
+   "seed": 6001,
+   "solo_state_dep": 0.0,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": 0.0,
+   "persist_modes": {
+    "none": 16,
+    "tape": 14
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SHAM",
+   "seed": 6003,
+   "solo_state_dep": 0.002,
+   "solo_frac_dep_ge_.02": 0.067,
+   "group_state_dep": -0.0062,
+   "persist_modes": {
+    "all": 23,
+    "regs": 2,
+    "tape": 2,
+    "none": 3
+   }
+  },
+  {
+   "world": "P-boom",
+   "arm": "SHAM",
+   "seed": 6005,
+   "solo_state_dep": 0.0006,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": 0.0,
+   "persist_modes": {
+    "none": 14,
+    "all": 4,
+    "regs": 9,
+    "tape": 3
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "CONC",
+   "seed": 6402,
+   "solo_state_dep": 0.006,
+   "solo_frac_dep_ge_.02": 0.1,
+   "group_state_dep": 0.0318,
+   "persist_modes": {
+    "all": 28,
+    "none": 2
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "CONC",
+   "seed": 6403,
+   "solo_state_dep": 0.088,
+   "solo_frac_dep_ge_.02": 0.8,
+   "group_state_dep": 0.0591,
+   "persist_modes": {
+    "regs": 18,
+    "all": 12
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "CONC",
+   "seed": 6405,
+   "solo_state_dep": 0.0,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": -0.0007,
+   "persist_modes": {
+    "tape": 27,
+    "none": 3
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SOLO",
+   "seed": 6402,
+   "solo_state_dep": -0.0008,
+   "solo_frac_dep_ge_.02": 0.033,
+   "group_state_dep": -0.011,
+   "persist_modes": {
+    "all": 24,
+    "tape": 6
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SOLO",
+   "seed": 6403,
+   "solo_state_dep": 0.0192,
+   "solo_frac_dep_ge_.02": 0.667,
+   "group_state_dep": 0.0096,
+   "persist_modes": {
+    "regs": 30
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SOLO",
+   "seed": 6405,
+   "solo_state_dep": -0.0061,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": 0.0,
+   "persist_modes": {
+    "none": 14,
+    "tape": 15,
+    "regs": 1
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SHAM",
+   "seed": 6402,
+   "solo_state_dep": -0.0067,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": 0.0,
+   "persist_modes": {
+    "none": 21,
+    "all": 1,
+    "tape": 8
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SHAM",
+   "seed": 6403,
+   "solo_state_dep": 0.0651,
+   "solo_frac_dep_ge_.02": 0.933,
+   "group_state_dep": -0.0057,
+   "persist_modes": {
+    "all": 25,
+    "regs": 5
+   }
+  },
+  {
+   "world": "B-scatter",
+   "arm": "SHAM",
+   "seed": 6405,
+   "solo_state_dep": 0.0,
+   "solo_frac_dep_ge_.02": 0.0,
+   "group_state_dep": -0.003,
+   "persist_modes": {
+    "none": 20,
+    "tape": 10
+   }
+  }
+ ]
+}
