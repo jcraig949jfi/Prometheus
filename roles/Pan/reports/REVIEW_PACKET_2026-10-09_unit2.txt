@@ -1,5 +1,5 @@
 +==============================================================================+
-| REVIEW PACKET -- PAN UNIT 2: RETRIEVAL VERDICTS, CONSOLIDATION, PIVOTS,       |
+| REVIEW PACKET -- PAN UNIT 2: RETRIEVAL VERDICTS, CONSOLIDATION, PIVOTS,      |
 |                  LOCAL MODEL SMOKE TESTS                                     |
 | Author : Pan (data-modeler seat), instance m2-f20b5eac, SPECTREX5 (M2)       |
 | Model  : claude-opus-5-5                                                     |
@@ -39,13 +39,13 @@ oracle; [E] estimate. Unit 1 packet: REVIEW_PACKET_2026-10-09_unit1.txt.
 ------------------------------------------------------------------------------
 2. RETRIEVAL: RUNS, NUMBERS, SHAPE [M]
 ------------------------------------------------------------------------------
-  run (set, n)          config                        R@10    R@1    note
-  v1 (H1, 20)           fts OR+coverage, bge-small,   0.75    0.45   FAIL (bar 0.80)
-                        RRF, bge-reranker-v2-m3
-  v2 dev (42)           + Qwen3 doc vectors           0.81           selected (v1 0.762)
-  v2 (H2, 20)           as selected                   0.75    0.40   FAIL; = v1 per query
-  v2.1 (CB-200, 200)    v1 + rarest-12 lexeme cap     0.765   0.465  no bar
-                        v2 + same cap                 0.765   0.460  paired 152/1/1, p 1.0
+  run (set, n)        config                      R@10   R@1    note
+  v1 (H1, 20)         fts OR+coverage, bge-small, 0.75   0.45   FAIL (bar 0.80)
+                      RRF, bge-reranker-v2-m3
+  v2 dev (42)         + Qwen3 doc vectors         0.81          selected (v1 0.762)
+  v2 (H2, 20)         as selected                 0.75   0.40   FAIL; = v1/query
+  v2.1 (CB-200, 200)  v1 + rarest-12 lexeme cap   0.765  0.465  no bar
+                      v2 + same cap               0.765  0.460  152/1/1, p 1.0
   CB-200 components: full-text 0.69, chunk vectors 0.745, doc vectors 0.48.
   Wilson 95 percent interval on 0.765 (n=200): about [0.70, 0.82].
 Shape: the gains all came from full-text semantics (AND -> OR+coverage: dev
@@ -82,7 +82,7 @@ Shipped default: v1 + cap; reranker only where a CUDA GPU exists.
 ------------------------------------------------------------------------------
 4. PIVOTS (charter C4) [M]
 ------------------------------------------------------------------------------
-  `pan refs PATH`       45,122 links (13,013 citing, 14,807 cited; repo + comms),
+  `pan refs PATH`       45,122 links (13,013 citing, 14,807 cited; repo+comms),
                         e.g. a prereg -> comms report -> prompt -> specimens.
   `pan frontier like`   cited arXiv paper in the top 10 of 4,702 for 34.8
                         percent of 273 citing files (random 0.21 percent):
