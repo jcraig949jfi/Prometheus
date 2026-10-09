@@ -41,17 +41,23 @@ def fit(repo_id, tags, safetensors, gguf):
     rid = repo_id.lower()
     quant = any(q in rid or any(q in t for t in tags_l) for q in QUANT_MARKERS)
     params, basis = None, "none"
-    if gguf and gguf.get("total"):
+    adapter = bool(gguf) and str(gguf.get("architecture", "")).lower() in ("controlvector", "lora", "adapter", "clip",
+                                                                           "mmproj")
+    if gguf and gguf.get("total") and not adapter:
         params, basis = int(gguf["total"]), "gguf"
     elif safetensors and safetensors.get("total"):
         params, basis = int(safetensors["total"]), "safetensors"
-    else:
-        p = params_from_name(repo_id)
-        if p:
-            params, basis = p, "name"
+    named = params_from_name(repo_id)
+    disagree = False
+    if params is None and named:
+        params, basis = named, "name"
+    elif params is not None and named and params < 0.25 * named:
+        # the hub summary describes some OTHER file in the repo (a control vector, an adapter,
+        # a projector) -- found 2026-10-09: a 27B GGUF repo reporting 322,560 parameters
+        params, basis, disagree = named, "name (hub count disagrees)", True
     if params is None:
         return params, basis, dict(reliable=False, basis=basis)
-    reliable = not (basis == "safetensors" and quant)
+    reliable = not (basis == "safetensors" and quant) and not disagree and not adapter
     q4 = params * Q4_BYTES_PER_PARAM / 1e9 + HEADROOM_GB
     fp16 = params * 2 / 1e9 + HEADROOM_GB
     return params, basis, dict(est_gb_q4=round(q4, 2), est_gb_fp16=round(fp16, 2), fits_16gb_q4=q4 <= VRAM_GB,
