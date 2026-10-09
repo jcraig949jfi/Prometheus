@@ -51,7 +51,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B51 | coupled write/read pair mutation | PAIR 0/8 (bloat; killed); BASE 1/8 L4 SOLVED (.971, large tape, self-written code) -> memory-law correction |
 | B52 | self-modifying code: the route? (writable vs locked) | 0/8 vs 0/8: a real but RARE route (B51's solver stands) |
 | B53 | KV-store organ (STK/LDK single instructions) | NULL 0/8 vs 0/8: organ barely used |
-| B55/B56 | wiring wall: keyed recall vs read-chain length | GRADED: L1 8/8 (gen ~1), L2 8/8 (~8), L3 2/8 (~100-200) |
+| B55/B56 | wiring wall: keyed recall vs read-chain length | GRADED: L1 8/8 (gen ~1), L2 8/8 (~8), L3 2-3/8 (~44-203) |
+| B57 | free one register coupling in L3 | 6/8 (median gen ~72): coupling count matters; ORDER coupling remains |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -635,6 +636,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   300-generation budget a 3-link read is found ~1/4 of the time; the unreached memory solutions of B02-B54 all need
   longer coupled chains (write AND read, through matched registers, on the right tick kinds), which this search does
   not complete at these budgets. Founder-probability (B55) and search-building (B56) give the same slope.
+- B57 RESULT (free-link test: L3 VM + every IN also writes r0, so the tag's register coupling is given; scrubbed gen 0;
+  8 seeds; lease released ~03:45Z): keyed 6/8 (L3: 2/8), first train >= .9 at gens 43, 43, 69, 76, 91, 207 (median ~72;
+  L2 ~8, L3 95-171). PREDICTION: >= 6/8 HELD; median <= 30 FAILED. Reading: removing one REGISTER coupling triples the
+  reach rate and roughly halves the waiting time, but does not reach L2 -- the remaining cost matches L3f's remaining
+  constraint, ORDER (the tag must be the last IN before LDK). Refined mechanism: the cost of a read chain grows with
+  each coupling, register naming AND instruction order alike. CORE-HOUR TALLY window 3: ~8.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
