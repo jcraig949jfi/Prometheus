@@ -1,0 +1,28 @@
+{
+ "schema": "pte_c4.freeze.D.v1",
+ "authority": "72h order s8; PREREG_PTE_C4 s7 (s8 diagnostic, concrete rule fixed at aba974cf1)",
+ "condition": "runs ONLY if reduce_c4 issues neither REUSE_IMPROVES_COMPOSITION nor COMPOSITION_REACHED for both GATE and FLIP",
+ "code_files": {
+  "c4_common.py": "69739a38d9c84aea934a1f577c7c213c302170c4161c61b5f13f9fa46cef3e21",
+  "run_c4.py": "a6a4d7e853853d8f5256a22ac46888debbf17b56ddfc4558c8ba0a95fbd7649e",
+  "make_plan_c4d.py": "13d1e4a46410cf1aef2acf74764594d07e5624e130129b6689d822ffefdaa9b7",
+  "reduce_c4d.py": "27c287477aebfe6ca7a6a4df40e83eccda28906614171388ed033fde6cba5b97",
+  "build_dlib.py": "f70ef11fc098fdd886e117d88efa766bd4d5ec50e19580ea45d554212e47525b",
+  "../c3/c3r_common.py": "4ed88b20b97064e4aabcb1832c8951c6f73f0b4ebe4e4e2c8b336af97184337e",
+  "../../../../prometheus/ananke/envs.py": "56e0921bad285932ea645f184404da5f25f2f1b2bcc610d0bc30fde8ee479a6a"
+ },
+ "plan_D_sha256": "cc917494d64cc64e8608d6e29b65a184fadd3d59833fd44c81f6f3d9b513ec60",
+ "dlib_sha256": "83fec46ef5743f3b118098824b4525b4fa250669a6811e919d761033ecc4ccd2",
+ "prereg_sha256": "78d8903ad8d10e6adac9a05128d145304afd54b46fa8bbc1fa8e5af84edb8dc6",
+ "n_jobs_D": 32,
+ "verdict_rule": "reduce_c4d.py: >=4 across >=2 cells REPRESENTABLE_BUT_UNSEARCHABLE; <=1 REPRESENTATION_STILL_INADEQUATE; else INCONCLUSIVE_SPARSE",
+ "smoke": "c4_flight/smoke_D_reduce.json (CPU, 3 gens, idx 8): plumbing ok",
+ "production": {
+  "workers": 3,
+  "lease": "lse-7d61e3584398",
+  "deadline_min": 180,
+  "projected_wall_min": 140
+ },
+ "frozen_utc": "2026-10-09T05:02:35.167854+00:00",
+ "frozen_before": "any C4-T reduction was run (T production still in flight)"
+}
