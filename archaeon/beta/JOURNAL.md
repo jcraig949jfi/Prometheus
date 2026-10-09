@@ -671,6 +671,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   earn more in 4-groups than SOLO finals in >= 4/6 pairs. Lease lse-78a64fc8d5b2 (TTL to 10:00Z; token not captured
   -- my slip, acquire output truncated by tail -- so it lapses by TTL instead of an explicit release). Est ~5 core-h;
   window 3 tally ~24 of 48 on completion.
+- B61 DESIGNED AND DROPPED BEFORE RUNNING (self-dissent, ~06:20Z): planned lever = force regenerating food (+ lethal
+  hazards) in the training family so PARKING pays (plan item 3 / B42 obstacle). Profile of 300 family worlds: regen
+  >= .15 in 74% (deciles .05-.25; mode .247 = P-boom base inherited when resources are off), lethal hazards 24%. So
+  B41 (forced lethal hazards) already trained on regenerating food + lethal hazards; B61 would replicate B41. Not run;
+  no compute spent. Named-world transfer stays PARKED (B42). Instrument note for any reopening: B38/B41 named-world
+  lifts used E=8 on one seed (below the B45 standard) -- re-score with b46.sc (64 x 4) first.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
