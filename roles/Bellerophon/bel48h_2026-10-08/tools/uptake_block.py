@@ -38,3 +38,17 @@ class UptakeBlockWorld(OriginWorld):
             self._revert_uptake(mem, tr)
             self._own_writes(a, b, mem, tr, 2 * self.L)
         return mem, tr
+
+
+class SelfCopyUptakeBlockWorld(UptakeBlockWorld):
+    """NEXT #9 ablation: revert imports ONLY in executions in which the organism laid down a self-copy (>= 0.9 L window
+    bytes whose material origin is its own byte at the same position, the FUNC criterion applied to this execution).
+    Imports by organisms that are not copying themselves in that execution (UF's precursor breakers) are left intact."""
+
+    def _revert_uptake(self, mem, tr):
+        L = self.L
+        own = sum(1 for off, o in tr.win_origin.items() if o == off)
+        if own >= 0.9 * L:
+            self.O["selfcopy_executions_blocked"] += 1
+            return super()._revert_uptake(mem, tr)
+        return mem, tr

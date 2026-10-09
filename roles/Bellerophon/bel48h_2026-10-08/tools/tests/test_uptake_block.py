@@ -27,3 +27,17 @@ def test_block_world_identical_without_uptake():
     a = OriginWorld(cfg, 5); a.run(); b = UptakeBlockWorld(cfg, 5); b.run()
     if b.O.get("blocked_bytes", 0) == 0:
         assert end_state_hash(a) == end_state_hash(b)
+
+
+def test_selfcopy_block_only_reverts_during_self_copy():
+    from uptake_block import SelfCopyUptakeBlockWorld
+    cfg = Config(reproduction="ENDOGENOUS_PARTIAL", physics="v2", cells=16, ticks=5)
+    w = SelfCopyUptakeBlockWorld(cfg, 3); w.cells = [None] * 16
+    code = bytes([vm.LD_S_n, 64, vm.LD_T_n, 32, vm.LD_C_n, 4, vm.LDIR, vm.HALT])          # import only, no self-copy
+    t = bytearray(64); t[:len(code)] = code
+    a = w._spawn(0, t, None, "init"); b = w._spawn(1, bytearray([0xAA, 0xBB, 0xCC, 0xDD]) + bytearray(60), None, "init")
+    for o in (a, b):
+        w.tags[o.id] = [o.id * 64 + i for i in range(64)]; w.shadow[o.id] = bytes(o.tape)
+    mem, tr = w._execute(a, b.tape, [1])
+    assert bytes(mem[32:36]) == bytes([0xAA, 0xBB, 0xCC, 0xDD])                          # not a self-copy -> import kept
+    assert w.O.get("blocked_bytes", 0) == 0

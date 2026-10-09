@@ -392,3 +392,14 @@ tools/analyze_s1.py (committed with this section; smoke-tested 8 runs, 0 voids).
   blocked-only discordant pairs exceed normal-only (one-sided p < 0.05); per-substrate results reported.
 - S1-P2 (CL-04 under changed topology): in BOTH SOUP/WELL_MIXED and GRAPH/LOCAL, AB-only (PARTIAL) exceeds copy-only
   (COPY) FUNC_ANY discordant pairs, one-sided p < 0.05 each.
+
+## 20. U3 + P2 (frozen 2026-10-09T12:07:12Z, before any run)
+
+Plans tools/plan_u3p2.py: U3 1,800 runs sha256 aa60ffd5f62b88fd35c98a6511ed312a126e79e9bd4e245acec0fee516eb2d8c; P2 512 runs
+sha256 d5cfcdd5840e5e00aa2188d7f264e47a9ee1fd32f4ca272f474451f06d946fba. New ablation SelfCopyUptakeBlockWorld
+(tools/uptake_block.py; tested: an import outside a self-copy is kept). Analysis tools/analyze_u3p2.py (smoke-tested).
+- U3-P1: block_all > normal origins (one-sided sign test on discordant seed-triples' pairs, p < 0.05) -- third test of CL-20.
+- U3-P2: block_selfcopy > normal (p < 0.05): the self-inflicted (staging-copier) import component alone suppresses origination.
+- U3-P3: the LD T,0xA0-shape origin gain under block_selfcopy is >= 50% of the gain under block_all.
+- P2 (descriptive, two-sided): at HIGH mutation the 16 pairings' ON - OFF budget-coupled share; direction and two-sided
+  sign test reported (the two single pairs disagreed at HIGH).
