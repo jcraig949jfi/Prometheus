@@ -109,6 +109,27 @@ def dedupe(items):
     return list({it["source_id"]: it for it in items}.values())
 
 
+FEED_KINDS = ("blog", "newsletter", "society", "releases")
+
+
+def save_state(cur, fid, url, kind, final_url, etag, lastmod, status, err, n):
+    """One pan.feed_state row per polled endpoint (feeds here; GitHub API endpoints in ghwatch)."""
+    cur.execute("""
+        insert into pan.feed_state as s (feed_id, url, kind, final_url, etag, last_modified, last_status,
+            last_error, last_checked_at, last_ok_at, entries_last, consecutive_failures)
+        values (%(id)s, %(url)s, %(kind)s, %(fin)s, %(etag)s, %(lm)s, %(st)s, %(err)s, now(),
+                case when %(err)s is null then now() end, %(n)s, case when %(err)s is null then 0 else 1 end)
+        on conflict (feed_id) do update set url=excluded.url, kind=excluded.kind,
+            final_url=coalesce(excluded.final_url, s.final_url), etag=excluded.etag,
+            last_modified=excluded.last_modified, last_status=excluded.last_status,
+            last_error=excluded.last_error, last_checked_at=now(),
+            last_ok_at=coalesce(excluded.last_ok_at, s.last_ok_at),
+            entries_last=coalesce(excluded.entries_last, s.entries_last),
+            consecutive_failures=case when excluded.last_error is null then 0
+                                      else s.consecutive_failures + 1 end""",
+                dict(id=fid, url=url, kind=kind, fin=final_url, etag=etag, lm=lastmod, st=status, err=err, n=n))
+
+
 def run(force=False, only=None, out=print, feed_list=None):
     from .. import db
     sd = seeds()
@@ -161,21 +182,7 @@ def run(force=False, only=None, out=print, feed_list=None):
             if err:
                 c["failed"].append(f["feed_id"])
                 etag = lastmod = None          # a failed poll never keeps a validator: next poll is a full GET
-            cur.execute("""
-                insert into pan.feed_state as s (feed_id, url, kind, final_url, etag, last_modified, last_status,
-                    last_error, last_checked_at, last_ok_at, entries_last, consecutive_failures)
-                values (%(id)s, %(url)s, %(kind)s, %(fin)s, %(etag)s, %(lm)s, %(st)s, %(err)s, now(),
-                        case when %(err)s is null then now() end, %(n)s, case when %(err)s is null then 0 else 1 end)
-                on conflict (feed_id) do update set url=excluded.url, kind=excluded.kind,
-                    final_url=coalesce(excluded.final_url, s.final_url), etag=excluded.etag,
-                    last_modified=excluded.last_modified, last_status=excluded.last_status,
-                    last_error=excluded.last_error, last_checked_at=now(),
-                    last_ok_at=coalesce(excluded.last_ok_at, s.last_ok_at),
-                    entries_last=coalesce(excluded.entries_last, s.entries_last),
-                    consecutive_failures=case when excluded.last_error is null then 0
-                                              else s.consecutive_failures + 1 end""",
-                        dict(id=f["feed_id"], url=f["url"], kind=f["kind"], fin=fin, etag=etag, lm=lastmod,
-                             st=status, err=err, n=n_ent))
+            save_state(cur, f["feed_id"], f["url"], f["kind"], fin, etag, lastmod, status, err, n_ent)
             out("  {:<44} {} {:>4} entries {:>3} new{}".format(f["feed_id"], status, n_ent if n_ent is not None else "-",
                                                              new, "  FAIL " + err if err else ""))
         cl.flush(cur)
@@ -203,7 +210,7 @@ def controls(out=print):
     with db.cursor() as cur:
         cur.execute("""select count(*), count(*) filter (where last_error is null and last_status in (200, 304)),
                               array_agg(feed_id) filter (where last_error is not null) from pan.feed_state
-                       where feed_id not like 'NEG:%'""")
+                       where feed_id not like 'NEG:%%' and kind = any(%s)""", (list(FEED_KINDS),))
         n, okn, bad = cur.fetchone()
         cur.execute("""select signals->>'kind', count(*), count(published_at) from pan.frontier_item
                        where source in ('rss', 'github') group by 1 order by 1""")

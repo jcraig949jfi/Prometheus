@@ -74,6 +74,8 @@ P5  CHEAPEST TIER THAT ANSWERS. Measured latencies decide (s6), not taste.
                                HF models, lab blogs,            + pan.hf_model; Iceberg    items; HF running)
                                newsletters, GitHub releases     [UPDATE 2026-10-09T20:22Z: 35 feeds, 2,770
                                (35 feeds, PAN-35)                entries, pan.feed_state; controls FEEDS_*.json]
+                               GitHub owners (29) + watched      [UPDATE 2026-10-09T20:38Z: 598 repositories,
+                               repos (126), PAN-36               anonymous API, controls GITHUB_*.json]
                                                                 snapshots for history
 
 Why Postgres for the catalog and text: small (2.2 GB for everything Pan

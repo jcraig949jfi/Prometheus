@@ -29,6 +29,8 @@
   frontier daily [--force]    refresh arXiv/HF daily/HF models/feeds + vectors (skips if < 20 h since last)
   frontier feeds [--force]    PAN-35: lab blogs, newsletters, GitHub releases (conditional GET, once a day)
   frontier feeds controls     PAN-35 live controls -> roles/Pan/reports/controls/FEEDS_<ts>.json
+  frontier github [--force]   PAN-36: repos of tracked GitHub owners + watched repos (anonymous API)
+  frontier github controls    PAN-36 live controls -> roles/Pan/reports/controls/GITHUB_<ts>.json
   frontier embed              PAN-14: paper vectors in the repository's document-vector space
   frontier like PATH          outside papers nearest to a repository file
 """
@@ -103,7 +105,7 @@ def main(argv=None):
     p.add_argument("--docs", action="store_true", help="whole-file JSON documents -> pan.result_docs")
     p = sub.add_parser("frontier")
     p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like", "daily",
-                                         "digest", "feeds"])
+                                         "digest", "feeds", "github"])
     p.add_argument("--force", action="store_true")
     p.add_argument("query", nargs="*")
     p.add_argument("--max-results", type=int, default=200)
@@ -233,6 +235,12 @@ def main(argv=None):
                 feeds.controls()
             else:
                 feeds.run(force=a.force, only=a.query or None)
+        elif a.what == "github":
+            from .frontier import ghwatch
+            if a.query == ["controls"]:
+                ghwatch.controls()
+            else:
+                ghwatch.run(force=a.force)
     elif a.cmd == "stats":
         from . import db
         with db.cursor() as cur:

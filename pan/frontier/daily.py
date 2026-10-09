@@ -1,6 +1,7 @@
 """Daily frontier refresh (charter C5): newest arXiv items per seed query, Hugging Face
 daily papers for the last two days, the HF model listings, the lab-blog / newsletter /
-GitHub-release feeds (PAN-35), then vectors for any new items. Polite by the same limits (seeds.json). Skips itself when the last daily run
+GitHub-release feeds (PAN-35), the GitHub owner sweep (PAN-36), then vectors for any new
+items. Polite by the same limits (seeds.json). Skips itself when the last daily run
 finished less than `min_age_h` hours ago, and says so.
 
 Productivity signal (base rule 8): new_items and new_models; a run that finds nothing
@@ -12,7 +13,7 @@ import time
 
 def run(min_age_h=20.0, force=False, out=print):
     from .. import db
-    from . import arxiv, feeds, hf, query
+    from . import arxiv, feeds, ghwatch, hf, query
     with db.cursor() as cur:
         cur.execute("""select extract(epoch from now() - max(finished_at)) / 3600 from pan.run
                        where kind = 'frontier-daily' and status = 'OK'""")
@@ -32,6 +33,7 @@ def run(min_age_h=20.0, force=False, out=print):
     d = hf.run_daily_papers(days=2, out=lambda *_: None)
     m = hf.run_models(out=lambda *_: None)
     fd = feeds.run(out=lambda *_: None)
+    gh = ghwatch.run(out=lambda *_: None)
     e = query.embed_items(out=lambda *_: None)
     with db.cursor() as cur:
         cur.execute("select count(*) from pan.frontier_item")
@@ -43,6 +45,7 @@ def run(min_age_h=20.0, force=False, out=print):
     res = dict(new_items=items1 - items0, new_models=models1 - models0, vectors_new=e, iceberg_snapshot=snap,
                arxiv_failed=a.get("failed"), hf_daily_failed=d.get("failed"), hf_models_failed=m.get("failed"),
                feeds_new=fd.get("new_items"), feeds_failed=fd.get("failed"),
+               github_new=gh.get("new_items"), github_failed=gh.get("failed"), github_rate_end=gh.get("rate_end"),
                seconds=round(time.time() - t0, 1))
     finish_run(run_id, res, "OK")
     out(json.dumps(res))

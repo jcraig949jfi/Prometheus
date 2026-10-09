@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-09T20:33Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-09T20:41Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] Status report 3 by ~22:45Z
@@ -15,4 +15,4 @@ Iceberg (8+ tables), consolidation (rows + docs), comms index, frontier intake
 + vectors + digest + snapshots, reference graph, pivot, dictionary, skill,
 MONITORS row, pgvector packet, retrieval verdicts (stopped), duplication,
 model smoke tests, code benchmark (PAN-33), data map dashboard, feed intake
-(PAN-35: 35 feeds, controls 4/4).
+(PAN-35: 35 feeds, controls 4/4), GitHub watch (PAN-36: 29 owners, 4/4).

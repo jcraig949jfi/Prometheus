@@ -62,14 +62,23 @@ def run(days=3, per_topic=6, model_days=14, per_kind=12, out=print):
         # order by the QUALIFIED column: a bare "published_at" binds to the ::date output column (day ties -> any
         # order), which once made the digest's "newest" release an arbitrary one of the day
         cur.execute("""select signals->>'kind', signals->>'feed', published_at::date, title, url from pan.frontier_item f
-                       where source in ('rss', 'github') and f.published_at >= %s order by f.published_at desc""",
+                       where source in ('rss', 'github') and signals->>'kind' in ('blog', 'newsletter', 'society', 'releases')
+                       and f.published_at >= %s order by f.published_at desc""",
                     (since,))
         feed_items = cur.fetchall()
         cur.execute("""select count(*), count(*) filter (where last_error is null),
                               string_agg(feed_id || ' (' || coalesce(last_error, '') || ', ' || consecutive_failures || 'x)', '; ')
                                   filter (where last_error is not null), max(last_checked_at)
-                       from pan.feed_state""")
+                       from pan.feed_state where kind in ('blog', 'newsletter', 'society', 'releases')""")
         health = cur.fetchone()
+        cur.execute("""select f.published_at::date, raw->>'full_name', (signals->>'stars')::int, signals->>'language',
+                              left(coalesce(summary, ''), 90), url from pan.frontier_item f
+                       where source = 'github' and signals->>'kind' = 'repo' and f.published_at >= %s
+                       order by f.published_at desc limit 20""", (now - dt.timedelta(days=model_days),))
+        new_repos = cur.fetchall()
+        cur.execute("""select count(*), count(*) filter (where last_error is null), max(last_checked_at)
+                       from pan.feed_state where kind in ('gh_owner', 'gh_repo')""")
+        gh_health = cur.fetchone()
     lines.append("{} arXiv papers published since {} in the corpus.".format(len(papers), since.strftime("%Y-%m-%d")))
     lines.append("")
     by_topic = {}
@@ -132,6 +141,17 @@ def run(days=3, per_topic=6, model_days=14, per_kind=12, out=print):
             if more > 0:
                 lines.append("  (+{} more; `python -m pan frontier search` finds them)".format(more))
         lines.append("")
+    lines += ["## New repositories from tracked GitHub owners (created in the last {} days)".format(model_days), "",
+              "GitHub watch: {} of {} owner/repo endpoints OK at their last poll ({}); anonymous API.".format(
+                  gh_health[1], gh_health[0],
+                  gh_health[2].astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ") if gh_health[2] else "never"), ""]
+    if not new_repos:
+        lines.append("(none)")
+    for created, full, stars, lang, summ, url in new_repos:
+        lines.append("- {} {} stars={}{}".format(created, full, stars, " " + lang if lang else ""))
+        if summ:
+            lines.append("    {}".format(ascii_fold(summ)))
+    lines.append("")
     d = REPO / "roles" / "Pan" / "reports" / "frontier"
     d.mkdir(parents=True, exist_ok=True)
     p = d / "DIGEST_{}.md".format(now.strftime("%Y-%m-%d"))

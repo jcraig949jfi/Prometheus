@@ -33,7 +33,7 @@ Schema descriptions live IN the database (`comment on table`, migration 006);
     python -m pan lexdf; python -m pan links
     python -m pan comms-index
     python -m pan consolidate; python -m pan consolidate --docs
-    python -m pan frontier arxiv|hf-models|hf-daily|feeds; python -m pan frontier embed
+    python -m pan frontier arxiv|hf-models|hf-daily|feeds|github; python -m pan frontier embed
 
 Keep it fresh: `python -m pan refresh` (incremental: changed blobs only, then
 lexdf + links + caches) and `python -m pan frontier daily` (skips if < 20 h).
@@ -47,6 +47,9 @@ lexdf + links + caches) and `python -m pan frontier daily` (skips if < 20 h).
     pan/tests/test_links.py        citation extraction incl. URL look-alikes
     pan/tests/test_feeds.py        feed parser: RSS/Atom known items, not-a-feed, undated and
                                    placeholder dates, entity bomb, local-path body, rate spacing
+    pan/tests/test_ghwatch.py      repo item builder; anonymous-by-construction check
+    python -m pan frontier github controls  live: owners answer, a nonexistent owner fails with
+                                   0 items, re-sweep adds 0, gap >= 2 s, reserve kept
     python -m pan frontier feeds controls   live: every feed parses, report-listed dead URLs
                                    fail with 0 items, re-poll adds 0, min gap >= 2 s
     pan/tests/test_modelbench.py   probe checkers incl. hard-coded cheats and an
