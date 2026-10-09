@@ -180,3 +180,22 @@ Supersedes s5/s6 where they conflict. Known answers K5a-K5d re-run: PASS.
   - Re-walks are limited to common-residual families.
   - (d) LIN 120-127 is about 6-7 core-h (an extrapolated estimate). It runs only on YES_PENDING_E6, and only within
     the cap. If it cannot finish by the hard stop, CLOSE_RULE row 2 applies.
+
+## AMENDMENT A3: TECHNICAL RERUN 1 of <= 3 (2026-10-09 07:20Z; after a TECHNICAL_FAILURE, no E5-N outcome inspected)
+- **The failure.** `b03_e5.py recip` stopped at 73/88 jobs (07:09Z). In `donor_w5p`, the OUTPUT-promotion bookkeeping
+  of a recipient's selected schema raised: `ValueError: promotion needs exactly one hole:
+  '(acc - math.gcd(abs(math.gcd(abs({H}), abs({H}))), abs(v)))'`.
+  - The schema's hole occurs twice, so it is not a unary-linear primitive under the W5P contract (call-by-value =
+    textual expansion only when the argument occurs once).
+  - No start-library template has a repeated hole (checked); the schema arises from the recipient's own LGG.
+- **The repair** (scientifically neutral):
+  - The `_w5p_run` wrapper patches, per job, `Promoted.from_schema` for `source_kind == "selected_entry"` ONLY. Such a
+    schema gets an UNPROMOTABLE stand-in record: schema, deps, and depth = 1 + max dep depth, so depth attribution is
+    preserved. It is listed in the row as `unpromotable_selected`.
+  - Selection, selected entries and transfer are computed BEFORE this step, and are unaffected.
+  - For every job without such a schema the wrapper behaves identically. That includes all 73 completed rows, which
+    are kept.
+  - Known answers K5a-K5e re-run: PASS.
+- **Resume:** the remaining 15 jobs (resumable), then score / report / E6 diagnose.
+- **Exposure disclosure:** while locating the traceback, one log line of the L_P (no-op) arm was seen (seed 116,
+  selected `(acc + {H})`). That arm is constrained to equal E1's ordinary row. No other E5-N row was read.

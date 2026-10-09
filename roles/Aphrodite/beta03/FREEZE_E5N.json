@@ -2,11 +2,11 @@
  "frozen_utc": "2026-10-08T09:23:00Z",
  "spec": "beta03/windows/E5N_PREREG.md",
  "files": {
-  "engine/v2b/b03_e5.py": "b0a44424bbd486b468f6003ef4081443b1fa6628312da2393d6eafd22d7eef15",
+  "engine/v2b/b03_e5.py": "a504736189da688e3b5f3479c1361c62e2e00bbe940d7c2a3dd4190c0c68531e",
   "engine/v2b/b03.py": "1febd5d54a6d0b26c597202bf483e15e18b071b508c4ec6dbfa14abbc1b53d82",
   "engine/v2b/b02.py": "e1463f4d5146b8524f342f376604e386fb1e21f88d5a9ac618baa1dacde7ecc8",
   "engine/v2b/gtc.py": "e097e1d4d11f1a869a88dcd5bba9ff80a487b721d71f8a3d13d9758afdad189f",
-  "beta03/windows/E5N_PREREG.md": "a93dec63d407afdcb64c5d44b28b7de3f0014b28184a6d906aa58a794d7c7bc5",
+  "beta03/windows/E5N_PREREG.md": "97857d9ed37ef6825effe5202a0a670724122cd4307953bf43ae48fa74ee12c1",
   "engine/w5p/donor.py": "a5d7b7551561f26764feb7706e9a7c7d18671f9aa9b4f94406c878bb4dba7715",
   "engine/w5p/promote.py": "33a28d01a9912b2432ecdcdeeac5874633a41d9663d68615b8cb7b39cc56cbec",
   "engine/w5p/harness.py": "204a4251747ea9121a26ec781c0f8d1efc2f7301e16f6a8702ba4e9f52b25268",
@@ -57,6 +57,24 @@
     "engine/v2b/b03_e6_known.py": {
      "old": "-",
      "new": "4e7b4da0f4e5bd03"
+    }
+   }
+  },
+  {
+   "utc": "2026-10-09T07:16:55Z",
+   "id": "A3",
+   "kind": "TECHNICAL_RERUN_1",
+   "after_partial_run": true,
+   "outcome_inspected": "one L_P no-op log line (disclosed)",
+   "note": "unpromotable stand-in for repeated-hole selected schemas (bookkeeping only); K5a-e PASS",
+   "changed": {
+    "engine/v2b/b03_e5.py": {
+     "old": "b0a44424bbd486b4",
+     "new": "a504736189da688e"
+    },
+    "beta03/windows/E5N_PREREG.md": {
+     "old": "a93dec63d407afdc",
+     "new": "97857d9ed37ef682"
     }
    }
   }

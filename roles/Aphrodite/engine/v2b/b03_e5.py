@@ -44,6 +44,35 @@ def _w5p_run(job):
         keep["derived_schemas"] = [str(d.get("schema") if isinstance(d, dict) else d) for d in out]
         return out
     WP.derive_schemas = spy_derive
+    # amendment A3 (technical rerun 1): output-promotion BOOKKEEPING of a selected schema whose hole occurs more than
+    # once (not a unary-linear primitive under the W5P contract) records an UNPROMOTABLE stand-in carrying its
+    # dependency depth instead of crashing. Selection, entries and transfer are computed before this step: unaffected.
+    ofs = WP.Promoted.from_schema
+    keep["unpromotable_selected"] = []
+
+    class _Stand:
+        def __init__(self, schema, reg):
+            import hashlib as _h
+            deps = sorted(set(WP.prims_in(WP.parse(schema))))
+            self.schema, self.deps = schema, deps
+            self.depth = 1 + max((reg[d].depth for d in deps if d in reg), default=0)
+            self.lineage = sorted(set(deps) | {x for d in deps if d in reg for x in reg[d].lineage})
+            self.id = "U_" + _h.sha256(schema.encode()).hexdigest()[:12]
+
+        def to_json(self):
+            return {"id": self.id, "schema": self.schema, "deps": self.deps, "depth": self.depth,
+                    "lineage": self.lineage, "unpromotable": "hole occurs more than once"}
+
+    def safe_from_schema(schema, reg, sha_, kind="selected_entry"):
+        try:
+            return ofs(schema, reg, sha_, kind)
+        except ValueError as ex:
+            if kind == "selected_entry" and "exactly one hole" in str(ex):
+                st = _Stand(schema, reg)
+                keep["unpromotable_selected"].append(st.to_json())
+                return st
+            raise
+    WP.Promoted.from_schema = safe_from_schema
 
     def spy(*a, **k):
         r = orig(*a, **k)
@@ -58,8 +87,10 @@ def _w5p_run(job):
         WD.donor_w5p = orig
         harness.D.donor_w5p = orig
         WP.derive_schemas = od
+        WP.Promoted.from_schema = ofs
     row["selection_table"] = keep.get("selection_table")
     row["derived_schemas"] = keep.get("derived_schemas")
+    row["unpromotable_selected"] = keep.get("unpromotable_selected", [])
     return row
 
 
