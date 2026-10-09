@@ -10,6 +10,9 @@
   cochange PATH               files that change in the same commits as PATH
   tables QUERY                find tables/columns on the cluster by name
   stats                       row counts per table in schema pan
+  frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
+  frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
+  frontier models QUERY [--fits]        Hugging Face models, optionally only 16 GB-fit
 """
 import argparse
 import os
@@ -51,6 +54,14 @@ def main(argv=None):
     p = sub.add_parser("tables")
     p.add_argument("query")
     sub.add_parser("stats")
+    p = sub.add_parser("frontier")
+    p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models"])
+    p.add_argument("query", nargs="*")
+    p.add_argument("--max-results", type=int, default=200)
+    p.add_argument("--days", type=int, default=14)
+    p.add_argument("--no-authors", action="store_true")
+    p.add_argument("-k", type=int, default=15)
+    p.add_argument("--fits", action="store_true", help="models: only those estimated to fit 16 GB at Q4")
     a = ap.parse_args(argv)
 
     if a.cmd == "migrate":
@@ -81,6 +92,18 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "frontier":
+        from .frontier import arxiv, hf, query
+        if a.what == "arxiv":
+            arxiv.run(max_results=a.max_results, include_authors=not a.no_authors)
+        elif a.what == "hf-models":
+            hf.run_models()
+        elif a.what == "hf-daily":
+            hf.run_daily_papers(days=a.days)
+        elif a.what == "search":
+            query.search_cli(" ".join(a.query), k=a.k)
+        elif a.what == "models":
+            query.models_cli(" ".join(a.query), k=a.k, fits=a.fits)
     elif a.cmd == "stats":
         from . import db
         with db.cursor() as cur:

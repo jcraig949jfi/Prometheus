@@ -56,10 +56,16 @@ def unplant(aid):
         cur.execute("delete from pan.artifact where artifact_id=%s and source='plant'", (aid,))
 
 
-def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None):
+def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None, qset=None, fts_semantics="or", rerank=None,
+        label="v1", pool=30):
+    import functools
     import numpy as np
     from . import embed
     spec = json.loads(KA.read_text(encoding="utf-8"))
+    if qset:
+        spec["queries"] = json.loads(Path(qset).read_text(encoding="utf-8"))["queries"]
+    fns = dict(fts=functools.partial(search.fts, semantics=fts_semantics), vector=search.vector,
+               hybrid=functools.partial(search.hybrid, rerank=rerank, fts_semantics=fts_semantics, pool=pool))
     model = model or embed.default_model()
     qs = spec["queries"]
     evaluable = chunked_paths({p for q in qs for p in q["answers"]})
@@ -70,7 +76,7 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None):
         for mode in modes:
             t = time.time()
             try:
-                res = getattr(search, mode)(q["q"], k=10)
+                res = fns[mode](q["q"], k=10)
                 err = None
             except Exception as e:
                 res, err = [], "{}: {}".format(type(e).__name__, e)
@@ -93,12 +99,13 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None):
     # NEGATIVE
     neg = []
     for nq in spec["nonsense"]:
-        f = search.fts(nq, k=5)
+        f = search.fts(nq, k=5, semantics=fts_semantics)
         try:
             v = search.vector(nq, k=5)
         except Exception:
             v = []
-        neg.append(dict(query=nq, fts_rows=len(f), vector_top1=(v[0]["score"] if v else None),
+        neg.append(dict(query=nq, fts_rows=len(f), fts_best_cov=(f[0].get("cov") if f else None),
+                        vector_top1=(v[0]["score"] if v else None),
                         vector_top=[r["path"] for r in v[:3]]))
     pos_v_top1 = [r["top1_score"] for r in rows if r["mode"] == "vector" and r["top1_score"] is not None]
     p25 = float(np.percentile(pos_v_top1, 25)) if pos_v_top1 else None
@@ -134,13 +141,17 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None):
     verdict["positive_hybrid_all>=0.80"] = None if h is None else h >= 0.80
     verdict["positive_fts_lexical>=0.60"] = None if fl is None else fl >= 0.60
     verdict["positive_vector_paraphrase>=0.60"] = None if vp is None else vp >= 0.60
+    # v1 (OR semantics) is expected to return rows for nonsense that shares a common word
+    # ("lattice", "recipe"); the frozen v0 criterion is reported as is, and the coverage of the
+    # best row is recorded beside it so the reader can see what matched.
     verdict["negative_fts_zero_rows"] = all(n["fts_rows"] == 0 for n in neg)
     verdict["negative_vector_below_p25"] = None if p25 is None else all(
         (n["vector_top1"] is not None and n["vector_top1"] < p25) for n in neg)
     verdict["cheat_fts_rank1"] = f_rank == 1
     verdict["cheat_vector_top3"] = None if v_rank is None and "vector" not in modes else (v_rank is not None)
     verdict["cheat_removed"] = gone
-    result = dict(when=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), model=model,
+    result = dict(when=dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), model=model, label=label,
+                  qset=str(qset or KA), fts_semantics=fts_semantics, rerank=rerank, pool=pool,
                   evaluable_queries=n_eval, summary=summary, negative=neg, positive_vector_top1_p25=p25,
                   cheat=dict(fts_rank=f_rank, vector_rank=v_rank, removed=gone), verdict=verdict, rows=rows,
                   seconds=round(time.time() - t0, 1))
@@ -148,7 +159,7 @@ def run(modes=("fts", "vector", "hybrid"), out_dir=None, model=None):
         out_dir = Path(out_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
         stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%MZ")
-        p = out_dir / "CONTROLS_{}.json".format(stamp)
+        p = out_dir / "CONTROLS_{}_{}.json".format(stamp, label)
         p.write_text(json.dumps(result, indent=1, default=str), encoding="utf-8", newline="\n")
         result["written"] = str(p)
     return result
@@ -160,8 +171,13 @@ def main():
     ap.add_argument("--modes", default="fts,vector,hybrid")
     ap.add_argument("--out", default=str(REPO / "roles" / "Pan" / "reports" / "controls"))
     ap.add_argument("--model", default=None)
+    ap.add_argument("--qset", default=None)
+    ap.add_argument("--fts", default="or", choices=["or", "and"])
+    ap.add_argument("--rerank", default=None)
+    ap.add_argument("--label", default="v1")
+    ap.add_argument("--pool", type=int, default=30)
     a = ap.parse_args()
-    r = run(tuple(a.modes.split(",")), a.out, a.model)
+    r = run(tuple(a.modes.split(",")), a.out, a.model, a.qset, a.fts, a.rerank, a.label, a.pool)
     print(json.dumps({k: r[k] for k in ("evaluable_queries", "summary", "negative", "positive_vector_top1_p25",
                                          "cheat", "verdict", "seconds", "written") if k in r}, indent=1, default=str))
 

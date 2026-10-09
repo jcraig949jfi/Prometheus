@@ -31,30 +31,62 @@ def _filters(kind=None, seat=None, path=None, since=None):
     return (" and " + " and ".join(sql)) if sql else "", args
 
 
-def fts(query, k=10, kind=None, seat=None, path=None, since=None, cur=None):
-    """Best chunk per artifact by ts_rank_cd over websearch_to_tsquery."""
+FTS_AND = """
+  with q as (select websearch_to_tsquery('english', %(q)s) as tq),
+  hits as (
+    select c.chunk_id, c.artifact_id, c.line_start, c.line_end, c.heading,
+           ts_rank_cd(c.tsv, q.tq, 32) as score, 0 as cov
+    from pan.chunk c join pan.artifact a on a.artifact_id = c.artifact_id, q
+    where c.tsv @@ q.tq {f}),
+  best as (select distinct on (artifact_id) * from hits order by artifact_id, score desc)
+  select b.chunk_id, a.path, a.kind, a.seat, a.last_commit_at, b.line_start, b.line_end, b.heading, b.score, b.cov,
+         ts_headline('english', c.body, q.tq, 'MaxWords=28, MinWords=10, MaxFragments=1') as snippet
+  from best b join pan.artifact a on a.artifact_id = b.artifact_id join pan.chunk c on c.chunk_id = b.chunk_id, q
+  order by b.score desc limit %(k)s"""
+
+# OR semantics (v1): any query lexeme matches; candidates ordered by cover density,
+# then re-scored by COVERAGE (how many distinct query lexemes the chunk holds), with a
+# minimum-should-match of 34 percent of the query's lexemes (fixed before the v1 dev runs).
+# v0 used AND only and dropped long lexical queries (CONTROLS_20261009T1117Z).
+FTS_OR = """
+  with lx as (select distinct lexeme as l from unnest(to_tsvector('english', %(q)s))),
+  q as (select string_agg(quote_literal(l), ' | ')::tsquery as tq, count(*) as n from lx),
+  cand as (
+    select c.chunk_id, c.artifact_id, c.line_start, c.line_end, c.heading, c.tsv,
+           ts_rank_cd(c.tsv, q.tq, 32) as r
+    from pan.chunk c join pan.artifact a on a.artifact_id = c.artifact_id, q
+    where c.tsv @@ q.tq {f}
+    order by r desc limit %(pool)s),
+  sc as (select cand.*, (select count(*) from lx where cand.tsv @@ quote_literal(lx.l)::tsquery) as cov from cand),
+  best as (select distinct on (artifact_id) * from sc order by artifact_id, cov desc, r desc)
+  select b.chunk_id, a.path, a.kind, a.seat, a.last_commit_at, b.line_start, b.line_end, b.heading,
+         (b.cov::float / greatest(q.n, 1)) + b.r as score, b.cov,
+         ts_headline('english', c.body, q.tq, 'MaxWords=28, MinWords=10, MaxFragments=1') as snippet
+  from best b join pan.artifact a on a.artifact_id = b.artifact_id join pan.chunk c on c.chunk_id = b.chunk_id, q
+  where b.cov >= greatest(1, ceil(q.n * 0.34))
+  order by b.cov desc, b.r desc limit %(k)s"""
+
+
+def fts(query, k=10, kind=None, seat=None, path=None, since=None, cur=None, semantics="or", pool=4000):
+    """Best chunk per artifact. semantics='and': websearch_to_tsquery (v0);
+    'or': any lexeme, ranked by coverage then cover density (v1 default)."""
     from . import db
     fsql, fargs = _filters(kind, seat, path, since)
-    sql = """
-      with q as (select websearch_to_tsquery('english', %s) as tq),
-      hits as (
-        select c.chunk_id, c.artifact_id, c.line_start, c.line_end, c.heading,
-               ts_rank_cd(c.tsv, q.tq, 32) as score
-        from pan.chunk c join pan.artifact a on a.artifact_id = c.artifact_id, q
-        where c.tsv @@ q.tq {f}),
-      best as (select distinct on (artifact_id) * from hits order by artifact_id, score desc)
-      select b.chunk_id, a.path, a.kind, a.seat, a.last_commit_at, b.line_start, b.line_end, b.heading, b.score,
-             ts_headline('english', c.body, q.tq, 'MaxWords=28, MinWords=10, MaxFragments=1') as snippet
-      from best b join pan.artifact a on a.artifact_id = b.artifact_id join pan.chunk c on c.chunk_id = b.chunk_id, q
-      order by b.score desc limit %s""".format(f=fsql)
+    # _filters emits positional %s; rewrite to named parameters for this query
+    names = {}
+    for i, a in enumerate(fargs):
+        fsql = fsql.replace("%s", "%(f{})s".format(i), 1)
+        names["f{}".format(i)] = a
+    sql = (FTS_OR if semantics == "or" else FTS_AND).format(f=fsql)
+    params = dict(q=query, k=k, pool=pool, **names)
     own = cur is None
     if own:
         ctx = db.cursor(statement_timeout_ms=60000)
         cur = ctx.__enter__()
     try:
-        cur.execute(sql, [query] + fargs + [k])
+        cur.execute(sql, params)
         cols = ["chunk_id", "path", "kind", "seat", "last_commit_at", "line_start", "line_end", "heading", "score",
-                "snippet"]
+                "cov", "snippet"]
         return [dict(zip(cols, r)) for r in cur.fetchall()]
     finally:
         if own:
@@ -156,11 +188,12 @@ def vector(query, k=10, model=None, kind=None, seat=None, path=None, since=None,
     return out
 
 
-def hybrid(query, k=10, **kw):
-    """Reciprocal-rank fusion of the full-text and vector lists, per artifact path."""
-    a = fts(query, k=max(k * 3, 30), **kw)
+def hybrid(query, k=10, rerank=None, pool=30, fts_semantics="or", **kw):
+    """Reciprocal-rank fusion of the full-text and vector lists, per artifact path;
+    optionally re-ordered by a cross-encoder over the fused pool (v1)."""
+    a = fts(query, k=max(k * 3, pool), semantics=fts_semantics, **kw)
     try:
-        b = vector(query, k=max(k * 3, 30), **kw)
+        b = vector(query, k=max(k * 3, pool), pool=max(400, 8 * pool), **kw)
     except Exception as e:  # no embeddings yet, or no model on this host: degrade, and say so
         b = []
         for r in a:
@@ -171,7 +204,36 @@ def hybrid(query, k=10, **kw):
             e = fused.setdefault(r["path"], dict(r, rrf=0.0, via=[]))
             e["rrf"] += 1.0 / (RRF_K + rank + 1)
             e["via"].append("{}#{}".format(tag, rank + 1))
-    return sorted(fused.values(), key=lambda r: -r["rrf"])[:k]
+    rows = sorted(fused.values(), key=lambda r: -r["rrf"])
+    if rerank:
+        rows = rerank_rows(query, rows, rerank)
+    return rows[:k]
+
+
+_RR = {}
+
+
+def rerank_rows(query, rows, model):
+    """Re-order rows by a cross-encoder score of (query, path + heading + chunk body)."""
+    from . import db
+    if not rows:
+        return rows
+    if model not in _RR:
+        import torch
+        from sentence_transformers import CrossEncoder
+        dev = "cuda" if torch.cuda.is_available() else "cpu"
+        kw = {"model_kwargs": {"torch_dtype": torch.float16}} if dev == "cuda" else {}
+        _RR[model] = CrossEncoder(model, device=dev, max_length=512, **kw)
+    with db.cursor() as cur:
+        cur.execute("select chunk_id, body from pan.chunk where chunk_id = any(%s)", ([r["chunk_id"] for r in rows],))
+        body = dict(cur.fetchall())
+    pairs = [(query, "{}\n{}\n{}".format(r["path"], r.get("heading") or "", (body.get(r["chunk_id"]) or "")[:2000]))
+             for r in rows]
+    scores = _RR[model].predict(pairs, batch_size=32, show_progress_bar=False)
+    for r, sc in zip(rows, scores):
+        r["rerank"] = float(sc)
+        r["via"] = r.get("via", []) + ["rr"]
+    return sorted(rows, key=lambda r: -r["rerank"])
 
 
 def _print(rows, as_json=False, elapsed=None):

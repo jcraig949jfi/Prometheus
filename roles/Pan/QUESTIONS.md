@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-09T11:05Z. The operator reviews this file about every 6
+Currency: 2026-10-09T11:40Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with
@@ -73,6 +73,16 @@ Q-006 | FYI + PREF (DuckDB) | 2026-10-09
   DEFAULT meanwhile: not used. Queries go through pyarrow/pyiceberg and
   Postgres. Sightings of SQLite/DuckDB files are reported in the
   inventory, as you asked of every seat.
+  ANSWER:
+
+Q-007 | PREF (shared-cluster disk) | 2026-10-09
+  Schema pan now occupies 2.2 GB on the M1 cluster (measured; the
+  prometheus_fire database grew from 3,477 MB to 5,698 MB). 791 MB of it is
+  chunk embeddings stored as real[]; 1.1 GB is text chunks with their
+  full-text index. Pan cannot see M1's free disk from SQL and will not run
+  shell commands on M1. What budget may Pan use on M1?
+  DEFAULT meanwhile: Pan caps itself at 10 GB on M1 and keeps bulk data
+  (Parquet/Iceberg files, vector shards) in the lake on M2's NVMe.
   ANSWER:
 
 ## ANSWERED
