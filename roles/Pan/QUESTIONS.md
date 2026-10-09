@@ -28,6 +28,9 @@ Q-001 | HARD (privileged host change on M1) | 2026-10-09
   an HNSW index is one migration.
   RECOMMENDATION: yes. Server-side HNSW is what makes vector search
   usable from every host without each host downloading the matrix.
+  PACKET READY (2026-10-09): roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md --
+  pgvector v0.8.7 source build (VS C++ tools, admin x64 prompt), file
+  hashes, acceptance gates fixed in advance, rollback.
   ANSWER:
 
 Q-002 | PREF (fleet integration) | 2026-10-09
