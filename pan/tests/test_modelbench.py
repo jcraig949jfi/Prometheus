@@ -58,3 +58,19 @@ def test_json_positive_negative_cheat():
 
 def test_thinking_is_stripped():
     assert mb.strip_thinking("<think>461? no</think>\n460") == "460"
+
+
+def test_math_answer_keys_are_derived_independently():
+    """ORACLE for the answer key itself (added after the math_system key was found wrong:
+    49 where 45 is right). Each key is recomputed here by a different route."""
+    import math
+    keys = {p["id"]: p["answer"] for p in mb.PROBES if p["kind"] == "math"}
+    sols = [(x, x + 1) for x in range(-100, 101) if 3 * x + 2 * (x + 1) == 22]
+    assert len(sols) == 1
+    x, y = sols[0]
+    assert keys["math_system"] == 10 * x + y
+    assert keys["math_arith"] == sum([17 * 23, 4 * 19, -6])
+    assert keys["math_train"] == 72 * 11 // 4                      # 2 h 45 min = 11/4 h
+    assert keys["math_primes"] == sum(1 for n in range(2, 101) if all(n % d for d in range(2, int(n ** 0.5) + 1)))
+    assert keys["math_gcd"] == math.gcd(1071, 462)
+    assert keys["math_combin"] == math.comb(10, 4)

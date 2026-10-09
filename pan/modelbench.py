@@ -51,7 +51,9 @@ PROBES = [
     dict(id="math_train", kind="math", prompt="A train travels at 72 km/h for 2 hours and 45 minutes. How many kilometres does it travel? Give only the final integer on the last line.", answer=198),
     dict(id="math_primes", kind="math", prompt="How many prime numbers are there between 1 and 100 inclusive? Give only the final integer on the last line.", answer=25),
     dict(id="math_gcd", kind="math", prompt="What is the greatest common divisor of 1071 and 462? Give only the final integer on the last line.", answer=21),
-    dict(id="math_system", kind="math", prompt="If 3x + 2y = 22 and x - y = -1, what is 10x + y? Give only the final integer on the last line.", answer=49),
+    # answer corrected 49 -> 45 on 2026-10-09: x=4, y=5 (the first key was wrong; every model "failed";
+    # tests/test_modelbench.py now derives every math key independently)
+    dict(id="math_system", kind="math", prompt="If 3x + 2y = 22 and x - y = -1, what is 10x + y? Give only the final integer on the last line.", answer=45),
     dict(id="math_combin", kind="math", prompt="How many ways are there to choose 4 items from 10 distinct items (order does not matter)? Give only the final integer on the last line.", answer=210),
     dict(id="json_basic", kind="json", prompt='Return ONLY a JSON object with exactly these keys: "name" set to the string "Pan", "count" set to the integer 3, and "tags" set to a list of the strings "a" and "b".',
          want={"name": "Pan", "count": 3, "tags": ["a", "b"]}),
