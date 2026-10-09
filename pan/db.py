@@ -40,7 +40,18 @@ def connect(dbname: str = None, *, autocommit: bool = False, statement_timeout_m
     kw["application_name"] = "pan"
     if statement_timeout_ms:
         kw["options"] = "-c statement_timeout={}".format(int(statement_timeout_ms))
-    conn = psycopg2.connect(**kw)
+    # bounded retry for CONNECTION-level failures only (2026-10-09: a single "server closed
+    # the connection unexpectedly" at connect killed a 9-model bench while the cluster stayed
+    # up); query errors are never retried here
+    import time as _t
+    for attempt in range(3):
+        try:
+            conn = psycopg2.connect(**kw)
+            break
+        except psycopg2.OperationalError:
+            if attempt == 2:
+                raise
+            _t.sleep(2 * (attempt + 1))
     cur = conn.cursor()
     cur.execute("select system_identifier::text from pg_control_system()")
     sysid = cur.fetchone()[0]

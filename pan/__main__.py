@@ -22,6 +22,7 @@
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
   frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
   frontier models QUERY [--fits]        Hugging Face models, optionally only 16 GB-fit
+  frontier daily [--force]    refresh arXiv/HF daily/HF models + vectors (skips if < 20 h since last)
   frontier embed              PAN-14: paper vectors in the repository's document-vector space
   frontier like PATH          outside papers nearest to a repository file
 """
@@ -86,7 +87,8 @@ def main(argv=None):
     p.add_argument("--no-typed", action="store_true")
     p.add_argument("--docs", action="store_true", help="whole-file JSON documents -> pan.result_docs")
     p = sub.add_parser("frontier")
-    p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like"])
+    p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like", "daily"])
+    p.add_argument("--force", action="store_true")
     p.add_argument("query", nargs="*")
     p.add_argument("--max-results", type=int, default=200)
     p.add_argument("--days", type=int, default=14)
@@ -189,6 +191,9 @@ def main(argv=None):
             query.models_cli(" ".join(a.query), k=a.k, fits=a.fits)
         elif a.what == "embed":
             query.embed_items()
+        elif a.what == "daily":
+            from .frontier import daily
+            daily.run(force=a.force)
         elif a.what == "like":
             query.like_cli(" ".join(a.query), k=a.k)
     elif a.cmd == "stats":
