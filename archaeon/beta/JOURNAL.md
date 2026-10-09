@@ -53,6 +53,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 | B53 | KV-store organ (STK/LDK single instructions) | NULL 0/8 vs 0/8: organ barely used |
 | B55/B56 | wiring wall: keyed recall vs read-chain length | GRADED: L1 8/8 (gen ~1), L2 8/8 (~8), L3 2-3/8 (~44-203) |
 | B57 | free one register coupling in L3 | 6/8 (median gen ~72): coupling count matters; ORDER coupling remains |
+| B58 | self-modifying route rate (16 seeds, G=600) | 0/16 -- rare accident (1 in ~28 runs overall) |
 | B30 | do foragers carry state across ticks? | YES: 6/7 content sensors use state; blind ones in rewarding worlds 5/5 |
 | B31 | what do they remember? | 2504: 1-register direction memory; others computed state (not past observations) |
 | B17 | forced perception (echo on PUT) opens the 2-value wall? | staged; controls pass |
@@ -645,6 +646,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B58 launched ~04:35Z (receipt-free estimate; commit time is the receipt): self-modifying route RATE, 16 writable
   large-tape seeds, jittered-wide L4, G=600; solvers re-scored locked. Lease lse-d7db40cbb039, 12 procs, est ~8 core-h
   (window 3 tally then ~17 of 48). PREDICTION: 1-3/16 solvers, each losing >= .5 when locked.
+- B58 RESULT (16 writable large-tape seeds, jittered-wide L4, G=600; lease released ~05:10Z): solved 0/16 (10/16 on the
+  one-value shelf). PREDICTION (1-3/16) FAILED. Combined with B52 (0/8 writable at G=300): the self-modifying route
+  appeared once in ~28 writable large-tape runs (B51 seed 5101). It stands as a real but RARE accident, not a route
+  this search takes at a usable rate; "self-modifying code as a systematic chain-shortener" is not supported.
+  CORE-HOUR TALLY window 3: ~17 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
