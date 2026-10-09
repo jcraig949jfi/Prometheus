@@ -34,3 +34,70 @@ def models_cli(q, k=15, fits=False):
             params = "{:.1f}B".format(r[2] / 1e9) if r[2] else "?"
             print("{:<55} {:<20} {:>7} ({}) q4~{}GB rel={} lic={} mod={} dl={} likes={}".format(
                 r[0][:55], (r[1] or "")[:20], params, r[3], r[4], r[5], r[6], r[7], r[8], r[9]))
+
+
+def embed_items(model=None, batch=32, out=print):
+    """PAN-14: vectors for frontier items (title + summary) in the SAME space as the
+    repository's document vectors (embed.DOC_MODEL), so a program file and an outside
+    paper can be compared directly."""
+    import io
+    import json
+    import time
+    from .. import db, embed
+    model = model or embed.DOC_MODEL
+    t0 = time.time()
+    with db.cursor() as cur:
+        cur.execute("""select item_id, source, source_id, title, summary from pan.frontier_item f where not exists
+                       (select 1 from pan.frontier_embedding e where e.item_id=f.item_id and e.model=%s)
+                       order by item_id""", (model,))
+        rows = cur.fetchall()
+    if not rows:
+        out(json.dumps(dict(embedded=0, model=model)))
+        return 0
+    texts = ["{}\n{}".format(t or "", s or "")[:1600] for _, _, _, t, s in rows]
+    vecs = embed.encode_docs(texts, model, batch=batch)
+    buf = io.StringIO()
+    for (iid, *_), v in zip(rows, vecs):
+        buf.write("{}\t{}\t{}\t{{{}}}\n".format(iid, model, vecs.shape[1], ",".join("{:.6g}".format(x) for x in v)))
+    buf.seek(0)
+    with db.cursor() as cur:
+        cur.copy_expert("copy pan.frontier_embedding (item_id, model, dims, vec) from stdin", buf)
+    out(json.dumps(dict(embedded=len(rows), model=model, seconds=round(time.time() - t0, 1))))
+    return len(rows)
+
+
+def like_cli(path, k=10, model=None):
+    """Outside papers nearest to a repository file (document vector vs paper vectors)."""
+    import numpy as np
+    from .. import db, embed, search
+    model = model or embed.DOC_MODEL
+    ids, m = search.load_doc_matrix(model)
+    with db.cursor() as cur:
+        cur.execute("select artifact_id from pan.artifact where source='git' and path=%s", (path,))
+        r = cur.fetchone()
+        if not r:
+            print("not in the catalog:", path)
+            return
+        pos = np.where(ids == r[0])[0]
+        if not len(pos):
+            print("no document vector for", path)
+            return
+        q = m[pos[0]].astype(np.float32)
+        cur.execute("""select f.item_id, f.source, f.source_id, f.published_at::date, f.title, e.vec
+                       from pan.frontier_embedding e join pan.frontier_item f on f.item_id=e.item_id
+                       where e.model=%s""", (model,))
+        items = cur.fetchall()
+    if not items:
+        print("no frontier vectors yet (python -m pan frontier embed)")
+        return
+    mat = np.asarray([it[5] for it in items], dtype=np.float32)
+    sc = mat @ q
+    seen = set()
+    for i in np.argsort(-sc):
+        it = items[i]
+        if it[2] in seen:          # same paper from arXiv and from HF daily
+            continue
+        seen.add(it[2])
+        print("{:.3f} {} {:<11} {} {}".format(sc[i], it[1][:6], it[2], it[3], (it[4] or "")[:90]))
+        if len(seen) >= k:
+            break

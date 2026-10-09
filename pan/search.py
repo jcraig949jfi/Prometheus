@@ -298,7 +298,7 @@ def _shingles(text, n=5):
     return {" ".join(w[i:i + n]) for i in range(max(0, len(w) - n + 1))}
 
 
-def collapse_copies(rows, threshold=0.5):
+def collapse_copies(rows, threshold=0.5, drop_at=0.95):
     """Canonical-first: when two candidates' passages are near-duplicates (5-word
     shingle Jaccard >= threshold), the one whose file was committed EARLIER is moved
     directly above the later one. v1's measured failure shape was the canonical
@@ -309,10 +309,10 @@ def collapse_copies(rows, threshold=0.5):
     with db.cursor() as cur:
         cur.execute("select chunk_id, body from pan.chunk where chunk_id = any(%s)", ([r["chunk_id"] for r in rows],))
         body = dict(cur.fetchall())
-        cur.execute("select path, first_commit_at from pan.artifact where source='git' and path = any(%s)",
-                    ([r["path"] for r in rows],))
+        cur.execute("""select path, coalesce(first_commit_at, last_commit_at) from pan.artifact
+                       where path = any(%s)""", ([r["path"] for r in rows],))
         first = dict(cur.fetchall())
-    sh = [_shingles(body.get(r["chunk_id"]) or "") for r in rows]
+    sh = {id(r): _shingles(body.get(r["chunk_id"]) or "") for r in rows}
     out = list(rows)
     moved = True
     guard = 0
@@ -320,11 +320,19 @@ def collapse_copies(rows, threshold=0.5):
         moved, guard = False, guard + 1
         for i in range(len(out)):
             for j in range(i + 1, len(out)):
-                si, sj = sh[rows.index(out[i])], sh[rows.index(out[j])]
+                si, sj = sh[id(out[i])], sh[id(out[j])]
                 if not si or not sj:
                     continue
                 jac = len(si & sj) / len(si | sj)
                 fi, fj = first.get(out[i]["path"]), first.get(out[j]["path"])
+                if jac >= drop_at:
+                    # the same text twice (e.g. one comms report fanned out to N seats): keep the
+                    # earlier, drop the later, count it on the kept row
+                    keep, gone = (i, j) if (fi is None or fj is None or fi <= fj) else (j, i)
+                    out[keep]["copies"] = out[keep].get("copies", 0) + 1 + out[gone].get("copies", 0)
+                    out.pop(gone)
+                    moved = True
+                    break
                 if jac >= threshold and fi and fj and fj < fi:
                     r = out.pop(j)
                     r["via"] = r.get("via", []) + ["canon>{}".format(i + 1)]
@@ -369,8 +377,9 @@ def _print(rows, as_json=False, elapsed=None):
     for i, r in enumerate(rows, 1):
         when = str(r.get("last_commit_at") or "")[:10]
         loc = "{}:{}-{}".format(r["path"], r.get("line_start"), r.get("line_end"))
-        print("{:>2}. {}  [{} {} {}] {}".format(i, loc, r.get("kind"), r.get("seat") or "-", when,
-                                               " ".join(r.get("via", []))))
+        print("{:>2}. {}  [{} {} {}] {}{}".format(i, loc, r.get("kind"), r.get("seat") or "-", when,
+                                                 " ".join(r.get("via", [])),
+                                                 "  (+{} copies)".format(r["copies"]) if r.get("copies") else ""))
         if r.get("heading"):
             print("      # " + str(r["heading"])[:110])
         sn = " ".join(str(r.get("snippet") or "").split())

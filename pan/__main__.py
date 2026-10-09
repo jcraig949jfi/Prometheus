@@ -10,11 +10,15 @@
   cochange PATH               files that change in the same commits as PATH
   tables QUERY                find tables/columns on the cluster by name
   stats                       row counts per table in schema pan
+  comms-index                 PAN-20: comms message history -> searchable artifacts (read-only)
+  refresh                     PAN-17: catalog to current origin/main + comms, changed items only
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
   frontier search QUERY       full-text over intake items (arXiv + HF daily papers)
   frontier models QUERY [--fits]        Hugging Face models, optionally only 16 GB-fit
+  frontier embed              PAN-14: paper vectors in the repository's document-vector space
+  frontier like PATH          outside papers nearest to a repository file
 """
 import argparse
 import os
@@ -58,12 +62,14 @@ def main(argv=None):
     p.add_argument("query")
     sub.add_parser("stats")
     sub.add_parser("status")
+    sub.add_parser("comms-index")
+    sub.add_parser("refresh")
     p = sub.add_parser("consolidate")
     p.add_argument("--ext", default=".jsonl")
     p.add_argument("--limit", type=int, default=0)
     p.add_argument("--no-typed", action="store_true")
     p = sub.add_parser("frontier")
-    p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models"])
+    p.add_argument("what", choices=["arxiv", "hf-models", "hf-daily", "search", "models", "embed", "like"])
     p.add_argument("query", nargs="*")
     p.add_argument("--max-results", type=int, default=200)
     p.add_argument("--days", type=int, default=14)
@@ -103,6 +109,13 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "comms-index":
+        from . import comms_index
+        comms_index.run()
+    elif a.cmd == "refresh":
+        from . import comms_index, refresh
+        refresh.run()
+        comms_index.run()
     elif a.cmd == "status":
         import subprocess
         from . import REPO, db
@@ -133,6 +146,10 @@ def main(argv=None):
             query.search_cli(" ".join(a.query), k=a.k)
         elif a.what == "models":
             query.models_cli(" ".join(a.query), k=a.k, fits=a.fits)
+        elif a.what == "embed":
+            query.embed_items()
+        elif a.what == "like":
+            query.like_cli(" ".join(a.query), k=a.k)
     elif a.cmd == "stats":
         from . import db
         with db.cursor() as cur:

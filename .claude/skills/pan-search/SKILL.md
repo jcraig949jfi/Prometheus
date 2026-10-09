@@ -38,6 +38,8 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
     python -m pan tables NAME            which database.schema.table / column matches NAME
     python -m pan frontier search "Q"    outside papers (arXiv + HF daily) by full-text
     python -m pan frontier models Q [--fits]   HF models, optionally only those estimated to fit 16 GB at Q4
+    python -m pan frontier like PATH     outside papers nearest to a repository file (exploratory: the
+                                         cited paper is in the top 10 for 34.8 percent of 273 citing files)
     python -m pan stats                  row counts of every Pan table
 
 Kinds come from path rules (a convention, not content): journal, prompt,
