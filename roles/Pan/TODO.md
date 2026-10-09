@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-09T20:41Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-09T20:40Z (UTC, commit a6f5e670a receipt). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] Status report 3 by ~22:45Z

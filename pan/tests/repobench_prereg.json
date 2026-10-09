@@ -1,0 +1,53 @@
+{
+  "_prereg": [
+    "PAN-34 in-house code benchmark, frozen 2026-10-09 BEFORE the task set is mined and BEFORE any model runs on it.",
+    "Question: can a locally runnable model rewrite one of the program's OWN functions so that the program's OWN tests",
+    "still pass -- the job of a code-mutation operator inside Prometheus. PAN-33 (HumanEval+) ranked the same models on a",
+    "public set that is very likely in their training data; its review packet asked whether that ranking transfers.",
+    "Uncontaminated by construction: the repository's first commit is 2026-03-22, after every candidate's training cutoff.",
+    "The task set is mined by the rules below; its manifest (paths, line ranges, sha256 of every original function and",
+    "test file) is committed BEFORE the first model generation. Changing a rule after that is an amendment with a date."
+  ],
+  "source": {
+    "tree": "origin/main at the catalog's recorded sha (pan.artifact.repo_sha) when mining starts; recorded in the manifest",
+    "materialized": "a sandbox copy on M2's NVMe (C:/Prometheus-data/pan/lake/repobench/), one per worker; files: .py and small data/config files (<= 128 KB: .json .jsonl .csv .txt .toml .ini .cfg .yaml .yml .npz, no extension) of every unit (top-level directory, or roles/<Seat>) that holds a test file; paths matching key / secret / credential / .env are never read",
+    "environment": "Pan venv python -m pytest -q -x -p no:cacheprovider <test file>; cwd a fresh temp dir; PYTHONPATH = the sandbox root; HOME/USERPROFILE/TEMP = that temp dir; no database host, no keys, no proxy variables; PYTHONHASHSEED=0; 120 s timeout"
+  },
+  "selection": {
+    "test_files": "paths matching (^|/)test_*.py at the tree; dropped before running if the test file or any repository module it imports directly contains one of: psycopg2, psycopg, requests, redis, httpx, aiohttp, urllib.request, socket, sqlalchemy, duckdb, boto3, openai, anthropic, ollama, transformers, torch, tensorflow, jax, subprocess, multiprocessing, get_key, keys, EW_DB_HOST, 192.168., D:/, D:\\, C:/, C:\\, /d/, Prometheus-data",
+    "baseline": "a test file enters only if it passes in the sandbox (exit 0)",
+    "functions": "top-level def (not async, not a method) in a repository module the test file imports directly (absolute or relative import), 3 to 60 body lines, not a dunder, not in a test or conftest file",
+    "gates": "a function becomes a TASK only if (a) the test file passes again with the original (second run: flakiness filter) and (b) the test file FAILS when the function body (after its docstring) is replaced by `raise NotImplementedError` -- the tests must see the function",
+    "sampling": "candidates shuffled with random.Random(34); caps: <= 2 tasks per module, <= 3 per test file, <= 12 per unit; mining stops at 160 tasks or when candidates run out; the task set is whatever survives, reported with its size"
+  },
+  "protocol": {
+    "runtime": "Ollama on M2 (version recorded per run in pan.run params), temperature 0, seed 1, num_ctx 8192",
+    "prompt": "the module source with the target function's body (after its docstring) replaced by `...`, truncated to 12,000 characters (the import header, then a window around the function), followed by: Write the complete function `NAME` (signature included) so that the module works as its author intended. Reply with ONLY one Python code block containing the function. No explanation, no tests.",
+    "hidden": "the test file is NOT shown to the model",
+    "extraction": "the last ```python block; it must parse and define NAME at top level, else the task fails",
+    "splice": "the block replaces the original function's lines (decorators included) in the worker's sandbox copy; the module is restored after the run",
+    "verdict": "pass = the task's test file exits 0 within 120 s",
+    "metric": "pass@1 (greedy) with a Wilson 95 percent interval; median tokens/s; truncations counted (eval_count >= budget)"
+  },
+  "configurations": [
+    {"model": "gpt-oss:20b", "think": false, "budget": 1024},
+    {"model": "qwen2.5-coder:14b", "think": false, "budget": 1024},
+    {"model": "gemma3:12b", "think": false, "budget": 1024},
+    {"model": "qwen3:8b", "think": false, "budget": 1024},
+    {"model": "gpt-oss:20b", "think": false, "budget": 4096, "_note": "preregistered here; it was exploratory in PAN-33"}
+  ],
+  "controls": {
+    "POSITIVE": "every task's original function, spliced back through the same path (extraction + splice + run), passes (100 percent), else no model result is reported",
+    "CHEAT": "a body of `pass` (returns None) passes at most 10 percent of tasks, else the tests are not discriminating enough",
+    "NEGATIVE": "another task's original function, renamed to NAME, passes at most 20 percent of tasks"
+  },
+  "comparison_rule": {
+    "primary": "two configurations differ only if their Wilson 95 percent intervals do not overlap (same rule as PAN-33)",
+    "secondary": "exact McNemar on the paired per-task outcomes, Holm-corrected over the 10 pairs, alpha 0.05"
+  },
+  "precommitments": [
+    "P1: every configuration's in-house pass@1 is LOWER than its HumanEval+ pass@1 (PAN-33: 0.853, 0.853, 0.773, 0.779; 0.908 for gpt-oss at 4096) by at least 0.15. Loses if any configuration is within 0.15 of (or above) its HumanEval+ score.",
+    "P2: the HumanEval+ split transfers: both of gpt-oss:20b@1024 and qwen2.5-coder:14b score at least as high in-house as both of gemma3:12b and qwen3:8b. Loses if either lower-pair model beats either upper-pair model.",
+    "P3: gpt-oss:20b@4096 scores at least gpt-oss:20b@1024 in-house (the budget effect seen on HumanEval+ holds). Loses if 4096 is lower."
+  ]
+}

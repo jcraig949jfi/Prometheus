@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-09T20:41Z (date -u).
+Currency: 2026-10-09T20:40Z (commit a6f5e670a receipt; first typed as 20:41Z).
 
 seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
