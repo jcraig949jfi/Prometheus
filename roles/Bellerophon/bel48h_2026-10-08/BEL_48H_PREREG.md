@@ -403,3 +403,12 @@ sha256 d5cfcdd5840e5e00aa2188d7f264e47a9ee1fd32f4ca272f474451f06d946fba. New abl
 - U3-P3: the LD T,0xA0-shape origin gain under block_selfcopy is >= 50% of the gain under block_all.
 - P2 (descriptive, two-sided): at HIGH mutation the 16 pairings' ON - OFF budget-coupled share; direction and two-sided
   sign test reported (the two single pairs disagreed at HIGH).
+
+## 21. UF2 -- why CL-20 vanishes in SOUP and at budget 384 (frozen 2026-10-09T23:48:02Z, before any run)
+
+P2 result (s20, descriptive): at HIGH mutation 10 decided pairings, ON < OFF 3, ON > OFF 2, ties 5, two-sided p 1.0 --
+no consistent direction (the MED effect does not extend to HIGH).
+UF2 plan tools/plan_uf2.py: 450 e6d734034864a57108a2ae569b48c3a714f9ed87c6d75944cc00f2c55426db3b; UptakeFateWorld; analysis tools/analyze_uf2.py (committed with this section).
+- UF2-P1: the pooled BREAK/MAKE ratio of uptake events is LOWER in both SOUP and GRID budget 384 than in the GRID budget
+  256 reference cell run in the same block (if imports break precursors less there, the absence of the block effect is
+  explained by the UF mechanism). Per-cell sign tests and FUNC loss/gain reported.
