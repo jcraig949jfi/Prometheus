@@ -90,7 +90,7 @@
       "title": "SECOND-LEVEL DISCOVERY PILOT",
       "start_utc": "2026-10-09T09:05Z",
       "end_utc": "2026-10-09T13:05Z",
-      "status": "ACTIVE"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W09",
@@ -98,7 +98,7 @@
       "title": "R8 REPRESENTATION-CONTROLLED RETEST (E5 design)",
       "start_utc": "2026-10-09T13:05Z",
       "end_utc": "2026-10-09T17:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W10",
@@ -106,7 +106,7 @@
       "title": "R8 PROMOTION ASSAY (E5)",
       "start_utc": "2026-10-09T17:05Z",
       "end_utc": "2026-10-09T21:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W11",
@@ -114,7 +114,7 @@
       "title": "FORENSIC REVIEW / REPAIR OR ABLATION",
       "start_utc": "2026-10-09T21:05Z",
       "end_utc": "2026-10-10T01:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W12",
@@ -122,10 +122,10 @@
       "title": "INDEPENDENT CONFIRMATION OR DECISIVE NULL (E6)",
       "start_utc": "2026-10-10T01:05Z",
       "end_utc": "2026-10-10T05:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     }
   ],
-  "active_window": "W08",
+  "active_window": "CLOSED",
   "supply": {
     "file": "science/arc3/w8_lin_generator/W8_SUPPLIES_B03.json",
     "blocks": {
@@ -151,7 +151,7 @@
       "status": "ARMED"
     }
   ],
-  "next_permissible_action": "E1 report when E1-only chain completes; at >= 2026-10-09T05:15Z (cap check): b03_e2.py score -> report, then b03_e5.py sham -> recip -> score -> report",
+  "next_permissible_action": "none: campaign closed; await operator",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
     "ledger": [
@@ -265,5 +265,9 @@
       "E2": "G12 INCONCLUSIVE; INFERIOR to g11; memorisation rejected 18/18 without ban",
       "W12": "oracle selection does not enable; limit upstream of selection"
     }
-  }
+  },
+  "status": "CLOSED",
+  "closed_utc": "2026-10-09T08:20Z",
+  "final_disposition": "MIGRATE_SUBSTRATE (CLOSE_RULE row 4; BASIS=OUTCOME_C_APPARATUS_LIMIT; S10_KILL_CRITERION=NOT_MET; KILL_CRITERION_HESTIA_PROXY=FIRES)",
+  "synthesis": "beta03/BETA03_48H_CLOSE_SYNTHESIS.md"
 }

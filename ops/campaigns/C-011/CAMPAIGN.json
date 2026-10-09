@@ -3,7 +3,7 @@
   "campaign_id": "C-011",
   "thread_id": "TH-P2B-APHRODITE-V2B",
   "epic_id": "EP-PHASE2B",
-  "status": "OPEN",
+  "status": "CLOSED",
   "label": "C-P2B-APH-BETA-03",
   "title": "Aphrodite Beta-03 -- the composition frontier (48 h, 12 windows)",
   "objective": "Why does first-order improvement stop compounding? E1 saturation/interference/ceiling; E2 g12 endpoint-aligned selector; E3 W5P promotion; E4 second-level ecology; E5 R8 under promotion; E6 attack. Kill criterion -> migrate substrate. Tier 2; no live models; no Campaign 1; no third generation.",
@@ -36,5 +36,8 @@
   "cadence": {
     "mode": "12 x 4h DEV/EXP windows",
     "note": "see beta03/STATE.json"
-  }
+  },
+  "closed_utc": "2026-10-09T08:40:00Z",
+  "close_report": "roles/Aphrodite/beta03/BETA03_48H_CLOSE_SYNTHESIS.md",
+  "close_summary": "E1 SATURATION_SUPPORTED (R8 failure mostly unequal headroom); E2 g12 INCONCLUSIVE (rejects memorisation without a ban 18/18; inferior to g11); W5P built+qualified; E5-H INSTRUMENT_UNVALIDATED (known-positive control fails; O1 repair 0/3); E5-N R8 under promotion NO (P1 -6 n.s.); W12 oracle selection does not enable. Recommendation MIGRATE_SUBSTRATE (basis Outcome C; s10 kill criterion NOT met). Tier 2."
 }
