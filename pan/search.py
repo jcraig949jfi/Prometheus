@@ -47,9 +47,13 @@ FTS_AND = """
 # OR semantics (v1): any query lexeme matches; candidates ordered by cover density,
 # then re-scored by COVERAGE (how many distinct query lexemes the chunk holds), with a
 # minimum-should-match of 34 percent of the query's lexemes (fixed before the v1 dev runs).
+# v2.1: only the `maxlex` RAREST query lexemes that occur in the corpus are used (by
+# pan.lexeme_df); lexemes absent from the corpus could not match anyway.
 # v0 used AND only and dropped long lexical queries (CONTROLS_20261009T1117Z).
 FTS_OR = """
-  with lx as (select distinct lexeme as l from unnest(to_tsvector('english', %(q)s))),
+  with lx0 as (select distinct lexeme as l from unnest(to_tsvector('english', %(q)s))),
+  lx as (select lx0.l from lx0 join pan.lexeme_df d on d.lexeme = lx0.l
+         order by d.ndoc asc limit %(maxlex)s),
   q as (select string_agg(quote_literal(l), ' | ')::tsquery as tq, count(*) as n from lx),
   cand as (
     select c.chunk_id, c.artifact_id, c.line_start, c.line_end, c.heading, c.tsv,
@@ -67,7 +71,8 @@ FTS_OR = """
   order by b.cov desc, b.r desc limit %(k)s"""
 
 
-def fts(query, k=10, kind=None, seat=None, path=None, since=None, cur=None, semantics="or", pool=4000):
+def fts(query, k=10, kind=None, seat=None, path=None, since=None, cur=None, semantics="or", pool=4000,
+        maxlex=12):
     """Best chunk per artifact. semantics='and': websearch_to_tsquery (v0);
     'or': any lexeme, ranked by coverage then cover density (v1 default)."""
     from . import db
@@ -78,7 +83,7 @@ def fts(query, k=10, kind=None, seat=None, path=None, since=None, cur=None, sema
         fsql = fsql.replace("%s", "%(f{})s".format(i), 1)
         names["f{}".format(i)] = a
     sql = (FTS_OR if semantics == "or" else FTS_AND).format(f=fsql)
-    params = dict(q=query, k=k, pool=pool, **names)
+    params = dict(q=query, k=k, pool=pool, maxlex=maxlex, **names)
     own = cur is None
     if own:
         ctx = db.cursor(statement_timeout_ms=60000)

@@ -64,6 +64,7 @@ def main(argv=None):
     sub.add_parser("stats")
     sub.add_parser("status")
     sub.add_parser("comms-index")
+    sub.add_parser("lexdf")
     sub.add_parser("refresh")
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
@@ -113,6 +114,15 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "lexdf":
+        import time
+        from . import db
+        t = time.time()
+        with db.cursor(statement_timeout_ms=1800000) as cur:
+            cur.execute("truncate pan.lexeme_df")
+            cur.execute("insert into pan.lexeme_df select word, ndoc, nentry from ts_stat('select tsv from pan.chunk')")
+            cur.execute("select count(*) from pan.lexeme_df")
+            print("lexemes", cur.fetchone()[0], "in", round(time.time() - t, 1), "s")
     elif a.cmd == "comms-index":
         from . import comms_index
         comms_index.run()
