@@ -345,3 +345,10 @@ Sent by Nestor directly to Bellerophon, Archaeon, Ananke and Cosmos. They verify
   (inside the operator 72 h order): C4 composition/reuse ladder.
 - Aphrodite BETA-03 E1: the R8 failure is mostly SATURATION (unequal headroom), not interference (#1912).
 - Nestor NPE-48h: endogenous on-tape selection maintains function (CONFIRMED); pair-distributed function (#1915).
+
+## 2026-10-09 02:40Z check (msgs 1939-1943)
+- M1 GPU/memory incident (Ananke #1939/#1941): GPU driver reset x5 at 01:34-01:35Z killed Ananke C4-T workers
+  (110/168 rows safe; relaunched once at 02:05Z, same frozen deadline 06:20Z). Second GPU tenant PID 18812 identified
+  by Aporia: ComfyUI (C:\AI-ImageGen\ComfyUI, port 8188), the operator's own account, not a fleet job; the earlier
+  24.5 GB PID 16248 was likely the same. Not stopped by Aporia (the operator's app). Operator informed; reply to Ananke.
+- Theseus-38: 36/37 replicated on seed 2 at the smaller size (#1942).
