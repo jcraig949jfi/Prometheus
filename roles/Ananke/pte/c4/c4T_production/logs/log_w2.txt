@@ -1,0 +1,81 @@
+FLIP-0000-adbab9bf|GATE|C|00 FALSE 17 666.79
+FLIP-0000-adbab9bf|FLIP|A|00 FALSE 0 474.81
+FLIP-0004-125dfbff|GATE|A|00 FALSE 0 339.69
+FLIP-0004-125dfbff|FLIP|A|00 FALSE 0 351.27
+FLIP-0099-df143630|GATE|B|00 FALSE 0 1271.02
+FLIP-0167-b6d3fceb|GATE|C|00 FALSE 21 1061.47
+FLIP-0167-b6d3fceb|FLIP|A|00 FALSE 0 828.99
+FLIP-0000-adbab9bf|GATE|B|01 FALSE 0 492.88
+FLIP-0000-adbab9bf|FLIP|C|01 FALSE 20 570.04
+FLIP-0004-125dfbff|GATE|A|01 FALSE 0 351.97
+FLIP-0004-125dfbff|FLIP|B|01 FALSE 0 355.63
+FLIP-0099-df143630|GATE|C|01 FALSE 22 1439.29
+FLIP-0167-b6d3fceb|GATE|A|01 FALSE 0 866.58
+FLIP-0167-b6d3fceb|FLIP|B|01 FALSE 0 878.03
+FLIP-0000-adbab9bf|GATE|C|02 FALSE 16 549.77
+FLIP-0000-adbab9bf|FLIP|A|02 FALSE 0 489.14
+FLIP-0004-125dfbff|GATE|B|02 FALSE 0 368.64
+FLIP-0004-125dfbff|FLIP|C|02 FALSE 20 437.06
+FLIP-0099-df143630|GATE|A|02 FALSE 0 1272.6
+FLIP-0167-b6d3fceb|GATE|B|02 FALSE 0 921.68
+FLIP-0167-b6d3fceb|FLIP|C|02 FALSE 14 980.03
+FLIP-0000-adbab9bf|GATE|A|03 FALSE 0 485.79
+FLIP-0000-adbab9bf|FLIP|B|03 FALSE 0 486.46
+FLIP-0004-125dfbff|GATE|C|03 FALSE 17 445.49
+FLIP-0004-125dfbff|FLIP|A|03 FALSE 0 386.16
+FLIP-0099-df143630|GATE|B|03 FALSE 0 1224.85
+FLIP-0167-b6d3fceb|GATE|C|03 FALSE 13 1115.3
+FLIP-0167-b6d3fceb|FLIP|A|03 FALSE 0 791.85
+FLIP-0000-adbab9bf|GATE|B|04 FALSE 0 468.37
+FLIP-0000-adbab9bf|FLIP|C|04 FALSE 15 590.53
+FLIP-0004-125dfbff|GATE|A|04 FALSE 0 336.61
+FLIP-0004-125dfbff|FLIP|B|04 FALSE 0 347.8
+FLIP-0099-df143630|GATE|C|04 FALSE 11 1458.28
+FLIP-0167-b6d3fceb|GATE|A|04 FALSE 0 850.75
+FLIP-0167-b6d3fceb|FLIP|A|04 FALSE 0 859.76
+FLIP-0000-adbab9bf|GATE|C|05 FALSE 16 781.37
+Traceback (most recent call last):
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\roles\Ananke\pte\c4\run_c4.py", line 190, in <module>
+    main()
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\roles\Ananke\pte\c4\run_c4.py", line 180, in main
+    row, npz = run_job(job, cells[job["cell_id"]], plan, a.device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\roles\Ananke\pte\c4\run_c4.py", line 127, in run_job
+    pt, ep = C.eval_programs(ph, env, hs, progs, device=device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\roles\Ananke\pte\c2b\..\c2a\c2a_common.py", line 205, in eval_programs
+    w.run(env.T(), graph=False)
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\prometheus\ananke\engine.py", line 573, in run
+    self.step()
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\prometheus\ananke\engine.py", line 566, in step
+    self._tick()
+  File "F:\Prometheus-worktrees\ananke-c4T-pinned\prometheus\ananke\engine.py", line 362, in _tick
+    (A ^ Bv).clamp(-REG_MAX, REG_MAX),                      # 11 XOR
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+EXIT=1 
+FLIP-0000-adbab9bf|FLIP|A|05 FALSE 0 482.04
+FLIP-0004-125dfbff|FLIP|C|05 FALSE 9 567.14
+FLIP-0099-df143630|GATE|B|05 FALSE 0 1345.4
+FLIP-0167-b6d3fceb|GATE|C|05 FALSE 21 1148.18
+FLIP-0167-b6d3fceb|FLIP|A|05 FALSE 0 892.06
+FLIP-0000-adbab9bf|GATE|B|06 FALSE 0 520.58
+FLIP-0000-adbab9bf|FLIP|C|06 FALSE 16 623.98
+FLIP-0004-125dfbff|GATE|A|06 FALSE 0 379.02
+FLIP-0004-125dfbff|FLIP|B|06 FALSE 0 406.86
+FLIP-0099-df143630|GATE|C|06 FALSE 20 1507.02
+FLIP-0167-b6d3fceb|GATE|A|06 FALSE 0 919.67
+FLIP-0167-b6d3fceb|FLIP|B|06 FALSE 0 959.01
+FLIP-0000-adbab9bf|GATE|C|07 FALSE 14 588.67
+FLIP-0000-adbab9bf|FLIP|A|07 FALSE 0 554.04
+FLIP-0004-125dfbff|GATE|C|07 FALSE 23 510.15
+FLIP-0004-125dfbff|FLIP|B|07 FALSE 0 349.84
+FLIP-0099-df143630|GATE|C|07 FALSE 19 1643.91
+FLIP-0167-b6d3fceb|GATE|A|07 FALSE 0 916.65
+FLIP-0167-b6d3fceb|FLIP|B|07 FALSE 0 847.87
+EXIT=0 
