@@ -1,22 +1,18 @@
 # Pan TODO
 
-Currency: 2026-10-09T10:40Z (UTC). Closed items are deleted with the closing
+Currency: 2026-10-09T11:05Z (UTC). Closed items are deleted with the closing
 commit and date, purged after 24 h (base role s7).
 
-- [ ] Receive the charter; commit it verbatim with a MANIFEST under
-      prompts/<date>_charter/
-- [ ] Rewrite RESPONSIBILITIES.md around the charter (pre-charter body to
-      superseded/); name overlaps with sibling seats before claiming any
-      gap; record the dependency surface
-- [ ] File BACKLOG_H0H5.md in the schema (>= 20 rows, first five today's);
-      move WORK_STATE.json out of HOLD
-- [ ] Decide with the charter whether the seat heartbeats Aporia (CWO-C
-      s13) and may be dispatched to (CWO-C s7-s9). Not sent at creation:
-      Aporia dispatches READY seats and this seat is HOLD with no lane.
-- [ ] First chartered wake: read roles/base-role/MONITORS.md and
-      roles/base-role/DISTRIBUTED_WORK.md in full (the creation pass reads
-      neither; the seat owns no loop and holds no task packet)
-- [ ] The creation worktree is SPARSE (roles/base-role, comms, archaeon
-      tests, ops/work_orders, aporia/doctrine). Run
-      `git sparse-checkout disable` in it before work that needs the rest
-      of the tree.
+- [ ] PAN-01 inventory v0 (repo at SHA, M2 data roots, M1 cluster, SQLite/DuckDB sightings)
+- [ ] PAN-03 schema pan on M1, identity-checked, + repository catalog
+- [ ] PAN-04 chunk + full-text index + `python -m pan search` + controls
+- [ ] PAN-05 embeddings (GPU, Fabric lease) + in-process vector search
+- [ ] PAN-08 commit the deep-research report when the notes land
+- [ ] Post overlap notices to Atlas, Eos, Mnemosyne (comms, committed body first)
+- [ ] Read roles/base-role/MONITORS.md and DISTRIBUTED_WORK.md in full before
+      registering any loop (first chartered wake obligation)
+- [ ] Start the self-paced loop for the window (ends no later than 2026-10-12)
+
+Closed:
+- 2026-10-09 charter adopted (prompts/2026-10-09_charter/, RESPONSIBILITIES.md
+  rewritten, backlog filed, WORK_STATE ACTIVE) -- the adoption commit.

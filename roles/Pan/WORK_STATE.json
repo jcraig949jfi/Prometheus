@@ -3,40 +3,52 @@
   "seat": "Pan",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-09T10:40:16Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-10-09T11:05:00Z",
+  "state": "ACTIVE",
   "instance": "spectrex5-f20b5eac (SPECTREX5)",
   "branch": "pan/base-role-adopt-2026-10-09",
   "base_sha": "970399844d25308c309a7b537810cfa2e36a83aa",
   "head_sha": "(this commit; see git log -1 -- roles/Pan/WORK_STATE.json)",
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
-  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Direct operator instruction (chat, 2026-10-09): create Pan (roles/Pan/prompts/2026-10-09_creation/).",
-  "current_objective": "none (charter PENDING)",
-  "current_step": "creation pass complete; awaiting the operator's charter",
+  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-09), verbatim at roles/Pan/prompts/2026-10-09_charter/.",
+  "current_objective": "Charter C1-C5: inventory every store; design the Postgres/pgvector/Parquet/Iceberg layer; build catalog, full-text and vector indices; frontier intake of adjacent research and locally runnable models.",
+  "current_step": "charter adopted; PAN-01 inventory and PAN-03 schema next",
   "in_flight": [],
-  "progress": "creation pass only; no domain work started or implied",
-  "finish_condition": "charter committed verbatim with MANIFEST; RESPONSIBILITIES.md rewritten; backlog filed",
-  "next_expected_milestone": "charter adoption commit",
-  "expected_next_artifact": "roles/Pan/prompts/<date>_charter/MANIFEST.md",
-  "threads": [],
+  "progress": "charter adopted; pyarrow 26.0.0 + pyiceberg 0.12.0 installed in a seat-owned venv; deep research on the adjacent frontier running",
+  "finish_condition": "loop window ends no later than 2026-10-12 (charter C7) with a closing report; return to HOLD",
+  "next_expected_milestone": "inventory v0 + schema pan + full-text search with controls",
+  "expected_next_artifact": "roles/Pan/reports/INVENTORY_2026-10-09.md",
+  "threads": [
+    "T-PAN-DATA (inventory, design, catalog, indices)",
+    "T-PAN-FRONTIER (intake of adjacent research and local models)"
+  ],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    "deep research: 5 research notes on the adjacent frontier (PAN-08)"
+  ],
   "blocked": [],
   "blocked_on": [],
-  "resource_status": "none held; no Fabric lease, no compute, no worker, no process started",
+  "resource_status": "venv on M2 NVMe (PAN venv); no Fabric lease held; no long-running process",
   "last_receipt": "roles/Pan/journal/2026-10-09.md (creation pass)",
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
   "session_started_utc": "UNKNOWN (not inferred)",
-  "next": "awaiting the operator's charter. Not awaiting Aporia dispatch: HOLD with no lane is not READY (CWO-C s1.3), and a new seat charter is the operator's (CWO-C s9).",
+  "next": "PAN-01 inventory -> PAN-03 schema pan -> PAN-04 full-text search -> PAN-05 embeddings",
   "next_actions": [
-    "Seat created 2026-10-09, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the charter arrives: commit verbatim with MANIFEST under roles/Pan/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md (pre-charter body to superseded/), file BACKLOG_H0H5.md, leave HOLD."
+    "PAN-01 inventory v0 (repo at SHA, M2 data roots, M1 cluster, SQLite/DuckDB sightings)",
+    "PAN-03 schema pan (identity-checked) + repository catalog",
+    "PAN-04 chunk + full-text index with POSITIVE/NEGATIVE/CHEAT controls",
+    "PAN-05 embeddings under a Fabric lease + in-process vector search",
+    "PAN-08 commit the deep-research report when the notes land"
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "Q-001 HARD: install pgvector on M1 (privileged host change); default real[] + in-process search"
+  ],
   "latest_reports": [
-    "roles/Pan/journal/2026-10-09.md (creation pass)"
-  ]
+    "roles/Pan/journal/2026-10-09.md"
+  ],
+  "operator_questions_file": "roles/Pan/QUESTIONS.md"
 }

@@ -1,10 +1,37 @@
 # Pan backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-10-09. PROVISIONAL: below the schema's 20-item floor
-because the seat has no charter yet. Rewritten in full when it lands.
+Currency: 2026-10-09T11:05Z (charter adopted; rewritten in full from the
+provisional pre-charter list, whose five rows PAN-01..05 were the
+adoption steps and close with the adoption commit). Charter items C1-C9
+are in RESPONSIBILITIES.md s0. Window: 2026-10-09 .. 2026-10-12 (C7).
 
-PAN-01 | Commit the operator's charter verbatim with a MANIFEST | EVIDENCE | beta | S | operator's charter prompt | roles/Pan/prompts/<date>_charter/MANIFEST.md verifies
-PAN-02 | Rewrite RESPONSIBILITIES.md around the charter, pre-charter body to superseded/ | EVIDENCE | beta | S | PAN-01 | committed file + superseded copy
-PAN-03 | Write the dependency surface: each inherited service and sibling seat, used or not, why, fallback | EVIDENCE | beta | S | PAN-01 | section in RESPONSIBILITIES.md
-PAN-04 | Map overlaps with sibling seats before claiming any gap | EVIDENCE | beta | S | PAN-01 | overlap section in RESPONSIBILITIES.md with SHAs
-PAN-05 | File the full backlog in the schema; WORK_STATE leaves HOLD | EVIDENCE | beta | S | PAN-01 | this file with >= 20 rows; WORK_STATE.json state != HOLD
+PAN-01 | Commit inventory v0 of every store (repo tree at a SHA, M2 data roots, M1 cluster databases/schemas/tables, SQLite/DuckDB sightings) as Parquet plus a report | TOOLS | alpha | S | none | roles/Pan/reports/INVENTORY_2026-10-09.md + lake inventory Parquet + pan.store rows with counts
+PAN-02 | Write DATA_ARCHITECTURE v0.1: which inventoried class goes to which tier (Postgres / pgvector / Parquet / Iceberg) and why, trade-offs measured | TOOLS | alpha | S | PAN-01 | roles/Pan/docs/DATA_ARCHITECTURE.md
+PAN-03 | Create schema pan on M1 (migration 001, identity-checked) and load the repository catalog: one row per tracked blob at a recorded SHA with kind, seat, date, size | TOOLS | alpha | S | none | pan/migrations/001_*.sql + receipt with row counts per kind
+PAN-04 | Build the chunk + full-text index (tsvector + pg_trgm) over every text artifact, with `python -m pan search` and POSITIVE/NEGATIVE/CHEAT controls | TOOLS | alpha | S | PAN-03 | pan/tests/ controls passing + latency receipt
+PAN-05 | Build the embedding pipeline on the M2 GPU under a Fabric lease and the in-process vector fallback; hybrid ranking with the same three controls | TOOLS | alpha | M | PAN-04 | embeddings row count + controls + recall@k on the known-answer set
+PAN-06 | Index git history at origin/main into pan.commit / pan.commit_file and an Iceberg table, for lineage and co-change queries | TOOLS | alpha | S | PAN-03 | row counts equal `git rev-list --count` at the SHA (independent oracle)
+PAN-07 | Stand up Iceberg: SQL catalog in schema pan_iceberg on M1, warehouse under PAN_LAKE; test append, schema evolution, time travel and snapshot rollback with controls | TOOLS | alpha | S | none | pan/tests/test_iceberg + receipt
+PAN-08 | Commit the deep-research report on the adjacent frontier (sources, key works, local models, feeds and limits) | LIT | alpha | S | none | roles/Pan/research/reports/Frontier landscape adjacent to Prometheus.md
+PAN-09 | Build arXiv intake v0 (categories and queries from PAN-08; 3 s spacing; Atom parse) into pan.frontier_item + Iceberg | LIT | alpha | S | PAN-08 | item counts per query + dedup check + rate log
+PAN-10 | Build Hugging Face Hub intake v0 (models, with a local-fit classifier for 16 GB VRAM) into pan.hf_model + Iceberg | LIT | alpha | S | PAN-08 | model rows + classifier controls (known-fit and known-not-fit repos)
+PAN-11 | Build Hugging Face daily-papers intake into pan.frontier_item | LIT | alpha | S | PAN-09 | rows + dedup against arXiv ids
+PAN-12 | Index the M1 cluster's own catalog (every database, schema, table, column, row estimate, comment) so table discovery is a query | TOOLS | alpha | S | PAN-03 | pan.db_table / pan.db_column rows equal to information_schema counts
+PAN-13 | Benchmark the cost being replaced: wall time and bytes read for a repo-wide grep versus pan search, same queries | TOOLS | alpha | S | PAN-04 | receipt with both timings
+PAN-14 | Embed and index the frontier corpus so a seat can ask "what outside work is like this file" | LIT | beta | S | PAN-05, PAN-09 | similar() control: planted paraphrase found
+PAN-15 | Build pivot queries: similar(path), cochange(path), lineage(path), recent(seat), with known-answer tests | TOOLS | beta | M | PAN-05, PAN-06 | pan/tests/test_pivot + receipt
+PAN-16 | Consolidate experiment result sets (JSONL/CSV/JSON ledgers under the repo) into typed Parquet/Iceberg tables, source pointers kept | TOOLS | beta | M | PAN-01, PAN-07 | per-set row counts equal source line counts
+PAN-17 | Make refresh incremental (only blobs changed since the last indexed SHA) as a bounded loop with a productivity signal | TOOLS | beta | S | PAN-04 | refresh receipt; non-productive bound declared in MONITORS.md row
+PAN-18 | Ship a Claude Code skill (.claude/skills/pan-search) so every seat queries the index instead of scanning | TOOLS | beta | S | PAN-05 | skill file + a cold-session test transcript
+PAN-19 | Build the local-model smoke-test harness (pull, load, fixed probe set, tokens/s, VRAM, pass rate) under a lease | TOOLS | beta | M | PAN-10 | results table for >= 5 models
+PAN-20 | Index comms messages read-only into chunks so the program's conversation is searchable | TOOLS | beta | S | PAN-04 | rows = comms.messages count at a timestamp
+PAN-21 | Write the cross-host collector (stat + hash of a host's data roots into pan.store) | TOOLS | beta | S | Q-004 for running it off M2 | script + M2 run receipt
+PAN-22 | Write the data dictionary generated from the live pan schema, with lineage of every table | EVIDENCE | beta | S | PAN-03 | roles/Pan/docs/DATA_DICTIONARY.md regenerated by a command
+PAN-23 | Status report every 6 hours of activity and a closing report at the end of the window | EVIDENCE | alpha | S | none | roles/Pan/reports/STATUS_*.md
+PAN-24 | Review packet after inventory + catalog + search land | EVIDENCE | alpha | S | PAN-05 | roles/Pan/reports/REVIEW_PACKET_*.txt
+PAN-25 | Report SQLite/DuckDB sightings found by the inventory (standing operator request) | EVIDENCE | alpha | S | PAN-01 | section in the inventory report with path, size, mtime, owner
+PAN-26 | Index the evidence wiki through its API (never SQL) | TOOLS | beta | S | Mnemosyne API availability | rows + API version in receipt
+PAN-27 | Export atlas.* (read-only) to Parquet snapshots so Atlas's record has an analytical copy, after telling Atlas | TOOLS | 1.0 | S | Atlas ack | snapshot manifest
+PAN-28 | Install pgvector on M1 and migrate real[] embeddings to vector + HNSW | TOOLS | 1.0 | XL | NEW: operator Q-001 (privileged host change on M1) | migration + recall equal to exact search on controls
+PAN-29 | Decide lake location and cross-host sharing | TOOLS | 1.0 | XL | NEW: operator Q-003 (topology) | DATA_ARCHITECTURE revision
+PAN-30 | Decide heartbeat/dispatch integration with Aporia | EVIDENCE | 1.0 | XL | NEW: operator Q-002 | WORK_STATE + fleet queue row or recorded no

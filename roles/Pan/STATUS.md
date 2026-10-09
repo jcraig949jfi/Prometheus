@@ -1,16 +1,22 @@
 # Pan status
 
-Currency: 2026-10-09T10:40Z (from the creation tool's clock, UTC).
+Currency: 2026-10-09T11:05Z.
 
-seat state: ACTIVE (creation pass). Charter PENDING the operator.
-  WORK_STATE.json: HOLD (no READY work without a charter; base role
-  2a F), MWO-0004 @ 25a486d44; fleet order CWO-2026-09-30C.
-what it asserts: PRESENT (comms boot Pan[spectrex5-f20b5eac] on the M1 store, heavy tier, claude-opus-5-5), ACTIVE (this pass), NOT PRODUCTIVE (no
-  domain output), VALID not applicable.
-host: SPECTREX5; worktree pan-base-role-adopt-2026-10-09, branch pan/base-role-adopt-2026-10-09,
-  base 970399844, dirty False at start.
-monitors owned or fed: none.
-fleet queue: no Pan row in ops/fleet/QUEUE.json.
-blockers: none; waiting on the charter is not a block (no lane yet).
-next executable action: commit the operator's charter verbatim when it
-  arrives, rewrite RESPONSIBILITIES.md around it, file the first backlog.
+seat state: ACTIVE (charter adopted 2026-10-09; window to 2026-10-12).
+  WORK_STATE.json: ACTIVE, MWO-0004; fleet order CWO-2026-09-30C.
+what it asserts: PRESENT (comms Pan[m2-f20b5eac] on the M1 store), ACTIVE
+  (charter adopted, environment built), NOT YET PRODUCTIVE (no index
+  rows yet), VALID not applicable until the first controls run.
+host: SPECTREX5; worktree pan-base-role-adopt-2026-10-09, branch
+  pan/base-role-adopt-2026-10-09, base 970399844.
+environment: seat venv on M2 NVMe with pyarrow 26.0.0, pyiceberg 0.12.0,
+  sentence-transformers 6.1.0, torch 2.11.0+cu128 (CUDA available).
+measured facts: M1 cluster PostgreSQL 17.9 (Windows); pgvector absent
+  (Q-001); databases lmfdb 365 GB, prometheus_fire 3477 MB,
+  prometheus_sci 320 MB; 33 schemas in prometheus_fire.
+monitors owned or fed: none yet.
+running: deep research on the adjacent frontier (5 notes).
+blockers: none for the seat. Q-001 (pgvector) is a hard gate on one
+  item only; its default is running.
+next executable action: PAN-01 inventory v0.
+questions for the operator: roles/Pan/QUESTIONS.md (6 open).
