@@ -212,7 +212,13 @@ def _ts(epoch):
     return dt.datetime.fromtimestamp(epoch, dt.timezone.utc) if epoch is not None else None
 
 
-def run(sha: str = "origin/main", write_db: bool = True, out=print):
+def run(sha: str = "origin/main", write_db: bool = True, out=print, fs_only: bool = False):
+    """fs_only=True (PAN-21, the cross-host collector): only this host's data roots and
+    canonical-checkout untracked files (PAN_DATA_ROOTS / PAN_CANONICAL or pan/config.json),
+    written to pan.store as host rows and to pan.artifact as source='fs' rows; no repository
+    tree, no cluster scan. Read-only toward every source."""
+    if fs_only:
+        return run_fs_only(write_db=write_db, out=out)
     import pyarrow as pa
     import pyarrow.parquet as pq
     from . import db
@@ -382,3 +388,60 @@ def _write_db(run_id, sha, repo_rows, root_summ, sightings, dbs, rels, cols, cou
         counts["artifact_rows_removed"] = removed
         cur.execute("update pan.run set finished_at=now(), status='OK', counts=%s where run_id=%s",
                     (json.dumps(counts, default=str), run_id))
+
+
+def run_fs_only(write_db=True, out=print):
+    import json
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    from psycopg2.extras import execute_values
+    from . import db
+    h = config()["host"]
+    roots = list(h.get("data_roots", []))
+    if not roots and not h.get("canonical_checkout"):
+        raise SystemExit("no data roots for host {}: set PAN_DATA_ROOTS (os.pathsep-separated) "
+                         "and optionally PAN_CANONICAL".format(host()))
+    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_id = "invfs-{}-{}".format(stamp, host().lower())
+    rows, summ = [], []
+    for root in roots:
+        if not os.path.isdir(root):
+            summ.append(dict(root=root, files=0, bytes=0, exists=False))
+            continue
+        fr, err = walk(root)
+        summ.append(dict(root=root, files=len(fr), bytes=sum(r[1] for r in fr), errors=err, exists=True))
+        rows += [(root, p, s, m) for p, s, m in fr]
+        out("fs: {} files under {} ({} errors)".format(len(fr), root, err))
+    canon = h.get("canonical_checkout")
+    if canon and os.path.isdir(canon):
+        fr, err, n_tracked = canonical_untracked(canon)
+        fr = [r for r in fr if not any(r[0].startswith(x.rstrip("/") + "/") for x in roots)]
+        summ.append(dict(root=canon + " (untracked only)", files=len(fr), bytes=sum(r[1] for r in fr), errors=err,
+                         exists=True, tracked_in_checkout=n_tracked))
+        rows += [(canon + " (untracked)", p, s, m) for p, s, m in fr]
+        out("fs: {} untracked files in the canonical checkout".format(len(fr)))
+    try:
+        d = lake() / "inventory" / run_id
+        d.mkdir(parents=True, exist_ok=True)
+        pq.write_table(pa.Table.from_pylist([dict(root=r, path=p, size_bytes=s, mtime=_ts(m), ext=ext_of(p))
+                                             for r, p, s, m in rows]), d / "fs_files.parquet", compression="zstd")
+    except RuntimeError:
+        pass   # no lake on this host: the database rows are the record
+    if write_db:
+        hn = host()
+        with db.cursor(statement_timeout_ms=900000) as cur:
+            cur.execute("insert into pan.run (run_id, kind, host, params) values (%s,'inventory-fs',%s,%s)",
+                        (run_id, hn, json.dumps({"roots": roots, "canonical": canon})))
+            execute_values(cur, """insert into pan.store (host, kind, locator, size_bytes, n_objects, detail, run_id)
+                values %s on conflict (host, kind, locator) do update set size_bytes=excluded.size_bytes,
+                n_objects=excluded.n_objects, detail=excluded.detail, run_id=excluded.run_id, observed_at=now()""",
+                [(hn, "fs_root", s["root"], s.get("bytes"), s.get("files"), json.dumps(s), run_id) for s in summ])
+            execute_values(cur, """insert into pan.artifact (source, host, path, size_bytes, ext, kind, mtime, run_id)
+                values %s on conflict (source, host, path) do update set size_bytes=excluded.size_bytes,
+                mtime=excluded.mtime, run_id=excluded.run_id, updated_at=now()""",
+                [("fs", hn, p, s, ext_of(p), classify(p.split("/", 1)[-1])[0], _ts(m), run_id) for r, p, s, m in rows],
+                page_size=5000)
+            cur.execute("update pan.run set finished_at=now(), status='OK', counts=%s where run_id=%s",
+                        (json.dumps({"files": len(rows), "roots": summ}, default=str), run_id))
+    out("done {}: {} files".format(run_id, len(rows)))
+    return run_id, len(rows)

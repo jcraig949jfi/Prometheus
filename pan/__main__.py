@@ -36,6 +36,7 @@ def main(argv=None):
     p = sub.add_parser("inventory")
     p.add_argument("--sha", default="origin/main")
     p.add_argument("--no-db", action="store_true")
+    p.add_argument("--fs-only", action="store_true", help="PAN-21 cross-host collector: this host's data roots only")
     p = sub.add_parser("commits")
     p.add_argument("--sha", default="origin/main")
     p = sub.add_parser("chunk")
@@ -91,7 +92,7 @@ def main(argv=None):
         db.migrate()
     elif a.cmd == "inventory":
         from . import inventory
-        inventory.run(a.sha, write_db=not a.no_db)
+        inventory.run(a.sha, write_db=not a.no_db, fs_only=a.fs_only)
     elif a.cmd == "commits":
         from . import commits
         commits.run(a.sha)
