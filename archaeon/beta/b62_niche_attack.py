@@ -56,7 +56,7 @@ def het_hom(pop, dom, w, s, seed, n=12):
 
 
 def cell(job):
-    world, s, _ = load(); w = NoClock(world); arm = job["arm"]; k = 1 if arm == "SOLO" else 4
+    world, s, _ = load(); w = NoClock(world); arm = job["arm"]; k = 1 if arm == "SOLO" else job.get("k", 4)
     cache = {}
 
     def ev_fn(m, eps, intervention=None, rng_seed=0, reward_mode="per_ask"):

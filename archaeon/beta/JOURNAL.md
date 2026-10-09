@@ -727,6 +727,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   word (.028-.060). PREDICTION (own word top in >= 2/3) MET. Mechanism: a specialist SENSES ONLY ITS OWN POOL --
   'harvest pool i when its word is non-zero, otherwise move'. It is BLIND to the other pools, so the niche is a
   perceptual restriction; partitioning arises because specialists blind to each other's pools stop colliding.
+- B66 STAGED, NOT LAUNCHED (window 3 at ~43 of 48 core-h): group size k=2 / k=8 CONC on P-boom, seeds 6001-6006
+  (B62 k=4 rows are the reference); b62.cell takes job['k'] (default 4 -> B62 reproducibility unchanged). Smoke test
+  passed. ~12 cells ~6 core-h: LAUNCH after the rolling envelope frees (~2026-10-10 00:30Z), under a NEW lease
+  (capture the token). Then B67 bridge: does competition make STATE pay (remember which pools others depleted)?
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
