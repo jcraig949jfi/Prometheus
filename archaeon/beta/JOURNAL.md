@@ -777,6 +777,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (49 min x 11) + B64 7.4 (37 min x 12) + evals ~0.5 = ~42.5 of 48 -> ~5.5 left in window 3. B66 SPLIT: k=2 arm now
   (6 cells, 6 procs, ~3.3 core-h -> ~46); k=8 arm after the window rolls. Lease lse-c2ed7edd7dc3 (TTL 90 min; token
   captured to scratchpad this time). b66 takes a k-list argument (default 2,8). Prediction unchanged (docstring).
+- B66 k=2 RESULT (13:35Z; lease lse-c2ed7edd7dc3 RELEASED with token): entropy CONC2 1.07/1.44/1.09/1.46/.70/1.40
+  (mean 1.194) vs CONC4 (B62) mean 1.228 vs SOLO .990. CONC2 - SOLO < .2 in 4/6 -> prediction part 2 MET; part 1
+  (entropy rises with k) only marginal between k=2 and 4 (k=8 pending). HARDENED RARE-TYPE TEST (B70 criteria, 4-group
+  yardstick): CONC2 0/6 wins, 6/6 testable -- every k=2 population shows DOMINANCE (rare>common one way, significantly
+  rare<common the other: e.g. 6004 +.143 / -.075, 6005 +.174 / -.078). Contrast k=4: 4/6 on two worlds.
+  READING: negative frequency dependence needs CROWDING -- pairs on 3 pools rarely collide, selection sees dominance.
+  Second instance (after SHAM) where ENTROPY is high but NFD is absent: entropy is not a niche readout; the rare-type
+  test is. CAVEAT: rare-type yardstick is 4-groups while k=2 pops were selected in pairs (a pair-level test is
+  1 rare vs 1 common = not definable as rare/common); the claim is 'pair selection does not produce the k=4 NFD
+  structure'. Window 3 tally ~46 of 48. k=8 arm after the window rolls.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
