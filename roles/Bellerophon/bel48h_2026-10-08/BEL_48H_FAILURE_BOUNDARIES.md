@@ -35,3 +35,11 @@ Instrument defects found and fixed before the affected analysis was read: DEF-00
 short-tape slice shrink in Func; `comp` name collision with World.comp. Analysis defect found after the results were
 read: W4-P5 tag-case (reported both ways). Prediction defects: W1-P7 written from a withdrawn figure; W2-P3 from a 3-run
 pilot. Hand-written future timestamps in the prereg (three errata). Calibration ledger: roles/Bellerophon/calibration/LEDGER.md.
+
+## D. Added 2026-10-09
+
+| claim | holds when | stops when | evidence |
+|---|---|---|---|
+| uptake helps origination (implicit in 'uptake is a route') | per specimen, the taken-up bytes are necessary | at population level: blocking uptake RAISES origins 61 -> 84 of 800 pairs (p 0.018) | W6 block 4 U |
+| budget-coupled architecture favoured under payment + HIGH mutation | one specimen pair (W5 block 3) | an independent pair (W6 block 4 X): separated wins 4/4 decided seeds | CL-16 |
+| payment favours compute-first architecture at MED | two independent pairs (23/24, 24/24) | -- | CL-16 |

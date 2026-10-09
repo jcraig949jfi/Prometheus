@@ -38,6 +38,19 @@ MED brings S to parity (0.45); under HIGH mutation only payment keeps replicator
 architecture payment favours flips with the mutation regime. PROVISIONAL (one specimen pair; attribution by founder tags
 degrades at HIGH mutation).
 
+## W6 block 4 U -- is uptake necessary? (prereg s13; 1,600 runs, 0 voids, 4.95 h)
+
+800 seed-pairs (PARTIAL 400, PAIR 400), normal vs UPTAKE BLOCKED (partner bytes cannot be imported into the own tape;
+the ablation acted in 800/800 blocked runs, median 905 bytes reverted per run). U-P1 HOLDS (0 uptake origins blocked; 9
+normal). U-P2 HOLDS and overshoots: origins blocked 84 vs normal 61 (+38%); discordant pairs 55 blocked-only vs 32
+normal-only, McNemar p = 0.018; both physics (PARTIAL 49 vs 37, PAIR 35 vs 24). Not a survival artefact: blocked worlds
+go extinct MORE (531 vs 488 of 800) with fewer births (median 846 vs 920); origin timing unchanged (median tick 63 vs 64).
+Causes, blocked vs normal: MUTATION 47 vs 32, BORN_ASSEMBLY 19 vs 8, SELF_MOVE 15 vs 11.
+READING: uptake is a real route to the first replicator (9/61 here, 13/85 in W6 C1) but on balance it SUPPRESSES
+origination -- removing it raises the origin rate. Hypothesis (untested): importing partner bytes mostly overwrites the
+importer's own cryptic precursor. Class: CAUSALLY_CONFIRMED (net suppressive effect; paired intervention, 800 pairs, two
+physics); mechanism of suppression PROVISIONAL.
+
 ## W6 block 4 X -- the same competition with an INDEPENDENT specimen pair (prereg s13; 192 runs, 0 voids)
 
 E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E share ON 0.07 vs OFF 0.60; ON < OFF in
@@ -108,7 +121,8 @@ Class: REPRODUCED (85 independent unseen populations).
    complete a copy routine in the importer.
 2. Conditions: any endogenous physics (the partner is in the window either way).
 3. Causal dependencies: each taken-up byte individually necessary (reversion) in 13/13 W6 uptake origins.
-4. Failure boundaries: not yet tested by blocking uptake (next experiments).
+4. Failure boundaries: blocking uptake removes this route (0 origins) yet RAISES total origination by 38% (W6 block 4 U):
+   uptake is a creative route and a net suppressor at once.
 5. Specimen: w2_00345 -- 08 a0 .. 15 imported into positions 4, 5, 10 in one execution, each byte originally made by a
    different mutation in a different organism.
 6. Independent origins: 5 runs / 5 seeds (W3a), 13/85 (W6).
