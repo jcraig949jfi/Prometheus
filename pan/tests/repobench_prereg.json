@@ -58,6 +58,34 @@
       "before_any_model_result": true,
       "change": "Matching semantics of the selection.test_files exclusion list, which as written ('contains one of') would drop every file that calls dict.keys(). Module tokens (psycopg2, psycopg, requests, redis, httpx, aiohttp, urllib.request, socket, sqlalchemy, duckdb, boto3, openai, anthropic, ollama, transformers, torch, tensorflow, jax, subprocess, multiprocessing, keys) match an IMPORT of that module or a submodule of it (import X, import X.y, from X import ..., from X.y import ...; urllib.request also as from urllib import request); get_key matches as an identifier (word boundary); EW_DB_HOST, 192.168., D:/, D:\\, C:/, C:\\, /d/, Prometheus-data match as substrings of the source text.",
       "evidence": "found while writing the miner, before any file was read for mining (commit 1e5276818 froze the text)"
+    },
+    {
+      "id": "A2",
+      "date": "2026-10-09",
+      "after_controls": true,
+      "before_any_model_result": true,
+      "change": "PRIMARY task set = the 160 frozen tasks (manifest 46e2343aa) minus the 18 whose test file passes with a `pass` body: n = 142. The 160-task result is reported as SECONDARY. On the 142 the pass-body CHEAT control holds BY CONSTRUCTION and is no longer evidence; it is replaced by CHEAT2, frozen here before it is run: a body that returns the function's first parameter unchanged (None when it has no parameter) passes at most 10 percent of the 142 tasks, else no model result is reported. POSITIVE (160/160) and NEGATIVE (1/160) carry over. The comparison rule and P1-P3 apply to the primary set.",
+      "evidence": "roles/Pan/reports/repobench/CONTROLS_20261009T212039Z.json: CHEAT pass-body 18/160 = 11.25 percent > the 10 percent bar (the frozen control FAILED). Failure shape: validators and guards whose tests exercise only the accepting path (None read as 'no problems' / 'no error'), and availability probes whose None makes the test skip its live branch. The stub gate used `raise NotImplementedError`, which these tests do see.",
+      "excluded_tasks": [
+        "RB-031",
+        "RB-039",
+        "RB-048",
+        "RB-050",
+        "RB-053",
+        "RB-062",
+        "RB-067",
+        "RB-068",
+        "RB-073",
+        "RB-075",
+        "RB-084",
+        "RB-091",
+        "RB-106",
+        "RB-113",
+        "RB-119",
+        "RB-121",
+        "RB-134",
+        "RB-142"
+      ]
     }
   ]
 }
