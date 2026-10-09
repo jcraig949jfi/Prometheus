@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-09T11:40Z. The operator reviews this file about every 6
+Currency: 2026-10-09T13:40Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with
@@ -83,6 +83,18 @@ Q-007 | PREF (shared-cluster disk) | 2026-10-09
   shell commands on M1. What budget may Pan use on M1?
   DEFAULT meanwhile: Pan caps itself at 10 GB on M1 and keeps bulk data
   (Parquet/Iceberg files, vector shards) in the lake on M2's NVMe.
+  ANSWER:
+
+Q-008 | PREF (cold data) | 2026-10-09
+  The April cold data (cartography/convergence/data, 128.8 GB of JSON Lines
+  in the canonical checkout on M2) would shrink to about 22 GB as Parquet,
+  measured on samples (reports/COLD_DATA_CONVERSION_SAMPLE_2026-10-09.md:
+  per-family ratios 4.0x to 15.5x; one family must NOT be typed, it grows
+  2.2x). Do you want Pan to (a) convert these families into the lake as
+  Parquet/Iceberg with a line-count oracle, sources untouched; (b) do (a)
+  and then have the sources archived or removed (your call alone); or (c)
+  leave them as they are until a seat asks for them?
+  DEFAULT meanwhile: (c). Nothing converted beyond the measured samples.
   ANSWER:
 
 ## ANSWERED
