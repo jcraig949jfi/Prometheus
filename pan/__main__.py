@@ -20,6 +20,7 @@
   dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
   codebench controls|run M    PAN-33: HumanEval+ pass@1 for a local model (protocol frozen in tests/)
+  repobench mine|controls|run M  PAN-34: the program's own functions under its own tests (frozen in tests/)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -93,6 +94,12 @@ def main(argv=None):
     p.add_argument("model", nargs="?")
     p.add_argument("--think", action="store_true")
     p.add_argument("--budget", type=int, default=1024)
+    p = sub.add_parser("repobench")
+    p.add_argument("what", choices=["mine", "controls", "run"])
+    p.add_argument("model", nargs="?")
+    p.add_argument("--think", action="store_true")
+    p.add_argument("--budget", type=int, default=1024)
+    p.add_argument("--workers", type=int, default=4)
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
     p.add_argument("--pull", action="store_true")
@@ -198,6 +205,14 @@ def main(argv=None):
             codebench.controls()
         else:
             codebench.run(a.model, think=a.think, budget=a.budget)
+    elif a.cmd == "repobench":
+        from . import repobench
+        if a.what == "mine":
+            repobench.mine(workers=a.workers)
+        elif a.what == "controls":
+            repobench.controls(workers=a.workers)
+        else:
+            repobench.run(a.model, think=a.think, budget=a.budget, workers=a.workers)
     elif a.cmd == "modelbench":
         from . import modelbench
         modelbench.run(a.models, pull=a.pull, think=a.think, budget=a.budget)

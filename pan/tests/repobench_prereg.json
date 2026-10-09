@@ -49,5 +49,15 @@
     "P1: every configuration's in-house pass@1 is LOWER than its HumanEval+ pass@1 (PAN-33: 0.853, 0.853, 0.773, 0.779; 0.908 for gpt-oss at 4096) by at least 0.15. Loses if any configuration is within 0.15 of (or above) its HumanEval+ score.",
     "P2: the HumanEval+ split transfers: both of gpt-oss:20b@1024 and qwen2.5-coder:14b score at least as high in-house as both of gemma3:12b and qwen3:8b. Loses if either lower-pair model beats either upper-pair model.",
     "P3: gpt-oss:20b@4096 scores at least gpt-oss:20b@1024 in-house (the budget effect seen on HumanEval+ holds). Loses if 4096 is lower."
+  ],
+  "amendments": [
+    {
+      "id": "A1",
+      "date": "2026-10-09",
+      "before_mining": true,
+      "before_any_model_result": true,
+      "change": "Matching semantics of the selection.test_files exclusion list, which as written ('contains one of') would drop every file that calls dict.keys(). Module tokens (psycopg2, psycopg, requests, redis, httpx, aiohttp, urllib.request, socket, sqlalchemy, duckdb, boto3, openai, anthropic, ollama, transformers, torch, tensorflow, jax, subprocess, multiprocessing, keys) match an IMPORT of that module or a submodule of it (import X, import X.y, from X import ..., from X.y import ...; urllib.request also as from urllib import request); get_key matches as an identifier (word boundary); EW_DB_HOST, 192.168., D:/, D:\\, C:/, C:\\, /d/, Prometheus-data match as substrings of the source text.",
+      "evidence": "found while writing the miner, before any file was read for mining (commit 1e5276818 froze the text)"
+    }
   ]
 }

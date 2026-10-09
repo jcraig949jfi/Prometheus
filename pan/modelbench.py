@@ -122,10 +122,10 @@ def ollama_version():
         return None
 
 
-def generate(model, prompt, timeout=900, think=False, budget=1024):
+def generate(model, prompt, timeout=900, think=False, budget=1024, num_ctx=None):
     import requests
     body = dict(model=model, prompt=prompt, stream=False, think=think,
-                options=dict(temperature=0, seed=1, num_ctx=max(4096, budget + 1024), num_predict=budget))
+                options=dict(temperature=0, seed=1, num_ctx=num_ctx or max(4096, budget + 1024), num_predict=budget))
     r = requests.post(OLLAMA + "/api/generate", json=body, timeout=timeout)
     if r.status_code == 400 and "think" in r.text:      # model without a thinking switch
         body.pop("think")
