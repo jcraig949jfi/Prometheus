@@ -348,3 +348,15 @@ Endpoint: a first FUNC event within 100 ticks. Analysis tools/analyze_n1.py (com
 DISCLOSURE (2026-10-08T21:54:31Z): the N1 analysis smoke run (8 runs, pilot seeds 77,995,000+, 20 ticks, 2 precursors per class,
 excluded) printed per-class rates before the real runs: NEEDLE VLOW 0.0 / HIGH 0.5, MOVE_RICH 1.0 / 1.0 -- the predicted
 direction, at n far too small to inform the frozen thresholds above, which were written before the smoke run.
+
+## 15. B1 -- budget coupling versus the execution budget (frozen 2026-10-09T01:51:36Z, before any run)
+
+Plan tools/plan_b1.py: 600 runs, sha256 bafb99833cf4facc90ab0ea9ee1722000184fe50a860a06c2a2eacdb7724a945; W4 M2 setting
+(seeded copiers, v3, ECHO, K40, ON) at budget 192 / 256 / 384, 200 seeds each (seed k shared across budgets).
+Classifier tools/analyze_b1.budget_class_b: BUDGET_COUPLED at the run's budget b = a shared byte whose knockout kills
+competence at b but not at 2b. Noted before freezing: on w4_00735 the unbounded copy (C = 0) is budget-rescued at 256 but
+not at 384 (at 384 it is classified OTHER_SHARED): the 256-byte copy also wraps over the organism's own code and the
+inputs, so 'coupling' has a COST component (budget) and a DAMAGE component (wrap-around). B1 does not separate them.
+- B-P1: the BUDGET_COUPLED share of competent dominant machines is larger at budget 192 than at 384 (Fisher one-sided
+  p < 0.05).
+- B-P2 (descriptive): shares at 192 / 256 / 384 monotone non-increasing.
