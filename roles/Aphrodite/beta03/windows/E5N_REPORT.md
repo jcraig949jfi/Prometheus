@@ -102,3 +102,32 @@ Per CLOSE_RULE (row 4): **MIGRATE_SUBSTRATE**, with:
 - KILL_CRITERION_HESTIA_PROXY = FIRES.
 
 Wording that recursion is refuted is not used.
+
+## 6. CORRECTIONS from the independent adversarial review (beta03/reviews/INDEPENDENT_ADVERSARIAL_REVIEW.md)
+The labels are unchanged; all were re-derived and confirmed. Wording and interpretation are corrected:
+1. **Q6, corrected.**
+   - "2, in a single pair" violates CLOSE_RULE's wording requirement. **Q6 = NOT ESTABLISHED in this engine.**
+   - The pair-99 depth-2 acquisition was never attacked: the E6 dependency ablation runs only on the positive branch.
+   - Context: the ordinary arm in pair 99 selected the same schema in plain form. It instantiates 6 bodies vs 167 and
+     did not reach the family.
+2. **Q4, corrected.**
+   - "A family that only a promotion-built body solves" is wrong. W8 families have base-grammar witnesses. The correct
+     statement is that the FIRST qualified program found lay outside G5.
+   - **New finding:** all 23 eligible promoted candidates (8 pairs) expand to schemas the SAME recipient also derived in
+     plain form. Promotion adds deeper hole fills, not new candidate schemas.
+   - **The limit is upstream of selection** (candidacy / representation).
+3. **"SELECTION 15/22", corrected.**
+   - The frozen E6 runner counts every pair that derived but did not select. By the prereg's own definition ("eligible
+     and rejected by g11") the split is:
+     - **6 pairs** rejected an eligible promoted candidate;
+     - **8 pairs** had none eligible;
+     - **1 pair** had bare re-expressions only.
+   - Pair 116 is a tie-break between two spellings with identical savings.
+   - **The s3 pair-96 example is wrong:** the gcd candidate was INELIGIBLE.
+4. **The sham control is degenerate.**
+   - The sham recipient observes 0 programs in 19/22 pairs. On the sham residual it acquires 1 family vs 33 for the
+     pristine promotable arm.
+   - The significant SHAM test shows only that the g11 recipient learns at all.
+   - It also shows that **a non-solving inherited library interferes strongly**.
+   - Hypothesis (untested): the inherited prefix (>= 57,960 candidates in 21/22 g11 and all sham libraries) exceeds the
+     30k observation escrow.

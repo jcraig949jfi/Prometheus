@@ -67,3 +67,9 @@ pre-data). Evidence tier 2.
   open design risk recorded in E4_DESIGN s5. It is plausibly part of the gap to g11, but not tested here.
 - Per CLOSE_RULE, E2 sets qualifiers only: the TFS-1 M2 g12 arm stays descriptive, because G12_GENERAL_RULE is not
   YES.
+
+## 5. CORRECTIONS from the independent adversarial review (labels unchanged)
+- g12 is a DESIGNED rule. "Learns to reject memorisation" overclaims. The correct statement: **an endpoint-aligned
+  acceptance rule rejects memorisation without naming it** (18/18 attractive seeds; also at lambda 0).
+- INFERIOR is effectively a two-sided test at alpha 0.10 (one-sided p 0.048 in the opposite direction). It is not
+  Holm-significant.

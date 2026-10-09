@@ -75,3 +75,12 @@ residual learning headroom.**
   opportunity set**. The own-start-censored endpoint mainly measures how much the inheritance already solved.
 - The natural-world question that remains is whether promotion lets inheritance ENABLE learning on the 89% of residual
   opportunities that no arm reaches. That is E5-N's P1, run after the compute roll-off.
+
+## 6. CORRECTIONS from the independent adversarial review (labels unchanged)
+- **The directive's residual definition is "unsolved by BOTH starting libraries"** (pairwise). On that residual the
+  interference contrast is **-13 (two-sided p 0.17)**, not -7. It is still not significant.
+- **Headroom share:** on a consistent per-family basis it is **0.80-0.89**, not 0.93. SATURATION_SUPPORTED holds
+  either way.
+- **"Interference not supported" applies to the g11 library.** E5-N's sham arm shows that a NON-solving inherited
+  library interferes strongly with observation. The mechanism is plausibly the inherited prefix exceeding the 30k
+  escrow (untested).
