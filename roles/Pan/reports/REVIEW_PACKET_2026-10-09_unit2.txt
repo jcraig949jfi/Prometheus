@@ -42,7 +42,7 @@ oracle; [E] estimate. Unit 1 packet: REVIEW_PACKET_2026-10-09_unit1.txt.
   run (set, n)        config                      R@10   R@1    note
   v1 (H1, 20)         fts OR+coverage, bge-small, 0.75   0.45   FAIL (bar 0.80)
                       RRF, bge-reranker-v2-m3
-  v2 dev (42)         + Qwen3 doc vectors         0.81          selected (v1 0.762)
+  v2 dev (42)         + Qwen3 doc vectors         0.81         picked; v1 0.762
   v2 (H2, 20)         as selected                 0.75   0.40   FAIL; = v1/query
   v2.1 (CB-200, 200)  v1 + rarest-12 lexeme cap   0.765  0.465  no bar
                       v2 + same cap               0.765  0.460  152/1/1, p 1.0
