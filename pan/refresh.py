@@ -51,13 +51,22 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     # 6. vectors for what has none
     ev = embed.run(out=lambda *_: None) if embed_chunks else {"embedded": 0}
     ed = embed.run_docs(out=lambda *_: None) if embed_docs else {"embedded": 0}
+    # 6b. derived tables that depend on chunks: lexeme frequencies (full-text cap) and links
+    lx_t = time.time()
+    with db.cursor(statement_timeout_ms=1800000) as cur:
+        cur.execute("truncate pan.lexeme_df")
+        cur.execute("insert into pan.lexeme_df select word, ndoc, nentry from ts_stat('select tsv from pan.chunk')")
+    from . import links
+    lk = links.run(out=lambda *_: None)
+    derived_s = round(time.time() - lx_t, 1)
     # 7. caches rebuilt against the ids that exist now
     search._CACHE.clear()
     search._DCACHE.clear()
     search.load_matrix(embed.default_model(), refresh=True)
     res = dict(noop=False, from_sha=cat, to_sha=head, artifacts_changed=changed, artifacts_removed=removed,
                commits_total=c.get("commits"), chunks_new=ch.get("chunks"), files_rechunked=ch.get("files_chunked"),
-               chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"),
+               chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"), links=lk.get("links"),
+               derived_seconds=derived_s,
                seconds=round(time.time() - t0, 1))
     out(json.dumps(res))
     return res

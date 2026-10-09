@@ -18,7 +18,9 @@ import re
 import subprocess
 import time
 
-from . import REPO, host
+from . import REPO, config, host
+
+EXCLUDE = tuple(config().get("index_exclude", {}).get("prefixes", []))
 
 TEXT_EXT = {".md", ".txt", ".rst", ".tex", ".org", ".py", ".rs", ".js", ".ts", ".c", ".h", ".cpp", ".hpp", ".go",
             ".java", ".jl", ".r", ".lean", ".sql", ".sh", ".bat", ".ps1", ".cmd", ".toml", ".yaml", ".yml",
@@ -177,6 +179,8 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
             rows, updates = [], []
             for aid, path, bsha, ext, size, _ in part:
                 ok, why = eligible(ext, size)
+                if ok and path.startswith(EXCLUDE):
+                    ok, why = False, "excluded_fixture"
                 if not ok:
                     skipped[why] = skipped.get(why, 0) + 1
                     updates.append((aid, False, None, 0, bsha))

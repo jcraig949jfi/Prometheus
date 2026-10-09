@@ -20,6 +20,20 @@
       ]
     }
   },
-  "databases": ["prometheus_fire", "prometheus_sci", "lmfdb"],
-  "environment": "prometheus-canonical"
+  "databases": [
+    "prometheus_fire",
+    "prometheus_sci",
+    "lmfdb"
+  ],
+  "environment": "prometheus-canonical",
+  "index_exclude": {
+    "_why": "Evaluation fixtures and their results contain the test queries and answer paths verbatim; indexing them lets the index find its own answer key (observed 2026-10-09 after the first refresh: three CONTROLS_*.json files ranked 1-3 for a held-out query). Excluded from chunking; still catalogued as artifacts.",
+    "prefixes": [
+      "roles/Pan/reports/controls/",
+      "pan/tests/known_answers.json",
+      "pan/tests/heldout_answers.json",
+      "pan/tests/heldout2_answers.json",
+      "pan/tests/commit_bench_cb200.json"
+    ]
+  }
 }

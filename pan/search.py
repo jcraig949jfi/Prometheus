@@ -119,12 +119,15 @@ def load_matrix(model, refresh=False):
         return _CACHE[model]
     from . import db
     with db.cursor() as cur:
-        cur.execute("select count(*) from pan.embedding where model = %s", (model,))
-        n_db = cur.fetchone()[0]
+        cur.execute("select chunk_id from pan.embedding where model = %s", (model,))
+        live = np.fromiter((r[0] for r in cur.fetchall()), dtype=np.int64)
+    n_db = len(live)
     shards = lake() / "vectors" / "shards" / model.replace("/", "__")
     if shards.is_dir():
-        # local Parquet shards written by embed.run; used only when their row count
-        # equals the database's (the database is the cross-host truth)
+        # local Parquet shards written by embed.run, COMPACTED against the chunk ids that exist
+        # in the database now (re-chunked files leave stale ids in older shards); later shards
+        # win for a repeated id; used only if every live id is covered (the database is the
+        # cross-host truth)
         import pyarrow.parquet as pq
         ids, mats = [], []
         for f in sorted(shards.glob("*.parquet")):
@@ -132,15 +135,20 @@ def load_matrix(model, refresh=False):
             ids.append(t.column("chunk_id").to_numpy())
             mats.append(np.asarray(t.column("vec").combine_chunks().flatten().to_numpy(zero_copy_only=False),
                                    dtype=np.float16).reshape(t.num_rows, -1))
-        if ids and sum(len(i) for i in ids) == n_db:
-            ids = np.concatenate(ids)
-            m = np.vstack(mats)
-            order = np.argsort(ids)
-            ids, m = ids[order], m[order]
-            p.parent.mkdir(parents=True, exist_ok=True)
-            np.savez(p, ids=ids, m=m)
-            _CACHE[model] = (ids, m)
-            return _CACHE[model]
+        if ids:
+            ids, m = np.concatenate(ids), np.vstack(mats)
+            _, last = np.unique(ids[::-1], return_index=True)
+            keep = np.sort(len(ids) - 1 - last)
+            ids, m = ids[keep], m[keep]
+            mask = np.isin(ids, live)
+            ids, m = ids[mask], m[mask]
+            if len(ids) == n_db:
+                order = np.argsort(ids)
+                ids, m = ids[order], m[order]
+                p.parent.mkdir(parents=True, exist_ok=True)
+                np.savez(p, ids=ids, m=m)
+                _CACHE[model] = (ids, m)
+                return _CACHE[model]
     conn = db.connect()
     try:
         cur = conn.cursor("pan_vec_dump")
@@ -204,8 +212,9 @@ def load_doc_matrix(model, refresh=False):
     if model in _DCACHE and not refresh:
         return _DCACHE[model]
     with db.cursor() as cur:
-        cur.execute("select count(*) from pan.doc_embedding where model = %s", (model,))
-        n_db = cur.fetchone()[0]
+        cur.execute("select artifact_id from pan.doc_embedding where model = %s", (model,))
+        live = np.fromiter((r[0] for r in cur.fetchall()), dtype=np.int64)
+    n_db = len(live)
     shards = lake() / "vectors" / "docs" / model.replace("/", "__")
     ids, m = None, None
     if shards.is_dir():
@@ -222,6 +231,8 @@ def load_doc_matrix(model, refresh=False):
             _, last = np.unique(ids[::-1], return_index=True)
             keep = len(ids) - 1 - last
             ids, m = ids[keep], m[keep]
+            mask = np.isin(ids, live)          # drop vectors of artifacts no longer catalogued
+            ids, m = ids[mask], m[mask]
             if len(ids) != n_db:
                 ids, m = None, None
     if ids is None:
