@@ -3,7 +3,7 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-08T10:20:00Z",
+  "updated_at_utc": "2026-10-08T23:50:00Z",
   "state": "ACTIVE",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
@@ -103,12 +103,66 @@
       "status": "DONE",
       "verdict": "H-TASK SUPPORTED (D>one-shot p 6e-10, D>R p .004)",
       "report": "theseus/runs/task_census_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus31b_task_hard",
+      "status": "DONE",
+      "verdict": "H-TASK-HARD SUPPORTED; H-CARRIER not supported"
+    },
+    {
+      "id": "theseus33_degeneracy",
+      "status": "DONE",
+      "verdict": "INDETERMINATE"
+    },
+    {
+      "id": "theseus35_replicate",
+      "status": "DONE",
+      "verdict": "task advantage REPLICATED; distributed carriers not replicated"
+    },
+    {
+      "id": "theseus30d",
+      "status": "DONE",
+      "verdict": "RANDOM-BEATS-RECURSION (availability confound)"
+    },
+    {
+      "id": "theseus30e",
+      "status": "DONE",
+      "verdict": "INDETERMINATE (misalignment)"
+    },
+    {
+      "id": "theseus34_aligned",
+      "status": "DONE",
+      "verdict": "INDETERMINATE"
+    },
+    {
+      "id": "theseus31c_tasksel",
+      "status": "DONE",
+      "verdict": "INDETERMINATE (relays suffice)"
+    },
+    {
+      "id": "theseus36b_census",
+      "status": "DONE",
+      "verdict": "SUPPORTED (D 60% vs 33%/23%)"
+    },
+    {
+      "id": "theseus36_comp_task",
+      "status": "DONE",
+      "verdict": "SUPPORTED (91 vs 59)"
+    },
+    {
+      "id": "theseus37_law_needed",
+      "status": "DONE",
+      "verdict": "SUPPORTED (91 vs 52)"
+    },
+    {
+      "id": "theseus13_syn_concepts",
+      "status": "DONE",
+      "verdict": "20 admitted"
     }
   ],
   "fabric_tasks": [],
   "running": [
-    "THESEUS-30d composition with conditional readers (prereg 83fb032c3)",
-    "THESEUS-31b task replication + knockouts (prereg 075d58921)"
+    "THESEUS-38 fresh-seed replication of 36/37 (prereg f4d41ca6d)"
   ],
   "blocked_on": [
     {
@@ -118,11 +172,9 @@
     }
   ],
   "next_actions": [
-    "30d verdict",
-    "31b verdict",
-    "31c task-selected ecology (prereg after 31b)",
-    "THESEUS-32 compiler collapse",
-    "review packet at loop end"
+    "38 verdicts",
+    "39 SYN re-injection (after 38)",
+    "review packet before loop end 2026-10-10T23:00Z"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
