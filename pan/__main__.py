@@ -13,6 +13,8 @@
   comms-index                 PAN-20: comms message history -> searchable artifacts (read-only)
   refresh                     PAN-17: catalog to current origin/main + comms, changed items only
   lexdf                       rebuild lexeme document frequencies (OR full-text cap)
+  links                       rebuild the reference graph (paths cited in text -> artifacts)
+  refs PATH                   who cites PATH and what PATH cites (pivots, lineage)
   dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
   status                      catalog SHA vs origin/main (freshness) and the last run of each kind
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
@@ -69,6 +71,9 @@ def main(argv=None):
     sub.add_parser("comms-index")
     sub.add_parser("lexdf")
     sub.add_parser("dictionary")
+    sub.add_parser("links")
+    p = sub.add_parser("refs")
+    p.add_argument("path")
     sub.add_parser("refresh")
     p = sub.add_parser("modelbench")
     p.add_argument("models", nargs="+")
@@ -118,6 +123,12 @@ def main(argv=None):
     elif a.cmd == "tables":
         from . import search
         search.tables_cli(a.query)
+    elif a.cmd == "links":
+        from . import links
+        links.run()
+    elif a.cmd == "refs":
+        from . import links
+        links.refs_cli(a.path)
     elif a.cmd == "dictionary":
         from . import dictionary
         dictionary.run()

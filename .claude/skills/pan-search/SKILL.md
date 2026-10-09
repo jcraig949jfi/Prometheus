@@ -33,6 +33,8 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
     python -m pan search "QUESTION" [-k 10] [--mode hybrid|fts|vector]
                          [--seat Archaeon,Nestor] [--kind prereg,result,journal,charter,doc,code,prompt]
                          [--path substring] [--since 2026-09-01] [--json]
+    python -m pan refs PATH              who cites PATH and what PATH cites (paths written in text;
+                                         45,122 links incl. comms), oldest first -- prereg -> result -> successors
     python -m pan cochange PATH          files changed in the same commits as PATH (lineage, pivots)
     python -m pan similar PATH           artifacts nearest to PATH by embedding (M2)
     python -m pan tables NAME            which database.schema.table / column matches NAME
