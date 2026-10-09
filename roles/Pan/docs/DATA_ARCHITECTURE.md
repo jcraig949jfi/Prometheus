@@ -137,6 +137,10 @@ columns say which rule produced them.
   (hybrid recall@10 0.68 < 0.80); NEGATIVE and CHEAT passed
   (reports/controls/CONTROLS_20261009T1117Z.json). v1 is being developed on
   the dev set and will be judged only on the held-out set.
+  [UPDATE 2026-10-09T13:40Z: v1 held-out 0.75 FAIL; v2 (document vectors)
+  held-out 0.75 FAIL, paired-identical to v1; on 200 queries written by other
+  seats both 0.765 (R@1 0.465). Tuning STOPPED, v1 shipped as the default:
+  reports/RETRIEVAL_VERDICTS_2026-10-09.md.]
 
 ## 6. Measured latencies (2026-10-09, from M2 against M1)
 

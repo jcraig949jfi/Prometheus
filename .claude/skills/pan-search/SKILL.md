@@ -56,11 +56,13 @@ Seats come from roles/<Seat>/ paths and mapped top-level directories.
 - `[kind seat last-commit-date]`; `via` shows which lists found it
   (fts / vec / doc) and their ranks; `rr` = reranked; `canon>N` = moved above
   a later copy of near-identical text.
-- Quality, measured against frozen known-answer queries (written by Pan, so
-  an upper bound): v1 hybrid recall@10 0.75 on held-out queries; full-text
-  recall@10 0.80 on keyword-style questions; abstract paraphrases are the
-  weak case. When a search misses, try fewer, more specific words with
-  `--mode fts`, or filter by `--seat` / `--kind`.
+- Quality (roles/Pan/reports/RETRIEVAL_VERDICTS_2026-10-09.md): on 200
+  queries written by other seats (commit subjects -> the files they
+  touched), the default hybrid puts a right file in the top 10 for 76.5
+  percent and at rank 1 for 46.5 percent; on Pan's own held-out questions
+  0.75. Abstract paraphrases are the weak case. When a search misses, try
+  fewer, more specific words with `--mode fts`, or filter by `--seat` /
+  `--kind`. The reranker runs only where a CUDA GPU exists (PAN_RERANK).
 
 ## Do not
 

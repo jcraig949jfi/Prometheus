@@ -393,8 +393,28 @@ def _print(rows, as_json=False, elapsed=None):
         print("({} results, {:.2f}s)".format(len(rows), elapsed))
 
 
+DEFAULT_RERANK = "BAAI/bge-reranker-v2-m3"
+
+
+def default_rerank():
+    """The shipped default (v1, verdicts 2026-10-09: CB-200 R@10 0.765 paired-equal to v2) reranks
+    with bge-reranker-v2-m3 when a CUDA GPU is present; on CPU the reranker costs ~10 s a query,
+    so it is skipped there (PAN_RERANK=none forces it off, PAN_RERANK=<model> forces a model)."""
+    import os
+    v = os.environ.get("PAN_RERANK")
+    if v:
+        return None if v.lower() == "none" else v
+    try:
+        import torch
+        return DEFAULT_RERANK if torch.cuda.is_available() else None
+    except Exception:
+        return None
+
+
 def cli(query, k=10, mode="hybrid", as_json=False, **kw):
     t = time.time()
+    if mode == "hybrid":
+        kw.setdefault("rerank", default_rerank())
     rows = {"fts": fts, "vector": vector, "hybrid": hybrid}[mode](query, k=k, **kw)
     _print(rows, as_json, time.time() - t)
 
