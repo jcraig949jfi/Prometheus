@@ -84,3 +84,9 @@ what is being re-used is a self-generated implementation of a known function.
 | P4 | first in-run D solver earlier in INJ-S | WRONG: both gen 1 (ledger) |
 | P5 | R2 >= 10/20 reproduced or partial | 16, RIGHT |
 | P6 | R1 <= 5/20 reproduced | 2, RIGHT |
+
+## Annotation 2026-10-09 (THESEUS-42)
+The "inherited working parts" source in the Reading (12 vs 3 all-copied solvers) did not
+replicate on seed 20261010: 11 vs 12 (theseus/runs/comp_task_syn_s3_2026-10-09/VERDICT.md).
+The rate advantage replicates in direction only (79 vs 74). Pooled over 2 seeds:
+RD_MH .090 [.007, .173], CMH p .016. Quote the pooled figure, not the 13 points above.
