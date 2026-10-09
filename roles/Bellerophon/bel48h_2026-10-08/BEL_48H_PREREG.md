@@ -360,3 +360,9 @@ inputs, so 'coupling' has a COST component (budget) and a DAMAGE component (wrap
 - B-P1: the BUDGET_COUPLED share of competent dominant machines is larger at budget 192 than at 384 (Fisher one-sided
   p < 0.05).
 - B-P2 (descriptive): shares at 192 / 256 / 384 monotone non-increasing.
+
+## 16. U2 -- fresh-seed replication of 'blocking uptake raises origination' (frozen 2026-10-09T02:47:36Z, before any run)
+
+Plan tools/plan_u2.py: the W6 block 4 U design with new seeds (57e12 +), 1,600 runs; sha256 printed at freeze in the
+execution ledger. Analysis tools/analyze_u2.py (committed with this section; same origin endpoint as U).
+- U2-P1: blocked-only discordant seed-pairs exceed normal-only, exact one-sided sign (McNemar) test p < 0.05.
