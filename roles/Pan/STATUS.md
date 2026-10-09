@@ -8,7 +8,7 @@ what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
   5,444 papers + 1,524 models; 9 local models smoke-tested), VALID: PARTIAL --
   retrieval R@10 0.765 on 200 independent queries (bar 0.80 sits inside its
   interval); tuning stopped by Pan's own rule.
-latest reports: reports/STATUS_20261009T1150Z.md (next ~17:50Z),
+latest reports: reports/STATUS_20261009T1645Z.md (status report 2),
   REVIEW_PACKET_2026-10-09_unit2.txt, RETRIEVAL_VERDICTS, MODEL_SMOKE_TESTS,
   frontier/DIGEST_2026-10-09.md.
 monitors: PanWorkLoop row in roles/base-role/MONITORS.md (bound 6).
