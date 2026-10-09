@@ -7,9 +7,13 @@
     "CAVEAT stated in advance: HumanEval (2021) is very likely in every model's training data; read RANKS and speeds,",
     "not absolute capability. No claim about reasoning is made from this set."
   ],
-  "dataset": {"hub_repo": "evalplus/humanevalplus", "file": "data/test-00000-of-00001-5973903632b82d40.parquet",
-              "sha256": "4436f5c03d77c17e0cbc57543b90665b5c1266f55a43992a5ed7922cd34a7558", "license": "apache-2.0",
-              "problems": 164},
+  "dataset": {
+    "hub_repo": "evalplus/humanevalplus",
+    "file": "data/test-00000-of-00001-5973903632b82d40.parquet",
+    "sha256": "4436f5c03d77c17e0cbc57543b90665b5c1266f55a43992a5ed7922cd34a7558",
+    "license": "apache-2.0",
+    "problems": 164
+  },
   "protocol": {
     "runtime": "Ollama 0.35.0 on M2, temperature 0, seed 1, num_ctx = budget + 1024",
     "prompt": "the HumanEval prompt followed by: Complete the function above. Reply with ONLY one Python code block (```python ... ```) containing the complete function, including the signature. No explanation, no tests.",
@@ -18,15 +22,43 @@
     "metric": "pass@1 (greedy), with a Wilson 95 percent interval; median tokens/s; truncations counted"
   },
   "configurations": [
-    {"model": "gpt-oss:20b", "think": false, "budget": 1024},
-    {"model": "qwen2.5-coder:14b", "think": false, "budget": 1024},
-    {"model": "gemma3:12b", "think": false, "budget": 1024},
-    {"model": "qwen3:8b", "think": false, "budget": 1024}
+    {
+      "model": "gpt-oss:20b",
+      "think": false,
+      "budget": 1024
+    },
+    {
+      "model": "qwen2.5-coder:14b",
+      "think": false,
+      "budget": 1024
+    },
+    {
+      "model": "gemma3:12b",
+      "think": false,
+      "budget": 1024
+    },
+    {
+      "model": "qwen3:8b",
+      "think": false,
+      "budget": 1024
+    }
   ],
   "controls": {
     "POSITIVE": "every canonical solution passes its own tests (164/164), else the harness is broken and NO model result is reported",
     "CHEAT": "a stub body (`pass`, returns None) passes at most 5 of 164 (problems whose tests expect None are possible), else the tests are not discriminating",
     "NEGATIVE": "the prompt alone (signature + docstring, no body) passes at most 5 of 164"
   },
-  "comparison_rule": "two configurations differ only if their Wilson 95 percent intervals do not overlap; otherwise reported as not separable"
+  "comparison_rule": "two configurations differ only if their Wilson 95 percent intervals do not overlap; otherwise reported as not separable",
+  "amendments": [
+    {
+      "id": "A1",
+      "date": "2026-10-09",
+      "before_any_model_result": true,
+      "change": "exclude HumanEval/32 (find_zero); n = 163; POSITIVE control becomes 163/163",
+      "evidence": "the controls run (roles/Pan/reports/codebench/CONTROLS_*.json) gave canonical 163/164; the only failure is HumanEval/32, whose EvalPlus test asserts `_poly(*candidate(*inp), inp) <= 0.0001`: it star-unpacks the candidate's return value, a float, so every candidate -- the canonical solution included -- raises TypeError ('Value after * must be an iterable, not float'). The item cannot be passed by construction.",
+      "excluded_tasks": [
+        "HumanEval/32"
+      ]
+    }
+  ]
 }

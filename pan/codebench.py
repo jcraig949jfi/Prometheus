@@ -32,7 +32,9 @@ def problems():
     got = hashlib.sha256(data).hexdigest()
     if got != spec["sha256"]:
         raise SystemExit("dataset sha256 {} != prereg {}".format(got, spec["sha256"]))
-    return pq.read_table(str(path)).to_pylist()
+    excluded = {t for a in json.loads(PREREG.read_text(encoding="utf-8")).get("amendments", [])
+                for t in a.get("excluded_tasks", [])}
+    return [p for p in pq.read_table(str(path)).to_pylist() if p["task_id"] not in excluded]
 
 
 def imports_of(prompt):
