@@ -14,6 +14,7 @@
   refresh                     PAN-17: catalog to current origin/main + comms, changed items only
   lexdf                       rebuild lexeme document frequencies (OR full-text cap)
   pivot PATH                  one screen around an artifact: lineage, co-change, nearest here and outside
+  dupes                       PAN-32: exact duplicate chunks across files, canonical = earliest committed
   links                       rebuild the reference graph (paths cited in text -> artifacts)
   refs PATH                   who cites PATH and what PATH cites (pivots, lineage)
   dictionary                  regenerate roles/Pan/docs/DATA_DICTIONARY.md from the live schema
@@ -75,6 +76,7 @@ def main(argv=None):
     sub.add_parser("lexdf")
     sub.add_parser("dictionary")
     sub.add_parser("links")
+    sub.add_parser("dupes")
     p = sub.add_parser("pivot")
     p.add_argument("path")
     p.add_argument("-k", type=int, default=8)
@@ -137,6 +139,9 @@ def main(argv=None):
     elif a.cmd == "pivot":
         from . import pivot
         pivot.run(a.path, k=a.k)
+    elif a.cmd == "dupes":
+        from . import dupes
+        dupes.run()
     elif a.cmd == "links":
         from . import links
         links.run()
