@@ -383,3 +383,12 @@ Plan tools/plan_p1.py: 512 runs, sha256 fe53b694843dd3235d80179bca6188591be7fa03
 4 SEPARATED machines from W6 block 3 K1 (excluding the X pair; first by run id), 16 pairings, MED, ON/OFF x order, 8
 seeds per pairing. Analysis tools/analyze_p1.py (committed with this section). Unit = pairing.
 - P1-P1: across decided pairings, mean E share ON < OFF in more pairings than the reverse (one-sided sign test p < 0.05).
+
+## 19. S1 -- substrate perturbation of the strongest causal findings (frozen 2026-10-09T09:34:21Z, before any run)
+
+Plan tools/plan_s1.py: 1,760 runs, sha256 0471ecae666050ff40bc0bed5d2fb7a2b335d93041f5633fab98a57ee27cab35. Analysis
+tools/analyze_s1.py (committed with this section; smoke-tested 8 runs, 0 voids).
+- S1-P1 (CL-20 under a changed world model and step budget): pooled over SOUP/WELL_MIXED and GRID/WELL_MIXED/budget 384,
+  blocked-only discordant pairs exceed normal-only (one-sided p < 0.05); per-substrate results reported.
+- S1-P2 (CL-04 under changed topology): in BOTH SOUP/WELL_MIXED and GRAPH/LOCAL, AB-only (PARTIAL) exceeds copy-only
+  (COPY) FUNC_ANY discordant pairs, one-sided p < 0.05 each.
