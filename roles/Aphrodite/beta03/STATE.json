@@ -214,7 +214,8 @@
   "dispositions": {
     "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)",
     "E1": "MEASURED: SATURATION_SUPPORTED (own-start -104, 1/20/1, p 2e-6, share 0.93, end-state L_g11 388 >= L_P 363); INTERFERENCE no (-7, 2/4/16, p .44, attainable); CEILING_CONSISTENT no (cond 4; unattributed)",
-    "E2": "MEASURED: G12_GENERAL_RULE INCONCLUSIVE (vs I_0 +48, 13/6/5, p .053; claim2 PASS 18/18 incl. lambda0; claim3 UNTESTED); G12_VS_G11 INFERIOR (142 vs 179, 3/11/10, p1 .048; Holm n.s.)"
+    "E2": "MEASURED: G12_GENERAL_RULE INCONCLUSIVE (vs I_0 +48, 13/6/5, p .053; claim2 PASS 18/18 incl. lambda0; claim3 UNTESTED); G12_VS_G11 INFERIOR (142 vs 179, 3/11/10, p1 .048; Holm n.s.)",
+    "E5N": "MEASURED NO: P1 -6 (3/4/15, p .82, attainable); channel OPEN; SECOND-LEVEL 1 pair (99); depth-2 selected 4 pairs; KILL_CRITERION_HESTIA proxy FIRES; E6 negative: first link STATISTICAL, per-pair SELECTION 15/CANDIDACY 3/TRANSFER 3/NONE 1; technical rerun 1/3 (A3)"
   },
   "close_decision_rule": {
     "frozen_utc": "2026-10-08T13:19:59Z",
@@ -241,5 +242,19 @@
     "rev": 1,
     "sha256": "3eeeb8f48ce30eb0513009088d18b829b4b213594ae4d4ada51a79d6a552d146",
     "note": "CLOSE_RULE.md governs recommendation"
+  },
+  "close_recommendation": {
+    "label": "MIGRATE_SUBSTRATE",
+    "rule_row": 4,
+    "BASIS": "OUTCOME_C_APPARATUS_LIMIT",
+    "S10_KILL_CRITERION": "NOT_MET",
+    "KILL_CRITERION_HESTIA_PROXY": "FIRES",
+    "qualifiers": {
+      "E5N_P1": "-6, p .82, attainable",
+      "channel": "OPEN",
+      "attributed_depth2_fraction": 0.045,
+      "E1": "SATURATION_SUPPORTED; interference not; ceiling-consistent not met",
+      "E2": "G12 INCONCLUSIVE; INFERIOR to g11; memorisation rejected 18/18 without ban"
+    }
   }
 }
