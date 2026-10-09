@@ -742,6 +742,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   refill (deplete ~1, slow regen) so that remembering where/when to return matters -- verify with hand controls
   (reactive vs memory specialist, solo vs group) BEFORE any evolution run. Also: the shared SIGNAL word (K=4) is
   unused by every B65 specialist (ablation 0.0) -- a communication lane is open but not motivated by these worlds.
+- B68 RESULT (hand-control ladder, evaluation only, 1 proc): PULSE worlds (harvest empties a pool; pools refill to
+  start amounts every P ticks) vs standard regen; hand REACT_i (stateless) vs LATCH_i (write-once 'found my pool'
+  latch -> WAIT when empty). Evaluator equivalence P=None vs B60: .303463 == .303463. Standard regen: LATCH == REACT
+  in every composition (adv 0.000; confirms the B67 reading). Pulse P=4/6/8: solo adv +.086/+.053/+.033 (LATCH
+  3.6x/2.8x/2.2x REACT); pure-group adv +.046/+.029/+.019; invasion adv (LATCH among REACT - REACT among LATCH)
+  +.052/+.036/+.025. PREDICTION parts 1-2 MET; BRIDGE criterion (absolute adv larger in group than solo) FAILED
+  0/3 -- competition roughly halves every reward, so it SHRINKS state's absolute value; the RATIO rises slightly
+  (P=4: 3.6x solo -> 4.2x group/invasion). VERDICT: no ecological amplification of state. USEFUL BY-PRODUCT: the
+  pulse world is a world where the REACHABLE memory form (latch, Finding 3) is decisive (2-4x). Staged B69 (after
+  the window rolls): evolve in pulse P=4, SOLO vs CONC, 6 seeds -- does search find the latch, and does competition
+  change the rate? Readout: persist=none ablation + latch-signature (wait-when-empty share at own pool node).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
