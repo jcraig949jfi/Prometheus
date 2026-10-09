@@ -42,3 +42,6 @@ date | call made | what was true | corrected by | changed practice
   first-OUT step was taken as execution inside the window). An automated test written for W6 block 3 refuted it (0/20);
   the real mechanism (budget coupling) was then tested causally. Rule: a mechanism read off a trace gets an automated,
   falsifiable test BEFORE it is written into a report.
+- Chain markers: 'grep -q B1_DONE' matched 'W6B1_DONE' and started U2 early (stopped at 0 results). Also twice killed my
+  own shell with 'pkill -f'/'grep [c]hain' patterns that appeared in my own command line. Rules: markers are matched
+  anchored ('^NAME_DONE'); process selection uses the exact full command line ('^/bin/bash /path/script.sh$').
