@@ -1,6 +1,6 @@
 # Local model smoke tests on M2 (PAN-19, charter C5 "run locally and tested")
 
-Currency: 2026-10-09T14:20Z (date -u). Host M2 (SPECTREX5), RTX 5060 Ti 16 GB,
+Currency: 2026-10-09T14:18Z (commit 042d832b8 receipt; first typed as 14:20Z without a clock read). Host M2 (SPECTREX5), RTX 5060 Ti 16 GB,
 Ollama 0.35.0, temperature 0, seed 1. Fabric lease lse-d045e7a2eb61
 (spectrex5:gpu0), released 14:17Z. Rows: pan.model_bench (every response kept;
 any check can be re-run). Command: `python -m pan modelbench MODEL... [--think
