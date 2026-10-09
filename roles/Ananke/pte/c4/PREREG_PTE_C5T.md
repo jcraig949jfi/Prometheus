@@ -1,7 +1,20 @@
-# PTE-C5T preregistration (DRAFT): terminal composition assay
+# PTE-C5T preregistration: terminal composition assay
 
-Status: DRAFT, written 2026-10-08 while C4-T runs and before any C4-T row was read. It is finalised (FREEZE_C5T.json)
-only if the C4 route rule sends the C5 slot here, and its numbers change only for the reasons listed in s6.
+Status: FROZEN by FREEZE_C5T.json (the commit adding it), before any C5T production row.
+- Drafted 2026-10-08 (c3f9c066e), before any C4-T row was read.
+- Since the draft: CP bounds corrected to exact values; the runner (run_c5t.py: the unchanged C4 runner with the C5T seed
+  namespace) and the plan builder (make_plan_c5t.py) added.
+
+**Route (PREREG_PTE_C4 s7):**
+- C3R: NO_REPRESENTATION_EFFECT, MINIMAL_REPRESENTATION_ROUTE_FAILED.
+- C4-T: NO_COMPOSITION for GATE and FLIP, 0/168.
+- s8 diagnostic: INCONCLUSIVE_SPARSE, 2/32 GATE with the designed halves, in 2 cells.
+- No replicated two-stage competence exists, so the C5 slot is this terminal assay (order s10). The turbulence campaign
+  does not run.
+
+**Throughput check (s6).** C4-T measured about 14.7 searches/h at 36 generations against about 16/h projected from the
+flight, within 25%. The deadline stays at launch + 16 h. The smoke test (idx 8, 6 generations, non-production) ran
+the C5T seed namespace and the library insertion (9 tagged lines).
 
 **Authority:** the 72h order, s10 (roles/Ananke/prompts/2026-10-07_72h_c3_c4_c5/, 8c48ebfdf).
 
@@ -66,6 +79,10 @@ A champion counts toward a POSITIVE label only if all three hold:
 
 So competence must be shown to use the two stages, not merely be achieved.
 
+**Operational form (frozen in reduce_c5t.py):** the two-stage condition is met when zeroing S1 or S2, the non-readout
+state registers, every tick loses competence. S0 is the readout register, so zeroing it says nothing about a second
+stage.
+
 **Labels (per task, then overall):**
 
 | label | rule |
@@ -85,7 +102,7 @@ So competence must be shown to use the two stages, not merely be achieved.
 not given a fair test of reuse.
 
 **What the kill excludes and what it does not:**
-- It excludes, at 95%, a per-search two-stage success rate above about 7% (CP upper bound for 0-1 of 56) at 4x, for this
+- It excludes, at 95%, a per-search two-stage success rate above 6.4% (0/56) or 9.6% (1/56) (CP95 upper bounds) at 4x, for this
   representation, operator, library and these cells.
 - It does not exclude other search architectures (lifetime learning, archives, curricula), other task families, or
   other physics.

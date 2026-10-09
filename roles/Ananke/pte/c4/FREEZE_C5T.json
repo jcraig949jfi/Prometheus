@@ -1,0 +1,31 @@
+{
+ "schema": "pte_c5t.freeze.v1",
+ "authority": "72h order s10; PREREG_PTE_C4 s7 route",
+ "code_files": {
+  "c4_common.py": "69739a38d9c84aea934a1f577c7c213c302170c4161c61b5f13f9fa46cef3e21",
+  "run_c4.py": "a6a4d7e853853d8f5256a22ac46888debbf17b56ddfc4558c8ba0a95fbd7649e",
+  "run_c5t.py": "669fd6c7690de1cc62d6ef5bf98e66717be47ad823e4bc057824081590cdfc0b",
+  "make_plan_c5t.py": "41413ec3821e2ce427e542e3048f2c630c8e327bdf7417f899cc0d87571b82be",
+  "reduce_c5t.py": "eaa8053391452f8eacb8ca79e51de9377ece3169034405055213b6be26e75834",
+  "assay_c4.py": "249c13cc4ee8a6e2a54d5935e48c5ef6ed7f835ebcdbc960016050ccf5737652",
+  "../c3/assay_candidates.py": "7bd2071aa54bf8b8213fa046fb931392e7ff96d4c650b4ed0a102cbe5f7ffc39",
+  "../c3/swap_v2.py": "333373fe5b1c7cef6ba04de26ba5833fe0feac5746501dbe4ff2e0959ac92d35",
+  "../c3/c3r_common.py": "4ed88b20b97064e4aabcb1832c8951c6f73f0b4ebe4e4e2c8b336af97184337e",
+  "../../../../prometheus/ananke/envs.py": "56e0921bad285932ea645f184404da5f25f2f1b2bcc610d0bc30fde8ee479a6a"
+ },
+ "prereg_sha256": "89c0bfa5b02c78b9c4fdeede6c5bda0c372f2d0d9ebff432cbaee20d97aea85b",
+ "plan_sha256": "55dd87bf9f8862dd8d852665d05ea5a9cb1e84eb19c2189a2a31fba56d273cbb",
+ "library_sha256": "110993382773c5c1ac82a45bb39c76cbbc04fa3521526ed506cf43a6235af836",
+ "n_jobs": 56,
+ "gens": 144,
+ "selector": "M32",
+ "seed_ns": "0xC5001007",
+ "smoke": "idx 8, 6 gens, GPU 51 s, library insertion live (9 tagged lines); reducer smoke UNDERPOWERED as expected",
+ "production": {
+  "workers": 3,
+  "lease": "lse-7d61e3584398",
+  "deadline_min": 960,
+  "projected_wall_min": 900
+ },
+ "frozen_utc": "2026-10-09T09:01:18.328070+00:00"
+}
