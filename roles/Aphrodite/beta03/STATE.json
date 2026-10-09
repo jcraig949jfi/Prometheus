@@ -81,7 +81,8 @@
       "title": "SECOND-LEVEL WORLD / ECOLOGY DESIGN (E4)",
       "start_utc": "2026-10-09T05:05Z",
       "end_utc": "2026-10-09T09:05Z",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "report": "beta03/windows/E2_REPORT.md; E5N_REPORT.md; W12_REPORT.md"
     },
     {
       "id": "W08",
@@ -89,7 +90,7 @@
       "title": "SECOND-LEVEL DISCOVERY PILOT",
       "start_utc": "2026-10-09T09:05Z",
       "end_utc": "2026-10-09T13:05Z",
-      "status": "PENDING"
+      "status": "ACTIVE"
     },
     {
       "id": "W09",
@@ -124,7 +125,7 @@
       "status": "PENDING"
     }
   ],
-  "active_window": "W07",
+  "active_window": "W08",
   "supply": {
     "file": "science/arc3/w8_lin_generator/W8_SUPPLIES_B03.json",
     "blocks": {
@@ -221,7 +222,8 @@
     "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)",
     "E1": "MEASURED: SATURATION_SUPPORTED (own-start -104, 1/20/1, p 2e-6, share 0.93, end-state L_g11 388 >= L_P 363); INTERFERENCE no (-7, 2/4/16, p .44, attainable); CEILING_CONSISTENT no (cond 4; unattributed)",
     "E2": "MEASURED: G12_GENERAL_RULE INCONCLUSIVE (vs I_0 +48, 13/6/5, p .053; claim2 PASS 18/18 incl. lambda0; claim3 UNTESTED); G12_VS_G11 INFERIOR (142 vs 179, 3/11/10, p1 .048; Holm n.s.)",
-    "E5N": "MEASURED NO: P1 -6 (3/4/15, p .82, attainable); channel OPEN; SECOND-LEVEL 1 pair (99); depth-2 selected 4 pairs; KILL_CRITERION_HESTIA proxy FIRES; E6 negative: first link STATISTICAL, per-pair SELECTION 15/CANDIDACY 3/TRANSFER 3/NONE 1; technical rerun 1/3 (A3)"
+    "E5N": "MEASURED NO: P1 -6 (3/4/15, p .82, attainable); channel OPEN; SECOND-LEVEL 1 pair (99); depth-2 selected 4 pairs; KILL_CRITERION_HESTIA proxy FIRES; E6 negative: first link STATISTICAL, per-pair SELECTION 15/CANDIDACY 3/TRANSFER 3/NONE 1; technical rerun 1/3 (A3)",
+    "W12": "ORACLE_SELECTION_ENABLES NO: oracle-best promoted-dependent libraries 9 vs pristine 35 (3/11/8, p2 .02) vs D-selected 29; limit upstream of selection (candidacy/representation)"
   },
   "close_decision_rule": {
     "frozen_utc": "2026-10-08T13:19:59Z",
@@ -260,7 +262,8 @@
       "channel": "OPEN",
       "attributed_depth2_fraction": 0.045,
       "E1": "SATURATION_SUPPORTED; interference not; ceiling-consistent not met",
-      "E2": "G12 INCONCLUSIVE; INFERIOR to g11; memorisation rejected 18/18 without ban"
+      "E2": "G12 INCONCLUSIVE; INFERIOR to g11; memorisation rejected 18/18 without ban",
+      "W12": "oracle selection does not enable; limit upstream of selection"
     }
   }
 }
