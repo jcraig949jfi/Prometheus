@@ -656,6 +656,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   each, G=200; readout = entropy of each final organism's dominant harvest index (uncoupled evaluation), harvester
   share, reward. Caveat up front: evaluation order matters under coupling. Lease lse-6da666a9281e, ~2 core-h.
   PREDICTION: COUPLED entropy > UNCOUPLED by >= .2 bits in >= 4/6 seed pairs.
+- B59 RESULT (05:58Z; lease released): PREDICTION FAILED 0/6, mean entropy diff -.113 bits (COUPLED lower in 5/6).
+  VERDICT = INSTRUMENT, not law: the coupling has NO TEETH in this world. Teeth check (content forager evaluated 20x
+  in sequence on one shared dict): rewards .2948, then .2895 x19; pools end at [3.0, 3.0, .505] = the in-episode
+  regen/deplete equilibrium (regen .247/tick). Sequential evaluation cannot carry depletion to the next organism, so
+  frequency dependence was never on. What COUPLED did change: every episode in a generation shares one pool layout
+  (episode 0's), i.e. a narrower training distribution -- consistent with lower entropy and lower uncoupled reward
+  (5/6). No niche claim either way. Repair = B60: CONCURRENT co-evaluation (k organisms act in the same episode on
+  the same pools, own pos/reward/alive), with a teeth check first (k identical foragers must earn less each than solo).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
