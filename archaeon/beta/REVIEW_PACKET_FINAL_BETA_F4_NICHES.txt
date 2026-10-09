@@ -1,0 +1,268 @@
+==========================================================================================
+ARCHAEON PHASE 2-B SFE BETA -- REVIEW PACKET: FINDING 4 (ECOLOGICAL NICHE PARTITIONING)
+probes B59-B68 | 2026-10-09 05:40Z..09:05Z | branch archaeon/p2b-sfe-2026-10-06 | host M2/spectrex5
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+------------------------------------------------------------------------------------------
+VERDICT: concurrent competition evolves NEGATIVE-FREQUENCY-DEPENDENT NICHE PARTITIONING in
+Proteus v0 organisms. It holds on 2/2 worlds tested (P-boom NoClock, B-scatter NoClock) at one
+group size (k=4).
+
+SURVIVED:
+- Noise-matched null (SHAM residual shuffle). It does not reproduce the diversity.
+- Function test: mixed-niche groups out-earn same-niche groups (6/6, 5/5 testable).
+- Rare-type advantage in both directions: CONC 4/6 on each world vs SOLO 1/6, SHAM 0/6 and 1/6.
+- Determinism: re-runs reproduce B60 cell-for-cell.
+
+MECHANISM: each specialist depends on exactly one observation word, its own pool's (33/36
+genomes). A niche is a PERCEPTUAL RESTRICTION.
+
+DIED:
+- B59 "coupling -> niches" null. It was an INSTRUMENT null: sequential coupling had no teeth.
+- B67/B68 "competition makes state pay". No ecological amplification of state: competition
+  shrinks its absolute value.
+
+------------------------------------------------------------------------------------------
+1. PROVENANCE / INSTRUMENT (verified, not trusted)
+------------------------------------------------------------------------------------------
+Organisms
+- Proteus v0 player VM (proteus.foundry.vm), unmodified.
+- Search: CMP3 GA (archaeon.wse.evolve.Evolution). N=200, E=8, G=200, regime E0 (fitness =
+  reward), FOUNDRY_C2 founders.
+
+Worlds
+- C6 ComposedWorld (archaeon/campaign6/worlds/runtime.py) wrapped in NoClock (b25: tick and
+  position words removed).
+- P-boom: R=3 pools, L=12 ring, 24 ticks. Features: lethal hazards, history pool 0, coupling,
+  K=4.
+- B-scatter: R=5, L=5, 24 ticks. Features: regime, hidden, non-lethal hazards, coupling.
+
+Concurrent evaluator (b60.group_rewards; regime-aware b64.group_rewards)
+- k organisms act in the SAME episode.
+- Shared via the C6 coupling dict, one per (group, episode): pools, cells, signal.
+- Per organism: pos, reward, alive.
+- Regeneration (and regime) are applied ONCE per tick, centrally. Acting order rotates.
+
+Teeth checks, run before any evolution
+- B60 P-boom: k=1 = evaluate_world (.2672 = .2672). 4 identical foragers .065-.073 each vs .267
+  solo.
+- B64 B-scatter: k=1 = evaluate_world on 15 diverse organisms (all diffs 0.0). 4 copies
+  .029-.047 vs .167 solo.
+- B68: pulse-evaluator P=None = B60 evaluator (.303463 = .303463).
+
+------------------------------------------------------------------------------------------
+2. PREREGISTRATION CHAIN
+------------------------------------------------------------------------------------------
+Each prediction was written in the probe docstring and committed and pushed BEFORE launch. The
+commit is the receipt.
+
+  B59 coupling (sequential)   prediction in commit preceding launch (~05:40Z)   FAILED -> instrument null
+  B60 concurrent              d0860c471                                        MET (entropy at the bar)
+  B62 noise + function attack adf737ed7                                        MET (3/3 parts)
+  B63 rare-type advantage     734020e7d                                        MET
+  B64 B-scatter replication   ac2606117                                        MET (3/3 parts)
+  B65 mechanism               3b5c33b52 (probe committed before run)          MET
+  B67 state under competition 4d807c4f8 (probe committed before run)          FAILED by the letter (see 5)
+  B68 pulse hand ladder       probe committed with result e038729ec           parts 1-2 MET, bridge FAILED
+
+AMENDMENT (process defect): B68's docstring prediction was committed TOGETHER with its result,
+not before. It is evaluation-only and fast, but the ordering is NOT receipted. Treat B68 as
+exploratory.
+
+------------------------------------------------------------------------------------------
+3. DESIGN AS EXECUTED
+------------------------------------------------------------------------------------------
+Arms (seeds 6001-6006 for P-boom, 6401-6406 for B-scatter)
+- CONC: each generation the population is randomly partitioned into groups of 4. Fitness = own
+  concurrent reward.
+- SOLO: same evaluator, k=1.
+- SHAM: per generation, x_i = concurrent reward and s_i = solo reward. Least squares x = a*s + e.
+  Fitness = a*s_i + e_pi(i), pi a random permutation. This keeps CONC's fitness signal/noise but
+  detaches the competition residual from the organism.
+
+Readouts on the final population
+- Entropy of dominant harvest index: solo, 32 episodes.
+- HET vs HOM 4-groups: per-capita reward of groups covering >= 3 niches vs groups from one niche.
+- Rare-type test (B63):
+  - for the two largest niches A and B, groups of 3A+1B and 1A+3B;
+  - 24 groups x 16 episodes on held-out world seeds s+1000..1003;
+  - rare-member vs common-member per-capita reward.
+- Mechanism (B65): per-word ablation on the top 6 genomes per niche (3 CONC populations), held-out
+  world seeds.
+
+------------------------------------------------------------------------------------------
+4. CENSUS
+------------------------------------------------------------------------------------------
+- 12 cells B60 + 18 cells B62 + 18 cells B64 = 48 evolution cells. No errors.
+- Final populations dumped:
+  - results/B62_pop_*.json
+  - results/B64_bscatter/B62_pop_*.json
+- Compute (window 3 from 2026-10-09 00:11Z): ~43 of 48 core-h (MWO-0004 R2).
+- Leases: lse-6da666a9281e (B59, released), lse-78a64fc8d5b2 (B60/B62/B64; lapsed by TTL at
+  10:00Z, see 7).
+
+------------------------------------------------------------------------------------------
+5. RESULTS (exact numbers)
+------------------------------------------------------------------------------------------
+B59 (sequential coupling)
+- Entropy COUPLED - UNCOUPLED: 0/6 >= .2, mean -.113.
+- Teeth check: rewards .2948, then .2895 x19; pools at equilibrium [3.0, 3.0, .505].
+- Verdict: INSTRUMENT.
+
+B60 (P-boom, CONC vs SOLO)
+- Entropy diff +.29 / +.52 / -.003 / +.21 / +.41 / -.005: 4/6 >= .2 (exactly the bar), mean
+  +.238.
+- 4-group reward CONC > SOLO in 5/6.
+
+B62 (P-boom)
+- CONC - SHAM entropy: +.72 / -.30 / -.19 / +.61 / +1.17 / +.80 -> 4/6 >= .2 (at the bar).
+- CONC HET - HOM: +.057 / +.007 / +.094 / +.045 / +.054 / +.053 -> 6/6.
+- SOLO HET - HOM: +.013 / n.a. / +.022 / -.004 / -.007 / +.037. CONC gap > SOLO gap 5/5 testable.
+
+B63 (P-boom)
+- Rare wins both compositions: CONC 4/6, SOLO 1/6 (that minor niche had 3 members), SHAM 0/6.
+- Example 6003: rare .192 vs common .087, and rare .226 vs common .081.
+- Control populations show DOMINANCE (one type wins rare AND common).
+
+B64 (B-scatter)
+- CONC - SHAM: +.10 / +1.20 / +.89 / +1.56 / +.47 / +.82 -> 5/6.
+- CONC HET > HOM: 5/5 testable.
+- Rare-type: CONC 4/6, SOLO 1/6, SHAM 1/6.
+- SOLO/SHAM populations are near-monomorphic (166-191/200 on pool 0). CONC populations split
+  (110/84, 103/85, 105/90, 96/68).
+
+B65 (mechanism)
+- 33/36 genomes: ablation drop .11-.19 on the OWN pool word, 0.0 on every other word.
+- The 3 exceptions have reward .028-.060 and no word dependence.
+
+B67 (state dependence, solo / group)
+- P-boom: CONC .031/.018, SOLO .074/.032, SHAM .001/-.002.
+- B-scatter: CONC .031/.030, SOLO .004/-.001, SHAM .020/-.003.
+- CONC - SOLO = -.043 (P-boom) and +.027 (B-scatter).
+- The prediction |d| < .02 FAILED BY THE LETTER on B-scatter. The excess comes from one population
+  (6403: .088), and P-boom has the opposite sign. Bimodal per population.
+
+B68 (pulse hand ladder)
+- Standard regen: LATCH = REACT in every composition (0.000).
+- Pulse P=4/6/8:
+  - solo advantage +.086 / +.053 / +.033 (LATCH 3.6x / 2.8x / 2.2x);
+  - pure-group advantage +.046 / +.029 / +.019;
+  - invasion advantage +.052 / +.036 / +.025.
+- Bridge criterion (group advantage > solo advantage): 0/3.
+
+------------------------------------------------------------------------------------------
+6. INHERITED LESSONS (how each was handled structurally)
+------------------------------------------------------------------------------------------
+- "Diversity is an unsafe observable"
+  -> entropy was never accepted alone. SHAM noise null, HET/HOM function test and rare-type test
+     were added.
+- "Measurement carries its answer" / teeth before use
+  -> a teeth check and an equivalence check precede every new evaluator (B60, B64, B68).
+     B59's missing teeth check is what this lesson predicts.
+- "Held-out sample discipline" (B45)
+  -> rare-type and mechanism readouts use held-out world seeds s+1000..1003 with 16 episodes per
+     group. Exception: entropy is on 32 episodes of the TRAINING world seed (as in B59), see 7.
+- "Same-seed premise must be tested"
+  -> B62 re-ran B60's seeds: cell-for-cell identical.
+- "Instrument error is not evidence"
+  -> B59 recorded as an INSTRUMENT verdict, not a law.
+
+------------------------------------------------------------------------------------------
+7. HOSTILE REVIEW + SELF-ATTACKS
+------------------------------------------------------------------------------------------
+A1 Entropy criteria passed AT the bar (4/6) on P-boom twice. CONCEDED: the entropy readout is the
+   weakest leg. The verdict rests on the function and rare-type tests, which are cleaner (6/6;
+   4/6 vs 1/6 and 0/6) and replicate on B-scatter.
+A2 Entropy and "dominant index" are computed on the TRAINING world seed. OPEN, minor: the
+   rare-type and mechanism tests are held out.
+A3 HET/HOM could hold for any population, because distinct targets collide less. ANSWERED IN
+   PART: SOLO populations show ~0 HET-HOM gap with the same niche labels. OPEN: label validity
+   differs by arm (SOLO labels are looser, fidelity .72-.85).
+A4 SHAM noise matching is approximate: slope a varies (.49-.96) and residual variance is matched,
+   not its covariance structure. OPEN.
+A5 Rare-type 'wins' with tiny minor niches (3-8 members) are sampling-fragile. Both SOLO/SHAM
+   passes are such cases. CONCEDED: n per niche is small for the controls.
+A6 One group size (k=4) and two C6 named worlds, both with coupling-capable K=4 and hazards.
+   OPEN: not ensemble-invariant yet (B66 k=2/8 staged; a non-C6 world not yet built).
+A7 "Pool-identity specialist" might be a location specialist in disguise: pool_node is random per
+   episode, so identity != location across episodes. Supported by B65 (dependence on the pool's
+   WORD, which is index-ordered) but OPEN for a direct test (permute pool order in observation).
+A8 PROCESS: lease token lost (acquire output truncated by tail), so lse-78a64fc8d5b2 could not be
+   released early. It covered B62/B64 under a purpose string naming B60. RECORDED (journal,
+   memory).
+A9 PROCESS: B68 prediction not receipted before its result (see 2).
+A10 B67 FAILED BY THE LETTER and was reported as "no bridge" on reading. CONCEDED that this is
+   interpretation. The numeric prediction failed on B-scatter.
+
+------------------------------------------------------------------------------------------
+8. WHAT THIS GENERATION ACTUALLY LEARNED (shapes)
+------------------------------------------------------------------------------------------
+1. Coupling must be SIMULTANEOUS to bite. With in-episode regeneration, sequential sharing returns
+   every organism to the same equilibrium. Frequency dependence needs co-presence.
+2. Under co-presence, selection produces SPECIALISTS BY BLINDNESS: each organism attends to one
+   pool word only. Partitioning follows because mutually blind specialists stop colliding.
+3. Without competition (SOLO) and under matched noise (SHAM), the same search converges on
+   near-monomorphic DOMINANCE. The polymorphism is caused by the competition residual being
+   ATTACHED to the organism.
+4. Competition does not rescue the memory law. Where state cannot pay (regenerating pools) it is
+   never used. Where it pays (pulse refill), competition shrinks its absolute value: the
+   ecological route does not amplify state.
+5. Pulse worlds are a place where the REACHABLE memory form (a write-once latch, Finding 3) is
+   decisive (2-4x). That makes them a test bed for whether search finds the latch when it matters
+   (B69).
+
+------------------------------------------------------------------------------------------
+9. FINAL VERDICT
+------------------------------------------------------------------------------------------
+- Finding 4: SUPPORTED on 2/2 worlds at k=4. Not yet ensemble-invariant.
+- Competition -> state bridge: NOT SUPPORTED (B67 failed by the letter; B68 bridge criterion 0/3).
+
+------------------------------------------------------------------------------------------
+10. CLAIM CEILING
+------------------------------------------------------------------------------------------
+"In Proteus v0 organisms evolved by CMP3 in two C6 NoClock worlds with depleting, regenerating
+pools, concurrent 4-agent competition produces coexisting pool-identity specialists with a
+rare-type advantage. Neither solo selection nor noise-matched selection does."
+
+The claim does NOT cover:
+- other group sizes;
+- worlds without regeneration;
+- non-C6 world generators;
+- other VMs or searches;
+- any claim of cooperation or communication (the signal channel is unused, ablation 0.0).
+
+------------------------------------------------------------------------------------------
+11. SUCCESSOR PRESCRIPTION
+------------------------------------------------------------------------------------------
+S1 B66: k=2 and k=8 on P-boom (staged; launch after the envelope frees, new lease, capture the
+   token).
+S2 A7 direct test: permute the order of pool words in the observation per episode. A pool-
+   identity specialist should lose its niche. A location specialist would not.
+S3 Third world outside the C6 named set (ensemble invariance).
+S4 A3/A5 hardening: rare-type test with matched niche sizes (sample equal-sized niches) and more
+   groups.
+S5 B69: pulse-world evolution, SOLO vs CONC (staged): does search find the latch where it is
+   decisive?
+
+------------------------------------------------------------------------------------------
+12. PRIMARY ARTIFACT INDEX
+------------------------------------------------------------------------------------------
+Code (archaeon/beta/)
+  b59_coupling_niches.py              results/B59_result.json, B59_cells.jsonl         eeb011d7e
+  b60_concurrent_niches.py            results/B60_result.json, B60_cells.jsonl         d0860c471 / 49049dc77
+  b62_niche_attack.py                 results/B62_result.json, B62_pop_*.json          adf737ed7 / a333538ca
+  b63_rare_advantage.py               results/B63_result.json                          734020e7d / a333538ca
+  b64_niche_replication.py            results/B64_bscatter/*                           ac2606117 / a85d7fb04
+  b65_specialist_mechanism.py         results/B65_result.json                          3b5c33b52
+  b67_state_use.py                    results/B67_result.json                          4d807c4f8
+  b68_pulse_state_controls.py         results/B68_result.json                          e038729ec
+  b66_group_size.py, b69_pulse_evolution.py   (staged)                                 b019c70c0 / 9ae60ea62
+
+Docs
+  JOURNAL.md (B59-B69 entries)
+  BETA_FINDINGS.md Finding 4
+  CAMPAIGN_UPDATE_2026-10-09b.md
+  comms #1956 (report to Harmonia, Aporia)
+==========================================================================================
