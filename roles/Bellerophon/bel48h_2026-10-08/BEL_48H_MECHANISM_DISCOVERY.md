@@ -38,6 +38,13 @@ MED brings S to parity (0.45); under HIGH mutation only payment keeps replicator
 architecture payment favours flips with the mutation regime. PROVISIONAL (one specimen pair; attribution by founder tags
 degrades at HIGH mutation).
 
+## W6 block 4 X -- the same competition with an INDEPENDENT specimen pair (prereg s13; 192 runs, 0 voids)
+
+E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E share ON 0.07 vs OFF 0.60; ON < OFF in
+24/24 seeds -- X-P7 HOLDS (the W5 block 3 MED reversal reproduces). HIGH + ON: S majority in 4/4 decided seeds -- X-P6
+FALSIFIED (W5-P6's 'E dominates at HIGH' was pair-specific). Generalisable part: paying for the computation favours the
+compute-first architecture (at least at MED mutation) across two independently evolved pairs.
+
 ## W6 block 2 -- GENERALITY of two-fragment complementation (prereg s11; 720 runs, 0 voids, 2.0 h)
 
 Three confound-free variants (writer holds NO LDIR and writes LD T,n by constructed writes; carrier holds only LDIR; each
