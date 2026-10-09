@@ -651,6 +651,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   appeared once in ~28 writable large-tape runs (B51 seed 5101). It stands as a real but RARE accident, not a route
   this search takes at a usable rate; "self-modifying code as a systematic chain-shortener" is not supported.
   CORE-HOUR TALLY window 3: ~17 of 48.
+- B59 launched (~05:40Z; commit is the receipt): NEW LANE -- ecological coupling and niche partitioning. P-boom NoClock,
+  COUPLED (one shared pool list per generation; each harvest depletes what later organisms see) vs UNCOUPLED, 6 seeds
+  each, G=200; readout = entropy of each final organism's dominant harvest index (uncoupled evaluation), harvester
+  share, reward. Caveat up front: evaluation order matters under coupling. Lease lse-6da666a9281e, ~2 core-h.
+  PREDICTION: COUPLED entropy > UNCOUPLED by >= .2 bits in >= 4/6 seed pairs.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
