@@ -85,7 +85,8 @@ through a staging area at 160; the 256-byte copy wraps and, mid-copy, overwrites
 window bytes (partner material) -- a self-inflicted import on every execution, which the ablation reverts. So part of
 uptake's suppression is self-damage of staging copiers, not only damage done by importing organisms to precursors
 (UF). PROVISIONAL; a test that blocks only imports performed while copying through a staging area is queued
-(NEXT_EXPERIMENTS #9).
+(NEXT_EXPERIMENTS #9). [RETRACTED by U3: before the first origin no organism self-copies, so this cannot explain the
+origin gain; the 0xA0 gain comes from blocking non-self-copying imports.]
 
 ## UF -- why uptake suppresses origination (prereg s17; 300 runs, 0 voids, 2.67 h)
 
@@ -103,6 +104,18 @@ E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E
 24/24 seeds -- X-P7 HOLDS (the W5 block 3 MED reversal reproduces). HIGH + ON: S majority in 4/4 decided seeds -- X-P6
 FALSIFIED (W5-P6's 'E dominates at HIGH' was pair-specific). Generalisable part: paying for the computation favours the
 compute-first architecture (at least at MED mutation) across two independently evolved pairs.
+
+## U3 -- splitting CL-20 (prereg s20; 1,800 runs, 0 voids, 4.17 h)
+
+600 seed-triples (PARTIAL 300, PAIR 300): origins normal 46, block_all 63, block_selfcopy 45. U3-P1 HOLDS (block_all vs
+normal 43 vs 26, one-sided p 0.027 -- third reproduction of CL-20 in GRID WELL_MIXED budget 256). U3-P2 FALSIFIED
+(block_selfcopy vs normal 0 vs 1) and U3-P3 FALSIFIED (LD T,0xA0-shape gain 0 under block_selfcopy vs +6 under
+block_all). The selective block acted in a median of 0 executions per run before the first origin, and could not act:
+until a first replicator exists nobody copies itself. My post-hoc 'staging-copier self-damage' reading of the 0xA0 gain
+was therefore logically unable to explain an ORIGIN effect -- an error I should have caught before freezing (calibration
+ledger). What U3 does show: the whole origin gain of blocking imports comes from imports by organisms that are NOT
+self-copying -- exactly UF's precursor-breaking imports. CL-20's mechanism (UF) is strengthened; the post-hoc 0xA0
+reading is RETRACTED as an origin mechanism.
 
 ## S1 -- substrate perturbation (prereg s19; 1,760 runs, 0 voids, 6.71 h)
 

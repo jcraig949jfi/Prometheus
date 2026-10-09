@@ -45,3 +45,6 @@ date | call made | what was true | corrected by | changed practice
 - Chain markers: 'grep -q B1_DONE' matched 'W6B1_DONE' and started U2 early (stopped at 0 results). Also twice killed my
   own shell with 'pkill -f'/'grep [c]hain' patterns that appeared in my own command line. Rules: markers are matched
   anchored ('^NAME_DONE'); process selection uses the exact full command line ('^/bin/bash /path/script.sh$').
+- U3-P2/P3 tested a post-hoc mechanism (staging-copier self-damage) that could not affect FIRST origins at all: before
+  the first replicator no organism self-copies. The selective block acted 0 times. Rule: before freezing a mechanism
+  test, check that the mechanism can operate in the window the endpoint measures.
