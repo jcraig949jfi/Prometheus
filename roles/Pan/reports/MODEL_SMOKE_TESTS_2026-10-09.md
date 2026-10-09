@@ -57,6 +57,17 @@ card, runs at this speed, follows basic instructions", not as a ranking.
 3. A transient refused connection to M1 ended the first run after 3 models;
    connections now retry at connect only (3 attempts).
 
+## Calibration of the intake's 16 GB fit estimate (added 2026-10-09 after the run)
+
+The 9 models' HF repos were fetched explicitly (`pan.frontier.hf.fetch_repos`)
+and their Ollama Q4 file sizes divided by the safetensors parameter counts:
+median 0.630 bytes/param (0.600 qwen2.5-coder... 0.673 gemma3). The estimator
+had assumed 0.5625 (4.5 bits) and so under-estimated file size by about 11
+percent; it now uses 0.63 (pan/frontier/hf.py). Recomputed over 1,510
+catalogued models: 8 fits_16gb_q4 verdicts changed (borderline 23-26B models).
+All 9 tested models were predicted to fit and did (100 percent GPU) -- these
+are positives only; no predicted non-fit was loaded.
+
 ## Not measured (candidates)
 
 Lean provers (Goedel-Prover-V2-8B, Kimina, Pythagoras-Prover-4B) need a Lean

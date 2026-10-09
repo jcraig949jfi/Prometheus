@@ -20,7 +20,10 @@ QUANT_MARKERS = ("gptq", "awq", "fp8", "nvfp4", "mxfp4", "bnb", "4bit", "4-bit",
                  "exl2", "mlx", "quantized", "bitsandbytes")
 VRAM_GB = 16.0
 HEADROOM_GB = 1.5          # KV cache, CUDA context, activations at modest context
-Q4_BYTES_PER_PARAM = 0.5625  # ~4.5 bits (Q4_K_M class)
+# Measured 2026-10-09 on 9 models pulled through Ollama on M2 (Q4 GGUF file bytes / safetensors
+# parameters): median 0.630, range 0.600-0.673 (roles/Pan/reports/MODEL_SMOKE_TESTS_2026-10-09.md).
+# The first value, 0.5625 (4.5 bits), underestimated file size by about 11 percent.
+Q4_BYTES_PER_PARAM = 0.63
 
 
 def params_from_name(repo_id):
@@ -160,3 +163,50 @@ def run_daily_papers(days=14, out=print):
     finish_run(run_id, counts, "OK" if not counts["failed"] else "PARTIAL")
     out(json.dumps(dict(papers=sum(counts["days"].values()), failed=counts["failed"])))
     return counts
+
+
+def fetch_repos(repo_ids, tag="explicit", out=print):
+    """Fetch named model repos one by one (GET /api/models/<id>) into pan.hf_model --
+    for models Pan has run or been asked about that the org listings did not reach."""
+    from .. import db
+    sd = seeds()
+    lim = sd["limits"]["huggingface"]
+    run_id = new_run("frontier-hf-repos", {"repos": list(repo_ids)})
+    cl = Client("huggingface", run_id, lim["min_interval_s"], lim["window_s"], lim["max_calls_per_window"])
+    got, missing = [], []
+    for rid in repo_ids:
+        r = cl.get(API + "/" + rid, params=[("expand[]", e) for e in EXPAND])
+        if r is None:
+            missing.append(rid)
+            continue
+        m = r.json()
+        m.setdefault("id", rid)
+        got.append(m)
+    with db.cursor() as cur:
+        n = upsert_models(cur, got, tag, run_id)
+        cl.flush(cur)
+    finish_run(run_id, dict(fetched=n, missing=missing), "OK" if not missing else "PARTIAL")
+    out(json.dumps(dict(fetched=n, missing=missing)))
+    return got
+
+
+
+def recompute_fit(out=print):
+    """Re-derive pan.hf_model.fit from each row's stored raw metadata (after a change to
+    the estimator constants); returns how many fits_16gb_q4 verdicts changed."""
+    from .. import db
+    from psycopg2.extras import execute_values
+    with db.cursor() as cur:
+        cur.execute("select repo_id, raw, fit from pan.hf_model")
+        rows = cur.fetchall()
+        upd, flipped = [], 0
+        for rid, raw, old in rows:
+            raw = raw or {}
+            _, _, f = fit(rid, raw.get("tags"), raw.get("safetensors"), raw.get("gguf"))
+            if (old or {}).get("fits_16gb_q4") != f.get("fits_16gb_q4"):
+                flipped += 1
+            upd.append((rid, json.dumps(f)))
+        execute_values(cur, "update pan.hf_model h set fit = v.f::jsonb from (values %s) v(id, f) where h.repo_id = v.id",
+                       upd, page_size=1000)
+    out(json.dumps(dict(models=len(rows), fit_verdicts_changed=flipped, q4_bytes_per_param=Q4_BYTES_PER_PARAM)))
+    return flipped
