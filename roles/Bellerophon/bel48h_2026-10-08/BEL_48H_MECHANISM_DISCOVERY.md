@@ -70,6 +70,13 @@ origination -- removing it raises the origin rate. Hypothesis (untested): import
 importer's own cryptic precursor. Class: CAUSALLY_CONFIRMED (net suppressive effect; paired intervention, 800 pairs, two
 physics); mechanism of suppression PROVISIONAL.
 
+## U2 -- fresh-seed replication of the uptake-block result (prereg s16; 1,600 runs, 0 voids, 4.22 h)
+
+800 new seed-pairs: origins blocked 83 vs normal 60; discordant 58 blocked-only vs 35 normal-only, one-sided p 0.011 --
+U2-P1 HOLDS. Uptake origins 0 vs 9. Extinction this time LOWER in blocked worlds (499 vs 534 of 800; in U it was higher),
+so the origin effect does not follow survival in either direction. Combined U + U2: 167 vs 121 origins over 1,600
+independent seed-pairs. CL-20 net effect REPRODUCED.
+
 ## UF -- why uptake suppresses origination (prereg s17; 300 runs, 0 voids, 2.67 h)
 
 99,595 uptake events in 300 fresh worlds (PARTIAL 200, PAIR 100). Precursor proxy (LDIR AND LD T present): BREAK 4,124 vs
