@@ -787,6 +787,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   test is. CAVEAT: rare-type yardstick is 4-groups while k=2 pops were selected in pairs (a pair-level test is
   1 rare vs 1 common = not definable as rare/common); the claim is 'pair selection does not produce the k=4 NFD
   structure'. Window 3 tally ~46 of 48. k=8 arm after the window rolls.
+- B72 RESULT (pair complementarity, closes the B66 caveat; prediction committed before the run; ~1 proc): mixed
+  (A,B) minus same-niche (A,A)/(B,B) pairs, per capita, 48 pairs per composition, held-out seeds, bootstrap lo.
+  CONC2 2/6 positive (mean ~.009), CONC (k=4) 6/6 (.016-.087), SOLO 2/5 testable (~.007). PREDICTION MET (all 3).
+  At the level they were SELECTED at, pair-trained populations show solo-like (weak) complementarity: crowding,
+  not the 4-group yardstick, is what produces the niche structure.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

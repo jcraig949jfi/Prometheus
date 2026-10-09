@@ -100,7 +100,8 @@ clock.
    other word's ablation drop is 0.0). A niche is a perceptual restriction: sense only pool i, harvest it, else move.
 6. **Crowding threshold (B66).** Under pair competition (k=2), entropy is as high as at k=4 (1.19 vs 1.23) but
    the hardened rare-type test finds 0/6 wins: every population shows dominance. Negative frequency dependence needs
-   crowding; entropy alone does not detect it.
+   crowding; entropy alone does not detect it. At pair level (B72) the same holds: mixed pairs beat same-niche pairs
+   in 2/6 k=2 populations (solo-like) vs 6/6 k=4 populations.
 7. **Limits.** Two worlds; k=8 and a third (procedural) world pending (B66 k=8, B71).
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
