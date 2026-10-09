@@ -65,3 +65,9 @@ stated as a finding.
 | D3 | positive RD in both arms for V8 k8 | WRONG (no-law -.073) |
 
 All three go in the ledger as one row.
+
+## Annotation 2026-10-09 (THESEUS-47)
+The per-arm redundancy split did not replicate on fresh seed 20261011. V8 k8 RD: law-on
++.046, no-law +.071; interaction z -.17 (theseus/runs/interact_s4_2026-10-09/VERDICT.md).
+The "multiplicity of law-built paths" account in the Reading above is withdrawn.
+The law-built generalisation advantage itself replicated: V8 k8 85% vs 27%, p 5e-12.
