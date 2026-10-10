@@ -187,11 +187,13 @@ def _run_one(spec):
         cfg = _cfg(spec)
         w = UptakeFateWorld(cfg, spec["seed"]); s = w.run()
         out["summary"] = _keep(s); out["origin"] = w.origin_summary(); out["UF"] = dict(w.UF); out["end_hash"] = end_state_hash(w)
-    elif kind in ("origin", "origin_block", "origin_block_selfcopy"):
+    elif kind in ("origin", "origin_block", "origin_block_selfcopy", "origin_block_ldir", "origin_block_noldir"):
         from origin import OriginWorld
         from uptake_block import UptakeBlockWorld, SelfCopyUptakeBlockWorld
+        from uptake_select import LdirUptakeBlockWorld, NoLdirUptakeBlockWorld
         cfg = _cfg(spec)
-        W = {"origin": OriginWorld, "origin_block": UptakeBlockWorld, "origin_block_selfcopy": SelfCopyUptakeBlockWorld}[kind]
+        W = {"origin": OriginWorld, "origin_block": UptakeBlockWorld, "origin_block_selfcopy": SelfCopyUptakeBlockWorld,
+             "origin_block_ldir": LdirUptakeBlockWorld, "origin_block_noldir": NoLdirUptakeBlockWorld}[kind]
         w = W(cfg, spec["seed"]); s = w.run()
         out["summary"] = _keep(s); out["heredity"] = w.heredity_summary(); out["reach"] = w.reach_summary()
         out["origin"] = w.origin_summary(); out["end_hash"] = end_state_hash(w)

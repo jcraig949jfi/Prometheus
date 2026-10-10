@@ -140,3 +140,18 @@ Analysis tools/analyze_c23.py (synthetic test tools/tests/test_c23.py):
   one-sided p < 0.05); NOT_TESTABLE if IMPLANT + IMPLANT_SHAM BOTH events < 5.
 ERRATUM s7 (same minute, before any E1 result): line "Disclosed confound: at  the population" lost a backquoted word to
 shell substitution; it reads "Disclosed confound: at the intervention tick the population ...". No rule changed.
+
+## 8. D2 -- selective uptake ablation: is the origin cost of uptake precursor damage? (frozen 2026-10-10T15:08:39Z, before any D2 run)
+
+Motivation (post-D1, disclosed): D1 falsified the loss/gain ratio rule; uptake blocking raised origination even where
+imports create more FUNC than they destroy, so the cost may fall on PRE-FUNC precursors. Marker: the importer's
+pre-execution tape contains an LDIR byte (BEL-48H: LDIR indispensable in 85/85 origins). Instruments tools/uptake_select.py
+(LdirUptakeBlockWorld / NoLdirUptakeBlockWorld: revert imports only into LDIR / non-LDIR carriers; import executions are
+counted per marker class), tested (tools/tests/test_d2.py). Plan tools/plan_d2.py: 3200 runs, sha256 93560f5bdd2c2ff0ea7abc0a88f7c852f9ac4e5301de3b6d5cf2aea13f46f0e1; substrates
+S_PAIR320 and S_REF (BEL-48H reference), 400 seeds each, 4 arms on the SAME seed (normal, block_all, block_ldir, block_noldir).
+Analysis tools/analyze_d2.py:
+- D2-P1: block_ldir > normal (one-sided sign test on discordant pairs, p < 0.05).
+- D2-P2: block_ldir > block_noldir (same test).
+- The precursor-damage account HOLDS if P1 and P2 hold in BOTH substrates; reported in any case: block_all vs normal
+  (replication), block_noldir vs normal, and import-execution dose per arm (the arms block different amounts; a dose
+  difference is disclosed, not corrected).
