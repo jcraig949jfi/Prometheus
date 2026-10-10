@@ -1,0 +1,115 @@
+{
+ "eval_sec": 0.0001163504000287503,
+ "growth": {
+  "X2 d=8 budget=20000": {
+   "cells": 42,
+   "distinct_genomes": 20000,
+   "sec_per_proposal": 0.0001262055299943313
+  },
+  "X2 d=8 budget=40000": {
+   "cells": 94,
+   "distinct_genomes": 39999,
+   "sec_per_proposal": 0.00013227848000242374
+  },
+  "X2 d=8 budget=5000": {
+   "cells": 13,
+   "distinct_genomes": 5001,
+   "sec_per_proposal": 0.00012256599999964238
+  },
+  "X3 d=8 budget=20000": {
+   "cells": 1536,
+   "distinct_genomes": 20001,
+   "sec_per_proposal": 0.0002956870499998331
+  },
+  "X3 d=8 budget=40000": {
+   "cells": 2987,
+   "distinct_genomes": 40001,
+   "sec_per_proposal": 0.00046994343500118705
+  },
+  "X3 d=8 budget=5000": {
+   "cells": 367,
+   "distinct_genomes": 5001,
+   "sec_per_proposal": 0.00017018173998221755
+  }
+ },
+ "host": "harry1",
+ "impl": "py",
+ "proposals_per_arm": 6000,
+ "python": "3.12.10",
+ "rows": {
+  "X1 d=3": {
+   "cells_at_end": 11,
+   "overhead_per_proposal": 1.6959433327429004e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.0001333098333561793
+  },
+  "X1 d=8": {
+   "cells_at_end": 12,
+   "overhead_per_proposal": -2.9427500364060164e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00011340764999234428
+  },
+  "X2 d=3": {
+   "cells_at_end": 67,
+   "overhead_per_proposal": 1.3317916619901842e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00012966831664865214
+  },
+  "X2 d=8": {
+   "cells_at_end": 68,
+   "overhead_per_proposal": 2.0155266664611792e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.0001365056666933621
+  },
+  "X3 d=3": {
+   "cells_at_end": 286,
+   "overhead_per_proposal": 2.3593716633816568e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00013994411666256687
+  },
+  "X3 d=8": {
+   "cells_at_end": 335,
+   "overhead_per_proposal": 2.162599998215834e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00013797640001090864
+  },
+  "X3G d=3": {
+   "cells_at_end": 64,
+   "overhead_per_proposal": 9.971666615456347e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00012632206664420665
+  },
+  "X3G d=8": {
+   "cells_at_end": 64,
+   "overhead_per_proposal": 1.2743349963178225e-05,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00012909374999192853
+  },
+  "chain_neutral d=3": {
+   "cells_at_end": 0,
+   "overhead_per_proposal": -5.77901668536167e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00011057138334338863
+  },
+  "chain_neutral d=8": {
+   "cells_at_end": 0,
+   "overhead_per_proposal": 4.6988666290417375e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00012104926665779204
+  },
+  "chain_strict d=3": {
+   "cells_at_end": 0,
+   "overhead_per_proposal": -1.321516698226329e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00011502888333052397
+  },
+  "chain_strict d=8": {
+   "cells_at_end": 0,
+   "overhead_per_proposal": -1.3241000318278895e-06,
+   "proposals_timed": 6000,
+   "sec_per_proposal": 0.00011502629999692241
+  }
+ },
+ "what": "C-013-T010 numba-port timing (toy settings; no outcome recorded)",
+ "written_at_utc": "2026-10-10T08:17:58Z"
+}
