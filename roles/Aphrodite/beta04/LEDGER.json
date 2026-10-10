@@ -45,6 +45,11 @@
       "utc": "2026-10-10T11:34Z",
       "kind": "RESULT",
       "note": "E1 foundry v1 NOT_QUALIFIED by pre-freeze red team: 3 BLOCKER (triviality by cheap regression/recurrence policies 26-31/39; circular R1 prerequisite; order leakage) + 7 MAJOR. v1 preserved as a result. One repair round v2 with rules frozen before its pilot."
+    },
+    {
+      "utc": "2026-10-10T12:16Z",
+      "kind": "LEAD",
+      "note": "ATLAS delivered @82343c31a: 14/14 tests; C-013 D1 descriptor procedure ported: D-CERT FAILS everywhere (reproduces D1: search-feedback descriptors blind to stepping stones), D-BEH mixed (pass TOY-D2/DESERT/CREDIT, fail GRADED, 2/6 pilot); route-based desert predictor UNCALIBRATED (predicted 4e7 vs empirical ~1.9e3 crossing) -> descriptive only; empirical credit-blind/partial-credit chain controls separate desert vs rarity (need >=24 seeds); archives no gain over plain chain or matched random at 1x on toys; pilot tasks censored at 1x (witness size 10-18)."
     }
   ]
 }
