@@ -125,6 +125,11 @@
    "utc": "2026-10-10T18:40Z",
    "kind": "RESULT",
    "note": "E3-KP PRIMARY (FREEZE_E3KP): TFS1_INSTRUMENT_QUALIFIED = NO; chain 7/15, scratch fails 15/15; links UNDERDETERMINED_STONE 7 (stones pass own R1 test but disagree with sealed mechanism on probes [-40,40], or R1 first dev-consistent fails test), HORIZON_R1 1. Pre-data prediction was horizon-dominated; observed underdetermination-dominated. OE trigger not met -> no repair -> TFS1_REACHABILITY_INSTRUMENT = FAIL. E3 2x2 not run."
+  },
+  {
+   "utc": "2026-10-10T18:55Z",
+   "kind": "RESULT",
+   "note": "E3-KP SECONDARY ROWS (descriptive, FREEZE_E3KP): fallback_off 0/15 (R1_ACQ 6, UNDERDET 5, HORIZON_R1 4); given_foundry_primitives 14/15 (COMPOSITION_HORIZON 1) -- composition step reachable given correct stones; all_acquired 7/15; seed1 9/15 (UNDERDET 2, H_R1 2, COMP_H 2); seed2 8/15 (UNDERDET 3, H_R1 4). Scratch fails 15/15 all rows. A1-C agreement: fallback-off NO = primary NO. Reading: the break is TFS-1 stone ACQUISITION (identifiability/order-dependence), not composition."
   }
  ]
 }
