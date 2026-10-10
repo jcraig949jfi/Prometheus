@@ -54,3 +54,20 @@ Arm-C progress is 21-35 vs arm A's 15-21, at every geometry.
 - Search infrastructure: the certificate-guided archive found all 3 discoveries; ordinary search found none.
 - Experimenter: geometry (bringing inputs within 2 rows), search space.
 - Certifier: ablation, autonomy, minimality.
+
+## LADDER01-x4 escalation (scaling rule 4x; PREREGISTRATION_LADDERx4.md, freeze eacc39578): COMPOSITION_RARE
+32 NEW seeds per arm at G1 (seeds 8-39); search 64/64 and certify 64/64 rc=0. Evidence: R3/evidence_ladderx4/.
+
+| | arm C certificate-guided | arm A ordinary |
+|---|---|---|
+| seeds with COMBINE | 4/32 = 12.5% (95% Wilson 5-28%) | 0/32 (0-11%) |
+| seeds with certified COMPOSE | 2/32 (s22: 1 a-only / 1 b-only / 4 shared; s27: 3 / 1 / 6) | 0 |
+| seeds with an AUTONOMOUS mechanism | 0/32 | 0 |
+| position robustness of the COMPOSE mechanisms | 16% (s22), 51% (s27) | -- |
+
+- Disposition by the frozen rule: C COMPOSE 2/32 is far below 12/32, so not ARCHIVE_ASSISTED_COMPOSITION. C COMPOSE
+  >= 1, so COMPOSITION_RARE.
+- The C-over-A ordering replicates on fresh seeds (4/32 vs 0/32).
+- The original 3/8 was a small-sample high.
+- Pooled over the 40 arm-C seeds: COMBINE 7/40, COMPOSE 3/40, AUTONOMOUS 1/40 (the original s7 COMBINE).
+  No discovered composition is autonomous.
