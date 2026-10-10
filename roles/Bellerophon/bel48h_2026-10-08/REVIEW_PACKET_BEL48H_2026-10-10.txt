@@ -1,0 +1,343 @@
++==============================================================================+
+| REVIEW PACKET -- BEL-48H-2026-10-08: heredity, reproduction and computation   |
+| in the Z80 x Atlas substrate, with repaired lineage/pairing/replication rulers|
+| Author: Bellerophon (Claude Opus 5.5), host ubu005, instance ubu005-0eb14d49   |
+| Date: 2026-10-10 (campaign 2026-10-08T05:14Z -> 2026-10-10T05:14Z)            |
+| For: the operator (HITL) and external reviewers                               |
+| Status: CLOSED. 18,862 runs in 23 preregistered blocks, 0 voids.              |
+| Self-contained: every load-bearing number is inline; no repo access needed.   |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Mandate: review three instrument repairs adversarially, then 48 h of autonomous
+experiments on how hereditary information, reproduction and computation arise,
+persist and interact in an artificial-life substrate of 64-byte Z80-like tapes.
+
+Verdict:
+- All three repairs survived after one was fixed: an independent reviewer found a
+  real defect in the lineage repair.
+- Six mechanism-level results are CAUSALLY_CONFIRMED or REPRODUCED on unseen
+  populations.
+- 16 frozen predictions were falsified and reported as such.
+- Two of my own mechanism claims were retracted.
+- One design flaw was found and amended: seeds shared across cells.
+
+Strongest single result: horizontal uptake is BOTH a route to the first
+replicator AND a net suppressor of replicator origin.
+- Blocking it raised origination three times: 84 vs 61, 83 vs 60, 63 vs 46
+  (paired seeds).
+- The effect holds only in one substrate, and its boundary is now measured.
+
+-----
+1. WHAT WAS BUILT (all committed before the data it measures)
+-----
+Kernel repairs (prometheus/z80atlas; opt-in switches, defaults byte-identical):
+- DEF-008 PROVENANCE lineage. The VM now tracks the pre-execution origin of every
+  written byte, multi-hop, through copy ops and register-A moves.
+- DEF-009 PAIRED init: every init slot consumes the same RNG draws.
+- DEF-010 'written' replication. A position counts only if its material origin
+  is the same tape position.
+
+Byte-identity of defaults was verified on two independent checks:
+- 478 full-output cases, from the reviewer's own harness;
+- the golden v1 replay.
+
+The repairs were merged to main 2c6072c9d.
+
+Measurement instruments (campaign tools; each tested for hook invariance by
+comparing end-state hashes with and without the hook):
+- DualWorld: both lineage rulers on one trajectory.
+- FUNC: a tape alone lays down >= 0.9 L window bytes whose origin is its own
+  byte at the same position.
+- HeredityWorld: founder tags per byte; ASSEMBLY birth classes; knockout-critical
+  sets; single-source reconstructions.
+- OriginWorld: eager tags for mutation / self-construction / uptake / self-move;
+  dissection of the first-FUNC event with per-byte reversion.
+- CompWorld: competence x FUNC.
+- UptakeBlockWorld: a campaign-level physics ablation that reverts partner bytes
+  imported into an organism's own tape.
+
+Procedure for every block:
+- prereg section written;
+- plan generated deterministically and sha256-hashed;
+- analysis script committed BEFORE the runs;
+- runs executed from a pinned code copy.
+
+-----
+2. WHY IT MATTERS
+-----
+The repaired rulers let us separate:
+- material inheritance from resemblance;
+- paired from unpaired comparisons;
+- real copying from zero-filler artefacts.
+
+The questions are where replicators come from, whether heredity can be assembled
+from several sources, and how computation and reproduction interact. These map
+onto Prometheus's interest in compositional mechanisms.
+
+-----
+3. REVIEWS OF THE REPAIRS (two independent adversarial reviewers)
+-----
+Review A (implementation): FAIL as shipped.
+- The provenance rule was one-hop. Bytes copied from the window were always
+  credited to the target, even when the writer had written them earlier in the
+  same execution.
+- Effect in short runs: 335/540 COPY, 337/938 PARTIAL and 385/1,085 PAIR
+  'capture' labels were wrong.
+- The 'written' rule passed a 6-byte tape that sweeps scratch zeros over the
+  window.
+
+Disposition of Review A:
+- Repaired with multi-hop origin tracking, plus 8 regression tests.
+- Validation added.
+- The 478/478 identity check was re-run and passed.
+
+Review B (scientific validity): SOUND_WITH_LIMITS. Limits recorded and disclosed:
+- PROVENANCE measures material ancestry, NOT parentage. A 2-way label cannot
+  represent multi-parent children; 13-16% of random-world births execute bytes of
+  two origins.
+- PAIRED init gives no variance reduction: the paired/independent ratio was
+  0.977-1.318, and RNG streams split at tick 0-40.
+- 'written' passes sterile near-copies and rejects prefix and shifted replicators.
+
+Review B's k-generation functional test was adopted as an extra measurement.
+
+-----
+4. DESIGN AS EXECUTED
+-----
+Six windows, plus follow-up blocks. Physics v2 (v3 for the computation lanes).
+Worlds are 256 cells, 300-500 ticks, budget 256 unless stated. Unit = run =
+independent initial population.
+
+Design defect found mid-campaign (amendment 2): seeds were base + lane*1e9 + k,
+so run k of every cell in a lane shared one initial population. This applied to:
+- my plans;
+- AND the historical grounding round (2,400 G1 runs = 400 populations).
+All pooled claims are re-stated per distinct seed, and every later plan uses one
+distinct seed per run.
+
+-----
+5. RESULTS (exact numbers; class in brackets)
+-----
+5.1 Baseline (W1 v2, 3,240 runs)
+
+Physics vs measurement:
+- PROVENANCE does not change dynamics under IMPLICIT pressure (100/100 identical
+  end hashes). It does under MINIMAL_CRITERION (20/20 differ).
+- PAIRED is a no-op without transplants (100/100).
+
+What survives the corrected rulers:
+- SR-level statistics: SR_res vs SR_prov differ on 0.022% of 1,581,755 births.
+- Spontaneity: 6/7 cells. BYTECODE32 gave 0/150 (historical 2/200).
+- Sustained fraction: 34.8% vs historical 39.4%.
+
+What does not survive:
+- Lineage roots: 22-26% of living organisms change genetic root between rulers in
+  mixing worlds.
+- Historical G6a ('160/160 built by copy'): already withdrawn by my seat on
+  2026-09-29. Its corrected form (64% copy-born) reproduced on fresh seeds: 38/45
+  populations.
+
+5.2 Origin of replicators [REPRODUCED]
+Discovery set: 21 populations. Confirmation set: 85 unseen populations, each a
+distinct seed.
+- The completing event is a single necessary change in 54/75 in-place origins.
+- The precursor copies 0 own bytes in 60/85.
+- The carrier was built and assisted by others' copying in 56/85.
+- Causes: mutation 53, UPTAKE 13, born-assembly 10, self-move 7,
+  self-construct 2.
+- LDIR writes the window in 85/85.
+- Replay of the discovery origins: 27/27 byte-identical.
+
+5.3 Two-fragment complementation [CAUSALLY_CONFIRMED, general]
+Two non-replicating fragments are combined: a writer of LD T,n and a carrier of
+LDIR.
+- They yield a FUNC child in which each byte set is necessary and single-source
+  reconstructions fail.
+- Origin worlds: A 95/100, A+B 99/100, B 6/100, none 8/100.
+- When B is present it supplies the decisive LDIR byte: 64/99.
+
+Ablations and generality:
+- Complete-overwrite physics abolishes it (97/100 runs with none).
+- Ablating target material abolishes it (39/40 -> 1/40).
+- 3 confound-free variants (writer holds no LDIR and builds its bytes by
+  computation): first event two-source in 120/120.
+- 3 world models: GRID 32-38 vs 0, GRAPH 39 vs 0, SOUP 38 vs 0 (PARTIAL vs COPY
+  discordant pairs).
+
+5.4 Capability persists without lineage [REPRODUCED]
+In 100 fresh worlds:
+- function is alive at the end in 98/100;
+- the first assembled lineage is alive in 36/100;
+- no assembly lineage is alive at all in 42/100.
+
+5.5 Operator-matched completion [post-hoc -> CAUSALLY_CONFIRMED by N1]
+Precursor neighbourhoods:
+- needle precursors: median 4 substitution routes, 0 segment-move routes;
+- move-rich precursors: 870-2,067 move routes.
+
+Intervention: the same 55 precursors re-placed in new worlds, mutation VLOW vs
+HIGH.
+- Needle: 0.14 -> 0.78.
+- Move-rich: 0.98 -> 1.00, with 63/63 completions at VLOW non-mutational.
+- Interaction: 0.62 [0.50, 0.73].
+
+Fault line: a fragment can be 0/16,320 substitutions from a replicator yet
+8/50,512 segment moves away.
+
+5.6 Uptake: creator and net suppressor [CAUSALLY_CONFIRMED x3, bounded]
+Blocking imports into the own tape changes origins (paired seeds):
+- U: 84 vs 61, p 0.018;
+- U2 on fresh seeds: 83 vs 60, p 0.011;
+- U3: 63 vs 46, p 0.027.
+It is not a survival artefact: extinction was higher in U and lower in U2.
+
+Mechanism (UF, 99,595 uptake events):
+- imports break precursors more than they make them: 4,124 vs 3,194;
+- they destroy working replicators far more than they create them: 2,363 vs 418.
+
+U3 showed the origin gain comes only from imports by NON-replicating organisms.
+
+Boundary:
+- No effect in SOUP (37 vs 35) or at budget 384 (124 vs 119).
+- There, imports' FUNC loss/gain ratio is 0.24 and 0.77, against 1.63 where the
+  effect exists (post-hoc).
+
+5.7 Computation x reproduction [CAUSALLY_CONFIRMED]
+Contingent payment raises competent self-replicators:
+- conflict repair: 10/300 vs 0/300 (this was historical P6, previously
+  underpowered);
+- ECHO: 20/150 vs 0 OFF vs 3 SHUFFLED;
+- reproduced at 15/300 and 41/300.
+
+Repair is in place, inside the damaging lineage: 16/25. Cross-lineage repair:
+0/25.
+
+BUDGET COUPLING:
+- In 17/41 fresh competent machines, the copy-length operand is competence-
+  critical because an unbounded copy starves the task of the shared 256-step
+  budget.
+- Causal on a specimen: doubling the budget restores competence.
+- It vanishes as the budget grows: 0.52 / 0.50 / 0.00 at budget 192 / 256 / 384.
+
+Architecture selection:
+- Payment favours compute-first over copy-then-compute at MED mutation: pairs
+  23/24 and 24/24; 4 x 4 panel 14 of 15 pairings, p 0.0005.
+- At HIGH mutation it is indeterminate: one pair each way; panel 3 vs 2, 5 ties.
+
+-----
+6. INCIDENTS, DEFECTS AND HOW THEY WERE HANDLED
+-----
+Instrument defects found before the affected analysis was read:
+- one-hop provenance;
+- the FUNC zero-sweep;
+- a short-tape memory shrink;
+- a name collision.
+
+Analysis defects found after the results were read:
+- W4-P5 tested lower-case tag kinds while the instrument emits upper case
+  (reported 0/20 as written, 19/20 corrected);
+- C1-P6 used the wrong tape field (77/85 as written, 83/85 corrected).
+
+Retractions of my own claims:
+- W4 "the answer is produced through the child copy": automated test 0/20.
+- The post-hoc "staging-copier self-damage" explanation for uptake suppression:
+  U3 showed it cannot act before a first origin.
+
+Predictions written from bad inputs:
+- W1-P7, from a figure my seat had already withdrawn;
+- W2-P3, from a 3-run pilot.
+
+Other process faults:
+- three hand-written future timestamps (errata appended; the frozen text was
+  never edited);
+- a completion marker collision ('B1_DONE' matched 'W6B1_DONE') started one block
+  early; it was stopped at 0 results;
+- a loose process pattern killed my own shell twice.
+
+Every item has a calibration-ledger rule.
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Establishes, in this substrate and these physics:
+- the origin pathway;
+- fragment complementation;
+- capability-without-lineage;
+- operator-matched completion;
+- the payment effect on architecture at MED;
+- budget coupling as a budget phenomenon;
+- uptake's dual role in GRID WELL_MIXED at budget 256.
+
+Does NOT establish:
+- parentage (the rulers measure material ancestry);
+- that uptake suppression generalises (it does not: SOUP, budget 384);
+- any HIGH-mutation architecture rule;
+- behaviour beyond 500 ticks;
+- anything about other engines.
+
+Rulers are single-execution. Knockout misses redundancy: 2/85 machines carry two
+LDIRs. The FUNC criterion rejects prefix replicators that do work under partial
+physics.
+
+-----
+8. RECOMMENDATION (operator's call)
+-----
+My lean:
+1. A multi-day campaign on uptake route economics and its substrate boundary,
+   making UF2's FUNC-level ratio a frozen prediction.
+2. A rearrangement-aware reachability ruler (segment-move neighbourhoods) in the
+   kernel, beside geometry.scan.
+3. A restatement of the coupling and multi-day campaigns' pooled counts per
+   distinct seed.
+
+"Not worth continuing" is a legitimate answer for the architecture-selection line:
+its HIGH-mutation part found no rule.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (please try to break these)
+-----
+Q1. Is the eager origin classifier sound? It attributes the first FUNC to the
+    single change that made it FUNC. Could FUNC's single-execution criterion
+    misplace the true origin in time?
+Q2. The uptake ablation is itself a physics change. Is "blocking imports" too
+    blunt to attribute the effect to scrambling, given that U3 shows only
+    non-replicators' imports matter?
+Q3. Complementation needs target bytes to survive into the child. Is
+    ENDOGENOUS_PARTIAL physics so permissive that 'assembly' is trivial, and the
+    result uninformative for any engine without partial writes?
+Q4. Budget coupling vanishes at budget 384, but shared critical bytes persist
+    (31/41) through a "damage" component. Is the budget/damage split real, or a
+    classifier artefact of comparing b vs 2b?
+Q5. 16 falsified predictions and 2 retractions in 48 h. Is the preregistration
+    discipline catching errors, or is the prediction quality too low to trust the
+    confirmed items?
+
+-----
+10. ARTIFACTS (main 09cf83cee; branch bellerophon/def-bel-008-010-2026-10-06)
+-----
+roles/Bellerophon/bel48h_2026-10-08/:
+- BEL_48H_FINAL_REPORT.md
+- BEL_48H_PREREG.md (21 sections)
+- BEL_48H_CAUSAL_LEDGER.jsonl (20 claims)
+- BEL_48H_EXECUTION_LEDGER.jsonl
+- BEL_48H_REVIEW_RECORD.md
+- the window reports
+- BEL_48H_MECHANISM_DISCOVERY.md (7 mechanism records)
+- BEL_48H_FAILURE_BOUNDARIES.md
+- BEL_48H_NEXT_EXPERIMENTS.md
+- receipts/ (one analysis JSON per block)
+- tools/ (instruments, plans, frozen analyses, tests)
+
+Elsewhere:
+- Directive: roles/Bellerophon/prompts/2026-10-08_bel48h/.
+- Kernel repairs: prometheus/z80atlas (dc1833bc2, merged 2c6072c9d).
+- Raw data, host-local on ubu005: ~/bel48h_runs/<block>/results.jsonl, plus plan
+  files and pinned code per freeze commit.
+
++==============================================================================+
+| END. If the reviewer judges any line "not worth continuing", say so plainly;  |
+| that is a first-class answer and will be acted on.                            |
++==============================================================================+
