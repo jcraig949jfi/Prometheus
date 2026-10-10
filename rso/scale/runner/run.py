@@ -71,10 +71,12 @@ def _head_lock(run_dir, chain_id):
 
 
 def create_run(run_dir, *, name, runtime, params, partitions, epochs, replay_every=10, caps=None,
-               question_ref=None, stop_rules=None, code_root=E.REPO):
+               question_ref=None, stop_rules=None, code_root=E.REPO, retention=None):
     """Freeze a run. A change to anything here is a new manifest_id, i.e. a new run (s3.1)."""
     if os.path.exists(os.path.join(run_dir, "RUN_MANIFEST.json")):
         raise FileExistsError("{} already holds a run".format(run_dir))
+    from rso.scale.runner import retention as RET               # imports this module: resolved at call time
+    retention = RET.validate_policy(retention)                  # a bad policy fails before anything is written
     engine = E.get_engine(runtime)
     ident = code_identity(code_root)
     store = object_store(run_dir)
@@ -97,6 +99,7 @@ def create_run(run_dir, *, name, runtime, params, partitions, epochs, replay_eve
         "partitions": parts, "epochs": epochs,
         "epoch_budget": {"unit": "ticks", "ticks_per_epoch": params["ticks_per_epoch"]},
         "checkpoint_every": 1,
+        "checkpoint_retention": retention,                      # None = keep every checkpoint (retention.py)
         "stop_rules": stop_rules or {"halt_on": ["DISAGREEMENT", "CONTESTED"], "max_worker_starts_per_chain": 8},
         "caps": dict(DEFAULT_CAPS, **(caps or {})),
         "replay_every": replay_every,
@@ -131,6 +134,11 @@ def genesis(run_dir, chain_id):
         gbytes = f.read()
     obj = C.parse_canonical(gbytes)
     return M.Genesis(obj, gbytes, object_store(run_dir).get(obj["initial_checkpoint_sha256"]))
+
+
+def genesis_checkpoint_sha(run_dir, chain_id):
+    with open(os.path.join(pdir(run_dir, chain_id), "GENESIS.json"), "rb") as f:
+        return C.parse_canonical(f.read())["initial_checkpoint_sha256"]
 
 
 def head(run_dir, chain_id):
