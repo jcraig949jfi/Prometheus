@@ -66,3 +66,10 @@ Limits:
 | W2 | SWAP rescue >= 25% | 39%, RIGHT |
 | W3 | CTRL raises J >= .05 over baseline | +.101, RIGHT |
 | W4 | S1 SUPPORTED | WRONG (p .113): ledger |
+
+## Annotation 2026-10-10 (THESEUS-50)
+The reading above ("carried mostly by the FORM of a generated law, a multi-source react") is
+corrected. A single-source cut of the same donor law rescues MORE: mean J .500, 37/79 rescued,
+vs .425 / 26 for the multi-source scrambled copy (theseus/runs/release_form_2026-10-10/VERDICT.md).
+What rescues release is a direct storage -> sensor coupling. Law-bearing ecologies supply one
+almost universally (93% vs 19% of solvers).
