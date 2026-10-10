@@ -134,7 +134,9 @@ def rewrite(t, pattern, name: str, arity: int, counter: Optional[List[int]] = No
     """Outermost-first rewrite of every match of `pattern` into (name, args...)."""
     if not _is_leaf(t) and t[0] != "lam":
         binds: Dict[int, tuple] = {}
-        if match(pattern, t, 0, binds):
+        if match(pattern, t, 0, binds) and all(j in binds for j in range(arity)):
+            # a pattern that does not mention every parameter (an entry with an unused parameter) cannot fix the
+            # missing argument from the match, so it is not rewritten (no guessed argument)
             if counter is not None:
                 counter[0] += 1
             return (name,) + tuple(rewrite(binds[j], pattern, name, arity, counter) for j in range(arity))
