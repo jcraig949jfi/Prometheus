@@ -127,7 +127,7 @@
   ],
   "active_window": "W01",
   "experiments": {
-    "E1": "PENDING",
+    "E1": "FOUNDRY_V1 = NOT_QUALIFIED: demand is feature selection, not composition (red-team F1: cheap non-composing policies solve 26-31/39 admitted; F2: R1 prerequisite circular, base search reaches no R1 mechanism in 3 world-mechanisms). One pre-registered repair round (v2) authorised; no retuning beyond it.",
     "E2": "PENDING",
     "E3": "PENDING",
     "E4": "GATED",
@@ -139,7 +139,12 @@
     "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
     "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged"
   },
-  "attempts": {},
+  "attempts": {
+    "E1": {
+      "v1": "pilot -> NOT_QUALIFIED (red-team)",
+      "v2": "one repair round (pre-registered rules in beta04/windows/E1_V2_RULES.md)"
+    }
+  },
   "compute": {
     "cap": "48 core-h / rolling 24h",
     "ledger": []
