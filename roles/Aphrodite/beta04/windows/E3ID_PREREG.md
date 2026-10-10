@@ -83,3 +83,28 @@ vs x > 4), and the foundry's enumerator found the sealed-equivalent stone, which
 - About 2-4 core-h (ID-1 enumeration over full budgets: 1e6 x about 20 stones at about 45 s each = about 0.25 core-h;
   RETAIN chains 15 x 3 rows x up to 60 s each).
 - <= 2 workers.
+
+## AMENDMENT ID-A1 (pre-data rulings; build 767ee7adf; no production E3-ID run yet)
+
+Rulings on E3_RUNNER s4C:
+
+1. **Unit family.**
+   - Use the R1 family the primary acquired from.
+   - If the unit was not acquired, use the first attempted family that yielded a dev-consistent program.
+   - If every attempt hit the horizon, the unit keeps its horizon label.
+2. **Designated rows: the UNCERTIFIED RETAIN-k**, as the draft literally says.
+   - The choice is made from the prereg text, NOT from the pilot (pilot: uncertified RETAIN-4 3/7; CERT 4/7).
+   - RETAIN-k-CERT is a reported secondary.
+   - If designated and CERT disagree on ID_RETENTION_REPAIR, both are reported and the synthesis states the
+     disagreement.
+3. **Pooled fraction.** It counts units whose E3-KP primary first link is UNDERDETERMINED_STONE. The "all units of
+   failed families" count is reported beside it.
+4. **Label edge cases.**
+   - Zero classes: NO_STONE (excluded).
+   - **One class that is NOT sealed-equivalent: UNIQUE_WRONG.** Within budget the dev data admit only a wrong mechanism,
+     so the sealed class is beyond the R1 horizon. This maps to WORLD / RULER-or-HORIZON (not INSTRUMENT).
+   - **INSTRUMENT** applies only to UNIQUE units that ARE sealed-equivalent yet were labelled UNDERDETERMINED_STONE in
+     E3-KP (an extraction / promotion defect).
+5. **"Mostly"** = a strict majority. A tie is MIXED, and both readings are reported.
+6. The RETAIN failing-link rule "no sealed-equivalent stone retained", the dual probe sets, the empty-slot handling and
+   no budget compensation (s4C items 6-9) are CONFIRMED.

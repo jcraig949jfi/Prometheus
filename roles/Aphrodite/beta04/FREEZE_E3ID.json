@@ -1,0 +1,49 @@
+{
+ "schema": "beta04.freeze.v1",
+ "freeze": "FREEZE_E3ID",
+ "utc": "2026-10-10T19:30Z",
+ "campaign": "C-015",
+ "scope": "E3-ID identifiability diagnostic (windows/E3ID_PREREG.md + ID-A1). New preregistration; does not relabel E3-KP.",
+ "status_before_freeze": "no E3-ID stage run on foundry/production (inputs: E3-KP production outputs, hashed below)",
+ "designated": "uncertified RETAIN-4 for ID_RETENTION_REPAIR; RETAIN-1/2 and CERT rows secondary",
+ "worlds": [
+  "W0321d83c",
+  "W2bdef02f",
+  "W480ffd54",
+  "W483b8c31",
+  "W6eb945cc",
+  "Wb49b6a5f",
+  "Wc025415a"
+ ],
+ "git_blob": {
+  "windows/E3ID_PREREG.md": "967c2e7c902de2c68cd6152eca2e8835a8634a60",
+  "tfs1/e3/e3_identifiability.py": "e885c79c475cf4fa117416d8d75769d734a97708",
+  "tfs1/e3/e3_known_positive.py": "2b9845fedec302737ac5b3da3ef94616d625d68a",
+  "tfs1\\__init__.py": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+  "tfs1\\bench.py": "161f3ea09970a3fb80f7a6876bbfb6453d610fa6",
+  "tfs1\\compress.py": "1bf5e01045e43d7f6ba3e0ec2f928f41a0b8309c",
+  "tfs1\\core.py": "a5ecd5e0c6e6d9a8d31c08cecaacded721621a10",
+  "tfs1\\enum.py": "6ffd14bf46a0e76dbfb353d51daf94d40c9352cd",
+  "tfs1\\library.py": "01687d208272a83fe738c71964466c061b075cf9",
+  "tfs1\\membrane.py": "827af25e0e91ad621034155a135b0c98deb46cde",
+  "tfs1\\mutate.py": "2f217e90a09ed906c73c38502da2c3a9c7479b0a",
+  "tfs1\\toy_calibration.py": "2bc18a6c6dfad70780956126677c46bed0fea62c",
+  "tfs1/e3/worlds.py": "790f18122060169d3392232f4de50bb3d8470b17"
+ },
+ "kp_inputs_git_blob": {
+  "runs/kp_production\\KPA1_POOLED_fb0.src-tfs1.lib-constituents.seed0.oe0.B1000000.json": "64cd63688928a4517f6f9a827212f75b1a56c19d",
+  "runs/kp_production\\KPA1_POOLED_fb1.src-foundry.lib-constituents.seed0.oe0.B1000000.json": "84796ebc74184bfed136c3dd86566891e5efed07",
+  "runs/kp_production\\KPA1_POOLED_fb1.src-tfs1.lib-all.seed0.oe0.B1000000.json": "b00fc4bbda0c8c0b74a6666c999b7838c1e31e5e",
+  "runs/kp_production\\KPA1_POOLED_fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000.json": "3fcf90ed3f226753d49d076a7b59f3b13313f1e6",
+  "runs/kp_production\\KPA1_POOLED_fb1.src-tfs1.lib-constituents.seed1.oe0.B1000000.json": "070f3f2634ada2aa19efc2526859161da7e2b2aa",
+  "runs/kp_production\\KPA1_POOLED_fb1.src-tfs1.lib-constituents.seed2.oe0.B1000000.json": "6e888ac73b693306c893f584843f094716e0b3b8",
+  "runs/kp_production\\KPA1_W0321d83c.json": "477a9ed3963e2c2ffaab05e663641a6ff9e286c2",
+  "runs/kp_production\\KPA1_W2bdef02f.json": "cd0c4455199f942c24efee7b7f0240f14ef1dc4d",
+  "runs/kp_production\\KPA1_W480ffd54.json": "d200bb7f924d5a67e028199f7c3266cd27cd25ad",
+  "runs/kp_production\\KPA1_W483b8c31.json": "f12693ad5a613d0765efb2c7abe82ad68388a805",
+  "runs/kp_production\\KPA1_W6eb945cc.json": "9b6ec2ce0e14325420ebe16504218291292873b4",
+  "runs/kp_production\\KPA1_Wb49b6a5f.json": "65cbd54a5bf91fa4224b73b03063edf317536837",
+  "runs/kp_production\\KPA1_Wc025415a.json": "2b1e2994246ea74fd159ca5324377c978dd50694"
+ },
+ "code_commit": "767ee7adf"
+}
