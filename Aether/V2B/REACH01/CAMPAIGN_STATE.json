@@ -17,9 +17,17 @@
     "R4": "082f2f27b",
     "R4b": "4b2093ad2",
     "LADDER01": "f372e412c",
-    "R4c": "74bd235d2"
+    "R4c": "74bd235d2",
+    "LADDERx4": "eacc39578"
   },
-  "active_workloads": [],
+  "active_workloads": [
+    {
+      "id": "LADDER01-x4 search+certify",
+      "ledger": "C:/Prometheus-data/aether_reach01/LADDERx4/ledger_plan_ladderx4_search.jsonl, ledger_plan_ladderx4_certify.jsonl",
+      "launched_utc": "2026-10-10T19:01Z",
+      "eta": "~4.5h search + certify"
+    }
+  ],
   "completed_units": {},
   "artifact_root": "Aether/V2B/REACH01/ (tracked, small); C:/Prometheus-data/aether_reach01/ (large, untracked)",
   "dispositions": {
@@ -31,7 +39,7 @@
     "LADDER01": "G1/C COMBINE_ONLY (3/8 COMBINE, 1 COMPOSE (s2, fragile), 1 AUTONOMOUS COMBINE (s7, 7-cell minimal)); G2/G3 and arm A NONE",
     "R4c": "REUSE_NOT_SUPPORTED (frozen: necessity 0.66<0.8) despite acquisition P 7/8 vs controls 0/8; discovered component; fragile ~11%"
   },
-  "next_action": "reduce R4c (r4_reduce with geom G1, inc 12,1, in2 0x55,0xAA); write R4c section; then 72H_SYNTHESIS.md (or further experiments if justified) before 2026-10-13T09:23Z",
+  "next_action": "reduce LADDERx4 (rates per arm with Wilson CI; COMPOSE/AUTONOMOUS counts) -> R3 addendum; then 72H_SYNTHESIS.md",
   "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units).",
   "attempts": {
     "R1": 1,
