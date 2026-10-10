@@ -866,6 +866,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   vs a patrol among 3 latches .099 (60% of solo). READING: patrols are excluded under competition by FREQUENCY-
   DEPENDENT INVASION -- latches invade patrol populations and resist invasion -- not by self-collision. Consistent
   with B69e (best genome is a patrol in SOLO 4/24, CONC 0/24). One genome per strategy; n=1 per type.
+- B71 COMPLETE (05:47Z): last cell SHAM 7103 entropy .221 (190/200 on pool 0) vs CONC 7103 .949 -> +.73; B71 entropy
+  criterion final 5/6. Lease lse-66beba5c83b5 RELEASED with token. Nothing running. Window 4 tally ~40 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
