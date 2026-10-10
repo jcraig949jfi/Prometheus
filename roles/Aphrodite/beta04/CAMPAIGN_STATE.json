@@ -138,7 +138,8 @@
  },
  "jobs": {
   "E2_SCREEN": "RUNNING from worktree aphrodite-beta01 (atlas mode then 720-shard screen, 2 workers; started ~17:30Z; do NOT merge main into that worktree until done)",
-  "E3KP_PRIMARY": "RUNNING from worktree aph-b04-tfs1 (7 worlds, 2 workers; out runs/kp_production; started ~18:08Z)"
+  "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
+  "E3KP_SECONDARY": "RUNNING rows fallback-off, given-foundry-primitives, all-acquired, seeds 1,2 (descriptive)"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -175,7 +176,8 @@
  "next_action": "KP primary -> pooled verdict -> secondary rows -> OE repair iff triggered; E2 -> e2_analyze; close W03 21:27Z (coordinator commits from aph-b04-tfs1 worktree while E2 runs)",
  "outcomes_frozen_labels": {
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
-  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)"
+  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)",
+  "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning."
  },
  "contract_decisions_pending": [
   "scanl includes init (n+1)? (match foundry)",
@@ -191,5 +193,6 @@
  },
  "known_answers": {
   "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
- }
+ },
+ "experiments_gate_note": "E3 2x2 lifetime screen NOT RUN (gate: TFS1_INSTRUMENT_QUALIFIED = NO). E4 barred (E1 NO)."
 }
