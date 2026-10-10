@@ -146,3 +146,12 @@ memory.jsonl 0a4bd500ee76925132170e2c4da218efd9152dc05aea7f143a7b2737c4549723.
 - Added: the LADDER2 non-competent-earner confound (prereg s8 descriptive), the per-K Q3 rates, effect-size CIs,
   reproducibility limits, the CRLF pin disclosure, and receipts/POSTHOC_SECONDARIES.json with its failure ledger
   (FAILURE_LEDGER.md).
+
+---
+## SEED-INDEPENDENCE AUDIT (2026-10-10T10:26:19Z, Bellerophon, BEL-RD-72 s XI) -- no correction needed; original figures unchanged
+
+The plan was regenerated from the committed code and inputs and every seed checked: seeds are shared ONLY across the
+arms of one block (ON / OFF / SHUFFLED / YOKED of the same lane, block and K) -- the intended seed pairing, analysed with
+seed-pair tests -- and by no two blocks, K levels, tasks or lanes (0 seeds span more than one (lane, block, K)). Coupling:
+11,372 Phase-1 runs on 3,151 distinct populations; multi-day: 4,160 runs on 1,120. Per-arm denominators in this report
+are counts of distinct populations already. (The grounding round's design differed: see its correction record.)

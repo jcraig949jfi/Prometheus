@@ -182,3 +182,15 @@ the setup (a wide, shallow basin); reproduction and computation are antagonistic
    the task). Before a 2-3 day campaign: design ONE coupling mechanism (NEXT_CAMPAIGN_RECOMMENDATION.md part B),
    add its positive/negative/cheat controls, and run a bounded (<= 6 h) preregistered pilot that must show the
    coupling moves task retention in a matched design. Then launch.
+
+---
+## CORRECTION RECORD (2026-10-10T10:26:19Z, Bellerophon, BEL-RD-72 s XI) -- seed independence; original figures above unchanged
+
+The plan seeded run k of every cell in a lane identically (seed = base + lane x 1e9 + k), so cells of one lane share
+initial populations. Recount from the frozen raw rows (receipts/GROUNDING_RESULTS_RAW.jsonl.gz):
+  G1   2,400 runs = 400 distinct populations; 55 spontaneous runs = 41 distinct populations (9 seeds spontaneous in 2-4 cells)
+  G1T    900 runs = 150 populations; 32 spontaneous runs = 9 populations (task cells were already noted as run-identical)
+  G2/G6 origin set: 160 'spontaneous origins' = 83 distinct populations
+Per-cell rates (s3 G1 table) are unaffected (runs within a cell are independent). Any POOLED 'independent origins'
+figure should be cited per population: 41 / 9 / 83. The G3, G5, P8 and G7P1 pairings across arms are by design.
+Source: roles/Bellerophon/bel48h_2026-10-08/BEL_48H_CORRECTED_BASELINE.md s6.

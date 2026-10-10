@@ -167,3 +167,12 @@ PHASE2_PLAN.json 430159527bedbbc66a7a4fba76e444b2baba42fad00a1259375b988d2265dd8
 STATUS.json cb5e12bf23c97f70d5f0041f9c97da4f9bb86adaaaa93002f2e461d3ffe674e6;
 supervisor.jsonl ec92ac3523b038972989e791047a63b1cec23346b6d625ea4ec10c28b73190b6;
 memory.jsonl dbcb6ef163837fdd3945b285dd2c5c05b447199a9ab05a98427117350f318950.
+
+---
+## SEED-INDEPENDENCE AUDIT (2026-10-10T10:26:19Z, Bellerophon, BEL-RD-72 s XI) -- no correction needed; original figures unchanged
+
+The plan was regenerated from the committed code and inputs and every seed checked: seeds are shared ONLY across the
+arms of one block (ON / OFF / SHUFFLED / YOKED of the same lane, block and K) -- the intended seed pairing, analysed with
+seed-pair tests -- and by no two blocks, K levels, tasks or lanes (0 seeds span more than one (lane, block, K)). Coupling:
+11,372 Phase-1 runs on 3,151 distinct populations; multi-day: 4,160 runs on 1,120. Per-arm denominators in this report
+are counts of distinct populations already. (The grounding round's design differed: see its correction record.)
