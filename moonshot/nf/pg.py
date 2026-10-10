@@ -22,7 +22,7 @@ SCHEMA_VERSION = 1
 ROLES = ("reader", "coordinator", "publisher", "validator", "resolver")
 GRANTS = {
     "coordinator": ["create_chain(text, text, bytea, bytea, jsonb, text, integer, text)", "put_object(bytea)",
-                    "record_receipt(text, bytea, text)"],
+                    "record_receipt(text, bytea, text)", "record_materialization(jsonb, text)"],
     "publisher": ["publish(text, text, text, integer, text, bigint, bytea, bytea, bytea, bytea, jsonb, text)",
                   "record_attempt_outcome(text, text, text, integer, text, bigint, text, text, text, jsonb, text)",
                   "put_object(bytea)"],
@@ -261,6 +261,14 @@ class Moonshot:
             "SELECT contest_id, epoch_index, reason, state, published_epoch_digest, challenger_epoch_digest "
             "FROM {s}.contests WHERE chain_id = %s ORDER BY contest_id", (chain_id,))]
 
+    def select(self, sql, args=()):
+        """A read-only query under this handle's role; `{s}` is this schema."""
+        return self._q(sql, args)
+
+    def materializations(self):
+        """Every logged materializer report, oldest first."""
+        return [r[0] for r in self._q("SELECT detail FROM {s}.events WHERE kind = 'materialization' ORDER BY event_id")]
+
     def receipts(self, chain_id):
         return [r[0] for r in self._q("SELECT detail->>'sha256' FROM {s}.events WHERE chain_id = %s AND kind = 'receipt' "
                                       "ORDER BY event_id", (chain_id,))]
@@ -304,6 +312,12 @@ class Moonshot:
         """Store a receipt's canonical bytes content-addressed and log it; returns its sha256."""
         return self._q("SELECT {s}.record_receipt(%s, %s, %s)", (chain_id, receipt_bytes, self.actor), one=True,
                        commit=True)[0]
+
+    def record_materialization(self, report):
+        """Log a materializer report (coordinator role); returns its event id."""
+        import psycopg2.extras
+        return self._q("SELECT {s}.record_materialization(%s, %s)", (psycopg2.extras.Json(report), self.actor),
+                       one=True, commit=True)[0]
 
     def verify(self, chain_id, epoch_index, files):
         """The publisher's semantic checks; [] means the bytes are a well-formed epoch at this position."""

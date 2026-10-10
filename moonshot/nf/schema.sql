@@ -415,6 +415,31 @@ BEGIN
     RETURN h;
 END $$;
 
+-- A materializer run's report (C-012-T005): the per-table row-count oracle, logged in Moonshot's own records.
+CREATE OR REPLACE FUNCTION {schema}.record_materialization(p_report JSONB, p_actor TEXT) RETURNS BIGINT
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = {schema}, pg_temp AS $$
+DECLARE
+    eid BIGINT;
+BEGIN
+    INSERT INTO events (actor, kind, detail) VALUES (p_actor, 'materialization', p_report)
+    RETURNING events.event_id INTO eid;
+    RETURN eid;
+END $$;
+
+-- The catalogue Pan's refresh pulls into pan.artifact (contract s6): one row per LIVE published epoch.
+CREATE OR REPLACE VIEW {schema}.catalog_v AS
+SELECT r.manifest_sha256 AS object_sha256,
+       'moonshot.epoch'::text AS kind,
+       p.chain_id || ' epoch ' || p.epoch_index AS title,
+       'Moonshot chain ' || p.chain_id || ' (' || c.namespace || '), epoch ' || p.epoch_index || ' of '
+           || c.epochs_target || ', generation ' || p.generation || ', epoch digest ' || p.epoch_digest AS summary,
+       p.published_at,
+       '{schema}:' || p.chain_id || '/' || p.epoch_index AS ref
+FROM {schema}.publications p
+JOIN {schema}.results r ON r.work_id = p.work_id AND r.epoch_digest = p.epoch_digest
+JOIN {schema}.chains c ON c.chain_id = p.chain_id
+WHERE p.rejected_at IS NULL;
+
 -- INVALID (failed the publisher's semantic checks) or REFUSED_UNAPPROVED (code not approved): recorded, never
 -- published. Idempotent per attempt.
 CREATE OR REPLACE FUNCTION {schema}.record_attempt_outcome(

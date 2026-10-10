@@ -199,6 +199,17 @@ class TestMaterialize(LakeCase):
         self.assertEqual((fixed["tables"]["epochs"]["appended"], fixed["tables"]["epochs"]["oracle"]), (1, "OK"))
         self.assertEqual(sorted(e["publication_id"] for e in self.lake_rows("epochs")), [1, 2, 3, 4])
 
+    def test_the_oracle_reports_rows_a_rogue_writer_duplicated(self):
+        # One writer per table is Pan's rule; a second writer re-appending rows must not pass silently (mutation MM05
+        # survived without this). Detection only: an append-only lake is repaired by rewriting, an owner's decision.
+        self.populate()
+        self.run_mz()
+        rows = self.ice.read("epochs", namespace="mt")
+        self.ice.write("epochs", rows.slice(0, 1), namespace="mt")
+        rep = self.run_mz()
+        self.assertEqual(rep["tables"]["epochs"]["oracle"], "DUPLICATED")
+        self.assertEqual(rep["tables"]["attempts"]["oracle"], "OK")
+
     def test_one_materializer_at_a_time(self):
         self.populate()
         cur = self.admin.cursor()
@@ -226,6 +237,21 @@ class TestCatalogueView(LakeCase):
         self.assertEqual(len(rows), 4)
         self.assertTrue(all(r[1] == "moonshot.epoch" and len(r[0]) == 64 for r in rows))
         self.assertIn("{}:L1/1".format(self.schema), [r[5] for r in rows])
+
+    def test_catalog_v_drops_an_overturned_epoch(self):
+        g = genesis("L9", 2)
+        self.coord.create_chain(g, namespace="test", approved_code_sha=APPROVED)
+        bad = model.execute(g.obj, 1, g.initial_checkpoint, planted_runner())
+        good = model.execute(g.obj, 1, g.initial_checkpoint)
+        self.pub.publish(self.att(), "tsk-lake", "L9", 1, None, 0, bad.files())                 # faulty, published
+        self.pub.publish(self.att(), "tsk-lake", "L9", 1, None, 0, good.files())                # DISAGREEMENT
+        cid = self.reader.open_contest("L9")["contest_id"]
+        self.assertEqual(self.res.resolve_contest(cid, [good.epoch_digest] * 2), "OVERTURNED")
+        refs = [r[0] for r in self.reader.raw("SELECT ref FROM {s}.catalog_v")]
+        self.assertNotIn("{}:L9/1".format(self.schema), refs)
+        self.pub.publish(self.att(), "tsk-lake", "L9", 1, None, 2, good.files())                # honest, re-published
+        rows = self.reader.raw("SELECT object_sha256 FROM {s}.catalog_v WHERE ref = %s", ("{}:L9/1".format(self.schema),))
+        self.assertEqual([r[0] for r in rows], [C.sha256_hex(good.manifest_bytes)])
 
 
 if __name__ == "__main__":
