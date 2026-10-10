@@ -1,0 +1,1616 @@
+{
+ "budget": 1000000,
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "72084f13698788a277ed2522cd657e3bb9f57e0baac4d064a000a0c8f01c4ddb",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "e3_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependency.py": "d61122aed0801ba8d41d2911c3d7bf144c2fb7c53dfbf5a80011e86cbdc8ec01",
+  "e3_identifiability.py": "e525e356f0385a0913a7efbed42042b8021dd93a6573fd3c7a232399f53892b1",
+  "e3_known_positive.py": "1efd24d1fe0620179388b2ac7f4cdb73b13752ca521674a37167407b3d385d15",
+  "final_eval.py": "39f51af061c9ddc358d52dff81b20a730cc081b656adc33a75082e9e85c2df3e",
+  "kp_timing.py": "0d5030970cc3c04369fa41311f56a8db97a26277b42f96dcc3517926074bda33",
+  "organism.py": "93f0e2c0a9a99f3666b419909b771aa2373a787f17e5d75402f0d0fee7a17daa",
+  "resumable.py": "d87e55f3a18ed7e6e14cc4be39e5b5d0ee6199d1ff83a476d0e8467998910238",
+  "smoke.py": "cf8271284fd2dae5a8810a2f2a2fe92134fc094e193ec708b40ec2c179ffe4f4",
+  "summarize_smoke.py": "e0e65b34d6ba6538371e004796af0c6a5be5ce481ddd17c50a2fc124e23b049a",
+  "worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444"
+ },
+ "enumerations": {
+  "Wc025415a-F008-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 45.3,
+   "hits": [
+    [
+     13223,
+     "(div (mul 2 (last xs)) 3)"
+    ],
+    [
+     297589,
+     "(div (mul 2 (head (rev xs))) 3)"
+    ],
+    [
+     316635,
+     "(div (add (last xs) (last xs)) 3)"
+    ],
+    [
+     629271,
+     "(div (div (mul 2 (last xs)) 1) 3)"
+    ],
+    [
+     718020,
+     "(div (mul 2 (foldl (lam a (lam b b)) 0 xs)) 3)"
+    ],
+    [
+     742504,
+     "(add (last xs) (div (last xs) (neg 3)))"
+    ],
+    [
+     976983,
+     "(div (mul 2 (neg (last xs))) (neg 3))"
+    ]
+   ]
+  },
+  "Wc025415a-F010-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 45.0,
+   "hits": [
+    [
+     854378,
+     "(len (filter (lam x (gt (sub x 2) 3)) xs))"
+    ]
+   ]
+  },
+  "Wc025415a-F011-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 8,
+   "cpu_s": 76.39,
+   "hits": [
+    [
+     10419,
+     "(filter (lam x (gt (sub x 3) 2)) xs)"
+    ],
+    [
+     15278,
+     "(filter (lam x (lt (add 1 3) x)) xs)"
+    ],
+    [
+     18078,
+     "(filter (lam x (lt (pow 2 2) x)) xs)"
+    ],
+    [
+     27772,
+     "(filter (lam x (lt 1 (div x 3))) xs)"
+    ],
+    [
+     30729,
+     "(filter (lam x (lt 3 (sub x 1))) xs)"
+    ],
+    [
+     32129,
+     "(filter (lam x (lt 2 (sub x 2))) xs)"
+    ],
+    [
+     37795,
+     "(filter (lam x (gt x (add 2 2))) xs)"
+    ],
+    [
+     40573,
+     "(filter (lam x (gt x (add 1 3))) xs)"
+    ],
+    [
+     50225,
+     "(filter (lam x (lt (add 2 2) x)) xs)"
+    ],
+    [
+     50764,
+     "(filter (lam x (gt (sub x 2) 3)) xs)"
+    ],
+    [
+     56286,
+     "(filter (lam x (gt (div x 3) 1)) xs)"
+    ],
+    [
+     60269,
+     "(filter (lam x (gt x (pow 2 2))) xs)"
+    ],
+    [
+     62761,
+     "(filter (lam x (lt 2 (div x 2))) xs)"
+    ],
+    [
+     65701,
+     "(filter (lam x (lt 2 (sub x 3))) xs)"
+    ],
+    [
+     67982,
+     "(filter (lam x (gt (sub x 2) 2)) xs)"
+    ],
+    [
+     71459,
+     "(filter (lam x (lt 1 (sub x 3))) xs)"
+    ],
+    [
+     72004,
+     "(filter (lam x (gt x (add 2 3))) xs)"
+    ],
+    [
+     72078,
+     "(filter (lam x (gt (sub x 1) 3)) xs)"
+    ],
+    [
+     72287,
+     "(filter (lam x (gt x (mul 2 2))) xs)"
+    ],
+    [
+     73827,
+     "(filter (lam x (gt (sub x 3) 1)) xs)"
+    ],
+    [
+     75098,
+     "(filter (lam x (lt (mul 2 2) x)) xs)"
+    ],
+    [
+     80644,
+     "(filter (lam x (lt 3 (sub x 2))) xs)"
+    ],
+    [
+     82385,
+     "(filter (lam x (gt (div x 2) 2)) xs)"
+    ],
+    [
+     89516,
+     "(filter (lam x (lt (add 2 3) x)) xs)"
+    ],
+    [
+     90884,
+     "(filter (lam x (not (lt x (mul 2 3)))) xs)"
+    ],
+    [
+     97869,
+     "(filter (lam x (lt 1 (add x (neg 3)))) xs)"
+    ],
+    [
+     101755,
+     "(filter (lam x (lt (sub 2 (neg 2)) x)) xs)"
+    ],
+    [
+     141823,
+     "(filter (lam x (gt x (sub 2 (neg 2)))) xs)"
+    ],
+    [
+     159587,
+     "(filter (lam x (gt x (sub 3 (neg 2)))) xs)"
+    ],
+    [
+     167441,
+     "(filter (lam x (gt (add x (neg 2)) 3)) xs)"
+    ],
+    [
+     194896,
+     "(filter (lam x (lt (sub 3 x) (neg 1))) xs)"
+    ],
+    [
+     200541,
+     "(filter (lam x (gt x (sub 1 (neg 3)))) xs)"
+    ],
+    [
+     208921,
+     "(filter (lam x (lt 3 (neg (sub 1 x)))) xs)"
+    ],
+    [
+     233562,
+     "(filter (lam x (not (lt x (add 3 3)))) xs)"
+    ],
+    [
+     242760,
+     "(filter (lam x (not (gt 2 (sub x 3)))) xs)"
+    ],
+    [
+     245848,
+     "(filter (lam x (gt x (sub 2 (neg 3)))) xs)"
+    ],
+    [
+     286740,
+     "(filter (lam x (lt 2 (neg (sub 2 x)))) xs)"
+    ],
+    [
+     312365,
+     "(filter (lam x (not (gt (add 3 3) x))) xs)"
+    ],
+    [
+     337828,
+     "(filter (lam x (lt (sub 3 (neg 1)) x)) xs)"
+    ],
+    [
+     358458,
+     "(filter (lam x (gt (neg (sub 3 x)) 1)) xs)"
+    ],
+    [
+     365446,
+     "(filter (lam x (not (gt (mul 2 3) x))) xs)"
+    ],
+    [
+     381434,
+     "(filter (lam x (gt x (sub 3 (neg 1)))) xs)"
+    ],
+    [
+     384042,
+     "(filter (lam x (not (gt (add 2 3) x))) xs)"
+    ],
+    [
+     390007,
+     "(filter (lam x (gt (neg (sub 3 x)) 2)) xs)"
+    ],
+    [
+     401755,
+     "(filter (lam x (not (lt (div x 3) 2))) xs)"
+    ],
+    [
+     406772,
+     "(filter (lam x (not (gt 3 (div x 2)))) xs)"
+    ],
+    [
+     439192,
+     "(filter (lam x (not (gt 3 (sub x 3)))) xs)"
+    ],
+    [
+     455428,
+     "(filter (lam x (lt 2 (add x (neg 2)))) xs)"
+    ],
+    [
+     485284,
+     "(filter (lam x (lt (pow (neg 2) 2) x)) xs)"
+    ],
+    [
+     486298,
+     "(filter (lam x (gt (add x (neg 3)) 1)) xs)"
+    ],
+    [
+     488809,
+     "(filter (lam x (gt (neg (sub 1 x)) 3)) xs)"
+    ],
+    [
+     492402,
+     "(filter (lam x (lt 2 (neg (sub 3 x)))) xs)"
+    ],
+    [
+     494192,
+     "(filter (lam x (gt (add x (neg 1)) 3)) xs)"
+    ],
+    [
+     494237,
+     "(filter (lam x (gt (neg (sub 2 x)) 3)) xs)"
+    ],
+    [
+     496715,
+     "(filter (lam x (not (gt 2 (div x 3)))) xs)"
+    ],
+    [
+     502066,
+     "(filter (lam x (lt (sub 2 x) (neg 2))) xs)"
+    ],
+    [
+     560373,
+     "(filter (lam x (gt (neg 3) (sub 1 x))) xs)"
+    ],
+    [
+     579906,
+     "(filter (lam x (lt (sub 3 x) (neg 2))) xs)"
+    ],
+    [
+     583100,
+     "(filter (lam x (lt (sub 3 (neg 2)) x)) xs)"
+    ],
+    [
+     607479,
+     "(filter (lam x (gt x (pow (neg 2) 2))) xs)"
+    ],
+    [
+     609975,
+     "(filter (lam x (lt (sub 1 x) (neg 3))) xs)"
+    ],
+    [
+     613080,
+     "(filter (lam x (lt 3 (neg (sub 2 x)))) xs)"
+    ],
+    [
+     631605,
+     "(filter (lam x (lt 3 (add x (neg 2)))) xs)"
+    ],
+    [
+     657467,
+     "(filter (lam x (not (lt (sub x 3) 3))) xs)"
+    ],
+    [
+     660927,
+     "(filter (lam x (lt 1 (neg (sub 3 x)))) xs)"
+    ],
+    [
+     687570,
+     "(filter (lam x (gt (neg (sub 2 x)) 2)) xs)"
+    ],
+    [
+     690066,
+     "(filter (lam x (gt (neg 3) (sub 2 x))) xs)"
+    ],
+    [
+     694413,
+     "(filter (lam x (gt (add x (neg 2)) 2)) xs)"
+    ],
+    [
+     699368,
+     "(filter (lam x (not (lt (sub x 2) 3))) xs)"
+    ],
+    [
+     731871,
+     "(filter (lam x (gt (neg 2) (sub 3 x))) xs)"
+    ],
+    [
+     746225,
+     "(filter (lam x (gt (neg 1) (sub 3 x))) xs)"
+    ],
+    [
+     749390,
+     "(filter (lam x (lt (sub 1 (neg 3)) x)) xs)"
+    ],
+    [
+     750756,
+     "(filter (lam x (not (gt 3 (sub x 2)))) xs)"
+    ],
+    [
+     772058,
+     "(filter (lam x (not (lt (div x 2) 3))) xs)"
+    ],
+    [
+     781336,
+     "(filter (lam x (lt (sub 2 x) (neg 3))) xs)"
+    ],
+    [
+     791931,
+     "(filter (lam x (gt (neg 2) (sub 2 x))) xs)"
+    ],
+    [
+     816889,
+     "(filter (lam x (not (lt (sub x 3) 2))) xs)"
+    ],
+    [
+     830222,
+     "(filter (lam x (gt (add x (neg 3)) 2)) xs)"
+    ],
+    [
+     859470,
+     "(filter (lam x (lt 3 (add x (neg 1)))) xs)"
+    ],
+    [
+     878178,
+     "(filter (lam x (not (lt x (add 2 3)))) xs)"
+    ],
+    [
+     895404,
+     "(filter (lam x (lt (sub 2 (neg 3)) x)) xs)"
+    ],
+    [
+     901785,
+     "(filter (lam x (lt 2 (add x (neg 3)))) xs)"
+    ],
+    [
+     924498,
+     "(filter (lam x (gt (pow (sub x 3) 3) 3)) xs)"
+    ],
+    [
+     933685,
+     "(filter (lam x (gt (sub x (div 2 2)) 3)) xs)"
+    ],
+    [
+     948304,
+     "(filter (lam x (lt (add 1 (mul 2 2)) x)) xs)"
+    ],
+    [
+     953580,
+     "(filter (lam x (gt (div x 1) (mul 2 2))) xs)"
+    ],
+    [
+     961687,
+     "(filter (lam x (gt (sub x (mod 1 2)) 3)) xs)"
+    ],
+    [
+     972534,
+     "(filter (lam x (lt 2 (div (sub x 3) 1))) xs)"
+    ],
+    [
+     973753,
+     "(filter (lam x (lt 2 (sub x (gcd 0 3)))) xs)"
+    ],
+    [
+     975888,
+     "(filter (lam x (lt (pow 1 2) (sub x 3))) xs)"
+    ],
+    [
+     976038,
+     "(filter (lam x (lt (add 3 (div 2 1)) x)) xs)"
+    ],
+    [
+     980970,
+     "(filter (lam x (gt x (add 0 (pow 2 2)))) xs)"
+    ],
+    [
+     990397,
+     "(filter (lam x (lt 3 (sub x (pow 1 2)))) xs)"
+    ],
+    [
+     995187,
+     "(map (lam x x) (filter (lam x (lt 2 (sub x 3))) xs))"
+    ],
+    [
+     997224,
+     "(filter (lam x (lt (gcd 0 (add 2 3)) x)) xs)"
+    ]
+   ]
+  }
+ },
+ "id1": {
+  "f1|Wc025415a-F008-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "readout_fallback",
+     "first_charge": 13223,
+     "first_ordinal": 1,
+     "first_program": "(div (mul 2 (last xs)) 3)",
+     "key": "e04e0909c21af8d0975bc994",
+     "n_programs": 5,
+     "r1_qualified": true,
+     "sealed_equivalent": true,
+     "stone": "(lam x (div (mul 2 x) 3))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 7,
+   "enum_cpu_s": 45.3,
+   "family_id": "Wc025415a-F008-R1",
+   "first_class_sealed_equivalent": true,
+   "first_hit": [
+    13223,
+    "(div (mul 2 (last xs)) 3)"
+   ],
+   "mechanism": "f1",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 7,
+   "n_no_stone_programs": 2,
+   "no_stone_first": {
+    "charge": 297589,
+    "ordinal": 2,
+    "program": "(div (mul 2 (head (rev xs))) 3)"
+   },
+   "primary_first_hit": [
+    13223,
+    "(div (mul 2 (last xs)) 3)"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 13223,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "sealed_equivalent_found": true,
+   "sealed_key": "e04e0909c21af8d0975bc994",
+   "slot_order": [
+    "e04e0909c21af8d0975bc994",
+    "NO_STONE"
+   ]
+  },
+  "p0|Wc025415a-F010-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "closed_lambda",
+     "first_charge": 854378,
+     "first_ordinal": 1,
+     "first_program": "(len (filter (lam x (gt (sub x 2) 3)) xs))",
+     "key": "d307c8cf3bba6a833f3498a9",
+     "n_programs": 1,
+     "r1_qualified": false,
+     "sealed_equivalent": false,
+     "stone": "(lam x (gt (sub x 2) 3))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 7,
+   "enum_cpu_s": 45.0,
+   "family_id": "Wc025415a-F010-R1",
+   "first_class_sealed_equivalent": false,
+   "first_hit": [
+    854378,
+    "(len (filter (lam x (gt (sub x 2) 3)) xs))"
+   ],
+   "mechanism": "p0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 1,
+   "n_no_stone_programs": 0,
+   "no_stone_first": null,
+   "primary_first_hit": [
+    854378,
+    "(len (filter (lam x (gt (sub x 2) 3)) xs))"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": null,
+   "sealed_equivalent_first_charge": null,
+   "sealed_equivalent_first_ordinal": null,
+   "sealed_equivalent_first_program_r1_qualified": null,
+   "sealed_equivalent_found": false,
+   "sealed_key": "d5bf415ebe871c9f0a4de100",
+   "slot_order": [
+    "d307c8cf3bba6a833f3498a9"
+   ]
+  },
+  "p0|Wc025415a-F011-R1": {
+   "ID_IDENTIFIABILITY": "AMBIGUOUS",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "closed_lambda",
+     "first_charge": 10419,
+     "first_ordinal": 1,
+     "first_program": "(filter (lam x (gt (sub x 3) 2)) xs)",
+     "key": "d307c8cf3bba6a833f3498a9",
+     "n_programs": 42,
+     "r1_qualified": false,
+     "sealed_equivalent": false,
+     "stone": "(lam x (gt (sub x 3) 2))"
+    },
+    {
+     "class_rank": 2,
+     "extraction": "closed_lambda",
+     "first_charge": 15278,
+     "first_ordinal": 2,
+     "first_program": "(filter (lam x (lt (add 1 3) x)) xs)",
+     "key": "d5bf415ebe871c9f0a4de100",
+     "n_programs": 53,
+     "r1_qualified": true,
+     "sealed_equivalent": true,
+     "stone": "(lam x (lt (add 1 3) x))"
+    }
+   ],
+   "classify_cpu_s": 0.05,
+   "complete_through_size": 8,
+   "enum_cpu_s": 76.39,
+   "family_id": "Wc025415a-F011-R1",
+   "first_class_sealed_equivalent": false,
+   "first_hit": [
+    10419,
+    "(filter (lam x (gt (sub x 3) 2)) xs)"
+   ],
+   "mechanism": "p0",
+   "n_classes": 2,
+   "n_dev_consistent_programs": 95,
+   "n_no_stone_programs": 0,
+   "no_stone_first": null,
+   "primary_first_hit": [
+    10419,
+    "(filter (lam x (gt (sub x 3) 2)) xs)"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": 2,
+   "sealed_equivalent_first_charge": 15278,
+   "sealed_equivalent_first_ordinal": 2,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "sealed_equivalent_found": true,
+   "sealed_key": "d5bf415ebe871c9f0a4de100",
+   "slot_order": [
+    "d307c8cf3bba6a833f3498a9",
+    "d5bf415ebe871c9f0a4de100"
+   ]
+  }
+ },
+ "kp_row": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+ "label": "PRODUCTION",
+ "retain": {
+  "RETAIN-1": {
+   "Wc025415a-F041-R4": {
+    "certified": false,
+    "charge": 843641,
+    "charges": 843641,
+    "complete_through_size": 7,
+    "cpu_s": 35.61,
+    "family_id": "Wc025415a-F041-R4",
+    "found": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": null,
+     "found": null,
+     "library_sha256": null,
+     "status": "CHAIN_C_FAIL"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": false,
+    "retain1_differs_by_design": true,
+    "rung": "R4",
+    "search_key": "Wc025415a-F041-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      124979,
+      1365260
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 8,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(map (lam x (if (lt 3 (sub (add x 2) 3)) (div (add x x) 3) x)) xs)",
+     "witness_promoted_form": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)"
+    },
+    "status": "FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ],
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": false,
+     "test_ok": false,
+     "tribunal_ok": false
+    }
+   },
+   "Wc025415a-F044-R4": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 50.81,
+    "family_id": "Wc025415a-F044-R4",
+    "found": null,
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": null,
+     "found": null,
+     "library_sha256": null,
+     "status": "CHAIN_C_FAIL"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": false,
+    "retain1_differs_by_design": true,
+    "rung": "R4",
+    "search_key": "Wc025415a-F044-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(filter (lam x (lt 3 (sub (add x 2) 3))) (map (lam x (div (add x x) 3)) xs))",
+     "witness_promoted_form": "(filter (lam x (L_11706a0b16ad x)) (map (lam x (L_649ce599c255 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ]
+   }
+  },
+  "RETAIN-1-CERT": {
+   "Wc025415a-F041-R4": {
+    "certified": true,
+    "family_id": "Wc025415a-F041-R4",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": null,
+      "sealed_equivalent": [],
+      "stones": []
+     }
+    },
+    "k": 1,
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "missing": [
+     "p0"
+    ],
+    "primary_chain": {
+     "charge": null,
+     "charges": null,
+     "found": null,
+     "library_sha256": null,
+     "status": "CHAIN_C_FAIL"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R4",
+    "status": "CHAIN_C_FAIL"
+   },
+   "Wc025415a-F044-R4": {
+    "certified": true,
+    "family_id": "Wc025415a-F044-R4",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": null,
+      "sealed_equivalent": [],
+      "stones": []
+     }
+    },
+    "k": 1,
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "missing": [
+     "p0"
+    ],
+    "primary_chain": {
+     "charge": null,
+     "charges": null,
+     "found": null,
+     "library_sha256": null,
+     "status": "CHAIN_C_FAIL"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R4",
+    "status": "CHAIN_C_FAIL"
+   }
+  },
+  "RETAIN-2": {
+   "Wc025415a-F041-R4": {
+    "certified": false,
+    "charge": 843641,
+    "charges": 843641,
+    "complete_through_size": 7,
+    "cpu_s": 35.61,
+    "family_id": "Wc025415a-F041-R4",
+    "found": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F041-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      124979,
+      1365260
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 8,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(map (lam x (if (lt 3 (sub (add x 2) 3)) (div (add x x) 3) x)) xs)",
+     "witness_promoted_form": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)"
+    },
+    "status": "FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ],
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": false,
+     "test_ok": false,
+     "tribunal_ok": false
+    }
+   },
+   "Wc025415a-F044-R4": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 50.81,
+    "family_id": "Wc025415a-F044-R4",
+    "found": null,
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F044-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(filter (lam x (lt 3 (sub (add x 2) 3))) (map (lam x (div (add x x) 3)) xs))",
+     "witness_promoted_form": "(filter (lam x (L_11706a0b16ad x)) (map (lam x (L_649ce599c255 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ]
+   }
+  },
+  "RETAIN-2-CERT": {
+   "Wc025415a-F041-R4": {
+    "certified": true,
+    "charge": 887513,
+    "charges": 887513,
+    "complete_through_size": 7,
+    "cpu_s": 35.81,
+    "family_id": "Wc025415a-F041-R4",
+    "found": "(map (lam x (if (L_89ef04886383 x) (L_649ce599c255 x) x)) xs)",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F011-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt (add 1 3) x))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "e1e91f6844b96f14ceb66f51a17af4f989da20f4c2d10f4c59760381df48dc22",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F041-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      124979,
+      1365260
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 8,
+     "uses_entries": [
+      "L_649ce599c255",
+      "L_89ef04886383"
+     ],
+     "witness": "(map (lam x (if (lt 3 (sub (add x 2) 3)) (div (add x x) 3) x)) xs)",
+     "witness_promoted_form": "(map (lam x (if (L_89ef04886383 x) (L_649ce599c255 x) x)) xs)"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   },
+   "Wc025415a-F044-R4": {
+    "certified": true,
+    "charge": 120316,
+    "charges": 120316,
+    "complete_through_size": 6,
+    "cpu_s": 4.17,
+    "family_id": "Wc025415a-F044-R4",
+    "found": "(filter (lam x (L_89ef04886383 x)) (map (lam x (L_649ce599c255 x)) xs))",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F011-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt (add 1 3) x))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "e1e91f6844b96f14ceb66f51a17af4f989da20f4c2d10f4c59760381df48dc22",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F044-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_649ce599c255",
+      "L_89ef04886383"
+     ],
+     "witness": "(filter (lam x (lt 3 (sub (add x 2) 3))) (map (lam x (div (add x x) 3)) xs))",
+     "witness_promoted_form": "(filter (lam x (L_89ef04886383 x)) (map (lam x (L_649ce599c255 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-4": {
+   "Wc025415a-F041-R4": {
+    "certified": false,
+    "charge": 843641,
+    "charges": 843641,
+    "complete_through_size": 7,
+    "cpu_s": 35.61,
+    "family_id": "Wc025415a-F041-R4",
+    "found": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F041-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      124979,
+      1365260
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 8,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(map (lam x (if (lt 3 (sub (add x 2) 3)) (div (add x x) 3) x)) xs)",
+     "witness_promoted_form": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)"
+    },
+    "status": "FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ],
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": false,
+     "test_ok": false,
+     "tribunal_ok": false
+    }
+   },
+   "Wc025415a-F044-R4": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 50.81,
+    "family_id": "Wc025415a-F044-R4",
+    "found": null,
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F010-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (gt (sub x 2) 3))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "103c5b2f459cbd6f1cc5cfbcedabc8e9a9a45441ae0e87ccf8f05ea4306796de",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F044-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_11706a0b16ad",
+      "L_649ce599c255"
+     ],
+     "witness": "(filter (lam x (lt 3 (sub (add x 2) 3))) (map (lam x (div (add x x) 3)) xs))",
+     "witness_promoted_form": "(filter (lam x (L_11706a0b16ad x)) (map (lam x (L_649ce599c255 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "p0"
+    ]
+   }
+  },
+  "RETAIN-4-CERT": {
+   "Wc025415a-F041-R4": {
+    "certified": true,
+    "charge": 887513,
+    "charges": 887513,
+    "complete_through_size": 7,
+    "cpu_s": 35.81,
+    "family_id": "Wc025415a-F041-R4",
+    "found": "(map (lam x (if (L_89ef04886383 x) (L_649ce599c255 x) x)) xs)",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F011-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt (add 1 3) x))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "e1e91f6844b96f14ceb66f51a17af4f989da20f4c2d10f4c59760381df48dc22",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F041-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      124979,
+      1365260
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 8,
+     "uses_entries": [
+      "L_649ce599c255",
+      "L_89ef04886383"
+     ],
+     "witness": "(map (lam x (if (lt 3 (sub (add x 2) 3)) (div (add x x) 3) x)) xs)",
+     "witness_promoted_form": "(map (lam x (if (L_89ef04886383 x) (L_649ce599c255 x) x)) xs)"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   },
+   "Wc025415a-F044-R4": {
+    "certified": true,
+    "charge": 120316,
+    "charges": 120316,
+    "complete_through_size": 6,
+    "cpu_s": 4.17,
+    "family_id": "Wc025415a-F044-R4",
+    "found": "(filter (lam x (L_89ef04886383 x)) (map (lam x (L_649ce599c255 x)) xs))",
+    "hypotheses": {
+     "f1": {
+      "family": "Wc025415a-F008-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (div (mul 2 x) 3))"
+      ]
+     },
+     "p0": {
+      "family": "Wc025415a-F011-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt (add 1 3) x))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "e1e91f6844b96f14ceb66f51a17af4f989da20f4c2d10f4c59760381df48dc22",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R4",
+    "search_key": "Wc025415a-F044-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_649ce599c255",
+      "L_89ef04886383"
+     ],
+     "witness": "(filter (lam x (lt 3 (sub (add x 2) 3))) (map (lam x (div (add x x) 3)) xs))",
+     "witness_promoted_form": "(filter (lam x (L_89ef04886383 x)) (map (lam x (L_649ce599c255 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  }
+ },
+ "searches": {
+  "Wc025415a-F041-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 843641,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 7,
+   "cpu_s": 35.61,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 843641,
+   "library_entries": 2,
+   "program": "(map (lam x (if (L_11706a0b16ad x) (L_649ce599c255 x) x)) xs)",
+   "units_expanded": 4570256,
+   "units_promoted": 4104026,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": false,
+    "test_ok": false,
+    "tribunal_ok": false
+   },
+   "verify_evals": 0
+  },
+  "Wc025415a-F041-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 887513,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 7,
+   "cpu_s": 35.81,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 887513,
+   "library_entries": 2,
+   "program": "(map (lam x (if (L_89ef04886383 x) (L_649ce599c255 x) x)) xs)",
+   "units_expanded": 4816309,
+   "units_promoted": 4323130,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "Wc025415a-F044-R4|seed=0|lib=103c5b2f459cbd6f|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 7,
+   "cpu_s": 50.81,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 2,
+   "program": null,
+   "units_expanded": 12224490,
+   "units_promoted": 10643651,
+   "verify_evals": 0
+  },
+  "Wc025415a-F044-R4|seed=0|lib=e1e91f6844b96f14|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 120316,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 6,
+   "cpu_s": 4.17,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 120316,
+   "library_entries": 2,
+   "program": "(filter (lam x (L_89ef04886383 x)) (map (lam x (L_649ce599c255 x)) xs))",
+   "units_expanded": 1186468,
+   "units_promoted": 1028869,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  }
+ },
+ "summary": {
+  "families": [
+   {
+    "RETAIN-1": {
+     "charge": null,
+     "cpu_s": 50.81,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": false,
+     "retain1_differs_by_design": true,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-1-CERT": {
+     "charge": null,
+     "cpu_s": 0.0,
+     "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "CHAIN_C_FAIL"
+    },
+    "RETAIN-2": {
+     "charge": null,
+     "cpu_s": 50.81,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-2-CERT": {
+     "charge": 120316,
+     "cpu_s": 4.17,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "RETAIN-4": {
+     "charge": null,
+     "cpu_s": 50.81,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-4-CERT": {
+     "charge": 120316,
+     "cpu_s": 4.17,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "family_id": "Wc025415a-F044-R4",
+    "primary_chain_qualified": false,
+    "primary_link": "UNDERDETERMINED_STONE",
+    "rung": "R4",
+    "skeleton": "R4:fp:filter_of_map",
+    "world": "Wc025415a"
+   },
+   {
+    "RETAIN-1": {
+     "charge": 843641,
+     "cpu_s": 35.61,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": false,
+     "retain1_differs_by_design": true,
+     "status": "FIRST_DEV_CONSISTENT_FAILS_TEST"
+    },
+    "RETAIN-1-CERT": {
+     "charge": null,
+     "cpu_s": 0.0,
+     "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "CHAIN_C_FAIL"
+    },
+    "RETAIN-2": {
+     "charge": 843641,
+     "cpu_s": 35.61,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "FIRST_DEV_CONSISTENT_FAILS_TEST"
+    },
+    "RETAIN-2-CERT": {
+     "charge": 887513,
+     "cpu_s": 35.81,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "RETAIN-4": {
+     "charge": 843641,
+     "cpu_s": 35.61,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "FIRST_DEV_CONSISTENT_FAILS_TEST"
+    },
+    "RETAIN-4-CERT": {
+     "charge": 887513,
+     "cpu_s": 35.81,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "family_id": "Wc025415a-F041-R4",
+    "primary_chain_qualified": false,
+    "primary_link": "UNDERDETERMINED_STONE",
+    "rung": "R4",
+    "skeleton": "R4:fp:guard_p",
+    "world": "Wc025415a"
+   }
+  ],
+  "units": [
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 45.3,
+    "first_class_sealed_equivalent": true,
+    "id_family": "Wc025415a-F008-R1",
+    "mechanism": "f1",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 7,
+    "n_no_stone_programs": 2,
+    "primary_link": null,
+    "primary_status": "ACQUIRED",
+    "sealed_equivalent_class_rank": 1,
+    "sealed_equivalent_first_charge": 13223,
+    "sealed_equivalent_first_ordinal": 1,
+    "sealed_equivalent_first_program_r1_qualified": true,
+    "underdetermined_stone_unit": false,
+    "used_by_failed_family": true,
+    "world": "Wc025415a"
+   },
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 45.0,
+    "first_class_sealed_equivalent": false,
+    "id_family": "Wc025415a-F010-R1",
+    "mechanism": "p0",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 1,
+    "n_no_stone_programs": 0,
+    "primary_link": "UNDERDETERMINED_STONE",
+    "primary_status": "NOT_ACQUIRED",
+    "sealed_equivalent_class_rank": null,
+    "sealed_equivalent_first_charge": null,
+    "sealed_equivalent_first_ordinal": null,
+    "sealed_equivalent_first_program_r1_qualified": null,
+    "underdetermined_stone_unit": true,
+    "used_by_failed_family": true,
+    "world": "Wc025415a"
+   }
+  ]
+ },
+ "world": "Wc025415a"
+}

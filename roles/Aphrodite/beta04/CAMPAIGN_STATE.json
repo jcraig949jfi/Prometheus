@@ -140,7 +140,8 @@
   "E2_SCREEN": "RUNNING from worktree aphrodite-beta01 (atlas mode then 720-shard screen, 2 workers; started ~17:30Z; do NOT merge main into that worktree until done)",
   "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
   "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
-  "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT"
+  "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
+  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -178,7 +179,8 @@
  "outcomes_frozen_labels": {
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
   "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)",
-  "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning."
+  "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning.",
+  "E3ID (diagnostic; FREEZE_E3ID)": "ID_IDENTIFIABILITY: 4/4 UNDERDETERMINED_STONE units are one-class NOT sealed-equivalent -> UNIQUE_WRONG (ID-A1.4; code printed UNIQUE / interpretation INSTRUMENT, superseded by the frozen ID-A1.4 relabel). In each, TFS-1 enumeration at 1e6 found exactly ONE dev-consistent program on the R1 family and it is not the sealed mechanism (3/4 also pass R1 test+tribunal). ID_RETENTION_REPAIR = NO (designated uncertified RETAIN-4 7/15; CERT secondary RETAIN-4-CERT 9/15, also < 12; agree). Interpretation (frozen map + ID-A1.4): WORLD/RULER-or-HORIZON -- the R1 stepping-stone families do not identify their mechanism over the domain the composite uses, and the sealed stone lies beyond the TFS-1 R1 horizon; retention of hypotheses does not repair."
  },
  "contract_decisions_pending": [
   "scanl includes init (n+1)? (match foundry)",
