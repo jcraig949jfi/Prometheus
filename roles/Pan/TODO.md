@@ -8,7 +8,8 @@ date, purged after 24 h (base role s7).
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] Status report 6 by ~2026-10-10T16:00Z
-- [ ] PAN-39: calibration set v2 without textual tells (tell gate; CPU kill checks under spectrex5:cpu12)
+- [ ] PAN-39: prereg v2 frozen (03b9c37c1); BUILD when M2 CPU < 60 % over a minute: lease spectrex5:cpu12,
+      `python -m pan reviewcal build --set-version 2`, then `reviewcal floors` (gate G1-G4) + review packet
 - [ ] PAN-37: first calibrated reviewer on set v2 (GPU, after PAN-34 runs), reported against the floors;
       dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-11T14:30Z)
