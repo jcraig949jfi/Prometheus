@@ -3,23 +3,23 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-10T11:57:00Z",
+  "updated_at_utc": "2026-10-10T14:50:00Z",
   "state": "INTEGRATION_READY",
-  "branch": "argus/c013-t013",
-  "base_sha": "187ebe4475d3dcf1c85a9f42d87d235008e57987",
+  "branch": "argus/c013-t012",
+  "base_sha": "7f77d5c53529c5c8a3f055297742069dba4f2fcf",
   "head_sha": "(this commit; see receipt end_sha)",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t013",
-  "model": "claude-opus-5-5",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t012",
+  "model": "claude-sonnet-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-91546d7d",
-  "session_start_utc": "2026-10-10T11:25:00Z",
+  "instance": "harry1-90a937a5",
+  "session_start_utc": "2026-10-10T12:30:00Z",
   "current_objective": "RSO Builder Cell, campaign C-013 (RSO-STRATEGIC-EXPANSION-48H), Workstream B",
-  "current_step": "C-013-T013 INTEGRATION_READY: PREREGISTRATION v1.0.1 (A1 wording) b85d690bf + FREEZE_D1 v1.0.1 8ddaa4f19; 4 behavioural pins RED on mutants; 80 tests green; no lineage run",
+  "current_step": "C-013-T012 INTEGRATION_READY: D1 run N=15/24, STOPPED_AT_CPU_CAP 3.243 core-h; RESULT.md nothing separates; 9 certified discoveries",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates C-013-T013; then C-013-T012 (Argus) runs D1 on FREEZE_D1 v1.0.1",
-  "expected_next_artifact": "C-013-T012: rso/reach/runs/D1/{LEDGER.jsonl,CONTROLS.json,RUN.json,RESULT.json} when READY",
+  "next_expected_milestone": "Palamedes integrates C-013-T012 and reads RESULT.md",
+  "expected_next_artifact": "",
   "threads": [
     "phase3-rso"
   ],
@@ -31,14 +31,12 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "comms sync Argus; workgraph ready Argus",
-    "take C-013-T012 when READY (venv C:/Prometheus-worktrees/argus-reach-venv)",
-    "read the D1 result under s7 as amended by A1 (per-(arm,d) counts beside every separating contrast)"
+    "workgraph ready Argus; take further READY work or close"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-013/tasks/C-013-T013/attempts/A-001/RECEIPT.json",
-    "rso/reach/FREEZE_D1.md v1.0.1 (branch argus/c013-t013)"
+    "ops/campaigns/C-013/tasks/C-013-T012/attempts/A-001/RECEIPT.json",
+    "rso/reach/RESULT.md"
   ],
   "last_push_sha": "8ddaa4f19",
   "last_push_utc": "2026-10-10T11:55:00Z",
