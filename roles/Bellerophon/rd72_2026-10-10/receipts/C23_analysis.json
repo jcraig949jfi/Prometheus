@@ -1,0 +1,108 @@
+{
+ "cells": {
+  "C2|NONE": {
+   "n": 16,
+   "lo_end": 13,
+   "both": 0,
+   "survived": 16,
+   "affected_median": 0
+  },
+  "C2|REMOVE": {
+   "n": 16,
+   "lo_end": 11,
+   "both": 0,
+   "survived": 16,
+   "affected_median": 99
+  },
+  "C2|SHAM": {
+   "n": 16,
+   "lo_end": 13,
+   "both": 0,
+   "survived": 15,
+   "affected_median": 74
+  },
+  "C3|ABLATE": {
+   "n": 11,
+   "lo_end": 7,
+   "both": 0,
+   "survived": 11,
+   "affected_median": 99
+  },
+  "C3|A_PRESENT": {
+   "n": 11,
+   "lo_end": 9,
+   "both": 0,
+   "survived": 11,
+   "affected_median": 0
+  },
+  "C3|SHAM": {
+   "n": 11,
+   "lo_end": 10,
+   "both": 0,
+   "survived": 11,
+   "affected_median": 74
+  },
+  "C3F|IMPLANT": {
+   "n": 10,
+   "lo_end": 6,
+   "both": 0,
+   "survived": 8,
+   "affected_median": 16
+  },
+  "C3F|IMPLANT_SHAM": {
+   "n": 10,
+   "lo_end": 4,
+   "both": 0,
+   "survived": 5,
+   "affected_median": 16
+  }
+ },
+ "C2-a": {
+  "sham_lo_end": [
+   13,
+   16
+  ],
+  "remove_lo_end": [
+   11,
+   16
+  ],
+  "p_sham_gt_remove": 0.342541
+ },
+ "C2-b": {
+  "regenerated": 12,
+  "of": 16,
+  "faster": 8,
+  "slower": 1,
+  "p_sign": 0.019531,
+  "holds": true
+ },
+ "C3-P1": {
+  "A_PRESENT": [
+   0,
+   11
+  ],
+  "ABLATE": [
+   0,
+   11
+  ],
+  "SHAM": [
+   0,
+   11
+  ],
+  "p_A_gt_ABLATE": 1.0,
+  "p_SHAM_gt_ABLATE": 1.0,
+  "holds": "NOT_TESTABLE"
+ },
+ "C3-P2": {
+  "IMPLANT": [
+   0,
+   10
+  ],
+  "IMPLANT_SHAM": [
+   0,
+   10
+  ],
+  "p": 1.0,
+  "holds": "NOT_TESTABLE"
+ }
+}

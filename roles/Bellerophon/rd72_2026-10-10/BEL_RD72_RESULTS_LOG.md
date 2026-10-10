@@ -52,3 +52,29 @@ budget. The position of ONE instruction (IN) relative to the copy decides which 
   within 3,000 ticks of coexistence. In COND_MULTI the transform half ((x^0x55)+3) was never reached (0/14 established).
 - Consequence for s7: C3-P1 / C3-P2 need >= 5 BOTH events; they are expected to be NOT_TESTABLE. They run anyway as
   frozen (no outcome-dependent cancellation); C2 (source removal of LO) is unaffected.
+
+## C2 / C3 -- source removal and mechanism dependency on E1b worlds (prereg s7; CONFIRMATORY; completed 2026-10-10 ~19:25Z)
+101 runs, 0 voids; plan generated from E1b by the frozen plan_c23.py (sha256 93bf6136...), pin 6570ec568; analysis
+tools/analyze_c23.py; receipt receipts/C23_analysis.json.
+| arm | n | LO-or-BOTH FUNC at end | BOTH | FUNC alive at end |
+|---|---|---|---|---|
+| C2 NONE | 16 | 13 | 0 | 16 |
+| C2 SHAM (median 74 NONE organisms removed) | 16 | 13 | 0 | 15 |
+| C2 REMOVE (median 99 LO carriers removed) | 16 | 11 | 0 | 16 |
+| C3 A_PRESENT | 11 | 9 | 0 | 11 |
+| C3 SHAM | 11 | 10 | 0 | 11 |
+| C3 ABLATE | 11 | 7 | 0 | 11 |
+| C3F IMPLANT (16 foreign LO FUNC) | 10 | 6 | 0 | 8 |
+| C3F IMPLANT_SHAM (16 own NONE FUNC) | 10 | 4 | 0 | 5 |
+- C2-a (SHAM > REMOVE at the end): 13/16 vs 11/16, p 0.34 -- not supported; it was reported, not a claim by itself.
+- C2-b (regeneration, frozen sign test): LO came back in 12 of the 16 REMOVE worlds. In 8 the re-acquisition delay was
+  shorter than the world's original t_LO, in 1 it was longer, and 3 were ties at the 100-tick census grain. One-sided
+  sign test on the decided pairs: p 0.0195. HOLDS.
+  Reading, under the confound disclosed in the prereg: removing every carrier of the capability does not remove it from
+  the world. It returns faster than it first arose, so the route is held by the world (non-carrier material, or a copier
+  population poised to re-make it), not only by the lineage that carried it. The light instrument does not resolve
+  where the route is held.
+- C3-P1 and C3-P2: NOT_TESTABLE (0 BOTH events in every arm; threshold 5). Whether A makes B reachable is unanswered,
+  because B (the composite) is never reached with or without A. See E1b and the desert probe.
+- C3F, descriptive: implanting a foreign LO solver left LO present at the end in 6/10 worlds vs 4/10 for the sham, and
+  FUNC alive in 8/10 vs 5/10. Not tested (n is small).
