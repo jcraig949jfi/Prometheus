@@ -11,6 +11,7 @@ import datetime as dt
 import hashlib
 import json
 import random
+import re
 import time
 
 from . import PKG, lake
@@ -198,3 +199,113 @@ def score(findings, answers=None):
                 recall_wilson95=wilson(hits, n_mut), false_alarms=fa, clean=clean,
                 false_alarm_rate=round(fa / clean, 3) if clean else None, false_alarm_wilson95=wilson(fa, clean),
                 unreliable_for_unsupervised=(wilson(hits, n_mut)[1] < 0.5) if n_mut else None)
+
+
+# ---------------------------------------------------------------- chance floors (prereg A3)
+
+def site_lines(code):
+    """Line numbers (within the function, def = 1) of every applicable mutation site under the frozen operators --
+    public information (the operator list is in the committed prereg)."""
+    tree = ast.parse(code)
+    nodes = list(ast.walk(tree))
+    out = []
+    for op, idx in sites(code):
+        n = nodes[idx]
+        t = n.test if op == "negate_if" else (n.value if op == "return_none" else n)
+        out.append(getattr(t, "lineno", getattr(n, "lineno", 1)))
+    return out
+
+
+def heuristic_line(code, window=2):
+    """The line whose +-window neighbourhood holds the most mutation sites (ties -> earliest); 1 if none.
+    Uses the item's code only, never the answer key."""
+    import textwrap
+    lines = site_lines(textwrap.dedent(code))
+    n = len(code.splitlines())
+    if not lines:
+        return 1
+    return max(range(1, n + 1), key=lambda L: (sum(1 for x in lines if abs(x - L) <= window), -L))
+
+
+TELLS = (re.compile(r"\breturn None\b"), re.compile(r"\bnot \("))
+
+
+def tell_line(code):
+    """First line carrying a textual signature of the frozen operators (`return None` from return_none, `not (` from
+    ast.unparse in negate_if), or None. Reads the item's code only."""
+    for i, ln in enumerate(code.splitlines(), 1):
+        if any(rx.search(ln) for rx in TELLS):
+            return i
+    return None
+
+
+def floors(write=True, out=print, seed=37, draws=10000):
+    """What a reviewer scores WITHOUT reviewing, under the frozen rule (one finding per item; hit = mutant item
+    flagged with a line within +-2 of the mutated line; false alarm = clean item flagged):
+      silent       never flags: recall 0, false-alarm rate 0
+      random line  always flags, line uniform over the function: expected recall = mean window coverage
+      middle line  always flags the middle line
+      site density always flags the line whose +-2 window holds the most sites of the frozen operators
+    A reviewer abstaining at random keeps recall/false-alarm on the line recall = R_floor x FA, so a reviewer is
+    better than a floor only above that line. Writes aggregates only (no item lines: the key stays secret)."""
+    import numpy as np
+    from . import REPO
+    items = {it["item"]: it for it in json.loads(latest("ITEMS").read_text(encoding="utf-8"))}
+    key = json.loads(latest("ANSWERS").read_text(encoding="utf-8"))
+    mut = [a for a in key if a["kind"] == "mutant"]
+    n_lines = {i: len(items[i]["code"].splitlines()) for i in items}
+    cover = [len([L for L in range(1, n_lines[a["item"]] + 1) if abs(L - a["line_in_function"]) <= 2]) / n_lines[a["item"]]
+             for a in mut]
+    rng = np.random.default_rng(seed)
+    mc = float(np.mean([np.mean([abs(int(rng.integers(1, n_lines[a["item"]] + 1)) - a["line_in_function"]) <= 2 for a in mut])
+                        for _ in range(200)]))
+    res = {}
+    for name, pick in (("middle_line", lambda it: (len(it["code"].splitlines()) + 1) // 2),
+                       ("site_density", lambda it: heuristic_line(it["code"])),
+                       ("surface_tell", lambda it: tell_line(it["code"])),
+                       ("tell_else_density", lambda it: tell_line(it["code"]) or heuristic_line(it["code"]))):
+        f = {i: dict(bug=pick(it) is not None, line=pick(it)) for i, it in items.items()}
+        sc = score(f, key)
+        by_op = {}
+        for a in mut:
+            ok = f[a["item"]]["bug"] and abs(f[a["item"]]["line"] - a["line_in_function"]) <= 2
+            d = by_op.setdefault(a["op"], [0, 0])
+            d[0] += ok
+            d[1] += 1
+        res[name] = dict(recall=sc["recall"], recall_wilson95=sc["recall_wilson95"], hits=sc["hits"],
+                         false_alarm_rate=sc["false_alarm_rate"], false_alarms=sc["false_alarms"],
+                         unreliable_by_frozen_rule=sc["unreliable_for_unsupervised"], by_operator={k: "{}/{}".format(*v) for k, v in by_op.items()})
+    silent = score({}, key)
+    oracle = score({a["item"]: dict(bug=a["kind"] == "mutant", line=a.get("line_in_function")) for a in key}, key)
+    off3 = score({a["item"]: dict(bug=True, line=(a["line_in_function"] or 0) + 3) for a in mut}, key)
+    lens = sorted(n_lines[a["item"]] for a in mut)
+    doc = dict(control="PAN-37 reviewer chance floors (prereg A3)", items=latest("ITEMS").name,
+               mutants=len(mut), clean=len(key) - len(mut),
+               mutant_function_lines=dict(min=lens[0], median=lens[len(lens) // 2], max=lens[-1]),
+               share_mutants_window_covers_half_or_more=round(float(np.mean([c >= 0.5 for c in cover])), 3),
+               floors=dict(silent=dict(recall=silent["recall"], false_alarm_rate=silent["false_alarm_rate"]),
+                           random_line=dict(expected_recall=round(float(np.mean(cover)), 3), monte_carlo=round(mc, 3),
+                                            false_alarm_rate=1.0),
+                           **res))
+    checks = [
+        dict(kind="POSITIVE", name="the answer key itself scores recall 1, false alarms 0",
+             ok=oracle["recall"] == 1.0 and oracle["false_alarms"] == 0, detail="{} / {}".format(oracle["recall"], oracle["false_alarms"])),
+        dict(kind="NEGATIVE", name="a silent reviewer scores 0 and 0; a line 3 away from every bug scores 0",
+             ok=silent["hits"] == 0 and silent["false_alarms"] == 0 and off3["hits"] == 0,
+             detail="silent {}/{}; off-by-3 hits {}".format(silent["hits"], silent["false_alarms"], off3["hits"])),
+        dict(kind="CHEAT", name="the analytic random-line floor equals a 200x Monte Carlo of it within 0.02",
+             ok=abs(mc - float(np.mean(cover))) <= 0.02, detail="{:.3f} vs {:.3f}".format(float(np.mean(cover)), mc)),
+    ]
+    doc["checks"] = checks
+    doc["verdict"] = "PASS" if all(c["ok"] for c in checks) else "FAIL"
+    if write:
+        at = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        p = REPO / "roles" / "Pan" / "reports" / "controls" / "REVIEWCAL_FLOORS_{}.json".format(at)
+        p.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
+        out("wrote " + str(p))
+    out(json.dumps(doc["floors"], indent=1))
+    out("mutant functions: lines {mutant_function_lines}; window covers >= half the function for {share_mutants_window_covers_half_or_more} of mutants".format(**doc))
+    for c in checks:
+        out("{:<8} {:<5} {}  ({})".format(c["kind"], "PASS" if c["ok"] else "FAIL", c["name"], c["detail"]))
+    out(doc["verdict"])
+    return doc

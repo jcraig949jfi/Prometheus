@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-10T13:37Z (date -u).
+Currency: 2026-10-10T14:38Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
@@ -17,6 +17,8 @@ monitors: PanWorkLoop row in roles/base-role/MONITORS.md (bound 6).
 running: nothing; no lease held (M1 lease skullport:cpu8 13:09-13:29Z for PAN-28, released). PAN-34: 3 of 5
   configurations measured; qwen3:8b and gpt-oss@4096 wait for the GPU budget.
 blockers: PAN-26 (PEW down, reported #1969).
+review calibration: set v1 UNFIT (prereg A3): a regex for `return None` / `not (` scores recall 0.45 at
+  false-alarm 0.05 without reviewing; floors in controls/REVIEWCAL_FLOORS_20261010T143738Z.json; v2 = PAN-39.
 vectors: pgvector 0.8.7 on M1 (Atlas install #2056; Pan migrations 012+013): HNSW on chunk, document and
   paper vectors; off-M2 hosts get vector neighbours from Postgres (pan/pgvec.py); controls
   PGVECTOR_20261010T132524Z 5/5; query-style recall@10 0.94 at ef 200, 0.98 at 400;

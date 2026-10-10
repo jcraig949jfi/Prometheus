@@ -1,0 +1,120 @@
+{
+ "control": "PAN-37 reviewer chance floors (prereg A3)",
+ "items": "ITEMS_20261010T072739Z.json",
+ "mutants": 40,
+ "clean": 20,
+ "mutant_function_lines": {
+  "min": 3,
+  "median": 15,
+  "max": 53
+ },
+ "share_mutants_window_covers_half_or_more": 0.25,
+ "floors": {
+  "silent": {
+   "recall": 0.0,
+   "false_alarm_rate": 0.0
+  },
+  "random_line": {
+   "expected_recall": 0.379,
+   "monte_carlo": 0.385,
+   "false_alarm_rate": 1.0
+  },
+  "middle_line": {
+   "recall": 0.4,
+   "recall_wilson95": [
+    0.263,
+    0.554
+   ],
+   "hits": 16,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "off_by_one": "4/9",
+    "negate_if": "5/10",
+    "return_none": "3/11",
+    "cmp_flip": "4/7",
+    "arith_flip": "0/2",
+    "bool_flip": "0/1"
+   }
+  },
+  "site_density": {
+   "recall": 0.525,
+   "recall_wilson95": [
+    0.375,
+    0.671
+   ],
+   "hits": 21,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "off_by_one": "9/9",
+    "negate_if": "4/10",
+    "return_none": "1/11",
+    "cmp_flip": "4/7",
+    "arith_flip": "2/2",
+    "bool_flip": "1/1"
+   }
+  },
+  "surface_tell": {
+   "recall": 0.45,
+   "recall_wilson95": [
+    0.307,
+    0.602
+   ],
+   "hits": 18,
+   "false_alarm_rate": 0.05,
+   "false_alarms": 1,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "off_by_one": "0/9",
+    "negate_if": "10/10",
+    "return_none": "8/11",
+    "cmp_flip": "0/7",
+    "arith_flip": "0/2",
+    "bool_flip": "0/1"
+   }
+  },
+  "tell_else_density": {
+   "recall": 0.8,
+   "recall_wilson95": [
+    0.652,
+    0.895
+   ],
+   "hits": 32,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "off_by_one": "9/9",
+    "negate_if": "10/10",
+    "return_none": "8/11",
+    "cmp_flip": "3/7",
+    "arith_flip": "1/2",
+    "bool_flip": "1/1"
+   }
+  }
+ },
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "the answer key itself scores recall 1, false alarms 0",
+   "ok": true,
+   "detail": "1.0 / 0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "a silent reviewer scores 0 and 0; a line 3 away from every bug scores 0",
+   "ok": true,
+   "detail": "silent 0/0; off-by-3 hits 0"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "the analytic random-line floor equals a 200x Monte Carlo of it within 0.02",
+   "ok": true,
+   "detail": "0.379 vs 0.385"
+  }
+ ],
+ "verdict": "PASS"
+}
