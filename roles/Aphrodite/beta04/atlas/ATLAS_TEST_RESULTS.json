@@ -1,19 +1,22 @@
 {
  "code_sha256": {
   "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "arms.py": "13c542ae99461184158d3a59cd8dd4bdf498c9f1d1fe8f1ef75c15ea7d31ce33",
-  "common.py": "63176788907412ff6d6948c3debc7841360c6cab33e2b670c878abf941663bf7",
-  "descriptors.py": "2af23f6e1e878ff5c4ddddef42c6ef46688a3bebbde6d112ddd627c1835fbe3e",
-  "measure.py": "ef3a0689b5dfa9bad6829f926d96ec3b453dda0262c39bf2c80d062786f04646",
+  "arms.py": "374b9bc4d866f34215ef3216ddb4efc1e483f6222e8b8fbc4361bec7768df31a",
+  "calibration.py": "ff9419a10cba7b4a46ff6effb91b03f6f0fbc7efe774d77a0797c88daa89b7cf",
+  "common.py": "a884aa0e1d64868b1812c6263922703e9a00772054c0763a4bda1a81f7d7374b",
+  "costs.py": "08d6268c0c1d332377f21ddd7127f262d6f12beb2d40bea531c511e38d6d9c08",
+  "descriptors.py": "47d24a2d3eeefef6d09d8f3df6d011f7a636b8625bd2bb12aa81729f4c9ad05b",
+  "measure.py": "ddc054e0bc3ae5711cf81aad4a772bd0eee888b1a5755492b520b86be4f92cb0",
+  "pilot.py": "7f3ce3735cc7a454163efe8c517a3abb75c5e28bc5d335221bd4689edf6c1321",
   "route.py": "4f9588b686d424719fa9ee331f44617b9a7d685cab72f469924676d7eb00f557",
   "sample.py": "a32beab32fdfd7f571147c615b8b74d82d3b34741af7fd4bfdb68823c110f33f",
   "toys.py": "1026b1ef10970a526d1db1208b855ae42c3a961da5d26f6ca993f4cd97c8597e"
  },
  "fail": 0,
- "pass": 13,
+ "pass": 14,
  "results": [
   {
-   "cpu_s": 3.0,
+   "cpu_s": 4.02,
    "info": {
     "Int/3/lib1": {
      "chi2_z": 0.809,
@@ -38,7 +41,7 @@
    "test": "sampler_uniform_over_class"
   },
   {
-   "cpu_s": 1.73,
+   "cpu_s": 2.3,
    "info": {
     "terms_checked": 72
    },
@@ -46,7 +49,7 @@
    "test": "ranks_of_equals_rank_of"
   },
   {
-   "cpu_s": 4.22,
+   "cpu_s": 5.48,
    "info": {
     "edges": 41,
     "empirical": [
@@ -81,7 +84,7 @@
    "test": "route_edges_are_legal_mutations_and_step_prob_exact"
   },
   {
-   "cpu_s": 0.16,
+   "cpu_s": 0.17,
    "info": {
     "synonyms_checked": 338
    },
@@ -89,7 +92,7 @@
    "test": "synonyms_are_semantically_identical"
   },
   {
-   "cpu_s": 2.42,
+   "cpu_s": 2.62,
    "info": {
     "fresh_process_equal": true,
     "other_seed_differs": true,
@@ -99,7 +102,7 @@
    "test": "determinism_in_process_and_fresh_process"
   },
   {
-   "cpu_s": 4.8,
+   "cpu_s": 15.28,
    "info": {
     "A-CHAIN": {
      "charges": 2500,
@@ -170,13 +173,73 @@
       82342,
       74758
      ]
+    },
+    "D1-X1": {
+     "charges": 2500,
+     "probe_runs": 20000,
+     "rejected": 0,
+     "restores": 2497,
+     "units_dev": [
+      164266,
+      148129
+     ]
+    },
+    "D1-X2": {
+     "charges": 2500,
+     "probe_runs": 20000,
+     "rejected": 0,
+     "restores": 2497,
+     "units_dev": [
+      163109,
+      145135
+     ]
+    },
+    "D1-X3": {
+     "charges": 2500,
+     "probe_runs": 20000,
+     "rejected": 0,
+     "restores": 2497,
+     "units_dev": [
+      140776,
+      125684
+     ]
+    },
+    "D1-X3G": {
+     "charges": 2500,
+     "probe_runs": 0,
+     "rejected": 0,
+     "restores": 2497,
+     "units_dev": [
+      237593,
+      183618
+     ]
+    },
+    "D1-chain_neutral": {
+     "charges": 2500,
+     "probe_runs": 0,
+     "rejected": 0,
+     "restores": 1,
+     "units_dev": [
+      213073,
+      174814
+     ]
+    },
+    "D1-chain_strict": {
+     "charges": 2500,
+     "probe_runs": 0,
+     "rejected": 0,
+     "restores": 1,
+     "units_dev": [
+      89101,
+      71791
+     ]
     }
    },
    "pass": true,
    "test": "matched_compute_accounting_exact"
   },
   {
-   "cpu_s": 11.42,
+   "cpu_s": 30.05,
    "info": {
     "CREDIT/B3-CELLADMIT": {
      "hits_original": 0,
@@ -198,6 +261,16 @@
      "hits_perturbed": 0,
      "same_decisions": true
     },
+    "GRADED/D1-X1": {
+     "hits_original": 0,
+     "hits_perturbed": 0,
+     "same_decisions": true
+    },
+    "GRADED/D1-X3": {
+     "hits_original": 4,
+     "hits_perturbed": 0,
+     "same_decisions": true
+    },
     "TOY-D2/B3-CELLADMIT": {
      "hits_original": 0,
      "hits_perturbed": 0,
@@ -208,7 +281,7 @@
    "test": "archive_target_blindness_perturbation"
   },
   {
-   "cpu_s": 6.98,
+   "cpu_s": 8.28,
    "info": {
     "entries_checked": 783,
     "genotype_only_restore_diverges": true,
@@ -218,7 +291,7 @@
    "test": "genotype_and_state_restoration"
   },
   {
-   "cpu_s": 10.56,
+   "cpu_s": 12.83,
    "info": {
     "calibration": {
      "K": 645,
@@ -284,7 +357,7 @@
    "test": "final_evaluation_is_archive_free"
   },
   {
-   "cpu_s": 2.02,
+   "cpu_s": 1.64,
    "info": {
     "DESERT": {
      "D-BEH": "QUALIFIED",
@@ -301,7 +374,7 @@
    "test": "descriptor_qualification_controls_behave"
   },
   {
-   "cpu_s": 1.02,
+   "cpu_s": 1.28,
    "info": {
     "seed0_hit_charge": 78783,
     "substrate_lead_value": 78783
@@ -310,7 +383,7 @@
    "test": "crosscheck_tfs1_toy_hitting_cost"
   },
   {
-   "cpu_s": 4.53,
+   "cpu_s": 6.17,
    "info": {
     "CREDIT": "CREDIT_LIMIT",
     "DESERT": "REACHABILITY_DESERT",
@@ -318,8 +391,19 @@
    },
    "pass": true,
    "test": "planted_label_calibration"
+  },
+  {
+   "cpu_s": 0.34,
+   "info": {
+    "all_censored": "UNRESOLVED_ALL_CENSORED",
+    "credit": "CREDIT_LIMIT",
+    "desert": "REACHABILITY_DESERT",
+    "graded": "RARITY_LIMIT"
+   },
+   "pass": true,
+   "test": "empirical_flags_and_blind_control"
   }
  ],
  "suite": "atlas-v0 tests",
- "wall_s": 53.9
+ "wall_s": 94.6
 }

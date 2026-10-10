@@ -175,13 +175,15 @@ def matched_compute_accounting_exact():
     view = K.LearnerView(T)
     E = Enumerator(lib)
     for arm, desc in (("A-FRESH", None), ("A-CHAIN", None), ("B1-RETAIN", None), ("B2-DESCSEL", "D-BEH"),
-                      ("B3-CELLADMIT", "D-BEH"), ("C3-RAND", "RAND:50"), ("C2-RAND", "RAND:50")):
+                      ("B3-CELLADMIT", "D-BEH"), ("C3-RAND", "RAND:50"), ("C2-RAND", "RAND:50"),
+                      ("D1-chain_strict", None), ("D1-chain_neutral", None), ("D1-X1", "D-BEH"), ("D1-X2", "D-BEH"),
+                      ("D1-X3", "D-BEH"), ("D1-X3G", "RAND:50")):
         s = A.Search(view, K.Certifier(T, lib), E, arm, 1, 2500, 10, desc, stop_on_hit=False, keep_log=True)
         r = s.run()
         nst = len(s.starts)
         assert r["ledger"]["search"]["charges"] == 2500, arm
         assert len(s.log) == 2500 - nst, arm
-        expect_restores = 1 if arm == "A-CHAIN" else math.ceil((2500 - nst) / 10)
+        expect_restores = 1 if A.SPECS[arm].get("single_burst") else math.ceil((2500 - nst) / s.L)
         assert s.restores == expect_restores, (arm, s.restores, expect_restores)
         # re-sum the expanded/promoted unit ledgers independently from the logged genotypes
         u = [0, 0]
@@ -218,7 +220,8 @@ def archive_target_blindness_perturbation():
     out = {}
     for name, arm, desc in (("GRADED", "B1-RETAIN", None), ("GRADED", "B2-DESCSEL", "D-BEH"),
                             ("CREDIT", "B3-CELLADMIT", "D-BEH"), ("CREDIT", "C3-RAND", "RAND:300"),
-                            ("TOY-D2", "B3-CELLADMIT", "D-RES")):
+                            ("TOY-D2", "B3-CELLADMIT", "D-RES"), ("GRADED", "D1-X3", "D-BEH"),
+                            ("GRADED", "D1-X1", "D-BEH")):
         T, lib = TOYS[name]
         P = _perturb(T)
         a = A.run_arm(T, lib, arm, 4, 4000, descriptor=desc, stop_on_hit=False, final_eval=False)
@@ -350,8 +353,11 @@ def empirical_flags_and_blind_control():
     assert g["FEEDBACK_USED"] and not g["ALT_CREDIT_HELPS"] and g["reading"] == "RARITY_LIMIT", g
     c = M.classify_empirical({"A-CHAIN": [B] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [300] * 8}, B)
     assert c["reading"] == "CREDIT_LIMIT" and not c["DRIFT_CROSSES"], c
-    d = M.classify_empirical({"A-CHAIN": [B] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [B] * 8}, B)
-    assert d["reading"] == "REACHABILITY_DESERT", d
+    d = M.classify_empirical({"A-CHAIN": [B] * 7 + [900], "A-CHAIN[none]": [B] * 7 + [800],
+                              "A-CHAIN[partial]": [B] * 8}, B)
+    assert d["reading"] == "REACHABILITY_DESERT" and d["DRIFT_CROSSES"], d
+    u = M.classify_empirical({"A-CHAIN": [B] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [B] * 8}, B)
+    assert u["reading"] == "UNRESOLVED_ALL_CENSORED", u
     # the credit-blind chain (accepts every non-all-FAIL child) keeps exact accounting: one restore, budget charges
     T, lib = TOYS["GRADED"]
     view = K.LearnerView(T)
@@ -359,7 +365,7 @@ def empirical_flags_and_blind_control():
     s = A.Search(view, None, E, "A-CHAIN", 0, 1500, 10, None, stop_on_hit=False, credit="none", keep_log=True)
     s.run()
     assert s.charges == 1500 and s.restores == 1
-    return {"graded": g["reading"], "credit": c["reading"], "desert": d["reading"]}
+    return {"graded": g["reading"], "credit": c["reading"], "desert": d["reading"], "all_censored": u["reading"]}
 
 
 def main():

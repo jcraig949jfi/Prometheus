@@ -282,7 +282,7 @@ def summary():
                                 for k, v in r["one_factor_contrasts_exact_signflip"].items()}
             row["descriptor_arm_status"] = ("VALIDATED" if (q and DESC in q.get("qualified", []))
                                             else "INSTRUMENT_UNVALIDATED")
-            row["empirical_flags"] = r.get("empirical_flags")
+            row["empirical_flags"] = M.classify_empirical(r["censored_cost"], B)
             row["random_K"] = {k: v["K"] for k, v in r["random_control_calibration"].items()}
             row["arms_cpu_s"] = r["cpu_s"]
         if s:
@@ -292,10 +292,30 @@ def summary():
         if lad:
             row["d1_ladder_hits_of_8"] = lad["hits_by_arm"]
             row["d1_ladder_contrasts"] = lad["contrasts_C1_C5"]
-            row["d1_ladder_empirical_flags"] = lad["empirical_flags"]
+            row["d1_ladder_empirical_flags"] = M.classify_empirical(lad["censored_cost"], B)
             row["d1_ladder_descriptor_status"] = row.get("descriptor_arm_status")
             row["d1_X3G_K"] = lad["X3G_calibration"]["K"]
         out["toys"][toy] = row
+    out["pilot"] = {}
+    for p in sorted(OUT.glob("PILOT_*.json")):
+        d = json.loads(p.read_text())
+        a, q, lad = d["atlas"], d["qualification"], d["ladder"]
+        out["pilot"][a["family_id"]] = {
+            "task_sha256": d["task_sha256"], "witness_size": a["existence"].get("size_promoted"),
+            "exists": a["existence"].get("exists"),
+            "enum_hits_by_seed_at_80k": [x["hit_charge"] for x in a["hitting_cost_enumeration"]],
+            "enum_false_hits": [x["n_false_hits"] for x in a["hitting_cost_enumeration"]],
+            "witness_rank_bracket_seed0": a.get("revisitability", {}).get("witness_rank_by_seed", {}).get("0"),
+            "lattice": {k: a.get("lattice", {}).get(k) for k in ("size", "n_paths", "paths_truncated",
+                                                                    "any_intermediate_with_exact_credit")},
+            "route_classification": M.classify(a, B),
+            "ladder_hits_of_4": lad["hits_by_arm"], "ladder_flags": M.classify_empirical(lad["censored_cost"], B),
+            "descriptor_verdicts": {n: q["descriptors"][n].get("verdict") for n in ("D-BEH", "D-CERT", "D-RES")},
+            "descriptor_R1": {n: q["descriptors"][n].get("R1_separation") for n in ("D-BEH", "D-CERT", "D-RES",
+                                                                                   "TRACE")},
+            "qual_pairs": [q["pairs_R1"], q["pairs_R2"]], "qual_controls_ok": q["controls_ok"],
+            "cpu_s": {"atlas": d["atlas_cpu_s"], "qual": d["qual_cpu_s"], "ladder": d["ladder_cpu_s"],
+                      "total": d["cpu_s"]}}
     (HERE / "ATLAS_CALIBRATION_RESULT.json").write_text(json.dumps(out, indent=1, sort_keys=True, default=str))
     print(json.dumps(out, indent=1, default=str)[:6000])
 

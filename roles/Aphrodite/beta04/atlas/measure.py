@@ -345,6 +345,13 @@ def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict
     out["crossing_cost_estimate"] = cross
     out["widest_unrewarded_segment_search_channel"] = \
         rt["best_for_" + search_channel]["gradient"][search_channel]["widest_unrewarded_segment"]
+    starts = set(K.STARTS.get(rec.get("output_type"), []))
+    first = {ch: rt["best_for_" + ch]["steps"][0]["program"] for ch in (search_channel,) + tuple(alt_channels)}
+    out["route_start_is_generic_start"] = {ch: (p in starts) for ch, p in first.items()}
+    unanchored = not all(out["route_start_is_generic_start"].values())
+    if unanchored:
+        out["notes"].append("route starts are not the search's generic starts: the estimates omit the approach cost "
+                            "and are NOT anchored; label suffixed _UNANCHORED")
     if arm_results is not None:
         out["local_search_empirical_hits_at_B"] = {a: arm_results.get(a) for a in ("A-FRESH", "A-CHAIN")}
     if cross[search_channel] <= budget:
@@ -362,6 +369,9 @@ def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict
                 out["notes"].append("diagnostic: the %s channel (a numeric-closeness heuristic, not a correctness "
                                     "credit; used by no search here) WOULD see a gradient (crossing estimate %.3g)"
                                     % (ch, cross[ch]))
+    if unanchored:
+        out["local_search"] += "_UNANCHORED"
+    out["status"] = "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)"
     return out
 
 
@@ -392,7 +402,9 @@ def classify_empirical(cost: Dict, budget: int, alpha: float = 0.05) -> Dict:
     out["exact_chain_hits"] = hits
     out["blind_chain_hits"] = sum(c < budget for c in no)
     out["reached_at_B"] = hits * 2 >= len(ex)
-    if out["FEEDBACK_USED"]:
+    if all(c >= budget for k in ("A-CHAIN", "A-CHAIN[none]", "A-CHAIN[partial]") for c in (cost.get(k) or [])):
+        out["reading"] = "UNRESOLVED_ALL_CENSORED"          # no chain hit: no information at this budget; escalate
+    elif out["FEEDBACK_USED"]:
         out["reading"] = "RARITY_LIMIT"
     elif out.get("ALT_CREDIT_HELPS"):
         out["reading"] = "CREDIT_LIMIT"
