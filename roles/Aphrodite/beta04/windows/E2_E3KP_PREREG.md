@@ -85,3 +85,95 @@ C-015, W02.
   (about 1 core-h).
 - **4x, if triggered:** about 15 x 3 x 8 x 160 s = about 16 core-h. That runs in a later cap window.
 - **Rolling cap:** 48 / 24 h; <= 4 workers.
+
+## AMENDMENT A1 (pre-data; red team reviews/REDTEAM_E2_E3KP_PREFREEZE.md: 5 BLOCKER / 13 MAJOR; supersedes s A-C where they conflict)
+
+### A1-A. E3-KP
+1. **Labelled an INSTRUMENT TEST that is GIVEN the decomposition** (constituent mechanisms named). It is not
+   discovery (M1 / M8).
+2. **Predicted outcome, written before data:** FAIL is likely (about 4-7 / 15). The TFS-1 size-8 Int-output class
+   spans ranks 627k-6.0M, so 1e6 covers about 7% of it; 10 / 15 families depend on such an R1 stone.
+3. **Primary:** as in s A, with the readout fallback ON (labelled). **Secondary rows:**
+   - fallback OFF;
+   - the foundry's acquired primitives given directly (skips TFS-1 R1 acquisition: isolates the composition step);
+   - 2 extra keyed seeds;
+   - the all-acquired library.
+
+   Each family reports its FIRST failing link: R1_ACQUISITION / UNDERDETERMINED_STONE / HORIZON_R1 /
+   COMPOSITION_HORIZON / COMPOSITION_UNDERDETERMINED.
+4. **Verdict is POOLED over the 15 families:** >= 12 / 15 chain-qualified, AND from-scratch fails >= 12 / 15. The KP
+   code is aligned to this.
+5. **The single permitted neutral repair is pre-registered now:** observational-equivalence (OE) pruning in TFS-1
+   enumeration (exact charges; OE classes on dev inputs). It is applied ONLY if the primary is FAIL with
+   HORIZON_R1 / COMPOSITION_HORIZON as the dominant link, and re-run ONCE. If that still fails:
+   **TFS1_REACHABILITY_INSTRUMENT = FAIL.**
+
+### A1-B. E2: re-specified
+1. **Library (B1).**
+   - **Primary arms:** the family's constituent mechanisms as the FOUNDRY-ACQUIRED (learner-found, not sealed)
+     primitives.
+   - **DESERT REFERENCE:** a no-library credit-blind chain.
+   - This tests whether credit and archives help cross the composition step given stepping stones.
+2. **Arms (B2 / B4), at the code level:**
+
+   | Arm | Code |
+   |---|---|
+   | `credit_blind` | `credit="none"` |
+   | `chain_strict` | strict improvement |
+   | `chain_neutral` | accept >=, as atlas/arms.py |
+   | `D1-X3` | descriptor-guided worse-into-new-cell |
+   | `X3G` | matched structure-free; matched to D1-X3 on cell count and restore frequency |
+   | `desert_ref` | no-library credit_blind |
+
+   D1-X3 / X3G run ONLY on families where D-BEH passes qualification (C-013 R1). Elsewhere: INSTRUMENT_UNVALIDATED,
+   not run.
+3. **Families:** the 15 admitted R3 / R4 families. The R2 contrast is dropped (compute). Atlas measurements run on all
+   53 admitted families: existence, hitting rank, mutation robustness, feedback gradient.
+4. **Primary endpoint (M6):** the FIRST dev-consistent program found qualifies on test + a fresh tribunal.
+   - Secondary: any qualified program within B, with certifier-assisted hits tagged.
+   - Archive OFF at final evaluation.
+5. **Per-family labels:**
+
+   | Label | Rule |
+   |---|---|
+   | REACHED | chain_neutral primary hits >= 1 / 8 |
+   | CREDIT_GRADIENT | chain_strict or chain_neutral beats credit_blind by >= 3 seeds |
+   | CREDIT_MISLEADING | credit_blind beats both credit chains by >= 3 |
+   | DESERT_OR_HORIZON | all arms 0 / 8 |
+   | UNRESOLVED | otherwise |
+6. **FRONTIER_ARCHIVE_EFFECT (B3, M11).**
+   - **Contrasts:** D1-X3 vs chain_neutral AND D1-X3 vs X3G.
+   - **Unit:** skeleton clusters (merged skeletons; 5 clusters).
+   - **Informative unit:** >= 1 hit in any arm.
+   - < 5 informative units: **INCONCLUSIVE_CENSORED.**
+   - **YES_SCREEN:** both one-sided cluster sign-flip p < 0.05 with sum > 0. Note that with 5 units the minimum p is
+     1 / 32 = 0.031, so this is attainable only if all 5 point the same way.
+   - **NO:** >= 5 informative units AND sum <= 0 vs chain_neutral.
+   - Otherwise **INCONCLUSIVE.**
+7. **4x escalation (M7):** only for (family, arm) pairs with >= 1 hit at 1x (Hestia's rule).
+8. **Pre-launch checks (amendment item 6):**
+   - certifier re-check of all 53 witnesses and the foundry route solutions;
+   - start-at-target control (each arm started at the witness must "hit" at charge 0);
+   - a constant / lookup control family;
+   - a target-blindness test on production families (perturb test / witness -> decisions unchanged).
+9. **REACHABILITY_ATLAS_COMPLETE = YES** iff:
+   - the atlas measurements are complete on all 53 admitted families;
+   - the arm screen is complete on the 15 R3 / R4 families at 1x;
+   - the pre-launch checks pass.
+10. **Compute (M13):**
+    - Per-run costs for D1-X3 / X3G / chains at 2e5 are MEASURED first on an EXPOSED pilot_v2 family.
+    - If the 1x screen is projected above 24 core-h, the frozen TRUNCATION ORDER applies:
+      1. drop chain_strict first;
+      2. then reduce to 6 seeds;
+      3. then drop desert_ref on families whose admission evidence already shows from-scratch failure.
+    - Each truncation is recorded.
+11. **Claim limits and gates (M12):**
+    - All E2 / E3 claims are restricted to the motif-limited admitted set (2 pairings).
+    - The E3 2x2 lifetime screen requires E3-KP QUALIFIED AND E2 complete.
+    - **E4 is BARRED on these worlds** (E1 not qualified; R5 = 0).
+
+### A1-C. Open disagreement, recorded
+The red team judged the readout fallback acceptable when it is labelled and paired with a fallback-OFF row; a
+stricter reading would make fallback-OFF primary. **Decision:** fallback-ON stays primary (it is the foundry's
+documented readout rule) and fallback-OFF is mandatory beside it. If they disagree, the report states both, and the
+recommendation uses the fallback-OFF row.
