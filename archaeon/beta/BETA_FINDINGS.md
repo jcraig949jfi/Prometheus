@@ -102,7 +102,9 @@ clock.
    the hardened rare-type test finds 0/6 wins: every population shows dominance. Negative frequency dependence needs
    crowding; entropy alone does not detect it. At pair level (B72) the same holds: mixed pairs beat same-niche pairs
    in 2/6 k=2 populations (solo-like) vs 6/6 k=4 populations.
-7. **Limits.** Two worlds; k=8 and a third (procedural) world pending (B66 k=8, B71).
+   At k=8 (B66) the hardened rare-type test gives 4/6, as at k=4: NFD switches on between k=2 and k=4 (a crowding
+   threshold), while entropy rises gently (.99 / 1.19 / 1.23 / 1.32 for k = 1/2/4/8).
+7. **Limits.** Two worlds; a third (procedural) world pending (B71).
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

@@ -795,6 +795,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - WINDOW 4 OPENED 2026-10-10 00:29Z (window 3 closed at ~46 of 48 core-h). Lease lse-66beba5c83b5 (spectrex5:cpu12,
   3 h, token captured). Launched in parallel: B66 k=8 arm (6 cells, 6 procs) + B69 pulse evolution SOLO/CONC x
   6901-6906 (12 cells, 6 procs). Est ~9-10 core-h. B71 (third world, 18 cells) next.
+- B66 k=8 RESULT (00:55Z): entropy CONC8 1.37/1.48/1.29/1.43/1.13/1.23 (mean 1.321); HET>HOM 6/6 (+.008..+.108);
+  hardened rare-type 4/6 wins (6/6 testable; failures 6002 dominance, 6003 ~0 both ways). B66 SUMMARY by group size:
+  k=1 entropy .99 / rare 0/5; k=2 1.19 / 0/6; k=4 1.23 / 4/6; k=8 1.32 / 4/6. Prediction part 1 (entropy rises with k)
+  MET, small; part 2 (CONC2 - SOLO < .2 in >= 3/6) MET (4/6). SHAPE: NFD switches ON between k=2 and k=4 and holds at
+  k=8 -- a crowding THRESHOLD, not a graded dose; entropy rises gently throughout and does not mark the threshold.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
