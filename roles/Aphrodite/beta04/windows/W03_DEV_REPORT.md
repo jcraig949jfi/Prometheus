@@ -64,3 +64,15 @@ A1-C: fallback-off agrees with the primary (NO).
 2. ALIEN review + frozen addendum + production.
 3. Independent adversarial review of results.
 4. Synthesis preparation.
+
+## ERRATUM (after independent review v1; see reviews/COORDINATOR_RESPONSE_REVIEW_v1.md)
+- **Withdrawn:** the E3-ID "Reading" above (world / ruler identifiability as the first failure) and the claim that the
+  stones "diverge only on the wider domain the composite uses". Both are false for 3 / 4 units.
+- **Correct reading:**
+  - The R1 programs are globally correct, and the extraction rule mis-cuts the stone.
+  - Seeds 1 and 2 acquire the right stones.
+  - The first failure is stone ACQUISITION (search horizon + extraction non-invariance), with a world dev-gap in 1 / 4.
+- **Also corrected:**
+  - "horizon-dominated was predicted; underdetermination-dominated was observed" is wrong. The prediction was right;
+    the label precedence renamed in-class horizons.
+  - "Composition is reachable given true stones" is conditional on the foundry-selected families and is order-fragile.

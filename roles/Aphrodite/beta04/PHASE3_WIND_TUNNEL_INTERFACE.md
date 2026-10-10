@@ -65,10 +65,17 @@ Each Beta-04 label maps to {execution RAN / BLOCKED; authority QUALIFIED@stage /
   is: "in cell C, with true stones given, the chain qualified 14 / 15 at B = 1e6".
 
 ## 4. What the wind tunnel should take from Beta-04's results (to be completed at close)
-- **Stepping-stone IDENTIFIABILITY is a qualification question in its own right.** It is distinct from REACH: a stone
-  can be reachable and dev-consistent yet behaviourally wrong. Proposal: add IDENTIFIABILITY to the five qualification
-  questions (CAPACITY / DEMAND / REACH / DETECTION / DEVELOPABILITY + Fable's CLIMBABILITY). Its typed null is
-  STONE_UNDERDETERMINED. The E3-ID diagnostic (prereg windows/E3ID_PREREG.md) is the calibration case.
+- **Stone ACQUISITION needs its own qualification checks** (revised after independent review v1, F2 / F3 / F9).
+  1. **Extraction invariance.** A mechanism extracted from a found program must be invariant to semantics-preserving
+     refactorings of that program. In Beta-04, 3 / 4 "underdetermined" stones were mis-cuts of globally correct
+     programs (e.g. affine parts hoisted outside a max / min). Proposal: a wind-tunnel known answer that feeds the
+     extractor equivalent rewrites and requires identical stones.
+  2. **Budget coverage of the witness size class.** Report the fraction of the witness's size class covered by the
+     budget. In Beta-04, 1e6 covered about 7% of the size-8 class, so acquisition was an order lottery (seeds 0 / 1 / 2
+     gave 7 / 9 / 8 of 15).
+  3. **IDENTIFIABILITY of stepping-stone tasks** (dev sets contain the distinguishing boundary inputs). This is kept as
+     a proposed qualification question with typed null STONE_UNDERDETERMINED. Its Beta-04 support is ONE case
+     (Wc025415a p0: no element 5 in dev, so x > 4 vs x > 5 cannot be told apart).
 - **Descriptor qualification before archive arms is a wind-tunnel GATE, not a reporting option.** In Beta-04 the
   descriptor qualified on 5 / 15 families (2 / 5 clusters), which censored FRONTIER_ARCHIVE_EFFECT before any outcome.
 - **The first-failing-link vocabulary should be the wind tunnel's ascent-from-scratch report format** (RSO s14), so
