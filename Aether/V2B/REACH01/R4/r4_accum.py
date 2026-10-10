@@ -186,16 +186,24 @@ def main():
     ap.add_argument("--batches", type=int, default=20)
     ap.add_argument("--batch", type=int, default=1024)
     ap.add_argument("--dy-set", default=None, help="R4b: comma list restricting vertical insert offsets")
+    ap.add_argument("--geom", default="R3", help="R4c: R3 tile geometry for inputs A, B and output")
+    ap.add_argument("--inc", default=None, help="R4c: third input position y,x")
+    ap.add_argument("--in2", default=None, help="R4c: the two input values v1,v2")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
-    global DY_SET
+    global DY_SET, INC, IN2
+    F.set_geom(a.geom)
+    if a.inc:
+        INC = tuple(int(v) for v in a.inc.split(","))
+    if a.in2:
+        IN2 = tuple(int(v, 0) for v in a.in2.split(","))
     if a.dy_set:
         DY_SET = [int(v) for v in a.dy_set.split(",")]
     if os.path.exists(a.out):
         return 0
     comp, cpatch = load_component(a.component)
     res, found = search(a.arm, a.seed, a.batches, a.batch, comp, cpatch)
-    res.update(schema="aether.reach01.r4.search.v1", runner=RUNNER_VERSION, component=os.path.basename(a.component), dy_set=DY_SET)
+    res.update(schema="aether.reach01.r4.search.v1", runner=RUNNER_VERSION, component=os.path.basename(a.component), dy_set=DY_SET, geom=a.geom, inc=list(INC), in2=list(IN2))
     if found:
         hs = sorted(found, key=lambda h: found[h][0])
         np.savez_compressed(a.out[:-5] + "_found.npz", patches=np.stack([found[h][1] for h in hs]),
