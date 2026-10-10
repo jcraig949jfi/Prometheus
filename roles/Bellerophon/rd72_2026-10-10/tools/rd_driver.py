@@ -146,7 +146,12 @@ def _run_one(spec):
         out["summary"] = _keep(s); out["summary"]["competence"] = s.get("competence"); out["summary"]["coupling"] = {
             k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
+        out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log)          # organism-ticks lived (search budget)
         out["end_hash"] = end_state_hash(w)
+    elif kind == "harvest":
+        from harvest import harvest
+        cfg = _cfg(spec)
+        out["harvest"] = harvest(cfg, spec["seed"], spec["harvest_tick"], spec.get("n_sample", 20))
     elif kind == "uptake_fate":
         from uptake_fate import UptakeFateWorld
         cfg = _cfg(spec)

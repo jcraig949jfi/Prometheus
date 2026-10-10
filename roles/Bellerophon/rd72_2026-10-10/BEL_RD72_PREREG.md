@@ -27,3 +27,27 @@ rows -- which caught and fixed a NO_PREDICTION handling bug before this freeze).
 Rule: R >= 1.25 predicts INCREASE (blocked > normal, one-sided sign test p < 0.05); R <= 0.8 predicts NO_INCREASE;
 otherwise NO_PREDICTION.
 - D1-P1: in every testable substrate the predicted and observed outcomes match.
+
+## 3. K -- composition of two COMPUTATIONAL blocks across a reachability desert (frozen 2026-10-10T10:20:30Z, before any run)
+
+Target: COND_MULTI (x < 128 ? x : (x XOR 0x55) + 3) by a FUNC replicator. Prior: LADDER2 (multi-day, 20,000 ticks,
+ENDOGENOUS_COPY + BYTE mutation) INC copiers -> COND_ONE 0/240. Fixtures tools/fixtures_k.py: X (copier + transform
+block; correct only on x >= 128), Y (copier + branch block, echoes; correct only on x < 128). ENUMERATED before freezing:
+X, Y each FUNC; NEITHER has any single-step route (SUB 0/16,320, self MOVE 0/50,512, INS 0/16,384) to FUNC + COND_MULTI-
+competent; one X segment into Y_SH gives 12 routes; Y_NS 0 single cross routes; ALIGNED: Y[0:12] + X[12:] is the
+composite (a prefix transfer; a Y whose copy length mutates to 12 writes it but keeps the truncated copier).
+Plan tools/plan_k.py: 1260 e05f720ee6d1dd3251e8e2f8b2c52b6a8e30a5c0c274c4f81dc11306d7ee9833; 6 fixture sets x 3 operator regimes x ON, plus XY_AL x OFF per regime; 60 distinct seeds per cell;
+physics v3 COMMON + K40, task COND_MULTI, 1,000 ticks, PAIRED init. Analysis tools/analyze_k.py (committed; branch-
+exercised on synthetic rows in both directions). Exposure (organism-ticks) recorded per run as the search budget.
+Pilot disclosure (4 + 8 runs, seeds 78e6+, excluded): XY_AL 1,000 ticks extinct in 3/3 (one per regime, 25-70 s); at
+300 ticks 7/8 alive across LOCAL/WELL_MIXED x K40/K100; no competent organism in any pilot run. Setting kept at the
+historical K40 LOCAL; seeds doubled to 60 because of extinction risk.
+Endpoints: COMP_ANY = a competent child born to a non-competent writer (any FUNC state: catches prefix-replicator
+composites); COMP_SR = a competent FUNC child born. TWO_SOURCE = the competent machine's competence-critical bytes include
+founder bytes of both X (transplant0) and Y (transplant1).
+- K-P1 (the desert under the historical operators): XY_AL COMP_SR <= 2/60 under COPY_BYTE and under COPY_STRUCT.
+- K-P2 (operator-relative crossing): XY_AL COMP_ANY under PARTIAL_BYTE exceeds X_ONLY, Y_ONLY (PARTIAL_BYTE) and XY_AL
+  COPY_BYTE (Fisher one-sided p < 0.05 each).
+- K-P3 (two-source composition): >= 80% of XY_AL PARTIAL_BYTE runs with COMP_SR are TWO_SOURCE.
+- K-P4 (selection): XY_AL PARTIAL_BYTE COMP_ANY ON > OFF (Fisher one-sided p < 0.05).
+XY_SH / XY_NS cells are descriptive (operator-distance gradient: 1 donor step vs >= 2).
