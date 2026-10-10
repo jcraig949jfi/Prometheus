@@ -17,17 +17,20 @@
     "rso/reach/RESULT.md"
   ],
   "reads": [
-    "rso/reach/"
+    "rso/reach/",
+    "rso/reach/FREEZE_D1.md (v1.0.1)",
+    "rso/reach/PREREGISTRATION.md (v1.0.1, s9 A1 governs s4/s5/s7)"
   ],
-  "problem": "Local CPU only, on the frozen budget; a host other than harry1 if one is available.",
+  "problem": "Run the FROZEN v1.0.1 design exactly: python -m rso.reach.run_d1 --out-dir rso/reach/runs/D1 --workers 2, then --resume --max-rounds-this-call 1 in foreground slices until the CPU cap or N_MAX stops it. Local CPU on harry1 (no other host is available: Fabric has 0 live workers; ubu nodes are C-012's). <= 2 processes. Result read under A1 wording only.",
   "non_goals": [
     "No paid cloud resources (zero-spend authorization only)",
     "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
     "No restart or redesign of shared Fabric infrastructure"
   ],
   "evidence_required": [
-    "rows, certification and analysis committed",
-    "RESULT.md bounded result"
+    "rso/reach/runs/D1/ ledger rows, certification records and the analysis output committed",
+    "RESULT.md: result class, per-(arm,d) counts beside every contrast (A1.3), Holm-adjusted p, completed rounds, CPU core-hours, interpretation restricted to the A1.4 rows",
+    "no edit to any file pinned in FROZEN_D1.json"
   ],
   "acceptance": {
     "condition": "all evidence_required items; committed with source references"
@@ -37,13 +40,19 @@
     "rso/reach/RESULT.md"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-10T07:50:32Z",
       "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T12:31:39Z",
+      "note": "C-013-T013 INTEGRATED (FREEZE_D1 v1.0.1); launch Argus on claude-sonnet-5-5 (cheapest sufficient: execution of a frozen design + bounded read)"
     }
   ],
   "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
