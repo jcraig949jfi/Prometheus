@@ -67,7 +67,7 @@ Portfolio: reachability archives and structured credit first (Horizon I);
   only after a seed exists (III); an unfamiliar-substrate lane reserved
   (~15-20% of compute; disputed).
 
-3. D1 -- THE ONE DEMONSTRATION RUN IN THIS WINDOW (frozen; result pending)
+3. D1 -- THE ONE DEMONSTRATION RUN IN THIS WINDOW (frozen; result below)
 ---------------------------------------------------------------------------
 World: a small register-machine "reach" world with a known 8-instruction
 builder; starts are the builder with d = 1, 3 or 8 rows knocked out; budget
@@ -82,6 +82,15 @@ intermediates from score-matched random programs (separation 0.006). Our
 own Q3 challenge then found the "stepping stone" interpretation row vacuous
 (exact-row restoration needs ~6x the lineage budget) and narrowed it before
 any result.
+RESULT (2026-10-10): NOTHING SEPARATES. 15 of 24 rounds ran before the
+CPU cap (thermally limited host). Certified discoveries per 45 lineages:
+plain chain 4, neutral chain 1, retention 0, count selection 4, worse-
+into-new-cell 0, structure-free control 0; all at d = 1 or 3, none at
+d = 8 in any arm. Holm p >= 0.56 on all five contrasts. Power at this N
+for a +0.20 per-lineage effect: 0.49 (0.82 as planned). The plain chain
+already scored 4/15 at d = 1 (planned baseline 1/24). We read this as an
+under-powered null on a world that is too easy at d = 1 and too hard at
+d = 8 -- NOT as "archives do not help".
 
 4. WHERE WE ALREADY SUSPECT OURSELVES (please go further)
 ----------------------------------------------------------
@@ -91,8 +100,9 @@ any result.
     target. Is that guard enough?
   - "Reuse lowers later acquisition cost" can be faked by a curriculum that
     leaks the next answer into the previous world. What control exposes it?
-  - D1's world has a known answer; a positive D1 says a search structure
-    finds a constructible target, not that evolution invents mechanisms.
+  - D1's world has a known answer; a positive D1 would have said a search
+    structure finds a constructible target, not that evolution invents
+    mechanisms. D1 was null; is a null on such a world worth anything?
   - Every reviewer and builder so far is from one model vendor family.
 
 5. QUESTIONS FOR THE REVIEWER (written to resist agreement)

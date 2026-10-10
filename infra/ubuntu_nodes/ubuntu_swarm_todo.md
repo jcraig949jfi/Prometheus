@@ -128,11 +128,9 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       bay HDD 1 for Ubuntu; the Intel 330 180 GB (Win7) back in HDD 2 unmodified; Momentus 500 GB = spare. Install with ONLY
       the Patriot inside, legacy BIOS, Ethernet. Image the Intel 330 to M2 first. Details: ubuntu_server_machines.md s ubu007.
       The PM991 and the second USB-C enclosure are now spares.
-- [ ] **ubu008 = ThinkPad T490s** (i7 8th gen AVX2, 16 GB, 512 GB NVMe, dock + monitor; bought 2026-10-10; Fedora, wipe
-      OK). Check the BIOS password / Absolute first; install wired via the dock. The Toshiba A665 becomes ubu009 if used.
-
-## Operator (needs hands at a keyboard or the router; not the phone)
-
+- [x] **ubu008 = ThinkPad T490s** ONLINE 2026-10-10 at 192.168.1.231 (wired via dock; Wi-Fi .232). i7-8565U AVX2, 16 GB,
+      512 GB NVMe. Worker active (f78d18e26), Claude token installed. Remaining: DHCP reservation, BIOS AC-attach power-on.
+      The Toshiba A665 becomes ubu009 if used.
 - [ ] **BIOS: Power On with AC Attach = Enabled** on each laptop (F1 at boot → Config → Power; F10 to save). Also
       Config → Network → Wake On LAN = AC only. Without it, a power cut that drains the battery leaves the node off
       until someone presses the button. Each reboot takes that node's phone session down for about 2 min; it comes back by itself.

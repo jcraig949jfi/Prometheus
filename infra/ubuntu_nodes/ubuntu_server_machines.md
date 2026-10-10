@@ -12,7 +12,7 @@ Don't record passwords here.
 | 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 7 | ubu007   | jcraig   | (planned)  | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB 2.5" SATA SSD (on order), bay HDD 1 | (wired) | **Planned**; dual boot with Win7 on the Intel 330 in HDD 2 |
-| 8 | ubu008   | jcraig   | (planned)  | Ubuntu Server 26.04.1 LTS | 512 GB NVMe (internal) | (wired via dock) | **Planned**; bought 2026-10-10, currently Fedora (wipe OK) |
+| 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -192,13 +192,17 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   >= 60 GB). Legacy BIOS, USB first, Ethernet. Normal internal-disk install, so the CIDATA stick needs no
   --allow-usb-target. Image the Intel 330 to M2 before the install (backup only; it is not wiped).
 
-## ubu008 (machine #8, Lenovo ThinkPad T490s, planned)
+## ubu008 (machine #8, Lenovo ThinkPad T490s)
 
-- **Bought 2026-10-10** (Facebook Marketplace) with a dock and monitor. i7 (8th gen, likely i7-8565U/8665U, 4C/8T,
-  **AVX2**), 16 GB (partly soldered), 512 GB NVMe. Came with Fedora; operator: wipe OK.
-- Likely no built-in RJ45: install and run wired through the dock. UEFI; F12 boot menu, F1 setup.
-- Before install: check for a BIOS supervisor password and for Absolute/Computrace persistence (second-hand); check the
-  battery for swelling. Then the normal autoinstall + provision_node.sh.
+- **Bought 2026-10-10** (Facebook Marketplace) with a dock and monitor; came with Fedora (wiped, operator OK).
+- **Hardware (read 2026-10-10):** i7-8565U, 4C/8T, **AVX2**; 14 GiB usable (16 GB, partly soldered); WD PC SN730 512 GB
+  NVMe; wired `enp0s31f6` through the dock (the laptop's own I219 NIC), Wi-Fi `wlp0s20f3`. UEFI, Secure Boot left on.
+  Idle 50 C, fan ~2800 rpm (78 C briefly during setup).
+- **Autoinstall:** first try, the 2026-10-04 stick (`--allow-usb-target` is harmless when an internal disk exists).
+- **provision_node.sh 192.168.1.231 ubu008:** ~4 min; shared token, push dry-run OK; no reboot needed. Worker installed
+  at f78d18e26 with --enable: active, IDLE. Claude: `~/.config/claude-oauth.env` copied node-to-node from ubu006 over
+  stdin (never printed), sourced from `~/.bashrc` line 1 and `~/.profile`; `claude auth status` oauth_token, `claude -p` OK.
+- Still to do: DHCP reservation for .231; BIOS Power On with AC Attach; full `/login` only if it is to host a seat.
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
@@ -213,6 +217,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu004 | PrometheusWorker/ubu004/ubu004-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
@@ -229,5 +234,6 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
   at f78d18e26); services restarted between runs on ubu001-003.
 - 2026-10-03: ubu004 got the shared GitHub token (nodes-shared, no expiry, Prometheus only; installed from
   C:/autoinstall_secrets/tokens/shared.txt, never printed, shredded on the node); push dry-run OK; worker enabled.
+- 2026-10-10 ~15:39Z: ubu008 (T490s) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-04 ~14:12Z: ubu005 (P52s, USB-enclosure root) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.

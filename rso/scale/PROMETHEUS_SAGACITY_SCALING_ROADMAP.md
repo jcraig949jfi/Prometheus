@@ -5,7 +5,7 @@ roles/Palamedes/notes/2026-10-10_strategic_sources/ (Hestia Audit 1 + Oct-8 resp
 attack; ASTRA-6.0, FABLE-5.1, v0.4 synthesis, wind-tunnel reviews; execution inventory), rso/scale/
 RSO_SCALING_ASSESSMENT.md, and C-004/C-009/C-010 results. Status: v1 -- LONG_DURATION_EXECUTION_ARCHITECTURE.md,
 CHECKPOINT_REPLAY_SURVEY.md and the session-independent runner (fire test 13/13) are folded in; the D1 result is
-pending (challenge in progress); external Astra/Fable reviews and Hestia's review are PENDING (none has occurred).
+folded in (rso/reach/RESULT.md + INTEGRATION_D1.md, 2026-10-10 15:30Z); external Astra/Fable reviews and Hestia's review are PENDING (none has occurred).
 
 ## 0. The position in one paragraph
 
@@ -77,6 +77,15 @@ architecture, development, the world, search infrastructure and the evaluator su
     AND the mechanism the hits use is the construction's or a qualified alternative -- not a seeded control.
   Failure: no arm moves with budget-relative upper bounds stated -> search structure alone is not the lever at
     these budgets; Horizon II tests representation/development.
+  D1 RESULT (2026-10-10; rso/reach/RESULT.md, INTEGRATION_D1.md): NOTHING SEPARATES at B = 200,000, N = 15 (the
+    CPU cap on thermally limited harry1 stopped it below the registered 20-24 rounds; 3.24 core-hours). 9 certified
+    discoveries, all at d = 1 (chain_strict 4, X2 3) or d = 3 (chain_neutral 1, X2 1); none at d = 8 in any arm;
+    X1, X3 and X3G found none. Power at N = 15 for a uniform +0.20 effect is 0.49 (0.82 registered at N = 24), and
+    the chain baseline was 4/15 at d = 1 rather than 1/24. So D1 rules out only LARGE ingredient effects on this
+    world; it does NOT trigger the failure branch above, which needs a powered null. Consequence for the next step:
+    do not re-run D1 bigger on harry1 (the easy stratum is saturated by the plain chain and d = 8 is empty for
+    everyone); carry the protocol -- certification, matched structure-free control, Holm family, outcome-
+    symmetric cap -- to a desert whose chain baseline is near zero at every stratum and whose owner runs it.
   Pivot if: the behaviour descriptor cannot separate meaningful intermediates from arbitrary genomes (then no archive
     result is interpretable -- fix the descriptor first, per Nyx A4), or the target turns out REWARD/CREDIT-bound.
   Also in Horizon I (platform): a qualified-component registry so the next native runtime pays only for its adapter
@@ -178,7 +187,8 @@ architecture, development, the world, search infrastructure and the evaluator su
 
   - Archive value: Gemini "required"; ChatGPT 2 and Hestia: only with certificate-keyed descriptors; Nyx: S4 is
     MAP-Elites with count selection and "Go-Explore" must not describe genome copying. This roadmap sides with Nyx and
-    Hestia pending D1.
+    Hestia. D1 did not settle it: no archive arm separated, but at N = 15 only large effects were detectable, and the
+    descriptor was known before the run to separate shortest-path intermediates from random programs by 0.006.
   - Whether promotion is "designed reasoning with extra steps" (Hestia open question) -- Horizon II's pivot rule.
   - Alien-lane share and membership (ChatGPT 1 vs Hestia).
   - Whether W1 is near-theorem or representation-specific (M1 chose the latter; literature unverified).
@@ -201,5 +211,9 @@ architecture, development, the world, search infrastructure and the evaluator su
     event-driven dispatch of READY packets, with P-4 deferred until a registered workload exceeds one host. To be
     decided in RECOMMENDATION.md with D1's measured cost in hand; recorded here as an open disagreement with my own
     v1 provisional choice.
-  next scientific experiment (provisional): D1, then the same frozen cartography on one audited desert (Ananke FLIP),
-    routed to its owner.
+    D1's measured cost (s4): host capacity DID bind once -- thermal throttling cut D1 to 15 of 24 rounds -- but the
+    remedy that would have fixed it is running one whole seat on a cooler machine (M1/M2), which needs no cross-host
+    transport. A single run that must span hosts has still not appeared.
+  next scientific experiment (provisional; D1 done -- under-powered null, s4): the same frozen cartography protocol on
+    one audited desert with a near-zero chain baseline at every stratum (Ananke FLIP, 0/290), routed to its owner,
+    with N sized from the s4 power numbers BEFORE freezing and run where the cap does not truncate it.
