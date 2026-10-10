@@ -200,3 +200,41 @@ FUNC LO-or-BOTH tape, censored if none.
   itself; C2-b is then explained by the confound and is NOT evidence of stored capability.
 - C2R-P2: REMOVE re-acquires faster than NEAR (same test). HOLDS -> the route is held by near-carriers (cryptic variants
   within 16 bytes of the capability).
+
+## 10. F1 -- COND_ONE desert stress test with a distance ladder (CONFIRMATORY; frozen 2026-10-10T22:48:21Z, before any F1 run)
+
+Motivation (disclosed, post-E1b): E1b produced 0 composites, the desert probe found 0 one- or sampled three-step routes
+from the evolved half-solvers, and the ruler showed those solvers are plain ECHO / INC machines. The directive requires a
+null to distinguish inaccessible / improbable / too short / insufficient variation / destructive selection / instrument
+blindness / extinction. F1 places founders at controlled distances from a verified existence witness.
+1. Starting population: the E1b setting (s6-A) with COND_ONE. The founder (32 copies) is one of:
+   - W0: the copier + COND_ONE witness, FUNC and BOTH.
+   - KO1 / KO2 / KO4: W0 with d of its 9 competence-critical, replication-neutral bytes set to NOP, positions drawn per
+     world; asserted FUNC and not BOTH.
+   - ECHOH: copier + ECHO witness.
+   - REP: the bare copier.
+   Payment ON and OFF, 20 worlds per cell, 240 runs, 2,000 ticks, distinct seeds (72.4e12+). Plan tools/plan_f1.py (sha256
+   logged at launch).
+2. Target: a FUNC BOTH tape (light census; the same predicate as E1b).
+3. Baseline accessibility: tools/f1_geometry.py, one-step routes per distinct founder (KO1, KO2, ECHOH, REP), run
+   separately as a measurement.
+4. Witness: W0 itself.
+5. Routes: none is imposed. Repair of the knocked-out byte, rebuilding elsewhere, and assembly or uptake are all
+   admissible.
+6. Shortcut controls: a founder is never BOTH at tick 0 (asserted). The competence predicate is that of the B2 audit (no
+   constant / random exploits for COND_ONE).
+7. Success criterion: a FUNC BOTH at any census in (0, 2000].
+Analysis tools/analyze_f1.py (synthetic tests tools/tests/test_f1.py):
+- F1-P0 (validity of the setting): among W0-ON worlds with FUNC at the end, >= 50% still hold a FUNC BOTH at the end.
+  FAILS -> the setting destroys composites (destructive selection or instability), and the E1b null is reclassified as
+  that, not as inaccessibility.
+- F1-P1: KO1-ON crossed > REP-ON crossed (Fisher one-sided, p < 0.05).
+- F1-P2: KO1-ON crossed > KO1-OFF crossed (same test).
+Interpretation rules (frozen):
+- KO1 crossings > 0 with ECHOH = REP = 0 -> the E1b null is DISTANCE-LIMITED. The composite is reachable from cryptic
+  precursors one step away and not from the evolved half-solvers within 2,000 ticks: "reachable but improbable from
+  what evolution makes", not inaccessible.
+- Crossings falling with d (1 -> 2 -> 4), reported descriptively, locate the desert's edge.
+- Worlds losing FUNC before 500 count against crossing; per-cell FUNC survival is reported to separate extinction from
+  failure to cross.
+Compute: F1 takes precedence over D2 (Workstream D is secondary per the directive); D2 starts when cores are free.
