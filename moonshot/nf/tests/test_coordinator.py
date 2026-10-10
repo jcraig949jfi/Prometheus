@@ -173,6 +173,21 @@ class TestHappyPath(CoordCase):
         self.step()
         self.assertEqual(self.co.publish_ready(), [])
 
+    def test_a_pass_does_not_refetch_tasks_it_already_classified(self):
+        # Fabric clears tasks.current_attempt when an attempt ends, so the first skip rule never fired and every
+        # pass fetched every completed task again: quadratic work as tasks accumulate (found reading for T004).
+        for _ in range(3):
+            self.step()
+        calls = []
+        real = self.S.get_task
+        self.co.S = type("CountingStore", (), {})()
+        for name in dir(self.S):
+            if not name.startswith("__"):
+                setattr(self.co.S, name, getattr(self.S, name))
+        self.co.S.get_task = lambda conn, tid: (calls.append(tid), real(conn, tid))[1]
+        self.assertEqual(self.co.publish_ready(), [])
+        self.assertEqual(calls, [])
+
     def test_accounting_lives_outside_the_trace(self):
         res = self.step()
         a = self.reader().attempt(res["attempt_id"])

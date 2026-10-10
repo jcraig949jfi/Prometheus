@@ -1,10 +1,12 @@
 # Pan TODO
 
-Currency: 2026-10-10T07:30Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-10T09:35Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),
       then report + review packet
+- [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
+      lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] Status report 5 by ~2026-10-10T10:03Z
 - [ ] PAN-37: first calibrated reviewer = a local model on the 60-item set (GPU, after PAN-34 runs); portal view
       of the review queue; dispatch to seats ONLY if the operator answers Q-011
