@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T011",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-00742ab2 (one headless session: boot, hash verification, claim, set, execution, report, receipt, state commits; no background job at any point)",
+  "host": "harry1",
+  "branch": "pallas/c013-t011",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c013-t011",
+  "start_sha": "7f4ed9f2d9eb8578e8d42f6a7100641ec025ab3e",
+  "end_sha": "0f2f7917c09ffb5635aa8befe09eb876ff574ebf",
+  "dirty": false,
+  "commits": {
+    "claim": "d1cd386a6 (main, 09:40Z)",
+    "set_before_outcomes": "1e0c9c1bc (10:00:24Z): EXPOSURE.md, CHALLENGE_SET.md with predictions, expected.json, cases_d1.py, edits.json, run_edits.py, witnesses.py; comms bodies CLAIMED + heartbeat",
+    "implementing": "a29dc5679 (main)",
+    "results": "73784ccf3: results_d1.jsonl, mutation_rows.jsonl, posthoc_p4.json, REPORT.md, run_edits.py hygiene patch, journal, WORK_STATE, comms bodies",
+    "merge_origin_main_explicit": "0f2f7917c (merged 527aa3cb8; nothing under rso/reach, the prototype or Nyx's lane moved; FROZEN_D1 34/34 re-verified; check_frozen OK; set data files byte-identical to 1e0c9c1bc)",
+    "green_and_integration_ready": "the state commit carrying this receipt (main)"
+  },
+  "files_changed": [
+    "rso/reach/challenge/__init__.py, rso/reach/challenge/D1/ (new: __init__.py, EXPOSURE.md, CHALLENGE_SET.md, expected.json, cases_d1.py, edits.json, run_edits.py, witnesses.py, results_d1.jsonl, mutation_rows.jsonl, posthoc_p4.json, REPORT.md)",
+    "roles/Pallas/{WORK_STATE.json, journal/2026-10-10.md, comms/C013-T011_CLAIMED_2026-10-10.md, comms/C013-HEARTBEAT_2026-10-10_T011_start.md, comms/C013-T011_INTEGRATION_READY_2026-10-10.md, comms/C013-HEARTBEAT_2026-10-10_T011_done.md}",
+    "ops/campaigns/C-013/tasks/C-013-T011/ (state commits on main: LEASE.json, TASK.json, this receipt)"
+  ],
+  "evidence_added": [
+    "set committed BEFORE any outcome (1e0c9c1bc): 3 sound, 3 broken, 3 probes, 5 edits, predictions in expected.json; FROZEN_D1 34/34 verified before the claim, after every edit restore, and on the merged tree",
+    "INFERENCE: S1 null size under the CPU-cap stop with shared starts FWER 0.002/0.004 (1/24, cap/no cap) and 0.027/0.025 (0.25 with shared multipliers); N varies 20-22 (outcome-symmetric, not outcome-independent); S2 power 0.7985/0.3255 vs quoted 0.82/0.33; B1 planted opposing-strata table did NOT separate (raw 0.065, Holm 0.26; honest miss); post-hoc P4: X3 16/0/0 vs X2 1/2/2 separates (Holm 0.034) with two strata opposing -> s7 direction language is pooled over d (NARROWING); E3 Holm and E4 resume CPU accounting survive every behavioural test (hash-killed only by test_check_frozen), witnesses NOT_EQUIVALENT",
+    "CERTIFICATION: S3 24/24 target synonyms CERTIFIED (trace-identical); P1 family of 34 programs: the sealed class-exclusion ruler never decides alone (PASS for every selection-passer, INDETERMINATE for every selection-failer; builder(7) 449/500 = 89.8% NOT_CERTIFIED by one probe); E1 (selection on training lives) and E2 (sealed gate accepts INDETERMINATE) survive behaviourally; W1 record-level NOT_EQUIVALENT ([500,500] vs [126,126]), W2 EQUIVALENT_ON_FAMILY; selection block not oracle-checked; certify's selection lives outside rulers.py's declared bands",
+    "INTERPRETATION: B2a functional intermediate and unused-field drift of the start both 'off path' (-1) while trace- and score-identical; B2b 0 stones in 8/8 development lineages under exact AND functional predicates, chains leave the exact path at the first accepted neutral move; P3 exact restore 1/16-1/1024 of functional; B3 X3G 87-89% full at b/8 and 98-99% at b/4 vs X3 10-13% / 22-26% of final (ratio 9.1/4.5/2.1/1.0 at d=3, 6.8/3.8/2.0/1.0 at d=8), X2 archive 10-15% of X3's; P2 no ancestry field in a ledger row -> s7 rows C4, C5, off-path need NARROWING before any result is read",
+    "per surface (REPORT.md s3): INFERENCE NOT CLOSED (narrowing + 2 coverage; test and stopping rule sound), CERTIFICATION NOT CLOSED on coverage (frozen code correct on every input; bearing LOW), INTERPRETATION NOT CLOSED (narrowing required); nothing BLOCKING; nothing in s2-s6 to change; the run may start on the frozen code",
+    "E5 control KILLED (2 test_stats failures): the mutation harness kills"
+  ],
+  "evidence_executed": [
+    {"command": "FROZEN_D1 hash walk (git show HEAD:<p> and disk, LF sha256) x3: before claim at 7f4ed9f2d, after edits, on merged tree 0f2f7917c; merge-base --is-ancestor 307afe4b1", "result": "34/34 equal each time; ancestor; check_frozen() OK"},
+    {"command": "<venv>/python -m pytest -q -p no:cacheprovider rso/reach/tests/test_arms.py ; the other five files (baseline, unmodified tree)", "result": "49 passed (295 s); 27 passed (90 s) = 76"},
+    {"command": "<venv>/python rso/reach/challenge/D1/cases_d1.py --case S1 S2 | B1 B2a P2 P3 S3 P1 | B2b | B3", "result": "S1/S2/S3 AS_EXPECTED; B1 NOT_AS_PREDICTED; B2a/B2b/B3 SURVIVOR; P1/P2/P3 RECORDED; case CPU 327 s"},
+    {"command": "<venv>/python rso/reach/challenge/D1/run_edits.py --edit E1..E5 --phase targeted", "result": "E1 9 passed, E2 9 passed, E3 5 passed, E4 1 failed (test_check_frozen) + 2 passed, E5 2 failed + 4 passed; every file restored (sha + git diff --quiet) and check_frozen OK"},
+    {"command": "run_edits.py --phase rest for E1, E4, E2, E3 (the other five test files)", "result": "E1 66 passed + test_check_frozen; E4 73 passed; E2 66 passed + test_check_frozen; E3 70 passed + test_check_frozen; 801 suite-seconds over the five mutant runs"},
+    {"command": "run_edits.py --phase witness for E1, E2, E3 (first pass), then re-run after the bytecode-hygiene patch; E4 witness W4", "result": "first E3 'original' was a stale mutant pyc (disclosed); clean re-run: E1 differs, E2 equivalent, E3 differs; W4 differs (original STOPPED_AT_CPU_CAP after 2 rounds + refusal; mutant PAUSED then COMPLETE at 3)"},
+    {"command": "post-hoc probe P4 (clean, -B after purge)", "result": "opposing-strata separation at X3 16/0/0 vs X2 1/2/2 (Holm 0.034), 19/0/0 vs 1/3/3 (0.031), 21/0/0 vs 1/4/4 (0.047); reproduced the earlier run exactly"},
+    {"command": "git diff --quiet 1e0c9c1bc HEAD -- cases_d1.py witnesses.py edits.json expected.json (merged tree)", "result": "set data files byte-identical"},
+    {"command": "python -m workgraph validate (before each push)", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "tooling: first E3 witness ran the 'original' against a stale .pyc compiled from the mutant (mutation + restore within one second, equal size); caught, run_edits.py patched (purge + -B), all witnesses re-run; pytest phases unaffected (REPORT.md s6.1)",
+    "B1 prediction missed (the stratified test resisted the planted qualitative interaction); P4 is post-hoc and unscored",
+    "B3 X2 <= 5% sub-prediction missed (observed 10-15%); the scored criterion held",
+    "E4 predicted SURVIVES; observed hash-killed by test_check_frozen, behaviourally survives (2 + 73)",
+    "development outcomes observed: B2b 8 lineages d=3 at 20k (no hit); P2 one lineage at 500 (no hit); W4 toy runner lineages -500..-498 at 3,000 (not inspected, temp ledger deleted); B3 blind; knock-out indices 2000-2003, 1900, 1800, 4500-4502; no confirmatory lineage",
+    "E1 has a record-level witness only (no overfit genome hunted: the prototype produced 0 in 360 lineages)",
+    "the selection block of certify is not oracle-checked (recorded; improbable defect class)",
+    "exposure: the integrator's held 80%-threshold finding was read in T010's TASK.json history before the set; that mutant not scored (EXPOSURE.md)",
+    "same vendor family as the builder; cell member; informed coverage review (test bodies read); reviewer ~65 min wall"
+  ],
+  "unresolved": [
+    "s7 rows C4, C5 and the off-path row need a wording amendment (v1.0.1 under s9) or the result read with the narrowed wording (REPORT.md s4.3, s5)",
+    "s7 direction language pooled over d; s5 sealed-ruler role; s4 'outcome-symmetric' (wording)",
+    "three behavioural tests for the repair round: Holm, resume CPU accounting, selection lives (+ the integrator's 90% boundary)"
+  ],
+  "unblocks": [
+    "C-013-T012 (the confirmatory run may start on the frozen code; the repair round is wording + tests)"
+  ],
+  "resources": {
+    "case_cpu_s": 327,
+    "frozen_suite_runs_s": 1186,
+    "witness_wall_min": 6,
+    "core_hours_total_estimate": 0.6,
+    "processes_max": 2,
+    "paid_resources": "none",
+    "venv": "C:/Prometheus-worktrees/argus-reach-venv (read only; numba 0.65.1, pytest 8.3.3, Python 3.12.10)"
+  },
+  "created_at_utc": "2026-10-10T10:43:00Z",
+  "notes": "Operator ruling s4 honoured: fresh session, actual claude-fable-5-1 (comms boot tier heavy), no downgrade, no D1 outcome seen (none exists), set committed before outcomes. Headless rule applied throughout: no run_in_background; every command foreground with timeout <= 600 s; <= 2 processes (the frozen suite's own Pool(2) in test_runner excepted). TASK.json names Dionysus in eligible_roles; Pallas (owner_role) claimed on workgraph ready, as for C-010-T034."
+}

@@ -1,0 +1,65 @@
+EEEE
+======================================================================
+ERROR: rso.scale.runner.tests.test_engine (unittest.loader._FailedTest.rso.scale.runner.tests.test_engine)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: rso.scale.runner.tests.test_engine
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "C:\Prometheus-worktrees\eupalamus-c013-t022\rso\scale\runner\tests\test_engine.py", line 4, in <module>
+    from rso.scale.runner import engine as E
+ImportError: cannot import name 'engine' from 'rso.scale.runner' (unknown location)
+
+
+======================================================================
+ERROR: rso.scale.runner.tests.test_run (unittest.loader._FailedTest.rso.scale.runner.tests.test_run)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: rso.scale.runner.tests.test_run
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "C:\Prometheus-worktrees\eupalamus-c013-t022\rso\scale\runner\tests\test_run.py", line 8, in <module>
+    from rso.scale.runner import account as A
+ImportError: cannot import name 'account' from 'rso.scale.runner' (unknown location)
+
+
+======================================================================
+ERROR: rso.scale.runner.tests.test_store (unittest.loader._FailedTest.rso.scale.runner.tests.test_store)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: rso.scale.runner.tests.test_store
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "C:\Prometheus-worktrees\eupalamus-c013-t022\rso\scale\runner\tests\test_store.py", line 8, in <module>
+    from rso.scale.runner import store as S
+ImportError: cannot import name 'store' from 'rso.scale.runner' (unknown location)
+
+
+======================================================================
+ERROR: rso.scale.runner.tests.test_supervisor (unittest.loader._FailedTest.rso.scale.runner.tests.test_supervisor)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: rso.scale.runner.tests.test_supervisor
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "C:\Prometheus-worktrees\eupalamus-c013-t022\rso\scale\runner\tests\test_supervisor.py", line 8, in <module>
+    from rso.scale.runner import account as A
+ImportError: cannot import name 'account' from 'rso.scale.runner' (unknown location)
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+FAILED (errors=4)

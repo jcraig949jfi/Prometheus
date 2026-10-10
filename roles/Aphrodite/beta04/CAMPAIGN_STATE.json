@@ -135,13 +135,31 @@
     "ALIEN": "PENDING"
   },
   "jobs": [],
-  "subagents": {},
+  "subagents": {
+    "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
+    "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged"
+  },
   "attempts": {},
   "compute": {
     "cap": "48 core-h / rolling 24h",
     "ledger": []
   },
   "cloud_spend_usd": 0,
-  "next_action": "read digest; launch FOUNDRY + SUBSTRATE leads against contract v0",
-  "outcomes_frozen_labels": {}
+  "next_action": "red-team foundry gate; freeze foundry decisions D1-D9; production worlds 201-212",
+  "outcomes_frozen_labels": {},
+  "contract_decisions_pending": [
+    "scanl includes init (n+1)? (match foundry)",
+    "curried 2-arg lambdas (lam a (lam b BODY))",
+    "exec units on FAIL counted to failure -> compare units only on non-FAIL",
+    "and/or strict",
+    "hit definition for search vs endpoint",
+    "E3 budget/max size (8; 7 with libraries)",
+    "commutative canonicalisation on; CRN slot=family_id"
+  ],
+  "contract_decisions_frozen": {
+    "v0.1-1": "promoted/learned primitives must be CLOSED over their own arguments: no free reference to the task input xs (prevents whole-program memorisation posing as a mechanism)"
+  },
+  "known_answers": {
+    "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
+  }
 }

@@ -5,6 +5,36 @@
       "utc": "2026-10-10T09:27Z",
       "kind": "ACTIVATE",
       "note": "Beta-04 activated; directive verbatim; C-015; contract v0 plan"
+    },
+    {
+      "utc": "2026-10-10T09:42Z",
+      "kind": "DESIGN",
+      "note": "reading digest integrated: archive factorisation (Nyx), descriptor qualification first (C-013 D1), foundry rigor (Fable/WTP-05), Hestia ledger/controls; coordination with C-013/C-014"
+    },
+    {
+      "utc": "2026-10-10T09:56Z",
+      "kind": "PROCESS_DEFECT",
+      "note": "SUBSTRATE lead force-stopped PID 16644 (FOUNDRY lead's seed-101 qualify trial, ~186 CPU-s) mistaking it for its own runaway test (recursion bug, now fixed; ~10 extra processes briefly). Trial to be discarded and rerun (technical, not a result). Rule restated: stop only verified own PIDs; <=2 workers per lead."
+    },
+    {
+      "utc": "2026-10-10T10:18Z",
+      "kind": "LEAD",
+      "note": "SUBSTRATE delivered minimal TFS-1 @9b6392d71: 15/15 tests; toy depth-2 sensitivity 8/8 (correct primitive) vs 0/8 (none, exhaustive 6.0M) vs 0/8 (wrong); throughput ~28-94k cand/s pristine; size-8 exhaustive horizon. Contract v0.1-1 frozen: learned primitives closed (no free xs)."
+    },
+    {
+      "utc": "2026-10-10T10:32Z",
+      "kind": "INPUT",
+      "note": "Theseus #2032 (info): validated composition gate (1-part controls at chance .20, hand-built store+release pairs 1.0, re-scored per eval; theseus/synth/task_comp.py); composition supplied by an OPERATOR inserting a k-ary coupling (coupling existence, values irrelevant), planted cross-lineage parts composed 1/91; locus probe: 69% failures hold-but-never-release. Implications: E1 gate should include 1-part (component-ablated) controls at chance; E3/E4 may test a composition-inserting operator as a search-machinery intervention."
+    },
+    {
+      "utc": "2026-10-10T11:00Z",
+      "kind": "LEAD",
+      "note": "FOUNDRY delivered @f1fe051c4: 20/20; pilot gate passed in all 3 worlds; motif concentration fold/scan-over-map 17/24; oracle desert at size>=9"
+    },
+    {
+      "utc": "2026-10-10T11:00Z",
+      "kind": "KNOWN_ANSWER",
+      "note": "K-AB interpreter A vs B PASS (12k terms/192k runs + bool 3k/48k; 0 mismatches)"
     }
   ]
 }
