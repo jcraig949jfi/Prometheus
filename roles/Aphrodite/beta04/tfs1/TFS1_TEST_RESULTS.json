@@ -1,0 +1,211 @@
+{
+ "summary": {
+  "code_sha256": {
+   "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+   "compress.py": "8d4215fe778bf18a32d64f42d3957547abf4ce9d1aed6f4ffb50f91978cd4196",
+   "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+   "enum.py": "7f67bd11f9a1dc3fde1b339699ff7e3f3e8379fbdf4bd3e927a5fd73fe0220c3",
+   "library.py": "cd51247e11a0d8043f8518a5101195c736689a54b65071c14c48ecada8686f5f",
+   "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+   "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+   "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+  },
+  "fail": 0,
+  "pass": 15,
+  "python": "3.12.10",
+  "quick": false
+ },
+ "tests": {
+  "test_alias_collapse_and_depth": {
+   "A2_depth": 2,
+   "chain_depth": 3,
+   "commuted_respelling_status": "collapsed",
+   "composition_depth": 2,
+   "eta_alias": "collapsed",
+   "respelling": "collapsed",
+   "seconds": 0.0,
+   "semantic_but_not_syntactic_respelling_status": "new",
+   "status": "PASS",
+   "trivial_rejected": 3
+  },
+  "test_chunked_keyed_order_equals_full_sort": {
+   "chunked_equal": true,
+   "class_size": 55995,
+   "fallback_equal": true,
+   "gen_trees_equal": true,
+   "seconds": 4.52,
+   "status": "PASS"
+  },
+  "test_compressor_function_hole": {
+   "candidate": "(sum (map h0 (filter (lam x (gt x 0)) xs)))",
+   "gain": 10,
+   "params": [
+    "Int->Int"
+   ],
+   "seconds": 0.0,
+   "status": "PASS"
+  },
+  "test_compressor_planted_kat": {
+   "alias_candidates": 0,
+   "depth_with_library": 2,
+   "depth_without_library": 1,
+   "gain": 13,
+   "seconds": 0.01,
+   "status": "PASS",
+   "top_with_library": "(sum (map (lam x (mul 3 (L_e8691a5e8b00 x))) h0))",
+   "top_without_library": "(sum (map (lam x (mul 3 (add (mul x x) 1))) h0))",
+   "uses": 4
+  },
+  "test_cost_ledger_exact": {
+   "exhaustive_through_4_charges": 4972,
+   "hit_charge": 66,
+   "hit_program": "(L_d5571637b7c3 (L_ae173035a9db 0))",
+   "seconds": 0.27,
+   "static_rank": 66,
+   "status": "PASS",
+   "units_expanded": 1199,
+   "units_promoted": 153,
+   "uses_entry": false
+  },
+  "test_count_equals_materialised": {
+   "base_Int_class_sizes": [
+    4,
+    10,
+    110,
+    658,
+    6723,
+    55995,
+    563912,
+    5379790,
+    55149973
+   ],
+   "base_List_class_sizes": [
+    1,
+    1,
+    14,
+    88,
+    904,
+    8036,
+    81574,
+    825820,
+    8697789
+   ],
+   "classes_checked": 72,
+   "seconds": 14.2,
+   "status": "PASS"
+  },
+  "test_enumerator_determinism_and_crn": {
+   "base_walk_len": 7505,
+   "budget": 8000,
+   "fresh_process_equal": true,
+   "library_walk_len": 66576,
+   "permutation_invariant": true,
+   "seconds": 21.35,
+   "shared_order_preserved": true,
+   "status": "PASS",
+   "walk_sha256": "f5f25aa288bfcb784f00be4dcaf1cc7f25805acfda441fdcbfdd1a7458d4f68f"
+  },
+  "test_flip_test_known_values": {
+   "flip_all_pos_p": 0.0009765625,
+   "paired_example": {
+    "diffs": [
+     3004,
+     -8,
+     -2441,
+     0
+    ],
+    "hits_control": 3,
+    "hits_treatment": 4,
+    "p_one_sided": 0.5
+   },
+   "seconds": 0.7,
+   "status": "PASS"
+  },
+  "test_interpreter_guards": {
+   "cases": 72,
+   "mismatches": 0,
+   "seconds": 0.0,
+   "status": "PASS"
+  },
+  "test_mutator_typed_and_deterministic": {
+   "children_checked": 3000,
+   "ill_typed": 0,
+   "seconds": 7.79,
+   "status": "PASS",
+   "walk_charges": 1046,
+   "walk_hit": true,
+   "walk_program": "(L_d5571637b7c3 (L_ae173035a9db 0))"
+  },
+  "test_parse_print_roundtrip_and_types": {
+   "ill_typed_rejected": 12,
+   "roundtrips": 3312,
+   "seconds": 0.33,
+   "status": "PASS"
+  },
+  "test_promotion_semantics_random": {
+   "cases": 12000,
+   "fail_cases": 1772,
+   "library_entries": 10,
+   "library_max_depth": 3,
+   "mismatches_expanded_units": 0,
+   "mismatches_value_or_FAIL": 0,
+   "programs": 3000,
+   "programs_with_calls": 2683,
+   "seconds": 6.16,
+   "status": "PASS"
+  },
+  "test_serialization_roundtrip_and_tamper": {
+   "entries": 10,
+   "fresh_process_sha_equal": true,
+   "library_sha256": "b2db912a45aa9082d294fccd2baee3d85e3819fc1525b53c1d5553ebe1081346",
+   "seconds": 0.21,
+   "status": "PASS",
+   "tamper_cases_detected": 3
+  },
+  "test_transplant_no_donor_state": {
+   "library_sha256": "b2db912a45aa9082d294fccd2baee3d85e3819fc1525b53c1d5553ebe1081346",
+   "recipient_pid": 2304,
+   "results": [
+    [
+     "sumsq1",
+     true,
+     737
+    ],
+    [
+     "len",
+     true,
+     22
+    ],
+    [
+     "maxp1",
+     true,
+     1408
+    ],
+    [
+     "rev",
+     true,
+     2
+    ]
+   ],
+   "seconds": 1.44,
+   "status": "PASS",
+   "tasks_sha256": "62c8ceb407e7f3ecb81ff67a9f6db7a5cea8389614645b47a630d6cb43c2c765",
+   "verification": {
+    "NO_DONOR_STATE": true,
+    "fresh_process": true,
+    "isolated_interpreter": true,
+    "library_reserializes_identically": true,
+    "reads_exactly_library_and_tasks": true,
+    "receipt_hash_ok": true,
+    "same_code": true,
+    "tasks_hash_ok": true
+   }
+  },
+  "test_units_known_answers": {
+   "cases": 8,
+   "seconds": 0.0,
+   "status": "PASS"
+  }
+ }
+}
