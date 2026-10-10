@@ -115,3 +115,10 @@ They supersede this draft wherever they conflict. In particular:
    - Start not before 2026-10-11 11:30Z.
    - At the hard stop, report what is complete. Otherwise REPAIR_CLASS = INCOMPLETE with bounds.
 10. **Custody:** UTC start / end in every result file; FREEZE_E3R.json with git-blob hashes; an assert that the reused off_frozen cell = 7 / 15.
+
+## AMENDMENT E3R-A2 (pre-data; independent review v2)
+- **E3R-A1 item 6 is corrected.** off_xabs at seed 0 is "EXPECTED about 9 / 15, PENDING REPRODUCTION", not known.
+  - The reviewer's 9 / 15 was a hand-spelled exploratory run, and stone spelling can change the enumeration order.
+  - DEVELOPMENTAL / EITHER are therefore "expected unattainable", not "unattainable".
+  - The only hard reproduction assert stays the reused off_frozen cell = 7 / 15.
+- **Wall-clock UTC start / end** in every E3-R result file (pilot, cells, pooled) is a freeze precondition.
