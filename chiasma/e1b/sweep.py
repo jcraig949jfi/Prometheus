@@ -2,7 +2,7 @@
 
 Usage: python -B -m chiasma.e1b.sweep <out_dir> <seed> [<seed> ...]
        [--worlds H:R21,H:R11,H:R12,H3] [--caps 600,1000,3000] [--caps-h3 1800,3000,9000]
-       [--arms O1,...] [--full] [--procs 8]
+       [--arms O1,...] [--pevict] [--full] [--procs 8]
 Uncapped arms (O3U) run once per (world, seed). PW-H3 has its own caps: its positive
 geometry P is about 3x PW-H's (dev seed 910001: 1442 vs 481 bytes at the end of F), so
 PW-H's caps would leave P alone over budget.
@@ -32,15 +32,15 @@ def build(world: str, seed: int):
 
 
 def job(args):
-    world, seed, cap, arm, full_dir = args
+    world, seed, cap, arm, full_dir, pevict = args
     t0 = time.process_time()
-    r = run(build(world, seed), arm, cap)
+    r = run(build(world, seed), arm, cap, pevict=pevict)
     cpu_ms = int((time.process_time() - t0) * 1000)
     if full_dir:
-        fn = "{}_{}_{}_{}.json".format(world.replace(":", "-"), seed, r["cap"], arm)
+        fn = "{}_{}_{}_{}{}.json".format(world.replace(":", "-"), seed, r["cap"], arm, "_pe" if pevict else "")
         with open(os.path.join(full_dir, fn), "wb") as fh:
             fh.write(canonical(r))
-    return {"world": world, "seed": seed, "cap": r["cap"], "arm": arm,
+    return {"world": world, "seed": seed, "cap": r["cap"], "arm": arm, "pevict": pevict,
             "world_sha256": r["world_sha256"], "receipt_sha256": r["receipt_sha256"],
             "endpoints": r["endpoints"], "summary": r["summary"], "cpu_ms": cpu_ms}
 
@@ -53,6 +53,7 @@ def main(argv=None) -> int:
     ap.add_argument("--caps", default="600,1000,3000")
     ap.add_argument("--caps-h3", default="1800,3000,9000")
     ap.add_argument("--arms", default=",".join(E1B_ARMS))
+    ap.add_argument("--pevict", action="store_true")
     ap.add_argument("--full", action="store_true")
     ap.add_argument("--procs", type=int, default=8)
     a = ap.parse_args(argv)
@@ -69,7 +70,7 @@ def main(argv=None) -> int:
         for seed in a.seeds:
             for arm in a.arms.split(","):
                 for cap in ([None] if arm in UNCAPPED else caps):
-                    jobs.append((world, seed, cap, arm, full_dir))
+                    jobs.append((world, seed, cap, arm, full_dir, a.pevict))
     out = os.path.join(a.out_dir, "rows.jsonl")
     with Pool(a.procs) as pool, open(out, "w", encoding="utf-8", newline="\n") as fh:
         for row in pool.imap_unordered(job, jobs):

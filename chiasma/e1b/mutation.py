@@ -50,6 +50,8 @@ MUTANTS = [
      "        self.weldable = bool(self.ARMS[arm].get(\"weldable\"))", "        self.weldable = False"),
     ("E14 weldable arm welds with the stale anchor", "e1b/arms.py",
      "            anchor = c.premise if c.consolidated else c.anchor", "            anchor = c.anchor if c.anchor is not None else 0"),
+    ("E15 binding budget evicts nothing", "e1b/arms.py",
+     "            self.cells[vname].remove(victim)\n", "            break\n"),
 ]
 
 

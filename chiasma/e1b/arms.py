@@ -13,6 +13,11 @@
   O4LW  O4L with the same change (provenance repair kept).
   The 2x2 is {O3, O4L, O3W, O4LW}: freeze {yes, no} x provenance repair {off, on}.
 
+Binding budget (pevict=True, any arm; DEV_NOTES s6): E1's cap evicts N, then U, and
+never P, so P can sit over the cap (over_budget). With pevict, after N and U are gone,
+whole cells are evicted, the lowest support first, then the oldest, until the cap is
+met. The rule is the same for every arm.
+
 Every E1 arm is chiasma.organisms.Organism unchanged.
 """
 from typing import Optional
@@ -28,9 +33,28 @@ class E1bOrganism(Organism):
                 O3W=dict(neg="proj", consolidate=True, seams="none", weldable=True),
                 O4LW=dict(neg="proj", consolidate=True, seams="lazy", weldable=True))
 
-    def __init__(self, arm, m, cap, seed=0):
+    def __init__(self, arm, m, cap, seed=0, pevict=False):
         super().__init__(arm, m, cap, seed)
         self.weldable = bool(self.ARMS[arm].get("weldable"))
+        self.pevict = pevict
+        self.events["p_evicted"] = 0
+
+    def _enforce_cap(self) -> None:
+        super()._enforce_cap()
+        if not self.pevict or self.cap is None:
+            return
+        total = self.nbytes()["total"]
+        while total > self.cap:
+            victim, vname = None, None
+            for name in sorted(self.cells):
+                for c in self.cells[name]:
+                    if victim is None or (c.support, c.born) < (victim.support, victim.born):
+                        victim, vname = c, name
+            if victim is None:
+                break
+            self.cells[vname].remove(victim)
+            self.events["p_evicted"] += 1
+            total = self.nbytes()["total"]
 
     def _maybe_consolidate(self, c) -> None:
         anchor = c.anchor
@@ -69,7 +93,7 @@ E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U", "O3W", "O4LW"]
 UNCAPPED = {"O3U", "CEIL"}
 
 
-def make(arm: str, m: int, cap: Optional[int], seed: int = 0):
-    if arm in ("O3U", "O4LR", "O3W", "O4LW"):
-        return E1bOrganism(arm, m, cap, seed)
+def make(arm: str, m: int, cap: Optional[int], seed: int = 0, pevict: bool = False):
+    if pevict or arm in ("O3U", "O4LR", "O3W", "O4LW"):
+        return E1bOrganism(arm, m, cap, seed, pevict)
     return make_e1(arm, m, cap, seed)

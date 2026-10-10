@@ -151,6 +151,16 @@ class TestE1bArms(unittest.TestCase):
         self.assertEqual(arms.make("O3W", 8, None).seams, "none")
         self.assertFalse(arms.make("O4L", 8, None).__dict__.get("weldable", False))
 
+    def test_binding_budget_holds_the_cap_for_every_arm(self):
+        w = make_world(WorldSpec(n_ydep=12, n_decoy=12), 900002)
+        for arm in ("O0", "O1", "O3W", "O4LW"):
+            free = run_e1b(w, arm, 240)
+            bound = run_e1b(w, arm, 240, pevict=True)
+            self.assertGreater(free["endpoints"]["bytes_peak"], 240, arm)   # P alone overflows
+            self.assertLessEqual(bound["endpoints"]["bytes_peak"], 240, arm)
+            self.assertGreater(bound["summary"]["events"]["p_evicted"], 0, arm)
+            self.assertTrue(bound["pevict"])
+
     def test_receipts_refuse_floats_and_reproduce(self):
         w = make_world_h3(SMALL, 3)
         a, b = run_e1b(w, "O4L", 1000), run_e1b(w, "O4L", 1000)

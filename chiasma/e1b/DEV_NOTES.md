@@ -139,3 +139,64 @@ the no-compression organism cannot meet without losing knowledge.
   empty or noise-sized, that is itself the answer: in PW worlds, literal pruning cannot
   pay, and the charter's compression claim needs the factoring lever (DEV_NOTES s4
   item 4).
+
+## 7. dev-3: binding budget (1120 runs, 0.58 CPU core-hours; chiasma/runs/e1b-dev-3/)
+
+pevict on (arms.py): after N and U, whole cells are evicted (lowest support, then
+oldest), the same rule for every arm. Caps sit below O0's natural P: PW-H 240/270/300/330,
+PW-H3 420/470/520/570 (O0's median P at the end of B is 313 and 546). One new test
+(the cap holds with pevict and is overrun without it, for O0/O1/O3W/O4LW); mutants 15/15
+(chiasma/runs/e1b-dev-3/MUTATION.txt).
+
+Wins out of 10 on err_CDE, caps in the order listed:
+
+| world | O3W>O0 | O4LW>O0 | O4LW>O3W | O4LW>O1 |
+|---|---|---|---|---|
+| R21 240/270/300/330 | 9/6/4/4 | 9/3/0/2 | 1/0/2/7 | 6/8/9/7 |
+| R11 240/270/300/330 | 10/7/6/5 | 9/5/3/5 | 0/0/3/8 | 8/9/8/6 |
+| R12 240/270/300/330 | 10/10/9/9 | 9/8/8/8 | 1/0/1/4 | 9/8/8/5 |
+| H3 420/470/520/570 | 10/9/5/4 | 9/8/2/1 | 2/2/2/5 | 10/10/10/10 |
+
+Median err_CDE O0 / O3W / O4LW at the tightest and loosest caps: R11 8626/7503/8180 and
+2146/2241/2355; H3 17396/14223/15176 and 4020/4742/5051.
+
+Reading (dev, sizing):
+1. The predicted window exists. Compression (O3W) beats never-compressing (O0) when
+   the budget binds, 9-10/10 at the tightest cap in every world. The advantage fades as
+   the cap approaches O0's natural P. In R12 (decoys dominate, so dropping f is right)
+   it holds at every cap.
+2. The window is a regime of heavy loss. At the tightest caps every arm's err_CDE is
+   many times its unbounded value. Compression wins by losing less, not by keeping
+   knowledge.
+3. Provenance repair HURTS under a binding budget. O4LW beats O3W at most 3/10 at the
+   three tightest caps of every world. Its provenance bytes and restored literals cost
+   cells. The dual mesh's revision machinery is a byte cost that the budget charges for.
+4. With no N memory, O1 has more room for P. It wins R12 cap 330 (median 1398, the
+   lowest of any arm there).
+
+## 8. Where this leaves CHIASMA's discrete form (dev only; nothing frozen)
+
+| regime | best arm | dual mesh + revision (O4LW) |
+|---|---|---|
+| unbounded (E1 caps) | O0 (no compression) where true dependents are common; O4LW where decoys dominate | loses to O0 on R21 and PW-H3 |
+| binding budget | O3W (compression, no provenance) | loses to O3W at tight caps |
+
+No tested regime has the charter's O4-family arm as the best organism. Each of its
+two parts wins somewhere: repair when bytes are free, compression when bytes are
+scarce. They do not win together, because repair spends exactly the resource that makes
+compression worth having.
+
+What a frozen E1b should test, if it is run (proposal; the freeze waits on G3):
+- C1 (unbounded, PW-H3): O0 beats O4LW on err_CDE in at least 8/10 eval seeds at every
+  cap. Dev: 9/10 at each cap.
+- C2 (binding, every world): O3W beats O0 at the tightest cap. O4LW does NOT beat O3W
+  at the tightest two caps.
+- Prediction: both confirm. A confirmed pair supports KILL of the discrete O4 design,
+  REVISE toward the untested factoring lever (one shared vertex for Y = c & f), or
+  both. The operator decides which.
+
+The factoring lever is the one charter mechanism these worlds have not tried. In PW-H3
+about 54 cells depend on 3 abstractions. One shared vertex per abstraction would save
+a vertex in each dependent cell, against literal pruning's 8-9% of P. It is the only
+remaining way for compression to pay without destroying knowledge. Next design item:
+HADES-28.

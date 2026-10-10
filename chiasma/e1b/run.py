@@ -19,9 +19,9 @@ def world_fns(w):
     return stream, probes, "PW-H"
 
 
-def run(w, arm: str, cap: Optional[int], org_seed: int = 0) -> Dict:
+def run(w, arm: str, cap: Optional[int], org_seed: int = 0, pevict: bool = False) -> Dict:
     stream_fn, probes_fn, family = world_fns(w)
-    org = arms.make(arm, w.spec.m, cap, org_seed)
+    org = arms.make(arm, w.spec.m, cap, org_seed, pevict)
     prb = probes_fn(w)
     cps, bytes_end, ops_phase, events_phase = [], {}, {p: 0 for p in PHASES}, {}
     last_phase, ops_mark = None, 0
@@ -81,9 +81,10 @@ def run(w, arm: str, cap: Optional[int], org_seed: int = 0) -> Dict:
         "events_phase": events_phase,
     }
     receipt = {
-        "schema": "chiasma.e1.run.v1" if family == "PW-H" else "chiasma.e1b.run.v1",
+        "schema": "chiasma.e1.run.v1" if family == "PW-H" and not pevict else "chiasma.e1b.run.v1",
         "arm": arm, "cap": cap if cap is not None and arm not in arms.UNCAPPED else "NONE",
         "org_seed": org_seed,
+        **({"pevict": True} if pevict else {}),
         "world": {"family": family, "seed": w.seed, "spec": w.spec.as_dict()},
         "world_sha256": hashlib.sha256(canonical(w.describe())).hexdigest(),
         "endpoints": endpoints,
