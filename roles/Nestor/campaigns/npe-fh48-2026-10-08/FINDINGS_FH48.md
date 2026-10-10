@@ -550,3 +550,15 @@ function.
 - Offline CS therefore swings widely under INHERIT (0.17-0.89) while TCS stays high.
 - This is consistent with F13 (the distributed form is neutral): deeper genealogies mean larger neutral sweeps.
 - **Weak signal, not chased.** A confirm would need a frozen design with tape-only share as its endpoint.
+
+## F15. X-ONTAPE-7AE3: SIGNAL. The endogenous on-tape mechanism generalizes to the second world (16 runs)
+
+| arm (7ae3) | on-tape function maintained (established runs) | final TCS | final offline CS | tape-only share |
+|---|---|---|---|---|
+| ONTAPE | 6/6 | 0.86-0.95 | 0.88-0.94 | <= 0.02 |
+| ONTAPE_RND | 0/7 | 0 | -- | 0 |
+
+- The higher equilibrium than in ffa6 (TCS 0.70-0.85) is consistent with 7ae3's opcode-sparing, lower-leak mutation
+  (F12).
+- Pair-distributed forms are near-absent here: <= 2%, against up to 8% in ffa6 confirm runs at RESET. This is
+  plausibly because the Z8_64 genome layout makes the partner-OUT jump less available; it is untested.
