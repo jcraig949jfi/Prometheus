@@ -139,6 +139,12 @@ def _run_one(spec):
         w = CompWorld(cfg, spec["seed"]); s = w.run()
         out["summary"] = _keep(s); out["comp"] = w.comp_summary(); out["census"] = founder_census(w)
         out["end_hash"] = end_state_hash(w)
+    elif kind == "light_halves":
+        from light_halves import LightHalvesWorld
+        cfg = _cfg(spec)
+        w = LightHalvesWorld(cfg, spec["seed"], census_every=spec.get("census_every", 250)); s = w.run()
+        out["summary"] = _keep(s); out["census"] = w.census; out["first_both"] = w.first_both
+        out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log); out["end_hash"] = end_state_hash(w)
     elif kind == "halves":
         from halves import HalvesWorld
         cfg = _cfg(spec)

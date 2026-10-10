@@ -25,3 +25,9 @@ def test_halves_classification_and_invariance():
     a = World(_cfg("COND_ONE"), 11); a.run(); b = HalvesWorld(_cfg("COND_ONE"), 11, census_every=20); b.run()
     assert end_state_hash(a) == end_state_hash(b)
     assert len(b.census) >= 1
+
+
+def test_light_halves_is_invariant_and_censuses():
+    from light_halves import LightHalvesWorld
+    a = World(_cfg("COND_ONE", ticks=60), 21); a.run(); b = LightHalvesWorld(_cfg("COND_ONE", ticks=60), 21, census_every=20); b.run()
+    assert end_state_hash(a) == end_state_hash(b) and len(b.census) >= 1
