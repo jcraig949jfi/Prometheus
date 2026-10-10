@@ -122,6 +122,10 @@ Identity is aligned by construction: the runner calls Moonshot's code instead of
 | run manifest, final account | rso.runner.run_manifest.v1, FINAL_ACCOUNT.json | not in C-012 (the Observatory layer above it, architecture s3.0) | NEW |
 | leases | host-local LEASE.json per partition (lease.py:45) | Fabric lease row only; Moonshot keeps no lease table, contract :21-22 | DIVERGES by design (escalation response: Fabric lease optional). On NF transport, Fabric's one-live-attempt invariant replaces it |
 
+C-012-T003 closed while this packet was in flight (974275bca: approved executor moonshot/epoch/fabric_exec.py and
+coordinator, two-node demonstration). The NF transport the runner would move onto therefore now exists. Its
+checkpoints still travel inline, and the large-object fetch path is still a design item (contract :57-60).
+
 Moving to Fabric/NF transport keeps the manifest, genesis, SPEC, MANIFEST and checkpoint bytes unchanged. Only
 three layers swap:
 - objects -> `moonshot.put_object`;
