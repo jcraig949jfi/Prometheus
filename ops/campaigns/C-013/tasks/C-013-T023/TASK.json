@@ -41,7 +41,7 @@
     "rso/slice001/tests/test_ledger.py"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -84,6 +84,12 @@
       "by": "Eupalamus[harry1-f28941a3]",
       "at_utc": "2026-10-10T09:11:37Z",
       "note": "T023 INTEGRATION_READY"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:47:48Z",
+      "note": "merged eupalamus/c013-t023 (seat WORK_STATE conflict with the parallel T022 instance resolved to the later record); ledger 60 OK; integrator mutation (declared cloud estimate ignored) killed by 2 TestPaidResourceCaps tests; full suites green"
     }
   ],
   "authority": "C-013 operator ruling 2026-10-10 s11; escalation NEW_Eupalamus_2026-10-10_1 RESPONSE",
