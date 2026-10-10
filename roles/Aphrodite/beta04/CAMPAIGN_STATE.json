@@ -128,10 +128,10 @@
   ],
   "active_window": "W02",
   "experiments": {
-    "E1": "v1 NOT_QUALIFIED; v2 pilot: gate 2/3, pairings 2; PRODUCTION (12 secret seeds) decides under Addendum D",
+    "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
     "E2": "PENDING",
     "E3": "PENDING",
-    "E4": "GATED",
+    "E4": "NOT BEGUN: instruments not passed (E1 not qualified; R5=0 so depth-2 inheritance cannot be demanded)",
     "E5": "GATED",
     "ALIEN": "PENDING"
   },
@@ -157,8 +157,10 @@
     ]
   },
   "cloud_spend_usd": 0,
-  "next_action": "red-team foundry gate; freeze foundry decisions D1-D9; production worlds 201-212",
-  "outcomes_frozen_labels": {},
+  "next_action": "pre-register E3-KP (TFS-1 known-positive on 15 admitted R3/R4) + E2 screening atlas on admitted R3/R4 (8 seeds); red-team; run",
+  "outcomes_frozen_labels": {
+    "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)"
+  },
   "contract_decisions_pending": [
     "scanl includes init (n+1)? (match foundry)",
     "curried 2-arg lambdas (lam a (lam b BODY))",
