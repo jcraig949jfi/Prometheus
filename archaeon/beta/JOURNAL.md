@@ -858,6 +858,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   00:56-03:00, then 1 proc for SHAM 7103) + B69c 4.7 + B69d ~10 + evals ~1 = ~39 of 48. The running estimate ('~23 on
   completion', journaled 01:40Z) undercounted. Within the envelope; NO further heavy runs until window 5
   (~2026-10-11 00:29Z). Campaign update 8 written (CAMPAIGN_UPDATE_2026-10-10.md).
+- Update 8 posted (comms #1985).
+- B73 RESULT (patrol vs latch, evaluation only; prediction committed before the run): solo / 4-copies / ratio --
+  PATROL (SOLO 6930) .165/.046/.282; LATCH_R (CONC 6913) .139/.037/.268; LATCH_C (CONC 6922) .135/.033/.243; hand
+  latch .118/.030/.252. RATIO prediction FAILED: the patrol holds up BEST among its own copies, so self-collision is
+  not why patrols are absent under competition. INVASION prediction MET: a latch among 3 patrols .131 (~its solo .139)
+  vs a patrol among 3 latches .099 (60% of solo). READING: patrols are excluded under competition by FREQUENCY-
+  DEPENDENT INVASION -- latches invade patrol populations and resist invasion -- not by self-collision. Consistent
+  with B69e (best genome is a patrol in SOLO 4/24, CONC 0/24). One genome per strategy; n=1 per type.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
