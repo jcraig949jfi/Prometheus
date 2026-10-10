@@ -815,6 +815,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B69c launched 01:40Z (prediction committed before run, 0dead854d): preregistered census replication on new seeds
   6911-6916, SOLO/CONC, 6 procs; B71 still on the other 6. Lease lse-66beba5c83b5 RENEWED to ~04:40Z. Window 4 tally:
   B66 k=8 ~2.5 + B69 ~6 + census/rare evals ~0.3 so far; B71 + B69c in flight (~14) -> ~23 of 48 on completion.
+- B69c RESULT (02:27Z; PREREGISTERED census on new seeds 6911-6916): latch-like populations SOLO 3/6 (10/10/4 of 10
+  genomes), CONC 5/6 (8/9/5/3/1). Part 1 (each >= 2/6) MET; part 2 (|diff| <= 2) MET (=2); part 3 (every best reward <
+  hand LATCH .119) FAILED: CONC 6911 .121 and CONC 6913 .139 -- evolved latch-like organisms OUT-FORAGE the hand latch
+  (solo pulse evaluation). Best rewards: SOLO .028-.057 (mean .041), CONC .028-.139 (mean .076).
+  VERDICT: the waiting LATCH is REACHED by this search in a world where it pays (replicated under preregistration;
+  pooled with exploratory B69b: SOLO 6/12, CONC 9/12 populations). This extends Finding 3 (write-once latches are
+  reachable) to a latch that GATES behaviour, and it can exceed the hand design. HYPOTHESIS (not tested): competition
+  may raise the latch rate and quality because tournament selection sees RANKS, and B68 showed the latch's RATIO
+  advantage is larger in groups (3.6x -> 4.2x) even though its absolute advantage is smaller. 9/12 vs 6/12 is n.s.
+  (Fisher p ~ .4). Test: more seeds, or rank-free (proportional) selection.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
