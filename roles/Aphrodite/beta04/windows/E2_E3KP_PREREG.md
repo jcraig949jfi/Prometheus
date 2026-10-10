@@ -177,3 +177,37 @@ The red team judged the readout fallback acceptable when it is labelled and pair
 stricter reading would make fallback-OFF primary. **Decision:** fallback-ON stays primary (it is the foundry's
 documented readout rule) and fallback-OFF is mandatory beside it. If they disagree, the report states both, and the
 recommendation uses the fallback-OFF row.
+
+## AMENDMENT A2 (pre-data clarifications for E2; adopted from the ATLAS driver build 2bfeeda16; no production arm run yet)
+
+The conservative readings chosen by the driver become the frozen rules:
+
+1. **Labels may co-occur.** All matching labels are listed; the HEADLINE label is the first in table order (A1-B.5).
+   Under truncation, the rules use only the credit chains actually run.
+2. **Primary hit** = the first dev-consistent program passes test AND the search tribunal AND a fresh FINAL tribunal.
+   This is value-or-FAIL agreement; test sets contain no expected-FAIL outputs (checked: 0 / 32,344).
+3. **FRONTIER units.**
+   - Clusters = sealed-witness skeleton labels merged by the foundry motif-control rules: fp:map_of_filter 6,
+     fp:guard_p 3, fp:filter_of_map 2, fs:post_fold 2, fs:scan_of_map 2.
+   - A cluster's difference is the mean over its D-BEH-qualified families.
+   - A unit is informative iff it has >= 1 primary hit in any arm.
+   - A cluster with no qualified family is censored (so YES_SCREEN becomes impossible -> INCONCLUSIVE_CENSORED if < 5
+     informative).
+4. **YES_SCREEN reports as FRONTIER_ARCHIVE_EFFECT = INCONCLUSIVE (screen-positive; confirmation required).** Per the
+   directive, no significance is inferred from a screen.
+5. **Prelaunch.**
+   - Route-solution recheck: the E2 verdict must equal the foundry verdict exactly.
+   - Constant / lookup control: two synthetic control families with no qualified program in any arm, AND constant /
+     lookup programs fail certification on every family.
+   - Start-at-target: a hit at charge 1, tagged as not discovery.
+6. **Atlas mode parameters:** enumeration 2e5, 4 seeds, rank cap 1e6, density to size 6, 500 robustness mutations.
+   R2 families without a foundry-acquired primitive (17 / 38) run in the base grammar, flagged LIBRARY_UNAVAILABLE.
+7. **Compute.** Calibration cost counts inside the 24 core-h screen budget for the truncation decision. 4x eligibility
+   uses PRIMARY hits only.
+8. **Analyzer.** `e2_analyze` re-derives every endpoint from the stored program text (Palamedes #2079). A mismatch with
+   the runner fields is fatal (exit 3); an incomplete screen exits 2.
+9. **Power, stated pre-data.**
+   - At 8 seeds, YES_SCREEN at 80% power needs an X3 per-seed hit rate of about 0.16 against a comparator at 0, or
+     0.30 against 0.05.
+   - At the D1-observed rates (about 0.1) power is about 0.15.
+   - A NO therefore rules out only large effects. It is reported as such.
