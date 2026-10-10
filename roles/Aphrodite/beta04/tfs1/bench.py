@@ -19,7 +19,7 @@ from tfs1.mutate import Mutator, rng_for        # noqa: E402
 from tfs1.membrane import code_hashes           # noqa: E402
 
 HERE = Path(__file__).resolve().parent
-CAP8 = 1_500_000
+CAP8 = 1_000_000
 
 
 def rss_mb():

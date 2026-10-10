@@ -13,7 +13,8 @@ call earlier entries (its DEPENDENCIES). Parameters may be value-typed (Int, Boo
   hash       = sha256 of the canonical record (every field except hash)
 
 ALIAS RULES (the Beta-03 O1 defect: a bare re-expression P_x({H}) was recorded at depth 2):
-  A1 (collapse)       if BODY's expansion (with the same parameter types) equals an existing entry's expansion, the
+  A1 (collapse)       if BODY's expansion (with the same parameter types), after commutative canonicalisation (args of
+                      add mul gcd eq and or sorted), equals an existing entry's, the
                       promotion returns THAT entry: no new id, no new depth level. Covers eta-aliases (L_k h0 h1) and
                       any re-spelling of an existing mechanism.
   A2 (re-expression)  if BODY is a single library call whose arguments are all atoms (holes, literals, xs), the entry is
@@ -28,6 +29,7 @@ import json
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 from . import core as C
+from .enum import canon_comm
 
 VERSION = "tfs1-lib-v0"
 MAX_ARITY = 2
@@ -201,7 +203,7 @@ class Library:
             raise C.TypeErr("entry result must be a value type")
         exp_t = self.expand(body)
         exp_s = C.to_str(exp_t)
-        key = (tuple(params), exp_s)
+        key = (tuple(params), C.to_str(canon_comm(exp_t)))    # commuted re-spellings collapse too
         if key in self._by_expansion:
             return self.entries[self._by_expansion[key]], "collapsed"
         body_s = C.to_str(body)

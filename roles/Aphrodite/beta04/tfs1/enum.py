@@ -29,7 +29,7 @@ from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 from . import core as C
 
-CHUNK = 400_000          # max candidates materialised at once by the keyed walk
+CHUNK = 1_000_000        # max candidates materialised at once by the keyed walk
 
 
 def compositions(n: int, m: int):
@@ -158,6 +158,43 @@ class Enumerator:
                     for combo in itertools.product(*lists):
                         yield (name,) + tuple(c[0] for c in combo), pre + " ".join(c[1] for c in combo) + ")"
 
+    def _gen_trees(self, T: str, ctx: Tuple[str, ...], n: int):
+        """Exactly _gen's sequence, trees only (no text): used by the chunked keyed walk (tested equal)."""
+        if n == 1:
+            for t, _s in self._leaves(T, ctx):
+                yield t
+            return
+        rem = n - 1
+        for name, ats, rt in self.by_ret[T]:
+            m = len(ats)
+            if m == 0 or rem < m:
+                continue
+            comm = self.comm and name in C.COMMUTATIVE
+            for comp in compositions(rem, m):
+                if comm and comp[0] > comp[1]:
+                    continue
+                lists = [self.arg_terms(at, ctx, s) for at, s in zip(ats, comp)]
+                if not all(lists):
+                    continue
+                if m == 1:
+                    for a, _sa in lists[0]:
+                        yield (name, a)
+                elif m == 2:
+                    l0 = [a for a, _s in lists[0]]
+                    l1 = [b for b, _s in lists[1]]
+                    if comm and comp[0] == comp[1]:
+                        for i in range(len(l0)):
+                            a = l0[i]
+                            for b in l1[i:]:
+                                yield (name, a, b)
+                    else:
+                        for a in l0:
+                            for b in l1:
+                                yield (name, a, b)
+                else:
+                    for combo in itertools.product(*[[c[0] for c in lst] for lst in lists]):
+                        yield (name,) + combo
+
     def count(self, T: str, ctx: Tuple[str, ...], n: int) -> int:
         """Exact class size by dynamic programming (no materialisation); equals len(terms(T, ctx, n)) (tested)."""
         key = (T, ctx, n)
@@ -233,12 +270,40 @@ class Enumerator:
                 yield k, t
             return
         import numpy as np
+        memo = (T, (), n) in self._tab
         keys = np.fromiter((frombytes(b2((pre + s).encode(), digest_size=8).digest(), "big")
                             for _t, s in self._class_iter(T, n)), dtype=np.uint64, count=total)
-        keys.sort()
+        order = np.argsort(keys, kind="stable")          # generation indices in key order
+        ks = keys[order]
+        if bool(np.any(ks[1:] == ks[:-1])):
+            # a 64-bit key collision inside the class (p ~ n^2 / 2^65): fall back to the exact (key, text) order
+            del keys, order, ks
+            yield from self._keyed_ranges(T, n, keyed, m, chunk)
+            return
+        del ks
+
+        def trees():
+            if memo:
+                return (t for t, _s in self._tab[(T, (), n)])
+            return self._gen_trees(T, (), n)
         emitted = 0
-        lo = int(keys[0])
-        start = 0
+        for start in range(0, m, chunk):
+            idx = order[start:min(start + chunk, m)]
+            mask = np.zeros(total, dtype=np.uint8)
+            mask[idx] = 1
+            picked = list(itertools.compress(trees(), mask.tobytes()))    # generation order
+            pos = np.searchsorted(np.sort(idx), idx)                       # key order -> picked position
+            for g, p in zip(idx.tolist(), pos.tolist()):
+                yield int(keys[g]), picked[p]
+                emitted += 1
+            del picked, mask
+
+    def _keyed_ranges(self, T, n, keyed, m, chunk):
+        """Exact (key, text) order by key-range chunks (collision fallback; regenerates text each chunk)."""
+        import numpy as np
+        total = self.count(T, (), n)
+        keys = np.sort(np.fromiter((z[0] for z in keyed()), dtype=np.uint64, count=total))
+        emitted, start, lo = 0, 0, int(keys[0])
         while emitted < m:
             nxt = start + chunk
             hi = int(keys[nxt]) if nxt < total else None
@@ -253,7 +318,6 @@ class Enumerator:
                 return
             start += len(part)
             lo = hi
-        del keys
 
     def compile_root(self, t):
         """Compile a root candidate. Children are table objects (alive), so their closures are cached by id; the

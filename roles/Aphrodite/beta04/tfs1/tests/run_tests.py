@@ -326,9 +326,12 @@ def test_alias_collapse_and_depth():
     x, st = lib.promote_body(P("(add (mul h0 h0) 1)"))
     check(x.id == a.id and st == "collapsed", "re-spelling not collapsed")
     out["respelling"] = st
-    # commuted spelling is a different term (no semantic equivalence check: documented limitation)
+    # commuted spelling collapses (commutative canonicalisation); other semantic equivalences are NOT detected
     x, st = lib.promote_body(P("(add 1 (mul h0 h0))"))
+    check(x.id == a.id and st == "collapsed", "commuted re-spelling not collapsed")
     out["commuted_respelling_status"] = st
+    x, st = lib.promote_body(P("(add (pow h0 2) 1)"))
+    out["semantic_but_not_syntactic_respelling_status"] = st     # 'new': documented limitation
     # genuine composition
     b, st = lib.promote_body(P("(sum (map (lam x (%s (%s x))) h0))" % (a.id, a.id)))
     check(b.depth == 2 and b.deps == [a.id] and b.lineage == [a.id], "composition depth")
@@ -384,7 +387,21 @@ def test_chunked_keyed_order_equals_full_sort():
     check([t for _k, t in lim] == [t for _k, t in full[:20000]], "limited chunked order differs")
     keys = [k for k, _t in full]
     check(keys == sorted(keys), "not ascending")
-    return {"class_size": len(full)}
+    # collision-fallback path (exact (key, text) order by key ranges) gives the same order
+    pre = "TFS1/ORDER/v0/3/s/"
+
+    def keyed():
+        import hashlib as h
+        for t, s in E._gen("Int", (), 6):
+            yield (int.from_bytes(h.blake2b((pre + s).encode(), digest_size=8).digest(), "big"), s, t)
+    fb = list(E._keyed_ranges("Int", 6, keyed, len(full), 7000))
+    check([t for _k, t in fb] == [t for _k, t in full], "fallback order differs")
+    # the text-free generator reproduces the generator sequence exactly
+    lib = _random_library()
+    El = Enumerator(lib)
+    for T, n in (("Int", 5), ("List", 5), ("Bool", 5), ("Int", 6)):
+        check(list(El._gen_trees(T, (), n)) == [t for t, _s in El._gen(T, (), n)], "_gen_trees %s %d" % (T, n))
+    return {"class_size": len(full), "chunked_equal": True, "fallback_equal": True, "gen_trees_equal": True}
 
 
 def _trace(lib, seed, slot, budget, max_size=5, T="Int"):
