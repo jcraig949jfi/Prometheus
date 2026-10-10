@@ -1,0 +1,311 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-27 + PAN-28: ATLAS COPY AND SERVER-SIDE VECTORS         |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-10 (work 13:02Z-13:36Z; packet 13:37Z)                      |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  BOTH DONE on main (6141e3ba1); controls 6/6 and 5/5                 |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Three messages from the seat Atlas unblocked two backlog items and named two
+defects:
+  - PAN-27: Atlas said yes to Pan keeping read-only analytical copies of its
+    record (schema atlas on the shared Postgres cluster on M1).
+  - PAN-28: Atlas built and installed the pgvector extension (0.8.7) on M1
+    under the operator's chat instruction. That was the hard gate in Pan's
+    question Q-001. Pan did the database part (step 4).
+  - Defects: `pan tables` failed off M2; pivot printed a bare error off M2.
+
+Verdict:
+  - PAN-27 works: 35 tables, 143,139 rows, copied losslessly in about 6 s.
+  - PAN-28 works, with one finding that matters more than the feature.
+    Pan's install packet fixed its recall gate in advance as "chunk vectors
+    used as queries". That gate PASSED (0.966) while real text queries
+    reached only 0.659 at the same setting. The gate was too easy. The graph
+    was rebuilt denser and the default search depth raised. Real-query
+    recall@10 is now 0.941 at Pan's default and 0.979 at the depth search
+    uses.
+  - Both defects are fixed. The first failed on every host, not only M1.
+
+-----
+1. WHAT WAS BUILT (and what was committed before measurement)
+-----
+Committed before measurement:
+  - roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md (2026-10-09) fixed the
+    acceptance gates before any install:
+      POSITIVE  '[1,2,3]' <-> '[1,2,4]' = 1;
+      RECALL    mean top-10 overlap, HNSW vs exact, >= 0.95 on 1,000 random
+                chunk vectors used as queries;
+      CHEAT     a vector written after the build is its own nearest
+                neighbour;
+      frozen retrieval controls give the same ranks within tolerance;
+      report sizes.
+  - PAN-27 had no pre-registration (an instrument, not an experiment). Its
+    controls were written into the code before the first control run.
+
+Built (all on main, 6141e3ba1):
+  pan/atlas_snap.py     PAN-27. Every base table of schema atlas goes to an
+                        Iceberg table in Pan's own namespace pan_atlas. One
+                        read-only REPEATABLE READ transaction per pass
+                        (consistent cut). Each pass is an overwrite, so each
+                        is an Iceberg snapshot and older passes stay readable
+                        by time travel. A pass is skipped unless
+                        max(harvest_id) or the schema's write counter moved.
+                        Manifest = a pan.run row (readable from any host)
+                        plus a JSON copy in the lake.
+                        CLI: python -m pan atlas snapshot|manifest|controls.
+  migration 012         CREATE EXTENSION vector in schema pan. HNSW indexes on
+                        the EXPRESSION vec::halfvec(N) over the existing real[]
+                        columns, partial per embedding model, for chunks (384
+                        dims), documents (512) and papers (512).
+                        Deviation from the packet, recorded in the file: no
+                        new halfvec columns. The packet's fill-by-UPDATE would
+                        have left ~0.8 GB of dead rows; writers needed no
+                        change.
+  migration 013         Same indexes rebuilt with m=32, ef_construction=200
+                        (012 used the defaults m=16, ef_construction=64).
+                        See s4.
+  pan/pgvec.py          knn() through the index. Backend choice: M2 keeps the
+                        exact in-process matrix; any host without the lake
+                        uses Postgres (override: PAN_VECTOR_BACKEND). Wired
+                        into vector search, document search, similar, pivot
+                        and `frontier like`. Controls.
+  defect fixes          `pan tables` -> pan.similarity / operator(pan.%);
+                        pivot prints the exception's cause.
+  tests                 3 new unit tests (fingerprint order-free and
+                        time-zone blind; one changed value or a duplicate row
+                        changes it; SELECT list casts). Suite: 72 passed.
+
+-----
+2. THE CLAIMS AND WHY THEY MATTER
+-----
+C1 (PAN-27): pan_atlas.* holds exactly what schema atlas held at the
+    recorded harvest_id range, row for row.
+    Why: Atlas's record becomes analysable (Iceberg time travel, Parquet)
+    without touching the live schema, and each copy says which harvest it
+    reflects.
+C2 (PAN-28): a host with only psycopg2 gets the same vector neighbours that
+    M2's exact search gives, within a stated recall.
+    Why: until now vector search worked only on M2, where the lake lives.
+    Atlas uses pan as its discovery layer from M1.
+
+-----
+3. DESIGN AS EXECUTED
+-----
+3.1 Atlas copy.
+  - Types: bigint, integer, double, boolean, text, text[] and timestamptz map
+    to Arrow types; everything else (17 jsonb columns) is read as text.
+  - Fingerprint per table: row count plus an order-free hash (the sum of
+    per-row sha256 prefixes mod 2^64). It is computed on the rows read from
+    Postgres and again on the rows read back from Iceberg.
+  - The reading session must refuse an UPDATE; this is checked every pass.
+
+3.2 Vectors.
+  - The exact reference is M2's in-process float16 matrix of the same
+    real[] values that the index casts to halfvec (also IEEE half
+    precision). Before use, the matrix was checked fresh: 2,000 sampled
+    rows, cosine with the database 1.0000 for every one.
+  - Recall@10 = |HNSW top-10 intersect exact top-10| / 10, averaged over
+    the queries.
+  - "Query-style" vectors: text encoded with the query instruction, as
+    search does. The set is the 62 frozen retrieval queries plus 438 chunk
+    headings drawn at random (setseed 0.07).
+  - All index work ran under the Fabric lease skullport:cpu8, held
+    13:09-13:29Z.
+
+-----
+4. RESULTS
+-----
+4.1 PAN-27 (pass atlas-snapshot-20261010T130703Z-spectrex5):
+  - 35 base tables, 143,139 rows. Largest: fact_evidence 41,785; fact
+    41,784; source_link 14,246; source 13,995.
+  - harvest_id 1..364 (164 harvest runs); last pass finished
+    2026-10-10T12:30:46Z.
+  - About 6 s wall time; 14 MB of Parquet in the lake.
+  - Every table's read-back fingerprint equals its source's; every count(*)
+    equals its rows.
+  - 8 views are not copied (derived); their definitions are kept in the
+    lake manifest.
+  - At 13:34Z a pass was skipped: no new harvest, write counter unchanged.
+
+4.2 PAN-28, step by step (recall@10; ef = hnsw.ef_search):
+
+  graph / query kind                      ef 40    ef 100   ef 400   ef 1000
+  012 (m16) chunk vectors as queries      0.9657   0.9793   0.9925     -
+      [the packet's gate: >= 0.95 at ef 40 -> PASS]
+  012 (m16) query-style, n=500            0.6590   0.8252   0.9342   0.9736
+  trial m32/efc200 query-style, n=500     0.7966   0.9158   0.9730     -
+      [built and measured inside a transaction that was ROLLED BACK]
+  013 (m32) chunk vectors as queries      0.9930   0.9966   0.9986     -
+  013 (m32) query-style, n=500            0.7902   0.9236   0.9790     -
+      ef 200 (new default):               0.9412  (frozen 62: 0.9548;
+                                          share of queries below 0.8: 0.034)
+
+  Build and cost:
+    012: 36 s for all three indexes.
+    013: 2 min 26 s (the chunk table is locked during the rebuild).
+    Index sizes after 013: chunk 548 MB, document 103 MB, paper 14 MB.
+    Schema pan 2,956 MB before -> 3,590 MB after 013 (pg_size_pretty units).
+    M1 C: had 90 GB free (Atlas, measured today). Pan's self-cap is 10 GB.
+  Latency, self-query, 013: p50 4.6 / 7.8 / 20.7 ms at ef 40 / 100 / 400.
+
+4.3 The 62 frozen retrieval queries (rank of the first acceptable answer):
+
+  chunk search   012: same rank 59/62; hits in top-10: exact 37, pg 35
+                      (H10 2 -> none, K10 7 -> none, K01 7 -> 8);
+                      top-10 path overlap 0.948
+                 013: same rank 60/62; exact 37, pg 36
+                      (H10 2 -> none, K01 7 -> 8); overlap 0.982
+  document search  012 and 013: identical ranks 62/62; overlap 0.987 and
+                   0.990
+
+4.4 H10 diagnosis:
+  - The answer chunk is 319135 (roles/Argus/RESPONSIBILITIES.md), at exact
+    rank 2 with cosine 0.7474.
+  - On the 012 graph it was not returned even at ef 1000.
+  - Queried with its own vector it comes back first at cosine 1.0, so the
+    chunk is in the index and reachable.
+  - Reading: the query vector lands in a region of the graph from which the
+    greedy search never reaches it. That is a property of approximate
+    search, not a missing row.
+
+-----
+5. INCIDENTS (and what they validated)
+-----
+5.1 The pre-fixed recall gate was too easy.
+  - Chunk vectors as queries sit exactly where the graph was built, so the
+    gate measured the easiest case.
+  - It passed at 0.966 while real queries were at 0.659.
+  - Caught only because the frozen retrieval set was also run through the
+    new backend, and two answers vanished.
+  - Lesson: gate on the query distribution the system actually sees.
+  - The query-style gate in the controls (>= 0.93 at the default ef) was
+    set AFTER the first measurement. It is a regression guard, labelled so
+    in the code and the controls file.
+5.2 `pan tables` defect.
+  - Atlas reported it from M1. It also failed on M2 (search_path is
+    "$user", public; pg_trgm lives in schema pan).
+  - Pan's own use had never exercised the command after the schema move.
+5.3 A lease release first failed: the command needs the resource argument.
+  Released at about 13:29Z (receipt "RELEASED"); no overrun.
+5.4 Q-001 was executed through a relay, not by an ANSWER line in Pan's
+  question file: the operator told Atlas in chat; Atlas did steps 1-3 with
+  sha256 receipts.
+  - Pan acted on step 4, which the packet assigned to Pan.
+  - Pan first verified the install itself (vector 0.8.7 available in the
+    cluster).
+  - Pan recorded Q-001 as EXECUTED rather than ANSWERED.
+5.5 Two numbers went out wrong in Pan's message to Atlas (#2066), the
+  commit message of 6141e3ba1 and the STATUS file:
+  - Schema size 3,497 MB was measured after 012; after 013 it is 3,590 MB.
+  - The Atlas copy's controls were reported as 7/7; there are 6 checks
+    (6/6). Pan miscounted.
+  Both are corrected here, in STATUS and the journal, and by a follow-up
+  message to Atlas; a pushed commit message cannot be changed.
+
+-----
+6. CONTROLS
+-----
+ATLAS_SNAP_20261010T130725Z.json -- PASS 6/6
+  POSITIVE  every table copied losslessly (35 tables, 143,139 rows)    PASS
+  POSITIVE  manifest records the harvest_id range (1..364)             PASS
+  NEGATIVE  the reading session refuses UPDATE ... WHERE false          PASS
+  NEGATIVE  an unchanged record is not copied again (fact snapshots
+            3 -> 3)                                                    PASS
+  CHEAT     copy with one row dropped fails verify (fact_evidence)     PASS
+  CHEAT     copy with one trailing space added fails verify            PASS
+
+PGVECTOR_20261010T132524Z.json -- PASS 5/5
+  POSITIVE  '[1,2,3]' <-> '[1,2,4]' = 1                                 PASS
+  NEGATIVE  knn uses the HNSW index; the same query written with
+            vector(384) instead of the index expression does not
+            (so recall is not an exact scan in disguise)               PASS
+  POSITIVE  query-style recall@10 >= 0.93 at ef 200: 0.9412             PASS
+  POSITIVE  packet gate: chunk-vector recall@10 >= 0.95 at ef 40: 0.993 PASS
+  CHEAT     a vector written after the build (UPDATE inside a
+            transaction, then rolled back) is top-1 at cosine 1.0000   PASS
+PGVECTOR_20261010T131152Z.json (012 graph, packet gate only) PASS 4/4 --
+  kept as the record of the too-easy gate.
+PGVECTOR_TRIALS_20261010.json -- the 012 query-style curve, the rolled-back
+  trial, and both frozen-62 comparisons.
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does:
+  - C1 holds for the 13:07Z pass: every row survives the round trip, and the
+    harvest range is recorded.
+  - C2 holds with a stated loss: off M2, chunk search recalls about 98% of
+    the exact top-10 at the depth it uses. Document search matched the
+    exact search on all 62 frozen queries.
+Does NOT:
+  - make off-M2 search exact. One of 37 frozen answers (H10) is lost there.
+    M2 stays exact by default for that reason.
+  - give a host text-query vector search without the encoder.
+    sentence-transformers plus the 130 MB bge-small model are still needed
+    to embed the question. Pivot, similar and `frontier like` need neither.
+  - keep the Atlas copy current after Pan's window closes
+    (2026-10-12T10:40Z). Nothing runs it then.
+  - check that the copy means what Atlas means. Fingerprints prove bytes,
+    not semantics; jsonb is copied as text.
+  - test the pgvector install itself (Atlas's build, files and DLL). Pan saw
+    the receipts and the extension working, nothing deeper.
+
+-----
+8. DECISION / RECOMMENDATION (operator's call; Pan's lean)
+-----
+  a) Keep migration 013 and the default ef 200. Pan's lean: yes. The cost is
+     about 100 MB more on M1 and about 10 ms per query.
+  b) Make pg the default on M2 too (one search path everywhere), accepting
+     about 2% recall loss? Pan's lean: no, while M2 has the lake. Exact
+     search is the measured baseline for the retrieval verdicts.
+  c) Who runs `pan atlas snapshot` after 2026-10-12? Pan's lean: Atlas,
+     after each `harvest all`. It is one command and reads only.
+  d) Q-007 (Pan's budget on M1): with 90 GB free on M1 C:, Pan's 10 GB cap
+     is about 11% of the remaining space. The operator may want a lower cap
+     or the F: drive (2.1 TB free) for the cluster.
+  e) "Drop the HNSW indexes" is a valid answer if off-M2 vector search is not
+     wanted. Rollback is DROP EXTENSION vector CASCADE (real[] stays).
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  1. 438 of the 500 query-style vectors are chunk headings encoded as
+     queries, not questions people asked. Is that close enough to real use
+     to gate on, or does it flatter the index (headings resemble chunks)?
+  2. The exact reference is float16 and so is halfvec. Could shared
+     quantization hide a recall loss that a float32 reference would show?
+  3. Is an order-free sum of hash prefixes (64 bits) strong enough to call
+     a 143k-row copy "lossless", or should a sorted full-content hash be
+     required?
+  4. The snapshot trigger uses pg_stat_user_tables counters. They reset on
+     a stats reset or a crash, which can only cause an extra copy, never a
+     missed one -- or is there a case where they hide a change?
+  5. Was raising the default ef after seeing the curve a tuning-on-the-test
+     problem? The 62 frozen queries were part of the 500.
+
+-----
+10. ARTIFACTS
+-----
+  commit 6141e3ba1 (main): pan/atlas_snap.py, pan/pgvec.py,
+    pan/migrations/012_pgvector.sql, pan/migrations/013_hnsw_m32.sql,
+    pan/tests/test_atlas_snap.py, pan/search.py, pan/pivot.py,
+    pan/frontier/query.py, pan/__main__.py, pan/README.md, pan-search
+    SKILL.md (both copies), DATA_DICTIONARY.md
+  controls: roles/Pan/reports/controls/ATLAS_SNAP_20261010T130725Z.json,
+    PGVECTOR_20261010T131152Z.json, PGVECTOR_20261010T132524Z.json,
+    PGVECTOR_TRIALS_20261010.json
+  runs: pan.run atlas-snapshot-20261010T130703Z-spectrex5 (+ the controls'
+    forced pass); migrations recorded in pan.migration
+    (012 4586fdf93704, 013 c8741336cf78)
+  lease: lse-8c668316f009 skullport:cpu8, 13:09:10Z-~13:29Z
+  comms: Atlas #2053 #2056 #2061 -> Pan #2066
+  question file: roles/Pan/QUESTIONS.md (Q-001 EXECUTED; Q-007 fact added)
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "drop the indexes; M2-only vector search was enough".                       |
++==============================================================================+

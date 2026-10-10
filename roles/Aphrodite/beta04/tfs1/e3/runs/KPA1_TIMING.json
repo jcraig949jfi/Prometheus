@@ -1,0 +1,558 @@
+{
+ "label": "EXPOSED DEV DATA (pilot)",
+ "per_search_parameters": {
+  "base/chain": {
+   "censored_max_cpu_s": 47.03,
+   "censored_mean_cpu_s": 34.28,
+   "cpu_per_1e6_charges_hits": 50.1,
+   "n": 11
+  },
+  "base/r1": {
+   "censored_max_cpu_s": 53.8,
+   "censored_mean_cpu_s": 43.44,
+   "cpu_per_1e6_charges_hits": 45.5,
+   "n": 9
+  },
+  "base/scratch": {
+   "censored_max_cpu_s": 93.0,
+   "censored_mean_cpu_s": 64.24,
+   "cpu_per_1e6_charges_hits": null,
+   "n": 7
+  },
+  "oe_repair/chain": {
+   "censored_max_cpu_s": null,
+   "censored_mean_cpu_s": null,
+   "cpu_per_1e6_charges_hits": 223.2,
+   "n": 7
+  },
+  "oe_repair/r1": {
+   "censored_max_cpu_s": null,
+   "censored_mean_cpu_s": null,
+   "cpu_per_1e6_charges_hits": 148.5,
+   "n": 6
+  },
+  "oe_repair/scratch": {
+   "censored_max_cpu_s": 237.88,
+   "censored_mean_cpu_s": 179.52,
+   "cpu_per_1e6_charges_hits": null,
+   "n": 6
+  }
+ },
+ "projection": {
+  "all_acquired (incremental)": {
+   "upper_core_h": 0.45
+  },
+  "assumptions": {
+   "all_acquired_chain_slowdown": 1.3,
+   "censored_cpu_s": {
+    "chain": 34.28,
+    "r1": 43.44,
+    "scratch": 64.24
+   },
+   "extra_units_all_acquired_est": 11,
+   "fallback_dependent_families_est": 5,
+   "fallback_dependent_units_est": 5,
+   "families": 15,
+   "high_risk_units": 10,
+   "oe_censored_cpu_s": {
+    "chain": 237.88,
+    "r1": 237.88,
+    "scratch": 237.88
+   },
+   "oe_expected": "10 high-risk units: one OE R1 search at the censored cost; chains ~60 s; half the scratch searches at the cap",
+   "oe_scratch_list_family_cap_s": 900.0,
+   "r1_per_unit_max": 2,
+   "units": 17,
+   "worlds": 7
+  },
+  "fallback_off (incremental)": {
+   "upper_core_h": 0.11
+  },
+  "foundry_primitives (incremental: chains only)": {
+   "upper_core_h": 0.14
+  },
+  "oe_repair re-run (primary config, OE on; standalone)": {
+   "expected_core_h": 3.28,
+   "upper_core_h": 6.99
+  },
+  "primary": {
+   "expected_core_h": 0.69,
+   "upper_core_h": 0.82
+  },
+  "primary + 4 secondaries, upper_core_h": 3.16,
+  "seed1 + seed2": {
+   "expected_core_h": 1.39,
+   "upper_core_h": 1.64
+  }
+ },
+ "rows": {},
+ "worlds": {
+  "W0467897d": {
+   "fallback_off": {
+    "by_stage_cpu_s": {
+     "r1": 132.26,
+     "scratch": 200.41
+    },
+    "families": [
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F085-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 93.0
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F081-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 55.52
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F061-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 51.89
+     }
+    ],
+    "incremental_cpu_s": 0,
+    "standalone_cpu_s": 332.67,
+    "units": [
+     {
+      "cpu_s": 78.44,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": 2,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 53.82,
+      "link": "HORIZON_R1",
+      "mechanism": "p0",
+      "n_attempts": 2,
+      "status": "NOT_ACQUIRED"
+     }
+    ]
+   },
+   "foundry_primitives": {
+    "by_stage_cpu_s": {
+     "chain": 94.58,
+     "scratch": 200.41
+    },
+    "families": [
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W0467897d-F085-R3",
+      "link": null,
+      "r1_units_attributed": 0,
+      "scratch": 93.0
+     },
+     {
+      "chain": "NOT_FOUND_AT_BUDGET",
+      "detail": "CLASS_NOT_ENTERED",
+      "family_id": "W0467897d-F081-R3",
+      "link": "COMPOSITION_HORIZON",
+      "r1_units_attributed": 0,
+      "scratch": 55.52
+     },
+     {
+      "chain": "NOT_FOUND_AT_BUDGET",
+      "detail": "CLASS_NOT_ENTERED",
+      "family_id": "W0467897d-F061-R3",
+      "link": "COMPOSITION_HORIZON",
+      "r1_units_attributed": 0,
+      "scratch": 51.89
+     }
+    ],
+    "incremental_cpu_s": 94.58,
+    "standalone_cpu_s": 294.99,
+    "units": [
+     {
+      "cpu_s": 0,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": null,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 0,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": null,
+      "status": "ACQUIRED"
+     }
+    ]
+   },
+   "oe_repair": {
+    "by_stage_cpu_s": {
+     "chain": 127.44,
+     "r1": 41.99,
+     "scratch": 302.48
+    },
+    "families": [
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W0467897d-F085-R3",
+      "link": null,
+      "r1_units_attributed": 41.99,
+      "scratch": 0.0
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W0467897d-F081-R3",
+      "link": null,
+      "r1_units_attributed": 41.99,
+      "scratch": 159.81
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W0467897d-F061-R3",
+      "link": null,
+      "r1_units_attributed": 41.99,
+      "scratch": 142.67
+     }
+    ],
+    "incremental_cpu_s": 471.91,
+    "standalone_cpu_s": 471.91,
+    "units": [
+     {
+      "cpu_s": 21.55,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 20.44,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     }
+    ]
+   },
+   "primary": {
+    "by_stage_cpu_s": {
+     "r1": 132.26,
+     "scratch": 200.41
+    },
+    "families": [
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F085-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 93.0
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F081-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 55.52
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "IN_CLASS",
+      "family_id": "W0467897d-F061-R3",
+      "link": "HORIZON_R1",
+      "r1_units_attributed": 132.26,
+      "scratch": 51.89
+     }
+    ],
+    "incremental_cpu_s": 332.67,
+    "standalone_cpu_s": 332.67,
+    "units": [
+     {
+      "cpu_s": 78.44,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": 2,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 53.82,
+      "link": "HORIZON_R1",
+      "mechanism": "p0",
+      "n_attempts": 2,
+      "status": "NOT_ACQUIRED"
+     }
+    ]
+   }
+  },
+  "W1d5301d0": {
+   "fallback_off": {
+    "by_stage_cpu_s": {
+     "r1": 50.25,
+     "scratch": 249.26
+    },
+    "families": [
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "NO_EXTRACTABLE_MECHANISM_FALLBACK_OFF",
+      "family_id": "W1d5301d0-F035-R3",
+      "link": "R1_ACQUISITION",
+      "r1_units_attributed": 49.45,
+      "scratch": 59.34
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "NO_EXTRACTABLE_MECHANISM_FALLBACK_OFF",
+      "family_id": "W1d5301d0-F077-R4",
+      "link": "R1_ACQUISITION",
+      "r1_units_attributed": 1.92,
+      "scratch": 77.84
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "NO_EXTRACTABLE_MECHANISM_FALLBACK_OFF",
+      "family_id": "W1d5301d0-F071-R4",
+      "link": "R1_ACQUISITION",
+      "r1_units_attributed": 1.92,
+      "scratch": 69.56
+     },
+     {
+      "chain": "CHAIN_C_FAIL",
+      "detail": "NO_EXTRACTABLE_MECHANISM_FALLBACK_OFF",
+      "family_id": "W1d5301d0-F027-R3",
+      "link": "R1_ACQUISITION",
+      "r1_units_attributed": 49.45,
+      "scratch": 42.52
+     }
+    ],
+    "incremental_cpu_s": 0.48,
+    "standalone_cpu_s": 299.51,
+    "units": [
+     {
+      "cpu_s": 1.12,
+      "link": "R1_ACQUISITION",
+      "mechanism": "f1",
+      "n_attempts": 2,
+      "status": "NOT_ACQUIRED"
+     },
+     {
+      "cpu_s": 0.8,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 48.33,
+      "link": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED"
+     }
+    ]
+   },
+   "foundry_primitives": {
+    "by_stage_cpu_s": {
+     "chain": 93.97,
+     "scratch": 249.26
+    },
+    "families": [
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F035-R3",
+      "link": null,
+      "r1_units_attributed": 0,
+      "scratch": 59.34
+     },
+     {
+      "chain": "NOT_FOUND_AT_BUDGET",
+      "detail": "IN_CLASS",
+      "family_id": "W1d5301d0-F077-R4",
+      "link": "COMPOSITION_HORIZON",
+      "r1_units_attributed": 0,
+      "scratch": 77.84
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F071-R4",
+      "link": null,
+      "r1_units_attributed": 0,
+      "scratch": 69.56
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F027-R3",
+      "link": null,
+      "r1_units_attributed": 0,
+      "scratch": 42.52
+     }
+    ],
+    "incremental_cpu_s": 93.97,
+    "standalone_cpu_s": 343.23,
+    "units": [
+     {
+      "cpu_s": 0,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": null,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 0,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": null,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 0,
+      "link": null,
+      "mechanism": "s0",
+      "n_attempts": null,
+      "status": "ACQUIRED"
+     }
+    ]
+   },
+   "oe_repair": {
+    "by_stage_cpu_s": {
+     "chain": 66.3,
+     "r1": 55.64,
+     "scratch": 774.64
+    },
+    "families": [
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F035-R3",
+      "link": null,
+      "r1_units_attributed": 52.67,
+      "scratch": 159.34
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F077-R4",
+      "link": null,
+      "r1_units_attributed": 3.28,
+      "scratch": 237.88
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F071-R4",
+      "link": null,
+      "r1_units_attributed": 3.28,
+      "scratch": 237.23
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F027-R3",
+      "link": null,
+      "r1_units_attributed": 52.67,
+      "scratch": 140.19
+     }
+    ],
+    "incremental_cpu_s": 896.58,
+    "standalone_cpu_s": 896.58,
+    "units": [
+     {
+      "cpu_s": 0.31,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 2.97,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 52.36,
+      "link": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED"
+     }
+    ]
+   },
+   "primary": {
+    "by_stage_cpu_s": {
+     "chain": 108.15,
+     "r1": 49.77,
+     "scratch": 249.26
+    },
+    "families": [
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F035-R3",
+      "link": null,
+      "r1_units_attributed": 48.97,
+      "scratch": 59.34
+     },
+     {
+      "chain": "NOT_FOUND_AT_BUDGET",
+      "detail": "IN_CLASS",
+      "family_id": "W1d5301d0-F077-R4",
+      "link": "COMPOSITION_HORIZON",
+      "r1_units_attributed": 1.44,
+      "scratch": 77.84
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F071-R4",
+      "link": null,
+      "r1_units_attributed": 1.44,
+      "scratch": 69.56
+     },
+     {
+      "chain": "SOLVED",
+      "detail": "CHAIN_QUALIFIED",
+      "family_id": "W1d5301d0-F027-R3",
+      "link": null,
+      "r1_units_attributed": 48.97,
+      "scratch": 42.52
+     }
+    ],
+    "incremental_cpu_s": 407.18,
+    "standalone_cpu_s": 407.18,
+    "units": [
+     {
+      "cpu_s": 0.64,
+      "link": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 0.8,
+      "link": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED"
+     },
+     {
+      "cpu_s": 48.33,
+      "link": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,11 +1,11 @@
-# Prometheus Sagacity Scaling Roadmap -- v0 (C-013-T031, Workstream D)
+# Prometheus Sagacity Scaling Roadmap -- v1 (C-013-T031, Workstream D)
 
 Palamedes[harry1-679179c6], 2026-10-10. A map of decisions, not a backlog and not a schedule. Sources:
 roles/Palamedes/notes/2026-10-10_strategic_sources/ (Hestia Audit 1 + Oct-8 response M1-M7; Atlas G1-G6 + Nyx's
 attack; ASTRA-6.0, FABLE-5.1, v0.4 synthesis, wind-tunnel reviews; execution inventory), rso/scale/
-RSO_SCALING_ASSESSMENT.md, and C-004/C-009/C-010 results. Status: DRAFT v0 -- revised when C-013's D1 result,
-LONG_DURATION_EXECUTION_ARCHITECTURE.md and CHECKPOINT_REPLAY_SURVEY.md land; external Astra/Fable reviews and Hestia's
-review are PENDING (none has occurred).
+RSO_SCALING_ASSESSMENT.md, and C-004/C-009/C-010 results. Status: v1 -- LONG_DURATION_EXECUTION_ARCHITECTURE.md,
+CHECKPOINT_REPLAY_SURVEY.md and the session-independent runner (fire test 13/13) are folded in; the D1 result is
+folded in (rso/reach/RESULT.md + INTEGRATION_D1.md, 2026-10-10 15:30Z); external Astra/Fable reviews and Hestia's review are PENDING (none has occurred).
 
 ## 0. The position in one paragraph
 
@@ -77,12 +77,23 @@ architecture, development, the world, search infrastructure and the evaluator su
     AND the mechanism the hits use is the construction's or a qualified alternative -- not a seeded control.
   Failure: no arm moves with budget-relative upper bounds stated -> search structure alone is not the lever at
     these budgets; Horizon II tests representation/development.
+  D1 RESULT (2026-10-10; rso/reach/RESULT.md, INTEGRATION_D1.md): NOTHING SEPARATES at B = 200,000, N = 15 (the
+    CPU cap on thermally limited harry1 stopped it below the registered 20-24 rounds; 3.24 core-hours). 9 certified
+    discoveries, all at d = 1 (chain_strict 4, X2 3) or d = 3 (chain_neutral 1, X2 1); none at d = 8 in any arm;
+    X1, X3 and X3G found none. Power at N = 15 for a uniform +0.20 effect is 0.49 (0.82 registered at N = 24), and
+    the chain baseline was 4/15 at d = 1 rather than 1/24. So D1 rules out only LARGE ingredient effects on this
+    world; it does NOT trigger the failure branch above, which needs a powered null. Consequence for the next step:
+    do not re-run D1 bigger on harry1 (the easy stratum is saturated by the plain chain and d = 8 is empty for
+    everyone); carry the protocol -- certification, matched structure-free control, Holm family, outcome-
+    symmetric cap -- to a desert whose chain baseline is near zero at every stratum and whose owner runs it.
   Pivot if: the behaviour descriptor cannot separate meaningful intermediates from arbitrary genomes (then no archive
     result is interpretable -- fix the descriptor first, per Nyx A4), or the target turns out REWARD/CREDIT-bound.
   Also in Horizon I (platform): a qualified-component registry so the next native runtime pays only for its adapter
     (assessment B1); a durable run-record + local runner so a job survives its session (assessment B2); one
     World-Demand admission ladder (reference solver succeeds; reflex/register/memoryless baselines fail) on a world
-    from the existing Ensorain N0-N6 / Ludus / Cosmos parts, owned where Hestia's M3 places it.
+    from the existing Ensorain N0-N6 / Ludus / Cosmos parts, owned where Hestia's M3 places it. In flight elsewhere,
+    to be reused not duplicated: Aphrodite's Beta-04 (C-015: typed list-program foundry R0-R4 with a null ladder and a
+    known-positive gate, adopting D1's arms and descriptor test) and Ensorain's C-014/WTP-05 (0.2-0.8 admission band).
 
 ## 5. Horizon II -- about one quarter (developmental and evolutionary exploration)
 
@@ -161,14 +172,23 @@ architecture, development, the world, search infrastructure and the evaluator su
 
   The job owns its state: immutable manifest + seed partitions + append-only progress events + periodic checkpoint
   records with hashes, written to a retained store; any seat (or an operator command) resumes from the last verified
-  checkpoint; a lease prevents double execution; final accounting is computed from the event log. Detailed in
-  LONG_DURATION_EXECUTION_ARCHITECTURE.md (C-013-T020); built on Themis's C-012 Fabric/PostgreSQL work, not beside it.
+  checkpoint; a lease prevents double execution; final accounting is computed from the event log
+  (LONG_DURATION_EXECUTION_ARCHITECTURE.md s3). DEMONSTRATED on one host in this window: rso/scale/runner/ survived
+  worker, supervisor and session loss and a different session resumed it to the control's digest (FIRE_TEST.md, 13/13);
+  checkpoint retention (T024) bounds storage; an idempotent relaunch entry (T025) removes the "someone must run launch"
+  dependency once the operator chooses to install a host scheduler task (documented, deliberately not installed).
+  Missing for seven days on the fleet: cross-host transport (P-4: port onto Themis's C-012 NF transport; depends on its
+  large-object fetch path), a standing worker plane (Fabric
+  carries work only inside its owner's windows -- C-012 published 1,504 benchmark and 12 native-world epochs through it
+  on 2026-10-10 -- and is otherwise idle, 0 live of 61 at 12:40Z), and an engine save/load pair -- only Aether's
+  kernel, z80atlas (pickle) and Proteus checkpoint today without engine edits (CHECKPOINT_REPLAY_SURVEY.md).
 
 ## 12. Open disagreements (preserved, not synthesised away)
 
   - Archive value: Gemini "required"; ChatGPT 2 and Hestia: only with certificate-keyed descriptors; Nyx: S4 is
     MAP-Elites with count selection and "Go-Explore" must not describe genome copying. This roadmap sides with Nyx and
-    Hestia pending D1.
+    Hestia. D1 did not settle it: no archive arm separated, but at N = 15 only large effects were detectable, and the
+    descriptor was known before the run to separate shortest-path intermediates from random programs by 0.006.
   - Whether promotion is "designed reasoning with extra steps" (Hestia open question) -- Horizon II's pivot rule.
   - Alien-lane share and membership (ChatGPT 1 vs Hestia).
   - Whether W1 is near-theorem or representation-specific (M1 chose the latter; literature unverified).
@@ -177,7 +197,23 @@ architecture, development, the world, search infrastructure and the evaluator su
 
 ## 13. The next decisions (to be finalised in RECOMMENDATION.md at closeout)
 
-  next engineering investment (provisional): the durable run-record + qualified-component registry pair -- relieves
-    assessment B1 and B2 together, is small, and every later horizon depends on it.
-  next scientific experiment (provisional): D1, then the same frozen cartography on one audited desert (Ananke FLIP),
-    routed to its owner.
+  next engineering investment (provisional): port the now-demonstrated session-independent runner onto Themis's C-012
+    NF transport (cross-host, P-4) TOGETHER WITH a qualified-component registry -- relieves assessment B2 across hosts
+    and B1, is small relative to the alternatives, and every later horizon depends on it. Evidence since v1: C-012's
+    owner reports N2 and N5 exist, N4 measured (~0.10 s coordination per epoch; 1.6% wasted work under induced kills),
+    N1 (out-of-database checkpoint refs) and N3 (run_tag) not built but small (comms #2043/#2044). Themis's C-012
+    review packet (moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md s7) lists option D -- offer that path to the
+    Observatory -- but LEANS A (park: "the only native workload sits three to four orders of magnitude below the
+    envelope; building more now would be engineering ahead of demand"). The same argument bears on P-4 here and is
+    NOT answered yet: this program's measured workloads are tens of CPU-minutes per campaign (s5 of the assessment),
+    D1 is ~3 core-hours on one host, and B2's waiting is between SEATS, not between hosts. If nothing in Horizon I
+    needs a second host, the cheaper investment that attacks B2 directly is the qualified-component registry plus
+    event-driven dispatch of READY packets, with P-4 deferred until a registered workload exceeds one host. To be
+    decided in RECOMMENDATION.md with D1's measured cost in hand; recorded here as an open disagreement with my own
+    v1 provisional choice.
+    D1's measured cost (s4): host capacity DID bind once -- thermal throttling cut D1 to 15 of 24 rounds -- but the
+    remedy that would have fixed it is running one whole seat on a cooler machine (M1/M2), which needs no cross-host
+    transport. A single run that must span hosts has still not appeared.
+  next scientific experiment (provisional; D1 done -- under-powered null, s4): the same frozen cartography protocol on
+    one audited desert with a near-zero chain baseline at every stratum (Ananke FLIP, 0/290), routed to its owner,
+    with N sized from the s4 power numbers BEFORE freezing and run where the cap does not truncate it.

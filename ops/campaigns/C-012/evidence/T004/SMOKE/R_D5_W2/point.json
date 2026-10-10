@@ -1,0 +1,87 @@
+{
+ "D": 5,
+ "K": 0,
+ "W": 2,
+ "abandoned_attempts": 1,
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "arm": "R",
+ "drain_left_busy": 0,
+ "ended_at": "2026-10-10T09:32:12Z",
+ "fabric_schema": "fabric_b_smoke_r_d5_w2_783a",
+ "iters": 5000000,
+ "kills": [
+  {
+   "killed_at": "2026-10-10T09:30:39Z",
+   "killed_at_db_epoch": 1791624639.759398,
+   "victim_pid": 226919,
+   "victim_was_executing": false
+  }
+ ],
+ "label": "R_D5_W2",
+ "loop_errors": [],
+ "metrics": {
+  "M1_coordination_wall_fraction": 0.03190283583251623,
+  "M2_retries_per_published": 0.02,
+  "M3_p95_gap_over_median_execute": 0.010377936781907281,
+  "M4_abandonment_rate": 0.0196078431372549,
+  "M5_bytes_moved_per_published": 14072.64,
+  "M6_db_bytes_per_published": 64225.28,
+  "M7_tripwire_bytes_per_30d": 55419684496.20123,
+  "attempts_executed": 51,
+  "db_errors": 0,
+  "execute_s": {
+   "median": 4.268081545829773,
+   "p95": 5.25135612487793
+  },
+  "finish_s": {
+   "median": 0.017041444778442383,
+   "p95": 0.027410030364990234
+  },
+  "gap_s": {
+   "median": 0.029224157333374023,
+   "n": 49,
+   "p95": 0.044293880462646484
+  },
+  "moonshot_non_published": 0,
+  "publish_latency_s": {
+   "median": 0.11298561096191406,
+   "p95": 0.2235088348388672
+  },
+  "published": 50,
+  "queue_s": {
+   "median": 5.2301565408706665,
+   "p95": 10.668589115142822
+  },
+  "tasks": 50,
+  "throughput_per_s": 0.3329070907493371,
+  "transfer_s": {
+   "median": 0.08150601387023926,
+   "p95": 0.13025403022766113
+  },
+  "wall_s": 150.19205474853516
+ },
+ "moonshot_schema": "moonshot_b_smoke_r_d5_w2_783a",
+ "recovery": [
+  {
+   "abandoned_attempt": "att-1fdd8a8b6cc6",
+   "recovered_s": 92.45776009559631,
+   "task_id": "tsk-7d9c79c5e6fa"
+  }
+ ],
+ "smoke": true,
+ "started_at": "2026-10-10T09:29:22Z",
+ "validation": {
+  "byte_failures": 0,
+  "byte_verified": 50,
+  "replay_mismatches": 0,
+  "replayed": 5
+ },
+ "verdict": [
+  "RECONSIDER",
+  [
+   "B4"
+  ]
+ ],
+ "wall_s": 150.0,
+ "wpn": 1
+}

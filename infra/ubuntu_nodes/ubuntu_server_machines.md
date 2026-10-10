@@ -11,6 +11,24 @@ Don't record passwords here.
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token pending; Claude logged in 2026-10-06 |
 | 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
+| 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **Provisioned** (shared token, Claude token); worker NOT enabled until memtester pass 2 |
+| 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
+
+## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
+
+| Host | Machine | CPU | C/T | AVX2 | RAM | IP (wired / Wi-Fi) | Serial / tag |
+|---|---|---|---|---|---|---|---|
+| ubu001 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .218 (Wi-Fi) | PF0V02XZ |
+| ubu002 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .219 (Wi-Fi) | PF0V0JL6 |
+| ubu003 | Dell Latitude E7240 | i7-4600U | 2C/4T | yes | 8 GB | .220 | D5VYTZ1 |
+| ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U | 2C/4T | yes | 8 GB | .221 (USB eth) / .178 | 8CG80912V3 |
+| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/8T | yes | 24 GB (8+16) | .222 / .227 | R90T9A2G |
+| ubu006 | Dell Inspiron 3647 (desktop) | i3-4130 | 2C/4T | yes | 16 GB | .225 / .226 | J3B1K02 |
+| ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
+| ubu008 | ThinkPad T490s (20NX0020US) | i7-8565U | 4C/8T | yes | 16 GB | .231 / .232 | PC1AHQQD |
+
+Corrections: ubu006 is an i3-4130 (was "Haswell, 4 threads"); ubu005 has 24 GB installed (22 GiB usable).
+Screens: all nodes blank after 5 min idle (consoleblank=300, also set live); a key or Ctrl+Alt+F2, F1 wakes them.
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -175,6 +193,45 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   no reboot needed. Worker installed at f78d18e26 with --enable: active, IDLE.
 - Still to do: Claude login, DHCP reservation for .225.
 
+## ubu007 (machine #7, Dell Precision M6500)
+
+- **Hardware (opened 2026-10-10):** i7 Q720 (no AVX), RAM 2x 8 GB SODIMM in the bottom slots (one Centon; 2 more slots
+  under the keyboard; confirm with dmidecode). Two 2.5" SATA bays, 3 Gb/s: **HDD 1** (in the bay by the battery) held an **Intel
+  SSD 330 180 GB (SSDSC2CT180A3, fw 300i) = the Windows 7 drive**; **HDD 2** held a **Seagate Momentus 500 GB
+  (ST9500424AS, 2012, marked "New")**. FCM and WWAN slots are Mini PCIe (not M.2): unusable for boot.
+  Lower fan dusty. Win7 COA under the battery (do not photograph publicly).
+- **Plan (operator 2026-10-10; replaces the 2026-10-04 USB-enclosure plan):** a **Patriot P210 256 GB SATA SSD**
+  (P210S256G25; DRAM-less, low TBW: watch wear) in **HDD 1** for Ubuntu (the default-boot bay, so the worker comes back
+  unattended after a power cut). The **Intel 330 (Win7) goes back in HDD 2**, unmodified; Windows via F12, or a GRUB
+  chainload (os-prober) if F12 does not list HDD 2. Leave BIOS "SATA Operation" unchanged. Momentus = spare / backup target.
+- **Install:** ONLY the Patriot in the machine (both Windows-side drives out; the guard wipes the largest internal disk
+  >= 60 GB). Legacy BIOS, USB first, Ethernet. Normal internal-disk install, so the CIDATA stick needs no
+  --allow-usb-target. Image the Intel 330 to M2 before the install (backup only; it is not wiped).
+- **Install 2026-10-10:** BIOS boots USB from ONE specific port only (operator found it by trial). Attempt 1 failed in
+  curtin extract: `SQUASHFS error: xz decompression failed, data probably corrupt` (no USB/SATA I/O errors; the same
+  stick installed ubu008 cleanly). Attempt 2 failed at `netplan apply` (`netplan-wpa-wlan-none.service not found`):
+  template bug, fixed in 092ee16a6 (wait 60 s for wl*, else drop wifis). Attempt 3 succeeded, wired only.
+- **provision_node.sh 192.168.1.3 ubu007:** setup OK, but the repo clone failed `inflate: data stream error (incorrect
+  data check)` -- a second in-memory corruption, now from the network. Suspect RAM: 2x 8 GB DDR3-1333
+  (V01D3SF8GB52852813) in DIMM_B + DIMM_D; DIMM_A/C (under the keyboard) empty. `memtester 12G 2` started 17:42Z in
+  tmux `memtest` (log ~/memtester_*.log). Pass 1 (12 GB) clean ~19:20Z. Re-clone 19:3xZ during pass 2: 2m10s,
+  `git fsck` clean. provision_node.sh re-run: push dry-run OK; Claude token copied from ubu006, claude -p OK.
+  Battery and HDD 2 bay left empty; fan blown out (operator). Screen blanked (backlight off + consoleblank=300).
+- Wi-Fi: the Intel 6300 enumerated during installer boot 1 (iwlwifi 0000:0c:00.0) but is absent from lspci now: likely
+  unseated at reassembly, or Internal WLAN disabled in BIOS. Not needed while wired.
+
+## ubu008 (machine #8, Lenovo ThinkPad T490s)
+
+- **Bought 2026-10-10** (Facebook Marketplace) with a dock and monitor; came with Fedora (wiped, operator OK).
+- **Hardware (read 2026-10-10):** i7-8565U, 4C/8T, **AVX2**; 14 GiB usable (16 GB, partly soldered); WD PC SN730 512 GB
+  NVMe; wired `enp0s31f6` through the dock (the laptop's own I219 NIC), Wi-Fi `wlp0s20f3`. UEFI, Secure Boot left on.
+  Idle 50 C, fan ~2800 rpm (78 C briefly during setup).
+- **Autoinstall:** first try, the 2026-10-04 stick (`--allow-usb-target` is harmless when an internal disk exists).
+- **provision_node.sh 192.168.1.231 ubu008:** ~4 min; shared token, push dry-run OK; no reboot needed. Worker installed
+  at f78d18e26 with --enable: active, IDLE. Claude: `~/.config/claude-oauth.env` copied node-to-node from ubu006 over
+  stdin (never printed), sourced from `~/.bashrc` line 1 and `~/.profile`; `claude auth status` oauth_token, `claude -p` OK.
+- Still to do: DHCP reservation for .231; BIOS Power On with AC Attach; full `/login` only if it is to host a seat.
+
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
 Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installed by Achilles with
@@ -188,6 +245,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu004 | PrometheusWorker/ubu004/ubu004-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
@@ -204,5 +262,6 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
   at f78d18e26); services restarted between runs on ubu001-003.
 - 2026-10-03: ubu004 got the shared GitHub token (nodes-shared, no expiry, Prometheus only; installed from
   C:/autoinstall_secrets/tokens/shared.txt, never printed, shredded on the node); push dry-run OK; worker enabled.
+- 2026-10-10 ~15:39Z: ubu008 (T490s) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-04 ~14:12Z: ubu005 (P52s, USB-enclosure root) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.

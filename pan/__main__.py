@@ -22,7 +22,11 @@
   codebench controls|run M    PAN-33: HumanEval+ pass@1 for a local model (protocol frozen in tests/)
   repobench mine|controls|run M  PAN-34: the program's own functions under its own tests (frozen in tests/)
   review build | review queue [--seat S] [-k N]   PAN-37: ranked review units (signals, never dispatched)
-  reviewcal build             PAN-37: seeded-bug calibration set (items + answer key in the lake only)
+  reviewcal build [--set-version 2]   PAN-37/39: seeded-bug calibration set (items + key in the lake only)
+  reviewcal floors            PAN-37: what a reviewer scores without reviewing (chance floors, prereg A3)
+  reviewcal run MODEL | controls   PAN-37: score a local model as a reviewer on set v2 (GPU) | runner controls
+  fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
+  atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -81,6 +85,7 @@ def main(argv=None):
     sub.add_parser("stats")
     sub.add_parser("status")
     sub.add_parser("comms-index")
+    sub.add_parser("moonshot-index")
     sub.add_parser("lexdf")
     sub.add_parser("dictionary")
     sub.add_parser("links")
@@ -90,7 +95,9 @@ def main(argv=None):
     p.add_argument("-k", type=int, default=8)
     p = sub.add_parser("refs")
     p.add_argument("path")
-    sub.add_parser("refresh")
+    p = sub.add_parser("refresh")
+    p.add_argument("--no-doc-vectors", action="store_true",
+                   help="skip document vectors (slow on CPU); chunk vectors, lexdf, links still rebuilt")
     p = sub.add_parser("codebench")
     p.add_argument("what", choices=["controls", "run"])
     p.add_argument("model", nargs="?")
@@ -100,8 +107,17 @@ def main(argv=None):
     p.add_argument("what", choices=["build", "queue"])
     p.add_argument("--seat")
     p.add_argument("-k", type=int, default=25)
+    p = sub.add_parser("fleet")
+    p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
+    p = sub.add_parser("atlas")
+    p.add_argument("what", choices=["snapshot", "manifest", "controls"])
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
-    p.add_argument("what", choices=["build"])
+    p.add_argument("what", choices=["build", "floors", "run", "controls"])
+    p.add_argument("model", nargs="?")
+    p.add_argument("--think", action="store_true")
+    p.add_argument("--budget", type=int, default=512)
+    p.add_argument("--set-version", type=int, default=2, choices=[1, 2])
     p.add_argument("--workers", type=int, default=4)
     p = sub.add_parser("repobench")
     p.add_argument("what", choices=["mine", "controls", "cheat2", "run", "analyze", "diagnose", "report"])
@@ -190,9 +206,15 @@ def main(argv=None):
         from . import comms_index
         comms_index.run()
     elif a.cmd == "refresh":
-        from . import comms_index, refresh
-        refresh.run()
+        from . import comms_index, moonshot_index, refresh
+        # comms and Moonshot first: refresh rebuilds pan.lexeme_df, and full-text search drops query terms the
+        # table does not know -- indexed after it, new messages/epochs were findable only one refresh later
         comms_index.run()
+        moonshot_index.run()
+        refresh.run(embed_docs=not a.no_doc_vectors)
+    elif a.cmd == "moonshot-index":
+        from . import moonshot_index
+        moonshot_index.run()
     elif a.cmd == "status":
         import subprocess
         from . import REPO, db
@@ -220,9 +242,41 @@ def main(argv=None):
             review.build()
         else:
             review.queue(seat=a.seat, k=a.k)
+    elif a.cmd == "fleet":
+        from . import fleet
+        if a.what == "probe":
+            fleet.probe()
+        elif a.what == "controls":
+            fleet.controls()
+        elif a.what == "machines":
+            for r in fleet.machines():
+                print("{:<22} {:<8} {:>3}T {:>6} GB  {:<28} {:<34} {}".format(
+                    r["name"], r["status"], r["threads"] or "?", r["ram_gb"] or "?", (r["gpu"] or "")[:28],
+                    (r["os"] or "")[:34], r["specs"] + (" | " + r["mismatch"] if r["mismatch"] else "")))
+        else:
+            rows, meta = fleet.seats()
+            for r in rows:
+                print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
+                                                         r["last_machine"], r["last_commit"][:70]))
+            print(meta)
+    elif a.cmd == "atlas":
+        from . import atlas_snap
+        if a.what == "snapshot":
+            atlas_snap.snapshot(force=a.force)
+        elif a.what == "manifest":
+            atlas_snap.manifest_cli()
+        else:
+            atlas_snap.controls()
     elif a.cmd == "reviewcal":
         from . import reviewcal
-        reviewcal.build(workers=a.workers)
+        if a.what == "floors":
+            reviewcal.floors(version=a.set_version)
+        elif a.what == "controls":
+            reviewcal.run_controls(version=a.set_version)
+        elif a.what == "run":
+            reviewcal.review_run(a.model, version=a.set_version, think=a.think, budget=a.budget)
+        else:
+            reviewcal.build(workers=a.workers, version=a.set_version)
     elif a.cmd == "repobench":
         from . import repobench
         if a.what == "mine":

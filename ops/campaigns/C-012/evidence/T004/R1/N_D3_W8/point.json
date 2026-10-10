@@ -1,0 +1,90 @@
+{
+ "D": 3,
+ "K": 0,
+ "W": 8,
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "arm": "N",
+ "drain_left_busy": 0,
+ "ended_at": "2026-10-10T10:24:05Z",
+ "fabric_schema": "fabric_b_r1_n_d3_w8_a925",
+ "iters": 5090063,
+ "kills": [],
+ "label": "N_D3_W8",
+ "loop_errors": [],
+ "metrics": {
+  "M1_coordination_wall_fraction": 0.014856136628516084,
+  "M2_retries_per_published": 0.0,
+  "M3_p95_gap_over_median_execute": 0.004996394382025843,
+  "M4_abandonment_rate": 0.0,
+  "M5_bytes_moved_per_published": 14198.124260355029,
+  "M6_db_bytes_per_published": 47213.065088757394,
+  "M7_tripwire_bytes_per_30d": 114841267762.08685,
+  "attempts_executed": 338,
+  "db_errors": 0,
+  "execute_s": {
+   "median": 8.504563093185425,
+   "p95": 10.53403615951538
+  },
+  "finish_s": {
+   "median": 0.012814044952392578,
+   "p95": 0.02226996421813965
+  },
+  "gap_s": {
+   "median": 0.020799994468688965,
+   "n": 330,
+   "p95": 0.04249215126037598
+  },
+  "moonshot_non_published": 0,
+  "publish_latency_s": {
+   "median": 0.13863301277160645,
+   "p95": 0.2331860065460205
+  },
+  "published": 338,
+  "queue_s": {
+   "median": 8.69517195224762,
+   "p95": 10.15381908416748
+  },
+  "tasks": 338,
+  "throughput_per_s": 0.9384276275646698,
+  "transfer_s": {
+   "median": 0.06628310680389404,
+   "p95": 0.10142111778259277
+  },
+  "wall_s": 360.176949262619
+ },
+ "moonshot_schema": "moonshot_b_r1_n_d3_w8_a925",
+ "node_load_before": {
+  "ubu001": [
+   "10:17:42 up 7 days, 19:39,  2 users,  load average: 0.28, 2.20, 2.46",
+   "%CPU COMMAND",
+   " 3.5 sshd-session",
+   " 0.9 claude",
+   " 0.0 irq/139-iwlwifi",
+   " 0.0 upowerd",
+   " 0.0 kworker/1:2-cgroup_free"
+  ],
+  "ubu002": [
+   "10:17:43 up 7 days, 19:35,  2 users,  load average: 0.40, 2.46, 2.59",
+   "%CPU COMMAND",
+   " 3.5 sshd-session",
+   " 1.2 claude",
+   " 0.0 irq/138-iwlwifi",
+   " 0.0 upowerd",
+   " 0.0 kworker/3:0-events"
+  ]
+ },
+ "smoke": false,
+ "started_at": "2026-10-10T10:17:41Z",
+ "validation": {
+  "byte_failures": 0,
+  "byte_verified": 338,
+  "replay_mismatches": 0,
+  "replayed": 33
+ },
+ "verdict": [
+  "ADEQUATE",
+  []
+ ],
+ "wall_s": 360.0,
+ "wpn": 4
+}

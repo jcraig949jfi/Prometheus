@@ -1,0 +1,671 @@
+{
+ "ID_IDENTIFIABILITY": {
+  "AMBIGUOUS": 0,
+  "UNIQUE": 0,
+  "all_units_of_failed_families": {
+   "AMBIGUOUS": 1,
+   "UNIQUE": 3,
+   "n": 4,
+   "other": {}
+  },
+  "fraction_ambiguous": null,
+  "labelled": 0,
+  "not_labelled": {},
+  "underdetermined_stone_units": 0
+ },
+ "ID_RETENTION_REPAIR": "NO",
+ "ID_RETENTION_REPAIR_rule": "RETAIN-4 chain-qualified >= 80% (5q >= 4n; 12/15)",
+ "budget": 1000000,
+ "claim_limits": "diagnostic; does not relabel TFS1_INSTRUMENT_QUALIFIED (= NO, frozen); not compositional discovery (stones from sealed-family-indexed R1 tasks); motif-limited admitted set",
+ "consistency": {
+  "RETAIN-1-CERT_reproduces_primary_all": true,
+  "RETAIN-1_differs_by_design (primary R1 certifier rejected a constituent)": [
+   "W0467897d-F061-R3",
+   "W0467897d-F081-R3",
+   "W0467897d-F085-R3"
+  ],
+  "RETAIN-1_reproduces_primary_where_all_constituents_acquired": true
+ },
+ "families": [
+  {
+   "RETAIN-1": {
+    "charge": null,
+    "cpu_s": 38.62,
+    "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "link": "UNDERDETERMINED_STONE",
+    "qualified": false,
+    "reproduces_primary": false,
+    "retain1_differs_by_design": true,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-1-CERT": {
+    "charge": null,
+    "cpu_s": 0.0,
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "qualified": false,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "CHAIN_C_FAIL"
+   },
+   "RETAIN-2": {
+    "charge": 611611,
+    "cpu_s": 30.47,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-2-CERT": {
+    "charge": 587314,
+    "cpu_s": 32.84,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4": {
+    "charge": 584848,
+    "cpu_s": 35.98,
+    "detail": "CHAIN_FIRST_DEV_CONSISTENT_FAILS_TEST",
+    "link": "COMPOSITION_UNDERDETERMINED",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "FIRST_DEV_CONSISTENT_FAILS_TEST"
+   },
+   "RETAIN-4-CERT": {
+    "charge": 587314,
+    "cpu_s": 32.84,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "family_id": "W0467897d-F085-R3",
+   "primary_chain_qualified": false,
+   "primary_link": "HORIZON_R1",
+   "rung": "R3",
+   "skeleton": "R3:fp:guard_p",
+   "world": "W0467897d"
+  },
+  {
+   "RETAIN-1": {
+    "charge": null,
+    "cpu_s": 17.39,
+    "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "link": "UNDERDETERMINED_STONE",
+    "qualified": false,
+    "reproduces_primary": false,
+    "retain1_differs_by_design": true,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-1-CERT": {
+    "charge": null,
+    "cpu_s": 0.0,
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "qualified": false,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "CHAIN_C_FAIL"
+   },
+   "RETAIN-2": {
+    "charge": null,
+    "cpu_s": 20.45,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-2-CERT": {
+    "charge": null,
+    "cpu_s": 18.0,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4": {
+    "charge": null,
+    "cpu_s": 23.62,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4-CERT": {
+    "charge": null,
+    "cpu_s": 18.0,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "family_id": "W0467897d-F081-R3",
+   "primary_chain_qualified": false,
+   "primary_link": "HORIZON_R1",
+   "rung": "R3",
+   "skeleton": "R3:fp:filter_of_map+red",
+   "world": "W0467897d"
+  },
+  {
+   "RETAIN-1": {
+    "charge": null,
+    "cpu_s": 16.94,
+    "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "link": "UNDERDETERMINED_STONE",
+    "qualified": false,
+    "reproduces_primary": false,
+    "retain1_differs_by_design": true,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-1-CERT": {
+    "charge": null,
+    "cpu_s": 0.0,
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "qualified": false,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "CHAIN_C_FAIL"
+   },
+   "RETAIN-2": {
+    "charge": null,
+    "cpu_s": 17.28,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-2-CERT": {
+    "charge": null,
+    "cpu_s": 17.97,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4": {
+    "charge": null,
+    "cpu_s": 24.42,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4-CERT": {
+    "charge": null,
+    "cpu_s": 17.97,
+    "detail": "CLASS_NOT_ENTERED",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "family_id": "W0467897d-F061-R3",
+   "primary_chain_qualified": false,
+   "primary_link": "HORIZON_R1",
+   "rung": "R3",
+   "skeleton": "R3:fp:map_of_filter+red",
+   "world": "W0467897d"
+  },
+  {
+   "RETAIN-1": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-1-CERT": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-2": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-2-CERT": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4-CERT": {
+    "charge": 410735,
+    "cpu_s": 15.91,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "family_id": "W1d5301d0-F035-R3",
+   "primary_chain_qualified": true,
+   "primary_link": null,
+   "rung": "R3",
+   "skeleton": "R3:fs:post_fold",
+   "world": "W1d5301d0"
+  },
+  {
+   "RETAIN-1": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-1-CERT": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-2": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-2-CERT": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "RETAIN-4-CERT": {
+    "charge": null,
+    "cpu_s": 31.86,
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "qualified": false,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "NOT_FOUND_AT_BUDGET"
+   },
+   "family_id": "W1d5301d0-F077-R4",
+   "primary_chain_qualified": false,
+   "primary_link": "COMPOSITION_HORIZON",
+   "rung": "R4",
+   "skeleton": "R4:fp:guard_p",
+   "world": "W1d5301d0"
+  },
+  {
+   "RETAIN-1": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-1-CERT": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-2": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-2-CERT": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4-CERT": {
+    "charge": 64561,
+    "cpu_s": 2.05,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "family_id": "W1d5301d0-F071-R4",
+   "primary_chain_qualified": true,
+   "primary_link": null,
+   "rung": "R4",
+   "skeleton": "R4:fp:filter_of_map",
+   "world": "W1d5301d0"
+  },
+  {
+   "RETAIN-1": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-1-CERT": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "status": "SOLVED"
+   },
+   "RETAIN-2": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-2-CERT": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "RETAIN-4-CERT": {
+    "charge": 650459,
+    "cpu_s": 19.25,
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "qualified": true,
+    "reproduces_primary": null,
+    "retain1_differs_by_design": null,
+    "status": "SOLVED"
+   },
+   "family_id": "W1d5301d0-F027-R3",
+   "primary_chain_qualified": true,
+   "primary_link": null,
+   "rung": "R3",
+   "skeleton": "R3:fs:step_of_f",
+   "world": "W1d5301d0"
+  }
+ ],
+ "interpretation": "NOT_APPLICABLE",
+ "label": "EXPOSED DEV DATA (pilot)",
+ "mostly": null,
+ "retain_rows": {
+  "RETAIN-1": {
+   "chain_qualified": 3,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "UNDERDETERMINED_STONE": 3
+   },
+   "meets_80pct": false,
+   "n": 7
+  },
+  "RETAIN-1-CERT": {
+   "chain_qualified": 3,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "HORIZON_R1": 3
+   },
+   "meets_80pct": false,
+   "n": 7
+  },
+  "RETAIN-2": {
+   "chain_qualified": 4,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 3
+   },
+   "meets_80pct": false,
+   "n": 7
+  },
+  "RETAIN-2-CERT": {
+   "chain_qualified": 4,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 3
+   },
+   "meets_80pct": false,
+   "n": 7
+  },
+  "RETAIN-4": {
+   "chain_qualified": 3,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 3,
+    "COMPOSITION_UNDERDETERMINED": 1
+   },
+   "meets_80pct": false,
+   "n": 7
+  },
+  "RETAIN-4-CERT": {
+   "chain_qualified": 4,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 3
+   },
+   "meets_80pct": false,
+   "n": 7
+  }
+ },
+ "units": [
+  {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "enum_cpu_s": 32.97,
+   "first_class_sealed_equivalent": true,
+   "id_family": "W0467897d-F007-R1",
+   "mechanism": "f1",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 1,
+   "n_no_stone_programs": 0,
+   "primary_link": null,
+   "primary_status": "ACQUIRED",
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 763421,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "underdetermined_stone_unit": false,
+   "used_by_failed_family": true,
+   "world": "W0467897d"
+  },
+  {
+   "ID_IDENTIFIABILITY": "AMBIGUOUS",
+   "enum_cpu_s": 51.55,
+   "first_class_sealed_equivalent": false,
+   "id_family": "W0467897d-F010-R1",
+   "mechanism": "p0",
+   "n_classes": 5,
+   "n_dev_consistent_programs": 342,
+   "n_no_stone_programs": 60,
+   "primary_link": "HORIZON_R1",
+   "primary_status": "NOT_ACQUIRED",
+   "sealed_equivalent_class_rank": 2,
+   "sealed_equivalent_first_charge": 10930,
+   "sealed_equivalent_first_ordinal": 4,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "underdetermined_stone_unit": false,
+   "used_by_failed_family": true,
+   "world": "W0467897d"
+  },
+  {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "enum_cpu_s": 36.25,
+   "first_class_sealed_equivalent": true,
+   "id_family": "W1d5301d0-F006-R1",
+   "mechanism": "f1",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 9,
+   "n_no_stone_programs": 1,
+   "primary_link": null,
+   "primary_status": "ACQUIRED",
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 49862,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "underdetermined_stone_unit": false,
+   "used_by_failed_family": true,
+   "world": "W1d5301d0"
+  },
+  {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "enum_cpu_s": 55.59,
+   "first_class_sealed_equivalent": true,
+   "id_family": "W1d5301d0-F008-R1",
+   "mechanism": "p0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 37,
+   "n_no_stone_programs": 0,
+   "primary_link": null,
+   "primary_status": "ACQUIRED",
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 27841,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "underdetermined_stone_unit": false,
+   "used_by_failed_family": true,
+   "world": "W1d5301d0"
+  },
+  {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "enum_cpu_s": 46.94,
+   "first_class_sealed_equivalent": true,
+   "id_family": "W1d5301d0-F012-R1",
+   "mechanism": "s0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 1,
+   "n_no_stone_programs": 0,
+   "primary_link": null,
+   "primary_status": "ACQUIRED",
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 286293,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "underdetermined_stone_unit": false,
+   "used_by_failed_family": false,
+   "world": "W1d5301d0"
+  }
+ ],
+ "worlds": [
+  "W0467897d",
+  "W1d5301d0",
+  "Wf294d5d9"
+ ]
+}

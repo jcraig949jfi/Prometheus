@@ -1,0 +1,58 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T004",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T093445Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "start_sha": "974275bca69a95470c8e2677cdd20aee53efe3cc",
+ "end_sha": "ee11bb78ae8ccbc79cc4b348da4abb1ec788bdca",
+ "files_changed": [
+  "ops/campaigns/C-012/prereg/T004_PREREG.md",
+  "ops/campaigns/C-012/prereg/MANIFEST.md",
+  "ops/campaigns/C-012/evidence/T004/"
+ ],
+ "evidence_added": [
+  "prereg/T004_PREREG.md + MANIFEST (frozen at 2f4b38ef0 before any data; 3 SMOKE harness tests ran before the freeze, disclosed in it, files kept in evidence/T004/SMOKE/)",
+  "evidence/T004/{bench.py, bench_metrics.py, test_bench_metrics.py} at their frozen hashes",
+  "evidence/T004/R1/: calibration, RUN_LOG.jsonl, 8 points (point.json + rows.json), REPORT.json, README.md",
+  "evidence/T004/R1/DIAG_STORAGE/STORAGE.json: per-relation storage attribution (DIAGNOSTIC, not preregistered)"
+ ],
+ "evidence_executed": [
+  "calibration 2026-10-10T09:36Z: 1.70M synthetic.v1 iterations/s per node (ubu001, ubu002)",
+  "R1 09:37Z-11:10Z, ubu001 + ubu002, Fabric v0.2 9c022347e in throwaway schemas, executor 55c74f7cb: 1504 published epochs, all byte-verified, 146 replayed on M2, 0 replay mismatches, 0 DISAGREEMENT, 0 database errors",
+  "operating point D=30 W=8 ADEQUATE (M1 0.00154, M2 0, M3 0.00038, M4 0); envelope T* = 3 s; D=1 RECONSIDER (B1 0.0559, B3 0.306: the worker's 1 s idle-poll quantum behind one-epoch-in-flight-per-chain dispatch)",
+  "scaling at D=30: 0.069 / 0.117 / 0.133 epochs/s at W = 2 / 4 / 8 (ratio 0.48; CPU-bound, M1 <= 0.005)",
+  "recovery (3 SIGKILLs at W=8): published after 189.6, 131.7, 124.6 s (B7 <= 150 s FAILS once)",
+  "tripwire T1 FAILED: 2.6e10 bytes/30 d at the operating point; diagnostic attribution ~65 KB/epoch at 45 epochs (marginal ~42 KB), two thirds Fabric's per-attempt record; 1 GB/30 d is unattainable at that rate for any transport that keeps a 4 KB checkpoint",
+  "predictions: P1 P2 P3 P4 HELD; P6 P7 LOST; P5 NOT TESTED"
+ ],
+ "red_observed": {
+  "observed": false,
+  "sha": null,
+  "detail": "measurement task (preregistration first, not test-first); the analysis code has its own tests (5 OK) frozen with the preregistration"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "Arm S (the M2 coordination ceiling) NOT RUN: the operator started experiments on M2 at ~09:30Z; P5 stays open and Arm S may run later under the same frozen preregistration",
+  "two nodes, Wi-Fi, 2C/4T laptops: four workers per node share two physical cores, so execution swells (a 30 s epoch runs ~80 s at W=8); results are for this fleet",
+  "the benchmark ran in throwaway Fabric schemas, not the canonical queue (to exclude foreign claims and keep benchmark tasks out of the real queue); the database server and Fabric code are the production ones",
+  "M2 carried the operator's experiments (19-46% CPU before the points): publication latency is measured on a loaded coordinator host",
+  "B7's 150 s assumed re-execution of about D; the prereg did not anticipate the CPU-shared re-execution time",
+  "the deliverable path in the task file is evidence/BENCH/; the evidence is in evidence/T004/"
+ ],
+ "unresolved": [
+  "Arm S",
+  "storage retention: a decision for the program (Fabric artifact pruning is Odysseus's; checkpoints by reference are contract item N1)"
+ ],
+ "unblocks": [
+  "C-012-T007 (native epochs through the qualified path)",
+  "C-012-T006 (the review)"
+ ],
+ "created_at_utc": "2026-10-10T11:14:44Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Window comms: #2020 (opened), #2029 (extended), #2039 (closed; it misstated the epoch total as 1,509), #2040 (correction: 1,504). Leases ubu001:cpu4 and ubu002:cpu4 held 09:36Z-11:13Z."
+}

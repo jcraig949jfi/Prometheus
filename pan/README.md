@@ -62,8 +62,13 @@ Retrieval verdicts and why tuning stopped: roles/Pan/reports/RETRIEVAL_VERDICTS_
 
 ## Known limits
 
-- Vector search is in-process (pgvector absent on M1: roles/Pan/QUESTIONS.md Q-001;
-  install packet roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md). Off M2, use --mode fts.
+- Vector search: M2 uses the exact in-process matrix from the lake; every other host uses
+  pgvector HNSW in Postgres (migrations 012/013, pan/pgvec.py; PAN_VECTOR_BACKEND=local|pg
+  overrides). HNSW is approximate: on real query vectors recall@10 is 0.94 at the default
+  ef_search 200 and 0.98 at 400 (search asks for 400 candidates); on the 62 frozen queries
+  chunk search off M2 loses 1 of 37 answers that the exact search finds (H10). Pivot,
+  similar and `frontier like` need only psycopg2 + numpy; a TEXT query also needs the
+  encoder on the host (sentence-transformers + bge-small, ~130 MB).
 - Seat and kind columns come from path rules and commit-subject prefixes; they
   are lower bounds, not facts about content.
 - The lake is M2-local (Q-003); the Iceberg catalog on M1 is visible everywhere.

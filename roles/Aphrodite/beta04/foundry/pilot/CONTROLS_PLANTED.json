@@ -1,0 +1,276 @@
+[
+ {
+  "expect": "lookup solves (history2 tables also memorise, since test inputs == dev inputs); constant fails",
+  "family_id": "PLANTED-LOOKUP",
+  "note": "test inputs == dev inputs; NOT contract-conformant; calibration only",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.025,
+    "best_test_model": "const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "history2:table+const",
+    "hindsight_model": "history2:table+const",
+    "hindsight_solved": true,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": true,
+    "solved": true
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "lookup",
+    "hindsight_model": "lookup",
+    "hindsight_solved": true,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "lookup",
+    "selected_solved": true,
+    "solved": true
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 0,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "oracle": {
+   "budget": 1000000,
+   "charge": 1000000,
+   "complete_size": 7,
+   "cpu_s": 19.17,
+   "found": null,
+   "size_reached": 8,
+   "status": "NOT_FOUND"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "lookup",
+   "history2"
+  ]
+ },
+ {
+  "expect": "no baseline solves; oracle-library search fails -> KNOWN_POSITIVE_FAIL",
+  "family_id": "PLANTED-RANDOM",
+  "note": null,
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 3,
+    "n_models": 3,
+    "selected_model": "reactive_head:table+const",
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "oracle": {
+   "budget": 1000000,
+   "charge": 1000000,
+   "complete_size": 7,
+   "cpu_s": 15.78,
+   "found": null,
+   "size_reached": 8,
+   "status": "NOT_FOUND"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": []
+ },
+ {
+  "expect": "reactive (elementwise table) solves; constant/lookup/small fail",
+  "family_id": "PLANTED-REACTIVE",
+  "note": null,
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:elem_table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "reactive:elem_table+const",
+    "hindsight_model": "reactive:elem_table+const",
+    "hindsight_solved": true,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "reactive:elem_table+const",
+    "selected_solved": true,
+    "solved": true
+   }
+  },
+  "oracle": {
+   "budget": 1000000,
+   "charge": 1000000,
+   "complete_size": 8,
+   "cpu_s": 30.53,
+   "found": null,
+   "size_reached": 9,
+   "status": "NOT_FOUND"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 7,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 8,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "reactive"
+  ]
+ }
+]

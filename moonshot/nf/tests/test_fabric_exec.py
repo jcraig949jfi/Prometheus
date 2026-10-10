@@ -145,15 +145,21 @@ class TestBoundary(unittest.TestCase):
         """What the node runs touches only the stdlib and the pure epoch model: no psycopg2, sockets, subprocesses,
         HTTP or git -- its inputs arrive in argv and its outputs leave through FABRIC_OUT_DIR."""
         allowed = {"argparse", "base64", "binascii", "hashlib", "json", "os", "re", "sys", "time", "pathlib",
-                   "moonshot.epoch", "moonshot.epoch.canonical", "moonshot.epoch.model", "moonshot.epoch.runtime"}
+                   "moonshot.epoch", "moonshot.epoch.canonical", "moonshot.epoch.model", "moonshot.epoch.runtime",
+                   # native epochs (C-012-T007): the runtime loads wforge, itself stdlib-only (scanned below)
+                   "moonshot.epoch.native_wforge", "wforge", "wforge.genome", "wforge.world"}
+        files = [(REPO / "moonshot" / "epoch" / (n + ".py"), "moonshot.epoch")
+                 for n in ("fabric_exec", "model", "runtime", "canonical", "native_wforge")]
+        files += [(REPO / "SerendipityFoundry" / "worldfoundry" / "wforge" / n, "wforge")
+                  for n in ("__init__.py", "world.py", "genome.py")]
         seen = set()
-        for name in ("fabric_exec", "model", "runtime", "canonical"):
-            tree = ast.parse((REPO / "moonshot" / "epoch" / (name + ".py")).read_text(encoding="utf-8"))
+        for path, package in files:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
                     seen.update(a.name for a in node.names)
                 elif isinstance(node, ast.ImportFrom):
-                    seen.add("moonshot.epoch" + ("." + node.module if node.module else "") if node.level else node.module)
+                    seen.add(package + ("." + node.module if node.module else "") if node.level else node.module)
         self.assertEqual(sorted(seen - allowed - {"dataclasses", "__future__"}), [])
 
 

@@ -1,0 +1,494 @@
+{
+ "admitted": [
+  "W1d5301d0-F035-R3",
+  "W1d5301d0-F077-R4",
+  "W1d5301d0-F071-R4",
+  "W1d5301d0-F027-R3"
+ ],
+ "chain": {
+  "W1d5301d0-F027-R3": {
+   "charge": 650459,
+   "charges": 650459,
+   "complete_through_size": 6,
+   "cpu_s": 29.69,
+   "family_id": "W1d5301d0-F027-R3",
+   "found": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+   "library": {
+    "closed_args": true,
+    "contract": "beta04-contract-v0",
+    "entries": [
+     {
+      "alias_of": null,
+      "body": "(div (add 1 h0) 3)",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(div (add 1 h0) 3)",
+      "expansion_size": 5,
+      "hash": "8b85855300a9d49d65744aa27fe3a32ee5761fb90de2f8a663e74855d3b76534",
+      "id": "L_a7616ca2cd22",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F006-R1",
+       "mechanism_slot": "f1",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     },
+     {
+      "alias_of": null,
+      "body": "(sub h1 (div h0 3))",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(sub h1 (div h0 3))",
+      "expansion_size": 5,
+      "hash": "6597047c853d18044beb11bc76b6f6a445ac33ad1b95f8a68a47abbb30286bcc",
+      "id": "L_bb32638da314",
+      "lineage": [],
+      "params": [
+       "Int",
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F012-R1",
+       "mechanism_slot": "s0",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     }
+    ],
+    "format": "tfs1-lib-v0"
+   },
+   "rung": "R3",
+   "static": {
+    "hitting_cost_bracket": [
+     131402,
+     1427485
+    ],
+    "size_promoted_form": 7,
+    "uses_entries": [
+     "L_a7616ca2cd22",
+     "L_bb32638da314"
+    ],
+    "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+    "witness_refactored": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+   },
+   "status": "SOLVED",
+   "units_expanded": 3107598,
+   "units_promoted": 2573603,
+   "uses_library": true,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   }
+  },
+  "W1d5301d0-F035-R3": {
+   "charge": 410735,
+   "charges": 410735,
+   "complete_through_size": 6,
+   "cpu_s": 23.94,
+   "family_id": "W1d5301d0-F035-R3",
+   "found": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+   "library": {
+    "closed_args": true,
+    "contract": "beta04-contract-v0",
+    "entries": [
+     {
+      "alias_of": null,
+      "body": "(div (add 1 h0) 3)",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(div (add 1 h0) 3)",
+      "expansion_size": 5,
+      "hash": "8b85855300a9d49d65744aa27fe3a32ee5761fb90de2f8a663e74855d3b76534",
+      "id": "L_a7616ca2cd22",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F006-R1",
+       "mechanism_slot": "f1",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     },
+     {
+      "alias_of": null,
+      "body": "(sub h1 (div h0 3))",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(sub h1 (div h0 3))",
+      "expansion_size": 5,
+      "hash": "6597047c853d18044beb11bc76b6f6a445ac33ad1b95f8a68a47abbb30286bcc",
+      "id": "L_bb32638da314",
+      "lineage": [],
+      "params": [
+       "Int",
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F012-R1",
+       "mechanism_slot": "s0",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     }
+    ],
+    "format": "tfs1-lib-v0"
+   },
+   "rung": "R3",
+   "static": {
+    "hitting_cost_bracket": [
+     131402,
+     1427485
+    ],
+    "size_promoted_form": 7,
+    "uses_entries": [
+     "L_a7616ca2cd22",
+     "L_bb32638da314"
+    ],
+    "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+    "witness_refactored": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))"
+   },
+   "status": "SOLVED",
+   "units_expanded": 1881341,
+   "units_promoted": 1559316,
+   "uses_library": true,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   }
+  },
+  "W1d5301d0-F071-R4": {
+   "charge": 64561,
+   "charges": 64561,
+   "complete_through_size": 6,
+   "cpu_s": 2.33,
+   "family_id": "W1d5301d0-F071-R4",
+   "found": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+   "library": {
+    "closed_args": true,
+    "contract": "beta04-contract-v0",
+    "entries": [
+     {
+      "alias_of": null,
+      "body": "(lt h0 (add 2 3))",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(lt h0 (add 2 3))",
+      "expansion_size": 5,
+      "hash": "30c4a6ff05d6516d411694d432a232841e142176cbf4f631e943f287fc8a466c",
+      "id": "L_91245740aedc",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F008-R1",
+       "mechanism_slot": "p0",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Bool",
+      "version": "tfs1-lib-v0"
+     },
+     {
+      "alias_of": null,
+      "body": "(div (add 1 h0) 3)",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(div (add 1 h0) 3)",
+      "expansion_size": 5,
+      "hash": "8b85855300a9d49d65744aa27fe3a32ee5761fb90de2f8a663e74855d3b76534",
+      "id": "L_a7616ca2cd22",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F006-R1",
+       "mechanism_slot": "f1",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     }
+    ],
+    "format": "tfs1-lib-v0"
+   },
+   "rung": "R4",
+   "static": {
+    "hitting_cost_bracket": [
+     11835,
+     124978
+    ],
+    "size_promoted_form": 7,
+    "uses_entries": [
+     "L_91245740aedc",
+     "L_a7616ca2cd22"
+    ],
+    "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+    "witness_refactored": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))"
+   },
+   "status": "SOLVED",
+   "units_expanded": 620942,
+   "units_promoted": 537660,
+   "uses_library": true,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   }
+  },
+  "W1d5301d0-F077-R4": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 48.72,
+   "family_id": "W1d5301d0-F077-R4",
+   "found": null,
+   "library": {
+    "closed_args": true,
+    "contract": "beta04-contract-v0",
+    "entries": [
+     {
+      "alias_of": null,
+      "body": "(lt h0 (add 2 3))",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(lt h0 (add 2 3))",
+      "expansion_size": 5,
+      "hash": "30c4a6ff05d6516d411694d432a232841e142176cbf4f631e943f287fc8a466c",
+      "id": "L_91245740aedc",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F008-R1",
+       "mechanism_slot": "p0",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Bool",
+      "version": "tfs1-lib-v0"
+     },
+     {
+      "alias_of": null,
+      "body": "(div (add 1 h0) 3)",
+      "body_size": 5,
+      "deps": [],
+      "depth": 1,
+      "expansion": "(div (add 1 h0) 3)",
+      "expansion_size": 5,
+      "hash": "8b85855300a9d49d65744aa27fe3a32ee5761fb90de2f8a663e74855d3b76534",
+      "id": "L_a7616ca2cd22",
+      "lineage": [],
+      "params": [
+       "Int"
+      ],
+      "provenance": {
+       "from": "W1d5301d0-F006-R1",
+       "mechanism_slot": "f1",
+       "procedure": "E3 s1 (ii)"
+      },
+      "ret": "Int",
+      "version": "tfs1-lib-v0"
+     }
+    ],
+    "format": "tfs1-lib-v0"
+   },
+   "rung": "R4",
+   "static": {
+    "hitting_cost_bracket": [
+     124979,
+     1365260
+    ],
+    "size_promoted_form": 8,
+    "uses_entries": [
+     "L_91245740aedc",
+     "L_a7616ca2cd22"
+    ],
+    "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+    "witness_refactored": "(map (lam x (if (L_91245740aedc x) (L_a7616ca2cd22 x) x)) xs)"
+   },
+   "status": "NOT_FOUND_AT_BUDGET",
+   "units_expanded": 9456510,
+   "units_promoted": 8292270
+  }
+ },
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "8d4215fe778bf18a32d64f42d3957547abf4ce9d1aed6f4ffb50f91978cd4196",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "7f67bd11f9a1dc3fde1b339699ff7e3f3e8379fbdf4bd3e927a5fd73fe0220c3",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "label": "EXPOSED DEV DATA (pilot_v2)",
+ "r1": {
+  "f1": {
+   "agrees_with_sealed_on_probe": 1.0,
+   "attempts": [
+    {
+     "charge": 49862,
+     "charges": 49862,
+     "complete_through_size": 5,
+     "cpu_s": 1.02,
+     "extraction": "readout_fallback",
+     "family_id": "W1d5301d0-F006-R1",
+     "found": "(div (add 1 (last xs)) 3)",
+     "mechanism_lambda": "(lam x (div (add 1 x) 3))",
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   ],
+   "extraction": "readout_fallback",
+   "from": "W1d5301d0-F006-R1",
+   "kind": "f",
+   "lambda": "(lam x (div (add 1 x) 3))",
+   "mechanism": "f1",
+   "status": "ACQUIRED"
+  },
+  "p0": {
+   "agrees_with_sealed_on_probe": 1.0,
+   "attempts": [
+    {
+     "charge": 27841,
+     "charges": 27841,
+     "complete_through_size": 6,
+     "cpu_s": 1.36,
+     "extraction": "closed_lambda",
+     "family_id": "W1d5301d0-F008-R1",
+     "found": "(filter (lam x (lt x (add 2 3))) xs)",
+     "mechanism_lambda": "(lam x (lt x (add 2 3)))",
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   ],
+   "extraction": "closed_lambda",
+   "from": "W1d5301d0-F008-R1",
+   "kind": "p",
+   "lambda": "(lam x (lt x (add 2 3)))",
+   "mechanism": "p0",
+   "status": "ACQUIRED"
+  },
+  "s0": {
+   "agrees_with_sealed_on_probe": 1.0,
+   "attempts": [
+    {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 62.39,
+     "family_id": "W1d5301d0-F010-R1",
+     "found": null
+    },
+    {
+     "charge": 286293,
+     "charges": 286293,
+     "complete_through_size": 7,
+     "cpu_s": 16.94,
+     "extraction": "closed_lambda",
+     "family_id": "W1d5301d0-F012-R1",
+     "found": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+     "mechanism_lambda": "(lam a (lam b (sub b (div a 3))))",
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   ],
+   "extraction": "closed_lambda",
+   "from": "W1d5301d0-F012-R1",
+   "kind": "s",
+   "lambda": "(lam a (lam b (sub b (div a 3))))",
+   "mechanism": "s0",
+   "status": "ACQUIRED"
+  }
+ },
+ "scratch": {
+  "W1d5301d0-F027-R3": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 53.16,
+   "family_id": "W1d5301d0-F027-R3",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  },
+  "W1d5301d0-F035-R3": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 49.77,
+   "family_id": "W1d5301d0-F035-R3",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  },
+  "W1d5301d0-F071-R4": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 8,
+   "cpu_s": 73.09,
+   "family_id": "W1d5301d0-F071-R4",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  },
+  "W1d5301d0-F077-R4": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 8,
+   "cpu_s": 70.73,
+   "family_id": "W1d5301d0-F077-R4",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  }
+ },
+ "verdict": {
+  "TFS1_INSTRUMENT_QUALIFIED_world": "NO",
+  "admitted_R3_R4": 4,
+  "chain_fraction": 0.75,
+  "chain_solved": 3,
+  "complete": true,
+  "rule": ">= 80% chain success AND from-scratch fails every admitted R3/R4 family (1e6 each)",
+  "scratch_solved": 0
+ },
+ "world": "W1d5301d0"
+}

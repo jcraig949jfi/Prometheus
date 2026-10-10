@@ -48,7 +48,7 @@
     "rso/reach/FREEZE_D1.md"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -91,6 +91,12 @@
       "by": "Argus[harry1-6417c3ea]",
       "at_utc": "2026-10-10T09:09:41Z",
       "note": "branch argus/c013-t010 head e3cbcb30e; freeze 66c7ccdae (code 307afe4b1); receipt attempts/A-001; STOPPED before the run (T012 after T011)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:33:46Z",
+      "note": "merged e3cbcb30e (freeze 66c7ccdae); 76 tests pass in the isolated venv C:/Prometheus-worktrees/argus-reach-venv (numba 0.65.1, pytest; NOT on system Python -- environment dependency recorded). INTEGRATOR FINDING (held for the one repair round, not shown to Pallas before its set is committed): mutating certify.selection_ok from >= 90% to >= 80% SURVIVES test_certify (9 passed) -- the selection threshold boundary is unpinned; the sealed class-exclusion ruler remains a second gate."
     }
   ],
   "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",

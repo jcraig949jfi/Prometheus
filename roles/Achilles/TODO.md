@@ -7,3 +7,12 @@ with the closing commit and date, purged after 24 h (base role s7).
       change verified from the email_dispatched receipt, Pages verified
 - [ ] ACHILLES-05: route the first-run data-quality defects to owners
 - [ ] sync comms at least every 60 minutes while live (CWO-30C s12)
+- [ ] ACHILLES-06 (2026-10-10): a parked census must be visible. While PARKED.json exists, exit non-zero (Task
+      Scheduler shows the failure) and have the mailer/page flag a census older than 2 cycles. Found after a silent
+      3-day park (DNS outage 2026-10-07).
+- [ ] ubu007: memory test (re-run after the 20:42Z move/power cut; pass 1 earlier was clean) -> full-load (8 threads,
+      ~10 min) thermal test lid closed -> enable worker. Repo + Claude token already done.
+- [ ] WATCH ubu007 TEMPERATURE (operator 2026-10-10): lid closed in its final spot, no battery, old fan (blown out).
+      Light load (1 thread) 60-75 C in the first minutes. Check under real worker load; act above ~90 C (lid open or
+      cap worker threads). Re-check periodically; add to the node health watchdog when that exists.
+- [ ] ubu008: seat + engine to move off M2 (operator choosing; default proposal Aether REACH01); full /login for RC.

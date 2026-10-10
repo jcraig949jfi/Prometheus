@@ -40,11 +40,19 @@ def run(path, k=8):
         print("  {:>4} x  {:>5}  {}".format(together, share, p))
     print("== NEAREST HERE")
     try:
-        ids, m = search.load_doc_matrix(embed.DOC_MODEL)
-        pos = np.where(ids == aid)[0]
+        from . import pgvec
+        if pgvec.backend() == "pg":
+            v = pgvec.stored_vector("doc", embed.DOC_MODEL, aid)
+            pos = [0] if v is not None else []
+            if v is not None:
+                order = [i for i, _ in pgvec.knn("doc", embed.DOC_MODEL, v, k + 1) if i != aid][:k]
+        else:
+            ids, m = search.load_doc_matrix(embed.DOC_MODEL)
+            pos = np.where(ids == aid)[0]
+            if len(pos):
+                sc = m.astype(np.float32) @ m[pos[0]].astype(np.float32)
+                order = [int(ids[i]) for i in np.argsort(-sc)[: k + 1] if int(ids[i]) != aid][:k]
         if len(pos):
-            sc = m.astype(np.float32) @ m[pos[0]].astype(np.float32)
-            order = [int(ids[i]) for i in np.argsort(-sc)[: k + 1] if int(ids[i]) != aid][:k]
             with db.cursor() as cur:
                 cur.execute("select artifact_id, path, kind, seat from pan.artifact where artifact_id = any(%s)", (order,))
                 meta = {r[0]: r for r in cur.fetchall()}
@@ -55,10 +63,10 @@ def run(path, k=8):
         else:
             search.similar_cli(path, k=k)
     except Exception as e:
-        print("  (vector neighbours unavailable on this host: {})".format(type(e).__name__))
+        print("  (vector neighbours unavailable on this host: {}: {})".format(type(e).__name__, e))
     print("== NEAREST OUTSIDE (exploratory; cited-paper recall@10 0.348)")
     try:
         from .frontier import query
         query.like_cli(path, k=min(k, 6))
     except Exception as e:
-        print("  (unavailable: {})".format(type(e).__name__))
+        print("  (unavailable on this host: {}: {})".format(type(e).__name__, e))

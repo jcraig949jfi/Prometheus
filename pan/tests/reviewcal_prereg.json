@@ -37,6 +37,14 @@
       "id": "A2",
       "date": "2026-10-10",
       "change": "Bookkeeping: the generator's 'survivors' was candidates tried minus mutants kept -- an upper bound, because the last batch's extra killed mutants were not needed. The counter now counts mutants the tests did NOT catch. First set: 64 tried, 40 kept, survivors <= 24."
+    },
+    {
+      "id": "A3",
+      "date": "2026-10-10",
+      "after_generation": true,
+      "before_any_reviewer_scored": true,
+      "change": "CHANCE FLOORS + SET v1 UNFIT. What a reviewer scores WITHOUT reviewing, under the frozen rule (python -m pan reviewcal floors; aggregates only): random line 0.379 recall at false-alarm 1.0; middle line 0.40; the line whose +-2 window holds most sites of the published operators 0.525 [0.375, 0.671]; a regex for the operators' textual signatures (`return None` from return_none, `not (` from ast.unparse in negate_if; flag that line, else abstain) 0.45 [0.307, 0.602] at false-alarm 0.05 (1/20); regex else site density 0.80 [0.652, 0.895] at 1.0. The frozen reliability rule (recall interval upper bound < 0.5 => unreliable) passes every one of these non-reviewers. Consequences: (1) set v1 (ITEMS_20261010T072739Z) is NOT used to calibrate any reviewer -- it measures pattern-spotting: 21 of 40 mutants carry their operator's text signature (return None: 14/40 mutant items, 0/20 clean; `not (`: 12/40 mutant, 1/20 clean); (2) a successor set v2 (backlog PAN-39) must pass a tell gate before freezing; (3) any reviewer is reported against the floors and counts as better than chance only if its recall exceeds the strongest floor scaled to its own false-alarm rate (abstaining at random moves a floor along recall = R_floor x FA).",
+      "evidence": "roles/Pan/reports/controls/REVIEWCAL_FLOORS_20261010T143738Z.json (controls 3/3)"
     }
   ]
 }

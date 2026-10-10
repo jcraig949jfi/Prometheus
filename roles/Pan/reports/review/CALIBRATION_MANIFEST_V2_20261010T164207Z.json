@@ -1,0 +1,17 @@
+{
+ "what": "PAN-39 seeded-bug calibration set v2, generated under pan/tests/reviewcal_prereg_v2.json (frozen and pushed BEFORE generation in 03b9c37c1)",
+ "generated": "2026-10-10T16:42:07Z (CPU lease lse-402f01b477bd, 16:39:35Z-16:42:24Z; 2 workers at BELOW_NORMAL priority because the operator's experiments held M2's CPU at 60-93 percent)",
+ "items": 60,
+ "mutants_killed_by_their_tests": 40,
+ "clean": 20,
+ "candidates_tried": 72,
+ "rejected_by_mutation_rule": 30,
+ "survivors": 32,
+ "ops": {"cmp_flip": 7, "bool_flip": 0, "arith_flip": 5, "off_by_one": 15, "negate_test": 13},
+ "items_sha256": "79b11d6a749041d6bdbde8f9ec4cb7daf1670dc67dff88aaa0cf5949cffa2f16",
+ "answers_sha256": "dbe79c199e2a0776e28b359f5e299c185a155ed2bd24eebdfc9d5923f1fd9e42",
+ "stored": "M2 lake only: C:/Prometheus-data/pan/lake/reviewcal/ITEMS_V2_20261010T164207Z.json and ANSWERS_V2_20261010T164207Z.json (never in the repository or the database)",
+ "tell_gate": "USABLE -- G1 0 tells in mutated segments; G2 surface_tell recall 0.025; G3 0 rare introduced shapes; G4 rare_bigram 0.10 <= 0.80 (controls/REVIEWCAL_FLOORS_V2_20261010T164224Z.json)",
+ "floors": "random line 0.361; middle line 0.475; site density 0.70 [0.546, 0.819] at false-alarm 1.0; surface_tell 0.025 at 0.10; rare_bigram 0.10",
+ "valid_for": "reviewers run WITHOUT repository access (v1 amendment A1 carries over); judged by prereg v2 better_than_chance: recall Wilson lower bound > max over floors of R_F x min(1, FA / FA_F) -- with these floors, 0.70 x the reviewer's false-alarm rate"
+}

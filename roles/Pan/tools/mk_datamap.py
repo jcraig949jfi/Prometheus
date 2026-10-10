@@ -1,7 +1,7 @@
 """Datasets behind the Prometheus Data Map dashboard (https://claude.ai/artifact/WygNq5aG2tp4xFiDJxYZCE):
 JSON files built from the live catalog, the newest inventory run and the committed control results.
 
-Usage (Pan venv, EW_DB_HOST set):  python roles/Pan/tools/mk_datamap.py OUT_DIR [--only architecture]
+Usage (Pan venv, EW_DB_HOST set):  python roles/Pan/tools/mk_datamap.py OUT_DIR [--only architecture|review|fleet]
 then upload each OUT_DIR/*.json as a dashboard asset and point its dataset at the new url.
 """
 import collections
@@ -203,9 +203,73 @@ def architecture():
     dump("architecture", rows)
 
 
+def review():
+    """PAN-37 review queue for the dashboard: the top of pan.review_unit and smell prevalence. Signals, never
+    verdicts; nothing is dispatched (QUESTIONS.md Q-011)."""
+    kinds = {"abs_path": "Hard-coded path", "lan_ip": "Hard-coded LAN address", "bare_except": "Bare except",
+             "except_pass": "except Exception: pass", "shell_true": "shell=True", "eval_exec": "eval / exec",
+             "long_function": "Function over 150 lines", "syntax_error": "Does not parse"}
+    with db.cursor() as cur:
+        cur.execute("""select path, coalesce(seat, ''), commits_7d, commits_30d, tested_by, smells, score, repo_sha
+                       from pan.review_unit where score > 0 order by score desc, commits_7d desc, path limit 20""")
+        rows = cur.fetchall()
+        dump("review_queue", [dict(path=p, seat=s, commits_7d=a7, commits_30d=a30, tested_by=tb,
+                                   smells=", ".join(kinds.get(k, k) for k in sorted(sm)), score=sc, repo_sha=sha[:9])
+                              for p, s, a7, a30, tb, sm, sc, sha in rows])
+        cur.execute("""select k, count(*), count(*) filter (where commits_30d > 0) from pan.review_unit,
+                       jsonb_object_keys(smells) k group by 1 order by 2 desc""")
+        dump("review_smells", [dict(kind=kinds.get(k, k), modules=int(n), changed_30d=int(c))
+                               for k, n, c in cur.fetchall()])
+
+
+def fleet_tabs():
+    """PAN-38 Machines and Pantheon tabs: the register merged with probes (pan.fleet.machines) and seat activity
+    (pan.fleet.seats). Run `python -m pan fleet probe` first for fresh measurements."""
+    import subprocess
+    from pan import fleet
+    ms = fleet.machines()
+    names = {m["host"]: m["name"] for m in ms}
+    keep = ("name", "host", "label", "family", "status", "last_seen", "seen_by", "os", "hardware", "model_measured",
+            "cpu", "cores", "threads", "ram_gb", "gpu", "vram_gb", "cuda", "disk", "disk_total_gb", "free_gb",
+            "free_where", "ip", "tags", "seats_7d", "n_seats_7d", "fabric_workers", "specs", "checked_at", "mismatch",
+            "notes")
+    dump("machines", [{k: m.get(k) for k in keep} for m in ms])
+    rows, meta = fleet.seats()
+    for r in rows:
+        r["last_machine"] = names.get(r["last_machine"], r["last_machine"])
+    dump("seats", rows)
+    with db.cursor() as cur:
+        cur.execute("""select count(*) from comms.agents where status = 'active'
+                       and coalesce(last_active_at, 'epoch') < now() - interval '24 hours'""")
+        meta["comms_active_but_idle_24h"] = cur.fetchone()[0]
+        cur.execute("select max(probed_at) from pan.host_probe where ok")
+        t = cur.fetchone()[0]
+        meta["last_probe_at"] = fleet._iso(t)
+    meta["register_changed"] = subprocess.run(
+        ["git", "-C", W, "log", "-1", "--format=%cs", "HEAD", "--", fleet.DOC], capture_output=True, text=True).stdout.strip()
+    # from each host's NEWEST ssh probe (not from a label): failed for want of a stored host key, or unreachable
+    with db.cursor() as cur:
+        cur.execute("""select distinct on (host) host, ok, coalesce(error, '') from pan.host_probe where method = 'ssh'
+                       order by host, probed_at desc""")
+        newest = {h: (ok, err) for h, ok, err in cur.fetchall()}
+    linux = {m["host"] for m in ms if m["family"] == "Linux"}
+    meta["machines_unprobed_no_hostkey"] = ", ".join(
+        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" in newest[h][1])
+    meta["machines_unreachable"] = ", ".join(
+        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" not in newest[h][1])
+    meta["hardware_table_read"] = fleet.parse_hw(fleet.git_show(fleet.HW_DOC))[1]
+    dump("fleet_meta", [meta])
+
+
 if __name__ == "__main__":
     if ONLY == "architecture":
         architecture()
+    elif ONLY == "review":
+        review()
+    elif ONLY == "fleet":
+        fleet_tabs()
     else:
         main()
         architecture()
+        review()
+        fleet_tabs()

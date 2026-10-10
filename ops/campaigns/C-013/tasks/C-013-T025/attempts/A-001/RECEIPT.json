@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T025",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "c2b39fa8d84434a7aed268b1aaeea58fe26b2954",
+  "end_sha": "6ebaf9acffb913bb2af80b7cf4b704ee714187e5",
+  "files_changed": [
+    "rso/scale/runner/relaunch.py",
+    "rso/scale/runner/sched_sim.py",
+    "rso/scale/runner/RELAUNCH.md",
+    "rso/scale/runner/__main__.py",
+    "rso/scale/runner/store.py",
+    "rso/scale/runner/tests/test_relaunch.py",
+    "rso/scale/runner/tests/test_store.py",
+    "rso/scale/runner/evidence/ (RED_T025.txt, GREEN_T025.txt, MUTATION_RELAUNCH_T025.json, RELAUNCH_FIRE_RESULT_T025.json)"
+  ],
+  "evidence_added": [
+    "python -m rso.scale.runner relaunch <run_dir>: decides from the run directory alone (COMPLETE / HALTED / RUNNING / BLOCKED / LAUNCHED), check+launch under .relaunch.lock and returns once the new supervisor is live; acquire_supervisor is the second guard; every fire logged to supervisor/relaunch.jsonl; refuses the canonical checkout",
+    "sched_sim.py: simulated scheduler (subprocess per fire on a timer). Fire test: supervisor and worker killed mid-epoch, no session acts, fires: LAUNCHED, 5x RUNNING, COMPLETE, COMPLETE (after completion); exactly one SUPERVISOR_START after the kill; 1 interrupted attempt accounted; run digest == control (74ca8e75...); 8/8 criteria",
+    "latent bug found and fixed: store.FileLock raised PermissionError on Windows under contention (os.remove while a waiter had the file open; os.open mid-delete); fix + test_store regression test",
+    "RELAUNCH.md: Task Scheduler and systemd install commands, written down and NOT run"
+  ],
+  "evidence_executed": [
+    {"command": "python -m unittest rso.scale.runner.tests.test_relaunch (before relaunch.py/sched_sim.py)", "result": "ImportError, FAILED (errors=1) (RED, evidence/RED_T025.txt); test_store FileLock regression RED without the fix"},
+    {"command": "python -m unittest discover -s rso/scale/runner/tests -t .", "result": "56 OK (evidence/GREEN_T025.txt)"},
+    {"command": "5 mutants (relaunch: ignore live supervisor / HALTED / BLOCKED / no lock; FileLock PermissionError)", "result": "5/5 killed (evidence/MUTATION_RELAUNCH_T025.json); the concurrent-fire test was flaky once before the FileLock fix, 8/8 stable after"},
+    {"command": "sched_sim.fire_test(toy, 2 partitions x 3 epochs, interval 2 s)", "result": "failed=[] (evidence/RELAUNCH_FIRE_RESULT_T025.json); peak sampled runner processes 2"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "tests written first and run against the missing modules (ImportError); tests and code committed together, so RED is not a separate commit"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "NO OS scheduler task, service or timer was installed on any host (hard limit); the real Task Scheduler / systemd path is untested by design",
+    "the fire is a short subprocess beside supervisor + worker; the sampled peak of run-related processes was 2 (fires too brief to be sampled at 0.2 s, so a third transient process is not excluded)",
+    "BLOCKED / CAP_REFUSED runs stay down until an explicit launch; a stale-heartbeat cross-host supervisor is only replaced after 120 s (existing supervisor.py rule)",
+    "toy engine only for the scheduler fire test (small, within CPU budget); the relaunch path is engine-agnostic"
+  ],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-10T10:45:00Z",
+  "instance": "harry1-13757eac",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c013-t024",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c013-t024",
+  "resources": {"cpu": "suites, mutants and fire tests ~12 CPU-min total with T024 (< 0.5 core-hour)", "validation_launches": 0, "gpu": 0, "cloud_usd": 0, "model": "one Q1 session"},
+  "notes": "No Fabric restart, no OS scheduler install. Design and install docs: rso/scale/runner/RELAUNCH.md."
+}

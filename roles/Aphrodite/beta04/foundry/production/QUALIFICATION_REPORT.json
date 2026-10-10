@@ -1,0 +1,4903 @@
+{
+ "config_sha": "c199f0ae8845f60fc16303840c25f68df640572bb41ba382dd2c96308da66ddf",
+ "planted_controls": [
+  {
+   "expect": "lookup solves (test inputs == dev inputs; not contract-conformant)",
+   "family_id": "PLANTED-LOOKUP",
+   "regression": null,
+   "solved_by": [
+    "lookup",
+    "history2"
+   ]
+  },
+  {
+   "expect": "nothing solves",
+   "family_id": "PLANTED-RANDOM",
+   "regression": null,
+   "solved_by": []
+  },
+  {
+   "expect": "reactive (elementwise table) solves",
+   "family_id": "PLANTED-REACTIVE",
+   "regression": null,
+   "solved_by": [
+    "reactive"
+   ]
+  },
+  {
+   "expect": "regression (W) solves",
+   "family_id": "PLANTED-REGRESSION-W",
+   "regression": "W",
+   "solved_by": [
+    "regression"
+   ]
+  },
+  {
+   "expect": "regression (E) solves",
+   "family_id": "PLANTED-REGRESSION-E",
+   "regression": "E",
+   "solved_by": [
+    "regression"
+   ]
+  },
+  {
+   "expect": "regression does NOT solve (multiplicative accumulator)",
+   "family_id": "PLANTED-NONLINEAR-FOLD",
+   "regression": null,
+   "solved_by": []
+  }
+ ],
+ "pooled": {
+  "E1": "WORLD_DEMAND_NOT_QUALIFIED (motif coverage: 2 kind-pairs < 3)",
+  "by_rung": {
+   "R0": {
+    "admitted": 0,
+    "classes": {
+     "DUPLICATE": 2,
+     "TRIVIAL_BY_LIBRARY": 11,
+     "TRIVIAL_BY_REACTIVE": 45,
+     "TRIVIAL_BY_REGRESSION": 14,
+     "TRIVIAL_BY_SMALL_SEARCH": 2
+    },
+    "gen_ok": 72,
+    "generated": 74
+   },
+   "R1": {
+    "admitted": 0,
+    "classes": {
+     "DEGENERATE": 8,
+     "DUPLICATE": 36,
+     "NEAR_TRIVIAL": 5,
+     "QUALIFIED": 93,
+     "TRIVIAL_BY_LIBRARY": 1,
+     "TRIVIAL_BY_REACTIVE": 8,
+     "TRIVIAL_BY_SMALL_SEARCH": 11
+    },
+    "gen_ok": 118,
+    "generated": 162
+   },
+   "R2": {
+    "admitted": 38,
+    "classes": {
+     "DEGENERATE": 19,
+     "DUPLICATE": 7,
+     "FAIL_PRONE": 4,
+     "KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED": 3,
+     "KNOWN_POSITIVE_FAIL:HORIZON": 42,
+     "MOTIF_CAP": 4,
+     "NEAR_TRIVIAL": 8,
+     "QUALIFIED": 38,
+     "SYNTHETIC_DEPTH": 4,
+     "TRIVIAL_BY_BASE_1E6": 4,
+     "TRIVIAL_BY_LIBRARY": 2,
+     "TRIVIAL_BY_REACTIVE": 4,
+     "TRIVIAL_BY_REGRESSION": 11
+    },
+    "gen_ok": 120,
+    "generated": 150
+   },
+   "R3": {
+    "admitted": 8,
+    "classes": {
+     "CHAIN_C_FAIL:f0": 8,
+     "CHAIN_C_FAIL:f0+f1": 1,
+     "CHAIN_C_FAIL:f0+s0": 1,
+     "CHAIN_C_FAIL:f0+s1": 3,
+     "CHAIN_C_FAIL:f1": 21,
+     "CHAIN_C_FAIL:f1+s0": 3,
+     "CHAIN_C_FAIL:f1+s1": 13,
+     "CHAIN_C_FAIL:p0": 1,
+     "CHAIN_C_FAIL:p0+s1": 2,
+     "CHAIN_C_FAIL:s0": 28,
+     "CHAIN_C_FAIL:s0+s1": 5,
+     "CHAIN_C_FAIL:s1": 26,
+     "CHAIN_D_FAIL:HORIZON": 7,
+     "CHAIN_D_FAIL:NOT_FOUND": 2,
+     "CHAIN_D_FAIL:TRIBUNAL": 1,
+     "DEGENERATE": 6,
+     "DUPLICATE": 17,
+     "FAIL_PRONE": 11,
+     "NEAR_TRIVIAL": 4,
+     "QUALIFIED": 8,
+     "SYNTHETIC_DEPTH": 1,
+     "TRIVIAL_BY_BASE_1E6": 2,
+     "TRIVIAL_BY_LOOKUP": 1,
+     "TRIVIAL_BY_REGRESSION": 6
+    },
+    "gen_ok": 144,
+    "generated": 178
+   },
+   "R4": {
+    "admitted": 7,
+    "classes": {
+     "CHAIN_C_FAIL:f0": 9,
+     "CHAIN_C_FAIL:f1": 10,
+     "CHAIN_C_FAIL:f1+p0": 4,
+     "CHAIN_C_FAIL:f1+s0": 2,
+     "CHAIN_C_FAIL:f1+s1": 4,
+     "CHAIN_C_FAIL:p0": 2,
+     "CHAIN_C_FAIL:s0": 5,
+     "CHAIN_C_FAIL:s1": 16,
+     "CHAIN_D_FAIL:HORIZON": 3,
+     "DEGENERATE": 2,
+     "DUPLICATE": 4,
+     "FAIL_PRONE": 16,
+     "QUALIFIED": 7,
+     "SYNTHETIC_DEPTH": 4,
+     "TRIVIAL_BY_LIBRARY": 1,
+     "TRIVIAL_BY_REACTIVE": 2,
+     "TRIVIAL_BY_REGRESSION": 3
+    },
+    "gen_ok": 72,
+    "generated": 94
+   },
+   "R5": {
+    "admitted": 0,
+    "classes": {
+     "CHAIN_C_FAIL:f0": 10,
+     "CHAIN_C_FAIL:f0+s0": 1,
+     "CHAIN_C_FAIL:f0+s1": 2,
+     "CHAIN_C_FAIL:f1": 18,
+     "CHAIN_C_FAIL:f1+s0": 2,
+     "CHAIN_C_FAIL:f1+s1": 13,
+     "CHAIN_C_FAIL:p0": 2,
+     "CHAIN_C_FAIL:s0": 15,
+     "CHAIN_C_FAIL:s0+s1": 3,
+     "CHAIN_C_FAIL:s1": 12,
+     "CHAIN_D_FAIL:HORIZON": 8,
+     "DEGENERATE": 13,
+     "DUPLICATE": 13,
+     "FAIL_PRONE": 1,
+     "NEAR_TRIVIAL": 2,
+     "SYNTHETIC_DEPTH": 2,
+     "TRIVIAL_BY_BASE_1E6": 1,
+     "TRIVIAL_BY_REACTIVE": 2,
+     "TRIVIAL_BY_REGRESSION": 3
+    },
+    "gen_ok": 96,
+    "generated": 123
+   }
+  },
+  "kind_pairs_admitted": [
+   "fp",
+   "fs"
+  ],
+  "worlds_passing_gate": [
+   "W2bdef02f",
+   "W483b8c31",
+   "W0321d83c",
+   "W480ffd54",
+   "W6eb945cc"
+  ]
+ },
+ "qual_config_sha": "22d2c38767a22e3a4ceb34c5f8424be8363cafe18d027c911016afcf97dee089",
+ "worlds": {
+  "W0321d83c": {
+   "E1_gate": "PASS",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mod x (add 3 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (div x 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "family_id": "W0321d83c-F024-R2",
+     "fused_key": "R2|s:extra_struct|s1",
+     "kind_pair": null,
+     "kp_found": "(foldl (lam a (lam b (s1 a b))) 1 (rev xs))",
+     "kp_order_free_rank": 351982,
+     "kp_rank": 539443,
+     "rung": "R2",
+     "skeleton": "R2:s:extra_struct",
+     "witness_esize": 11,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 1 (rev xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.075,
+     "family_id": "W0321d83c-F026-R2",
+     "fused_key": "R2|f:extra_struct|f1",
+     "kind_pair": null,
+     "kp_found": "(max (take 3 (map (lam x (f1 x)) xs)))",
+     "kp_order_free_rank": 351982,
+     "kp_rank": 120223,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_struct+red",
+     "witness_esize": 12,
+     "witness_promoted": "(max (take 3 (map (lam x (f1 x)) xs)))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.25,
+     "chain_found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+     "chain_order_free_rank": 31773,
+     "chain_rank": 22524,
+     "family_id": "W0321d83c-F040-R3",
+     "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:map_of_filter",
+     "witness_esize": 13,
+     "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_REGRESSION": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "DUPLICATE": 4,
+      "QUALIFIED": 7,
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R2": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W0321d83c-F024-R2",
+      "W0321d83c-F026-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "DEGENERATE": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 5,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 2,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 10,
+     "generated": 11
+    },
+    "R3": {
+     "admitted": 1,
+     "admitted_ids": [
+      "W0321d83c-F040-R3"
+     ],
+     "bands": {
+      "BELOW_BAND": 9,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 1,
+      "CHAIN_C_FAIL:f1+s0": 2,
+      "CHAIN_C_FAIL:f1+s1": 1,
+      "CHAIN_C_FAIL:s0": 2,
+      "CHAIN_C_FAIL:s1": 4,
+      "DEGENERATE": 1,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 1
+     },
+     "gen_ok": 12,
+     "generated": 13
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 1,
+      "CHAIN_C_FAIL:s0": 3,
+      "FAIL_PRONE": 3,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 6,
+     "generated": 9
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1+s0": 2,
+      "CHAIN_C_FAIL:s0": 1,
+      "CHAIN_C_FAIL:s1": 2,
+      "DEGENERATE": 1,
+      "DUPLICATE": 1,
+      "NEAR_TRIVIAL": 2,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 8,
+     "generated": 10
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 5,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 11,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 13,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 9,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 10,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 2,
+    "CONSTANT": 26,
+    "FAIL_PRONE": 119,
+    "FOLD_LOW_DIVERSITY": 4,
+    "FOLD_UNSTABLE": 3,
+    "IDENTITY_LIKE": 22,
+    "LOW_DIVERSITY": 10,
+    "PRED_BALANCE": 59,
+    "PROJECTION": 1,
+    "R1_REGRESSION": 55,
+    "REDUCIBLE": 52,
+    "SIZE": 832,
+    "UNUSED_ARGUMENT": 65
+   },
+   "mechanisms": [
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 6,
+      "draws": 111,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 6
+     },
+     "term": "(lam x (mod x (mul 3 2)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 21,
+      "draws": 599,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 48
+     },
+     "term": "(lam x (mul (gcd x x) (add 2 3)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 334,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.366
+     },
+     "term": "(lam x (lt (add 3 2) x))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 8,
+      "esize": 7,
+      "fold_distinct": 22,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (gcd (mul b b) (mul b a))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 203,
+      "esize": 7,
+      "fold_distinct": 80,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 4
+     },
+     "term": "(lam a (lam b (add (gcd b a) (mul b a))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.654,
+    "SHUFFLED_UNIFORM_2": 0.692,
+    "SHUFFLED_UNIFORM_3": 0.692,
+    "SHUFFLED_UNIFORM_4": 0.731,
+    "SHUFFLED_UNIFORM_5": 0.269,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 876.9,
+   "r3_pairs": [
+    "f0+p0",
+    "f0+s0",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s1"
+   ],
+   "r4_pairs": [
+    "f0+f1",
+    "p0+s0",
+    "s0+s1"
+   ],
+   "regression_rejected_candidates": 55,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W09efdf93": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mul x (div x 3)))"
+    },
+    "s0": {
+     "agree_with_sealed": 0.0,
+     "term": "(lam a (lam b (mul a b)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.3,
+     "family_id": "W09efdf93-F018-R2",
+     "fused_key": "R2|f:base_post|f0",
+     "kind_pair": null,
+     "kp_found": "(pow (f0 (head xs)) 2)",
+     "kp_order_free_rank": 3503,
+     "kp_rank": 3750,
+     "rung": "R2",
+     "skeleton": "R2:f:base_post",
+     "witness_esize": 21,
+     "witness_promoted": "(mul (head (map (lam x (f0 x)) xs)) (head (map (lam x (f0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.05,
+     "family_id": "W09efdf93-F024-R2",
+     "fused_key": "R2|f:base_fold|f1",
+     "kind_pair": null,
+     "kp_found": "(sum (map (lam x (f1 x)) xs))",
+     "kp_order_free_rank": 3503,
+     "kp_rank": 1299,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W09efdf93-F029-R2",
+     "fused_key": "R2|f:extra_p|f1",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (f1 x)) (filter (lam x (lt 2 x)) xs))",
+     "kp_order_free_rank": 491605,
+     "kp_rank": 320345,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_p",
+     "witness_esize": 13,
+     "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (lt 2 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_REGRESSION": 3
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "DUPLICATE": 2,
+      "QUALIFIED": 8,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gen_ok": 10,
+     "generated": 12
+    },
+    "R2": {
+     "admitted": 3,
+     "admitted_ids": [
+      "W09efdf93-F018-R2",
+      "W09efdf93-F024-R2",
+      "W09efdf93-F029-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "DEGENERATE": 3,
+      "FAIL_PRONE": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 3,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 3,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 9,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 4,
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "CHAIN_C_FAIL:p0": 1,
+      "CHAIN_C_FAIL:p0+s1": 2,
+      "CHAIN_D_FAIL:NOT_FOUND": 2,
+      "FAIL_PRONE": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "gen_ok": 12,
+     "generated": 14
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1+p0": 4,
+      "CHAIN_C_FAIL:p0": 2,
+      "DUPLICATE": 1,
+      "FAIL_PRONE": 3
+     },
+     "gen_ok": 6,
+     "generated": 10
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 3
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:f1+s1": 3,
+      "CHAIN_C_FAIL:p0": 2,
+      "CHAIN_D_FAIL:HORIZON": 1,
+      "DUPLICATE": 1
+     },
+     "gen_ok": 8,
+     "generated": 9
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "UNDERDETERMINED",
+     "UNDERDETERMINED"
+    ],
+    "s0": [
+     "ACQUIRED",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 14,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 14,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 10,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 9,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 11,
+    "CONSTANT": 5,
+    "FAIL_PRONE": 55,
+    "FOLD_LOW_DIVERSITY": 4,
+    "FOLD_UNSTABLE": 3,
+    "IDENTITY_LIKE": 6,
+    "PRED_BALANCE": 6,
+    "PROJECTION": 2,
+    "R1_REGRESSION": 11,
+    "REDUCIBLE": 17,
+    "SIZE": 331,
+    "UNUSED_ARGUMENT": 49
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 33,
+      "draws": 94,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 6
+     },
+     "term": "(lam x (add 0 (mul (div x 3) x)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 9,
+      "draws": 80,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2
+     },
+     "term": "(lam x (mod (add 1 x) (mul 3 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 54,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.439
+     },
+     "term": "(lam x (lt (sub (gcd x 3) 0) x))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 85,
+      "esize": 7,
+      "fold_distinct": 77,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (add (mul b a) (gcd 1 1))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 192,
+      "esize": 7,
+      "fold_distinct": 78,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 4
+     },
+     "term": "(lam a (lam b (add (mul a (mul b 3)) b)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.346,
+    "SHUFFLED_UNIFORM_2": 0.692,
+    "SHUFFLED_UNIFORM_3": 0.692,
+    "SHUFFLED_UNIFORM_4": 0.615,
+    "SHUFFLED_UNIFORM_5": 0.5,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 887.8,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+p0",
+    "f0+s0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+s1",
+    "f1+p0",
+    "p0+s0"
+   ],
+   "regression_rejected_candidates": 11,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W2bdef02f": {
+   "E1_gate": "PASS",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mod x (mul 3 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (div x 3)))"
+    },
+    "s0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam a (lam b (sub (gcd a b) a)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.65,
+     "family_id": "W2bdef02f-F022-R2",
+     "fused_key": "R2|f:guard|f0",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (max (scanl (lam a (lam b x)) (f0 x) xs))) xs)",
+     "kp_order_free_rank": 495337,
+     "kp_rank": 368479,
+     "rung": "R2",
+     "skeleton": "R2:f:guard",
+     "witness_esize": 12,
+     "witness_promoted": "(map (lam x (if (gt 1 x) (f0 x) x)) xs)"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W2bdef02f-F024-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(pow (sum (filter (lam x (p0 x)) xs)) 2)",
+     "kp_order_free_rank": 338651,
+     "kp_rank": 410414,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 19,
+     "witness_promoted": "(mul (sum (filter (lam x (p0 x)) xs)) (sum (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W2bdef02f-F026-R2",
+     "fused_key": "R2|s:base_post|s1",
+     "kind_pair": null,
+     "kp_found": "(neg (foldl (lam a (lam b (s1 a b))) 0 xs))",
+     "kp_order_free_rank": 338651,
+     "kp_rank": 90142,
+     "rung": "R2",
+     "skeleton": "R2:s:base_post",
+     "witness_esize": 12,
+     "witness_promoted": "(sub 0 (foldl (lam a (lam b (s1 a b))) 0 xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W2bdef02f-F027-R2",
+     "fused_key": "R2|f:base_fold|f0",
+     "kind_pair": null,
+     "kp_found": "(neg (sum (map (lam x (f0 x)) xs)))",
+     "kp_order_free_rank": 28916,
+     "kp_rank": 4853,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 12,
+     "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W2bdef02f-F031-R2",
+     "fused_key": "R2|s:base_fold|s1",
+     "kind_pair": null,
+     "kp_found": "(sum (scanl (lam a (lam b (s1 a b))) 0 xs))",
+     "kp_order_free_rank": 338651,
+     "kp_rank": 114686,
+     "rung": "R2",
+     "skeleton": "R2:s:base_fold",
+     "witness_esize": 15,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (scanl (lam a (lam b (s1 a b))) 0 xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.175,
+     "chain_found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+     "chain_order_free_rank": 35491,
+     "chain_rank": 24088,
+     "family_id": "W2bdef02f-F042-R3",
+     "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:map_of_filter",
+     "witness_esize": 14,
+     "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "s0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.175,
+     "chain_found": "(q0 (foldl (lam a (lam b (q2 a b))) 1 xs))",
+     "chain_order_free_rank": 196839,
+     "chain_rank": 114036,
+     "family_id": "W2bdef02f-F048-R4",
+     "fused_key": "R4|f o ACC(s)|f0+s0",
+     "kind_pair": "fs",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fs:post_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(f0 (foldl (lam a (lam b (s0 a b))) 1 xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "s0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(scanl (lam a (lam b (q2 a (q0 b)))) 1 xs)",
+     "chain_order_free_rank": 35491,
+     "chain_rank": 50929,
+     "family_id": "W2bdef02f-F051-R4",
+     "fused_key": "R4|ACC(s)o MAP(f)|f0+s0",
+     "kind_pair": "fs",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fs:scan_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 5
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 4
+     },
+     "classes": {
+      "DUPLICATE": 6,
+      "NEAR_TRIVIAL": 2,
+      "QUALIFIED": 6,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gen_ok": 10,
+     "generated": 16
+    },
+    "R2": {
+     "admitted": 5,
+     "admitted_ids": [
+      "W2bdef02f-F022-R2",
+      "W2bdef02f-F024-R2",
+      "W2bdef02f-F026-R2",
+      "W2bdef02f-F027-R2",
+      "W2bdef02f-F031-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 6,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "DEGENERATE": 1,
+      "DUPLICATE": 1,
+      "KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 2,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 5,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 10,
+     "generated": 12
+    },
+    "R3": {
+     "admitted": 1,
+     "admitted_ids": [
+      "W2bdef02f-F042-R3"
+     ],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 4
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 5,
+      "CHAIN_C_FAIL:s1": 3,
+      "CHAIN_D_FAIL:HORIZON": 2,
+      "QUALIFIED": 1,
+      "SYNTHETIC_DEPTH": 1
+     },
+     "gen_ok": 12,
+     "generated": 12
+    },
+    "R4": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W2bdef02f-F048-R4",
+      "W2bdef02f-F051-R4"
+     ],
+     "bands": {
+      "BELOW_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "CHAIN_C_FAIL:s1": 2,
+      "QUALIFIED": 2
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 5
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 5,
+      "CHAIN_C_FAIL:s1": 2,
+      "DEGENERATE": 2,
+      "FAIL_PRONE": 1,
+      "SYNTHETIC_DEPTH": 1
+     },
+     "gen_ok": 8,
+     "generated": 11
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "UNDERDETERMINED",
+     "UNDERDETERMINED"
+    ],
+    "p0": [
+     "UNDERDETERMINED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "ACQUIRED"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 6,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 4,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 12,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 12,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 11,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 1,
+    "CONSTANT": 62,
+    "FAIL_PRONE": 206,
+    "FOLD_LOW_DIVERSITY": 1,
+    "IDENTITY_LIKE": 25,
+    "LOW_DIVERSITY": 13,
+    "MAGNITUDE": 1,
+    "PRED_BALANCE": 99,
+    "R1_REGRESSION": 84,
+    "REDUCIBLE": 110,
+    "SIZE": 1417,
+    "UNUSED_ARGUMENT": 52
+   },
+   "mechanisms": [
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 9,
+      "draws": 720,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 40
+     },
+     "term": "(lam x (mod x (pow 3 2)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 41,
+      "draws": 669,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 45
+     },
+     "term": "(lam x (sub (pow 0 x) (mul x 2)))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 628,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2,
+      "true_frac": 0.366
+     },
+     "term": "(lam x (lt (sub 3 x) (neg 2)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 57,
+      "esize": 7,
+      "fold_distinct": 30,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (sub (gcd 0 (gcd a b)) a)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 2,
+      "esize": 7,
+      "fold_distinct": 47,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (add (add b (gcd a b)) a)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.423,
+    "SHUFFLED_UNIFORM_2": 0.385,
+    "SHUFFLED_UNIFORM_3": 0.231,
+    "SHUFFLED_UNIFORM_4": 0.423,
+    "SHUFFLED_UNIFORM_5": 0.692,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 875.7,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+p0",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "p0+s0",
+    "p0+s1"
+   ],
+   "r4_pairs": [
+    "f0+s0",
+    "f1+s1",
+    "s0+s1"
+   ],
+   "regression_rejected_candidates": 84,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W38fc86d7": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mod (neg x) (pow 2 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (sub x 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.675,
+     "family_id": "W38fc86d7-F025-R2",
+     "fused_key": "R2|f:extra_f|f1",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (add 1 (f1 x))) xs)",
+     "kp_order_free_rank": 4362,
+     "kp_rank": 4026,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_f",
+     "witness_esize": 13,
+     "witness_promoted": "(map (lam x (add x 1)) (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.45,
+     "family_id": "W38fc86d7-F029-R2",
+     "fused_key": "R2|f:extra_p|f0",
+     "kind_pair": null,
+     "kp_found": "(len (filter (lam x (eq 1 (f0 x))) xs))",
+     "kp_order_free_rank": 346052,
+     "kp_rank": 96447,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_p+red",
+     "witness_esize": 14,
+     "witness_promoted": "(sum (filter (lam x (not (gt x 1))) (map (lam x (f0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.15,
+     "family_id": "W38fc86d7-F031-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(add 3 (sum (filter (lam x (p0 x)) xs)))",
+     "kp_order_free_rank": 346052,
+     "kp_rank": 229691,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 11,
+     "witness_promoted": "(add (sum (filter (lam x (p0 x)) xs)) 3)"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.35,
+     "family_id": "W38fc86d7-F035-R2",
+     "fused_key": "R2|f:guard|f1",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (max (scanl (lam a (lam b x)) (f1 x) xs))) xs)",
+     "kp_order_free_rank": 510665,
+     "kp_rank": 379890,
+     "rung": "R2",
+     "skeleton": "R2:f:guard",
+     "witness_esize": 14,
+     "witness_promoted": "(map (lam x (if (lt x 3) (f1 x) x)) xs)"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "DUPLICATE": 2,
+      "TRIVIAL_BY_REACTIVE": 5,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 6,
+     "generated": 8
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 5,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DUPLICATE": 6,
+      "QUALIFIED": 9,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 10,
+     "generated": 16
+    },
+    "R2": {
+     "admitted": 4,
+     "admitted_ids": [
+      "W38fc86d7-F025-R2",
+      "W38fc86d7-F029-R2",
+      "W38fc86d7-F031-R2",
+      "W38fc86d7-F035-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 7,
+      "IN_BAND": 3
+     },
+     "classes": {
+      "DEGENERATE": 2,
+      "DUPLICATE": 2,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 5,
+      "QUALIFIED": 4,
+      "TRIVIAL_BY_BASE_1E6": 1
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:s0": 4,
+      "CHAIN_C_FAIL:s0+s1": 1,
+      "CHAIN_C_FAIL:s1": 4,
+      "DUPLICATE": 2,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 12,
+     "generated": 14
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:f1+s0": 2,
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "DEGENERATE": 1
+     },
+     "gen_ok": 6,
+     "generated": 7
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 1,
+      "IN_BAND": 5,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 1,
+      "CHAIN_C_FAIL:s0": 4,
+      "CHAIN_C_FAIL:s1": 1,
+      "DEGENERATE": 1,
+      "DUPLICATE": 3,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 8,
+     "generated": 12
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "UNDERDETERMINED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 8,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 4,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 4,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 4,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 14,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 14,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 7,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 12,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 28,
+    "CONSTANT": 27,
+    "FAIL_PRONE": 176,
+    "FOLD_LOW_DIVERSITY": 19,
+    "FOLD_UNSTABLE": 10,
+    "IDENTITY_LIKE": 24,
+    "LOW_DIVERSITY": 10,
+    "MAGNITUDE": 4,
+    "PRED_BALANCE": 5,
+    "PROJECTION": 6,
+    "R1_REGRESSION": 58,
+    "REDUCIBLE": 61,
+    "SIZE": 1324,
+    "UNUSED_ARGUMENT": 210
+   },
+   "mechanisms": [
+    {
+     "body_esize": 6,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 8,
+      "draws": 114,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 6
+     },
+     "term": "(lam x (mod (neg x) (pow 2 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 31,
+      "draws": 725,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 43
+     },
+     "term": "(lam x (sub x (div x (mul 2 2))))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 56,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.39
+     },
+     "term": "(lam x (not (lt (sub x 2) 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 279,
+      "esize": 7,
+      "fold_distinct": 37,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 5
+     },
+     "term": "(lam a (lam b (sub (sub a (gcd b a)) 2)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 793,
+      "esize": 7,
+      "fold_distinct": 36,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 8
+     },
+     "term": "(lam a (lam b (div (sub (mul b 2) a) 2)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.538,
+    "SHUFFLED_UNIFORM_2": 0.423,
+    "SHUFFLED_UNIFORM_3": 0.346,
+    "SHUFFLED_UNIFORM_4": 0.346,
+    "SHUFFLED_UNIFORM_5": 0.769,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 1037.1,
+   "r3_pairs": [
+    "f0+p0",
+    "f0+s0",
+    "f0+s1",
+    "f1+p0",
+    "p0+s0",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+f1",
+    "f1+s0",
+    "f1+s1"
+   ],
+   "regression_rejected_candidates": 58,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W3a22e2ee": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mod x (mul 3 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (sub x 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.375,
+     "family_id": "W3a22e2ee-F024-R2",
+     "fused_key": "R2|f:extra_f|f0",
+     "kind_pair": null,
+     "kp_found": "(neg (min (map (lam x (f0 x)) xs)))",
+     "kp_order_free_rank": 27503,
+     "kp_rank": 4796,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_f+red",
+     "witness_esize": 11,
+     "witness_promoted": "(max (map (lam x (neg x)) (map (lam x (f0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.475,
+     "family_id": "W3a22e2ee-F025-R2",
+     "fused_key": "R2|f:self_compose|f1",
+     "kind_pair": null,
+     "kp_found": "(max (map (lam x (f1 (f1 x))) xs))",
+     "kp_order_free_rank": 27503,
+     "kp_rank": 10282,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose+red",
+     "witness_esize": 22,
+     "witness_promoted": "(max (map (lam x (f1 (f1 x))) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W3a22e2ee-F028-R2",
+     "fused_key": "R2|s:base_fold|s1",
+     "kind_pair": null,
+     "kp_found": "(sum (scanl (lam a (lam b (s1 a b))) 1 xs))",
+     "kp_order_free_rank": 328632,
+     "kp_rank": 111233,
+     "rung": "R2",
+     "skeleton": "R2:s:base_fold",
+     "witness_esize": 15,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (scanl (lam a (lam b (s1 a b))) 1 xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 8,
+     "capture": 0.7,
+     "family_id": "W3a22e2ee-F031-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(sum (map (lam x 2) (filter (lam x (p0 x)) xs)))",
+     "kp_order_free_rank": 328632,
+     "kp_rank": 107783,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 12,
+     "witness_promoted": "(mul 2 (len (filter (lam x (p0 x)) xs)))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_REACTIVE": 4,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 1,
+      "NEAR_TRIVIAL": 4
+     },
+     "classes": {
+      "DEGENERATE": 3,
+      "DUPLICATE": 5,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 6,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gen_ok": 10,
+     "generated": 18
+    },
+    "R2": {
+     "admitted": 4,
+     "admitted_ids": [
+      "W3a22e2ee-F024-R2",
+      "W3a22e2ee-F025-R2",
+      "W3a22e2ee-F028-R2",
+      "W3a22e2ee-F031-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DEGENERATE": 4,
+      "DUPLICATE": 2,
+      "FAIL_PRONE": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 4,
+      "MOTIF_CAP": 1,
+      "NEAR_TRIVIAL": 1,
+      "QUALIFIED": 4
+     },
+     "gen_ok": 10,
+     "generated": 17
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1+s0": 1,
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "CHAIN_C_FAIL:s0": 4,
+      "CHAIN_C_FAIL:s1": 4,
+      "DEGENERATE": 1,
+      "DUPLICATE": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 12,
+     "generated": 14
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 4,
+      "DUPLICATE": 1,
+      "FAIL_PRONE": 4,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 6,
+     "generated": 11
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "CHAIN_C_FAIL:s0": 2,
+      "CHAIN_C_FAIL:s1": 3,
+      "DEGENERATE": 2,
+      "DUPLICATE": 1,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 8,
+     "generated": 11
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 8,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 4,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 17,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 14,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 11,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 11,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 6,
+    "CONSTANT": 10,
+    "FAIL_PRONE": 55,
+    "FOLD_LOW_DIVERSITY": 5,
+    "FOLD_UNSTABLE": 4,
+    "IDENTITY_LIKE": 6,
+    "LOW_DIVERSITY": 7,
+    "MAGNITUDE": 1,
+    "PRED_BALANCE": 1,
+    "PROJECTION": 1,
+    "R1_REGRESSION": 15,
+    "REDUCIBLE": 15,
+    "SIZE": 375,
+    "UNUSED_ARGUMENT": 34
+   },
+   "mechanisms": [
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 9,
+      "draws": 4,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam x (mod x (pow 3 2)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 12,
+      "draws": 301,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 13
+     },
+     "term": "(lam x (pow (gcd x 2) (sub x 1)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 5,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.39
+     },
+     "term": "(lam x (gt (add x x) (mul 3 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 134,
+      "esize": 7,
+      "fold_distinct": 75,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (add (mul (add 2 a) b) b)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 96,
+      "esize": 7,
+      "fold_distinct": 52,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2
+     },
+     "term": "(lam a (lam b (gcd (sub (sub a b) b) 0)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.538,
+    "SHUFFLED_UNIFORM_2": 0.154,
+    "SHUFFLED_UNIFORM_3": 0.423,
+    "SHUFFLED_UNIFORM_4": 0.5,
+    "SHUFFLED_UNIFORM_5": 0.5,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 995.1,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+s0",
+    "f0+s1",
+    "f1+s0",
+    "f1+s1",
+    "p0+s0",
+    "p0+s1"
+   ],
+   "r4_pairs": [
+    "f0+p0",
+    "f1+p0",
+    "s0+s1"
+   ],
+   "regression_rejected_candidates": 15,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W480ffd54": {
+   "E1_gate": "PASS",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (sub 3 (div x (mul 3 3))))"
+    },
+    "f1": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mod x (add 3 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt x (add 2 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.4,
+     "family_id": "W480ffd54-F023-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(pow (len (filter (lam x (p0 x)) xs)) 2)",
+     "kp_order_free_rank": 324454,
+     "kp_rank": 382349,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 19,
+     "witness_promoted": "(mul (len (filter (lam x (p0 x)) xs)) (len (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "family_id": "W480ffd54-F024-R2",
+     "fused_key": "R2|s:base_fold|s0",
+     "kind_pair": null,
+     "kp_found": "(neg (sum (scanl (lam a (lam b (s0 a b))) 0 xs)))",
+     "kp_order_free_rank": 3371705,
+     "kp_rank": 508498,
+     "rung": "R2",
+     "skeleton": "R2:s:base_fold",
+     "witness_esize": 15,
+     "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (scanl (lam a (lam b (s0 a b))) 0 xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.125,
+     "family_id": "W480ffd54-F026-R2",
+     "fused_key": "R2|f:base_fold|f0",
+     "kind_pair": null,
+     "kp_found": "(sum (map (lam x (f0 x)) xs))",
+     "kp_order_free_rank": 3375,
+     "kp_rank": 1250,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "W480ffd54-F028-R2",
+     "fused_key": "R2|p:base_fold|p0",
+     "kind_pair": null,
+     "kp_found": "(add 1 (sum (filter (lam x (p0 x)) xs)))",
+     "kp_order_free_rank": 324454,
+     "kp_rank": 207709,
+     "rung": "R2",
+     "skeleton": "R2:p:base_fold",
+     "witness_esize": 13,
+     "witness_promoted": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.35,
+     "family_id": "W480ffd54-F031-R2",
+     "fused_key": "R2|f:extra_struct|f0",
+     "kind_pair": null,
+     "kp_found": "(drop 3 (map (lam x (f0 x)) xs))",
+     "kp_order_free_rank": 3977,
+     "kp_rank": 2186,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_struct",
+     "witness_esize": 11,
+     "witness_promoted": "(drop 3 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.1,
+     "chain_found": "(filter (lam x (q2 x)) (map (lam x (q0 x)) xs))",
+     "chain_order_free_rank": 36511,
+     "chain_rank": 34269,
+     "family_id": "W480ffd54-F039-R3",
+     "fused_key": "R3|FILTER(p) o MAP(f)|f0+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:filter_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (f0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.05,
+     "chain_found": "(map (lam x (q0 x)) (filter (lam x (q2 x)) xs))",
+     "chain_order_free_rank": 36511,
+     "chain_rank": 25351,
+     "family_id": "W480ffd54-F046-R3",
+     "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:map_of_filter",
+     "witness_esize": 16,
+     "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(map (lam x (q1 x)) (filter (lam x (q2 x)) xs))",
+     "chain_order_free_rank": 36511,
+     "chain_rank": 25433,
+     "family_id": "W480ffd54-F055-R4",
+     "fused_key": "R4|MAP(f) o FILTER(p)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fp:map_of_filter",
+     "witness_esize": 16,
+     "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_REACTIVE": 5,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "DEGENERATE": 2,
+      "DUPLICATE": 3,
+      "QUALIFIED": 7,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gen_ok": 10,
+     "generated": 15
+    },
+    "R2": {
+     "admitted": 5,
+     "admitted_ids": [
+      "W480ffd54-F023-R2",
+      "W480ffd54-F024-R2",
+      "W480ffd54-F026-R2",
+      "W480ffd54-F028-R2",
+      "W480ffd54-F031-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DEGENERATE": 4,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 3,
+      "QUALIFIED": 5,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R3": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W480ffd54-F039-R3",
+      "W480ffd54-F046-R3"
+     ],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s0": 6,
+      "CHAIN_C_FAIL:s0+s1": 2,
+      "DEGENERATE": 1,
+      "DUPLICATE": 2,
+      "QUALIFIED": 2,
+      "TRIVIAL_BY_BASE_1E6": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 12,
+     "generated": 15
+    },
+    "R4": {
+     "admitted": 1,
+     "admitted_ids": [
+      "W480ffd54-F055-R4"
+     ],
+     "bands": {
+      "BELOW_BAND": 5,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s1": 4,
+      "DUPLICATE": 1,
+      "QUALIFIED": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 6,
+     "generated": 7
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s0": 4,
+      "CHAIN_C_FAIL:s0+s1": 2,
+      "DUPLICATE": 1,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 8,
+     "generated": 9
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 7,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 14,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 15,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 7,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 9,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 9,
+    "CONSTANT": 37,
+    "FAIL_PRONE": 137,
+    "FOLD_LOW_DIVERSITY": 2,
+    "FOLD_UNSTABLE": 4,
+    "IDENTITY_LIKE": 26,
+    "LOW_DIVERSITY": 9,
+    "MAGNITUDE": 4,
+    "PRED_BALANCE": 45,
+    "R1_REGRESSION": 75,
+    "REDUCIBLE": 55,
+    "SIZE": 926,
+    "UNUSED_ARGUMENT": 50
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 6,
+      "draws": 332,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 32
+     },
+     "term": "(lam x (sub 3 (div x (mul 3 3))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 6,
+      "draws": 597,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 40
+     },
+     "term": "(lam x (mod (mul x 1) (add 3 3)))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 261,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3,
+      "true_frac": 0.61
+     },
+     "term": "(lam x (not (lt (add 3 1) x)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 96,
+      "esize": 7,
+      "fold_distinct": 38,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (add (mod a 2) (mul b b))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 98,
+      "esize": 7,
+      "fold_distinct": 34,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2
+     },
+     "term": "(lam a (lam b (mod b (mul 3 (add a 2)))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.5,
+    "SHUFFLED_UNIFORM_2": 0.538,
+    "SHUFFLED_UNIFORM_3": 0.346,
+    "SHUFFLED_UNIFORM_4": 0.885,
+    "SHUFFLED_UNIFORM_5": 0.5,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 1206.7,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+p0",
+    "f0+s0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s0",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+s1",
+    "f1+p0",
+    "p0+s1"
+   ],
+   "regression_rejected_candidates": 75,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W483b8c31": {
+   "E1_gate": "PASS",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (add 2 (mul x x)))"
+    },
+    "f1": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (div (mul 2 x) (mul 3 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt x (pow 2 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "family_id": "W483b8c31-F022-R2",
+     "fused_key": "R2|p:extra_f|p0",
+     "kind_pair": null,
+     "kp_found": "(filter (lam x (p0 x)) (map (lam x (gcd x x)) xs))",
+     "kp_order_free_rank": 508565,
+     "kp_rank": 498944,
+     "rung": "R2",
+     "skeleton": "R2:p:extra_f",
+     "witness_esize": 11,
+     "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (gcd x x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.575,
+     "family_id": "W483b8c31-F026-R2",
+     "fused_key": "R2|f:base_fold|f1",
+     "kind_pair": null,
+     "kp_found": "(foldl (lam a (lam b (mul a (f1 b)))) 1 xs)",
+     "kp_order_free_rank": 349404,
+     "kp_rank": 532052,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (mul b a))) 1 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.425,
+     "family_id": "W483b8c31-F030-R2",
+     "fused_key": "R2|f:self_compose|f0",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (f0 (f0 x))) xs)",
+     "kp_order_free_rank": 629,
+     "kp_rank": 412,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose",
+     "witness_esize": 15,
+     "witness_promoted": "(map (lam x (f0 (f0 x))) xs)"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.375,
+     "chain_found": "(map (lam x (if (q2 x) (q0 x) x)) xs)",
+     "chain_order_free_rank": 386837,
+     "chain_rank": 361926,
+     "family_id": "W483b8c31-F045-R3",
+     "fused_key": "R3|MAP(if p f)|f0+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:guard_p",
+     "witness_esize": 14,
+     "witness_promoted": "(map (lam x (if (p0 x) (f0 x) x)) xs)"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(map (lam x (q1 x)) (filter (lam x (q2 x)) xs))",
+     "chain_order_free_rank": 39197,
+     "chain_rank": 27949,
+     "family_id": "W483b8c31-F046-R3",
+     "fused_key": "R3|MAP(f) o FILTER(p)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fp:map_of_filter",
+     "witness_esize": 15,
+     "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 5
+     },
+     "classes": {
+      "DUPLICATE": 4,
+      "QUALIFIED": 10
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R2": {
+     "admitted": 3,
+     "admitted_ids": [
+      "W483b8c31-F022-R2",
+      "W483b8c31-F026-R2",
+      "W483b8c31-F030-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "DEGENERATE": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 4,
+      "MOTIF_CAP": 1,
+      "QUALIFIED": 3,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 10,
+     "generated": 11
+    },
+    "R3": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W483b8c31-F045-R3",
+      "W483b8c31-F046-R3"
+     ],
+     "bands": {
+      "BELOW_BAND": 7,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s0": 5,
+      "CHAIN_C_FAIL:s1": 3,
+      "DEGENERATE": 1,
+      "DUPLICATE": 2,
+      "FAIL_PRONE": 6,
+      "QUALIFIED": 2,
+      "TRIVIAL_BY_BASE_1E6": 1,
+      "TRIVIAL_BY_LOOKUP": 1
+     },
+     "gen_ok": 12,
+     "generated": 21
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s0": 2,
+      "CHAIN_C_FAIL:s1": 2,
+      "FAIL_PRONE": 1,
+      "SYNTHETIC_DEPTH": 2
+     },
+     "gen_ok": 6,
+     "generated": 7
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 3
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s0": 2,
+      "CHAIN_C_FAIL:s1": 2,
+      "CHAIN_D_FAIL:HORIZON": 3,
+      "DEGENERATE": 3,
+      "TRIVIAL_BY_BASE_1E6": 1
+     },
+     "gen_ok": 8,
+     "generated": 11
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "ACQUIRED"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 3,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 4,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 11,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 21,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 7,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 11,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 21,
+    "CONSTANT": 37,
+    "DUPLICATE_MECHANISM": 1,
+    "FAIL_PRONE": 144,
+    "FOLD_LOW_DIVERSITY": 7,
+    "FOLD_UNSTABLE": 1,
+    "IDENTITY_LIKE": 28,
+    "LOW_DIVERSITY": 20,
+    "MAGNITUDE": 1,
+    "PRED_BALANCE": 36,
+    "PROJECTION": 2,
+    "R1_REGRESSION": 52,
+    "REDUCIBLE": 80,
+    "SIZE": 1111,
+    "UNUSED_ARGUMENT": 106
+   },
+   "mechanisms": [
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 21,
+      "draws": 430,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 22
+     },
+     "term": "(lam x (add 2 (mul x x)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 10,
+      "draws": 453,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 27
+     },
+     "term": "(lam x (div (div (add x x) 3) 3))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 271,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2,
+      "true_frac": 0.683
+     },
+     "term": "(lam x (lt x (pow 2 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 202,
+      "esize": 7,
+      "fold_distinct": 28,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (sub (gcd b a) (mul b b))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 296,
+      "esize": 7,
+      "fold_distinct": 74,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (mul (sub b a) (mul 2 b))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.346,
+    "SHUFFLED_UNIFORM_2": 0.192,
+    "SHUFFLED_UNIFORM_3": 0.423,
+    "SHUFFLED_UNIFORM_4": 0.462,
+    "SHUFFLED_UNIFORM_5": 0.462,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 1128.0,
+   "r3_pairs": [
+    "f0+p0",
+    "f0+s0",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+f1",
+    "f1+s1",
+    "p0+s0"
+   ],
+   "regression_rejected_candidates": 52,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W6eb945cc": {
+   "E1_gate": "PASS",
+   "acquired": {
+    "f0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (sub 1 (mul x x)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt x (mul 3 3)))"
+    },
+    "s0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam a (lam b (mul b (pow 2 a))))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.1,
+     "family_id": "W6eb945cc-F023-R2",
+     "fused_key": "R2|s:base_post|s1",
+     "kind_pair": null,
+     "kp_found": "(neg (foldl (lam a (lam b (s1 a b))) 1 xs))",
+     "kp_order_free_rank": 341960,
+     "kp_rank": 90993,
+     "rung": "R2",
+     "skeleton": "R2:s:base_post",
+     "witness_esize": 12,
+     "witness_promoted": "(sub 0 (foldl (lam a (lam b (s1 a b))) 1 xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "family_id": "W6eb945cc-F024-R2",
+     "fused_key": "R2|f:base_post|f0",
+     "kind_pair": null,
+     "kp_found": "(div (sum (map (lam x (f0 x)) xs)) 3)",
+     "kp_order_free_rank": 341960,
+     "kp_rank": 314813,
+     "rung": "R2",
+     "skeleton": "R2:f:base_post",
+     "witness_esize": 10,
+     "witness_promoted": "(div (sum (map (lam x (f0 x)) xs)) 3)"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.5,
+     "family_id": "W6eb945cc-F025-R2",
+     "fused_key": "R2|f:base_post|f1",
+     "kind_pair": null,
+     "kp_found": "(gcd 0 (f1 (last xs)))",
+     "kp_order_free_rank": 3549,
+     "kp_rank": 3489,
+     "rung": "R2",
+     "skeleton": "R2:f:base_post",
+     "witness_esize": 21,
+     "witness_promoted": "(gcd (last (map (lam x (f1 x)) xs)) (last (map (lam x (f1 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.125,
+     "family_id": "W6eb945cc-F028-R2",
+     "fused_key": "R2|s:extra_struct|s1",
+     "kind_pair": null,
+     "kp_found": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))",
+     "kp_order_free_rank": 341960,
+     "kp_rank": 517885,
+     "rung": "R2",
+     "skeleton": "R2:s:extra_struct",
+     "witness_esize": 11,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "s0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "chain_found": "(scanl (lam a (lam b (q2 a (q0 b)))) 1 xs)",
+     "chain_order_free_rank": 37162,
+     "chain_rank": 53685,
+     "family_id": "W6eb945cc-F033-R3",
+     "fused_key": "R3|ACC(s)o MAP(f)|f0+s0",
+     "kind_pair": "fs",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 14,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f0",
+      "s0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.45,
+     "chain_found": "(q0 (foldl (lam a (lam b (q2 a b))) 0 xs))",
+     "chain_order_free_rank": 205046,
+     "chain_rank": 118789,
+     "family_id": "W6eb945cc-F047-R3",
+     "fused_key": "R3|f o ACC(s)|f0+s0",
+     "kind_pair": "fs",
+     "kp_capacity": "SOLVED",
+     "rung": "R3",
+     "skeleton": "R3:fs:post_fold",
+     "witness_esize": 19,
+     "witness_promoted": "(f0 (foldl (lam a (lam b (s0 a b))) 0 xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 3,
+      "TRIVIAL_BY_REACTIVE": 2,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 5,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DUPLICATE": 3,
+      "QUALIFIED": 9,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 10,
+     "generated": 13
+    },
+    "R2": {
+     "admitted": 4,
+     "admitted_ids": [
+      "W6eb945cc-F023-R2",
+      "W6eb945cc-F024-R2",
+      "W6eb945cc-F025-R2",
+      "W6eb945cc-F028-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 5,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "DEGENERATE": 2,
+      "KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 2,
+      "QUALIFIED": 4,
+      "TRIVIAL_BY_BASE_1E6": 1,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 10,
+     "generated": 12
+    },
+    "R3": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W6eb945cc-F033-R3",
+      "W6eb945cc-F047-R3"
+     ],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 8
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 5,
+      "CHAIN_C_FAIL:f1+s1": 3,
+      "CHAIN_D_FAIL:HORIZON": 1,
+      "CHAIN_D_FAIL:TRIBUNAL": 1,
+      "DEGENERATE": 1,
+      "DUPLICATE": 4,
+      "QUALIFIED": 2
+     },
+     "gen_ok": 12,
+     "generated": 17
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 1,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s1": 4,
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "IN_BAND": 8
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 5,
+      "CHAIN_C_FAIL:f1+s1": 1,
+      "CHAIN_D_FAIL:HORIZON": 2
+     },
+     "gen_ok": 8,
+     "generated": 8
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "ACQUIRED"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 4,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 12,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 17,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 8,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 7,
+    "CONSTANT": 34,
+    "FAIL_PRONE": 104,
+    "FOLD_LOW_DIVERSITY": 3,
+    "IDENTITY_LIKE": 20,
+    "LOW_DIVERSITY": 8,
+    "MAGNITUDE": 1,
+    "PRED_BALANCE": 29,
+    "R1_REGRESSION": 43,
+    "REDUCIBLE": 63,
+    "SIZE": 609,
+    "UNUSED_ARGUMENT": 43
+   },
+   "mechanisms": [
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 21,
+      "draws": 278,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 21
+     },
+     "term": "(lam x (sub 1 (mul x x)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 21,
+      "draws": 261,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 24
+     },
+     "term": "(lam x (sub (gcd (pow 2 3) x) x))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 243,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.707
+     },
+     "term": "(lam x (lt x (mul 3 (add 1 2))))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 28,
+      "esize": 5,
+      "fold_distinct": 23,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (mul b (pow 2 a))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 159,
+      "esize": 7,
+      "fold_distinct": 31,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (sub b (gcd 0 (sub b a)))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.885,
+    "SHUFFLED_UNIFORM_2": 0.346,
+    "SHUFFLED_UNIFORM_3": 0.423,
+    "SHUFFLED_UNIFORM_4": 0.692,
+    "SHUFFLED_UNIFORM_5": 0.769,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 939.1,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+s0",
+    "f1+p0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s0",
+    "p0+s1"
+   ],
+   "r4_pairs": [
+    "f0+p0",
+    "f0+s1",
+    "s0+s1"
+   ],
+   "regression_rejected_candidates": 43,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "W8f6a223e": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt x (add 3 3)))"
+    },
+    "s0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam a (lam b (gcd 0 (add a b))))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.275,
+     "family_id": "W8f6a223e-F017-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(pow (len (filter (lam x (p0 x)) xs)) 2)",
+     "kp_order_free_rank": 269436,
+     "kp_rank": 305530,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 19,
+     "witness_promoted": "(mul (len (filter (lam x (p0 x)) xs)) (len (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.35,
+     "family_id": "W8f6a223e-F020-R2",
+     "fused_key": "R2|f:self_compose|f1",
+     "kind_pair": null,
+     "kp_found": "(map (lam x (f1 (f1 x))) xs)",
+     "kp_order_free_rank": 617,
+     "kp_rank": 390,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose",
+     "witness_esize": 27,
+     "witness_promoted": "(map (lam x (f1 (f1 x))) xs)"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 5
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DUPLICATE": 2,
+      "QUALIFIED": 7,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 8,
+     "generated": 10
+    },
+    "R2": {
+     "admitted": 2,
+     "admitted_ids": [
+      "W8f6a223e-F017-R2",
+      "W8f6a223e-F020-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 6,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "KNOWN_POSITIVE_FAIL:HORIZON": 3,
+      "MOTIF_CAP": 2,
+      "QUALIFIED": 2,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_BASE_1E6": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 10,
+     "generated": 10
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 9,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:f1+s1": 3,
+      "CHAIN_C_FAIL:s1": 6,
+      "DUPLICATE": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "gen_ok": 12,
+     "generated": 15
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 3,
+      "CHAIN_D_FAIL:HORIZON": 3,
+      "DEGENERATE": 1,
+      "DUPLICATE": 1
+     },
+     "gen_ok": 6,
+     "generated": 8
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6,
+      "IN_BAND": 2
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:f1+s1": 4,
+      "CHAIN_C_FAIL:s1": 2,
+      "DEGENERATE": 2,
+      "DUPLICATE": 2
+     },
+     "gen_ok": 8,
+     "generated": 12
+    }
+   },
+   "chain_c": {
+    "f1": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "p0": [
+     "UNDERDETERMINED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 8,
+    "R1_regression_solved": 0,
+    "families_ok": 50,
+    "witness_ok": 50
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 4,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 10,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 15,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 8,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 12,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 4,
+    "CONSTANT": 121,
+    "FAIL_PRONE": 340,
+    "FOLD_UNSTABLE": 1,
+    "IDENTITY_LIKE": 63,
+    "LOW_DIVERSITY": 29,
+    "MAGNITUDE": 6,
+    "PRED_BALANCE": 49,
+    "R1_REGRESSION": 153,
+    "REDUCIBLE": 158,
+    "SIZE": 2033,
+    "UNUSED_ARGUMENT": 59
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 22,
+      "draws": 1210,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 73
+     },
+     "term": "(lam x (mul x (add (mod x 3) x)))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 293,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2,
+      "true_frac": 0.634
+     },
+     "term": "(lam x (not (lt (add 2 3) x)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 32,
+      "esize": 5,
+      "fold_distinct": 47,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (gcd (add a b) 0)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 54,
+      "esize": 7,
+      "fold_distinct": 24,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (mul b (add b (gcd b a)))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.654,
+    "SHUFFLED_UNIFORM_2": 0.5,
+    "SHUFFLED_UNIFORM_3": 0.692,
+    "SHUFFLED_UNIFORM_4": 0.577,
+    "SHUFFLED_UNIFORM_5": 0.423,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 1001.0,
+   "r3_pairs": [
+    "f1+s0",
+    "f1+s1",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f1+p0",
+    "p0+s0"
+   ],
+   "regression_rejected_candidates": 153,
+   "unfilled_slots": [
+    "f0"
+   ],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 10,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "Wb49b6a5f": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "f1": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (mul x (mul x 3)))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt (neg x) (add 2 3)))"
+    },
+    "s1": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam a (lam b (sub (mod a 3) b)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "family_id": "Wb49b6a5f-F021-R2",
+     "fused_key": "R2|s:base_fold|s1",
+     "kind_pair": null,
+     "kp_found": "(sum (scanl (lam a (lam b (s1 a b))) 0 xs))",
+     "kp_order_free_rank": 352145,
+     "kp_rank": 119130,
+     "rung": "R2",
+     "skeleton": "R2:s:base_fold",
+     "witness_esize": 15,
+     "witness_promoted": "(foldl (lam a (lam b (add b a))) 0 (scanl (lam a (lam b (s1 a b))) 0 xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.275,
+     "family_id": "Wb49b6a5f-F024-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(neg (len (filter (lam x (p0 x)) xs)))",
+     "kp_order_free_rank": 30434,
+     "kp_rank": 4855,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 10,
+     "witness_promoted": "(neg (len (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+     "chain_order_free_rank": 362075,
+     "chain_rank": 350078,
+     "family_id": "Wb49b6a5f-F052-R4",
+     "fused_key": "R4|MAP(if p f)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fp:guard_p",
+     "witness_esize": 15,
+     "witness_promoted": "(map (lam x (if (p0 x) (f1 x) x)) xs)"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+     "chain_order_free_rank": 38276,
+     "chain_rank": 26446,
+     "family_id": "Wb49b6a5f-F055-R4",
+     "fused_key": "R4|MAP(f) o FILTER(p)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fp:map_of_filter",
+     "witness_esize": 14,
+     "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 2,
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "DUPLICATE": 1,
+      "QUALIFIED": 9,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 10,
+     "generated": 11
+    },
+    "R2": {
+     "admitted": 2,
+     "admitted_ids": [
+      "Wb49b6a5f-F021-R2",
+      "Wb49b6a5f-F024-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "DEGENERATE": 1,
+      "DUPLICATE": 1,
+      "FAIL_PRONE": 2,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 4,
+      "QUALIFIED": 2,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REGRESSION": 2
+     },
+     "gen_ok": 10,
+     "generated": 14
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 1,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 4,
+      "CHAIN_C_FAIL:s0": 3,
+      "CHAIN_D_FAIL:HORIZON": 2,
+      "DUPLICATE": 1,
+      "FAIL_PRONE": 3,
+      "TRIVIAL_BY_REGRESSION": 3
+     },
+     "gen_ok": 12,
+     "generated": 16
+    },
+    "R4": {
+     "admitted": 2,
+     "admitted_ids": [
+      "Wb49b6a5f-F052-R4",
+      "Wb49b6a5f-F055-R4"
+     ],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 2
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 3,
+      "FAIL_PRONE": 3,
+      "QUALIFIED": 2,
+      "SYNTHETIC_DEPTH": 1
+     },
+     "gen_ok": 6,
+     "generated": 9
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 5,
+      "IN_BAND": 3
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 4,
+      "CHAIN_C_FAIL:s0": 2,
+      "CHAIN_D_FAIL:HORIZON": 2,
+      "DEGENERATE": 1
+     },
+     "gen_ok": 8,
+     "generated": 9
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "f1": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "p0": [
+     "HORIZON",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 14,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 16,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 9,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 9,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 12,
+    "CONSTANT": 62,
+    "FAIL_PRONE": 173,
+    "FOLD_LOW_DIVERSITY": 3,
+    "FOLD_UNSTABLE": 2,
+    "IDENTITY_LIKE": 29,
+    "LOW_DIVERSITY": 15,
+    "MAGNITUDE": 5,
+    "PRED_BALANCE": 13,
+    "R1_REGRESSION": 78,
+    "REDUCIBLE": 69,
+    "SIZE": 1152,
+    "UNUSED_ARGUMENT": 95
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 33,
+      "draws": 1208,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 74
+     },
+     "term": "(lam x (mul (pow x 3) (div x 3)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 21,
+      "draws": 45,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam x (mul (mul x x) 3))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 132,
+      "esize": 6,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.61
+     },
+     "term": "(lam x (lt (sub (neg x) 3) 2))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 66,
+      "esize": 7,
+      "fold_distinct": 75,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1
+     },
+     "term": "(lam a (lam b (mul b (add (sub a 0) b))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 262,
+      "esize": 7,
+      "fold_distinct": 35,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 6
+     },
+     "term": "(lam a (lam b (sub (mod a (add 0 3)) b)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.385,
+    "SHUFFLED_UNIFORM_2": 0.346,
+    "SHUFFLED_UNIFORM_3": 0.538,
+    "SHUFFLED_UNIFORM_4": 0.5,
+    "SHUFFLED_UNIFORM_5": 0.808,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 988.1,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+s0",
+    "f0+s1",
+    "f1+s1",
+    "p0+s0",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+p0",
+    "f1+p0",
+    "f1+s0"
+   ],
+   "regression_rejected_candidates": 78,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 8,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "Wc025415a": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "f1": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (div (mul 2 x) 3))"
+    },
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (sub x 3)))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "Wc025415a-F021-R2",
+     "fused_key": "R2|f:base_fold|f0",
+     "kind_pair": null,
+     "kp_found": "(sum (scanl (lam a (lam b (f0 b))) 1 xs))",
+     "kp_order_free_rank": 27213,
+     "kp_rank": 9841,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (add b a))) 1 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+     "chain_order_free_rank": 288448,
+     "chain_rank": 273050,
+     "family_id": "Wc025415a-F041-R4",
+     "fused_key": "R4|MAP(if p f)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fp:guard_p",
+     "witness_esize": 16,
+     "witness_promoted": "(map (lam x (if (p0 x) (f1 x) x)) xs)"
+    },
+    {
+     "acquired_used": [
+      "f1",
+      "p0"
+     ],
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.0,
+     "chain_found": "(filter (lam x (q1 x)) (map (lam x (q0 x)) xs))",
+     "chain_order_free_rank": 31793,
+     "chain_rank": 29413,
+     "family_id": "Wc025415a-F044-R4",
+     "fused_key": "R4|FILTER(p) o MAP(f)|f1+p0",
+     "kind_pair": "fp",
+     "kp_capacity": "SOLVED",
+     "rung": "R4",
+     "skeleton": "R4:fp:filter_of_map",
+     "witness_esize": 15,
+     "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (f1 x)) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_REGRESSION": 3
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 3,
+      "IN_BAND": 4,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "QUALIFIED": 7,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gen_ok": 10,
+     "generated": 10
+    },
+    "R2": {
+     "admitted": 1,
+     "admitted_ids": [
+      "Wc025415a-F021-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 3
+     },
+     "classes": {
+      "KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 4,
+      "NEAR_TRIVIAL": 2,
+      "QUALIFIED": 1,
+      "TRIVIAL_BY_BASE_1E6": 1,
+      "TRIVIAL_BY_REGRESSION": 1
+     },
+     "gen_ok": 10,
+     "generated": 10
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6,
+      "IN_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 4,
+      "CHAIN_C_FAIL:f0+s0": 1,
+      "CHAIN_C_FAIL:f0+s1": 1,
+      "CHAIN_C_FAIL:s0": 4,
+      "CHAIN_C_FAIL:s0+s1": 2,
+      "DUPLICATE": 2
+     },
+     "gen_ok": 12,
+     "generated": 14
+    },
+    "R4": {
+     "admitted": 2,
+     "admitted_ids": [
+      "Wc025415a-F041-R4",
+      "Wc025415a-F044-R4"
+     ],
+     "bands": {
+      "BELOW_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:s1": 4,
+      "QUALIFIED": 2
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 4,
+      "IN_BAND": 4
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 6,
+      "CHAIN_C_FAIL:f0+s0": 1,
+      "CHAIN_C_FAIL:s0+s1": 1,
+      "DEGENERATE": 1,
+      "DUPLICATE": 2
+     },
+     "gen_ok": 8,
+     "generated": 11
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "f1": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "HORIZON",
+     "HORIZON"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 10,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 14,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 11,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 16,
+    "CONSTANT": 76,
+    "FAIL_PRONE": 261,
+    "FOLD_LOW_DIVERSITY": 6,
+    "FOLD_UNSTABLE": 3,
+    "IDENTITY_LIKE": 38,
+    "LOW_DIVERSITY": 28,
+    "MAGNITUDE": 2,
+    "PRED_BALANCE": 30,
+    "PROJECTION": 5,
+    "R1_REGRESSION": 123,
+    "REDUCIBLE": 106,
+    "SIZE": 1748,
+    "UNUSED_ARGUMENT": 172
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 25,
+      "draws": 762,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 56
+     },
+     "term": "(lam x (div x (gcd x (mul 2 3))))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 28,
+      "draws": 1058,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 61
+     },
+     "term": "(lam x (div (add x x) 3))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 203,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2,
+      "true_frac": 0.39
+     },
+     "term": "(lam x (lt 3 (sub (add x 2) 3)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 543,
+      "esize": 7,
+      "fold_distinct": 24,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 7
+     },
+     "term": "(lam a (lam b (sub b (gcd b (mul a 3)))))"
+    },
+    {
+     "body_esize": 6,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 53,
+      "esize": 6,
+      "fold_distinct": 30,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 2
+     },
+     "term": "(lam a (lam b (mul b (neg (gcd a b)))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.462,
+    "SHUFFLED_UNIFORM_2": 0.615,
+    "SHUFFLED_UNIFORM_3": 0.769,
+    "SHUFFLED_UNIFORM_4": 0.462,
+    "SHUFFLED_UNIFORM_5": 0.231,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 940.5,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+p0",
+    "f0+s0",
+    "f0+s1",
+    "f1+s0",
+    "p0+s0",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f1+p0",
+    "f1+s1",
+    "p0+s1"
+   ],
+   "regression_rejected_candidates": 123,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 8,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  },
+  "Wd1490fbb": {
+   "E1_gate": "FAIL",
+   "acquired": {
+    "p0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam x (lt 1 (sub x 3)))"
+    },
+    "s0": {
+     "agree_with_sealed": 1.0,
+     "term": "(lam a (lam b (add a (gcd a b))))"
+    }
+   },
+   "admitted": [
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.05,
+     "family_id": "Wd1490fbb-F019-R2",
+     "fused_key": "R2|f:base_fold|f0",
+     "kind_pair": null,
+     "kp_found": "(sum (map (lam x (f0 x)) xs))",
+     "kp_order_free_rank": 3472,
+     "kp_rank": 1289,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.15,
+     "family_id": "Wd1490fbb-F021-R2",
+     "fused_key": "R2|p:base_post|p0",
+     "kind_pair": null,
+     "kp_found": "(pow (sum (filter (lam x (p0 x)) xs)) 2)",
+     "kp_order_free_rank": 336104,
+     "kp_rank": 400874,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 21,
+     "witness_promoted": "(mul (sum (filter (lam x (p0 x)) xs)) (sum (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base1e6_n_dev_consistent": 0,
+     "capture": 0.025,
+     "family_id": "Wd1490fbb-F022-R2",
+     "fused_key": "R2|s:base_fold|s0",
+     "kind_pair": null,
+     "kp_found": "(neg (sum (scanl (lam a (lam b (s0 a b))) 0 xs)))",
+     "kp_order_free_rank": 3542000,
+     "kp_rank": 533359,
+     "rung": "R2",
+     "skeleton": "R2:s:base_fold",
+     "witness_esize": 13,
+     "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (scanl (lam a (lam b (s0 a b))) 0 xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "NEAR_TRIVIAL": 6
+     },
+     "classes": {
+      "TRIVIAL_BY_LIBRARY": 2,
+      "TRIVIAL_BY_REACTIVE": 4
+     },
+     "gen_ok": 6,
+     "generated": 6
+    },
+    "R1": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6,
+      "IN_BAND": 2,
+      "NEAR_TRIVIAL": 2
+     },
+     "classes": {
+      "DEGENERATE": 3,
+      "NEAR_TRIVIAL": 2,
+      "QUALIFIED": 8
+     },
+     "gen_ok": 10,
+     "generated": 13
+    },
+    "R2": {
+     "admitted": 3,
+     "admitted_ids": [
+      "Wd1490fbb-F019-R2",
+      "Wd1490fbb-F021-R2",
+      "Wd1490fbb-F022-R2"
+     ],
+     "bands": {
+      "BELOW_BAND": 6,
+      "NEAR_TRIVIAL": 4
+     },
+     "classes": {
+      "DUPLICATE": 1,
+      "KNOWN_POSITIVE_FAIL:HORIZON": 3,
+      "NEAR_TRIVIAL": 2,
+      "QUALIFIED": 3,
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gen_ok": 10,
+     "generated": 11
+    },
+    "R3": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 8,
+      "IN_BAND": 3,
+      "NEAR_TRIVIAL": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0+f1": 1,
+      "CHAIN_C_FAIL:f0+s1": 2,
+      "CHAIN_C_FAIL:f1": 2,
+      "CHAIN_C_FAIL:f1+s1": 2,
+      "CHAIN_C_FAIL:s1": 2,
+      "CHAIN_D_FAIL:HORIZON": 2,
+      "DEGENERATE": 1,
+      "NEAR_TRIVIAL": 1
+     },
+     "gen_ok": 12,
+     "generated": 13
+    },
+    "R4": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 6
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0": 6,
+      "FAIL_PRONE": 2
+     },
+     "gen_ok": 6,
+     "generated": 8
+    },
+    "R5": {
+     "admitted": 0,
+     "admitted_ids": [],
+     "bands": {
+      "BELOW_BAND": 7,
+      "IN_BAND": 1
+     },
+     "classes": {
+      "CHAIN_C_FAIL:f0+s1": 2,
+      "CHAIN_C_FAIL:f1": 3,
+      "CHAIN_C_FAIL:f1+s1": 3,
+      "DUPLICATE": 2
+     },
+     "gen_ok": 8,
+     "generated": 10
+    }
+   },
+   "chain_c": {
+    "f0": [
+     "HORIZON",
+     "UNDERDETERMINED"
+    ],
+    "f1": [
+     "UNDERDETERMINED",
+     "UNDERDETERMINED"
+    ],
+    "p0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s0": [
+     "ACQUIRED",
+     "ACQUIRED"
+    ],
+    "s1": [
+     "HORIZON",
+     "HORIZON"
+    ]
+   },
+   "controls": {
+    "R0_ok": 6,
+    "R0_trivial": 6,
+    "R1_ok": 10,
+    "R1_regression_solved": 0,
+    "families_ok": 52,
+    "witness_ok": 52
+   },
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 3,
+      "ok": 2
+     },
+     "f1": {
+      "draws": 4,
+      "ok": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2
+     }
+    },
+    "R2": {
+     "draws": 11,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 13,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 8,
+     "ok": 6,
+     "quota": 6
+    },
+    "R5": {
+     "draws": 10,
+     "ok": 8,
+     "quota": 8
+    }
+   },
+   "mech_r1_regression": [],
+   "mechanism_rejections": {
+    "AFFINE_IN_ACC": 20,
+    "CONSTANT": 91,
+    "FAIL_PRONE": 265,
+    "FOLD_LOW_DIVERSITY": 8,
+    "FOLD_UNSTABLE": 8,
+    "IDENTITY_LIKE": 49,
+    "LOW_DIVERSITY": 21,
+    "MAGNITUDE": 9,
+    "PRED_BALANCE": 20,
+    "PROJECTION": 2,
+    "R1_REGRESSION": 102,
+    "REDUCIBLE": 96,
+    "SIZE": 1935,
+    "UNUSED_ARGUMENT": 185
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 19,
+      "draws": 328,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 21
+     },
+     "term": "(lam x (gcd (pow 3 (add 2 x)) x))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 23,
+      "draws": 1438,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 71
+     },
+     "term": "(lam x (neg (if (lt x 3) x 0)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 123,
+      "esize": 7,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 1,
+      "true_frac": 0.39
+     },
+     "term": "(lam x (lt (add 2 2) (sub x 0)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 225,
+      "esize": 5,
+      "fold_distinct": 31,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 3
+     },
+     "term": "(lam a (lam b (add a (gcd a b))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 702,
+      "esize": 7,
+      "fold_distinct": 75,
+      "min_equiv_esize": ">4",
+      "regression_attempts": 11
+     },
+     "term": "(lam a (lam b (mul (add b 2) (sub a b))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI_1": 0.0,
+    "SHUFFLED_ANTI_2": 0.0,
+    "SHUFFLED_ANTI_3": 0.0,
+    "SHUFFLED_UNIFORM_1": 0.577,
+    "SHUFFLED_UNIFORM_2": 0.462,
+    "SHUFFLED_UNIFORM_3": 0.692,
+    "SHUFFLED_UNIFORM_4": 0.308,
+    "SHUFFLED_UNIFORM_5": 0.846,
+    "YOKED_CURRICULUM": 0.0
+   },
+   "qualify_cpu_s": 1099.7,
+   "r3_pairs": [
+    "f0+f1",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s0",
+    "p0+s1"
+   ],
+   "r4_pairs": [
+    "f0+p0",
+    "f0+s0",
+    "s0+s1"
+   ],
+   "regression_rejected_candidates": 102,
+   "unfilled_slots": [],
+   "yoked_counts": {
+    "R0": 6,
+    "R1": 8,
+    "R2": 10,
+    "R3": 12,
+    "R4": 6,
+    "R5": 8
+   }
+  }
+ }
+}

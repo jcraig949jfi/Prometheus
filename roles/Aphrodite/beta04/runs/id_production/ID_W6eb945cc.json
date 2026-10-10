@@ -1,0 +1,1084 @@
+{
+ "budget": 1000000,
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "72084f13698788a277ed2522cd657e3bb9f57e0baac4d064a000a0c8f01c4ddb",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "e3_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependency.py": "d61122aed0801ba8d41d2911c3d7bf144c2fb7c53dfbf5a80011e86cbdc8ec01",
+  "e3_identifiability.py": "e525e356f0385a0913a7efbed42042b8021dd93a6573fd3c7a232399f53892b1",
+  "e3_known_positive.py": "1efd24d1fe0620179388b2ac7f4cdb73b13752ca521674a37167407b3d385d15",
+  "final_eval.py": "39f51af061c9ddc358d52dff81b20a730cc081b656adc33a75082e9e85c2df3e",
+  "kp_timing.py": "0d5030970cc3c04369fa41311f56a8db97a26277b42f96dcc3517926074bda33",
+  "organism.py": "93f0e2c0a9a99f3666b419909b771aa2373a787f17e5d75402f0d0fee7a17daa",
+  "resumable.py": "d87e55f3a18ed7e6e14cc4be39e5b5d0ee6199d1ff83a476d0e8467998910238",
+  "smoke.py": "cf8271284fd2dae5a8810a2f2a2fe92134fc094e193ec708b40ec2c179ffe4f4",
+  "summarize_smoke.py": "e0e65b34d6ba6538371e004796af0c6a5be5ce481ddd17c50a2fc124e23b049a",
+  "worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444"
+ },
+ "enumerations": {
+  "W6eb945cc-F006-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 46.88,
+   "hits": [
+    [
+     788243,
+     "(sub 1 (min (map (lam x (mul x x)) xs)))"
+    ]
+   ]
+  },
+  "W6eb945cc-F016-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 8,
+   "cpu_s": 62.66,
+   "hits": [
+    [
+     257109,
+     "(scanl (lam a (lam b (mul b (pow 2 a)))) 0 xs)"
+    ]
+   ]
+  }
+ },
+ "id1": {
+  "f0|W6eb945cc-F006-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "closed_lambda",
+     "first_charge": 788243,
+     "first_ordinal": 1,
+     "first_program": "(sub 1 (min (map (lam x (mul x x)) xs)))",
+     "key": "23d8d59eef471311a8480405",
+     "n_programs": 1,
+     "r1_qualified": true,
+     "sealed_equivalent": false,
+     "stone": "(lam x (mul x x))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 7,
+   "enum_cpu_s": 46.88,
+   "family_id": "W6eb945cc-F006-R1",
+   "first_class_sealed_equivalent": false,
+   "first_hit": [
+    788243,
+    "(sub 1 (min (map (lam x (mul x x)) xs)))"
+   ],
+   "mechanism": "f0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 1,
+   "n_no_stone_programs": 0,
+   "no_stone_first": null,
+   "primary_first_hit": [
+    788243,
+    "(sub 1 (min (map (lam x (mul x x)) xs)))"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": null,
+   "sealed_equivalent_first_charge": null,
+   "sealed_equivalent_first_ordinal": null,
+   "sealed_equivalent_first_program_r1_qualified": null,
+   "sealed_equivalent_found": false,
+   "sealed_key": "c92b927ace8f5295d0df09c6",
+   "slot_order": [
+    "23d8d59eef471311a8480405"
+   ]
+  },
+  "s0|W6eb945cc-F016-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "closed_lambda",
+     "first_charge": 257109,
+     "first_ordinal": 1,
+     "first_program": "(scanl (lam a (lam b (mul b (pow 2 a)))) 0 xs)",
+     "key": "536df75c92d8930563e8ba8e",
+     "n_programs": 1,
+     "r1_qualified": true,
+     "sealed_equivalent": true,
+     "stone": "(lam a (lam b (mul b (pow 2 a))))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 8,
+   "enum_cpu_s": 62.66,
+   "family_id": "W6eb945cc-F016-R1",
+   "first_class_sealed_equivalent": true,
+   "first_hit": [
+    257109,
+    "(scanl (lam a (lam b (mul b (pow 2 a)))) 0 xs)"
+   ],
+   "mechanism": "s0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 1,
+   "n_no_stone_programs": 0,
+   "no_stone_first": null,
+   "primary_first_hit": [
+    257109,
+    "(scanl (lam a (lam b (mul b (pow 2 a)))) 0 xs)"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 257109,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "sealed_equivalent_found": true,
+   "sealed_key": "536df75c92d8930563e8ba8e",
+   "slot_order": [
+    "536df75c92d8930563e8ba8e"
+   ]
+  }
+ },
+ "kp_row": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+ "label": "PRODUCTION",
+ "retain": {
+  "RETAIN-1": {
+   "W6eb945cc-F033-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": 1000000,
+     "found": null,
+     "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": 1000000,
+     "found": null,
+     "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  },
+  "RETAIN-1-CERT": {
+   "W6eb945cc-F033-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": 1000000,
+     "found": null,
+     "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "primary_chain": {
+     "charge": null,
+     "charges": 1000000,
+     "found": null,
+     "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "primary_family_link": "UNDERDETERMINED_STONE",
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  },
+  "RETAIN-2": {
+   "W6eb945cc-F033-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  },
+  "RETAIN-2-CERT": {
+   "W6eb945cc-F033-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  },
+  "RETAIN-4": {
+   "W6eb945cc-F033-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": false,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  },
+  "RETAIN-4-CERT": {
+   "W6eb945cc-F033-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 7,
+    "cpu_s": 46.0,
+    "family_id": "W6eb945cc-F033-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      1560745,
+      18359485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 9,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(scanl (lam a (lam b (mul b (pow 2 a)))) 1 (map (lam x (sub 1 (mul x x))) xs))",
+     "witness_promoted_form": "(scanl (lam a (lam b (L_489a97e629cf a b))) 1 (map (lam x (L_452e831ebd66 x)) xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   },
+   "W6eb945cc-F047-R3": {
+    "certified": true,
+    "charge": null,
+    "charges": 1000000,
+    "complete_through_size": 6,
+    "cpu_s": 33.03,
+    "family_id": "W6eb945cc-F047-R3",
+    "found": null,
+    "hypotheses": {
+     "f0": {
+      "family": "W6eb945cc-F006-R1",
+      "sealed_equivalent": [
+       false
+      ],
+      "stones": [
+       "(lam x (mul x x))"
+      ]
+     },
+     "s0": {
+      "family": "W6eb945cc-F016-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam a (lam b (mul b (pow 2 a))))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "7231408fcf42f469f2447dd8f4a23e3b4a1820b228ab6ec465030fc8c83dc2e4",
+    "link": "UNDERDETERMINED_STONE",
+    "link_detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+    "rung": "R3",
+    "search_key": "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      131402,
+      1427485
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_452e831ebd66",
+      "L_489a97e629cf"
+     ],
+     "witness": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))",
+     "witness_promoted_form": "(L_452e831ebd66 (foldl (lam a (lam b (L_489a97e629cf a b))) 0 xs))"
+    },
+    "status": "NOT_FOUND_AT_BUDGET",
+    "units_without_sealed_equivalent": [
+     "f0"
+    ]
+   }
+  }
+ },
+ "searches": {
+  "W6eb945cc-F033-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 101,
+    "5": 1098,
+    "6": 11137,
+    "7": 124725,
+    "8": 1423667
+   },
+   "complete_through_size": 7,
+   "cpu_s": 46.0,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 2,
+   "program": null,
+   "units_expanded": 6743872,
+   "units_promoted": 6388777,
+   "verify_evals": 0
+  },
+  "W6eb945cc-F047-R3|seed=0|lib=7231408fcf42f469|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 144,
+    "4": 1124,
+    "5": 11817,
+    "6": 118298,
+    "7": 1296084,
+    "8": 14275956
+   },
+   "complete_through_size": 6,
+   "cpu_s": 33.03,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 2,
+   "program": null,
+   "units_expanded": 4644534,
+   "units_promoted": 4337341,
+   "verify_evals": 0
+  }
+ },
+ "summary": {
+  "families": [
+   {
+    "RETAIN-1": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-1-CERT": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-2": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-2-CERT": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-4": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-4-CERT": {
+     "charge": null,
+     "cpu_s": 33.03,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "family_id": "W6eb945cc-F047-R3",
+    "primary_chain_qualified": false,
+    "primary_link": "UNDERDETERMINED_STONE",
+    "rung": "R3",
+    "skeleton": "R3:fs:post_fold",
+    "world": "W6eb945cc"
+   },
+   {
+    "RETAIN-1": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-1-CERT": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-2": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-2-CERT": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-4": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "RETAIN-4-CERT": {
+     "charge": null,
+     "cpu_s": 46.0,
+     "detail": "SEALED_EQUIVALENT_NOT_RETAINED",
+     "link": "UNDERDETERMINED_STONE",
+     "qualified": false,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "family_id": "W6eb945cc-F033-R3",
+    "primary_chain_qualified": false,
+    "primary_link": "UNDERDETERMINED_STONE",
+    "rung": "R3",
+    "skeleton": "R3:fs:scan_of_map",
+    "world": "W6eb945cc"
+   }
+  ],
+  "units": [
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 46.88,
+    "first_class_sealed_equivalent": false,
+    "id_family": "W6eb945cc-F006-R1",
+    "mechanism": "f0",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 1,
+    "n_no_stone_programs": 0,
+    "primary_link": null,
+    "primary_status": "ACQUIRED",
+    "sealed_equivalent_class_rank": null,
+    "sealed_equivalent_first_charge": null,
+    "sealed_equivalent_first_ordinal": null,
+    "sealed_equivalent_first_program_r1_qualified": null,
+    "underdetermined_stone_unit": true,
+    "used_by_failed_family": true,
+    "world": "W6eb945cc"
+   },
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 62.66,
+    "first_class_sealed_equivalent": true,
+    "id_family": "W6eb945cc-F016-R1",
+    "mechanism": "s0",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 1,
+    "n_no_stone_programs": 0,
+    "primary_link": null,
+    "primary_status": "ACQUIRED",
+    "sealed_equivalent_class_rank": 1,
+    "sealed_equivalent_first_charge": 257109,
+    "sealed_equivalent_first_ordinal": 1,
+    "sealed_equivalent_first_program_r1_qualified": true,
+    "underdetermined_stone_unit": false,
+    "used_by_failed_family": true,
+    "world": "W6eb945cc"
+   }
+  ]
+ },
+ "world": "W6eb945cc"
+}

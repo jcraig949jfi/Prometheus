@@ -24,6 +24,7 @@ REPO = Path(__file__).resolve().parents[5]
 T = "moonshot.nf.tests.test_pg_publication."
 S, P = "nf/schema.sql", "nf/pg.py"
 VALIDATOR_SIG = "record_validation(text, integer, text, text, text[], text, text, text)"
+EXTRA_TREES = []                         # repo-relative directories copied next to moonshot/ in each mutant
 
 M = [
     ("PM01", "publish guard ignores the chain generation", S,
@@ -151,6 +152,8 @@ def run(m, out_dir):
     mid, what, rel, old, new, targets = m
     d = os.path.join(out_dir, mid)
     shutil.copytree(REPO / "moonshot", os.path.join(d, "moonshot"), ignore=shutil.ignore_patterns("__pycache__"))
+    for tree in EXTRA_TREES:             # code the mutated package resolves relative to the repo root (e.g. wforge)
+        shutil.copytree(REPO / tree, os.path.join(d, tree), ignore=shutil.ignore_patterns("__pycache__"))
     p = os.path.join(d, "moonshot", rel)
     with open(p, encoding="utf-8") as f:
         text = f.read()

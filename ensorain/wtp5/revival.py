@@ -49,7 +49,11 @@ def _job(a):
     fid, pair, b, lab, seed = a
     f = next(x for x in families() if x["fid"] == fid)
     tf = next(t for (p, bb, l, t) in points() if (p, bb, l) == (pair, b, lab))
-    return dict(fid=fid, pair=pair, band=b, level=lab, **unit(tf(f["g"]), seed))
+    try:
+        u = unit(tf(f["g"]), seed)
+    except Exception as ex:          # runner robustness (disclosed): a numerical failure is a CRASH unit -> ILLEGAL
+        u = dict(seed=int(seed), status="CRASH", reason=f"{type(ex).__name__}: {ex}"[:300])
+    return dict(fid=fid, pair=pair, band=b, level=lab, **u)
 
 
 def run(name, seeds, workers=3):

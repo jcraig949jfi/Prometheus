@@ -1,0 +1,40 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-015",
+  "thread_id": "TH-P2B-APHRODITE-V2B",
+  "epic_id": "EP-PHASE2B",
+  "status": "OPEN",
+  "label": "C-P2B-APH-BETA-04",
+  "title": "Aphrodite Beta-04 -- escaping the composition desert (72h ceiling, staged)",
+  "objective": "Q1 cognitive demand (world foundry + null ladder), Q2 reachability (desert atlas, certificate vs random archive), Q3 composition and Q4 development (minimal TFS-1 2x2 promotion x archive; developmental inheritance with common-residual endpoint and ablation-verified depth), Q5 economics. Instruments first; tier 2; no live models; no third generation.",
+  "coordinator_role": "Aphrodite",
+  "members": [
+    "Aphrodite"
+  ],
+  "authority": "operator directive 2026-10-10 (roles/Aphrodite/prompts/2026-10-10_beta04/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "sources": "roles/Aphrodite/beta04/CAMPAIGN_STATE.json; roles/Aphrodite/beta04/EXPERIMENT_PLAN.md",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: reruns of frozen procedures, manifests, fixtures from a settled design",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: triage judgements, repairs, replay design, residual-science selection",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "scarce deep reasoning / adversarial review of a repair or a surprising replay",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "created_by": "Aphrodite[harry1-0f14ab93]",
+  "created_at_utc": "2026-10-10T09:27:00Z",
+  "cadence": {
+    "mode": "4h DEV/EXP windows, staged gates",
+    "note": "see beta04/CAMPAIGN_STATE.json"
+  }
+}

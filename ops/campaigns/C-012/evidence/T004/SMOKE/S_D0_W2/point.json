@@ -1,0 +1,73 @@
+{
+ "D": 0,
+ "K": 2,
+ "W": 2,
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "arm": "S",
+ "drain_left_busy": 0,
+ "ended_at": "2026-10-10T09:29:11Z",
+ "fabric_schema": "fabric_b_smoke_s_d0_w2_d0bd",
+ "iters": 1,
+ "kills": [],
+ "label": "S_D0_W2",
+ "loop_errors": [],
+ "metrics": {
+  "M1_coordination_wall_fraction": 0.9487375244183254,
+  "M2_retries_per_published": 0.0,
+  "M3_p95_gap_over_median_execute": 39.90271734224068,
+  "M4_abandonment_rate": 0.0,
+  "M5_bytes_moved_per_published": 11620.931506849314,
+  "M6_db_bytes_per_published": 39781.69863013698,
+  "M7_tripwire_bytes_per_30d": 1485620884323.3423,
+  "attempts_executed": 292,
+  "db_errors": 0,
+  "execute_s": {
+   "median": 0.0066024065017700195,
+   "p95": 0.011314153671264648
+  },
+  "finish_s": {
+   "median": 0.0019450187683105469,
+   "p95": 0.0033440589904785156
+  },
+  "gap_s": {
+   "median": 0.005441069602966309,
+   "n": 290,
+   "p95": 0.26345396041870117
+  },
+  "moonshot_non_published": 0,
+  "publish_latency_s": {
+   "median": 0.19939565658569336,
+   "p95": 0.2372429370880127
+  },
+  "published": 292,
+  "queue_s": {
+   "median": 0.033035874366760254,
+   "p95": 0.06554603576660156
+  },
+  "tasks": 292,
+  "throughput_per_s": 14.407534748590654,
+  "transfer_s": {
+   "median": 0.014690041542053223,
+   "p95": 0.021136999130249023
+  },
+  "wall_s": 20.267173051834106
+ },
+ "moonshot_schema": "moonshot_b_smoke_s_d0_w2_d0bd",
+ "smoke": true,
+ "started_at": "2026-10-10T09:28:50Z",
+ "validation": {
+  "byte_failures": 0,
+  "byte_verified": 292,
+  "replay_mismatches": 0,
+  "replayed": 29
+ },
+ "verdict": [
+  "RECONSIDER",
+  [
+   "B1",
+   "B3"
+  ]
+ ],
+ "wall_s": 20.0,
+ "wpn": 0
+}

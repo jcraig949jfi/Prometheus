@@ -251,6 +251,10 @@ class Moonshot:
         """Every attempt this schema has classified (the publisher's idempotency set)."""
         return {r[0] for r in self._q("SELECT attempt_id FROM {s}.attempts")}
 
+    def classified_task_ids(self):
+        """Every Fabric task with a classified attempt (a completed Fabric task has exactly one succeeded attempt)."""
+        return {r[0] for r in self._q("SELECT DISTINCT task_id FROM {s}.attempts")}
+
     def attempt_outcomes(self, chain_id):
         return dict(self._q("SELECT outcome, count(*) FROM {s}.attempts WHERE chain_id = %s GROUP BY outcome",
                             (chain_id,)))
