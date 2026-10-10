@@ -833,6 +833,20 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   latch with ZERO latch-like genomes -- the census misses another high-reward strategy class (not yet characterised;
   candidates: a different wait/return rule, timing to the refill period). The census is a lower bound on state-based
   foraging, not a census of it. Next: characterise those two elites (state dependence + per-tick trace).
+- ELITE CHARACTERISATION (04:20Z): SOLO 6930 (.165) = REGISTER-STATE PATROL (wiped -> 0; never waits; harvests all
+  3 pools at phases 2-3 of the 4-tick refill). CONC 6922 (.135) = SELF-MODIFYING-CODE LATCH: persist-none leaves it at
+  .135 but locking code drops it to .028 (2005 code writes); waits on its emptied pool .977, harvests at phase 0;
+  depends on its own pool word only; NOT stigmergy (no cell ever written non-zero). CONC 6913 (.139) = register latch.
+  INSTRUMENT GAP (mine): 'persist = none' does not remove state stored in the genome -> B67/B69 state readouts missed
+  code-stored state.
+- B69e FULL STATE CENSUS (instrument repair; dependence = r - r(code locked AND persist none); 48 pulse pops = B69 +
+  B69c + B69d; exploratory measurement): state-using populations SOLO 13/24, CONC 17/24. Best-genome class SOLO:
+  REGISTER/WAIT 7, BOTH/WAIT 1, CODE/WAIT 1, REGISTER/OTHER (patrol) 4, STATELESS 11; CONC: REGISTER/WAIT 12, CODE/WAIT
+  3, STATELESS 9. Beat the hand latch: SOLO 1, CONC 3. Mean best .045 vs .061.
+  READING: where state pays decisively, this search reaches it in ~60% of populations, in THREE forms: register latch,
+  register patrol, self-modifying-code latch. The self-modifying route is the best genome in 5/48 here vs ~1/28 in the
+  B51/B52/B58 memory worlds. CONC best genomes are all WAIT latches or stateless; patrols appear only in SOLO
+  (4/24 vs 0/24) -- plausibly because a patrol across all pools collides with competitors. Tentative; untested.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

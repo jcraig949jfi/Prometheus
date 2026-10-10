@@ -1,0 +1,592 @@
+{
+ "summary": {
+  "SOLO": {
+   "pops": 24,
+   "state_using_pops": 13,
+   "best_class_counts": {
+    "REGISTER/WAIT": 7,
+    "BOTH/WAIT": 1,
+    "CODE/WAIT": 1,
+    "REGISTER/OTHER": 4,
+    "STATELESS": 11
+   },
+   "mean_best": 0.0454,
+   "beat_hand_latch": 1
+  },
+  "CONC": {
+   "pops": 24,
+   "state_using_pops": 17,
+   "best_class_counts": {
+    "REGISTER/WAIT": 12,
+    "STATELESS": 9,
+    "CODE/WAIT": 3
+   },
+   "mean_best": 0.0613,
+   "beat_hand_latch": 3
+  }
+ },
+ "rows": [
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6901,
+   "classes": {
+    "STATELESS": 2,
+    "REGISTER/WAIT": 6,
+    "REGISTER/OTHER": 2
+   },
+   "state_using": true,
+   "best_reward": 0.0391,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6902,
+   "classes": {
+    "BOTH/WAIT": 9,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0694,
+   "best_class": "BOTH/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6903,
+   "classes": {
+    "STATELESS": 9,
+    "CODE/WAIT": 1
+   },
+   "state_using": true,
+   "best_reward": 0.034,
+   "best_class": "CODE/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6904,
+   "classes": {
+    "REGISTER/OTHER": 7,
+    "STATELESS": 3
+   },
+   "state_using": true,
+   "best_reward": 0.026,
+   "best_class": "REGISTER/OTHER"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6905,
+   "classes": {
+    "REGISTER/OTHER": 10
+   },
+   "state_using": true,
+   "best_reward": 0.0407,
+   "best_class": "REGISTER/OTHER"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "SOLO",
+   "seed": 6906,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0234,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6901,
+   "classes": {
+    "REGISTER/WAIT": 4,
+    "STATELESS": 6
+   },
+   "state_using": true,
+   "best_reward": 0.0511,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6902,
+   "classes": {
+    "STATELESS": 5,
+    "REGISTER/WAIT": 5
+   },
+   "state_using": true,
+   "best_reward": 0.0339,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6903,
+   "classes": {
+    "REGISTER/WAIT": 9,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0662,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6904,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0276,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6905,
+   "classes": {
+    "STATELESS": 7,
+    "REGISTER/WAIT": 3
+   },
+   "state_using": true,
+   "best_reward": 0.0511,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69_pulse",
+   "arm": "CONC",
+   "seed": 6906,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0312,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6911,
+   "classes": {
+    "REGISTER/WAIT": 10
+   },
+   "state_using": true,
+   "best_reward": 0.0489,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6912,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0339,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6913,
+   "classes": {
+    "REGISTER/WAIT": 10
+   },
+   "state_using": true,
+   "best_reward": 0.0569,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6914,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0278,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6915,
+   "classes": {
+    "REGISTER/OTHER": 5,
+    "REGISTER/WAIT": 4,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0511,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "SOLO",
+   "seed": 6916,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0284,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6911,
+   "classes": {
+    "STATELESS": 2,
+    "REGISTER/WAIT": 8
+   },
+   "state_using": true,
+   "best_reward": 0.1208,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6912,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0276,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6913,
+   "classes": {
+    "REGISTER/WAIT": 9,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.1393,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6914,
+   "classes": {
+    "STATELESS": 6,
+    "REGISTER/WAIT": 4
+   },
+   "state_using": true,
+   "best_reward": 0.0593,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6915,
+   "classes": {
+    "REGISTER/WAIT": 3,
+    "STATELESS": 7
+   },
+   "state_using": true,
+   "best_reward": 0.0599,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69c_pulse",
+   "arm": "CONC",
+   "seed": 6916,
+   "classes": {
+    "REGISTER/OTHER": 7,
+    "STATELESS": 2,
+    "REGISTER/WAIT": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0511,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6921,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0334,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6922,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0321,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6923,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0367,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6924,
+   "classes": {
+    "REGISTER/WAIT": 7,
+    "STATELESS": 3
+   },
+   "state_using": true,
+   "best_reward": 0.0501,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6925,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0175,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6926,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0325,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6927,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0268,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6928,
+   "classes": {
+    "REGISTER/WAIT": 9,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0327,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6929,
+   "classes": {
+    "REGISTER/WAIT": 9,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0944,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6930,
+   "classes": {
+    "REGISTER/OTHER": 6,
+    "STATELESS": 4
+   },
+   "state_using": true,
+   "best_reward": 0.1474,
+   "best_class": "REGISTER/OTHER"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6931,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0475,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "SOLO",
+   "seed": 6932,
+   "classes": {
+    "STATELESS": 4,
+    "REGISTER/OTHER": 6
+   },
+   "state_using": true,
+   "best_reward": 0.0585,
+   "best_class": "REGISTER/OTHER"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6921,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0319,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6922,
+   "classes": {
+    "CODE/WAIT": 8,
+    "CODE/OTHER": 1,
+    "STATELESS": 1
+   },
+   "state_using": true,
+   "best_reward": 0.1349,
+   "best_class": "CODE/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6923,
+   "classes": {
+    "REGISTER/WAIT": 8,
+    "STATELESS": 2
+   },
+   "state_using": true,
+   "best_reward": 0.1048,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6924,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0431,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6925,
+   "classes": {
+    "STATELESS": 2,
+    "CODE/WAIT": 5,
+    "BOTH/WAIT": 2,
+    "REGISTER/OTHER": 1
+   },
+   "state_using": true,
+   "best_reward": 0.1183,
+   "best_class": "CODE/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6926,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0444,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6927,
+   "classes": {
+    "STATELESS": 10
+   },
+   "state_using": false,
+   "best_reward": 0.0277,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6928,
+   "classes": {
+    "STATELESS": 6,
+    "REGISTER/WAIT": 3,
+    "REGISTER/OTHER": 1
+   },
+   "state_using": true,
+   "best_reward": 0.0433,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6929,
+   "classes": {
+    "CODE/WAIT": 1,
+    "STATELESS": 9
+   },
+   "state_using": true,
+   "best_reward": 0.0376,
+   "best_class": "CODE/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6930,
+   "classes": {
+    "REGISTER/WAIT": 3,
+    "STATELESS": 7
+   },
+   "state_using": true,
+   "best_reward": 0.0688,
+   "best_class": "STATELESS"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6931,
+   "classes": {
+    "STATELESS": 8,
+    "REGISTER/WAIT": 2
+   },
+   "state_using": true,
+   "best_reward": 0.0511,
+   "best_class": "REGISTER/WAIT"
+  },
+  {
+   "set": "B69d_pulse",
+   "arm": "CONC",
+   "seed": 6932,
+   "classes": {
+    "STATELESS": 8,
+    "REGISTER/WAIT": 2
+   },
+   "state_using": true,
+   "best_reward": 0.0451,
+   "best_class": "REGISTER/WAIT"
+  }
+ ]
+}

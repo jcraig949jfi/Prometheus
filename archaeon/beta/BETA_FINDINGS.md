@@ -81,7 +81,10 @@ clock.
    - The memory law's reachable class therefore includes a latch that gates control, not only a stored value -- when
      the world makes it decisive.
    - Competition raising the rate: NOT SUPPORTED (B69d: count CONC 6/12 vs SOLO 3/12, but reward p = .22).
-   - Some elites beat the hand latch with no latch-like genomes (another strategy class, uncharacterised).
+   - Full state census (B69e; dependence with code locked AND persist none; 48 populations, exploratory): state is
+     used in SOLO 13/24, CONC 17/24 populations, in three forms -- register latch, register patrol (SOLO only), and
+     self-modifying-code latch (best genome in 5/48). B67/B69's persist-only readout missed code-stored state
+     (instrument gap, mine).
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (2/2 worlds)
 
