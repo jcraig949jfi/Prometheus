@@ -142,15 +142,32 @@ whose Fabric base_sha is not the chain's approved_code_sha or not an ancestor of
 not moonshot.epoch.fabric_exec (REFUSED_UNAPPROVED). Fabric does not authenticate task submitters, so a hostile
 submitter could make a node RUN unapproved code; Moonshot cannot prevent that execution, only refuse its results.
 
-## 6. Pan's lake (OP-NF2 s4) -- proposal pending Pan's answer (#1986)
+## 6. Pan's lake (OP-NF2 s4) -- agreed with Pan (#2004, 2026-10-10T08:33Z)
 
 - Authoritative: Postgres `moonshot` (metadata + content-addressed objects). The lake is DERIVED (Pan's P1).
-- A materializer runs ON M2 (the lake is M2-local, Pan's Q-003 default; Ubuntu nodes never read it) and appends,
-  through Pan's public `pan.iceberg.write`, to namespace `moonshot`: epochs, attempts, validations, contests and
-  trace_lines (the event/measurement table, one row per canonical trace line).
-- Idempotent and recoverable: each append records a watermark (the last publication id) in the Iceberg snapshot
-  summary; on restart the materializer resumes from the latest snapshot's watermark, so a crash between the Iceberg
-  commit and anything else neither loses nor duplicates rows. Oracle: per-table row counts vs Postgres.
+- Where: the Iceberg catalog metadata is in M1 Postgres (schema `pan_iceberg`), the data files are local paths on
+  M2's NVMe (C:/Prometheus-data/pan/lake). Every lake reader and writer runs ON M2; the Ubuntu nodes and M1 read
+  Moonshot's authoritative rows in Postgres, never the lake.
+- Writer: Moonshot's materializer (on M2) calls Pan's public functions itself -- no Pan poller, nothing on the path
+  depends on a running Pan process. Interface as of Pan 801e09d6b:
+  `pan.iceberg.write(name, arrow_table, mode="append", namespace="moonshot", snapshot_properties={"watermark": ...})`
+  and `pan.iceberg.last_snapshot_properties(name, namespace="moonshot")`. Conditions (Pan's): write only namespace
+  `moonshot`, never `pan.*`; one writer per table; use the functions as they are (ask Pan for a change, never vendor
+  a copy); new columns arrive by schema evolution, a rename or type change needs a new table.
+- Tables (namespace `moonshot`): epochs, attempts, validations, contests (one row per database row) and trace_lines
+  (the event/measurement table: one row per canonical trace line). Columns borrow pan.result_rows names where the
+  meaning matches: `seat` (producer), `kind` (epoch | attempt | validation | contest | trace), `line_no` (position
+  in the canonical trace), `record` (the canonical JSON text where kept), `object_sha256` for content addresses (not
+  blob_sha, which means a git blob in Pan's tables); plus `publication_id` (orders the watermark), `published_at`
+  (world time, from Postgres), `materialized_at`, `materializer` (instance id).
+- Idempotent and recoverable: each append carries a watermark (the last publication id it covers) in the new
+  snapshot's summary; a restart reads the CURRENT snapshot's watermark and resumes after it, so a crash between the
+  Iceberg commit and anything else neither loses nor duplicates rows. Oracle per run: row counts per table vs
+  Postgres, logged in Moonshot's own records (not pan.run).
+- Catalogue (pull): a stable view `moonshot.catalog_v(object_sha256, kind, title, summary, published_at, ref)`
+  of PUBLISHED EPOCHS (not trace lines); Pan's refresh collects it into pan.artifact (source 'moonshot'). While
+  logins are superuser Pan's collector can read it; with per-role logins it needs moonshot_reader.
+- Size: synthetic epochs are bytes; < 50 MB is fine (Pan); the lake volume has ~630 GB free.
 - Publication never waits on the lake; a lake outage only delays materialization.
 
 ## 7. Node runtime for the demonstration (s3)
@@ -165,5 +182,5 @@ under /var/tmp naming a TEST namespace) so no task submitter can trigger it; pro
 
 | Reviewer | Requested | Outcome |
 |---|---|---|
-| Pan | comms #1986, 2026-10-10 | pending |
+| Pan | comms #1986, 2026-10-10 | questions answered #2004 (s6 rewritten to match); review of the committed contract pending |
 | Odysseus | comms #1987, 2026-10-10 | pending (offline since 2026-10-03) |

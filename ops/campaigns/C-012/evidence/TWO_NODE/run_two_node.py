@@ -61,7 +61,7 @@ def node_facts(host, approved_sha):
     out = ssh(host, "hostname; uptime; stat -c %Y ~/Prometheus/.git/FETCH_HEAD 2>/dev/null || echo none; "
                     "git -C ~/Prometheus cat-file -e {}^{{commit}} && echo approved_present || echo approved_missing; "
                     "git -C {} rev-parse HEAD 2>/dev/null || echo no_runtime; "
-                    "pgrep -af 'fabric worker' || true".format(approved_sha, RUNTIME_DIR))
+                    "pgrep -af '[f]abric worker' || true".format(approved_sha, RUNTIME_DIR))
     lines = out.strip().splitlines()
     return {"host": lines[0], "uptime": lines[1], "fetch_head_mtime": lines[2], "approved_sha": lines[3],
             "runtime_head": lines[4], "fabric_worker_processes": lines[5:]}
@@ -81,7 +81,9 @@ def clear_fault(host):
 
 def worker_cmd(host):
     agent = "worker.{}.moonshot".format(host)
-    return ("mkdir -p {w} && cd {r} && EW_DB_HOST=192.168.1.202 nohup python3 -m fabric worker --agent {a} "
+    # `;` not `&&` before the worker: `a && b && c &` would background the whole list as a subshell that keeps the
+    # ssh channel open (found 2026-10-10: the start hung until the ssh timeout)
+    return ("mkdir -p {w}; cd {r} || exit 1; EW_DB_HOST=192.168.1.202 nohup python3 -m fabric worker --agent {a} "
             "--caps moonshot.epoch.v1 --executors script --work-root {w} --poll-s 2 --idle-exit-s 1800 "
             ">> {w}/{a}.log 2>&1 < /dev/null & echo started $!").format(w=WORK_ROOT, r=RUNTIME_DIR, a=agent)
 
@@ -89,7 +91,8 @@ def worker_cmd(host):
 def workers(op, hosts=None):
     out = {}
     for h in hosts or NODES:
-        pat = "fabric worker --agent worker.{}.moonshot".format(h)
+        pat = "[f]abric worker --agent worker.{}.moonshot".format(h)   # [f]: the ssh shell running pgrep/pkill
+        # carries this pattern in its own command line; the bracket keeps it from matching (or killing) itself
         if op == "start":
             if ssh(h, "pgrep -f {} || true".format(shlex.quote(pat))).strip():
                 out[h] = "already running"
