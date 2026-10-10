@@ -121,6 +121,20 @@ Q-010 | PREF (shared service on M2) | 2026-10-09
   every benchmark run (pan.run params; today's 8 runs backfilled as 0.35.0).
   ANSWER:
 
+Q-011 | PREF (fleet work, outward-facing) | 2026-10-10
+  You want platform-wide code reviews done by the agents already working,
+  not by you. Pan can build the parts inside its lane: (1) a ranked REVIEW
+  QUEUE from the catalog (recently changed modules per seat, code no passing
+  test imports, hard-coded hosts/paths, test files that fail in a clean
+  sandbox), (2) a CALIBRATION SET of seeded bugs (PAN-34's sandbox can splice
+  a known-broken function in) so each reviewer's hit rate is measured, and
+  (3) a findings table and a portal view. Handing review units to other
+  seats (Fabric tasks or comms, author never reviews own code, reviewers
+  must run the code) changes their work, so it is yours to approve.
+  DEFAULT meanwhile: Pan builds (1)-(3) after PAN-34 closes; no review task
+  is dispatched to any seat until you answer.
+  ANSWER:
+
 ## ANSWERED
 
 (none yet)

@@ -39,6 +39,21 @@
   .dm td.num, .dm th.num { text-align: right; }
   .dm .dm-inbar { display: inline-block; height: 0.5rem; border-radius: 3px; background: var(--cds-chart-muted); vertical-align: middle; margin-right: 0.4rem; }
   .dm .dm-inbar.full { background: var(--color-ok); }
+  .dm-wide { grid-column: 1 / -1; }
+  .dm-arch { position: relative; min-height: 22rem; }
+  .dm-arch svg { display: block; overflow: visible; }
+  .dm-arch .node { cursor: default; outline: none; }
+  .dm-arch .node rect.box { fill: var(--color-bg); stroke-width: 1.5; }
+  .dm-arch .node:focus-visible rect.box { stroke-width: 3; }
+  .dm-arch .node text { font-family: var(--font-anthropic-sans); }
+  .dm-arch .edge { fill: none; stroke: var(--cds-chart-axis); stroke-width: 1.25; opacity: 0.55; transition: opacity var(--cds-dur-slow); }
+  .dm-arch.hot .edge { opacity: 0.12; }
+  .dm-arch.hot .edge.on { opacity: 1; stroke-width: 2; }
+  .dm-arch.hot .node { opacity: 0.35; }
+  .dm-arch.hot .node.on { opacity: 1; }
+  .dm-tip { position: absolute; pointer-events: none; max-width: 18rem; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); font-size: var(--cds-font-size-caption); line-height: 1.4; color: var(--color-fg); box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+  .dm-tip b { font-weight: var(--cds-font-weight-medium); }
+  .dm-tip span { color: var(--color-fg-muted); display: block; margin-top: 2px; }
   [data-dash-source-state=empty] { color: transparent; }
   [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 </style>
@@ -62,6 +77,13 @@
   </section>
 
   <section class="dm-grid">
+    <article class="dm-card dm-wide" id="architecture">
+      <h2>How Pan&rsquo;s data system fits together</h2>
+      <p class="dm-note">Where the data comes from, what Pan runs over it, where it lands, and how seats and the operator get at it. Colour shows the machine each part lives on. Hover or tab to a box to trace what feeds it and what it feeds.</p>
+      <div class="dm-legend" id="dm-arch-legend" data-source="architecture"></div>
+      <div class="dm-arch" id="dm-arch" data-source="architecture"></div>
+    </article>
+
     <article class="dm-card" id="stores">
       <h2>Where the bytes are</h2>
       <p class="dm-note">Size of each store, on a log scale so the small live stores stay visible beside the large cold ones.</p>
@@ -250,7 +272,161 @@
     });
   }
 
+  const hostLabel = { M1: 'M1 (Skullport): Postgres', M2: 'M2 (SPECTREX5): lake, GPU, models',
+                      Git: 'Repository (every machine)', Outside: 'Outside world' };
+  const hostColor = (h) => ({ M1: dash.colors[0], M2: dash.colors[1], Git: dash.colors[3], Outside: dash.colors[2] }[h]
+                              || 'var(--cds-chart-muted)');
+
+  function wrap(text, maxChars) {
+    const lines = [];
+    let cur = '';
+    String(text || '').split(/\s+/).forEach(w => {
+      if (cur && (cur + ' ' + w).length > maxChars) { lines.push(cur); cur = w; } else { cur = cur ? cur + ' ' + w : w; }
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+
+  function drawArch() {
+    const box = document.getElementById('dm-arch');
+    const legend = document.getElementById('dm-arch-legend');
+    box.textContent = '';
+    legend.textContent = '';
+    box.classList.remove('hot');
+    const d = dash.data('architecture');
+    if (d.status !== 'ok') return;
+    const nodes = d.data.filter(r => r.kind === 'node').map(r => ({ ...r, layer: Number(r.layer) }));
+    const edges = d.data.filter(r => r.kind === 'edge');
+    const byId = new Map(nodes.map(n => [n.id, n]));
+    Object.keys(hostLabel).forEach(k => {
+      if (!nodes.some(n => n.host === k)) return;
+      const item = document.createElement('span');
+      const sw = document.createElement('i');
+      sw.style.background = hostColor(k);
+      item.append(sw, document.createTextNode(hostLabel[k]));
+      legend.append(item);
+    });
+
+    const W = Math.max(300, box.clientWidth || 960);
+    const layers = d3.groups(nodes, n => n.layer).sort((a, b) => a[0] - b[0]);
+    const vertical = W < 860;
+    const pad = 2, head = 20, gapY = 10;
+    const heads = [];
+    let H = 0;
+    function size(n, cw) {
+      n.tl = wrap(n.title, Math.max(10, Math.floor((cw - 20) / 7.2)));
+      n.dl = wrap(n.detail, Math.max(12, Math.floor((cw - 20) / 6.1)));
+      n.w = cw;
+      n.h = 12 + n.tl.length * 15 + n.dl.length * 14 + 6;
+    }
+    if (!vertical) {
+      const gapX = 34;
+      const cw = (W - 2 * pad - gapX * (layers.length - 1)) / layers.length;
+      layers.forEach(([, ns], k) => {
+        const x = pad + k * (cw + gapX);
+        heads.push({ x, y: 13, w: cw, text: ns[0].layer_name });
+        let y = head + 6;
+        ns.forEach(n => { size(n, cw); n.x = x; n.y = y; y += n.h + gapY; });
+        H = Math.max(H, y);
+      });
+    } else {
+      const per = W < 520 ? 1 : 2, gx = 12;
+      const cw = (W - 2 * pad - gx * (per - 1)) / per;
+      let y = 0;
+      layers.forEach(([, ns]) => {
+        heads.push({ x: pad, y: y + 13, w: W, text: ns[0].layer_name });
+        y += head + 6;
+        for (let i = 0; i < ns.length; i += per) {
+          const row = ns.slice(i, i + per);
+          row.forEach(n => size(n, cw));
+          const rh = d3.max(row, n => n.h);
+          row.forEach((n, j) => { n.x = pad + j * (cw + gx); n.y = y; n.h = rh; });
+          y += rh + gapY;
+        }
+        y += 18;
+      });
+      H = y;
+    }
+
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', 'Architecture of Pan’s data system: sources, pipelines, stores, ways in and users');
+    svg.append('defs').append('marker').attr('id', 'dm-arrow').attr('viewBox', '0 0 10 10').attr('refX', 9).attr('refY', 5)
+      .attr('markerWidth', 7).attr('markerHeight', 7).attr('orient', 'auto-start-reverse')
+      .append('path').attr('d', 'M0,0 L10,5 L0,10 z').attr('fill', 'var(--cds-chart-axis)');
+    svg.selectAll('text.head').data(heads).join('text').attr('class', 'head')
+      .attr('x', h => h.x).attr('y', h => h.y).attr('font-size', 11).attr('font-weight', 500)
+      .attr('fill', 'var(--color-fg-muted)').attr('letter-spacing', '0.02em').text(h => h.text);
+
+    const path = (e) => {
+      const s = byId.get(e.source), t = byId.get(e.target);
+      if (!s || !t) return '';
+      if (!vertical) {
+        const x1 = s.x + s.w, y1 = s.y + s.h / 2, x2 = t.x - 2, y2 = t.y + t.h / 2, mx = (x1 + x2) / 2;
+        return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+      }
+      const x1 = s.x + s.w / 2, y1 = s.y + s.h, x2 = t.x + t.w / 2, y2 = t.y - 2, my = (y1 + y2) / 2;
+      return `M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`;
+    };
+    const eSel = svg.append('g').selectAll('path').data(edges).join('path').attr('class', 'edge')
+      .attr('d', path).attr('marker-end', 'url(#dm-arrow)');
+
+    const tip = document.createElement('div');
+    tip.className = 'dm-tip';
+    tip.hidden = true;
+    box.append(tip);
+
+    const nSel = svg.append('g').selectAll('g.node').data(nodes).join('g').attr('class', 'node')
+      .attr('transform', n => `translate(${n.x},${n.y})`).attr('tabindex', 0)
+      .attr('aria-label', n => n.title + ': ' + n.detail);
+    nSel.append('rect').attr('class', 'box').attr('width', n => n.w).attr('height', n => n.h).attr('rx', 6)
+      .attr('stroke', n => hostColor(n.host));
+    nSel.append('rect').attr('width', 4).attr('height', n => n.h - 8).attr('x', 3).attr('y', 4).attr('rx', 2)
+      .attr('fill', n => hostColor(n.host));
+    nSel.each(function (n) {
+      const g = d3.select(this);
+      n.tl.forEach((ln, i) => g.append('text').attr('x', 13).attr('y', 18 + i * 15).attr('font-size', 12.5)
+        .attr('font-weight', 500).attr('fill', 'var(--color-fg)').text(ln));
+      const y0 = 18 + n.tl.length * 15;
+      n.dl.forEach((ln, i) => g.append('text').attr('x', 13).attr('y', y0 + i * 14).attr('font-size', 11)
+        .attr('fill', 'var(--color-fg-muted)').text(ln));
+    });
+
+    function focus(n) {
+      const ins = edges.filter(e => e.target === n.id).map(e => e.source);
+      const outs = edges.filter(e => e.source === n.id).map(e => e.target);
+      const on = new Set([n.id, ...ins, ...outs]);
+      box.classList.add('hot');
+      nSel.classed('on', m => on.has(m.id));
+      eSel.classed('on', e => e.source === n.id || e.target === n.id);
+      tip.textContent = '';
+      const b = document.createElement('b'); b.textContent = n.title;
+      tip.append(b);
+      [['Fed by', ins], ['Feeds', outs]].forEach(([label, ids]) => {
+        if (!ids.length) return;
+        const s = document.createElement('span');
+        s.textContent = label + ': ' + ids.map(i => (byId.get(i) || {}).title || i).join(', ');
+        tip.append(s);
+      });
+      tip.hidden = false;
+      const scale = (box.clientWidth || W) / W;
+      const tw = tip.offsetWidth, bw = box.clientWidth || W;
+      let left = (n.x + n.w + 8) * scale;
+      if (left + tw > bw) left = Math.max(0, n.x * scale - tw - 8);
+      if (left < 0 || left + tw > bw) left = Math.max(0, Math.min(bw - tw, n.x * scale));
+      tip.style.left = left + 'px';
+      tip.style.top = Math.max(0, n.y * scale) + 'px';
+    }
+    function blur() {
+      box.classList.remove('hot');
+      nSel.classed('on', false);
+      eSel.classed('on', false);
+      tip.hidden = true;
+    }
+    nSel.on('mouseenter focus', (ev, n) => focus(n)).on('mouseleave blur', blur);
+  }
+
   dash.onData(() => {
+    drawArch();
     drawTotals();
     drawStores();
     drawMonths();
