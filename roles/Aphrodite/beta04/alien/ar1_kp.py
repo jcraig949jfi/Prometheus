@@ -27,6 +27,9 @@ FIRST FAILING LINK (the E3-KP labels, AR-1 reading; AR1_DESIGN.md s6):
   A chain is not exhaustive, so the E3-KP sub-labels IN_CLASS / CLASS_NOT_ENTERED and WITNESS_CLASS_COMPLETED_NO_HIT
   have no AR-1 analogue.
 GIVEN-TRUE-STONES row: NOT_DEFINABLE (a 'true' AR-1 stone needs a translation of the sealed lambda into a tape).
+SECONDARY ROWS: --seed s (all stages re-keyed); --r1-seeds K (R1 acquisition retried over MC-1 seeds 0..K-1 for each R1
+family, family-major, first qualified + extractable wins: CERTIFIER-ASSISTED, the native lambda-free way to give the
+composition step working stones; chain / scratch use --seed).
 
 Commands (from roles/Aphrodite/beta04, OMP_NUM_THREADS=1, ONE process at a time):
   python -m alien.ar1_kp --root foundry/<set> --world W --stage r1|chain|scratch|all [--seed s] [--cpu-cap 840]
@@ -57,7 +60,7 @@ LINKS = ("R1_ACQUISITION", "UNDERDETERMINED_STONE", "HORIZON_R1", "COMPOSITION_H
          "COMPOSITION_UNDERDETERMINED")
 PROBE_NARROW = list(range(-40, 41))
 PROBE_WIDE = list(range(-200, 201, 3))
-SEARCH_CPU_EST = 420.0          # pessimistic CPU-s of one censored 1e6 search (pilot-measured max is reported)
+SEARCH_CPU_EST = 300.0          # pessimistic CPU-s of one censored 1e6 search (pilot-measured: ~120-200 s)
 
 
 class CpuCap(Exception):
@@ -65,12 +68,13 @@ class CpuCap(Exception):
 
 
 class Config:
-    def __init__(self, seed: int = SEED, scope: str = "constituents", budget: int = BUDGET):
-        assert scope in ("constituents", "all")
-        self.seed, self.scope, self.budget = int(seed), scope, int(budget)
+    def __init__(self, seed: int = SEED, scope: str = "constituents", budget: int = BUDGET, r1_seeds: int = 1):
+        assert scope in ("constituents", "all") and r1_seeds >= 1
+        self.seed, self.scope, self.budget, self.r1_seeds = int(seed), scope, int(budget), int(r1_seeds)
 
     def key(self) -> str:
-        return "ar1.mc1.lib-%s.seed%d.B%d" % (self.scope, self.seed, self.budget)
+        k = "ar1.mc1.lib-%s.seed%d.B%d" % (self.scope, self.seed, self.budget)
+        return k + (".r1seeds%d" % self.r1_seeds if self.r1_seeds > 1 else "")
 
     def row_name(self) -> str:
         d = []
@@ -80,11 +84,13 @@ class Config:
             d.append("seed%d" % self.seed)
         if self.budget != BUDGET:
             d.append("B%d" % self.budget)
+        if self.r1_seeds > 1:
+            d.append("r1_multiseed%d" % self.r1_seeds)
         return "+".join(d) if d else "primary"
 
     def to_json(self):
-        return {"seed": self.seed, "scope": self.scope, "budget": self.budget, "key": self.key(),
-                "row": self.row_name()}
+        return {"seed": self.seed, "scope": self.scope, "budget": self.budget, "r1_seeds": self.r1_seeds,
+                "key": self.key(), "row": self.row_name()}
 
 
 PRIMARY = Config()
@@ -221,23 +227,25 @@ class AR1KP:
         vals = PROBE_NARROW if vals is None else vals
         seg = M.parse(segment)
         args = [(v,) for v in vals] if kind in ("f", "p") else [(u, v) for u in vals[::4] for v in vals[::4]]
-        same = 0
-        for a in args:
-            rs = C.evaluate(("app", lam) + tuple(("int", v) for v in a), [])[0]
-            ru = X.unit_value(seg, kind, a)
-            same += M.same_value(rs, ru)
+        sealed = [C.evaluate(("app", lam) + tuple(("int", v) for v in a), [])[0] for a in args]
         exc = getattr(C, "_FAIL_EXC", None)
         if exc is not None:
             exc.__traceback__ = None
-        return round(same / len(args), 4)
+        best = 0.0
+        for swap in ((False, True) if kind == "s" else (False,)):      # P-A1: s-kind max over the two bindings
+            same = sum(M.same_value(rs, X.unit_value(seg, kind, a, None, swap)) for rs, a in zip(sealed, args))
+            best = max(best, same / len(args))
+        return round(best, 4)
 
     # ---- (i) + (ii)
     def run_unit(self, d, m, cfg: Config) -> Dict:
         kind = self.mech[m]["kind"]
         attempts = []
-        for fid in self.r1_families(m):
-            r = self.search(d, fid, None, cfg)
-            row = {"family_id": fid, "found": r["program"], "charge": r["hit_charge"], "charges": r["charges"],
+        tries = [(fid, s) for fid in self.r1_families(m)
+                 for s in ([cfg.seed] if cfg.r1_seeds == 1 else range(cfg.r1_seeds))]
+        for fid, s in tries:
+            r = self.search(d, fid, None, Config(s, cfg.scope, cfg.budget))
+            row = {"family_id": fid, "r1_seed": s, "found": r["program"], "charge": r["hit_charge"], "charges": r["charges"],
                    "cpu_s": r["cpu_s"], "best_credit": r["best_credit"], "n_dev": r["n_dev"],
                    "restarts": r["restarts"]}
             if r["hit"]:
@@ -262,7 +270,7 @@ class AR1KP:
             attempts.append(row)
             if row["detail"] == "ACQUIRED":
                 seg = row["segment"]
-                return {"mechanism": m, "kind": kind, "status": "ACQUIRED", "segment": seg,
+                return {"mechanism": m, "kind": kind, "status": "ACQUIRED", "segment": seg, "r1_seed": row["r1_seed"],
                         "macro": X.macro_name(seg), "from": fid, "n_attempts": len(attempts),
                         "certifier_assisted_retry": any(a.get("detail") == "R1_FIRST_DEV_CONSISTENT_FAILS_TEST"
                                                         for a in attempts[:-1]),
@@ -371,7 +379,8 @@ class AR1KP:
                       "certifier_assisted_retry": u.get("certifier_assisted_retry"),
                       "agrees_with_sealed_on_probe": u.get("agrees_with_sealed_on_probe"),
                       "agrees_with_sealed_wide": u.get("agrees_with_sealed_wide"),
-                      "attempts": [{k: a.get(k) for k in ("family_id", "found", "minimised", "label", "detail",
+                      "r1_seed": u.get("r1_seed"),
+                      "attempts": [{k: a.get(k) for k in ("family_id", "r1_seed", "found", "minimised", "label", "detail",
                                                           "charge", "cpu_s", "best_credit")}
                                    for a in u.get("attempts", [])],
                       "cpu_s": round(sum(a.get("cpu_s", 0) or 0 for a in u.get("attempts", [])), 2)}
@@ -467,10 +476,12 @@ def main():
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--all-acquired-library", action="store_true")
     ap.add_argument("--budget", type=int, default=BUDGET)
+    ap.add_argument("--r1-seeds", type=int, default=1, help="secondary row: R1 acquisition retried over seeds "
+                    "0..K-1 per R1 family (certifier-assisted); chain / scratch keep --seed")
     ap.add_argument("--cpu-cap", type=float, default=840.0, help="per-process CPU-s guard (lead build rule)")
     a = ap.parse_args()
     out = a.out or str(HERE / "runs" / Path(a.root).name)
-    cfg = Config(a.seed, "all" if a.all_acquired_library else "constituents", a.budget)
+    cfg = Config(a.seed, "all" if a.all_acquired_library else "constituents", a.budget, a.r1_seeds)
     if a.pooled:
         res = pooled(a.root, a.worlds.split(",") if a.worlds else None, cfg, out)
         p = Path(out) / ("AR1_POOLED_%s.json" % cfg.key())

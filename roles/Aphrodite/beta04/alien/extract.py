@@ -3,15 +3,21 @@ only the found tape, the R1 family's DEV examples and the mechanism KIND (f / p 
 exactly as E3-KP reads it). It never reads the sealed mechanism, test, tribunal or witness.
 
 X1-a MINIMISE. T* = the found tape with contiguous windows deleted greedily while every dev output (value-or-FAIL) is
-     unchanged: repeat { for w in 1, 2, 3: for i = 0 .. len-w: if deleting T[i:i+w] keeps all dev outputs, delete it
-     and restart } until no deletion applies.
+     unchanged: repeat { for w in 1 .. len(T): for i = 0 .. len-w: if deleting T[i:i+w] keeps all dev outputs, delete
+     it and restart } until no deletion applies.
+     [Pilot amendment P-A2, before production: the window was 1..3; the pilot showed a 5-token net no-op
+     ('a 1 s A ?') that a <=3 window cannot remove, which split the mechanism segment. All window lengths now.]
 X1-b CANDIDATE SEGMENTS. Every contiguous segment S of T* such that
        - every token of S is PURE (0 1 2 3 a + - * / % n < = d s, or a macro token), i.e. no store / emit / skip /
          loop / re-list / len / drop token;
        - S contains at least one operator (+ - * / % n < =) and has >= 2 tokens;
        - S's static stack signature (k inputs taken from below its start, values left) and register use fit the kind:
            f : (k, out) = (1, 1), no 'a', last token not a comparison (< =)
-           p : (k, out) = (1, 1), no 'a', last token is a comparison (< =)
+           p : (k, out) = (1, 1), no 'a', last token is a comparison (< =) OR S is immediately followed by '?' in T*
+               [pilot amendment P-A3, before production: in AR-1 the only consumer of a truth value is '?'
+               (zero / non-zero), so a segment that feeds '?' is natively a predicate; the pilot found a qualified
+               filter whose predicate is an integer expression (no comparison) feeding '?'. Probe agreement for p
+               compares truthiness (value != 0) with the sealed Bool.]
            s : (k, out) = (2, 1) with no 'a'   OR   (1, 1) containing 'a'  (accumulator on the stack or in A).
 X1-c CHOICE. The LONGEST candidate; ties -> the leftmost. None -> NO_EXTRACTABLE_UNIT.
 The unit is promoted as macro token '@u<sha8 of its canonical text>' (identical segments collapse to one macro).
@@ -35,7 +41,7 @@ def minimise(tape: Sequence[str], dev, out_type, macros=None) -> Tuple[str, ...]
     changed = True
     while changed:
         changed = False
-        for w in (1, 2, 3):
+        for w in range(1, len(t) + 1):
             for i in range(0, len(t) - w + 1):
                 c = t[:i] + t[i + w:]
                 outs = dev_outputs(c, dev, out_type, macros)
@@ -48,7 +54,7 @@ def minimise(tape: Sequence[str], dev, out_type, macros=None) -> Tuple[str, ...]
     return t
 
 
-def fits_kind(seg: Sequence[str], kind: str, macros=None) -> bool:
+def fits_kind(seg: Sequence[str], kind: str, macros=None, next_tok: Optional[str] = None) -> bool:
     if len(seg) < 2:
         return False
     if not all(tok in M.PURE or M.is_macro(tok) for tok in seg):
@@ -62,7 +68,7 @@ def fits_kind(seg: Sequence[str], kind: str, macros=None) -> bool:
     if kind == "f":
         return sg == (1, 1) and not has_a and seg[-1] not in COMPARE
     if kind == "p":
-        return sg == (1, 1) and not has_a and seg[-1] in COMPARE
+        return sg == (1, 1) and not has_a and (seg[-1] in COMPARE or next_tok == "?")
     if kind == "s":
         return (sg == (2, 1) and not has_a) or (sg == (1, 1) and has_a)
     raise ValueError(kind)
@@ -73,7 +79,7 @@ def candidates(tape: Sequence[str], kind: str, macros=None) -> List[Tuple[int, i
     out = []
     for i in range(len(t)):
         for j in range(i + 2, len(t) + 1):
-            if fits_kind(t[i:j], kind, macros):
+            if fits_kind(t[i:j], kind, macros, t[j] if j < len(t) else None):
                 out.append((i, j))
     return out
 
@@ -93,15 +99,22 @@ def macro_name(segment_text: str) -> str:
     return "@u" + hashlib.sha256(segment_text.encode()).hexdigest()[:8]
 
 
-def probe_frame(kind: str, args: Tuple[int, ...]) -> Tuple[List[int], int]:
-    """The fixed probe binding (diagnostic only): f/p: stack [v], A = 0; s: stack [a, b], A = a."""
+def probe_frame(kind: str, args: Tuple[int, ...], swap: bool = False) -> Tuple[List[int], int]:
+    """The probe binding (diagnostic only): f/p: stack [v], A = 0; s: stack [a, b], A = a (swap=False) or
+    stack [b, a], A = b (swap=True).
+    [Pilot amendment P-A1, before production: s-kind agreement is the MAX over the two argument bindings. The pilot
+    showed a correct fold whose tape keeps the accumulator on the stack and the element in A (the reverse of the
+    declared frame); a unit is a stack transformer whose argument roles are fixed by the tape that uses it, so
+    binding order is not a property of the unit.]"""
     if kind in ("f", "p"):
         return [args[0]], 0
+    if swap:
+        return [args[1], args[0]], args[1]
     return [args[0], args[1]], args[0]
 
 
-def unit_value(segment: Sequence[str], kind: str, args: Tuple[int, ...], macros=None):
-    st, reg = probe_frame(kind, args)
+def unit_value(segment: Sequence[str], kind: str, args: Tuple[int, ...], macros=None, swap: bool = False):
+    st, reg = probe_frame(kind, args, swap)
     v = M.run_frame(tuple(segment), st, reg, macros)
     if kind == "p" and v != M.FAIL:
         return v != 0
