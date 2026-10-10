@@ -249,7 +249,7 @@ class TestCrashAndRollback(PgCase):
                 "r = T.model.execute(T.genesis().obj, 1, T.genesis().initial_checkpoint)\n"
                 "res = h.publish(sys.argv[2], 'tsk-child', 'C1', 1, None, 0, r.files(), _hold_before_commit_s=float(sys.argv[3]))\n"
                 "print(res['outcome'], flush=True)\n")
-        hold = {"before_commit": "30", "commit": "0"}[mode]
+        hold = {"before_commit": "8", "commit": "0"}[mode]
         env = dict(os.environ, PYTHONPATH=REPO)
         return subprocess.Popen([sys.executable, "-c", code, self.schema, attempt, hold], cwd=REPO, env=env,
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
