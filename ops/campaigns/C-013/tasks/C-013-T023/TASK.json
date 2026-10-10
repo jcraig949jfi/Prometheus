@@ -1,0 +1,67 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T023",
+  "campaign_id": "C-013",
+  "title": "P-2: enforce gpu_hours and cloud_usd caps in rso/slice001/ledger.py Caps (fire tests)",
+  "objective": "A run that would exceed the GPU-hour or dollar cap is refused before it starts; existing ledgers and suites keep passing.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-013-T020"
+  ],
+  "owns": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py"
+  ],
+  "reads": [
+    "ops/campaigns/C-013/escalations/NEW_Eupalamus_2026-10-10_1_RESPONSE.md",
+    "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md",
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md",
+    "ops/campaigns/C-012/ (Themis, read only)"
+  ],
+  "problem": "Optional fields: absent caps keep today's behaviour; caps present and exceeded refuse with a typed reason before the attempt row is written.",
+  "non_goals": [
+    "No paid compute",
+    "No Fabric restart/redesign",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "fire tests for both caps",
+    "slice suite green"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/slice001/ledger.py",
+    "rso/slice001/tests/test_ledger.py"
+  ],
+  "kind": "software",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T08:28:19Z",
+      "note": "from escalation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T08:28:19Z",
+      "note": "READY (escalation answered: options 1 + 3)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-f28941a3]",
+      "at_utc": "2026-10-10T08:31:16Z",
+      "note": "claim; P-2 caps"
+    }
+  ],
+  "authority": "C-013 operator ruling 2026-10-10 s11; escalation NEW_Eupalamus_2026-10-10_1 RESPONSE",
+  "preferred_model": "claude-sonnet-5-5"
+}
