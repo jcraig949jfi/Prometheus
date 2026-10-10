@@ -148,7 +148,7 @@
       </article>
       <article class="dm-card dm-wide" id="machine-list">
         <h2>Every machine</h2>
-        <p class="dm-note">Specs come from the fleet register (infra/FLEET_HOSTS.md, kept by Achilles and filled in by the operator, last changed <span data-source="fleet_meta" data-field="register_changed" data-row="0">&mdash;</span>). Where a probe measured a value, the measured value is shown, and any disagreement with the register is printed in the Specs column. Pan&rsquo;s probes are read-only: ssh from M2 to the Linux nodes and a local check on M2, newest <span data-source="fleet_meta" data-field="last_probe_at" data-row="0">&mdash;</span>. Not probed yet: <span data-source="fleet_meta" data-field="machines_unprobed_no_hostkey" data-row="0">&mdash;</span>, because M2 has no ssh host key for them.</p>
+        <p class="dm-note">Specs come from the fleet register (infra/FLEET_HOSTS.md, kept by Achilles and filled in by the operator, last changed <span data-source="fleet_meta" data-field="register_changed" data-row="0">&mdash;</span>) and, for the Linux nodes, Achilles&rsquo; hardware table read live on <span data-source="fleet_meta" data-field="hardware_table_read" data-row="0">&mdash;</span> (infra/ubuntu_nodes/ubuntu_server_machines.md), which also adds nodes the register does not list yet. Where a probe measured a value, the measured value is shown, and any disagreement with the register is printed in the Specs column. Pan&rsquo;s probes are read-only: ssh from M2 to the Linux nodes and a local check on M2, newest <span data-source="fleet_meta" data-field="last_probe_at" data-row="0">&mdash;</span>. Not probed yet: <span data-source="fleet_meta" data-field="machines_unprobed_no_hostkey" data-row="0">&mdash;</span>, because M2 has no ssh host key for them; unreachable from M2 at the last try: <span data-source="fleet_meta" data-field="machines_unreachable" data-row="0">&mdash;</span>.</p>
         <div class="dm-scroll"><table id="dm-machines" data-source="machines" data-row-key="name">
           <thead><tr><th data-field="name">Machine</th><th data-field="last_seen">Last seen</th><th data-field="os">Operating system</th><th data-field="cpu">CPU</th><th class="num" data-field="ram_gb">RAM, GB</th><th data-field="gpu">GPU</th><th data-field="disk">Storage</th><th data-field="seats_7d">Seats this week</th><th data-field="specs">Specs</th></tr></thead><tbody></tbody>
         </table></div>
@@ -686,6 +686,8 @@
     fill('[data-source="fleet_meta"][data-field="register_changed"]', r.register_changed ? fmtDay(new Date(r.register_changed + 'T12:00:00Z')) : '—');
     fill('[data-source="fleet_meta"][data-field="last_probe_at"]', at(r.last_probe_at));
     fill('[data-source="fleet_meta"][data-field="machines_unprobed_no_hostkey"]', r.machines_unprobed_no_hostkey || 'none');
+    fill('[data-source="fleet_meta"][data-field="machines_unreachable"]', r.machines_unreachable || 'none');
+    fill('[data-source="fleet_meta"][data-field="hardware_table_read"]', r.hardware_table_read ? fmtDay(new Date(r.hardware_table_read + 'T12:00:00Z')) : '—');
     fill('[data-source="fleet_meta"][data-field="built_at"]', at(r.built_at));
     fill('[data-source="fleet_meta"][data-field="comms_active_but_idle_24h"]', fmtInt(Number(r.comms_active_but_idle_24h)));
     fill('[data-source="fleet_meta"][data-field="commits_indexed_to"]', at(r.commits_indexed_to));

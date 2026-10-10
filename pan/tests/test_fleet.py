@@ -85,6 +85,9 @@ def test_unprobed_is_register_only():
     reg = fleet.register(DOC)[1]
     m = fleet.merge(reg, None, None, None)
     assert m["specs"] == "register only" and m["checked_at"] is None and m["ram_gb"] == 16.0
+    hw, date = fleet.parse_hw(HW)
+    over = {r["host"]: r for r in fleet.overlay(fleet.register(DOC), hw, date)}
+    assert fleet.merge(over["UBU007"], None, None, None)["specs"] == "register + Achilles read 2026-10-10"
 
 
 def test_status_buckets():

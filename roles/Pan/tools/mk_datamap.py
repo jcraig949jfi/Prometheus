@@ -247,8 +247,17 @@ def fleet_tabs():
         meta["last_probe_at"] = fleet._iso(t)
     meta["register_changed"] = subprocess.run(
         ["git", "-C", W, "log", "-1", "--format=%cs", "HEAD", "--", fleet.DOC], capture_output=True, text=True).stdout.strip()
+    # from each host's NEWEST ssh probe (not from a label): failed for want of a stored host key, or unreachable
+    with db.cursor() as cur:
+        cur.execute("""select distinct on (host) host, ok, coalesce(error, '') from pan.host_probe where method = 'ssh'
+                       order by host, probed_at desc""")
+        newest = {h: (ok, err) for h, ok, err in cur.fetchall()}
+    linux = {m["host"] for m in ms if m["family"] == "Linux"}
     meta["machines_unprobed_no_hostkey"] = ", ".join(
-        m["host"].lower() for m in ms if m["family"] == "Linux" and m["specs"] == "register only")
+        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" in newest[h][1])
+    meta["machines_unreachable"] = ", ".join(
+        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" not in newest[h][1])
+    meta["hardware_table_read"] = fleet.parse_hw(fleet.git_show(fleet.HW_DOC))[1]
     dump("fleet_meta", [meta])
 
 
