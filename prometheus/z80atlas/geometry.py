@@ -175,3 +175,109 @@ def scan_paired(tape: bytes, cfg: Config, task: Task, seed: int, n_panel: int = 
     return {"n": n, "panel": n_panel, "task": task.to_dict(), "base_score": round(b, 4),
             "beneficial_density": round(better / n, 4), "neutral_fraction": round(same / n, 4), "deleterious_fraction": round(worse / n, 4),
             "null_false_beneficial": float(null_better)}
+
+
+# ---- operator-aware reachability (added 2026-10-10, BEL-RD-72 Workstream A) ---------------------------------------------
+# geometry.scan / scan_paired count only single-byte SUBSTITUTION neighbours. The physics also varies tapes by moving
+# segments (copying with offsets, partial overwrites), by structural insertion/deletion, and by importing a partner's
+# segment (uptake / assembly). A state that is far under substitution can be one step away under another operator
+# (BEL-48H: a fragment 0/16,320 substitutions but 8/50,512 segment moves from a replicator). These functions are new and
+# pure; nothing above them changed, so every historical geometry output is untouched.
+OPERATORS = ("SUB", "MOVE", "INS", "DEL", "DONOR")
+
+
+def operator_neighbours(tape: bytes, op: str, L: int, donors=(), max_seg: int = 16):
+    """yield every one-step neighbour of `tape` under operator `op`.
+    SUB   t[p] = v (v != t[p])                          L * 255
+    MOVE  copy t[s:s+n] over t[d:d+n], d != s, n <= max_seg (self segment copy / overwrite)
+    INS   insert byte v at p, shifting right, the last byte drops (structural insertion)
+    DEL   delete byte p, shifting left, pad with 0 (structural deletion)
+    DONOR copy donor[s:s+n] over t[d:d+n] for each donor (uptake / partial overwrite by another tape)"""
+    t = bytes(tape[:L]) + bytes(max(0, L - len(tape)))
+    if op == "SUB":
+        for p in range(L):
+            for v in range(256):
+                if v != t[p]:
+                    yield t[:p] + bytes([v]) + t[p + 1:]
+    elif op == "MOVE":
+        for s in range(L):
+            for n in range(1, max_seg + 1):
+                if s + n > L:
+                    break
+                for d in range(L - n + 1):
+                    if d != s:
+                        yield t[:d] + t[s:s + n] + t[d + n:]
+    elif op == "INS":
+        for p in range(L):
+            for v in range(256):
+                yield t[:p] + bytes([v]) + t[p:L - 1]
+    elif op == "DEL":
+        for p in range(L):
+            yield t[:p] + t[p + 1:] + b"\x00"
+    elif op == "DONOR":
+        for dn in donors:
+            dn = bytes(dn[:L]) + bytes(max(0, L - len(dn)))
+            for s in range(L):
+                for n in range(1, max_seg + 1):
+                    if s + n > L:
+                        break
+                    for d in range(L - n + 1):
+                        yield t[:d] + dn[s:s + n] + t[d + n:]
+    else:
+        raise ValueError("unknown operator %r" % op)
+
+
+def scan_operators(tape: bytes, L: int, predicate, ops=OPERATORS, donors=(), max_seg: int = 16) -> dict:
+    """one-step reachability per operator: {op: {"routes": k, "neighbours": n}} where routes = neighbours satisfying
+    `predicate(tape_bytes) -> bool`. The predicate is the caller's (e.g. FUNC and task-competent)."""
+    out = {}
+    for op in ops:
+        if op == "DONOR" and not donors:
+            continue
+        k = n = 0
+        for u in operator_neighbours(tape, op, L, donors, max_seg):
+            n += 1
+            k += bool(predicate(u))
+        out[op] = {"routes": k, "neighbours": n}
+    return out
+
+
+def scan_moves(tape: bytes, L: int, predicate, max_seg: int = 16) -> dict:
+    """the substitution vs segment-move comparison (BEL-48H NEXT_EXPERIMENTS #13)."""
+    return scan_operators(tape, L, predicate, ops=("SUB", "MOVE"), max_seg=max_seg)
+
+
+def sample_paths(tape: bytes, L: int, predicate, ops=("SUB", "MOVE", "INS", "DEL"), depth: int = 3, n: int = 2000, seed: int = 0,
+                 donors=(), max_seg: int = 16) -> dict:
+    """multi-step GEOMETRIC reachability estimate: n random operator sequences of length `depth` (each step: an operator
+    drawn uniformly from `ops`, then a uniform random neighbour under it); returns the fraction that satisfy the predicate
+    at ANY step, per depth reached first. Geometric, not dynamical: no selection, no population."""
+    import random as _r
+    rng = _r.Random(seed)
+    t0 = bytes(tape[:L]) + bytes(max(0, L - len(tape)))
+    first = [0] * (depth + 1)
+    for _ in range(n):
+        t = t0
+        for step in range(1, depth + 1):
+            op = rng.choice([o for o in ops if o != "DONOR" or donors])
+            t = _random_neighbour(t, op, L, rng, donors, max_seg)
+            if predicate(t):
+                first[step] += 1
+                break
+    return {"n": n, "depth": depth, "first_hit_at_depth": first[1:], "reached": sum(first), "fraction": round(sum(first) / n, 6)}
+
+
+def _random_neighbour(t: bytes, op: str, L: int, rng, donors=(), max_seg: int = 16) -> bytes:
+    if op == "SUB":
+        p = rng.randrange(L); v = rng.randrange(255); v = v if v < t[p] else v + 1
+        return t[:p] + bytes([v]) + t[p + 1:]
+    if op == "INS":
+        p = rng.randrange(L); return t[:p] + bytes([rng.randrange(256)]) + t[p:L - 1]
+    if op == "DEL":
+        p = rng.randrange(L); return t[:p] + t[p + 1:] + b"\x00"
+    if op == "MOVE":
+        src = t
+    else:
+        dn = bytes(rng.choice(list(donors))); src = dn[:L] + bytes(max(0, L - len(dn)))
+    n = rng.randint(1, max_seg); s = rng.randrange(L - n + 1); d = rng.randrange(L - n + 1)
+    return t[:d] + src[s:s + n] + t[d + n:]
