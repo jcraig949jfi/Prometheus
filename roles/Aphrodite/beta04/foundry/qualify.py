@@ -15,7 +15,10 @@ Admission (family at rung R >= 2):
               and  (R3/R4) every mechanism used has >= 1 R1 family in the world whose known positive passes.
     Otherwise REJECTED with the first class that applies, in this order:
     FAIL_PRONE | DEGENERATE | DUPLICATE (generation screens) | TRIVIAL_BY_<baseline> | WITNESS_INVALID |
-    KNOWN_POSITIVE_FAIL:NOT_FOUND | KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED | PREREQ_MISSING.
+    KNOWN_POSITIVE_FAIL:NOT_FOUND | KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED | PREREQ_MISSING |
+    SYNTHETIC_DEPTH (mechanism ablation: removing one of the witness's mechanisms from the oracle library still
+    solves the family within B_oracle, hindsight -- so the mechanism is not causally needed at this budget).
+    Pipeline: world -> qualify -> ablate -> report.
 R0 / R1 families are CONTROLS. They get the same measurements and the same class, but are never "admitted".
 No treatment arm is consulted anywhere in this file.
 """
@@ -46,6 +49,8 @@ QCONFIG = {
     "goldilocks_band": [0.2, 0.8],
     "base_memo_max": 7, "oracle_memo_max": 6,          # memory only; enumeration order is unchanged
     "base_at_oracle_budget": "R>=2 families that pass every null and the known positive",
+    "ablation": "R>=2 families that pass every null and the known positive: oracle library minus each witness "
+                "mechanism, hindsight, B_oracle; any solve -> SYNTHETIC_DEPTH (added after pilot inspection)",
 }
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OUT = os.path.join(HERE, "pilot")
@@ -220,9 +225,75 @@ def cmd_qualify(seed, out, cpu_min=13.0):
     return True
 
 
+# ---------------------------------------------------------------- mechanism ablation (causal depth check)
+def cmd_ablate(seed, out, cpu_min=13.0):
+    """For every R>=2 family that passes every null and the known positive: for each mechanism m in its witness,
+    search the ORACLE grammar WITHOUT m (hindsight, B_oracle). If any ablated library solves the family, the
+    mechanism is not needed at this budget, so the depth label is SYNTHETIC (class SYNTHETIC_DEPTH)."""
+    world = load_world(out, seed)
+    mechs = G.mechanisms_of(world)
+    recs = {r["family_id"]: r for r in world["families"]}
+    with open(wpath(out, seed, "QUALIFICATION.jsonl")) as f:
+        quals = [json.loads(l) for l in f]
+    ap = wpath(out, seed, "ABLATION.jsonl")
+    done = set()
+    if os.path.exists(ap):
+        with open(ap) as f:
+            done = {(d["family_id"], d["ablated"]) for d in map(json.loads, f)}
+    jobs = []
+    for q in quals:
+        r = recs[q["family_id"]]
+        if r["gen_class"] != "OK" or int(r["rung"][1]) < 2 or q["solved_by"] or not q["known_positive"]:
+            continue
+        for m in r["mechanisms_used"]:
+            if (q["family_id"], m) not in done:
+                jobs.append((m, q["family_id"]))
+    jobs.sort()
+    t0 = time.process_time()
+    cur, g = None, None
+    with open(ap, "a") as f:
+        for m, fid in jobs:
+            if time.process_time() - t0 > cpu_min * 60:
+                print("cpu cap reached; resumable", flush=True)
+                return False
+            if m != cur:
+                g = tenum.Grammar({k: (v.sig, v.ret, v.term) for k, v in mechs.items() if k != m},
+                                  memo_max=QCONFIG["oracle_memo_max"])
+                cur = m
+            r = recs[fid]
+            t1 = time.process_time()
+            res = tenum.search(g, r["output_type"], r["dev"], QCONFIG["B_oracle"], hindsight_test=r["test"])
+            d = {"family_id": fid, "ablated": m, "budget": QCONFIG["B_oracle"], "solved": False,
+                 "n_dev_consistent": res["n_dev_consistent"], "walk_charge": res["walk_charge"]}
+            if res["hindsight_found"] is not None:
+                pm = {k: v.promoted() for k, v in mechs.items() if k != m}
+                h = res["hindsight_found"]
+                d["solved"] = all(A.run(h, xs, promoted=pm) == y for xs, y in r["test"])
+                d["found"] = A.show(h)
+                d["charge"] = res["hindsight_charge"]
+            d["cpu_s"] = round(time.process_time() - t1, 2)
+            f.write(json.dumps(d, sort_keys=True) + "\n")
+            f.flush()
+            print(fid, "without", m, "solved" if d["solved"] else "not solved", d.get("found", ""), flush=True)
+    print("done ablation", len(jobs), "searches, cpu_s", round(time.process_time() - t0, 1))
+    return True
+
+
+def load_ablation(out, seed):
+    ap = wpath(out, seed, "ABLATION.jsonl")
+    res = {}
+    if os.path.exists(ap):
+        with open(ap) as f:
+            for d in map(json.loads, f):
+                res.setdefault(d["family_id"], []).append(d)
+    return res
+
+
 # ---------------------------------------------------------------- classification
-def finalize(world, quals):
-    """Apply the admission gate. Needs every family's raw qualification (for R3/R4 prerequisites)."""
+def finalize(world, quals, ablation=None):
+    """Apply the admission gate. Needs every family's raw qualification (for R3/R4 prerequisites) and the
+    mechanism-ablation records (missing ablation for a would-be-admitted family -> ABLATION_PENDING)."""
+    ablation = ablation or {}
     byid = {q["family_id"]: q for q in quals}
     recs = {r["family_id"]: r for r in world["families"]}
     r1_kp = {}
@@ -244,8 +315,15 @@ def finalize(world, quals):
             cls = "KNOWN_POSITIVE_FAIL:" + q["oracle"]["status"]
         elif r["rung"] in ("R3", "R4") and any(r1_kp.get(m, 0) == 0 for m in r["mechanisms_used"]):
             cls = "PREREQ_MISSING"
+        elif int(r["rung"][1]) >= 2 and {d["ablated"] for d in ablation.get(r["family_id"], [])} !=                 set(r["mechanisms_used"]):
+            cls = "ABLATION_PENDING"
+        elif int(r["rung"][1]) >= 2 and any(d["solved"] for d in ablation.get(r["family_id"], [])):
+            cls = "SYNTHETIC_DEPTH"
         else:
             cls = "QUALIFIED"
+        if ablation.get(r["family_id"]):
+            q["ablation"] = {d["ablated"]: {"solved": d["solved"], "found": d.get("found"),
+                                            "charge": d.get("charge")} for d in ablation[r["family_id"]]}
         q["class"] = cls
         rn = int(r["rung"][1])
         q["status"] = ("ADMITTED" if cls == "QUALIFIED" else "REJECTED") if rn >= 2 else "CONTROL"
@@ -290,7 +368,7 @@ def planted_families(seed=777):
             xs.append(x)
     pairs = [[x, rng.randint(-1000, 1000)] for x in xs]
     fams.append({"family_id": "PLANTED-LOOKUP", "rung": "PLANTED", "output_type": "I", "dev": pairs,
-                 "test": pairs, "expect": "lookup solves; constant/reactive/history2/library/small fail",
+                 "test": pairs, "expect": "lookup solves (history2 tables also memorise, since test inputs == dev inputs); constant fails",
                  "note": "test inputs == dev inputs; NOT contract-conformant; calibration only"})
     # (2) structureless negative: random outputs, disjoint test -> nothing solves, the known positive must fail
     dev, test = [], []
@@ -509,7 +587,7 @@ def cmd_report(seeds, out):
         if len(quals) != len(world["families"]):
             print("W%s incomplete: %d/%d" % (seed, len(quals), len(world["families"])))
             continue
-        finals = finalize(world, quals)
+        finals = finalize(world, quals, load_ablation(out, seed))
         fp = wpath(out, seed, "FINAL.jsonl")
         with open(fp, "w") as f:
             for q in finals:
@@ -632,6 +710,8 @@ def main():
         cmd_world(a.seed, a.out)
     elif a.cmd == "qualify":
         cmd_qualify(a.seed, a.out, a.cpu_min)
+    elif a.cmd == "ablate":
+        cmd_ablate(a.seed, a.out, a.cpu_min)
     elif a.cmd == "controls":
         cmd_controls(a.out, a.oracle_seed)
     elif a.cmd == "report":

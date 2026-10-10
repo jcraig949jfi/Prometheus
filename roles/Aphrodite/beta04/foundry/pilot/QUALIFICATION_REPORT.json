@@ -1,0 +1,2163 @@
+{
+ "QCONFIG": {
+  "B_oracle": 1000000,
+  "B_small": 100000,
+  "ablation": "R>=2 families that pass every null and the known positive: oracle library minus each witness mechanism, hindsight, B_oracle; any solve -> SYNTHETIC_DEPTH (added after pilot inspection)",
+  "base_at_oracle_budget": "R>=2 families that pass every null and the known positive",
+  "base_memo_max": 7,
+  "closed_form_mode": "hindsight",
+  "goldilocks_band": [
+   0.2,
+   0.8
+  ],
+  "ladder": [
+   "constant",
+   "lookup",
+   "reactive",
+   "history2",
+   "library",
+   "small_search"
+  ],
+  "oracle_memo_max": 6,
+  "small_search_mode": "hindsight (any dev-consistent program within B_small solving test); the contract-protocol first-dev-consistent verdict is recorded as selected_solved",
+  "version": "b04-foundry-qual-v0.1"
+ },
+ "config_sha": "6e337ef5392387c81e67342b5e243d9adeb0138144a481b309e2c59947eca418",
+ "planted_controls": [
+  {
+   "expect": "lookup solves (history2 tables also memorise, since test inputs == dev inputs); constant fails",
+   "family_id": "PLANTED-LOOKUP",
+   "note": "test inputs == dev inputs; NOT contract-conformant; calibration only",
+   "oracle_status": "NOT_FOUND",
+   "solved_by": [
+    "lookup",
+    "history2"
+   ]
+  },
+  {
+   "expect": "no baseline solves; oracle-library search fails -> KNOWN_POSITIVE_FAIL",
+   "family_id": "PLANTED-RANDOM",
+   "note": null,
+   "oracle_status": "NOT_FOUND",
+   "solved_by": []
+  },
+  {
+   "expect": "reactive (elementwise table) solves; constant/lookup/small fail",
+   "family_id": "PLANTED-REACTIVE",
+   "note": null,
+   "oracle_status": "NOT_FOUND",
+   "solved_by": [
+    "reactive"
+   ]
+  }
+ ],
+ "qual_config_sha": "948917b61b3feac0cef9c04cccb2fe08a11f0c6bc61f45b20308c419738f81de",
+ "worlds": {
+  "W1": {
+   "admitted": [
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F023-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 227265
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(add 1 (sum (filter (lam x (p0 x)) xs)))",
+     "oracle_rank": 227265,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 10,
+     "witness_promoted": "(add 1 (sum (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F026-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 5202
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(neg (sum (map (lam x (f0 x)) xs)))",
+     "oracle_rank": 5202,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F027-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 194
+     },
+     "null_capture": 0.05,
+     "oracle_found": "(f1 (f1 (last xs)))",
+     "oracle_rank": 194,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose+red",
+     "witness_esize": 34,
+     "witness_promoted": "(last (map (lam x (f1 (f1 x))) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F031-R2",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 2608
+     },
+     "null_capture": 0.375,
+     "oracle_found": "(add 2 (f0 (head xs)))",
+     "oracle_rank": 2608,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:base_post",
+     "witness_esize": 12,
+     "witness_promoted": "(add (head (map (lam x (f0 x)) xs)) 2)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F033-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 348322
+     },
+     "null_capture": 0.05,
+     "oracle_found": "(map (lam x (add x 1)) (filter (lam x (p0 x)) xs))",
+     "oracle_rank": 348322,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:extra_f",
+     "witness_esize": 11,
+     "witness_promoted": "(map (lam x (add x 1)) (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F036-R2",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 424
+     },
+     "null_capture": 0.475,
+     "oracle_found": "(map (lam x (f0 (f0 x))) xs)",
+     "oracle_rank": 424,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose",
+     "witness_esize": 21,
+     "witness_promoted": "(map (lam x (f0 (f0 x))) xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F037-R3",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 509983
+     },
+     "null_capture": 0.35,
+     "oracle_found": "(map (lam x (if (p0 x) (f0 x) x)) xs)",
+     "oracle_rank": 509983,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fp:guard_p",
+     "witness_esize": 16,
+     "witness_promoted": "(map (lam x (if (p0 x) (f0 x) x)) xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F038-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 72810
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f0 b)))) 1 xs)",
+     "oracle_rank": 72810,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F042-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 552791
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)",
+     "oracle_rank": 552791,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:step_of_f",
+     "witness_esize": 16,
+     "witness_promoted": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F043-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 553488
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s1 a (f0 b)))) 1 xs)",
+     "oracle_rank": 553488,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:step_of_f",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a (f0 b)))) 1 xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F045-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 552779
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s0 a (f0 b)))) 0 xs)",
+     "oracle_rank": 552779,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:fold_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(foldl (lam a (lam b (s0 a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F046-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 33204
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))",
+     "oracle_rank": 33204,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fp:map_of_filter",
+     "witness_esize": 15,
+     "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F050-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 553487
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s1 a (f0 b)))) 0 xs)",
+     "oracle_rank": 553487,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:step_of_f",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a (f0 b)))) 0 xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F054-R4",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 436
+     },
+     "null_capture": 0.375,
+     "oracle_found": "(map (lam x (f1 (f0 x))) xs)",
+     "oracle_rank": 436,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:ff:two_maps",
+     "witness_esize": 17,
+     "witness_promoted": "(map (lam x (f1 x)) (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W1-F057-R4",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 12127
+     },
+     "null_capture": 0.15,
+     "oracle_found": "(min (map (lam x (f1 (f0 x))) xs))",
+     "oracle_rank": 12127,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:ff:compose+red",
+     "witness_esize": 34,
+     "witness_promoted": "(min (map (lam x (f1 (f0 x))) xs))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DUPLICATE": 1,
+      "TRIVIAL_BY_REACTIVE": 4,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gap_simplest_minus_small_reach_median": 1.0,
+     "generated": 7,
+     "goldilocks": {
+      "NEAR_TRIVIAL": 6
+     },
+     "input_len_mean": 4.97,
+     "input_val_absmax": 20,
+     "known_positive_pass": 6,
+     "kp_solution_uses_all_witness_mechanisms": 6,
+     "kp_within_B_small": 6,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 10956,
+     "oracle_rank_median": 375.0,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": 0,
+     "simplest_known_esize_median": 4.5,
+     "skeletons": {
+      "R0:base_stage": 2,
+      "R0:base_stage+readout": 2,
+      "R0:readout_only": 3
+     },
+     "solved_by_counts": {
+      "history2": 1,
+      "library": 4,
+      "reactive": 4,
+      "small_search": 6
+     },
+     "witness_esize_min_median_max": [
+      2,
+      5.0,
+      6
+     ]
+    },
+    "R1": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DUPLICATE": 4,
+      "QUALIFIED": 7,
+      "TRIVIAL_BY_REACTIVE": 2,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 1.5,
+     "generated": 14,
+     "goldilocks": {
+      "DESERT_HARSH": 4,
+      "GOLDILOCKS": 3,
+      "NEAR_TRIVIAL": 3
+     },
+     "input_len_mean": 4.97,
+     "input_val_absmax": 20,
+     "known_positive_pass": 10,
+     "kp_solution_uses_all_witness_mechanisms": 10,
+     "kp_within_B_small": 10,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 51600,
+     "oracle_rank_median": 583.5,
+     "output_types": {
+      "I": 4,
+      "L": 6
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": 7,
+     "simplest_known_esize_median": 8.0,
+     "skeletons": {
+      "R1:f:map": 4,
+      "R1:f:post(red)": 2,
+      "R1:p:filter": 2,
+      "R1:p:filter+red": 1,
+      "R1:s:foldl": 1,
+      "R1:s:scanl": 4
+     },
+     "solved_by_counts": {
+      "reactive": 2,
+      "small_search": 3
+     },
+     "witness_esize_min_median_max": [
+      7,
+      9.0,
+      11
+     ]
+    },
+    "R2": {
+     "admission_yield_of_generated": 0.375,
+     "admitted": 6,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 6,
+     "admitted_witness_esize_min": 10,
+     "base_search_at_B_oracle": {
+      "run": 6,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DEGENERATE": 4,
+      "DUPLICATE": 1,
+      "FAIL_PRONE": 1,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 3,
+      "QUALIFIED": 6,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 6.0,
+     "generated": 16,
+     "goldilocks": {
+      "DESERT_HARSH": 7,
+      "GOLDILOCKS": 2,
+      "NEAR_TRIVIAL": 1
+     },
+     "input_len_mean": 5.06,
+     "input_val_absmax": 20,
+     "known_positive_pass": 7,
+     "kp_solution_uses_all_witness_mechanisms": 6,
+     "kp_within_B_small": 5,
+     "oracle_not_found": 3,
+     "oracle_rank_max": 348322,
+     "oracle_rank_median": 5202,
+     "output_types": {
+      "I": 8,
+      "L": 2
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 12.0,
+     "skeletons": {
+      "R2:f:base_fold": 2,
+      "R2:f:base_post": 1,
+      "R2:f:extra_p+red": 1,
+      "R2:f:extra_struct+red": 1,
+      "R2:f:self_compose": 1,
+      "R2:f:self_compose+red": 1,
+      "R2:p:base_post": 2,
+      "R2:p:extra_f": 1,
+      "R2:s:base_fold": 4,
+      "R2:s:self_compose": 2
+     },
+     "solved_by_counts": {
+      "small_search": 1
+     },
+     "witness_esize_min_median_max": [
+      10,
+      13.5,
+      34
+     ]
+    },
+    "R3": {
+     "admission_yield_of_generated": 0.5,
+     "admitted": 7,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 7,
+     "admitted_witness_esize_min": 14,
+     "base_search_at_B_oracle": {
+      "run": 7,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DEGENERATE": 1,
+      "DUPLICATE": 1,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 5,
+      "QUALIFIED": 7
+     },
+     "gap_simplest_minus_small_reach_median": 9.5,
+     "generated": 14,
+     "goldilocks": {
+      "DESERT_HARSH": 11,
+      "GOLDILOCKS": 1
+     },
+     "input_len_mean": 4.91,
+     "input_val_absmax": 20,
+     "known_positive_pass": 7,
+     "kp_solution_uses_all_witness_mechanisms": 7,
+     "kp_within_B_small": 2,
+     "oracle_not_found": 5,
+     "oracle_rank_max": 553488,
+     "oracle_rank_median": 552779,
+     "output_types": {
+      "I": 8,
+      "L": 4
+     },
+     "passed_generation_screens": 12,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 16.0,
+     "skeletons": {
+      "R3:fp:guard_p": 1,
+      "R3:fp:map_of_filter": 1,
+      "R3:fp:map_of_filter+red": 1,
+      "R3:fp:pred_of_f+red": 1,
+      "R3:fs:fold_of_map": 1,
+      "R3:fs:scan_of_map": 1,
+      "R3:fs:step_of_f": 4,
+      "R3:ps:fold_of_filter": 1,
+      "R3:ps:scan_of_filter": 1,
+      "R3:ss:fold_of_scan": 2
+     },
+     "solved_by_counts": {},
+     "witness_esize_min_median_max": [
+      14,
+      16.0,
+      18
+     ]
+    },
+    "R4": {
+     "admission_yield_of_generated": 0.25,
+     "admitted": 2,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 2,
+     "admitted_witness_esize_min": 17,
+     "base_search_at_B_oracle": {
+      "run": 2,
+      "solved": 0
+     },
+     "class_histogram": {
+      "FAIL_PRONE": 2,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 3,
+      "QUALIFIED": 2,
+      "TRIVIAL_BY_REACTIVE": 1
+     },
+     "gap_simplest_minus_small_reach_median": 8.0,
+     "generated": 8,
+     "goldilocks": {
+      "DESERT_HARSH": 4,
+      "GOLDILOCKS": 1,
+      "NEAR_TRIVIAL": 1
+     },
+     "input_len_mean": 12.71,
+     "input_val_absmax": 40,
+     "known_positive_pass": 3,
+     "kp_solution_uses_all_witness_mechanisms": 2,
+     "kp_within_B_small": 3,
+     "oracle_not_found": 3,
+     "oracle_rank_max": 12127,
+     "oracle_rank_median": 436,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 14.0,
+     "skeletons": {
+      "R4:ff:compose+red": 2,
+      "R4:ff:two_maps": 1,
+      "R4:fs:post_fold": 1,
+      "R4:fs:step_of_f": 1,
+      "R4:ps:fold_of_filter": 2,
+      "R4:ps:scan_of_filter": 1
+     },
+     "solved_by_counts": {
+      "library": 1,
+      "reactive": 1,
+      "small_search": 1
+     },
+     "witness_esize_min_median_max": [
+      14,
+      15.5,
+      34
+     ]
+    }
+   },
+   "controls": {
+    "R0_solved_by_trivial": 6,
+    "R0_total_ok": 6,
+    "R1_kp_pass": 10,
+    "R1_total_ok": 10,
+    "admitted": 15,
+    "admitted_kp_pass": 15,
+    "expansion_consistent": 44,
+    "families_ok": 44,
+    "witness_ok": 44
+   },
+   "cpu_s_total": 770.0,
+   "fill": {
+    "R0": {
+     "draws": 7,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "f1": {
+      "draws": 4,
+      "ok": 2,
+      "quota": 2
+     },
+     "p0": {
+      "draws": 3,
+      "ok": 2,
+      "quota": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "s1": {
+      "draws": 3,
+      "ok": 2,
+      "quota": 2
+     }
+    },
+    "R2": {
+     "draws": 16,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 14,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 8,
+     "ok": 6,
+     "quota": 6
+    }
+   },
+   "mechanism_screen": {
+    "draws": {
+     "f0": 5,
+     "f1": 3,
+     "p0": 10,
+     "s0": 13,
+     "s1": 50
+    },
+    "rejections": {
+     "CONSTANT": 1,
+     "FAIL_PRONE": 5,
+     "FOLD_LOW_DIVERSITY": 3,
+     "FOLD_UNSTABLE": 1,
+     "PRED_BALANCE": 1,
+     "REDUCIBLE": 2,
+     "SIZE": 56,
+     "UNUSED_ARGUMENT": 7
+    }
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 21,
+      "draws": 5,
+      "esize": 7,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (mul (gcd 0 x) (gcd 2 x)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 39,
+      "draws": 3,
+      "esize": 7,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (sub (mul x (mul x x)) x))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 10,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "true_frac": 0.683
+     },
+     "term": "(lam x (lt (gcd 3 x) 3))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 13,
+      "esize": 7,
+      "fold_distinct": 49,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (add b (sub (add 3 3) a))))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 50,
+      "esize": 5,
+      "fold_distinct": 71,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (sub (mul b a) 1)))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI": 0.0,
+    "SHUFFLED_UNIFORM": 0.5
+   },
+   "r3_pairs": [
+    "f0+p0",
+    "f0+s0",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "p0+s0",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+f1",
+    "f1+s1",
+    "p0+s1"
+   ]
+  },
+  "W2": {
+   "admitted": [
+    {
+     "base_at_B_oracle": true,
+     "family_id": "W2-F019-R2",
+     "goldilocks": "NEAR_TRIVIAL",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 1321
+     },
+     "null_capture": 0.825,
+     "oracle_found": "(sum (filter (lam x (p0 x)) xs))",
+     "oracle_rank": 1321,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:base_fold",
+     "witness_esize": 12,
+     "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F024-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 340254
+     },
+     "null_capture": 0.1,
+     "oracle_found": "(map (lam x (mul x x)) (filter (lam x (p0 x)) xs))",
+     "oracle_rank": 340254,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:extra_f",
+     "witness_esize": 11,
+     "witness_promoted": "(map (lam x (mul x x)) (filter (lam x (p0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": true,
+     "family_id": "W2-F027-R2",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 143
+     },
+     "null_capture": 0.2,
+     "oracle_found": "(f0 (f0 (head xs)))",
+     "oracle_rank": 143,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:self_compose+red",
+     "witness_esize": 28,
+     "witness_promoted": "(head (map (lam x (f0 (f0 x))) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F028-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 71226
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f0 b)))) 1 xs)",
+     "oracle_rank": 71226,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F029-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 71902
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s1 a (f0 b)))) 1 xs)",
+     "oracle_rank": 71902,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(scanl (lam a (lam b (s1 a b))) 1 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F032-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 541719
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)",
+     "oracle_rank": 541719,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:fold_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(foldl (lam a (lam b (s0 a b))) 0 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F035-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 71225
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f0 b)))) 0 xs)",
+     "oracle_rank": 71225,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F036-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 542375
+     },
+     "null_capture": 0.05,
+     "oracle_found": "(foldl (lam a (lam b (s1 a (f0 b)))) 0 xs)",
+     "oracle_rank": 542375,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:fold_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F039-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 71246
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f1 b)))) 1 xs)",
+     "oracle_rank": 71246,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F042-R4",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 542395
+     },
+     "null_capture": 0.025,
+     "oracle_found": "(foldl (lam a (lam b (s1 a (f1 b)))) 0 xs)",
+     "oracle_rank": 542395,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:fs:fold_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 0 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W2-F045-R4",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 542396
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s1 a (f1 b)))) 1 xs)",
+     "oracle_rank": 542396,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:fs:step_of_f",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a (f1 b)))) 1 xs)"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "TRIVIAL_BY_REACTIVE": 5,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 1.0,
+     "generated": 6,
+     "goldilocks": {
+      "NEAR_TRIVIAL": 6
+     },
+     "input_len_mean": 5.0,
+     "input_val_absmax": 20,
+     "known_positive_pass": 4,
+     "kp_solution_uses_all_witness_mechanisms": 4,
+     "kp_within_B_small": 4,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 11815,
+     "oracle_rank_median": 245.0,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": 0,
+     "simplest_known_esize_median": 4.5,
+     "skeletons": {
+      "R0:base_stage": 2,
+      "R0:base_stage+readout": 3,
+      "R0:readout_only": 1
+     },
+     "solved_by_counts": {
+      "history2": 1,
+      "library": 3,
+      "reactive": 5,
+      "small_search": 6
+     },
+     "witness_esize_min_median_max": [
+      2,
+      5.5,
+      6
+     ]
+    },
+    "R1": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DUPLICATE": 1,
+      "QUALIFIED": 5,
+      "TRIVIAL_BY_REACTIVE": 3,
+      "TRIVIAL_BY_SMALL_SEARCH": 2
+     },
+     "gap_simplest_minus_small_reach_median": 1.5,
+     "generated": 11,
+     "goldilocks": {
+      "DESERT_HARSH": 4,
+      "NEAR_TRIVIAL": 6
+     },
+     "input_len_mean": 5.11,
+     "input_val_absmax": 20,
+     "known_positive_pass": 10,
+     "kp_solution_uses_all_witness_mechanisms": 10,
+     "kp_within_B_small": 10,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 50414,
+     "oracle_rank_median": 558.5,
+     "output_types": {
+      "I": 4,
+      "L": 6
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": 5,
+     "simplest_known_esize_median": 7.5,
+     "skeletons": {
+      "R1:f:map": 2,
+      "R1:f:map+red": 1,
+      "R1:f:post(red)": 1,
+      "R1:p:filter": 1,
+      "R1:p:filter+red": 1,
+      "R1:s:foldl": 2,
+      "R1:s:scanl": 3
+     },
+     "solved_by_counts": {
+      "history2": 1,
+      "library": 3,
+      "reactive": 3,
+      "small_search": 5
+     },
+     "witness_esize_min_median_max": [
+      7,
+      9.5,
+      10
+     ]
+    },
+    "R2": {
+     "admission_yield_of_generated": 0.273,
+     "admitted": 3,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 3,
+     "admitted_witness_esize_min": 11,
+     "base_search_at_B_oracle": {
+      "run": 3,
+      "solved": 2
+     },
+     "class_histogram": {
+      "FAIL_PRONE": 1,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 4,
+      "QUALIFIED": 3,
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 2
+     },
+     "gap_simplest_minus_small_reach_median": 7.0,
+     "generated": 11,
+     "goldilocks": {
+      "DESERT_HARSH": 3,
+      "GOLDILOCKS": 3,
+      "NEAR_TRIVIAL": 4
+     },
+     "input_len_mean": 4.99,
+     "input_val_absmax": 20,
+     "known_positive_pass": 6,
+     "kp_solution_uses_all_witness_mechanisms": 5,
+     "kp_within_B_small": 4,
+     "oracle_not_found": 4,
+     "oracle_rank_max": 340254,
+     "oracle_rank_median": 876.0,
+     "output_types": {
+      "I": 6,
+      "L": 4
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 13.5,
+     "skeletons": {
+      "R2:f:extra_p": 1,
+      "R2:f:guard": 1,
+      "R2:f:self_compose": 1,
+      "R2:f:self_compose+red": 2,
+      "R2:p:base_fold": 1,
+      "R2:p:extra_f": 1,
+      "R2:s:base_post": 1,
+      "R2:s:extra_p": 1,
+      "R2:s:guard": 1,
+      "R2:s:self_compose": 1
+     },
+     "solved_by_counts": {
+      "history2": 1,
+      "library": 3,
+      "reactive": 2,
+      "small_search": 1
+     },
+     "witness_esize_min_median_max": [
+      11,
+      14.5,
+      28
+     ]
+    },
+    "R3": {
+     "admission_yield_of_generated": 0.5,
+     "admitted": 6,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 6,
+     "admitted_witness_esize_min": 16,
+     "base_search_at_B_oracle": {
+      "run": 7,
+      "solved": 1
+     },
+     "class_histogram": {
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 3,
+      "QUALIFIED": 6,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_LIBRARY": 2
+     },
+     "gap_simplest_minus_small_reach_median": 9.0,
+     "generated": 12,
+     "goldilocks": {
+      "DESERT_HARSH": 9,
+      "GOLDILOCKS": 1,
+      "NEAR_TRIVIAL": 2
+     },
+     "input_len_mean": 5.06,
+     "input_val_absmax": 20,
+     "known_positive_pass": 9,
+     "kp_solution_uses_all_witness_mechanisms": 9,
+     "kp_within_B_small": 7,
+     "oracle_not_found": 3,
+     "oracle_rank_max": 542375,
+     "oracle_rank_median": 71226,
+     "output_types": {
+      "I": 7,
+      "L": 5
+     },
+     "passed_generation_screens": 12,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 16.0,
+     "skeletons": {
+      "R3:ff:post_map": 1,
+      "R3:fp:pred_of_f+red": 2,
+      "R3:fs:fold_of_map": 2,
+      "R3:fs:scan_of_map": 4,
+      "R3:ps:scan_of_filter": 1,
+      "R3:ss:fold_of_scan": 2
+     },
+     "solved_by_counts": {
+      "library": 2,
+      "small_search": 2
+     },
+     "witness_esize_min_median_max": [
+      16,
+      18.0,
+      28
+     ]
+    },
+    "R4": {
+     "admission_yield_of_generated": 0.333,
+     "admitted": 2,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 2,
+     "admitted_witness_esize_min": 14,
+     "base_search_at_B_oracle": {
+      "run": 3,
+      "solved": 0
+     },
+     "class_histogram": {
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 3,
+      "QUALIFIED": 2,
+      "SYNTHETIC_DEPTH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 8.5,
+     "generated": 6,
+     "goldilocks": {
+      "DESERT_HARSH": 6
+     },
+     "input_len_mean": 12.65,
+     "input_val_absmax": 40,
+     "known_positive_pass": 3,
+     "kp_solution_uses_all_witness_mechanisms": 3,
+     "kp_within_B_small": 1,
+     "oracle_not_found": 3,
+     "oracle_rank_max": 542396,
+     "oracle_rank_median": 542395,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 15.5,
+     "skeletons": {
+      "R4:fp:guard_p+red": 1,
+      "R4:fp:map_of_filter": 1,
+      "R4:fs:fold_of_map": 1,
+      "R4:fs:step_of_f": 1,
+      "R4:ps:fold_of_filter": 1,
+      "R4:ps:scan_of_filter": 1
+     },
+     "solved_by_counts": {},
+     "witness_esize_min_median_max": [
+      14,
+      16.0,
+      17
+     ]
+    }
+   },
+   "controls": {
+    "R0_solved_by_trivial": 6,
+    "R0_total_ok": 6,
+    "R1_kp_pass": 10,
+    "R1_total_ok": 10,
+    "admitted": 11,
+    "admitted_kp_pass": 11,
+    "expansion_consistent": 44,
+    "families_ok": 44,
+    "witness_ok": 44
+   },
+   "cpu_s_total": 725.7,
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "f1": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "p0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "s1": {
+      "draws": 3,
+      "ok": 2,
+      "quota": 2
+     }
+    },
+    "R2": {
+     "draws": 11,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 12,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    }
+   },
+   "mechanism_screen": {
+    "draws": {
+     "f0": 22,
+     "f1": 14,
+     "p0": 46,
+     "s0": 9,
+     "s1": 15
+    },
+    "rejections": {
+     "FAIL_PRONE": 9,
+     "PRED_BALANCE": 6,
+     "REDUCIBLE": 8,
+     "SIZE": 72,
+     "UNUSED_ARGUMENT": 6
+    }
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 24,
+      "draws": 22,
+      "esize": 7,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (gcd (add x 3) (sub x x)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 41,
+      "draws": 14,
+      "esize": 5,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (sub 3 (add x x)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 46,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "true_frac": 0.439
+     },
+     "term": "(lam x (lt (gcd x 3) x))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 9,
+      "esize": 7,
+      "fold_distinct": 77,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (mul b (sub 2 (sub 3 a)))))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 15,
+      "esize": 7,
+      "fold_distinct": 46,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (add 2 (sub (div b 2) a))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI": 0.0,
+    "SHUFFLED_UNIFORM": 0.833
+   },
+   "r3_pairs": [
+    "f0+f1",
+    "f0+s0",
+    "f0+s1",
+    "f1+p0",
+    "f1+s0",
+    "p0+s0",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+p0",
+    "f1+s1",
+    "p0+s1"
+   ]
+  },
+  "W3": {
+   "admitted": [
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F021-R2",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 199
+     },
+     "null_capture": 0.275,
+     "oracle_found": "(f1 (f1 (max xs)))",
+     "oracle_rank": 199,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:extra_f+red",
+     "witness_esize": 12,
+     "witness_promoted": "(max (map (lam x (add x x)) (map (lam x (f1 x)) xs)))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F022-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 234454
+     },
+     "null_capture": 0.025,
+     "oracle_found": "(add 3 (sum (filter (lam x (p0 x)) xs)))",
+     "oracle_rank": 234454,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 10,
+     "witness_promoted": "(add (sum (filter (lam x (p0 x)) xs)) 3)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F024-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 119721
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(sum (scanl (lam a (lam b (s1 a b))) 3 xs))",
+     "oracle_rank": 119721,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:s:self_compose",
+     "witness_esize": 19,
+     "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 0 (scanl (lam a (lam b (s1 a b))) 0 xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F025-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 5141
+     },
+     "null_capture": 0.025,
+     "oracle_found": "(neg (sum (map (lam x (f0 x)) xs)))",
+     "oracle_rank": 5141,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F027-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 17050
+     },
+     "null_capture": 0.125,
+     "oracle_found": "(f1 (len (filter (lam x (p0 x)) xs)))",
+     "oracle_rank": 17050,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:p:base_post",
+     "witness_esize": 10,
+     "witness_promoted": "(mul 2 (len (filter (lam x (p0 x)) xs)))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F030-R2",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 546672
+     },
+     "null_capture": 0.025,
+     "oracle_found": "(foldl (lam a (lam b (sub (f0 b) a))) 0 xs)",
+     "oracle_rank": 546672,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R2",
+     "skeleton": "R2:f:base_fold",
+     "witness_esize": 14,
+     "witness_promoted": "(foldl (lam a (lam b (sub b a))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F032-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 72153
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f1 b)))) 0 xs)",
+     "oracle_rank": 72153,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:scan_of_map",
+     "witness_esize": 14,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 0 (map (lam x (f1 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F039-R3",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 549260
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)",
+     "oracle_rank": 549260,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:step_of_f",
+     "witness_esize": 12,
+     "witness_promoted": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F041-R3",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 225295
+     },
+     "null_capture": 0.3,
+     "oracle_found": "(f1 (foldl (lam a (lam b (s1 a b))) 1 xs))",
+     "oracle_rank": 225295,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fs:post_fold",
+     "witness_esize": 23,
+     "witness_promoted": "(f1 (foldl (lam a (lam b (s1 a b))) 1 xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F043-R3",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": false,
+      "nulls_all_fail": true,
+      "oracle_rank": 505844
+     },
+     "null_capture": 0.2,
+     "oracle_found": "(map (lam x (if (p0 x) (f0 x) x)) xs)",
+     "oracle_rank": 505844,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R3",
+     "skeleton": "R3:fp:guard_p",
+     "witness_esize": 16,
+     "witness_promoted": "(map (lam x (if (p0 x) (f0 x) x)) xs)"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F047-R4",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 72137
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s0 a (f0 b)))) 0 xs)",
+     "oracle_rank": 72137,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:fs:scan_of_map",
+     "witness_esize": 16,
+     "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F048-R4",
+     "goldilocks": "DESERT_HARSH",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 72821
+     },
+     "null_capture": 0.0,
+     "oracle_found": "(scanl (lam a (lam b (s1 a (f0 b)))) 0 xs)",
+     "oracle_rank": 72821,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:fs:scan_of_map",
+     "witness_esize": 18,
+     "witness_promoted": "(scanl (lam a (lam b (s1 a b))) 0 (map (lam x (f0 x)) xs))"
+    },
+    {
+     "base_at_B_oracle": false,
+     "family_id": "W3-F049-R4",
+     "goldilocks": "GOLDILOCKS",
+     "headroom": {
+      "B_oracle": 1000000,
+      "B_small": 100000,
+      "kp_within_B_small": true,
+      "nulls_all_fail": true,
+      "oracle_rank": 165
+     },
+     "null_capture": 0.5,
+     "oracle_found": "(f0 (f1 (last xs)))",
+     "oracle_rank": 165,
+     "oracle_uses_all_witness_mechanisms": true,
+     "rung": "R4",
+     "skeleton": "R4:ff:two_maps+red",
+     "witness_esize": 16,
+     "witness_promoted": "(last (map (lam x (f0 x)) (map (lam x (f1 x)) xs)))"
+    }
+   ],
+   "by_rung": {
+    "R0": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "TRIVIAL_BY_LIBRARY": 1,
+      "TRIVIAL_BY_REACTIVE": 4,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 1.0,
+     "generated": 6,
+     "goldilocks": {
+      "NEAR_TRIVIAL": 6
+     },
+     "input_len_mean": 4.97,
+     "input_val_absmax": 20,
+     "known_positive_pass": 5,
+     "kp_solution_uses_all_witness_mechanisms": 5,
+     "kp_within_B_small": 5,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 8994,
+     "oracle_rank_median": 111,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": 0,
+     "simplest_known_esize_median": 4.5,
+     "skeletons": {
+      "R0:base_stage": 2,
+      "R0:base_stage+readout": 1,
+      "R0:readout_only": 3
+     },
+     "solved_by_counts": {
+      "history2": 2,
+      "library": 4,
+      "reactive": 4,
+      "small_search": 6
+     },
+     "witness_esize_min_median_max": [
+      3,
+      4.5,
+      6
+     ]
+    },
+    "R1": {
+     "admission_yield_of_generated": null,
+     "admitted": null,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 0,
+     "admitted_witness_esize_min": null,
+     "base_search_at_B_oracle": {
+      "run": 0,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DEGENERATE": 2,
+      "DUPLICATE": 2,
+      "QUALIFIED": 5,
+      "TRIVIAL_BY_REACTIVE": 2,
+      "TRIVIAL_BY_SMALL_SEARCH": 3
+     },
+     "gap_simplest_minus_small_reach_median": 1.0,
+     "generated": 14,
+     "goldilocks": {
+      "DESERT_HARSH": 5,
+      "NEAR_TRIVIAL": 5
+     },
+     "input_len_mean": 5.12,
+     "input_val_absmax": 20,
+     "known_positive_pass": 10,
+     "kp_solution_uses_all_witness_mechanisms": 10,
+     "kp_within_B_small": 10,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 51240,
+     "oracle_rank_median": 715.0,
+     "output_types": {
+      "I": 4,
+      "L": 6
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": 5,
+     "simplest_known_esize_median": 7.5,
+     "skeletons": {
+      "R1:f:map": 3,
+      "R1:f:map+red": 2,
+      "R1:f:post(red)": 2,
+      "R1:p:filter": 2,
+      "R1:p:filter+red": 1,
+      "R1:s:foldl": 1,
+      "R1:s:scanl": 3
+     },
+     "solved_by_counts": {
+      "library": 1,
+      "reactive": 2,
+      "small_search": 5
+     },
+     "witness_esize_min_median_max": [
+      7,
+      8.0,
+      10
+     ]
+    },
+    "R2": {
+     "admission_yield_of_generated": 0.5,
+     "admitted": 6,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 6,
+     "admitted_witness_esize_min": 10,
+     "base_search_at_B_oracle": {
+      "run": 6,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DEGENERATE": 2,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 2,
+      "QUALIFIED": 6,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 5.0,
+     "generated": 12,
+     "goldilocks": {
+      "DESERT_HARSH": 7,
+      "GOLDILOCKS": 1,
+      "NEAR_TRIVIAL": 2
+     },
+     "input_len_mean": 5.03,
+     "input_val_absmax": 20,
+     "known_positive_pass": 8,
+     "kp_solution_uses_all_witness_mechanisms": 6,
+     "kp_within_B_small": 5,
+     "oracle_not_found": 2,
+     "oracle_rank_max": 546672,
+     "oracle_rank_median": 35328.5,
+     "output_types": {
+      "I": 10
+     },
+     "passed_generation_screens": 10,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 11.0,
+     "skeletons": {
+      "R2:f:base_fold": 3,
+      "R2:f:base_post": 2,
+      "R2:f:extra_f+red": 1,
+      "R2:p:base_post": 2,
+      "R2:s:base_fold": 2,
+      "R2:s:base_post": 1,
+      "R2:s:self_compose": 1
+     },
+     "solved_by_counts": {
+      "library": 1,
+      "reactive": 1,
+      "small_search": 2
+     },
+     "witness_esize_min_median_max": [
+      10,
+      12.5,
+      19
+     ]
+    },
+    "R3": {
+     "admission_yield_of_generated": 0.308,
+     "admitted": 4,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 4,
+     "admitted_witness_esize_min": 12,
+     "base_search_at_B_oracle": {
+      "run": 5,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DUPLICATE": 1,
+      "KNOWN_POSITIVE_FAIL:NOT_FOUND": 5,
+      "QUALIFIED": 4,
+      "SYNTHETIC_DEPTH": 1,
+      "TRIVIAL_BY_REACTIVE": 1,
+      "TRIVIAL_BY_SMALL_SEARCH": 1
+     },
+     "gap_simplest_minus_small_reach_median": 7.0,
+     "generated": 13,
+     "goldilocks": {
+      "DESERT_HARSH": 8,
+      "GOLDILOCKS": 2,
+      "NEAR_TRIVIAL": 2
+     },
+     "input_len_mean": 5.05,
+     "input_val_absmax": 20,
+     "known_positive_pass": 7,
+     "kp_solution_uses_all_witness_mechanisms": 4,
+     "kp_within_B_small": 3,
+     "oracle_not_found": 5,
+     "oracle_rank_max": 549260,
+     "oracle_rank_median": 116797,
+     "output_types": {
+      "I": 6,
+      "L": 6
+     },
+     "passed_generation_screens": 12,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 14.0,
+     "skeletons": {
+      "R3:fp:guard_p": 1,
+      "R3:fp:guard_p+red": 1,
+      "R3:fp:pred_of_f+red": 2,
+      "R3:fs:post_fold": 1,
+      "R3:fs:scan_of_map": 1,
+      "R3:fs:step_of_f": 2,
+      "R3:ps:scan_of_filter": 4,
+      "R3:ss:fold_of_scan": 1
+     },
+     "solved_by_counts": {
+      "library": 1,
+      "reactive": 1,
+      "small_search": 2
+     },
+     "witness_esize_min_median_max": [
+      12,
+      15.0,
+      23
+     ]
+    },
+    "R4": {
+     "admission_yield_of_generated": 0.429,
+     "admitted": 3,
+     "admitted_kp_solution_uses_all_witness_mechanisms": 3,
+     "admitted_witness_esize_min": 16,
+     "base_search_at_B_oracle": {
+      "run": 6,
+      "solved": 0
+     },
+     "class_histogram": {
+      "DUPLICATE": 1,
+      "QUALIFIED": 3,
+      "SYNTHETIC_DEPTH": 3
+     },
+     "gap_simplest_minus_small_reach_median": 9.5,
+     "generated": 7,
+     "goldilocks": {
+      "DESERT_HARSH": 4,
+      "GOLDILOCKS": 2
+     },
+     "input_len_mean": 12.61,
+     "input_val_absmax": 40,
+     "known_positive_pass": 6,
+     "kp_solution_uses_all_witness_mechanisms": 4,
+     "kp_within_B_small": 4,
+     "oracle_not_found": 0,
+     "oracle_rank_max": 138599,
+     "oracle_rank_median": 72479.0,
+     "output_types": {
+      "I": 4,
+      "L": 2
+     },
+     "passed_generation_screens": 6,
+     "qualified_controls": null,
+     "simplest_known_esize_median": 16.0,
+     "skeletons": {
+      "R4:ff:post_map": 1,
+      "R4:ff:two_maps+red": 1,
+      "R4:fs:fold_of_map": 1,
+      "R4:fs:post_fold": 1,
+      "R4:fs:scan_of_map": 3
+     },
+     "solved_by_counts": {},
+     "witness_esize_min_median_max": [
+      16,
+      18.0,
+      34
+     ]
+    }
+   },
+   "controls": {
+    "R0_solved_by_trivial": 6,
+    "R0_total_ok": 6,
+    "R1_kp_pass": 10,
+    "R1_total_ok": 10,
+    "admitted": 13,
+    "admitted_kp_pass": 13,
+    "expansion_consistent": 44,
+    "families_ok": 44,
+    "witness_ok": 44
+   },
+   "cpu_s_total": 425.6,
+   "fill": {
+    "R0": {
+     "draws": 6,
+     "ok": 6,
+     "quota": 6
+    },
+    "R1": {
+     "f0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "f1": {
+      "draws": 5,
+      "ok": 2,
+      "quota": 2
+     },
+     "p0": {
+      "draws": 3,
+      "ok": 2,
+      "quota": 2
+     },
+     "s0": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     },
+     "s1": {
+      "draws": 2,
+      "ok": 2,
+      "quota": 2
+     }
+    },
+    "R2": {
+     "draws": 12,
+     "ok": 10,
+     "quota": 10
+    },
+    "R3": {
+     "draws": 13,
+     "ok": 12,
+     "quota": 12
+    },
+    "R4": {
+     "draws": 7,
+     "ok": 6,
+     "quota": 6
+    }
+   },
+   "mechanism_screen": {
+    "draws": {
+     "f0": 18,
+     "f1": 44,
+     "p0": 228,
+     "s0": 57,
+     "s1": 8
+    },
+    "rejections": {
+     "CONSTANT": 3,
+     "FAIL_PRONE": 23,
+     "FOLD_LOW_DIVERSITY": 2,
+     "FOLD_UNSTABLE": 1,
+     "LOW_DIVERSITY": 3,
+     "PRED_BALANCE": 35,
+     "REDUCIBLE": 22,
+     "SIZE": 246,
+     "UNUSED_ARGUMENT": 15
+    }
+   },
+   "mechanisms": [
+    {
+     "body_esize": 7,
+     "kind": "f",
+     "name": "f0",
+     "stats": {
+      "distinct": 21,
+      "draws": 18,
+      "esize": 7,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (add (sub (mul x x) 0) x))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "f",
+     "name": "f1",
+     "stats": {
+      "distinct": 21,
+      "draws": 44,
+      "esize": 5,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam x (add x (gcd 0 x)))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "p",
+     "name": "p0",
+     "stats": {
+      "draws": 228,
+      "esize": 5,
+      "min_equiv_esize": ">4",
+      "true_frac": 0.585
+     },
+     "term": "(lam x (not (lt x (neg 3))))"
+    },
+    {
+     "body_esize": 5,
+     "kind": "s",
+     "name": "s0",
+     "stats": {
+      "draws": 57,
+      "esize": 5,
+      "fold_distinct": 73,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (sub (mul a 2) b)))"
+    },
+    {
+     "body_esize": 7,
+     "kind": "s",
+     "name": "s1",
+     "stats": {
+      "draws": 8,
+      "esize": 7,
+      "fold_distinct": 58,
+      "min_equiv_esize": ">4"
+     },
+     "term": "(lam a (lam b (add a (mul 1 (add 3 b)))))"
+    }
+   ],
+   "orders_prereq_first_frac": {
+    "CURRICULUM": 1.0,
+    "DESERT": 0.0,
+    "SHUFFLED_ANTI": 0.0,
+    "SHUFFLED_UNIFORM": 0.667
+   },
+   "r3_pairs": [
+    "f0+p0",
+    "f1+p0",
+    "f1+s0",
+    "f1+s1",
+    "p0+s0",
+    "p0+s1",
+    "s0+s1"
+   ],
+   "r4_pairs": [
+    "f0+f1",
+    "f0+s0",
+    "f0+s1"
+   ]
+  }
+ }
+}
