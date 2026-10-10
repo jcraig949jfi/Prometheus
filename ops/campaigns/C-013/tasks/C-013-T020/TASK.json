@@ -41,7 +41,7 @@
     "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md"
   ],
   "kind": "document",
-  "status": "READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -54,6 +54,36 @@
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-10T07:50:32Z",
       "note": "READY at C-013 open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-68c6ba4c]",
+      "at_utc": "2026-10-10T07:56:24Z",
+      "note": "claimed; work on branch eupalamus/c-013-t020 base 9b1893d6f; runtime claude-opus-5-5 (Q2)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-68c6ba4c]",
+      "at_utc": "2026-10-10T08:11:11Z",
+      "note": "document packet, red_required false"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-68c6ba4c]",
+      "at_utc": "2026-10-10T08:11:11Z",
+      "note": "all evidence_required items committed on eupalamus/c-013-t020"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-68c6ba4c]",
+      "at_utc": "2026-10-10T08:11:11Z",
+      "note": "branch eupalamus/c-013-t020 @ 3d807a51a (work 3535f22ac); receipt A-001 DONE_CLEAN"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T08:28:19Z",
+      "note": "merged 3d807a51a; 12 read-only checks with raw outputs; ledger_numbers reproduces 53.1/31.8/26.2 CPU-min with self-crosscheck MATCH; integrator mutation (cpu_total x0.9) killed by test_known_answer and the crosscheck (an earlier mutant was equivalent on this data, recorded)"
     }
   ],
   "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",

@@ -1,0 +1,93 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T020",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "9b1893d6f335c18041130c1d34f8944a1e02466c",
+  "end_sha": "3535f22ac92b8c3f06413ed859495f65c10eada2",
+  "files_changed": [
+    "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md",
+    "rso/scale/ledger_numbers.py",
+    "rso/scale/__init__.py",
+    "rso/scale/tests/__init__.py",
+    "rso/scale/tests/test_ledger_numbers.py",
+    "rso/scale/evidence/T020_checks_20261010T080419Z/ (15 files)"
+  ],
+  "evidence_added": [
+    "architecture doc: five-state inventory s1 (Fabric, workers, ledgers/custody/accounting, RunPod, GPUs, artifact stores, C-012) with file:line sources",
+    "durable execution model s3 built on C-012 epochs (no new queue/lease/transport); failure table; scale-out vs scale-up",
+    "zero-spend RunPod canary proposal s6 (three termination layers, fault-injected recovery, per-checkpoint artifact pull, billing reconciliation with unmatched=$0, operator-verified hard cap, independent shutdown evidence)",
+    "Workstream A numbers table s7 via rso/scale/ledger_numbers.py (known-answer test)",
+    "raw read-only check outputs 2026-10-10T08:04-08:06Z under rso/scale/evidence/T020_checks_20261010T080419Z/"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -m fabric agents | tasks --limit 1000 | lease status --all (read-only)",
+      "result": "53 agents, 0 live, 3 stale online (last seen 2026-10-02 14:37Z); 375 lifetime tasks, none queued, newest 2026-10-04; 82 leases, 30 since 10-08, 1 expired-unreleased (lse-7d61e3584398)"
+    },
+    {
+      "command": "python -m fabric get art-8509eb89c369 + sha256sum",
+      "result": "sha256 and 1884 bytes match (blob store verified)"
+    },
+    {
+      "command": "python -m ops.custody.registry verify",
+      "result": "chain_ok true, 67 rows, rc 0"
+    },
+    {
+      "command": "ping + ssh BatchMode probe ubu001-006",
+      "result": "6/6 answer ICMP; ssh publickey denied from harry1 (service state not read)"
+    },
+    {
+      "command": "nvidia-smi (harry1); python -m pan status",
+      "result": "Quadro P500 2 GB idle; Pan jobs OK through 2026-10-10T07:23Z"
+    },
+    {
+      "command": "python -B -m rso.scale.ledger_numbers rso/slice001/s2/LEDGER.jsonl rso/binding/LEDGER.jsonl rso/witness/LEDGER.jsonl",
+      "result": "17/10/8 top-level launches; 3187.2/1910.2/1573.7 CPU-s; crosscheck vs ledger.usage(): MATCH x3"
+    },
+    {
+      "command": "python -B -m unittest discover -s rso/scale/tests -t .",
+      "result": "2 OK"
+    },
+    {
+      "command": "python -m workgraph validate",
+      "result": "OK"
+    }
+  ],
+  "red_observed": {
+    "observed": false,
+    "detail": "null: document packet; the numbers tool was written with its known-answer fixture in the same step, so no RED run was observed"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "No RunPod API call made (field decision FD-1); account spendLimit/balance remain unverified",
+    "PrometheusWorker service state and M1/M2 GPUs not checked directly (no ssh access from harry1); stated as n/c",
+    "C-012 is unimplemented; s3/s5 design depends on its contract as written in OP-NF2 and moonshot/epoch/CONTRACT.md",
+    "Canary pod-side self-termination relies on an UNVERIFIED assumption about RunPod pod env/CLI (s6.2(a)2)",
+    "Several inventory citations come from read-only research subagents; the load-bearing ones were re-read by this seat"
+  ],
+  "unresolved": [
+    "retained artifact store placement (s3.6) -> infra owner / Pan Q-003",
+    "O-1..O-6 observations routed in s8"
+  ],
+  "unblocks": [
+    "C-013-T030 (numbers table)",
+    "C-013-T031 (Workstream C input)"
+  ],
+  "created_at_utc": "2026-10-10T08:10:53Z",
+  "instance": "harry1-68c6ba4c",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c-013-t020",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c013-t020",
+  "resources": {
+    "cpu": "under 2 CPU-minutes (read-only checks, tests)",
+    "validation_launches": 0,
+    "gpu": 0,
+    "cloud_usd": 0,
+    "model": "one Q2 session plus three read-only research subagents"
+  },
+  "notes": "No Fabric restart, no reap, no lease or queue mutation. Files outside the packet's owns list: field decision FD-5."
+}

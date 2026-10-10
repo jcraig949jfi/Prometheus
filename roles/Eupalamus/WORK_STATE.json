@@ -3,24 +3,24 @@
  "seat": "Eupalamus",
  "mwo_id": "MWO-0004",
  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
- "updated_at_utc": "2026-10-07T08:58:00Z",
- "state": "READY",
- "branch": "eupalamus/c010-t011",
- "head_sha": "42c7c88371ca055601edeeaac18cff1b54ae5aab",
- "base_sha": "e1a0610916af23d749f9ae48ca48379f5e52c9e2",
- "worktree_path": "C:\\Prometheus-worktrees\\eupalamus-c010-t011",
- "model": "claude-sonnet-5-5",
- "capability_class": "Q1",
+ "updated_at_utc": "2026-10-10T08:35:54Z",
+ "state": "ACTIVE",
+ "branch": "eupalamus/c-013-t022",
+ "head_sha": null,
+ "base_sha": "ae55dccaa569de1c7265ec2b2fd1001e3bd51980",
+ "worktree_path": "C:\\Prometheus-worktrees\\eupalamus-c013-t022",
+ "model": "claude-opus-5-5",
+ "capability_class": "Q2",
  "host": "harry1 (M4)",
- "instance": "harry1-d0e200cd",
- "session_id": "d0e200cd-b59f-4073-b3a3-2a7ceb920bc7",
- "sole_instance_note": "Operator 2026-10-04: there is only one Eupalamus; this instance (gandalf-ced473bf) is it. The earlier instance harry1-e609b290 (C-004-T003) is superseded and offline.",
- "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
- "current_step": "C-010-T011 INTEGRATION_READY (branch eupalamus/c010-t011 code 42c7c8837; state on main 50421890c); no READY work; idle, awaiting Palamedes integration",
+ "instance": "harry1-93a529ba",
+ "session_id": "93a529ba-9b21-42a2-be46-b4b7227fabcd",
+ "sole_instance_note": "2026-10-10: Palamedes launched two concurrent Eupalamus instances on harry1 by packet: harry1-93a529ba (this record, C-013-T022, Opus) and harry1-f28941a3 (C-013-T023, Sonnet). Each instance writes its own packet's state; this file was last written by harry1-93a529ba.",
+ "current_objective": "RSO Builder Cell member, campaign C-013 (RSO-STRATEGIC-EXPANSION-48H), Workstream C",
+ "current_step": "C-013-T022 CLAIMED: building rso/scale/runner/ (RED first)",
  "in_flight": [],
  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
- "next_expected_milestone": "Palamedes integrates C-010-T011",
- "expected_next_artifact": "next claimed packet",
+ "next_expected_milestone": "C-013-T022 INTEGRATION_READY (fire test passed)",
+ "expected_next_artifact": "rso/scale/runner/ + FIRE_TEST.md + attempts/A-001/RECEIPT.json",
  "last_push_sha": "7989b02cc503c61f08d47dca706712be9ce29246",
  "last_push_utc": "2026-10-04T07:14:10Z",
  "threads": [
@@ -29,7 +29,8 @@
  "campaigns": [
   "C-004",
   "C-009",
-  "C-010"
+  "C-010",
+  "C-013"
  ],
  "experiments": [],
  "fabric_tasks": [],
@@ -41,6 +42,6 @@
  ],
  "operator_decisions_required": [],
  "latest_reports": [
-  "roles/Eupalamus/comms/2026-10-07_T016_INTEGRATION_READY.md"
+  "roles/Eupalamus/comms/2026-10-10_C-013-T020_INTEGRATION_READY.md"
  ]
 }

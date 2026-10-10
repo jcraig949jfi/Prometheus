@@ -52,11 +52,21 @@ def catalog():
     return _CAT
 
 
-def write(name, arrow_table, mode="append", namespace=NAMESPACE):
+def write(name, arrow_table, mode="append", namespace=NAMESPACE, snapshot_properties=None):
     """Create the table on first write (schema from the Arrow table), then append
     or overwrite. New nullable columns in the Arrow table are added by schema
-    evolution before the write. Returns the table."""
+    evolution before the write. Returns the table.
+
+    namespace: created on first use (other seats write their own namespace, e.g. Moonshot's
+    "moonshot"; never another seat's). snapshot_properties: string key/values stored in the
+    new snapshot's summary -- a writer's watermark (e.g. last publication id), read back with
+    last_snapshot_properties() after a crash."""
     cat = catalog()
+    if namespace != NAMESPACE:
+        try:
+            cat.create_namespace(namespace)
+        except Exception:          # already exists
+            pass
     ident = "{}.{}".format(namespace, name)
     try:
         t = cat.load_table(ident)
@@ -68,11 +78,22 @@ def write(name, arrow_table, mode="append", namespace=NAMESPACE):
         with t.update_schema() as u:
             u.union_by_name(arrow_table.schema)
         t = cat.load_table(ident)
+    props = {str(k): str(v) for k, v in (snapshot_properties or {}).items()}
     if mode == "overwrite":
-        t.overwrite(arrow_table)
+        t.overwrite(arrow_table, snapshot_properties=props)
     else:
-        t.append(arrow_table)
+        t.append(arrow_table, snapshot_properties=props)
     return t
+
+
+def last_snapshot_properties(name, namespace=NAMESPACE):
+    """The current snapshot's summary properties (a writer's watermark among them), or {} when the
+    table has no snapshot yet."""
+    t = catalog().load_table("{}.{}".format(namespace, name))
+    s = t.current_snapshot()
+    if s is None or s.summary is None:
+        return {}
+    return {k: v for k, v in s.summary.additional_properties.items()}
 
 
 def read(name, snapshot_id=None, row_filter=None, namespace=NAMESPACE):

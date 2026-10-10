@@ -1,0 +1,135 @@
+{
+ "schema": "moonshot.nf.mutation_table.r1",
+ "tree": "f32f4c098 (run on the worktree before that commit; files unchanged by it)",
+ "script": "session scratchpad version of mutate_pg.py (14 mutants; the repo version supersedes it)",
+ "results": [
+  {
+   "id": "PM01",
+   "what": "guard ignores the chain generation",
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM02",
+   "what": "guard ignores the expected parent digest",
+   "verdict": "SURVIVED",
+   "seconds": 3.5,
+   "tail": [
+    "OK"
+   ]
+  },
+  {
+   "id": "PM03",
+   "what": "no idempotency per attempt",
+   "verdict": "KILLED",
+   "seconds": 0.8,
+   "tail": [
+    "FAILED (errors=2)"
+   ]
+  },
+  {
+   "id": "PM04",
+   "what": "no chain row lock",
+   "verdict": "KILLED",
+   "seconds": 1.0,
+   "tail": [
+    "FAILED (failures=2)"
+   ]
+  },
+  {
+   "id": "PM05",
+   "what": "disagreement does not halt the chain",
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM06",
+   "what": "objects not content-addressed",
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM07",
+   "what": "results not append-only",
+   "verdict": "SURVIVED",
+   "seconds": 0.3,
+   "tail": [
+    "OK"
+   ]
+  },
+  {
+   "id": "PM08",
+   "what": "an overturn does not bump the generation",
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM09",
+   "what": "resolution always upholds",
+   "verdict": "KILLED",
+   "seconds": 1.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM10",
+   "what": "a validation mismatch does not halt",
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM11",
+   "what": "a publisher may validate",
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "id": "PM12",
+   "what": "the publisher skips its semantic checks",
+   "verdict": "SURVIVED",
+   "seconds": 2.4,
+   "tail": [
+    "OK"
+   ]
+  },
+  {
+   "id": "PM13",
+   "what": "no reconnect when the connection dies",
+   "verdict": "SURVIVED",
+   "seconds": 9.2,
+   "tail": [
+    "OK"
+   ]
+  },
+  {
+   "id": "PM14",
+   "what": "PUBLIC keeps EXECUTE on the functions",
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  }
+ ],
+ "killed": 10,
+ "total": 14
+}

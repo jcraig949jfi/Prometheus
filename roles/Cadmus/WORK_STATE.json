@@ -3,20 +3,20 @@
   "seat": "Cadmus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); M1 drain exclusion: roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/",
-  "updated_at_utc": "2026-10-04T13:31:08Z",
+  "updated_at_utc": "2026-10-10T08:05:59Z",
   "state": "READY",
-  "branch": "cadmus/c004-t023a",
+  "branch": "cadmus-c013-t021",
   "head_sha": "fb8a00de125b3cadcbd5d511378d7bde72315d15",
   "base_sha": "6f57aa7c6",
   "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t023a",
   "state_worktree_path": "F:/Prometheus-worktrees/cadmus-ops (detached at origin/main, state commits only)",
-  "model": "claude-opus-5-5",
+  "model": "claude-sonnet-5-5",
   "capability_class": "Q2",
-  "host": "SKULLPORT (M1)",
-  "instance": "m1-a86ec5e4",
+  "host": "harry1",
+  "instance": "harry1-ec004941",
   "session_start_utc": "2026-10-03T11:25:00Z (comms boot record; harness session start UNKNOWN)",
-  "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
-  "current_step": "C-004-T023A INTEGRATION_READY (7 AUTHOR_TESTED stage records); T001, T010, T011, T018 INTEGRATED",
+  "current_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "current_step": "C-013-T021 INTEGRATION_READY (survey at rso/scale/CHECKPOINT_REPLAY_SURVEY.md)",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
   "next_expected_milestone": "T023A integrated and records registered (Palamedes -> Aporia); T020 matrix run",
@@ -25,15 +25,14 @@
     "phase3-rso"
   ],
   "campaigns": [
-    "C-004"
+    "C-013"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "hourly loop (session cron job 9273bc21): comms sync + workgraph ready from cadmus-ops",
-    "claim T011/T012 when READY; T016 also needs T013 (Argus); T018 needs T012"
+    "no READY task; poll workgraph ready Cadmus; await integration of T021"
   ],
   "operator_decisions_required": [],
   "last_push_sha": "fb8a00de1 (branch cadmus/c004-t023a)",

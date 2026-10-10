@@ -60,3 +60,23 @@ def test_append_time_travel_cheat_and_evolution(ns):
     got = iceberg.read("t", namespace=ns).to_pylist()
     w = {r["id"]: r["w"] for r in got}
     assert w[6] == 1.5 and w[1] is None
+
+
+def test_foreign_namespace_and_watermark():
+    """A seat's own namespace is created on first write; a watermark in snapshot_properties reads back from the
+    CURRENT snapshot only (NEGATIVE: the earlier snapshot's watermark is not returned)."""
+    name = "pan_test_ns_" + uuid.uuid4().hex[:8]
+    cat = iceberg.catalog()
+    try:
+        tab = iceberg.write("w", pa.table({"id": pa.array([1], pa.int64())}), namespace=name,
+                            snapshot_properties={"watermark": 41})
+        assert iceberg.last_snapshot_properties("w", namespace=name)["watermark"] == "41"
+        iceberg.write("w", pa.table({"id": pa.array([2], pa.int64())}), namespace=name,
+                      snapshot_properties={"watermark": "42"})
+        assert iceberg.last_snapshot_properties("w", namespace=name)["watermark"] == "42"
+        assert iceberg.read("w", namespace=name).num_rows == 2
+        assert tab is not None
+    finally:
+        for ident in cat.list_tables(name):
+            cat.drop_table(ident)
+        cat.drop_namespace(name)

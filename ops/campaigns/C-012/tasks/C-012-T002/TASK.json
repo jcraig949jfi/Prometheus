@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,42 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T07:24:46Z",
       "note": "Themis starts OP-NF2"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "RED observed at f14130971 (committed 2026-10-10T07:29:26Z): Ran 26, errors=26, all NotImplementedError: C-012-T002"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "T002 IMPLEMENTING: RED f14130971 -> GREEN f32f4c098 -> hardened ce1b45c00 -> integrated 605e18ff3 (41 OK; mutation 29/29)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "T002 GREEN: RED f14130971 -> GREEN f32f4c098 -> hardened ce1b45c00 -> integrated 605e18ff3 (41 OK; mutation 29/29)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "T002 INTEGRATION_READY: RED f14130971 -> GREEN f32f4c098 -> hardened ce1b45c00 -> integrated 605e18ff3 (41 OK; mutation 29/29)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "T002 INTEGRATED: RED f14130971 -> GREEN f32f4c098 -> hardened ce1b45c00 -> integrated 605e18ff3 (41 OK; mutation 29/29)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T08:19:44Z",
+      "note": "T002 CLOSED: RED f14130971 -> GREEN f32f4c098 -> hardened ce1b45c00 -> integrated 605e18ff3 (41 OK; mutation 29/29); receipt attempts/A-20261010T072446Z-Themis-m2-0e9b1ed2"
     }
   ],
   "task_id": "C-012-T002",

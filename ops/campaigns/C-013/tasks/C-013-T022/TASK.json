@@ -1,0 +1,70 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T022",
+  "campaign_id": "C-013",
+  "title": "P-1: session-independent local runner (runtime-agnostic; Aether kernel first client, read only) + kill-everything fire test",
+  "objective": "Build rso/scale/runner/: a job that owns its state (manifest, seed partitions, checkpoint records, append-only events, verified resume, final account) and survives worker, supervisor and session loss.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-013-T020"
+  ],
+  "owns": [
+    "rso/scale/runner/",
+    "rso/scale/runner/tests/",
+    "rso/scale/runner/FIRE_TEST.md"
+  ],
+  "reads": [
+    "ops/campaigns/C-013/escalations/NEW_Eupalamus_2026-10-10_1_RESPONSE.md",
+    "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md",
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md",
+    "ops/campaigns/C-012/ (Themis, read only)"
+  ],
+  "problem": "See the escalation response for the conditions (interface, C-012 alignment, lease optional, <= 1 core-h, <= 2 processes on harry1).",
+  "non_goals": [
+    "No paid compute",
+    "No Fabric restart/redesign",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "fire test: resumed digest == control digest after killing worker + supervisor + session; wasted work accounted",
+    "format alignment table vs C-012",
+    "Aether notified"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; suites green"
+  },
+  "deliverables": [
+    "rso/scale/runner/",
+    "rso/scale/runner/tests/",
+    "rso/scale/runner/FIRE_TEST.md"
+  ],
+  "kind": "software",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T08:28:19Z",
+      "note": "from escalation"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T08:28:19Z",
+      "note": "READY (escalation answered: options 1 + 3)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-93a529ba]",
+      "at_utc": "2026-10-10T08:35:22Z",
+      "note": "claimed; work on branch eupalamus/c-013-t022 base ae55dccaa; runtime claude-opus-5-5 (Q2)"
+    }
+  ],
+  "authority": "C-013 operator ruling 2026-10-10 s11; escalation NEW_Eupalamus_2026-10-10_1 RESPONSE",
+  "preferred_model": "claude-opus-5-5"
+}
