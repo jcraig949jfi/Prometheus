@@ -239,11 +239,12 @@ def robustness(terms: Sequence, view, cert: Optional[K.Certifier], lib, mut: Mut
 
 def atlas(task: Dict, lib=None, witness: Optional[str] = None, seeds: Sequence = (0, 1, 2, 3),
           enum_budget: int = 1_000_000, enum_max_size: int = 8, density_max_n: int = 7, robust_n: int = 1000,
-          rank_max_class: int = 7_000_000, max_fill: int = 3, E: Optional[Enumerator] = None) -> Dict:
+          rank_max_class: int = 7_000_000, max_fill: int = 3, E: Optional[Enumerator] = None,
+          mutator_max_size: int = 16) -> Dict:
     t0 = time.process_time()
     witness = witness if witness is not None else task.get("witness")
     E = E or Enumerator(lib)
-    mut = Mutator(E, max_fill=max_fill)
+    mut = Mutator(E, max_fill=max_fill, max_size=mutator_max_size)
     view = K.LearnerView(task)
     cert = K.Certifier(task, lib, witness)
     T = task["output_type"]

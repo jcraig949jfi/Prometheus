@@ -1,0 +1,205 @@
+{
+ "R1": 0.7357142857142858,
+ "R1c": 0.9856459330143541,
+ "R2": 1.0,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "controls_ok": true,
+ "cpu_s": 4.42,
+ "driver": "e2-driver-v1",
+ "family_id": "W1d5301d0-F027-R3",
+ "ledger": "INFRA",
+ "lib_witness": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+ "lib_witness_checks": [
+  {
+   "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+   "qualified": true,
+   "source": "sealed_witness_promoted->acquired",
+   "type": "Int"
+  }
+ ],
+ "lib_witness_source": "sealed_witness_promoted->acquired",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "pid": 6748,
+ "qualification": {
+  "controls_ok": true,
+  "descriptors": {
+   "C-FIT": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.0,
+     "1": 0.0,
+     "4": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.0,
+     "2": 0.0
+    },
+    "R1_separation": 0.0,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.00558659217877095,
+    "granularity_cells_per_genotype": 0.0008621515470830539,
+    "pairs_R1c": 209,
+    "pool_cells": 9
+   },
+   "D-BEH": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.85,
+     "1": 0.7545,
+     "4": 0.3
+    },
+    "R1_by_prune_depth": {
+     "1": 0.7,
+     "2": 0.7833
+    },
+    "R1_separation": 0.7357142857142858,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 0.9856459330143541,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.7380509000620733,
+    "granularity_cells_per_genotype": 0.11389979883130569,
+    "pairs_R1c": 209,
+    "pool_cells": 1189,
+    "verdict": "FAIL"
+   },
+   "GENO": {
+    "G": "FAIL",
+    "OVERSPLIT_WARNING": true,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 1.0,
+     "1": 1.0,
+     "4": 1.0
+    },
+    "R1_by_prune_depth": {
+     "1": 1.0,
+     "2": 1.0
+    },
+    "R1_separation": 1.0,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "FAIL",
+    "R2_invariance": 0.0,
+    "cells_per_distinct_trace": 6.479826194909994,
+    "granularity_cells_per_genotype": 1.0,
+    "pairs_R1c": 209,
+    "pool_cells": 10439
+   },
+   "TRACE": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.9,
+     "1": 0.7591,
+     "4": 0.3
+    },
+    "R1_by_prune_depth": {
+     "1": 0.7063,
+     "2": 0.8
+    },
+    "R1_separation": 0.7464285714285714,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 1.0,
+    "granularity_cells_per_genotype": 0.15432512692786665,
+    "pairs_R1c": 209,
+    "pool_cells": 1611
+   }
+  },
+  "family_id": "A8a62c02666/f7a3afe5a9b0de52",
+  "intermediate_scores": [
+   0,
+   1,
+   4
+  ],
+  "intermediates": 14,
+  "intermediates_with_no_equal_score_other": 0,
+  "lattice_size": 15,
+  "lattice_truncated": false,
+  "pairs_R1": 280,
+  "pairs_R2": 83,
+  "pool_score_hist": {
+   "0": 4167,
+   "1": 5726,
+   "10": 2,
+   "11": 1,
+   "12": 2,
+   "2": 449,
+   "3": 62,
+   "4": 29,
+   "8": 1
+  },
+  "pool_size": 10439,
+  "qualified": [],
+  "synonym_semantic_mismatches": 0,
+  "thresholds": {
+   "G_PASS_max": 0.5,
+   "MIN_PAIRS": 20,
+   "R1_PASS": 0.9,
+   "R2_PASS": 0.9
+  },
+  "witness": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+ },
+ "qualified": false,
+ "root": "foundry\\pilot_v2",
+ "root_label": "EXPOSED DEV DATA (pilot_v2)",
+ "shard": "qual/W1d5301d0-F027-R3",
+ "shard_cpu_s": 4.42,
+ "verdict": "FAIL"
+}

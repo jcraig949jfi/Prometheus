@@ -48,6 +48,8 @@ import time
 from collections import Counter
 from typing import Dict, List, Optional, Sequence
 
+import numpy as np
+
 from tfs1 import core as C
 from tfs1.enum import Enumerator, canon_comm
 from tfs1.mutate import Mutator, rng_for
@@ -124,6 +126,12 @@ class Search:
         self.by_cell: Dict = {}
         self.cell_order: List = []
         self.chosen: Counter = Counter()
+        # incremental cell-weight structure for the cell_count restore (E2 performance repair, see _select_cell)
+        self._cw = np.empty(64, dtype=np.float64)          # weight 1/sqrt(1 + times chosen), aligned with cell_order
+        self._cum = np.empty(64, dtype=np.float64)         # sequential running sums of _cw (== itertools.accumulate)
+        self._ncw = 0                                      # number of cells already in _cw/_cum
+        self.reference_restore = False                     # True -> the original O(#cells) list code (tests only)
+        self._last_idx = None
         self.genos = set()
         self.replacements = 0
         self.hits: List[Dict] = []
@@ -303,7 +311,7 @@ class Search:
             self.cur = (s["term"], s["key"])
             self.anchor = None
             return
-        live = self.live_entries()
+        live = self.live_entries() if sel != "cell_count" else None     # unused by cell_count (no RNG use)
         if sel == "uniform":
             e = self.entries[live[self.rng.randrange(len(live))]]
         elif sel == "best_cell":
@@ -314,9 +322,14 @@ class Search:
             e = self.entries[ties[int(self.rng.random() * len(ties))]]
         else:                                                     # cell_count
             cells = self.cell_order
-            w = [1.0 / math.sqrt(1 + self.chosen[c]) for c in cells]
-            c = self.rng.choices(cells, weights=w)[0]
+            if self.reference_restore:
+                w = [1.0 / math.sqrt(1 + self.chosen[c]) for c in cells]
+                c = self.rng.choices(cells, weights=w)[0]
+            else:
+                c = cells[self._select_cell()]
             self.chosen[c] += 1
+            if not self.reference_restore:
+                self._reweight(self._last_idx, c)
             members = self.by_cell[c]
             if isinstance(members, int):
                 members = [members]
@@ -324,6 +337,57 @@ class Search:
         e["times_restored"] += 1
         self.cur = (e["term"], e["key"])
         self.anchor = e
+
+    # ------------------------------------------------------------ incremental weighted cell choice
+    # E2 PERFORMANCE REPAIR (red team M13(d); scientifically neutral). The original restore rebuilt the weight list
+    # over all cells and called rng.choices on every step: O(#cells) Python work per step, quadratic in the budget
+    # (5k charges 4.6 s, 20k charges 70 s for D1-X3 on an exposed pilot_v2 task). The repair keeps the weights and
+    # their SEQUENTIAL running sums in float64 arrays and reproduces CPython 3.12 random.choices(population,
+    # weights=w)[0] exactly: cum = accumulate(w) (sequential IEEE additions; np.add.accumulate is sequential),
+    # total = cum[-1] + 0.0, index = bisect_right(cum, random() * total, 0, n - 1). One random() call, the same
+    # float values, the same index -> bit-identical decision logs (tested against reference_restore=True).
+    def _grow(self, n):
+        if n > len(self._cw):
+            cap = max(n, 2 * len(self._cw))
+            for name in ("_cw", "_cum"):
+                a = np.empty(cap, dtype=np.float64)
+                a[:self._ncw] = getattr(self, name)[:self._ncw]
+                setattr(self, name, a)
+
+    def _sync_cells(self):
+        n = len(self.cell_order)
+        k = self._ncw
+        if n == k:
+            return
+        self._grow(n)
+        for j in range(k, n):
+            self._cw[j] = 1.0 / math.sqrt(1 + self.chosen[self.cell_order[j]])
+        if k == 0:
+            self._cum[0:n] = np.add.accumulate(self._cw[0:n])
+        else:
+            seg = np.empty(n - k + 1, dtype=np.float64)
+            seg[0] = self._cum[k - 1]
+            seg[1:] = self._cw[k:n]
+            self._cum[k:n] = np.add.accumulate(seg)[1:]
+        self._ncw = n
+
+    def _select_cell(self) -> int:
+        self._sync_cells()
+        n = self._ncw
+        total = float(self._cum[n - 1]) + 0.0
+        x = self.rng.random() * total
+        idx = int(np.searchsorted(self._cum[:n - 1], x, side="right"))     # == bisect(cum, x, 0, n - 1)
+        self._last_idx = idx
+        return idx
+
+    def _reweight(self, idx, c):
+        self._last_idx = None
+        n = self._ncw
+        self._cw[idx] = 1.0 / math.sqrt(1 + self.chosen[c])
+        seg = np.empty(n - idx + 1, dtype=np.float64)
+        seg[0] = self._cum[idx - 1] if idx > 0 else 0.0
+        seg[1:] = self._cw[idx:n]
+        self._cum[idx:n] = np.add.accumulate(seg)[1:]     # idx == 0: 0.0 + w[0] == w[0] exactly (w > 0)
 
     # ------------------------------------------------------------ step
     def step(self):
@@ -457,15 +521,16 @@ def run_arm(task: Dict, lib, arm: str, seed, budget: int, descriptor: Optional[s
 
 
 def calibrate_random_k(task: Dict, lib, ref_arm: str, descriptor: str, budget: int, seeds: Sequence,
-                       burst: int = DEFAULT_BURST, E: Optional[Enumerator] = None) -> Dict:
+                       burst: int = DEFAULT_BURST, E: Optional[Enumerator] = None, **kw) -> Dict:
     """OUTCOME-BLIND calibration of the random control's bucket count K: run the reference descriptor arm with
     stop_on_hit=False on CALIBRATION seeds (disjoint from evaluation seeds) and read only its realised cell count;
-    then check the random arm's realised cells at that K and adjust once by the observed ratio."""
+    then check the random arm's realised cells at that K and adjust once by the observed ratio.
+    **kw (e.g. max_size, credit) is passed to every Search so the calibration runs the SAME search as the evaluation."""
     E = E or Enumerator(lib)
     view = K.LearnerView(task)
     ref = []
     for sd in seeds:
-        s = Search(view, None, E, ref_arm, sd, budget, burst, descriptor, stop_on_hit=False)
+        s = Search(view, None, E, ref_arm, sd, budget, burst, descriptor, stop_on_hit=False, **kw)
         s.run()
         ref.append(s.realised_cells())
     target = sum(ref) / len(ref)
@@ -475,7 +540,7 @@ def calibrate_random_k(task: Dict, lib, ref_arm: str, descriptor: str, budget: i
     for _it in range(3):
         got = []
         for sd in seeds:
-            s = Search(view, None, E, rand_arm, sd, budget, burst, "RAND:%d" % k, stop_on_hit=False)
+            s = Search(view, None, E, rand_arm, sd, budget, burst, "RAND:%d" % k, stop_on_hit=False, **kw)
             s.run()
             got.append(s.realised_cells())
         mean = sum(got) / len(got)

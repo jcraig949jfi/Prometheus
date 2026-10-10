@@ -191,7 +191,11 @@ class Certifier:
         if self.witness is not None:
             got = [C.run(fn, list(i)) for i in self.tribunal]
             trib_ok = all(C.same_value(a, b) for a, b in zip(got, self.tribunal_ref))
-        task_trib_ok = C.check_dev(fn, self.task_tribunal) if self.task_tribunal is not None else None
+        # value-or-FAIL agreement (the foundry's definition; evaluator files encode an expected FAIL as "FAIL", which is
+        # the interpreter's sentinel). E2 pre-launch fix: C.check_dev treats every FAIL as wrong, so a correct
+        # program (even the sealed witness) failed any task tribunal that expects FAIL (e.g. min of []).
+        task_trib_ok = (all(C.same_value(C.run(fn, list(i)), o) for i, o in self.task_tribunal)
+                        if self.task_tribunal is not None else None)
         C.U[0], C.U[1] = u
         return {"test_ok": test_ok, "tribunal_ok": trib_ok, "task_tribunal_ok": task_trib_ok,
                 "qualified": bool(test_ok and trib_ok is not False and task_trib_ok is not False)}

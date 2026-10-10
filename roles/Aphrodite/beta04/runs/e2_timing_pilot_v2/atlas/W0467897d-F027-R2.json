@@ -1,0 +1,1071 @@
+{
+ "atlas": {
+  "atlas_version": "atlas-v0",
+  "cpu_s": 24.3,
+  "density": [
+   {
+    "all_fail_share": 0.0,
+    "class_size": 4,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 4,
+    "exact_credit_hist": [
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 1,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 10,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 10,
+    "exact_credit_hist": [
+     10,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 2,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.072727,
+    "class_size": 110,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 110,
+    "exact_credit_hist": [
+     110,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 3,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.06079,
+    "class_size": 658,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 658,
+    "exact_credit_hist": [
+     658,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 4,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.129109,
+    "class_size": 6723,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 6723,
+    "exact_credit_hist": [
+     6720,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 5,
+    "viable_share": 0.000446
+   },
+   {
+    "all_fail_share": 0.12894,
+    "class_size": 55995,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 55995,
+    "exact_credit_hist": [
+     55979,
+     10,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 6,
+    "viable_share": 0.000286
+   }
+  ],
+  "dev_n": 12,
+  "dev_test_overlap": 0,
+  "existence": {
+   "dev_ok": true,
+   "exists": true,
+   "size_expanded": 10,
+   "size_promoted": 10,
+   "test_ok": true,
+   "type": "Int",
+   "witness": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)"
+  },
+  "family_id": "A2998a74232/a3a73eb39bd34ca4",
+  "hitting_cost_enumeration": [
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 4.66,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0,
+    "units_expanded": 667293,
+    "units_promoted": 667293,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 4.77,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1,
+    "units_expanded": 666940,
+    "units_promoted": 666940,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 5.05,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2,
+    "units_expanded": 667348,
+    "units_promoted": 667348,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 4.88,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3,
+    "units_expanded": 667245,
+    "units_promoted": 667245,
+    "verify_evals": 0
+   }
+  ],
+  "lattice": {
+   "any_intermediate_with_exact_credit": true,
+   "any_intermediate_with_partial_credit": true,
+   "credit_by_prune_depth": {
+    "0": {
+     "max_exact": 1.0,
+     "max_partial": 1.0,
+     "mean_exact": 1.0,
+     "mean_partial": 1.0,
+     "n": 1
+    },
+    "1": {
+     "max_exact": 0.75,
+     "max_partial": 0.75,
+     "mean_exact": 0.119,
+     "mean_partial": 0.119,
+     "n": 7
+    },
+    "2": {
+     "max_exact": 0.0,
+     "max_partial": 0.0,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0,
+     "n": 11
+    },
+    "3": {
+     "max_exact": 0.0,
+     "max_partial": 0.0,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0,
+     "n": 6
+    },
+    "4": {
+     "max_exact": 0.0,
+     "max_partial": 0.0,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0,
+     "n": 6
+    },
+    "5": {
+     "max_exact": 0.0,
+     "max_partial": 0.0,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0,
+     "n": 3
+    }
+   },
+   "n_paths": 990,
+   "paths_truncated": false,
+   "size": 34,
+   "truncated": false
+  },
+  "library_entries": 0,
+  "output_type": "Int",
+  "params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "revisitability": {
+   "enumeration_rank_seed0": {
+    "(head (map (lam x (gcd x x)) xs))": {
+     "exact": true,
+     "in_space": true,
+     "rank": 60786,
+     "size": 6
+    },
+    "(head (map (lam x (pow (gcd x x) 3)) xs))": {
+     "bracket": [
+      627413,
+      6007202
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(head (map (lam x x) xs))": {
+     "exact": true,
+     "in_space": true,
+     "rank": 423,
+     "size": 4
+    },
+    "(head xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 5,
+     "size": 2
+    },
+    "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)": {
+     "bracket": [
+      61157176,
+      623202131
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "(pow (head (map (lam x (pow 3 3)) xs)) 3)": {
+     "bracket": [
+      627413,
+      6007202
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(pow (head (map (lam x 3) xs)) 3)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 24479,
+     "size": 6
+    },
+    "(pow (head xs) 3)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 169,
+     "size": 4
+    },
+    "0": {
+     "exact": true,
+     "in_space": true,
+     "rank": 1,
+     "size": 1
+    },
+    "3": {
+     "exact": true,
+     "in_space": true,
+     "rank": 2,
+     "size": 1
+    }
+   },
+   "genotype_restore_exact": true,
+   "witness_rank_by_seed": {
+    "0": {
+     "bracket": [
+      61157176,
+      623202131
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "1": {
+     "bracket": [
+      61157176,
+      623202131
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "2": {
+     "bracket": [
+      61157176,
+      623202131
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "3": {
+     "bracket": [
+      61157176,
+      623202131
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    }
+   }
+  },
+  "robustness": [
+   {
+    "all_fail_share": 0.022,
+    "children": 500,
+    "exact_credit": 12,
+    "keep_credit_share": 0.114,
+    "program": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.114,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.098,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "0",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.298,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.012,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(head xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.192,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.038,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(head (map (lam x x) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.28,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.028,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(head (map (lam x (gcd x x)) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.152,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.03,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(head (map (lam x (pow (gcd x x) 3)) xs))",
+    "raise_credit_share": 0.006,
+    "same_dev_behaviour_share": 0.162,
+    "stay_qualified_share": null
+   }
+  ],
+  "route": {
+   "best_for_exact": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.08333333333333333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "guided_route_cost_estimate": 11350.32829951263,
+     "magnitude": {
+      "crossing_cost_estimate": 220746.8537066903,
+      "decreases": 0,
+      "flat_steps": 1,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       684.72,
+       220746.8537066903,
+       9487.206000000002
+      ],
+      "strict_increases": 3,
+      "values": [
+       0.032081,
+       0.032082,
+       0.032082,
+       0.109982,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.083333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.032081,
+      "partial": 0.0,
+      "program": "3",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.032082,
+      "p_eff": 0.0014604509872648674,
+      "p_none": 0.366,
+      "p_single": 0.000925925925925926,
+      "partial": 0.0,
+      "program": "(pow (head xs) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.032082,
+      "p_eff": 0.004279764711164993,
+      "p_none": 0.293,
+      "p_single": 0.0030257936507936505,
+      "partial": 0.0,
+      "program": "(pow (head (map (lam x 3) xs)) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 3,
+      "magnitude": 0.109982,
+      "p_eff": 0.00105848713580533,
+      "p_none": 0.315,
+      "p_single": 0.000725063688026651,
+      "partial": 0.083333,
+      "program": "(pow (head (map (lam x (pow 3 3)) xs)) 3)",
+      "size": 8
+     },
+     {
+      "exact": 1.0,
+      "i": 4,
+      "magnitude": 1.0,
+      "p_eff": 0.00010540511084085239,
+      "p_none": 0.277,
+      "p_single": 7.620789513793628e-05,
+      "partial": 1.0,
+      "program": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)",
+      "size": 10
+     }
+    ]
+   },
+   "best_for_magnitude": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.08333333333333333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "guided_route_cost_estimate": 11350.32829951263,
+     "magnitude": {
+      "crossing_cost_estimate": 220746.8537066903,
+      "decreases": 0,
+      "flat_steps": 1,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       684.72,
+       220746.8537066903,
+       9487.206000000002
+      ],
+      "strict_increases": 3,
+      "values": [
+       0.032081,
+       0.032082,
+       0.032082,
+       0.109982,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.083333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.032081,
+      "partial": 0.0,
+      "program": "3",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.032082,
+      "p_eff": 0.0014604509872648674,
+      "p_none": 0.366,
+      "p_single": 0.000925925925925926,
+      "partial": 0.0,
+      "program": "(pow (head xs) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.032082,
+      "p_eff": 0.004279764711164993,
+      "p_none": 0.293,
+      "p_single": 0.0030257936507936505,
+      "partial": 0.0,
+      "program": "(pow (head (map (lam x 3) xs)) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 3,
+      "magnitude": 0.109982,
+      "p_eff": 0.00105848713580533,
+      "p_none": 0.315,
+      "p_single": 0.000725063688026651,
+      "partial": 0.083333,
+      "program": "(pow (head (map (lam x (pow 3 3)) xs)) 3)",
+      "size": 8
+     },
+     {
+      "exact": 1.0,
+      "i": 4,
+      "magnitude": 1.0,
+      "p_eff": 0.00010540511084085239,
+      "p_none": 0.277,
+      "p_single": 7.620789513793628e-05,
+      "partial": 1.0,
+      "program": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)",
+      "size": 10
+     }
+    ]
+   },
+   "best_for_partial": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.08333333333333333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "guided_route_cost_estimate": 11350.32829951263,
+     "magnitude": {
+      "crossing_cost_estimate": 220746.8537066903,
+      "decreases": 0,
+      "flat_steps": 1,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       684.72,
+       220746.8537066903,
+       9487.206000000002
+      ],
+      "strict_increases": 3,
+      "values": [
+       0.032081,
+       0.032082,
+       0.032082,
+       0.109982,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 151149785.670045,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       151149785.670045,
+       9487.206000000002
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.083333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.032081,
+      "partial": 0.0,
+      "program": "3",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.032082,
+      "p_eff": 0.0014604509872648674,
+      "p_none": 0.366,
+      "p_single": 0.000925925925925926,
+      "partial": 0.0,
+      "program": "(pow (head xs) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.032082,
+      "p_eff": 0.004279764711164993,
+      "p_none": 0.293,
+      "p_single": 0.0030257936507936505,
+      "partial": 0.0,
+      "program": "(pow (head (map (lam x 3) xs)) 3)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 3,
+      "magnitude": 0.109982,
+      "p_eff": 0.00105848713580533,
+      "p_none": 0.315,
+      "p_single": 0.000725063688026651,
+      "partial": 0.083333,
+      "program": "(pow (head (map (lam x (pow 3 3)) xs)) 3)",
+      "size": 8
+     },
+     {
+      "exact": 1.0,
+      "i": 4,
+      "magnitude": 1.0,
+      "p_eff": 0.00010540511084085239,
+      "p_none": 0.277,
+      "p_single": 7.620789513793628e-05,
+      "partial": 1.0,
+      "program": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)",
+      "size": 10
+     }
+    ]
+   },
+   "canonical": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 25547194255447.125,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       25547194255447.125
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     },
+     "guided_route_cost_estimate": 6032.274404076208,
+     "magnitude": {
+      "crossing_cost_estimate": 9254620303.515013,
+      "decreases": 0,
+      "flat_steps": 3,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       9254620303.515013,
+       2760.4800000000005
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.032081,
+       0.032081,
+       0.032081,
+       0.032081,
+       0.032082,
+       1.0
+      ],
+      "widest_unrewarded_segment": 4
+     },
+     "partial": {
+      "crossing_cost_estimate": 25547194255447.125,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       25547194255447.125
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.032081,
+      "partial": 0.0,
+      "program": "0",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.032081,
+      "p_eff": 0.017950098725542988,
+      "p_none": 0.381,
+      "p_single": 0.01111111111111111,
+      "partial": 0.0,
+      "program": "(head xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 2
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.032081,
+      "p_eff": 0.009455605158730158,
+      "p_none": 0.36,
+      "p_single": 0.006051587301587301,
+      "partial": 0.0,
+      "program": "(head (map (lam x x) xs))",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.032081,
+      "p_eff": 0.0015762254087535892,
+      "p_none": 0.356,
+      "p_single": 0.0010150891632373115,
+      "partial": 0.0,
+      "program": "(head (map (lam x (gcd x x)) xs))",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.032082,
+      "p_eff": 0.00040389353366452604,
+      "p_none": 0.345,
+      "p_single": 0.00026455026455026457,
+      "partial": 0.0,
+      "program": "(head (map (lam x (pow (gcd x x) 3)) xs))",
+      "size": 8
+     },
+     {
+      "exact": 1.0,
+      "i": 5,
+      "magnitude": 1.0,
+      "p_eff": 0.00036225583956413373,
+      "p_none": 0.29,
+      "p_single": 0.00025720164609053495,
+      "partial": 1.0,
+      "program": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)",
+      "size": 10
+     }
+    ]
+   }
+  },
+  "test_n": 40
+ },
+ "classification_route": {
+  "budget": 200000,
+  "crossing_cost_estimate": {
+   "exact": 151149785.670045,
+   "magnitude": 220746.8537066903,
+   "partial": 151149785.670045
+  },
+  "enumeration": "RARITY_LIMIT_BEYOND_16x",
+  "enumeration_crossing_by_seed": [
+   61157176,
+   61157176,
+   61157176,
+   61157176
+  ],
+  "local_search": "REACHABILITY_DESERT_UNANCHORED",
+  "notes": [
+   "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED",
+   "diagnostic: the magnitude channel (a numeric-closeness heuristic, not a correctness credit; used by no search here) WOULD see a gradient (crossing estimate 2.21e+05)"
+  ],
+  "route_start_is_generic_start": {
+   "exact": false,
+   "partial": false
+  },
+  "scale": 16,
+  "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+  "widest_unrewarded_segment_search_channel": 3
+ },
+ "cluster": "f:base_post",
+ "complete": true,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "cpu_s": 24.34,
+ "driver": "e2-driver-v1",
+ "existence_sealed_expanded": {
+  "dev_ok": true,
+  "exists": true,
+  "size_expanded": 10,
+  "size_promoted": 10,
+  "test_ok": true,
+  "type": "Int",
+  "witness": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)"
+ },
+ "family_id": "W0467897d-F027-R2",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "pid": 15012,
+ "representation": "BASE_GRAMMAR (no certified library witness)",
+ "root": "foundry\\pilot_v2",
+ "root_label": "EXPOSED DEV DATA (pilot_v2)",
+ "rung": "R2",
+ "shard": "atlas/W0467897d-F027-R2",
+ "shard_cpu_s": 24.34,
+ "witness_used": "(pow (head (map (lam x (pow (gcd x x) 3)) xs)) 3)"
+}
