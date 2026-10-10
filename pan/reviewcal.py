@@ -150,3 +150,51 @@ def build(workers=4, out=print):
                    items_path=str(pi), answers_path=str(pk), seconds=round(time.time() - t0, 1))
     out(json.dumps(summary))
     return summary
+
+
+INSTRUCTIONS = ("You are reviewing one Python function from a research codebase. Decide whether it contains a bug "
+                "(code that does not do what its name, docstring and surrounding logic intend). Reply with ONLY one "
+                "JSON object: {\"bug\": true or false, \"line\": <line number within the function, counting the def "
+                "line as 1, or null>, \"scenario\": \"<one sentence: input or state -> wrong result>\"}.")
+
+
+def latest(kind):
+    ps = sorted((lake() / "reviewcal").glob("{}_*.json".format(kind)))
+    if not ps:
+        raise SystemExit("no {} file in {}".format(kind, lake() / "reviewcal"))
+    return ps[-1]
+
+
+def packets():
+    """Reviewer packets: (item id, prompt) with the code only -- no module path, no task id, no module line
+    numbers (prereg A1). The function's lines are numbered from 1 so findings can cite them."""
+    items = json.loads(latest("ITEMS").read_text(encoding="utf-8"))
+    out = []
+    for it in items:
+        numbered = "\n".join("{:>3}  {}".format(i, ln) for i, ln in enumerate(it["code"].splitlines(), 1))
+        out.append((it["item"], INSTRUCTIONS + "\n\n```python\n" + numbered + "\n```"))
+    return out
+
+
+def score(findings, answers=None):
+    """findings: {item: {"bug": bool, "line": int|None}}. Scoring as frozen: hit = mutant item with bug true
+    and a line within +-2 of the mutated line; false alarm = clean item with bug true."""
+    from .codebench import wilson
+    key = answers if answers is not None else json.loads(latest("ANSWERS").read_text(encoding="utf-8"))
+    hits = misses = fa = clean = 0
+    for a in key:
+        f = findings.get(a["item"]) or {}
+        flagged = bool(f.get("bug"))
+        if a["kind"] == "mutant":
+            line = f.get("line")
+            ok = flagged and isinstance(line, int) and abs(line - a["line_in_function"]) <= 2
+            hits += ok
+            misses += not ok
+        else:
+            clean += 1
+            fa += flagged
+    n_mut = hits + misses
+    return dict(hits=hits, mutants=n_mut, recall=round(hits / n_mut, 3) if n_mut else None,
+                recall_wilson95=wilson(hits, n_mut), false_alarms=fa, clean=clean,
+                false_alarm_rate=round(fa / clean, 3) if clean else None, false_alarm_wilson95=wilson(fa, clean),
+                unreliable_for_unsupervised=(wilson(hits, n_mut)[1] < 0.5) if n_mut else None)

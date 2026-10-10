@@ -47,3 +47,31 @@ def test_specific_mutations():
 
 def test_negative_no_sites():
     assert sites("def f(name):\n    print(name)\n") == []
+
+
+def test_scoring_rule():
+    from pan.reviewcal import score
+    key = [dict(item="RC-001", kind="mutant", line_in_function=5), dict(item="RC-002", kind="mutant", line_in_function=9),
+           dict(item="RC-003", kind="clean"), dict(item="RC-004", kind="clean")]
+    perfect = {"RC-001": {"bug": True, "line": 6}, "RC-002": {"bug": True, "line": 9}, "RC-003": {"bug": False},
+               "RC-004": {"bug": False}}
+    s = score(perfect, key)
+    assert s["hits"] == 2 and s["recall"] == 1.0 and s["false_alarms"] == 0
+    always = {k: {"bug": True, "line": 1} for k in ("RC-001", "RC-002", "RC-003", "RC-004")}
+    s = score(always, key)                         # flags everything, wrong lines: no hits, all false alarms
+    assert s["hits"] == 0 and s["false_alarms"] == 2 and s["false_alarm_rate"] == 1.0
+    assert score({}, key)["recall"] == 0.0        # silent reviewer
+    near_miss = dict(perfect, **{"RC-001": {"bug": True, "line": 8}})     # 3 lines off: not a hit
+    assert score(near_miss, key)["hits"] == 1
+
+
+def test_packets_hide_paths():
+    import json
+    from pan import reviewcal
+    try:
+        pk = reviewcal.packets()
+    except SystemExit:
+        return                                     # no set generated on this machine
+    items = json.loads(reviewcal.latest("ITEMS").read_text(encoding="utf-8"))
+    for (iid, prompt), it in zip(pk, items):
+        assert it["module"] not in prompt and it["task_id"] not in prompt
