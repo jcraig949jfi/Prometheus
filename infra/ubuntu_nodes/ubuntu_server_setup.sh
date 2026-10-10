@@ -22,6 +22,10 @@ printf '[Login]\nHandleLidSwitch=ignore\nHandleLidSwitchExternalPower=ignore\nHa
   > /etc/systemd/logind.conf.d/10-server-lid.conf
 systemctl kill -s HUP systemd-logind
 
+step "3b console blank after 5 min idle (consoleblank=300 on the kernel line; the screen is never used)"
+grep -q 'consoleblank=' /etc/default/grub ||   sed -i -E 's/^GRUB_CMDLINE_LINUX_DEFAULT="([^"]*)"/GRUB_CMDLINE_LINUX_DEFAULT=" consoleblank=300"/' /etc/default/grub
+update-grub >/dev/null 2>&1 && grep '^GRUB_CMDLINE_LINUX_DEFAULT' /etc/default/grub
+
 step "4 wifi power save off (driver option + service after wifi connects; a udev rule alone did NOT survive reboot)"
 echo "options iwlmvm power_scheme=1" > /etc/modprobe.d/iwlwifi-powersave-off.conf
 for d in /sys/class/net/wl*; do
