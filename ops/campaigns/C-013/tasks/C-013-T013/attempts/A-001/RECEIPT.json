@@ -1,0 +1,62 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-013-T013",
+ "campaign_id": "C-013",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-91546d7d",
+ "host": "harry1",
+ "branch": "argus/c013-t013",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c013-t013",
+ "start_sha": "187ebe4475d3dcf1c85a9f42d87d235008e57987",
+ "end_sha": "48b6a425b0112486e76698c4e66a25f2815a47a2",
+ "dirty": false,
+ "commits": {
+  "claim_main": "3e7001e13",
+  "amendment_tests_red": "b85d690bf",
+  "freeze_v1_0_1": "8ddaa4f19acaca33371351e82a9c0e9f6bb9ec3e",
+  "journal_state_comms": "48b6a425b"
+ },
+ "files_changed": [
+  "rso/reach/PREREGISTRATION.md (v1.0.1: title/version line + s9 amendment A1)",
+  "rso/reach/tests/test_repair_v101.py (new, 4 tests)",
+  "rso/reach/repair_v101/{RED_EDITS.json,run_red.py,red_rows.jsonl} (new)",
+  "rso/reach/FROZEN_D1.json (regenerated, 48 files), rso/reach/FREEZE_D1.md (v1.0.1)",
+  "roles/Argus/{WORK_STATE.json,journal/2026-10-10.md,comms/2026-10-10_C-013-T013_*.md,comms/2026-10-10_HEARTBEAT_T013_done.md}",
+  "ops/campaigns/C-013/tasks/C-013-T013/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "PREREGISTRATION v1.0.1 sha256 4e3c10a0dba4dd9757e52467281082315bea57837b578d5d79af7bb10597bc0d, amendment A1 committed (b85d690bf) BEFORE any confirmatory lineage (no rso/reach/runs/ exists): A1.1 s4 outcome-symmetric (REPORT.md:111-117); A1.2 s5 band 2000..2063, sealed = reporting block, selection block not oracle-rechecked (REPORT.md:121-146); A1.3 pooled-over-d direction with per-stratum caveat (REPORT.md:84-94); A1.4 s7 rows C2/C4/C5/last restated, stepping-stone row withdrawn as inferential (REPORT.md:147-190); A1.5 the pins",
+  "tests/test_repair_v101.py: E1 selection lives (certify.py:52), E3 Holm decides (analyze.py:93), E4 resume counts prior CPU (run_d1.py:141), M80 90% threshold with builder(7) 449/500 witness (certify.py:54)",
+  "RED evidence rso/reach/repair_v101/red_rows.jsonl: baseline GREEN; E1/E3/E4 verbatim from rso/reach/challenge/D1/edits.json and M80 (integrator's finding, C-013-T010 INTEGRATED note) each RED on an assertion; restored sha256 + git diff --quiet verified",
+  "FROZEN_D1.json sha256 cdd5de75f7799a5f43855bccb1fd5d3f1b1a1ed97799b2f731ef7e7e2c4023a5 (48 files); of the 34 v1.0.0 entries only rso/reach/PREREGISTRATION.md changed"
+ ],
+ "evidence_executed": [
+  {"command": "<venv>/python -B -m pytest -q -p no:cacheprovider rso/reach/tests/{test_analysis,test_arms,test_certify,test_descriptor,test_stats,test_repair_v101}.py (venv C:/Prometheus-worktrees/argus-reach-venv: numba 0.65.1, pytest 8.3.3)", "result": "77 passed in 163.93s (11:49:04Z-11:51:49Z, on the v1.0.1 manifest)"},
+  {"command": "<venv>/python -B -m pytest -q -p no:cacheprovider -rs rso/reach/tests/test_runner.py", "result": "3 passed in 41.00s (incl. test_check_frozen_refuses_a_changed_file against the v1.0.1 manifest; no skips)"},
+  {"command": "<venv>/python -B rso/reach/repair_v101/run_red.py (twice; second pass records assertion reasons)", "result": "BASELINE GREEN; E1 RED ([126,126] != [500,500]); E3 RED (SEPARATES under raw p); E4 RED ('COMPLETE' != 'STOPPED_AT_CPU_CAP'); M80 RED (selection_ok True)"},
+  {"command": "<venv>/python -B -m rso.reach.freeze_manifest; run_d1.check_frozen()", "result": "48 files; 48 verify"},
+  {"command": "probe: certify(builder_min), certify(builder(7)) + oracle counts on lives 2000..2063", "result": "builder_min [500,500] CERTIFIED; builder(7) [500,449] sealed PASS NOT_CERTIFIED (matches Pallas P1)"}
+ ],
+ "red_observed": {"observed": true, "detail": "each of the four new tests failed on its mutant applied verbatim (rso/reach/repair_v101/red_rows.jsonl, 11:44-11:46Z); the same tests passed on the unmodified frozen code"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "ANOMALY 1 (preserved): the first-ever run of test_repair_v101.py failed the E4 test with numba 'Cannot set NUMBA_NUM_THREADS to a different value once the threads have been launched' (numba/core/config.py:512); not reproduced in 3 warm reruns, 1 cold-cache run, 2 full-suite slices. Suspected: run_d1 sets NUMBA_NUM_THREADS=1 by setdefault at import after numba was imported. Mitigated by importing run_d1 first in the new test module; the frozen test_runner has the same latent order under full-suite collection. The run (python -m rso.reach.run_d1, setdefault before numba) is not exposed.",
+  "M80's mutant text is my rendering of the integrator's prose ('>= 90% to >= 80%') as '>= 9 *' -> '>= 8 *' in certify.py:54; E1/E3/E4 are byte-verbatim from Pallas's edits.json.",
+  "E1 is pinned at record level (selection counts equal the independent oracle's counts on lives 2000..2063); no verdict-level witness (a training-perfect-but-overfit genome) exists, as in Pallas's report.",
+  "E2 (sealed gate accepts INDETERMINATE) is NOT pinned: it is equivalent on every program tried; A1.2 restates the sealed ruler as the reporting block instead.",
+  "freeze_manifest now also pins rso/reach/challenge/ and rso/reach/repair_v101/ (its rglob takes every .py/.md/.json under rso/reach); harmless, recorded.",
+  "Local branch ref stored as argus/C-013-T013 (case-folding with the existing argus/ ref directory); pushed explicitly as origin argus/c013-t013."
+ ],
+ "unresolved": [
+  "Integration of argus/c013-t013 by Palamedes",
+  "C-013-T012 (the D1 run) on FREEZE_D1 v1.0.1"
+ ],
+ "unblocks": ["C-013-T012"],
+ "resources": {"cpu_core_hours_estimate": 0.1, "processes_max": 2, "paid_resources": "none"},
+ "cleanup": "no scratch in the repo; mutation runs restored every file (verified); session scratch under C:/Prometheus-worktrees/argus-scratch/t013_*",
+ "notes": "Wording-only amendment; nothing the run executes changed; s2-s6 numbers unchanged. One repair round per operator ruling s4; no confirmatory or development lineage run.",
+ "created_at_utc": "2026-10-10T12:02:00Z"
+}
