@@ -868,6 +868,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   with B69e (best genome is a patrol in SOLO 4/24, CONC 0/24). One genome per strategy; n=1 per type.
 - B71 COMPLETE (05:47Z): last cell SHAM 7103 entropy .221 (190/200 on pool 0) vs CONC 7103 .949 -> +.73; B71 entropy
   criterion final 5/6. Lease lse-66beba5c83b5 RELEASED with token. Nothing running. Window 4 tally ~40 of 48.
+- B74 (relocating pulse hand ladder; attack on the memory law; predictions committed before each run):
+  v1 (+L/2 shift): FAILED BY DESIGN FLAW (mine) -- two half-ring shifts per episode at Q=8 return every pool home,
+  so a stuck LATCH recovers (RESET - LATCH -.023). v2 (random relocation): Q=None RESET == LATCH .1188 (counter never
+  misfires); Q=8 +.009 (FAILED >= .02; all strategies near REACT); Q=12 +.022 (met). PREDICTION v2 FAILED (Q=8 part).
+  B74b EXPLORATORY (episode length): ticks 48, Q=16 -> REACT .021 / LATCH .038 / RESET .064 = RESET 1.66x LATCH: a
+  world where the memory law's UNREACHED class (update-on-condition: unlatch after P empties, re-search) is the best
+  strategy.
+- B75 STAGED (b75_reset_evolution.py; prediction in docstring = memory law's defender: RESET-like in <= 2/12 pops,
+  none beats hand RESET). Re-find metric discriminates: hand LATCH .051 vs RESET .56 (threshold midpoint .31).
+  Smoke test passed. 12 SOLO cells, G=300, ticks 48 -> est ~12-15 core-h. LAUNCH in window 5 (~2026-10-11 00:29Z).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
