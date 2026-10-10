@@ -125,6 +125,12 @@ operator dependency that remains is the right kind: authorising spend, scope and
   B3 scarce discriminating experiments -> MAKE TARGETS, NOT RUNS: reachability cartography on existing deserts with
      known constructions (C-013 D1), and the World-Demand Foundry admission ladder (reference solver succeeds, specified
      simpler alternatives fail). Smallest step: D1 itself, then one Foundry world with a qualified admission ladder.
+     D1 RAN (2026-10-10): freeze -> independent Q3 challenge -> one repair round -> execution -> integration in
+     ~9.0 h wall (07:50Z-~16:00Z), ~3.3 core-hours of compute (3.24 h run + development), so B2 again dominated:
+     the run itself was 2.0 h of that window. Result: nothing separates at N = 15 (rso/reach/RESULT.md); power at
+     that N for +0.20 is 0.49 (rso/reach/INTEGRATION_D1.md). The binding resource was the THERMAL CPU of one host:
+     CPU per round rose ~630 -> ~980 core-s and the cap stopped the run at 15 of 24 rounds. This is the first
+     measured case in these campaigns where a second host (or a cooler one) would have changed a scientific result.
 
 ## 8. What would make a 100x claim honest (s8 measure)
 

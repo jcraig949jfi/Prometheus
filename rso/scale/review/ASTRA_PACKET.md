@@ -40,6 +40,11 @@ intelligently.
   compute      C-004 / C-009 / C-010 ledgered 53.1 / 31.8 / 26.2 CPU-min;
                0 GPU-seconds. Two independent tools agree to the decimal.
   wall time    ~3.1 days / 8.0 h / 6.2 h per campaign.
+  D1 run       one preregistered run this window: 3.24 core-hours on one
+               thermally limited host; CPU per round rose ~630 -> ~980
+               core-s and the CPU cap stopped it at 15 of 24 rounds,
+               halving its power for the effect size it was built for.
+               First case where host capacity changed a result.
   waiting      69-82% of every work packet's lifetime was WAITING (for a
                seat to claim, or for the coordinator to integrate);
                median work per packet 12-15 min.
