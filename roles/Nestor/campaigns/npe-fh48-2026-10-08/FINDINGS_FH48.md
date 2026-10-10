@@ -504,3 +504,26 @@ mutates opcodes; WELL_MIXED. Otherwise STATIC ADD37, CONST 0.15, 2000 epochs, as
   selection (900 against 400).
 - **Scope:** the principle (function persists iff competence biases copy-exchange DIRECTION) holds across two pair-tape
   worlds with different mutation geometry and structure. It is untested outside pair-tape replication.
+
+## F13. X-DISTRIB-GAME: CLEAN_NULL. The pair-distributed form (INV) is a NEUTRAL alternative implementation (24 runs)
+
+**Setup:** ONTAPE, CONST 0.15, 2000 epochs; 6 seeds paired across arms. 8 rare vs about 191 common planted.
+- INV share is inferred from offline CS: INV has u = 0 offline, and the on-tape readout was off in this experiment, so
+  its genomes were not saved.
+- The marker share is read directly (byte 60) among competent genomes.
+
+| arm | outcome by epoch 2000 |
+|---|---|
+| INV rare | lost like the rare marker: final CS 0.69-0.88 (NEU_RARE 0.74-0.84); the CS dip at epoch 200 is the same in both arms |
+| MARK rare | lost (about 0% of competents in 6/6) |
+| INV common | holds: offline CS stays about 0 in 5/6 (the INV family keeps the population); in 1/6 competence returned late (0.60 at epoch 2000) |
+| MARK common | holds (97-100% of competents) |
+
+**Reading:**
+- No edge from rare and no disadvantage when common: INV behaves as a neutral variant of CT_UA under on-tape
+  selection.
+- A population whose function is entirely PAIR-DISTRIBUTED (each genome answers through its partner's code) persists
+  for 2000 epochs. This is inferred from the population staying INV-dominated under ONTAPE selection; TCS was not
+  measured in this experiment.
+- The distributed architecture is an alternative stable state reached by drift, not a selected improvement.
+- **Killed:** "pair-distributed function spreads because it is advantaged" (together with the counter-copy kill).
