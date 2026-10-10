@@ -3,9 +3,9 @@
   "code_sha256": {
    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
    "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
-   "compress.py": "8d4215fe778bf18a32d64f42d3957547abf4ce9d1aed6f4ffb50f91978cd4196",
+   "compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
    "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
-   "enum.py": "7f67bd11f9a1dc3fde1b339699ff7e3f3e8379fbdf4bd3e927a5fd73fe0220c3",
+   "enum.py": "72084f13698788a277ed2522cd657e3bb9f57e0baac4d064a000a0c8f01c4ddb",
    "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
    "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
    "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
@@ -13,7 +13,7 @@
   },
   "data": "EXPOSED pilot_v2 (development only)",
   "fail": 0,
-  "pass": 10
+  "pass": 16
  },
  "tests": {
   "test_arm_view_only_access_log": {
@@ -38,7 +38,7 @@
     "RANDOM-LIBRARY": "CURRICULUM",
     "SHUFFLED-HISTORY": "SHUFFLED_ANTI_1"
    },
-   "seconds": 9.2,
+   "seconds": 8.1,
    "solved_by_arm": {
     "P0A0": 2,
     "P0A1": 2,
@@ -66,7 +66,7 @@
     "library": 2,
     "solved": 3
    },
-   "seconds": 16.4,
+   "seconds": 14.1,
    "status": "PASS"
   },
   "test_dependency_machinery": {
@@ -81,7 +81,7 @@
   "test_determinism_in_process_and_fresh_process": {
    "decision_sha256": "fc1667bc5996f2286cc4cde79f55d317df9f483eb61bb60aeee7e3c179dad164",
    "fresh_process_equal": true,
-   "seconds": 11.5,
+   "seconds": 10.0,
    "solved": 3,
    "status": "PASS"
   },
@@ -114,8 +114,36 @@
    "status": "PASS"
   },
   "test_known_positive_extraction_and_judge": {
-   "cases": 6,
+   "cases": 8,
    "seconds": 0.0,
+   "status": "PASS"
+  },
+  "test_kp_first_failing_link_rules": {
+   "cases": 11,
+   "seconds": 0.0,
+   "status": "PASS"
+  },
+  "test_kp_pooled_verdict_and_oe_trigger_rules": {
+   "cases": 8,
+   "seconds": 0.0,
+   "status": "PASS"
+  },
+  "test_kp_rows_separate_cache_keys_and_reuse": {
+   "row_keys": [
+    "fb1.src-tfs1.lib-constituents.seed0.oe0.B20000",
+    "fb0.src-tfs1.lib-constituents.seed0.oe0.B20000",
+    "fb1.src-foundry.lib-constituents.seed0.oe0.B20000",
+    "fb1.src-tfs1.lib-constituents.seed1.oe0.B20000",
+    "fb1.src-tfs1.lib-all.seed0.oe0.B20000",
+    "fb1.src-tfs1.lib-constituents.seed0.oe1.B20000"
+   ],
+   "search_cache_sizes": {
+    "fallback_off": 10,
+    "foundry": 14,
+    "primary": 10,
+    "seed1": 24
+   },
+   "seconds": 17.9,
    "status": "PASS"
   },
   "test_lifetime_library_semantics_and_v01_1": {
@@ -140,7 +168,7 @@
     null,
     null
    ],
-   "seconds": 3.1,
+   "seconds": 2.8,
    "snapshots": 2,
    "solved": 3,
    "status": "PASS"
@@ -149,14 +177,65 @@
    "decision_sha256": "4794ee96966ff841ab6722b52846a2be772119f81d546f6febf6d49ec9516cb7",
    "qualified": 2,
    "qualified_under_perturbation": 0,
-   "seconds": 7.6,
+   "seconds": 6.9,
    "solved": 3,
+   "status": "PASS"
+  },
+  "test_oe_charges_exact_and_deterministic": {
+   "charges_base": 49862,
+   "charges_oe": 11626,
+   "oe_stats": {
+    "cpu_s": 0.188,
+    "generated": 3350,
+    "kept": 1205,
+    "pruned": 2145,
+    "signature_evals": 138532
+   },
+   "program": "(div (add 1 (last xs)) 3)",
+   "seconds": 1.2,
+   "status": "PASS",
+   "walked_by_size": {
+    "1": 4,
+    "2": 10,
+    "3": 109,
+    "4": 499,
+    "5": 1647,
+    "6": 9357
+   }
+  },
+  "test_oe_off_byte_identical_to_pre_oe_enumerator": {
+   "cases": 3,
+   "frozen_at": "f4a46d777 enum.py e1c2993c",
+   "identical": true,
+   "seconds": 10.2,
+   "status": "PASS"
+  },
+  "test_oe_pruned_terms_observationally_equal_on_dev": {
+   "Int7_base": 563912,
+   "generated_Int7_oe": 61343,
+   "oe_stats": {
+    "cpu_s": 2.438,
+    "generated": 21107,
+    "kept": 7455,
+    "pruned": 13652,
+    "signature_evals": 757972
+   },
+   "pruned_by_ctx_arity": {
+    "0": 12218,
+    "1": 787,
+    "2": 647
+   },
+   "pruned_checked": 4551,
+   "pruned_logged": 13652,
+   "roots_scanned": 96882,
+   "roots_substituted": 81449,
+   "seconds": 35.8,
    "status": "PASS"
   },
   "test_random_archive_matched": {
    "archive_P0A1": 57,
    "archive_RANDOM": 57,
-   "seconds": 10.4,
+   "seconds": 9.2,
    "sizes_P0A1": [
     2,
     3,
