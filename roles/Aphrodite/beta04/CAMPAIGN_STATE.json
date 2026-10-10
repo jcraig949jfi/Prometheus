@@ -20,13 +20,14 @@
       "id": "W01",
       "kind": "DEV",
       "start_utc": "2026-10-10T09:27Z",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "report": "beta04/windows/W01_DEV_REPORT.md"
     },
     {
       "id": "W02",
       "kind": "EXP",
       "start_utc": "2026-10-10T13:27Z",
-      "status": "PENDING"
+      "status": "ACTIVE"
     },
     {
       "id": "W03",
@@ -125,7 +126,7 @@
       "status": "PENDING"
     }
   ],
-  "active_window": "W01",
+  "active_window": "W02",
   "experiments": {
     "E1": "v1 NOT_QUALIFIED; v2 pilot: gate 2/3, pairings 2; PRODUCTION (12 secret seeds) decides under Addendum D",
     "E2": "PENDING",
@@ -148,7 +149,12 @@
   },
   "compute": {
     "cap": "48 core-h / rolling 24h",
-    "ledger": []
+    "ledger": [
+      {
+        "utc": "2026-10-10T13:02Z",
+        "est_core_h_since_activation": 8.0
+      }
+    ]
   },
   "cloud_spend_usd": 0,
   "next_action": "red-team foundry gate; freeze foundry decisions D1-D9; production worlds 201-212",
