@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T010",
+  "campaign_id": "C-013",
+  "title": "Workstream B: REACHABILITY_CARTOGRAPHY_V0.md + frozen preregistration of the p1_slice archive-arms demonstration",
+  "objective": "Write the reusable cartography protocol (expressible / reachable / rewarded / credited / detected; target density or bound, smallest construction, operator distance, viable intermediates, hitting-time distribution, stepping-stone loss, representation and credit sensitivity, archive/novelty behaviour, modularity/promotion behaviour; budget-relative upper bounds, never impossibility) and preregister + freeze ONE small demonstration on the FABLE-5.1 p1_slice reach world with Nyx's corrected arms.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/reach/",
+    "rso/reach/REACHABILITY_CARTOGRAPHY_V0.md",
+    "rso/reach/PREREGISTRATION.md",
+    "rso/reach/FREEZE_D1.md"
+  ],
+  "reads": [
+    "roles/Palamedes/prompts/2026-10-10_strategic_expansion/",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/",
+    "docs/phase3/design/FABLE-5.1/prototype/p1_slice/ (read only)",
+    "nyx/atlas/experiments/reach_archive/ @ 3318a2098 (read only)",
+    "roles/Nyx/ATTACK_reachability_go_explore_2026-10-03.md",
+    "roles/Atlas/proposals/2026-10-02_reachability_go_explore/"
+  ],
+  "problem": "Operator ruling s2-s3. Arms must separate: retention of candidate genomes, neutral acceptance, visit-count/novelty selection, admission of worse candidates into new behaviour cells; plus the chain baseline and a structure-free archive control (genotype-hash cells) with bucket count matched to the behaviour cells. Hits certified independently (not training fitness). Decide with a timed measurement whether the numba port is needed; if ported, a differential test. Test that the behaviour descriptor separates meaningful intermediates (shortest-edit-path genomes under the arm's operator) from arbitrary genomes of equal score -- a planted near-miss it must fail on. Seeded capability controls kept separate from discovered solutions. Power: the chain baseline was 1/24 at d=1,3,8 (RECEIPT_reach.json); preregister the analysis (e.g. exact Fisher / Barnard per contrast, Holm over the declared contrasts) and the lineage count it needs. Never call genotype copying Go-Explore state restoration. Build the harness in rso/reach/ (RSO lane); do not edit Nyx's or the prototype's files; cite Nyx's design and 3318a2098. Small: local CPU, <= 4 CPU core-h for the whole demonstration.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "cartography spec committed",
+    "harness + certification wrapper + tests (RED first)",
+    "numba decision with timing evidence",
+    "descriptor near-miss test",
+    "preregistration + FREEZE_D1 committed BEFORE any outcome",
+    "Nyx notified (comms) of the derivative experiment"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/reach/",
+    "rso/reach/REACHABILITY_CARTOGRAPHY_V0.md",
+    "rso/reach/PREREGISTRATION.md",
+    "rso/reach/FREEZE_D1.md"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "preferred_model": "claude-opus-5-5"
+}

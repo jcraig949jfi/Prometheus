@@ -1,0 +1,53 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T012",
+  "campaign_id": "C-013",
+  "title": "Execute the D1 demonstration (after the challenge and at most one repair round); bounded RESULT",
+  "objective": "Run the frozen demonstration, certify hits, apply the preregistered analysis, commit RESULT.md with the result class and costs.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-013-T011"
+  ],
+  "owns": [
+    "rso/reach/runs/",
+    "rso/reach/RESULT.md"
+  ],
+  "reads": [
+    "rso/reach/"
+  ],
+  "problem": "Local CPU only, on the frozen budget; a host other than harry1 if one is available.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "rows, certification and analysis committed",
+    "RESULT.md bounded result"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/reach/runs/",
+    "rso/reach/RESULT.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false,
+  "notes": "red_required false: execution of a preregistered experiment.",
+  "preferred_model": "claude-sonnet-5-5"
+}

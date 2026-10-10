@@ -24,3 +24,4 @@ W1 support; async support; architecture throughput; production qualification.
 ## Rule
 Evidence rolls upward; authority does not: a C-004 result supports C-004's own claim; it does not make this
 thread, or EP-PHASE3, say anything about recursive sagacity.
+- C-013 -- RSO-STRATEGIC-EXPANSION-48H (ops/campaigns/C-013/; rso/scale/, rso/reach/). OPEN 2026-10-10 (operator directive + ruling), window to 2026-10-12T06:45Z.

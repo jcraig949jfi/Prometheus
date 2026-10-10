@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T020",
+  "campaign_id": "C-013",
+  "title": "Workstream C: LONG_DURATION_EXECUTION_ARCHITECTURE.md (+ zero-spend GPU canary proposal)",
+  "objective": "Assess how the Observatory would support 72-hour runs, week-long checkpointed runs, interrupted cloud execution, many concurrent cheap searches and selective GPU acceleration; inventory Fabric, workers, ledger, custody, RunPod with the ruling's five states; design the durable execution model (immutable manifests, seed partitions, checkpoint records, append-only progress events, worker loss, scheduler restart, leases, remote artifact store, verified resumption, final accounting).",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md"
+  ],
+  "reads": [
+    "roles/Palamedes/prompts/2026-10-10_strategic_expansion/",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/",
+    "fabric/",
+    "Aether/runpod/",
+    "workgraph/",
+    "rso/slice001/ledger.py",
+    "ops/custody/",
+    "infra/"
+  ],
+  "problem": "Operator ruling s5-s7. States for every component: implemented / tested historically / verified currently operational (by a read-only check you ran) / degraded / designed but unimplemented; stale worker presence is not a working queue. Do not restart or redesign Fabric. RunPod: zero spend; the client-side estimate is not a hard cap; the canary proposal must include reliable termination, worker-failure recovery, artifact preservation, cost accounting and independently verifiable shutdown. Also supply Workstream A with measured numbers (ledger CPU, launches, wall times) for C-004/C-009/C-010.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "architecture doc with the five-state inventory",
+    "canary proposal (no spend)",
+    "numbers table for Workstream A"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/scale/LONG_DURATION_EXECUTION_ARCHITECTURE.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false,
+  "preferred_model": "claude-opus-5-5"
+}

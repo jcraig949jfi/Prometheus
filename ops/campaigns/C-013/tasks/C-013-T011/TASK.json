@@ -1,0 +1,56 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T011",
+  "campaign_id": "C-013",
+  "title": "Independent Q3 challenge of the frozen D1 demonstration (inference, certification, archive interpretation)",
+  "objective": "Challenge the preregistered inference, the certification machinery and the interpretation of any archive advantage, committed before outcomes; you do not see results (none exist before your set is committed).",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "depends_on": [
+    "C-013-T010"
+  ],
+  "owns": [
+    "rso/reach/challenge/D1/"
+  ],
+  "reads": [
+    "rso/reach/",
+    "rso/reach/FREEZE_D1.md",
+    "rso/reach/PREREGISTRATION.md"
+  ],
+  "problem": "Operator ruling s4: a FRESH Pallas session on actual claude-fable-5-1 (runtime model verified); Q3, no downgrade. One bounded repair round after this challenge; if the method stays unqualified it is reported so. Synthetic / small runs only within the frozen budget.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "set committed before outcomes",
+    "CLOSED / NOT CLOSED per surface",
+    "survivors with their bearing on the registered inference"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/reach/challenge/D1/"
+  ],
+  "kind": "review",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false,
+  "preferred_model": "claude-fable-5-1",
+  "eligible_roles": [
+    "Dionysus"
+  ]
+}

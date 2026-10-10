@@ -1,0 +1,53 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T031",
+  "campaign_id": "C-013",
+  "title": "Workstream D: PROMETHEUS_SAGACITY_SCALING_ROADMAP.md (1 month / 1 quarter / 1 year; decisions, not a backlog)",
+  "objective": "Workstream D: PROMETHEUS_SAGACITY_SCALING_ROADMAP.md (1 month / 1 quarter / 1 year; decisions, not a backlog)",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/scale/PROMETHEUS_SAGACITY_SCALING_ROADMAP.md"
+  ],
+  "reads": [
+    "roles/Palamedes/prompts/2026-10-10_strategic_expansion/",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/"
+  ],
+  "problem": "Directive s13/s14/s17; ruling s6, s8, s9, s11.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "committed with sources"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/scale/PROMETHEUS_SAGACITY_SCALING_ROADMAP.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false
+}

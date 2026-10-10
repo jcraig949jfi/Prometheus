@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T021",
+  "campaign_id": "C-013",
+  "title": "Checkpoint/replay survey of native runtimes + next-runtime compatibility assessment",
+  "objective": "For each runtime with an evolutionary or lifetime loop in the repo (Ares, Ensorain, Ananke/PTE, z80atlas, SFE, Tyche, Crius, Theseus, Primordial, Aether, the p1_slice wm_mini): can full state incl. RNG be saved and restored, is replay deterministic, what is the checkpoint granularity and size, what blocks it; and a short list of next native runtimes for onboarding with their cost to adapt.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md"
+  ],
+  "reads": [
+    "the engine directories (read only)",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/01_HESTIA_AUDIT_DIGEST.md"
+  ],
+  "problem": "Code inspection and tiny smoke runs only; no engine's charter or files changed.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "survey table with evidence (file:line, smoke result)"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false,
+  "preferred_model": "claude-sonnet-5-5"
+}
