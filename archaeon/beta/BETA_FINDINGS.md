@@ -72,6 +72,16 @@ clock.
 4. **One rare exception.** A self-modifying-code state machine that rewrites its own genome per tick solved
    two-value memory at .971, and .062 when locked (B51). It was not reproduced in 8 writable runs (B52).
 
+5. **A behaviour-gating latch IS reached where it pays (B68/B69/B69c).**
+   - World: a pulse world, where a harvest empties the pool and pools refill every 4 ticks. There the hand latch
+     ('found my pool -> wait when empty') earns 3.6x the stateless forager.
+   - Result: latch-like organisms (stay-when-own-pool-empty >= .9 AND state dependence >= .02) evolve in SOLO 3/6 and
+     CONC 5/6 populations (preregistered, B69c). Pooled with the exploratory B69b: 6/12 and 9/12.
+   - Two CONC populations beat the hand latch (.121, .139 vs .119).
+   - The memory law's reachable class therefore includes a latch that gates control, not only a stored value -- when
+     the world makes it decisive.
+   - Whether competition raises the rate is under test (B69d).
+
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (2/2 worlds)
 
 1. **Sequential coupling has no teeth (B59).** Organisms evaluated one after another on a shared pool see the
