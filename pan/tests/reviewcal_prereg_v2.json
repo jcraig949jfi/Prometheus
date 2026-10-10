@@ -1,0 +1,44 @@
+{
+  "_prereg": [
+    "PAN-39: seeded-bug calibration set v2 for agent-run code reviews, frozen 2026-10-10 BEFORE generation.",
+    "Why v2: set v1 (reviewcal_prereg.json, amendment A3) is unfit -- 21 of 40 mutants carried their operator's text",
+    "signature (`return None`, `not (...)`), so a regex that reads no code scored recall 0.45 at false-alarm 0.05, and",
+    "the frozen reliability rule passed every non-reviewer floor. v2 keeps v1's source, selection and scoring and",
+    "changes three things: operators render like ordinary code, a TELL GATE decides whether the set may be used,",
+    "and reviewers are judged against chance floors instead of a fixed recall bar."
+  ],
+  "source": "the 142 PAN-34 primary tasks (manifest 46e2343aa, amendment A2) minus repobench.excluded(), their sandbox and worker copies (as v1)",
+  "operators": {
+    "cmp_flip": "one comparison operator swapped: < <-> <=, > <-> >=, == <-> !=, in <-> not in, is <-> is not (as v1)",
+    "bool_flip": "one `and` <-> `or` (as v1)",
+    "arith_flip": "one binary + <-> - (as v1)",
+    "off_by_one": "one integer literal n -> n + 1, rendered as the new literal (as v1)",
+    "negate_test": "one `if` / `while` test inverted ONLY in forms ordinary code uses: a single comparison -> its complement (< -> >=, <= -> >, > -> <=, >= -> <, == -> !=, != -> ==, in -> not in, not in -> in, is -> is not, is not -> is); `not X` -> `X`; a bare name / attribute / call / subscript X -> `not X`. Any other test (and/or, arithmetic, ...) is not a site."
+  },
+  "dropped": {
+    "return_none": "`return X` -> `return None` leaves `return None` in the text (14/40 v1 mutant items, 0/20 clean)",
+    "negate_if": "v1 rendered `not (T)`, a form ast.unparse writes and people rarely do (12/40 v1 mutant items, 1/20 clean)"
+  },
+  "mutation_rule": "as v1: the target expression's source segment is replaced by the unparsed mutated expression; every other character is unchanged. NEW, applied before the kill check: a candidate is rejected if (a) its mutated segment matches either v1 tell regex (return None / not-open-paren), or (b) it INTRODUCES a syntax-shape bigram (token pair with identifiers -> ID, numbers -> NUM, strings -> STR; keywords, None/True/False and operators kept) that occurs in fewer than 10 percent of the OTHER clean task functions (pan.reviewcal.introduced_rare, SHAPE_MIN_PREVALENCE = 0.10).",
+  "selection": "random.Random(39): tasks shuffled; per task the applicable v2 sites are taken in a generator-drawn order and the FIRST candidate passing the mutation rule is the task's candidate (a task with none is skipped); a candidate is KEPT only if its task's test file FAILS with it; stop at 40 kept mutants; then 20 CLEAN items (unmutated functions) from tasks not used for mutants. If all tasks are exhausted first, the set holds the mutants found; with fewer than 30 it is NOT USABLE.",
+  "secrecy": "as v1: items and answer key in the M2 lake only (ITEMS_V2_* / ANSWERS_V2_*); sha256 committed; reviewers get the code only (v1 A1: no module path, task id or module line numbers; no repository access)",
+  "scoring": "as v1: one finding per item {bug, line}; hit = mutant item flagged with a line within +-2 of the mutated line; false alarm = clean item flagged; recall over 40, false-alarm rate over 20, Wilson 95 percent intervals",
+  "floors": {
+    "silent": "never flags",
+    "random_line": "always flags; line uniform over the function (analytic expectation)",
+    "middle_line": "always flags the middle line",
+    "site_density": "always flags the line whose +-2 window holds the most sites of the v2 operators (public: this file)",
+    "surface_tell": "flags the first line matching a v1 tell regex, else abstains",
+    "rare_bigram": "always flags the line whose raw-token bigrams are rarest in the OTHER task functions' clean source (own task left out: its clean source is the v1 A1 diff channel); shown on v1 to be blind to tells (0.125)"
+  },
+  "tell_gate": {
+    "G1": "no kept mutant's mutated segment matches a v1 tell regex",
+    "G2": "surface_tell recall <= 0.10",
+    "G3": "no kept mutant introduces a syntax-shape bigram found in fewer than 10 percent of the other clean task functions",
+    "G4": "rare_bigram recall <= max(random_line expected recall, site_density recall) + 0.10",
+    "verdict": "the set may calibrate reviewers only if G1-G4 all hold and it has >= 30 mutants; otherwise it is recorded and not used",
+    "revised_before_generation": "2026-10-10, before any v2 candidate existed: the first G3 draft (a reviewer flagging the line with the rarest raw-token bigram) scored recall 0.125 on v1 -- below the random-line floor 0.379 -- so it cannot see v1's tells; a syntax-shape version scored 0.35 (same failure: `return None` is in 9/142 clean functions, `not (` in 5/142, so they are rare only RELATIVE to mutants). The operator-informed rule G3 above flags 27 of 40 v1 mutants (negate_if 10/10, return_none 10/11, cmp_flip 5/7, arith_flip 1/2, bool_flip 1/1, off_by_one 0/9): it has teeth on v1. The raw-bigram reviewer stays as G4, reported."
+  },
+  "better_than_chance": "a reviewer with false-alarm rate FA counts as better than chance only if the LOWER end of its recall Wilson interval exceeds max over floors F of R_F x min(1, FA / FA_F) (abstaining at random moves floor F along that line; floors with FA_F = 0 are excluded). Replaces v1's 'upper end < 0.5 => unreliable', which passed every floor.",
+  "amendments": []
+}

@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-10T13:33Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-10T14:38Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),
@@ -8,9 +8,11 @@ date, purged after 24 h (base role s7).
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] Status report 6 by ~2026-10-10T16:00Z
-- [ ] PAN-37: first calibrated reviewer = a local model on the 60-item set (GPU, after PAN-34 runs); portal view
-      of the review queue; dispatch to seats ONLY if the operator answers Q-011
-- [ ] Daily intake + digest (next ~2026-10-10T14:30Z)
+- [ ] PAN-39: prereg v2 frozen (03b9c37c1); BUILD when M2 CPU < 60 % over a minute: lease spectrex5:cpu12,
+      `python -m pan reviewcal build --set-version 2`, then `reviewcal floors` (gate G1-G4) + review packet
+- [ ] PAN-37: first calibrated reviewer on set v2 (GPU, after PAN-34 runs), reported against the floors;
+      dispatch to seats ONLY if the operator answers Q-011
+- [ ] Daily intake + digest (next ~2026-10-11T14:30Z)
 - [ ] Machines/Pantheon tabs: re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
       upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search

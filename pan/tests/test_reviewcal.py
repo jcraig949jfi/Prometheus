@@ -75,3 +75,13 @@ def test_packets_hide_paths():
     items = json.loads(reviewcal.latest("ITEMS").read_text(encoding="utf-8"))
     for (iid, prompt), it in zip(pk, items):
         assert it["module"] not in prompt and it["task_id"] not in prompt
+
+
+def test_tell_line_and_site_density_read_only_the_code():
+    from pan import reviewcal
+    code = "def f(xs, k):\n    if not (k > 0):\n        return None\n    return xs[k - 1]\n"
+    assert reviewcal.tell_line(code) == 2
+    assert reviewcal.tell_line("def g(a):\n    return a + 1\n") is None
+    dense = "def h(a, b):\n    c = 1\n    d = 2\n    e = 3\n    f = 4\n    g = 5\n    h = 6\n    if a < b and a + 1 > 2:\n        return a - b\n    return 0\n"
+    assert reviewcal.heuristic_line(dense) in range(6, 11)
+    assert reviewcal.heuristic_line("def k():\n    pass\n") == 1
