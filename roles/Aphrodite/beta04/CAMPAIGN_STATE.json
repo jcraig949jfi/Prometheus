@@ -135,7 +135,9 @@
     "ALIEN": "PENDING"
   },
   "jobs": [],
-  "subagents": {},
+  "subagents": {
+    "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending"
+  },
   "attempts": {},
   "compute": {
     "cap": "48 core-h / rolling 24h",
@@ -143,5 +145,17 @@
   },
   "cloud_spend_usd": 0,
   "next_action": "read digest; launch FOUNDRY + SUBSTRATE leads against contract v0",
-  "outcomes_frozen_labels": {}
+  "outcomes_frozen_labels": {},
+  "contract_decisions_pending": [
+    "scanl includes init (n+1)? (match foundry)",
+    "curried 2-arg lambdas (lam a (lam b BODY))",
+    "exec units on FAIL counted to failure -> compare units only on non-FAIL",
+    "and/or strict",
+    "hit definition for search vs endpoint",
+    "E3 budget/max size (8; 7 with libraries)",
+    "commutative canonicalisation on; CRN slot=family_id"
+  ],
+  "contract_decisions_frozen": {
+    "v0.1-1": "promoted/learned primitives must be CLOSED over their own arguments: no free reference to the task input xs (prevents whole-program memorisation posing as a mechanism)"
+  }
 }
