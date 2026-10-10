@@ -137,6 +137,21 @@ Q-012 | PREF (trust store on M2) | 2026-10-10
   read", never "measured".
   ANSWER:
 
+Q-013 | PREF (M2 memory; your machine) | 2026-10-10
+  PAN-34's frozen size arm (A3: does qwen2.5-coder:32b beat the 14b by
+  >= 0.08?) cannot run on M2 without spilling into system RAM. With the
+  context PAN-34 uses (8192), Ollama sized it at 22 GB against the 16 GB GPU,
+  ran it 35 % on the CPU, and llama-server took 14 GB of RAM. M2 reached 89 %
+  RAM and Claude Code killed the run at about 23:05Z (low-memory guard).
+  Pan stopped the leftovers, unloaded the model and released the leases by
+  23:10Z (RAM back to 44 %); no rows of that run are used. Run it anyway, at
+  a time you choose with nothing else on M2 (it holds ~14 GB of RAM for
+  1-2 h), or drop the arm?
+  DEFAULT meanwhile: dropped. Reported as NOT RUN (infeasible within M2's
+  memory), not as a result. gpt-oss:20b@4096 (the last PAN-34 config) runs
+  only after a load check shows it 100 % on the GPU.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09

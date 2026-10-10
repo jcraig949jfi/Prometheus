@@ -3,8 +3,8 @@
 Currency: 2026-10-10T22:03Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
-- [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),
-      then report + review packet
+- [ ] PAN-34: qwen3:8b DONE (0.352); 32B arm NOT RUN (Q-013, M2 memory); gpt-oss@4096 after a 100 %-GPU
+      load check (ollama ps) and the idle gate; then report + review packet
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] Status report 8 by ~2026-10-11T04:05Z
