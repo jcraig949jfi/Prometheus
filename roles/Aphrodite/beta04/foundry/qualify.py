@@ -1,4 +1,7 @@
-"""Foundry driver: world generation, per-family qualification (null ladder + known positive), admission gate,
+"""[v1 DRIVER - superseded by qualify2.py for E1 v2. v1 results in pilot/ are reproducible at commit f1fe051c4;
+this file is NOT compatible with the v2 generator (string seeds, R5, rule-2 screen).]
+
+Foundry driver: world generation, per-family qualification (null ladder + known positive), admission gate,
 planted controls, task export, manifest and report.
 
     python qualify.py world    --seed S [--out DIR]

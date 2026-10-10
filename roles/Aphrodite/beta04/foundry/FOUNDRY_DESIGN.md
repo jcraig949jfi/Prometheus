@@ -1,5 +1,13 @@
 # Beta-04 Experiment 1: World-Demand Foundry (design, freeze candidate, pilot)
 
+> **Status.** Part I (s1-s11) is foundry **v1** and its pilot. The pre-freeze red team
+> (`reviews/REDTEAM_FOUNDRY_PREFREEZE.md`) found three BLOCKERs in v1. v1 is recorded as an E1 result: **"demand =
+> feature selection, not composition"**. Part II (s12-s19, at the end) is foundry **v2**, built exactly to the frozen
+> `windows/E1_V2_RULES.md` (the single permitted repair round), together with its one v2 pilot.
+>
+> v1 code is reproducible at commit `f1fe051c4`. The v1 pilot outputs in `pilot/` are kept as recorded, including the
+> 6 stale `tasks/admitted/` files the red team flagged (F6); the manifest is authoritative for v1.
+
 Branch `aphrodite/b04-foundry`. Foundry lead, task side only. **No treatment arm is consulted anywhere.** The foundry
 does not read or import `roles/Aphrodite/beta04/tfs1/` (independence rule): interpreter A is written from
 EXPERIMENT_PLAN.md s1 alone.
@@ -356,3 +364,211 @@ All were made before any treatment run, and all came from foundry-side evidence 
 
 All rejected families are preserved. Generation-screen rejects keep their record in `WORLD_SEALED.json` and
 `FINAL.jsonl`, and those with dev/test are also in `tasks/rejected/`.
+
+---
+
+# Part II: foundry v2 (E1_V2_RULES, the single repair round)
+
+## 12. How each frozen rule is implemented
+
+* **Code freeze.** The code was frozen and pushed BEFORE any secret seed was touched: commit `3dab001c6`.
+  * generator config sha `c199f0ae8845f60fc16303840c25f68df640572bb41ba382dd2c96308da66ddf`;
+  * qualification config sha `22d2c38767a22e3a4ceb34c5f8424be8363cafe18d027c911016afcf97dee089`;
+  * regression bank sha `439e168c150d0d7f09d647e6b23c10f015f1c33e5370d879d25ade179b432745`.
+* **The v2 pilot ran ONCE** on the 3 `pilot_v2` secret seeds. Nothing was changed after admissions were seen, except
+  one REPORTING fix (s16.1).
+
+| rule | implementation (file) |
+|---|---|
+| 1 REGRESSION rung | `regress.py` (summary below) |
+| 2 mechanism screen | `generator.draw_mechanisms_with_r1` (summary below) |
+| 3 reachability chain | `qualify2.py` (summary below) |
+| 4 redacted arm view, secret seeds | see "Rules 4-5" below |
+| 5 clean export | see "Rules 4-5" below |
+| 6 reporting | order-free expected rank N(<k)+(N(k)+1)/2 from measured level counts (N(k) estimated by unpruned growth if level k was not completed, flagged). NOT_FOUND with witness esize > complete size is labelled HORIZON. Dev-consistent counts (`n_dev_consistent`) are recorded. Lookup has a nearest-input fallback. The optional 1e7 diagnostic was NOT run |
+| 7 motif control | cap 1 admitted family per fused skeleton x mechanism set (readout dropped; fold == scan; fold_of_map == step_of_f == scan_of_map; compose == two_maps; init literals not part of the key); the rest are MOTIF_CAP. **>= 3 kind-pairs required across the pooled admitted R3/R4/R5 set** (see the s16 flag) |
+| 8 R5 | `generator.sample_R5`: an OK R3 family's whole promoted term in a new context. Either a new input stage (40%: struct / base map / base filter) or a new outer context (Int: base post-transform or base-guarded post; List: readout / base fold / base map). Admitted by the same chain as R3 |
+| 9 YOKED + shuffles | the YOKED world has the target R3-R5 families, with R0-R2 stepping stones from a sibling world (seed = sha256("yoke"\|secret)[:32], also secret). Orders: CURRICULUM, 5 x SHUFFLED_UNIFORM, 3 x SHUFFLED_ANTI, DESERT, YOKED_CURRICULUM, over opaque ids, in the evaluator manifest only |
+| 10 D4 | R4 dev from `dist_base`; test and tribunal from `dist_shift` |
+| 11 D9 | reject capture > 0.8 (NEAR_TRIVIAL); the lower band is reported only |
+
+**Rule 1: REGRESSION rung** (`regress.py`). Five classes:
+* E: per-class elementwise;
+* F: keep-rule + E;
+* S: scan transducer, y-features y and y*phi;
+* P: single statistic, polynomial of degree <= 9 or per-class affine;
+* W: one-register linear recurrence, c in {+-1, +-2, +-3}, per-class affine input term.
+
+Its banks are derived mechanically from the public CONFIG:
+* PHI: 12 unary Int terms of esize <= 3 over the CONFIG ops and literals, non-FAIL on [-80, 80] and not affine to
+  an earlier feature: `x, x//2, x//3, |x|, gcd(x,2), gcd(x,3), x%3, x^2, x^3, 0^x, 1^x, 2^x`;
+* class keys: 20 single keys (cmp(term, term) with terms of esize <= 2, plus residue features with <= 6 values) and
+  products, 171 partitions in all;
+* statistics: CONFIG `readouts_int`.
+
+Fits are dev-only, with a float pre-screen and an exact rational re-solve. **Selection is per class on dev (fewest
+parameters, parameters < dev constraints); no hindsight.** The rung solves if any class's dev-selected model is
+correct on all of test.
+
+**Rule 2: mechanism screen** (`generator.draw_mechanisms_with_r1`).
+* Fold steps with s(a,b) = c*a + g(b) on the probe grid are rejected (AFFINE_IN_ACC).
+* Each candidate mechanism's actual R1 families are drawn at once and run through the regression rung. If any is
+  solved, the candidate is rejected and redrawn (R1_REGRESSION).
+* A slot is left UNFILLED after 80 such attempts.
+* Post-hoc check: R1 families solved by regression in qualification flag the mechanism (MECH_R1_REGRESSION). This
+  is 0 in the pilot, by construction.
+
+**Rule 3: reachability chain** (`qualify2.py`).
+* (a) the null ladder, plus NEAR_TRIVIAL.
+* (b) base search from scratch at 1e6, hindsight: TRIVIAL_BY_BASE_1E6.
+* (c) per mechanism, base search at 1e6 on its R1 families (contract protocol). The FOUND program must be correct on
+  test AND tribunal. The primitive is the first closed lambda of the mechanism's type in it; for f/p, a single
+  repeated readout `s(xs)` may instead be abstracted to `x`.
+* (d) base grammar + ALL acquired primitives of the world, contract protocol at 1e6, qualified on test + tribunal.
+* R2 = (a) + (b) + the sealed-mechanism known positive.
+* SYNTHETIC_DEPTH ablation is kept from v1: the acquired library minus each constituent for R3+, the sealed library
+  minus the mechanism for R2.
+
+**Rules 4-5: redaction and clean export.**
+* Arm view: `arm_view/<opaque world>/<opaque id>.json` = `{id, dev}` ONLY, with `ARM_VIEW_MANIFEST.json` (sha256 per
+  file).
+* Evaluator view: `evaluator/<world>/<family>.json` (full contract task + tribunal + class).
+* Opaque ids are sha256("opaque"|secret|family)[:16].
+* Only `world_seed_sha256` is stored, and it is checked against `WORLD_SEED_COMMITMENTS.json` before generation.
+* `export` wipes and rewrites both views; consumers must load through `WORLD_MANIFEST.json` /
+  `ARM_VIEW_MANIFEST.json`.
+
+## 13. Choices v2 leaves open (FLAGS for the coordinator)
+
+* **V1. Chain (c) uses the CONTRACT protocol.** The found program is the first dev-consistent one, and it must also be
+  correct on test + tribunal; hindsight is NOT used. A learner sees only dev, so this is what it would acquire.
+  Consequence: some R1 stepping stones fail as UNDERDETERMINED (e.g. W0467897d p0, 1 of 2 families) where hindsight
+  would succeed.
+* **V2. Primitive extraction** takes the first closed lambda of the mechanism's type, or abstracts a single repeated
+  readout. A post(readout) R1 family with a different found shape is NOT_EXTRACTABLE.
+* **V3. Chain (d) library = ALL acquired primitives of the world,** not only the family's constituents. This is
+  harder than the family-specific library and does not leak which mechanisms are needed.
+* **V4. Regression selection is per class, then OR across the five classes.** Each class is dev-selected, with no
+  test hindsight.
+* **V5. Motif cap = 1 per fused key, and the >= 3 kind-pair requirement is applied to the POOLED admitted
+  R3/R4/R5 set** as an E1 condition, alongside the unchanged per-world gate.
+* **V6. Not run:** the optional 1e7 multi-step diagnostic.
+* **V7. Pre-pilot defect fix:** `len` is offered as a readout only over a list that contains a filter
+  (`len(map f xs)` is mechanism-free). It was found on a dummy seed before the freeze commit.
+* **V8. The evaluator view (test, witness, tribunal) is committed in the repo,** as in v1. Arm isolation therefore
+  depends on access discipline (F4 note).
+
+## 14. Controls (run first)
+
+| control | result |
+|---|---|
+| PLANTED-LOOKUP | lookup (+ history2) solve |
+| PLANTED-RANDOM | nothing solves |
+| PLANTED-REACTIVE | reactive solves |
+| PLANTED-REGRESSION-W (alternating sum of squares) | regression solves |
+| PLANTED-REGRESSION-E (piecewise map) | regression solves |
+| PLANTED-NONLINEAR-FOLD (ab-1) | nothing solves |
+| R0 solved by a trivial rung | 18/18 |
+| R1 solved by regression | 0/26 (rule 2 by construction) |
+| witnesses verified by interpreter A | 151/151 |
+| arm-view audit | 306 files, all exactly `{id, dev}` |
+| seed audit | no pilot or production secret appears in any foundry file |
+
+## 15. v2 pilot results (3 secret worlds; full tables in `pilot_v2/QUALIFICATION_REPORT.md`)
+
+| rung | generated | gen OK | ADMITTED | main rejection classes (pooled) |
+|---|---|---|---|---|
+| R0 | 19 | 18 | (control) | TRIVIAL_BY_REACTIVE 11, _REGRESSION 3, _SMALL_SEARCH 3, _LIBRARY 1 |
+| R1 | 41 | 26 | (control; 20 QUALIFIED) | TRIVIAL_BY_REACTIVE 3, _SMALL_SEARCH 3; DEGENERATE 11 |
+| R2 | 40 | 30 | **6** | KNOWN_POSITIVE_FAIL:HORIZON 13, TRIVIAL_BY_REGRESSION 4, TRIVIAL_BY_BASE_1E6 3, NEAR_TRIVIAL 2, SYNTHETIC_DEPTH 1, TRIVIAL_BY_SMALL_SEARCH 1 |
+| R3 | 133 | 36 | **5** | CHAIN_C_FAIL 20 (s1 15, f0 5), CHAIN_D_FAIL:HORIZON 5, NEAR_TRIVIAL 3, TRIVIAL_BY_BASE_1E6 1, TRIVIAL_BY_REACTIVE 1, SYNTHETIC_DEPTH 1 |
+| R4 | 232 | 17 | **2** | CHAIN_C_FAIL 8, CHAIN_D_FAIL:HORIZON 4, TRIVIAL_BY_REACTIVE 2, SYNTHETIC_DEPTH 1 |
+| R5 | 32 | 24 | **0** | CHAIN_C_FAIL 13, CHAIN_D_FAIL:HORIZON 8, NEAR_TRIVIAL 2, TRIVIAL_BY_REACTIVE 1 |
+
+The R3/R4 "generated" counts include many generation-screen rejects (DUPLICATE / DEGENERATE / FAIL_PRONE). Fewer
+mechanisms leave few distinct pairs.
+
+**Per world:**
+
+| world | mechanisms (unfilled) | acquired by chain (c) | admitted R2 / R3 / R4 / R5 | E1 gate |
+|---|---|---|---|---|
+| W0467897d | f1 \|x\|^3, p0 x>4, s0 b(a+1), s1 a-(ab)//2 (f0) | f1, p0 (s0, s1 HORIZON) | 3 / 3 / 0 / 0 | **PASS** |
+| Wf294d5d9 | f0, f1, p0, s0, s1 (none) | p0, s0 (f0 NOT_EXTRACTABLE/TRIBUNAL; f1, s1 HORIZON) | 0 / 0 / 0 / 0 | **FAIL** |
+| W1d5301d0 | f1 (x+1)//3, p0 x<5, s0 b-a//3, s1 a//2+3^b (f0) | f1, p0, s0 (s1 HORIZON) | 3 / 2 / 2 / 0 | **PASS** |
+
+**Admitted R3/R4 families.** Every chain (d) solution uses both acquired primitives, and every acquired primitive
+agrees with its sealed mechanism on 100% of the probe grid.
+
+| family | witness |
+|---|---|
+| W0467897d-F061 | `sum(map f1 (filter p0))` |
+| W0467897d-F081 | `sum(filter p0 (map f1))` |
+| W0467897d-F085 | `map (if p0 f1 x)` |
+| W1d5301d0-F027 | `foldl (s0 a (f1 b)) 0` |
+| W1d5301d0-F035 | `f1(foldl s0 0)` |
+| W1d5301d0-F071-R4 | `filter p0 (map f1)` |
+| W1d5301d0-F077-R4 | `map (if p0 f1 x)` |
+
+* **Hitting cost.** Chain (d) CRN ranks are 32k-607k. Order-free ranks are 35k-1.49M; two are above the 1e6 budget
+  in expectation, so they are reachable only through enumeration order.
+* **Base search at 1e6:** 0 dev-consistent programs for every admitted family.
+* **Kind-pairs admitted:** fp, fs, i.e. 2 (< 3).
+* **History orders** (prerequisite-first fraction of R3+): CURRICULUM 1.0, YOKED 0.0, ANTI 0.0, DESERT 0.0,
+  uniform shuffles 0.24-0.73.
+
+**E1 outcome under the frozen rules:**
+* **Per-world gate:** 2 of 3 worlds PASS (W0467897d, W1d5301d0).
+* **Rule 7 coverage requirement:** FAILS (2 kind-pairs).
+* **Therefore, under V5: E1 = WORLD_DEMAND_NOT_QUALIFIED (motif coverage).** If the coordinator rules that rule 7 is
+  a reporting/selection constraint rather than an E1 condition, then E1 = WORLD_DEMAND_QUALIFIED in 2 of 3 worlds.
+  This is the key decision; I did not resolve it in the data's favour.
+* **R5 = 0 admitted:** depth-2 inheritance cannot yet be demanded in E4 from these worlds.
+
+## 16. Caveats (honest reading)
+
+1. **Reporting fix after the pilot.** The YOKED_CURRICULUM prerequisite metric first read 1.0, because the sibling
+   world reuses mechanism slot names. It is now namespaced. No gate, rule, feature or admission changed. This is
+   the only post-pilot edit.
+2. **Dev-selected regression leaves dev-ambiguity survivors.**
+   * Example: Wf294d5d9 f0 = (if x<2 then 1 else x) passed the rule-2 screen. Its R1 families were fit on dev by an
+     equally cheap wrong threshold key (x<0), scoring 80-92% on test.
+   * W1d5301d0 f1 = (x+1)//3 is in principle a per-residue affine function of x//3 and also survived dev selection.
+   * A hindsight regression would likely reject more. The rules mandate dev selection; the red team should check
+     this.
+3. **The chain is dominated by the enumeration HORIZON.** Fold-step mechanisms of esize >= 5 make R1 fold families of
+   esize >= 8-10, beyond base search at 1e6 (s1 in all 3 worlds; s0 in W0467897d). Every R5 family and most R2
+   known positives are HORIZON. These are horizon statements about one exhaustive enumerator, not deserts (F8).
+4. **The rule-2 screen is expensive and leaves slots unfilled.** 55-139 candidates were rejected per world for
+   R1_REGRESSION, and slot f0 was unfilled in 2 of 3 worlds. The surviving f mechanisms are mostly regression-hard
+   for incidental reasons (|x|^3 needs per-sign x^3; (x+1)//3 needs per-residue fits).
+5. **The admitted set is tiny and motif-narrow** (fp guard / map-filter, fs fold-of-f). The E2/E3 targets would rest
+   on about 7 families from 2 worlds.
+
+## 17. Costs (this repair round)
+
+| item | CPU |
+|---|---|
+| v2 pilot | 3,296 CPU-s = **0.92 core-h**: generation incl. the YOKED sibling 79-128 s per world; qualification 707-884 s per world; chain 55-109 s; ablation 11-184 s |
+| development | dummy world (one killed slow run, ~10 min), profiling, 3 test runs (~1 min each), one integration dry run on test-only seeds (~7 min): about 0.4 core-h |
+| **round total** | **about 1.3 core-h** (cap 4); <= 2 workers; every run < 15 CPU-min |
+
+## 18. v2 outputs (`pilot_v2/`)
+
+* `WORLD_MANIFEST.json` (evaluator): shas, seed commitments, evaluator files, id_map, orders, acquired libraries;
+* `arm_view/ARM_VIEW_MANIFEST.json` + `arm_view/<opaque>/<id>.json`: 6 arm worlds (3 + 3 YOKED);
+* `evaluator/<world>/*.json`;
+* `QUALIFICATION_REPORT.{md,json}`, `CONTROLS_PLANTED.json`;
+* per world: `WORLD_SEALED.json`, `YOKED_SEALED.json`, `GEN_RECEIPT.json`, `QUALIFICATION.jsonl`, `CHAIN.jsonl`,
+  `ABLATION.jsonl`, `FINAL.jsonl`;
+* `logs/`.
+
+## 19. Decisions for the coordinator
+
+* **W1. Rule 7 coverage (V5):** E1 condition, or selection constraint? This decides QUALIFIED vs NOT_QUALIFIED for
+  this pilot.
+* **W2. Chain (c) protocol (V1):** contract protocol (as run) vs hindsight.
+* **W3. Regression selection (caveat 2):** keep dev selection, or add a hindsight regression diagnostic before
+  production. The latter would be a new pre-registration, not a retune of this round.
+* **W4. Production seeds:** with about 1-3 admitted R3 per passing world and 1 in 3 worlds failing, a meaningful E2/E3
+  target set needs >= 8-12 production worlds (about 0.3 core-h each).
+* **W5.** Whether R5 = 0 (all HORIZON / chain failures) blocks the E4 depth-2 design.

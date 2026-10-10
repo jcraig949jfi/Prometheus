@@ -28,10 +28,11 @@ import tenum
 
 # ---------------------------------------------------------------- CONFIG (freeze candidate; sha printed by `config`)
 CONFIG = {
-    "version": "b04-foundry-gen-v0.1",
+    "version": "b04-foundry-gen-v0.2-e1v2", "readout_len_requires_filter": True,
     "contract": "EXPERIMENT_PLAN.md s1 v0",
     "dist_base": {"len": [2, 8], "val": [-20, 20]},
-    "dist_shift": {"len": [9, 16], "val": [-40, 40]},          # R4 only
+    "dist_shift": {"len": [9, 16], "val": [-40, 40]},          # R4 TEST + TRIBUNAL only (E1 v2 rule 10 / D4)
+    "r4_dev_dist": "dist_base",
     "n_dev": 12, "n_test": 40, "n_tribunal_random": 8,
     "fail_rate_max": 0.05, "fail_rate_samples": 200,
     "degenerate_modal_max": 0.5, "degenerate_min_distinct": 3,
@@ -42,12 +43,17 @@ CONFIG = {
     "mech_pcfg": {"p_term": [0.0, 0.35, 0.6, 0.85, 1.0],
                   "ops": {"add": 3, "sub": 3, "mul": 3, "div": 1, "mod": 2, "gcd": 1, "pow": 0.5, "neg": 0.5,
                           "if": 1},
-                  "var_p": 0.6, "bool_compound_p": 0.2},
+                  "var_p": 0.6, "bool_compound_p": 0.2,
+                  "literals": [0, 1, 2, 3], "cmp_ops": ["lt", "eq", "gt"], "bool_ops": ["and", "or", "not"]},
     "mech_screen": {"f_min_distinct": 6, "identity_like_max": 0.5, "mag_max": 10 ** 6,
                     "p_true_band": [0.25, 0.75], "s_fold_lists": 40, "s_fold_min_distinct": 20,
-                    "s_fold_mag_max": 10 ** 15},
+                    "s_fold_mag_max": 10 ** 15,
+                    "reject_affine_in_acc": True,             # E1 v2 rule 2: s(a,b) = c*a + g(b) on the probe set
+                    "r1_regression_screen": True,             # E1 v2 rule 2: the mechanism's R1 families must
+                    "regression_attempts_max": 80,            #   survive the REGRESSION rung (screen = reject+redraw)
+                    "r1_draws_per_candidate": 12},
     "base_filler_size": {"F1": [2, 3], "P": [3, 5], "F2": [3, 3]},
-    "quota": {"R0": 6, "R1_per_mech": 2, "R2": 10, "R3": 12, "R4": 6},
+    "quota": {"R0": 6, "R1_per_mech": 2, "R2": 10, "R3": 12, "R4": 6, "R5": 8},
     "r4_pair_fraction": 0.3,
     "family_max_draws": 200,
     "skeletons": {
@@ -58,6 +64,8 @@ CONFIG = {
                                                                     "guard_p"],
                "fs": ["fold_of_map", "step_of_f", "scan_of_map", "post_fold"],
                "ps": ["fold_of_filter", "scan_of_filter"], "ss": ["fold_of_scan"], "pp": ["filter_filter"]},
+        "R5": {"I": ["base_post", "guard_post"], "L": ["readout", "base_fold", "base_map"],
+               "pre": ["pre_struct", "pre_base_f", "pre_base_p"], "pre_prob": 0.4},
     },
     "readouts_int": ["sum", "len", "max", "min", "head", "last"],
     "readouts_after_filter": ["len", "sum"],
@@ -151,7 +159,7 @@ def gen_int(rng, vars_, depth, pc):
     if rng.random() < p_term:
         if rng.random() < pc["var_p"]:
             return V(rng.choice(vars_))
-        return L(rng.choice(tenum.LITERALS))
+        return L(rng.choice(pc["literals"]))
     ops = sorted(pc["ops"].items())
     op = rng.choices([o for o, _w in ops], weights=[w for _o, w in ops])[0]
     if op == "neg":
@@ -164,11 +172,11 @@ def gen_int(rng, vars_, depth, pc):
 
 def gen_bool(rng, vars_, depth, pc):
     if rng.random() < pc["bool_compound_p"] and depth < 2:
-        op = rng.choice(["and", "or", "not"])
+        op = rng.choice(pc["bool_ops"])
         if op == "not":
             return P("not", gen_bool(rng, vars_, depth + 1, pc))
         return P(op, gen_bool(rng, vars_, depth + 1, pc), gen_bool(rng, vars_, depth + 1, pc))
-    return P(rng.choice(["lt", "eq", "gt"]), gen_int(rng, vars_, depth + 1, pc), gen_int(rng, vars_, depth + 1, pc))
+    return P(rng.choice(pc["cmp_ops"]), gen_int(rng, vars_, depth + 1, pc), gen_int(rng, vars_, depth + 1, pc))
 
 
 # ---------------------------------------------------------------- probes and irreducibility tables
@@ -226,6 +234,30 @@ def compile_body(body):
 
 
 # ---------------------------------------------------------------- mechanism screening
+def affine_in_acc(fn) -> bool:
+    """s(a,b) = c*a + g(b) for one constant c, on the probe grid (E1 v2 rule 2)."""
+    from fractions import Fraction
+    As = sorted({a for a, _b in PROBE_S})
+    Bs = sorted({b for _a, b in PROBE_S})
+    c = None
+    for b in Bs:
+        g = _ev2(fn, 0, b)
+        if g == _FAILV:
+            return False
+        for a in As:
+            if a == 0:
+                continue
+            v = _ev2(fn, a, b)
+            if v == _FAILV:
+                return False
+            slope = Fraction(v - g, a)
+            if c is None:
+                c = slope
+            elif slope != c:
+                return False
+    return True
+
+
 def screen_mechanism(kind, body, cfg, existing_sigs) -> Tuple[Optional[str], dict]:
     sc = cfg["mech_screen"]
     lo, hi = cfg["mech_size"][kind]
@@ -268,6 +300,8 @@ def screen_mechanism(kind, body, cfg, existing_sigs) -> Tuple[Optional[str], dic
             return "PROJECTION", st
         if sum(1 for (a, b), v in zip(PROBE_S, vals) if v in (a, b)) / len(vals) >= sc["identity_like_max"]:
             return "IDENTITY_LIKE", st
+        if sc.get("reject_affine_in_acc") and affine_in_acc(fn):
+            return "AFFINE_IN_ACC", st
         # fold stability on base-distribution lists
         r = _rng("fold-probe", A.show(body))
         outs = []
@@ -395,6 +429,10 @@ def struct_stage(rng):
 
 
 def readout(rng, src, choices):
+    """A list readout. `len` is offered only if the list term contains a filter: otherwise its length is a function
+    of len(xs) alone, so the readout would not depend on any mechanism (defect found pre-pilot on a dummy seed)."""
+    if "(filter " not in A.show(src):
+        choices = [c for c in choices if c != "len"]
     r = rng.choice(choices)
     return P(r, src), r
 
@@ -577,6 +615,8 @@ def sample_R3(rng, m1: Mechanism, m2: Mechanism, cfg, dist_key="dist_base", tag=
 
 def classify_rung(fam: Fam, r1_mechs: set, r3_pairs: set) -> str:
     """Derived rung label from structure (checked against the target rung)."""
+    if getattr(fam, "reuses", None):
+        return "R5"
     distinct = sorted(set(fam.uses))
     if not distinct:
         return "R0"
@@ -589,34 +629,75 @@ def classify_rung(fam: Fam, r1_mechs: set, r3_pairs: set) -> str:
     return "R3"
 
 
+# ---------------------------------------------------------------- R5: combination reuse (E1 v2 rule 8)
+def sample_R5(rng, src_fam: "Fam", src_id: str, cfg):
+    """Reuse an R3 combination (the source family's whole promoted term) in a NEW context: either a new input stage
+    (pre) or a new outer context (post). The combination itself is unchanged."""
+    sk = cfg["skeletons"]["R5"]
+    T = src_fam.term
+    xs = V("xs")
+    if rng.random() < sk["pre_prob"]:
+        ctx = rng.choice(sk["pre"])
+        if ctx == "pre_struct":
+            pre = struct_stage(rng)(xs)
+        elif ctx == "pre_base_f":
+            pre = P("map", base_filler(rng, "f", cfg), xs)
+        else:
+            pre = P("filter", base_filler(rng, "p", cfg), xs)
+        t, out = subst_many(T, {"xs": pre}), src_fam.out
+    elif src_fam.out == "I":
+        ctx = rng.choice(sk["I"])
+        if ctx == "base_post":
+            t = apply_fun_body(base_filler(rng, "f", cfg), T)
+        else:
+            bp = base_filler(rng, "p", cfg)
+            bf = base_filler(rng, "f", cfg)
+            t = P("if", apply_fun_body(bp, T), T, apply_fun_body(bf, T))
+        out = "I"
+    else:
+        ctx = rng.choice(sk["L"])
+        if ctx == "readout":
+            t, out = readout(rng, T, cfg["readouts_int"])[0], "I"
+        elif ctx == "base_fold":
+            t, out = P("foldl", base_filler(rng, "s", cfg), L(rng.choice([0, 1])), T), "I"
+        else:
+            t, out = P("map", base_filler(rng, "f", cfg), T), "L"
+    f = Fam(t, out, list(src_fam.uses), 1, "R5:%s:%s" % (ctx, src_fam.skeleton.split(":", 1)[1]), "dist_base")
+    f.reuses = src_id
+    return f
+
+
 # ---------------------------------------------------------------- family materialisation (inputs, screens)
 def _key(xs):
     return tuple(xs)
 
 
-def materialise(fam: Fam, mechs, cfg, world_seed, idx, rung):
-    """Run screens and draw dev / test / tribunal. Returns (record, reject_class|None)."""
+def materialise(fam: Fam, mechs, cfg, world_seed, fkey, rung):
+    """Run screens and draw dev / test / tribunal. Returns (record, reject_class|None).
+    fkey: a string that, with the (secret) world seed, seeds every draw of this family.
+    D4 (E1 v2 rule 10): R4 dev comes from cfg["r4_dev_dist"]; test and tribunal from the family's dist_key."""
     base = expand(fam.term, mechs)
     A.typecheck(base)
-    dist = cfg[fam.dist_key]
+    test_dist = cfg[fam.dist_key]
+    dev_dist = cfg[cfg["r4_dev_dist"]] if rung == "R4" else test_dist
     rec = {"witness": A.show(base), "witness_promoted": A.show(fam.term), "witness_esize": A.esize(base),
            "witness_size": A.size(base), "promoted_esize": A.esize(fam.term), "output_type": fam.out,
            "skeleton": fam.skeleton, "mechanisms_used": sorted(set(fam.uses)), "uses": list(fam.uses),
-           "rung": rung, "dist_key": fam.dist_key}
-    # FAIL rate under the input distribution
-    r = _rng("failprobe", world_seed, idx)
-    fails = 0
-    for _ in range(cfg["fail_rate_samples"]):
-        if A.run(base, sample_list(r, dist)) == A.FAIL:
-            fails += 1
-    rate = fails / cfg["fail_rate_samples"]
-    rec["fail_rate"] = rate
-    if rate > cfg["fail_rate_max"]:
+           "rung": rung, "dist_key": fam.dist_key,
+           "dev_dist_key": cfg["r4_dev_dist"] if rung == "R4" else fam.dist_key, "fkey": fkey}
+    if getattr(fam, "reuses", None):
+        rec["reuses"] = fam.reuses
+    rates = []
+    for dk, dist in sorted({rec["dev_dist_key"]: dev_dist, fam.dist_key: test_dist}.items()):
+        r = _rng("failprobe", world_seed, fkey, dk)
+        fails = sum(1 for _ in range(cfg["fail_rate_samples"]) if A.run(base, sample_list(r, dist)) == A.FAIL)
+        rates.append(fails / cfg["fail_rate_samples"])
+    rec["fail_rate"] = max(rates)
+    if rec["fail_rate"] > cfg["fail_rate_max"]:
         return rec, "FAIL_PRONE"
-    seeds = {"dev": "%s|%d|dev" % (world_seed, idx), "test": "%s|%d|test" % (world_seed, idx),
-             "trib": "%s|%d|trib" % (world_seed, idx)}
+    seeds = {sp: "%s|%s|%s" % (world_seed, fkey, sp) for sp in ("dev", "test", "trib")}
 
-    def draw(split, n, exclude):
+    def draw(split, n, exclude, dist):
         rr = random.Random(seeds[split])
         out, seen = [], set(exclude)
         guard = 0
@@ -634,20 +715,18 @@ def materialise(fam: Fam, mechs, cfg, world_seed, idx, rung):
             out.append([xs, y])
         return out
 
-    dev = draw("dev", cfg["n_dev"], set())
-    test = draw("test", cfg["n_test"], {_key(x) for x, _ in dev or []}) if dev else None
+    dev = draw("dev", cfg["n_dev"], set(), dev_dist)
+    test = draw("test", cfg["n_test"], {_key(x) for x, _ in dev or []}, test_dist) if dev else None
     if dev is None or test is None:
         return rec, "FAIL_PRONE"
     rec["dev"], rec["test"] = dev, test
-    # tribunal extras
     rr = random.Random(seeds["trib"])
-    lo, hi = dist["val"]
-    lmax = dist["len"][1]
-    extras = [sample_list(rr, dist) for _ in range(cfg["n_tribunal_random"])]
+    lo, hi = test_dist["val"]
+    lmax = test_dist["len"][1]
+    extras = [sample_list(rr, test_dist) for _ in range(cfg["n_tribunal_random"])]
     extras += [[], [rr.randint(lo, hi)], [rr.randint(lo, hi)], [lo], [hi]]
     extras += [[hi] * lmax, [lo] * lmax, [hi if i % 2 else lo for i in range(lmax)], [0] * lmax]
     rec["tribunal"] = [[xs, A.run(base, xs)] for xs in extras]
-    # degeneracy
     outs = [json.dumps(y) for _x, y in dev + test]
     modal = max(outs.count(o) for o in set(outs)) / len(outs)
     rec["modal_frac"] = round(modal, 3)
@@ -671,74 +750,192 @@ def behaviour_key(base, cfg):
     return "|".join(vals)
 
 
+def seed_sha256(world_seed) -> str:
+    return hashlib.sha256(str(world_seed).encode()).hexdigest()
+
+
+# ---------------------------------------------------------------- mechanisms + their R1 families (rule 2 screen)
+def draw_mechanisms_with_r1(seed, cfg, beh_seen):
+    """Draw each mechanism slot. A candidate that passes the task-free screens gets its R1 families drawn at once;
+    the candidate is rejected (and redrawn) if it cannot supply R1_per_mech generation-OK R1 families, or if the
+    REGRESSION rung solves any of them (E1 v2 rule 2). Returns (mechanisms, r1 records by mechanism, stats)."""
+    import regress
+    sc = cfg["mech_screen"]
+    mechs, sigs, rej, draws, r1_by, unfilled, reg_rejects = [], set(), {}, {}, {}, [], []
+    for kind in ("f", "p", "s"):
+        for i in range(cfg["mechanisms"][kind]):
+            name = "%s%d" % (kind, i)
+            rng = _rng("mech", seed, kind, i)
+            vars_ = ("x",) if kind in ("f", "p") else ("a", "b")
+            attempts, filled = 0, False
+            for d in range(cfg["mech_max_draws"]):
+                body = gen_bool(rng, vars_, 0, cfg["mech_pcfg"]) if kind == "p" else \
+                    gen_int(rng, vars_, 0, cfg["mech_pcfg"])
+                why, st = screen_mechanism(kind, body, cfg, sigs)
+                if why is not None:
+                    rej[why] = rej.get(why, 0) + 1
+                    continue
+                attempts += 1
+                m = Mechanism(name, kind, body, dict(st, draws=d + 1, regression_attempts=attempts))
+                rr = _rng("R1", seed, name, d)
+                recs, local, ok, nd = [], {}, 0, 0
+                while ok < cfg["quota"]["R1_per_mech"] and nd < sc["r1_draws_per_candidate"]:
+                    nd += 1
+                    fam = sample_R1(rr, m, cfg)
+                    fkey = "R1|%s|%d|%d" % (name, d, nd)
+                    rec, why2 = materialise(fam, {name: m}, cfg, seed, fkey, "R1")
+                    if why2 is None:
+                        bk = behaviour_key(expand(fam.term, {name: m}), cfg) + "|" + fam.dist_key
+                        if bk in beh_seen or bk in local:
+                            why2 = "DUPLICATE"
+                        else:
+                            local[bk] = fkey
+                    rec["gen_class"] = why2 or "OK"
+                    recs.append(rec)
+                    ok += why2 is None
+                verdict = None
+                if ok < cfg["quota"]["R1_per_mech"]:
+                    verdict = "R1_SUPPLY"
+                elif sc.get("r1_regression_screen"):
+                    for rec in recs:
+                        if rec["gen_class"] != "OK":
+                            continue
+                        rv = regress.run(rec["dev"], rec["test"], cfg)
+                        rec["gen_regression"] = {"solved": rv["solved"], "solved_by": rv["solved_by"],
+                                                 "best_selected_test_acc": rv["best_selected_test_acc"]}
+                        if rv["solved"]:
+                            verdict = "R1_REGRESSION"
+                            reg_rejects.append({"slot": name, "term": A.show(m.term), "family": rec["witness"],
+                                                "solved_by": rv["solved_by"],
+                                                "model": rv["classes"][rv["solved_by"]]["model"]})
+                            break
+                if verdict is not None:
+                    rej[verdict] = rej.get(verdict, 0) + 1
+                    if attempts >= sc["regression_attempts_max"]:
+                        break
+                    continue
+                mechs.append(m)
+                sigs.add(sig_of(kind, compile_body(body)))
+                r1_by[name] = recs
+                beh_seen.update(local)
+                filled = True
+                draws[name] = d + 1
+                break
+            if not filled:
+                unfilled.append(name)
+    stats = {"rejections": dict(sorted(rej.items())), "draws": draws, "unfilled_slots": unfilled,
+             "regression_rejects": reg_rejects}
+    return mechs, r1_by, stats
+
+
 # ---------------------------------------------------------------- world
 def build_world(world_seed, cfg=None):
+    """world_seed: a string (E1 v2: a 128-bit secret hex string). It is NEVER stored in the world; only its sha256."""
     cfg = cfg or CONFIG
+    seed = str(world_seed)
+    ssha = seed_sha256(seed)
+    wid = "W" + ssha[:8]
     sha = config_sha(cfg)
-    mechs_l, mstats = draw_mechanisms(world_seed, cfg)
-    mechs = {m.name: m for m in mechs_l}
-    families, gen_rej = [], {}
     beh_seen = {}
-    idx = 0
+    mechs_l, r1_by, mstats = draw_mechanisms_with_r1(seed, cfg, beh_seen)
+    mechs = {m.name: m for m in mechs_l}
+    families = []
+    r3_fams = []
 
-    def add(fam: Fam, target):
-        nonlocal idx
+    def push(rec):
+        rec["index"] = len(families)
+        rec["family_id"] = "%s-F%03d-%s" % (wid, rec["index"], rec["rung"])
+        families.append(rec)
+        return rec
+
+    def add(fam: Fam, target, fkey):
         rung = classify_rung(fam, set(), set())
         assert rung == target, (rung, target, fam.skeleton)
-        rec, why = materialise(fam, mechs, cfg, world_seed, idx, target)
-        rec["family_id"] = "W%s-F%03d-%s" % (world_seed, idx, target)
-        rec["index"] = idx
-        idx += 1
+        rec, why = materialise(fam, mechs, cfg, seed, fkey, target)
         if why is None:
             bk = behaviour_key(expand(fam.term, mechs), cfg) + "|" + fam.dist_key
             if bk in beh_seen:
                 why = "DUPLICATE"
-                rec["duplicate_of"] = beh_seen[bk]
+                rec["duplicate_of_fkey"] = beh_seen[bk]
             else:
-                beh_seen[bk] = rec["family_id"]
+                beh_seen[bk] = fkey
         rec["gen_class"] = why or "OK"
-        families.append(rec)
+        push(rec)
+        if why is None and target == "R3":
+            r3_fams.append((rec["family_id"], fam))
         return why is None
 
     def fill(target, quota, sampler):
         got, draws = 0, 0
         while got < quota and draws < cfg["family_max_draws"]:
             draws += 1
-            if add(sampler(draws), target):
+            fam = sampler(draws)
+            if fam is None:
+                break
+            if add(fam, target, "%s|%d" % (target, draws)):
                 got += 1
         return {"quota": quota, "ok": got, "draws": draws}
 
     fill_stats = {}
-    rng0 = _rng("R0", world_seed)
+    rng0 = _rng("R0", seed)
     fill_stats["R0"] = fill("R0", cfg["quota"]["R0"], lambda d: sample_R0(rng0, cfg))
-    # R1: every mechanism alone, R1_per_mech OK families each
     fill_stats["R1"] = {}
     for m in mechs_l:
-        rr = _rng("R1", world_seed, m.name)
-        fill_stats["R1"][m.name] = fill("R1", cfg["quota"]["R1_per_mech"], lambda d, m=m, rr=rr: sample_R1(rr, m, cfg))
-    rng2 = _rng("R2", world_seed)
-    fill_stats["R2"] = fill("R2", cfg["quota"]["R2"], lambda d: sample_R2(rng2, mechs_l[(d - 1) % len(mechs_l)], cfg))
-    # pairs: split into R3 pairs and held-out R4 pairs (seeded)
+        for rec in r1_by[m.name]:
+            push(rec)
+        fill_stats["R1"][m.name] = {"ok": sum(1 for r in r1_by[m.name] if r["gen_class"] == "OK"),
+                                    "draws": len(r1_by[m.name])}
+    if mechs_l:
+        rng2 = _rng("R2", seed)
+        fill_stats["R2"] = fill("R2", cfg["quota"]["R2"],
+                                lambda d: sample_R2(rng2, mechs_l[(d - 1) % len(mechs_l)], cfg))
     pairs = [(mechs_l[i], mechs_l[j]) for i in range(len(mechs_l)) for j in range(i + 1, len(mechs_l))]
-    rp = _rng("pairs", world_seed)
+    rp = _rng("pairs", seed)
     rp.shuffle(pairs)
-    n4 = max(1, int(round(cfg["r4_pair_fraction"] * len(pairs))))
-    r4_pairs, r3_pairs = pairs[:n4], pairs[n4:]
-    rng3 = _rng("R3", world_seed)
-    fill_stats["R3"] = fill("R3", cfg["quota"]["R3"],
-                            lambda d: sample_R3(rng3, *r3_pairs[(d - 1) % len(r3_pairs)], cfg))
-    rng4 = _rng("R4", world_seed)
-    fill_stats["R4"] = fill("R4", cfg["quota"]["R4"],
-                            lambda d: sample_R3(rng4, *r4_pairs[(d - 1) % len(r4_pairs)], cfg,
-                                                dist_key="dist_shift", tag="R4"))
+    if len(pairs) >= 2:
+        n4 = max(1, int(round(cfg["r4_pair_fraction"] * len(pairs))))
+        r4_pairs, r3_pairs = pairs[:n4], pairs[n4:]
+    else:
+        r4_pairs, r3_pairs = [], pairs
+    if r3_pairs:
+        rng3 = _rng("R3", seed)
+        fill_stats["R3"] = fill("R3", cfg["quota"]["R3"],
+                                lambda d: sample_R3(rng3, *r3_pairs[(d - 1) % len(r3_pairs)], cfg))
+    if r4_pairs:
+        rng4 = _rng("R4", seed)
+        fill_stats["R4"] = fill("R4", cfg["quota"]["R4"],
+                                lambda d: sample_R3(rng4, *r4_pairs[(d - 1) % len(r4_pairs)], cfg,
+                                                    dist_key="dist_shift", tag="R4"))
+    if r3_fams:
+        rng5 = _rng("R5", seed)
+        fill_stats["R5"] = fill("R5", cfg["quota"]["R5"],
+                                lambda d: (lambda src: sample_R5(rng5, src[1], src[0], cfg))(rng5.choice(r3_fams)))
     world = {
-        "world_id": "W%s" % world_seed, "world_seed": world_seed, "config_sha": sha,
+        "world_id": wid, "world_seed_sha256": ssha, "config_sha": sha,
         "mechanisms": [m.to_json() for m in mechs_l], "mechanism_screen": mstats,
         "r3_pairs": sorted(pair_key(a, b) for a, b in r3_pairs),
         "r4_pairs": sorted(pair_key(a, b) for a, b in r4_pairs),
         "fill": fill_stats, "families": families,
     }
     return world
+
+
+def yoke_seed(world_seed) -> str:
+    """Sibling seed for the YOKED world: derived from the secret seed, itself secret."""
+    return hashlib.sha256(("yoke|%s" % world_seed).encode()).hexdigest()[:32]
+
+
+def build_yoked(world, sibling):
+    """YOKED world (E1 v2 rule 9 / D10): the SAME R3-R5 target families as `world`, but every R0-R2 stepping stone
+    comes from the sibling world (independently drawn mechanisms, the same generator and quotas). Stepping stones
+    are therefore matched in kind and number but carry no information about the targets' mechanisms."""
+    fams = [dict(r, yoked_source="sibling") for r in sibling["families"] if r["rung"] in ("R0", "R1", "R2")]
+    fams += [dict(r, yoked_source="target") for r in world["families"] if r["rung"] in ("R3", "R4", "R5")]
+    return {"world_id": world["world_id"] + "-YOKED", "target_world": world["world_id"],
+            "sibling_world": sibling["world_id"], "sibling_seed_sha256": sibling["world_seed_sha256"],
+            "sibling_mechanisms": sibling["mechanisms"], "families": fams,
+            "counts": {r: sum(1 for f in fams if f["rung"] == r and f["gen_class"] == "OK")
+                       for r in ("R0", "R1", "R2", "R3", "R4", "R5")}}
 
 
 def world_bytes(world) -> bytes:
