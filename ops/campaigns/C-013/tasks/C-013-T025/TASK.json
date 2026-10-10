@@ -37,7 +37,7 @@
     "rso/scale/runner/"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -80,6 +80,12 @@
       "by": "Eupalamus[harry1-13757eac]",
       "at_utc": "2026-10-10T10:20:15Z",
       "note": "T025 INTEGRATION_READY; code on branch eupalamus/c013-t024 at 6ebaf9acf"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T10:32:32Z",
+      "note": "merged 6ebaf9acf; relaunch tested with a simulated scheduler; no OS scheduler install in code (grep schtasks/Register-ScheduledTask/systemctl enable: none); test_waits_for_orphan_worker errored once under host load (Pallas run concurrent), passed 3/3 isolated and in two full runs -- timing-sensitive test, recorded"
     }
   ],
   "authority": "escalation NEW_Eupalamus_2026-10-10_2 RESPONSE",
