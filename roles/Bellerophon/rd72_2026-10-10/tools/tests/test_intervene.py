@@ -25,3 +25,21 @@ def test_none_is_identical_and_actions_apply():
     assert d.intervention["affected"] == d.intervention["class_count"] > 0
     e = InterveneWorld(_cfg(), 5, at=30, action="REMOVE_SHAM", classes=("LO", "BOTH"), census_every=20); e.run()
     assert e.intervention["affected"] == e.intervention["class_count"]
+
+
+def test_c2r_actions():
+    a = LightHalvesWorld(_cfg(), 5, census_every=20); a.run()
+    rep = (vm.replicator(64) + bytes(56)).hex()
+    r = InterveneWorld(_cfg(), 5, at=30, action="RESET_TAPES", tapes=[rep], census_every=20)
+    while r.tick <= 30:
+        r.step()
+    alive = [o for o in r.cells if o is not None]
+    assert r.intervention["affected"] == r.intervention["alive_before"] > 0
+    assert len(alive) >= 1
+    r.run(); assert end_state_hash(r) != end_state_hash(a)
+    d = InterveneWorld(_cfg(), 5, at=30, action="REMOVE_CLASS", classes=("NONE",), census_every=20); d.run()
+    n = InterveneWorld(_cfg(), 5, at=30, action="REMOVE_NEAR", classes=("NONE",), census_every=20); n.run()
+    assert n.intervention["class_count"] == d.intervention["class_count"]
+    assert n.intervention["affected"] == d.intervention["class_count"] + n.intervention["near_removed"]
+    z = InterveneWorld(_cfg(), 5, at=30, action="REMOVE_NEAR", classes=("NONE",), census_every=20, near=0); z.run()
+    assert z.intervention["affected"] >= z.intervention["class_count"]

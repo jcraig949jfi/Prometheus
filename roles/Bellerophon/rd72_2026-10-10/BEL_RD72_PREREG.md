@@ -179,3 +179,24 @@ s6-A note (2026-10-10T15:46:37Z, E1b running, its results NOT analysed): E1-c re
 (every BOTH world replayed under HalvesWorld to its first BOTH census tick), tools/analyze_replay.py (validity = identical
 census counts at every common tick; CUMULATIVE / ASSEMBLED_AT_ONCE as s6). HalvesWorld now also records a composite that
 arose in place (no birth) from a living carrier at census ("via": "census").
+
+## 9. C2R -- where is the regenerated capability held? (CONFIRMATORY follow-up of C2-b; frozen 2026-10-10T22:41:59Z, before any C2R run)
+
+Motivation (disclosed): C2-b held (LO returned faster than it first arose after every carrier was removed), but the frozen
+design could not separate (a) material left in the world (near-carriers, fragments: the directive's "environmental
+regeneration") from (b) a copier-rich population re-inventing LO from scratch (the confound disclosed in s7). I have seen
+the C2 REMOVE outcomes (re-acquisition at +100..+300 in 12/16, censored in 4) before writing this; the new arms are unseen.
+Instrument (opt-in additions, the five s7 actions unchanged; tools/tests/test_intervene.py): RESET_TAPES (every living
+organism replaced by the bare copier REP: same size, same cells, no world material) and REMOVE_NEAR (REMOVE plus every
+organism within Hamming 16 of a carrier tape). Plan tools/plan_c2r.py C23_PLAN OUT, a deterministic function of the frozen
+C2/C3 plan: the 16 C2 worlds x arms REMOVE (re-run), RESET, NEAR; same seed / at / irng / end (at + 1,000); census every
+20 ticks. Analysis tools/analyze_c2r.py (synthetic tests tools/tests/test_c2r.py); delay = first census after at with a
+FUNC LO-or-BOTH tape, censored if none.
+- Validity: the re-run REMOVE census at every C2 census tick equals the C2 run (alive count and FUNC halves); worlds that
+  fail are excluded and reported.
+- C2R-P1: REMOVE re-acquires faster than RESET (one-sided sign test, ties / both-censored dropped, p < 0.05; NOT_TESTABLE
+  with < 5 decided worlds). HOLDS -> the speed-up needs world material, not only copier abundance (the "environmental
+  regeneration / stored route" reading). FAILS with RESET at least as fast -> a copier-rich population re-invents LO by
+  itself; C2-b is then explained by the confound and is NOT evidence of stored capability.
+- C2R-P2: REMOVE re-acquires faster than NEAR (same test). HOLDS -> the route is held by near-carriers (cryptic variants
+  within 16 bytes of the capability).

@@ -8,6 +8,11 @@ RNG is separate from the world RNG) and at tick `at` applies ONE action, then co
   IMPLANT       replace `n_implant` random living NONE organisms by copies of `tapes` (hex, round-robin)       -> transplant
   IMPLANT_SHAM  the same replacement with copies of NONE FUNC tapes drawn from this world                      -> sham
   NONE          no action (the continuation control)
+  -- added for C2R (prereg s9; opt-in, the five actions above are unchanged) --
+  REMOVE_NEAR   REMOVE_CLASS plus every living organism whose tape is within Hamming distance `near` of ANY carrier tape
+                (near-carriers: cryptic material one or a few changes from the capability)
+  RESET_TAPES   replace EVERY living organism by a copy of `tapes` (round-robin): the same number of organisms in the
+                same cells, all world material gone, a copier-rich population (the C2 confound, isolated)
 The record keeps the action, the number affected and the census before / after. The count for REMOVE_SHAM is the count
 REMOVE_CLASS would have removed at the same tick in the same world (computed here, so the arms are matched)."""
 from __future__ import annotations
@@ -16,18 +21,18 @@ import random
 
 from light_halves import LightHalvesWorld
 
-ACTIONS = ("NONE", "REMOVE_CLASS", "REMOVE_SHAM", "IMPLANT", "IMPLANT_SHAM")
+ACTIONS = ("NONE", "REMOVE_CLASS", "REMOVE_SHAM", "IMPLANT", "IMPLANT_SHAM", "REMOVE_NEAR", "RESET_TAPES")
 
 
 class InterveneWorld(LightHalvesWorld):
     def __init__(self, cfg, seed, at: int, action: str, classes=("LO", "BOTH"), tapes=(), n_implant: int = 16,
-                 census_every: int = 100, irng: int = 0):
+                 census_every: int = 100, irng: int = 0, near: int = 16):
         if action not in ACTIONS:
             raise ValueError(action)
         super().__init__(cfg, seed, census_every=census_every)
         self.at, self.action, self.classes = at, action, tuple(classes)
         self.tapes = [bytes.fromhex(h) for h in tapes]; self.n_implant = n_implant
-        self.irng = random.Random(irng); self.intervention = None
+        self.irng = random.Random(irng); self.intervention = None; self.near = near
 
     def step(self):
         if self.tick == self.at and self.intervention is None:
@@ -66,4 +71,17 @@ class InterveneWorld(LightHalvesWorld):
                 self._kill(i)
                 self._spawn(i, t, None, "implant")
             rec["affected"] = len(pick)
+        elif self.action == "REMOVE_NEAR":
+            car = {bytes(self.cells[i].tape) for i in target}
+            near = [i for i in alive if i not in set(target) and any(
+                sum(a != b for a, b in zip(bytes(self.cells[i].tape), c)) <= self.near for c in car)]
+            for i in target + near:
+                self._kill(i)
+            rec["affected"] = len(target) + len(near); rec["near_removed"] = len(near)
+        elif self.action == "RESET_TAPES":
+            for k, i in enumerate(alive):
+                t = bytearray(self.L); s = self.tapes[k % len(self.tapes)]; t[:len(s)] = s[:self.L]
+                self._kill(i)
+                self._spawn(i, t, None, "implant")
+            rec["affected"] = len(alive)
         self.intervention = rec
