@@ -175,3 +175,7 @@ LO solvers); income 64 kept replicators but no LO; WELL_MIXED / lifespan 80 kept
 seed base 72.3e12). Analysis and tests E1-a / E1-b / E1-c exactly as s6 (tools/analyze_e1.py, cell names unchanged).
 Added, descriptive only: the same counts restricted to worlds with a FUNC organism at the tick-500 census ("established").
 C2 / C3 (s7) are generated from E1b by the frozen plan_c23.py rules.
+s6-A note (2026-10-10T15:46:37Z, E1b running, its results NOT analysed): E1-c replay tooling committed (b9b130000): tools/plan_replay.py
+(every BOTH world replayed under HalvesWorld to its first BOTH census tick), tools/analyze_replay.py (validity = identical
+census counts at every common tick; CUMULATIVE / ASSEMBLED_AT_ONCE as s6). HalvesWorld now also records a composite that
+arose in place (no birth) from a living carrier at census ("via": "census").
