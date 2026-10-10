@@ -119,10 +119,10 @@ def supervise(run_dir, poll_s=0.5, code_root=E.REPO):
     m, mid = RUN.load_manifest(run_dir)
     max_starts = m["stop_rules"]["max_worker_starts_per_chain"]
     sup_event(run_dir, {"kind": "SUPERVISOR_START", "manifest_id": mid, "code_root": code_root})
-    worker, last_beat = None, 0.0
+    worker, last_beat, last_cpu_row = None, 0.0, 0.0
 
     def stop(state, **extra):
-        sup_event(run_dir, dict(extra, kind="SUPERVISOR_END", state=state))
+        sup_event(run_dir, dict(extra, kind="SUPERVISOR_END", state=state, cpu_s=round(time.process_time(), 6)))
         release_supervisor(run_dir, tok)
         return dict(extra, state=state)
 
@@ -131,6 +131,9 @@ def supervise(run_dir, poll_s=0.5, code_root=E.REPO):
             if not _heartbeat(run_dir, tok):
                 return {"state": "SUPERVISOR_REPLACED"}
             last_beat = time.time()
+        if time.time() - last_cpu_row > 10.0:                  # metered so a killed supervisor's CPU is not lost
+            sup_event(run_dir, {"kind": "SUPERVISOR_CPU", "cpu_s": round(time.process_time(), 6)})
+            last_cpu_row = time.time()
         if worker is not None:
             proc, chain_id = worker
             rc = proc.poll()
