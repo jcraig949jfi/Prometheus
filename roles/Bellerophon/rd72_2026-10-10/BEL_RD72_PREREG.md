@@ -165,3 +165,13 @@ survival of ANY organism, not of FUNC organisms (my design error; calibration le
 E1 is DISCOVERY only; the 16 runs are kept and reported as a negative boundary (persistence without replicators). No
 confirmatory test is affected; C2/C3 (s7) take their worlds from whichever E1 successor is run, by the same frozen rules.
 A FUNC-persistence probe (48 pilot runs) chooses the successor setting by the criterion FUNC alive at tick 800.
+
+## 6-A. E1b -- successor of E1 (registered 2026-10-10T15:43:23Z, before any E1b run; DISCOVERY)
+
+Setting from the FUNC-persistence pilots (84 pilot runs, pilot log; criterion: FUNC organisms alive at tick 800):
+LOCAL / lifespan 40 / income 40 / 32-copy REP transplant kept replicators in 3/6 worlds (each of those also held 122-130
+LO solvers); income 64 kept replicators but no LO; WELL_MIXED / lifespan 80 kept none (0/12). Plan tools/plan_e1b.py:
+150 runs, sha256 11c59eb305667760553c4a2dc94c3084b29143f105865154fa56c2ce4c76994c (C1_ON 80, C1_OFF 30, CM_ON 40; 3,000 ticks;
+seed base 72.3e12). Analysis and tests E1-a / E1-b / E1-c exactly as s6 (tools/analyze_e1.py, cell names unchanged).
+Added, descriptive only: the same counts restricted to worlds with a FUNC organism at the tick-500 census ("established").
+C2 / C3 (s7) are generated from E1b by the frozen plan_c23.py rules.
