@@ -100,8 +100,8 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
       Rebuilt 2026-10-03 with `shutdown: poweroff` (no reinstall loop when the sticks are left in).
-- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s/M6500 USB enclosures).** Right after the
-      P52s (done) and M6500 installs: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
+- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s/M6500 USB enclosures).** The M6500 no
+      longer needs it (internal SSD, 2026-10-10), so rebuild before the next install (ubu007 or ubu008): rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
       machine can ever install onto an external disk.
 - [x] **ubu005 = P52s** ONLINE 2026-10-04 at 192.168.1.222 (i5-8350U, 22 GB), worker enabled. Remaining: Claude login,
       DHCP; PM991: see below. Lid closed 2026-10-04: still running (lid ignore works), 49 C. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
@@ -117,18 +117,19 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       (Motoeagle; SPD reads Samsung M378B5273DH0-CK0). All 3x2 GB removed. `Get-CimInstance Win32_PhysicalMemory` ->
       DIMM 1-4 x 4 GB, 1333 MT/s; Windows sees 16.0 GB (11.3 GB free after boot). Seat restarted; census task intact.
 - [ ] **Toshiba Satellite A665-S6070** (PSAW3U-04301C, ~2010-11, 19 V 4.74 A brick): offered 2026-10-05. Verdict: OK as a
-      light worker (`ubu008`), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
+      light worker (`ubu009`; ubu008 = T490s), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
       lscpu); 2 SODIMM slots, 8 GB max. Before use: SATA SSD in place of the HDD, 8 GB RAM, clean the fan and repaste
       (A665s run hot), remove the battery. Then the normal autoinstall + provision_node.sh.
 - [ ] **SSH by hostname from ELSA fails** (2026-10-04): `ubuNNN` resolves to IPv6 link-local and known_hosts has only
       IPv4 keys -> "Host key verification failed". Use `jcraig@192.168.1.NNN`, or add a `~/.ssh/config` HostName map.
       ubu004 answers on both .221 and .178.
-- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). Plan (operator
-      2026-10-04): **dual boot by enclosure** -- Ubuntu on an SSD in the second USB-C enclosure, BIOS boot order USB
-      Storage above Internal HDD: enclosure in -> Ubuntu, unplugged -> Windows 7. **Remove the Windows drive(s) (two
-      bays) during the install** (the guard prefers internal disks; this also protects them). Needs the CIDATA stick
-      still built with --allow-usb-target and an SSD >= 200 GB. USB 2.0 only: slow disk, fine for CPU work. Legacy
-      BIOS boot. The Win7 system image to M2 is still wanted, but no longer blocks this.
+- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). **Plan changed
+      2026-10-10 (operator; the USB-enclosure plan of 2026-10-04 is dropped):** Patriot P210 256 GB SATA SSD (on order) in
+      bay HDD 1 for Ubuntu; the Intel 330 180 GB (Win7) back in HDD 2 unmodified; Momentus 500 GB = spare. Install with ONLY
+      the Patriot inside, legacy BIOS, Ethernet. Image the Intel 330 to M2 first. Details: ubuntu_server_machines.md s ubu007.
+      The PM991 and the second USB-C enclosure are now spares.
+- [ ] **ubu008 = ThinkPad T490s** (i7 8th gen AVX2, 16 GB, 512 GB NVMe, dock + monitor; bought 2026-10-10; Fedora, wipe
+      OK). Check the BIOS password / Absolute first; install wired via the dock. The Toshiba A665 becomes ubu009 if used.
 
 ## Operator (needs hands at a keyboard or the router; not the phone)
 
@@ -175,7 +176,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 Before the session:
 - [ ] Have the Verbatim USB stick (already written; reusable) and the ISO (`D:\ISOs\`) on hand.
 - [ ] Collect for each machine: make/model, whether it has an Ethernet port, and whether it has Wi-Fi.
-- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, ... (LIZZIE-42 stays Windows, no ubu number)
+- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, `ubu007` (M6500), `ubu008` (T490s), `ubu009` (Toshiba A665, if used), ... (LIZZIE-42 stays Windows, no ubu number)
 
 Per machine (runbook + plan s10), with the lessons from the guinea pigs:
 1. BIOS: boot **USB HDD**; set **Power On with AC Attach** while you're in there.

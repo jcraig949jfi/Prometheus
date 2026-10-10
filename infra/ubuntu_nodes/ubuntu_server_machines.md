@@ -11,6 +11,8 @@ Don't record passwords here.
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token pending; Claude logged in 2026-10-06 |
 | 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
+| 7 | ubu007   | jcraig   | (planned)  | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB 2.5" SATA SSD (on order), bay HDD 1 | (wired) | **Planned**; dual boot with Win7 on the Intel 330 in HDD 2 |
+| 8 | ubu008   | jcraig   | (planned)  | Ubuntu Server 26.04.1 LTS | 512 GB NVMe (internal) | (wired via dock) | **Planned**; bought 2026-10-10, currently Fedora (wipe OK) |
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -174,6 +176,29 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
 - **provision_node.sh 192.168.1.225 ubu006:** 13 min (most of it the repo clone); shared token, push dry-run OK;
   no reboot needed. Worker installed at f78d18e26 with --enable: active, IDLE.
 - Still to do: Claude login, DHCP reservation for .225.
+
+## ubu007 (machine #7, Dell Precision M6500, planned)
+
+- **Hardware (opened 2026-10-10):** i7 Q720 (no AVX), RAM 2x 8 GB SODIMM in the bottom slots (one Centon; 2 more slots
+  under the keyboard; confirm with dmidecode). Two 2.5" SATA bays, 3 Gb/s: **HDD 1** (in the bay by the battery) held an **Intel
+  SSD 330 180 GB (SSDSC2CT180A3, fw 300i) = the Windows 7 drive**; **HDD 2** held a **Seagate Momentus 500 GB
+  (ST9500424AS, 2012, marked "New")**. FCM and WWAN slots are Mini PCIe (not M.2): unusable for boot.
+  Lower fan dusty. Win7 COA under the battery (do not photograph publicly).
+- **Plan (operator 2026-10-10; replaces the 2026-10-04 USB-enclosure plan):** a **Patriot P210 256 GB SATA SSD**
+  (P210S256G25; DRAM-less, low TBW: watch wear) in **HDD 1** for Ubuntu (the default-boot bay, so the worker comes back
+  unattended after a power cut). The **Intel 330 (Win7) goes back in HDD 2**, unmodified; Windows via F12, or a GRUB
+  chainload (os-prober) if F12 does not list HDD 2. Leave BIOS "SATA Operation" unchanged. Momentus = spare / backup target.
+- **Install:** ONLY the Patriot in the machine (both Windows-side drives out; the guard wipes the largest internal disk
+  >= 60 GB). Legacy BIOS, USB first, Ethernet. Normal internal-disk install, so the CIDATA stick needs no
+  --allow-usb-target. Image the Intel 330 to M2 before the install (backup only; it is not wiped).
+
+## ubu008 (machine #8, Lenovo ThinkPad T490s, planned)
+
+- **Bought 2026-10-10** (Facebook Marketplace) with a dock and monitor. i7 (8th gen, likely i7-8565U/8665U, 4C/8T,
+  **AVX2**), 16 GB (partly soldered), 512 GB NVMe. Came with Fedora; operator: wipe OK.
+- Likely no built-in RJ45: install and run wired through the dock. UEFI; F12 boot menu, F1 setup.
+- Before install: check for a BIOS supervisor password and for Absolute/Computrace persistence (second-hand); check the
+  battery for swelling. Then the normal autoinstall + provision_node.sh.
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
