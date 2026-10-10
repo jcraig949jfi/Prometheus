@@ -8,7 +8,7 @@
   "base_main": "5956b542e",
   "started_utc": "2026-10-10T09:23:11Z",
   "deadline_utc": "2026-10-13T09:23:11Z",
-  "current_phase": "LADDER01 + R4b EXPERIMENT",
+  "current_phase": "CLOSED (early, scaling rule)",
   "current_experiment": "R1 TEST-4",
   "attempt": 1,
   "frozen_sha": {
@@ -33,10 +33,11 @@
     "R4c": "REUSE_NOT_SUPPORTED (frozen: necessity 0.66<0.8) despite acquisition P 7/8 vs controls 0/8; discovered component; fragile ~11%",
     "LADDERx4": "COMPOSITION_RARE (C COMBINE 4/32 CI 5-28%, COMPOSE 2/32, autonomous 0; A 0/32)"
   },
-  "next_action": "reduce LADDERx4 (rates per arm with Wilson CI; COMPOSE/AUTONOMOUS counts) -> R3 addendum; then 72H_SYNTHESIS.md",
+  "next_action": "none (campaign closed); proposed next: ROBUST01 (contest-semantics change)",
   "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units).",
   "attempts": {
     "R1": 1,
     "R3": 2
-  }
+  },
+  "closed_utc": "2026-10-10T22:45Z"
 }
