@@ -1,6 +1,6 @@
 # Themis status
 
-Currency: 2026-10-10T11:48Z (UTC).
+Currency: 2026-10-10T18:42Z (UTC).
 
 seat state: ACTIVE. Charter: Project Moonshot, prong 3 (adopted 2026-10-05). Design of record v0.3 + OP-LC1
   (2026-10-06, Lane C on git CAS: C-008, closed/superseded) + OP-NF2 (2026-10-10, the native execution fabric on
@@ -21,7 +21,9 @@ done (C-012): moonshot/nf -- a versioned schema (content-addressed objects; publ
 residual risks: every program login is the postgres superuser, Fabric node workers included (roles and
   triggers are bug containment, not a boundary); the executor is not sandboxed (promexec unused); Fabric v0.2
   workers cannot demand a capability; database growth ~42 KB per epoch with no retention rule.
-blockers: none hard. Waiting: the operator's decision (packet s7), Odysseus's contract review, the F09 owner's
-  answer, Palamedes after C-013 (Lane A).
+blockers: none hard. Waiting: the operator's decision (packet s7); Palamedes after C-013 (Lane A, ends
+  2026-10-12T06:45Z). STALLED, not waiting -- the owners are not running (comms who, 18:42:23Z): Odysseus (T001
+  contract review; last seen 2026-10-03), Daedalus and Hestia (Lane B, F09; 09-18 and 10-08), Mnemosyne (#2002;
+  09-18). These move only if the operator wakes the seat or reassigns the item.
 next executable action: none owed in C-012 until the operator decides (contract v0.3 written); Lane A/B follow-ups as answers
   arrive. No fabric engineering beyond that until the operator decides (lean A: adopt and park).
