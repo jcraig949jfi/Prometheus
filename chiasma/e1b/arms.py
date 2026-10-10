@@ -22,6 +22,14 @@ Factoring (HADES-28; factor.py): O0F, O3WF, O4LWF are O0, O3W, O4LW whose premis
 stored with shared abstraction vertices (Re-Pair). Lossless: behaviour differs from the
 flat twin only through the byte cap.
 
+Shadow variants (HADES-30), all on O0's geometry with factored P, never consolidating:
+  S0F   no failure memory (positive only)
+  SRF   raw failures, FIFO
+  O0F   projected maximal shadow (above)
+  SPFF  projected shadow whose stored negatives are ALSO factored (lossless; the cap is
+        enforced by exact recomputation, oldest negative first)
+  SXF   counterfeit shadow: random masks of the same size (proj_rand)
+
 Every E1 arm is chiasma.organisms.Organism unchanged.
 """
 from typing import Optional
@@ -39,7 +47,11 @@ class E1bOrganism(Organism):
                 O4LW=dict(neg="proj", consolidate=True, seams="lazy", weldable=True),
                 O0F=dict(neg="proj", consolidate=False, seams="none", factor=True),
                 O3WF=dict(neg="proj", consolidate=True, seams="none", weldable=True, factor=True),
-                O4LWF=dict(neg="proj", consolidate=True, seams="lazy", weldable=True, factor=True))
+                O4LWF=dict(neg="proj", consolidate=True, seams="lazy", weldable=True, factor=True),
+                S0F=dict(neg="none", consolidate=False, seams="none", factor=True),
+                SRF=dict(neg="raw", consolidate=False, seams="none", factor=True),
+                SPFF=dict(neg="proj", consolidate=False, seams="none", factor=True, neg_factor=True),
+                SXF=dict(neg="proj_rand", consolidate=False, seams="none", factor=True))
 
     def __init__(self, arm, m, cap, seed=0, pevict=False):
         super().__init__(arm, m, cap, seed)
@@ -50,6 +62,10 @@ class E1bOrganism(Organism):
         self._fcache = FactorCache()
         if self.factor:
             self.events["rules"] = 0
+        self.neg_factor = bool(self.ARMS[arm].get("neg_factor"))
+        self._ncache = FactorCache()
+        if self.neg_factor:
+            self.events["neg_rules"] = 0
 
     def nbytes(self):
         b = super().nbytes()
@@ -61,10 +77,30 @@ class E1bOrganism(Organism):
         self.events["rules"] = rules
         flat = sum(popcount(p) for p in premises)
         P = b["P"] - flat + stored + RULE_BYTES * rules
-        return {"P": P, "N": b["N"], "U": b["U"], "total": P + b["N"] + b["U"]}
+        N = b["N"]
+        if self.neg_factor:
+            negs = [n for lst in self.proj.values() for n in lst]
+            nstored, nrules, nops = self._ncache.get(negs)
+            self.ops += nops
+            self.events["neg_rules"] = nrules
+            N = N - sum(popcount(n) for n in negs) + nstored + RULE_BYTES * nrules
+        return {"P": P, "N": N, "U": b["U"], "total": P + N + b["U"]}
 
     def _enforce_cap(self) -> None:
-        super()._enforce_cap()
+        if self.neg_factor and self.cap is not None:
+            # factored N: per-item flat costs are not exact, so recompute after each eviction
+            total = self.nbytes()["total"]
+            while total > self.cap and self.proj_order:
+                name, n = self.proj_order.pop(0)
+                lst = self.proj.get(name, [])
+                if n in lst:
+                    lst.remove(n)
+                self.events["evicted"] += 1
+                total = self.nbytes()["total"]
+            if total > self.cap and not self.pevict:
+                self.events["over_budget"] += 1
+        else:
+            super()._enforce_cap()
         if not self.pevict or self.cap is None:
             return
         total = self.nbytes()["total"]
@@ -114,7 +150,7 @@ class E1bOrganism(Organism):
 
 
 E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U", "O3W", "O4LW"]
-FACTOR_ARMS = ["O0F", "O3WF", "O4LWF"]
+FACTOR_ARMS = ["O0F", "O3WF", "O4LWF", "S0F", "SRF", "SPFF", "SXF"]
 UNCAPPED = {"O3U", "CEIL"}
 
 

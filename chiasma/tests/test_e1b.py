@@ -154,6 +154,59 @@ class TestWorldD(unittest.TestCase):
         self.assertLess(5 * pb, 4 * pa)              # factoring saves > 20% of P on PW-D
 
 
+class TestShadowArms(unittest.TestCase):
+    """HADES-30: the shadow variants differ from O0F only in the failure memory N."""
+
+    def _org_after(self, arm, w, cap=None, steps=1500):
+        from chiasma.e1b.world_d import stream_d
+        org = arms.make(arm, w.spec.m, cap, 0, pevict=cap is not None)
+        for t, ph, x in stream_d(w):
+            if t >= steps:
+                break
+            org.observe(x, w.observe(x, ph))
+        return org
+
+    def setUp(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d
+        self.w = make_world_d(WorldSpecD(), 31)
+
+    def test_memory_kinds(self):
+        s0 = self._org_after("S0F", self.w, steps=400)
+        sr = self._org_after("SRF", self.w, steps=400)
+        sx = self._org_after("SXF", self.w, steps=400)
+        self.assertEqual(s0.nbytes()["N"], 0)
+        self.assertFalse(s0.raw or s0.proj)
+        self.assertTrue(sr.raw and not sr.proj)
+        self.assertTrue(sx.proj and not sx.raw)
+        for arm in ("S0F", "SRF", "SPFF", "SXF"):
+            o = arms.make(arm, 8, None)
+            self.assertFalse(o.do_cons, arm)
+            self.assertTrue(o.factor, arm)
+
+    def test_counterfeit_shadow_differs_in_content(self):
+        # SXF is O0F's configuration with neg="proj_rand"; with true content they coincide
+        a = self._org_after("O0F", self.w, steps=300)
+        x = self._org_after("SXF", self.w, steps=300)
+        self.assertTrue(x.proj)
+        self.assertNotEqual(a.proj, x.proj)
+
+    def test_factored_shadow_is_lossless_and_smaller(self):
+        from chiasma.e1b.factor import expand, factorize
+        a = self._org_after("O0F", self.w, steps=600)
+        b = self._org_after("SPFF", self.w, steps=600)
+        self.assertEqual(a.proj, b.proj)                       # same stored negatives uncapped
+        negs = [n for lst in b.proj.values() for n in lst]
+        seqs, rules, _ops = factorize(negs)
+        self.assertEqual([expand(q, rules) for q in seqs], negs)
+        self.assertLess(b.nbytes()["N"], a.nbytes()["N"])
+        self.assertEqual(b.nbytes()["P"], a.nbytes()["P"])
+
+    def test_factored_shadow_cap_is_exact(self):
+        b = self._org_after("SPFF", self.w, cap=650, steps=600)
+        self.assertLessEqual(b.nbytes()["total"], 650)
+        self.assertGreater(b.events["evicted"], 0)
+
+
 def _consolidated_cell(arm: str):
     """A cell over {0,1,2} with literal 0 implying 1 and 2 in every object seen."""
     org = arms.make(arm, 8, None, 0)

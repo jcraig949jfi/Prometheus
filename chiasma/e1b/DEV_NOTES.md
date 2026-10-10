@@ -322,3 +322,57 @@ failure geometry and revision that retract false abstractions with less damage.
   fixed.
 - A confirmatory prereg for (i) can be drafted now (O0F beats O0 at caps 600-700 on
   PW-D, 8/10 per cap). Its freeze waits on G3 like the rest.
+
+## 13. dev-6: shadow compression under PW-D binding caps (HADES-30; 250 runs, 4.57 CPU core-hours; chiasma/runs/e1b-dev-6/)
+
+One variable: the failure memory N. The geometry is fixed (O0's, factored, never
+consolidating). The cap binds with pevict. Arms (arms.py):
+- S0F: no N.
+- SRF: raw failures, FIFO.
+- O0F: projected maximal shadow, the charter's compressed failure boundary.
+- SPFF: projected shadow, itself factored (lossless; exact cap loop, oldest negative
+  first).
+- SXF: counterfeit shadow, random masks of the same size.
+Four new tests (memory kinds; the counterfeit differs in content; the factored shadow is lossless, expands back and is
+smaller with identical P; its cap is exact). Mutants 29/29; first pass 28/29 (E27, counterfeit keeps true content, SURVIVED; content test added; MUTATION_first_pass.txt).
+
+Uncapped (dev seed 910001): SPFF halves N with identical errors (16989 -> 8845 bytes,
+460 rules). It costs about 40x the CPU of O0F, which is why dev-6 used 4.57 core-hours.
+
+Wins out of 10 on err_CDE (ties in brackets where they matter):
+
+| cap | O0F>SRF | O0F>SXF | O0F>S0F | SRF>S0F | SPFF>O0F | median err S0F / SRF / O0F / SPFF / SXF |
+|---|---|---|---|---|---|---|
+| 600 | 6 | 5 | 6 | 0 | 2 (6 ties) | 8343 / 8343 / 7079 / 7122 / 8040 |
+| 650 | 9 | 9 | 9 | 2 | 6 (2 ties) | 8343 / 7847 / 6809 / 5071 / 8023 |
+| 700 | 9 | 8 | 9 | 4 | 6 (2 ties) | 8343 / 7560 / 5266 / 3763 / 8025 |
+| 800 | 9 | 8 | 9 | 6 | 7 (2 ties) | 8343 / 7079 / 3735 / 2513 / 7424 |
+| 1200 | 10 | 10 | 10 | 10 | 1 (9 ties) | 8343 / 5486 / 1747 / 1747 / 5343 |
+
+Reading (dev, sizing):
+1. The charter's O3 claim has its first positive signal. A compressed failure boundary
+   beats raw failure memory at matched bytes, 9/10 at caps 650-800 and 10/10 at 1200.
+   It also beats its random counterfeit (content matters) and no failure memory. E1
+   never showed this (O3 beat O2 at most 2/10 there, where N never bound).
+2. Raw failure memory is close to useless under these caps. Whole objects are too
+   expensive, so SRF holds a handful and matches no-memory at 600.
+3. Factoring the shadow lowers the median further (2513 vs 3735 at cap 800). Per seed it
+   is mixed (6-7/10, below the 8/10 bar), and it is expensive in CPU. Not a claim yet.
+4. Together with s11: on PW-D under a binding budget, lossless compression of BOTH
+   meshes (factored geometry, projected shadow) beats every flat or raw alternative
+   tested. The positive mesh and the negative mesh compress differently: factoring for
+   one, projection onto support for the other.
+5. Still absent: the revision half (provenance, seams). In PW-D nothing is pruned, so
+   nothing is revised. The charter's "retract entrenched false abstractions with less
+   collateral" is untested in the one world where compression pays.
+
+## 14. Candidate confirmatory package (draft; freeze waits on G3)
+
+On PW-D, fresh evaluation seeds, pevict, caps 650/700/800:
+- D1: O0F beats O0 (factored vs flat geometry), at least 8/10 per cap.
+- D2: O0F beats SRF and SXF (projected vs raw and counterfeit shadow), at least 8/10 per cap.
+- D3 (secondary, not deciding): SPFF vs O0F.
+Plus the E1b C1/C2 pair (s8) on PW-H/H3. Predictions: D1, D2, C1, C2 confirm; D3 mixed.
+The revision question needs a world where compression pays AND is wrong somewhere:
+PW-Dm (the marker variant, s11) is that world, where pruning the core down to its
+marker is cheap and false. HADES-31 sizes the revision arms there.
