@@ -12,7 +12,7 @@ date, purged after 24 h (base role s7).
       prereg v2 A1; ~60 short generations) when the GPU is idle 60 s, lease spectrex5:gpu0;
       dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-11T14:30Z)
-- [ ] Machines/Pantheon tabs: re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
+- [ ] Machines/Pantheon tabs (+ per-engine CPU sample in the local probe, for Achilles #2090): re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
       upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
 - [ ] Atlas copy each loop tick: python -m pan atlas snapshot (skips unless Atlas harvested)

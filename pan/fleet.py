@@ -198,6 +198,68 @@ def parse_kv(text):
     return f
 
 
+def _engine_label(p):
+    """An engine label for a process: 'python <script under the repo or -m module>' for Python, else the image
+    name; plus the repo/worktree directory it runs in. Command-line ARGUMENTS are never kept."""
+    name = (p.name() or "").lower()
+    cmd = p.cmdline()
+    eng = name
+    if name.startswith("python") or name in ("py.exe", "pythonw.exe"):
+        mod = None
+        for i, a in enumerate(cmd[1:], 1):
+            if a == "-m" and i + 1 < len(cmd):
+                mod = "-m " + cmd[i + 1]
+                break
+            if a.endswith(".py"):
+                a = a.replace(chr(92), "/")
+                m = re.search(r"(?:Prometheus-worktrees/[^/]+/|Prometheus/)(.+[.]py)$", a, re.I)
+                mod = m.group(1) if m else a.split("/")[-1]
+                break
+        eng = "python " + (mod or "?")
+    where = None
+    try:
+        cwd = p.cwd().replace(chr(92), "/")
+        m = re.search(r"(Prometheus-worktrees/[^/]+|Prometheus(?:-data)?/[^/]+)", cwd, re.I)
+        where = m.group(1) if m else None
+    except Exception:
+        pass
+    return eng, where
+
+
+def engine_sample(seconds=10.0, top=10):
+    """Read-only CPU sample of the local host: [{engine, where, procs, cores}] for the busiest engines over
+    `seconds` (cores = share of one logical CPU; the idle process is left out). None without psutil."""
+    try:
+        import psutil
+    except ImportError:
+        return None
+    import time
+    procs = []
+    for pr in psutil.process_iter():
+        try:
+            pr.cpu_percent(None)
+            procs.append(pr)
+        except Exception:
+            pass
+    time.sleep(seconds)
+    agg = {}
+    for pr in procs:
+        try:
+            if pr.pid == 0:
+                continue
+            c = pr.cpu_percent(None) / 100
+            k = _engine_label(pr)
+        except Exception:
+            continue
+        a = agg.setdefault(k, dict(engine=k[0], where=k[1], procs=0, cores=0.0))
+        a["procs"] += 1
+        a["cores"] += c
+    rows = sorted(agg.values(), key=lambda a: -a["cores"])[:top]
+    for a in rows:
+        a["cores"] = round(a["cores"], 2)
+    return rows
+
+
 def _local_probe():
     if sys.platform != "win32":
         return None, "local probe is written for Windows hosts"
@@ -216,6 +278,7 @@ def _local_probe():
         f["nvidia"] = [dict(name=x.split(",")[0].strip(), vram_mb=int(x.split(",")[1])) for x in out if "," in x]
     except (OSError, subprocess.TimeoutExpired, ValueError):
         f["nvidia"] = []
+    f["engines"] = engine_sample()
     return f, None
 
 

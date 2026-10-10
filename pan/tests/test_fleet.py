@@ -92,3 +92,23 @@ def test_status_buckets():
     h = lambda x: now - dt.timedelta(hours=x)
     assert [fleet.bucket(h(x), now) for x in (1, 30, 200, 800)] == ["active", "week", "month", "inactive"]
     assert fleet.bucket(None, now) == "none"
+
+
+def test_engine_label_keeps_the_script_and_drops_arguments():
+    class P:
+        def __init__(self, name, cmd, cwd):
+            self._n, self._c, self._w = name, cmd, cwd
+
+        def name(self):
+            return self._n
+
+        def cmdline(self):
+            return self._c
+
+        def cwd(self):
+            return self._w
+    eng, where = fleet._engine_label(P("python.exe", ["python", "D:/Prometheus-worktrees/aether-m2/aether/r4_reduce.py",
+                                                       "--token", "SECRET"], "D:/Prometheus-worktrees/aether-m2/aether"))
+    assert eng == "python aether/r4_reduce.py" and where == "Prometheus-worktrees/aether-m2" and "SECRET" not in eng
+    assert fleet._engine_label(P("python.exe", ["python", "-m", "pan", "refresh"], "C:/x"))[0] == "python -m pan"
+    assert fleet._engine_label(P("chrome.exe", ["chrome.exe", "--flag"], "C:/x")) == ("chrome.exe", None)
