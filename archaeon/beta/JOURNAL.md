@@ -847,6 +847,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   register patrol, self-modifying-code latch. The self-modifying route is the best genome in 5/48 here vs ~1/28 in the
   B51/B52/B58 memory worlds. CONC best genomes are all WAIT latches or stateless; patrols appear only in SOLO
   (4/24 vs 0/24) -- plausibly because a patrol across all pools collides with competitors. Tentative; untested.
+- B71 RESULT (04:40Z; 17/18 cells -- SHAM 7103 still running, cannot change any criterion): THIRD WORLD (minimal
+  procedural ecology outside the C6 named set). CONC-SHAM entropy +.62/+1.48/+1.29/+.79/-.02 (4/5 >= .2, MET); CONC
+  HET>HOM 5/5 testable (+.06..+.14, MET); HARDENED rare-type CONC 6/6 wins (bootstrap lo .10-.16 -- the strongest of
+  the three worlds), SOLO 0/4, SHAM 0/2 testable (MET). SOLO/SHAM pops near-monomorphic (168-192/200) or dominance-
+  shaped; SHAM 7106 has entropy 1.58 but no NFD (3rd case of entropy without niches). Note: in this minimal world SOLO
+  HET>HOM is also positive (+.00..+.05), so the function test discriminates less there; the rare-type test does.
+  VERDICT: Finding 4 REPLICATES ON 3/3 WORLDS (P-boom, B-scatter, procedural minimal) at k=4 (and k=8 on P-boom).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

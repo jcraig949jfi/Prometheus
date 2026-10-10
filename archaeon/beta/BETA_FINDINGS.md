@@ -86,7 +86,7 @@ clock.
      self-modifying-code latch (best genome in 5/48). B67/B69's persist-only readout missed code-stored state
      (instrument gap, mine).
 
-## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (2/2 worlds)
+## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
 1. **Sequential coupling has no teeth (B59).** Organisms evaluated one after another on a shared pool see the
    in-episode regeneration equilibrium. Rewards: .2948, then .2895 x19. Its null says nothing about niches.
@@ -118,7 +118,10 @@ clock.
    in 2/6 k=2 populations (solo-like) vs 6/6 k=4 populations.
    At k=8 (B66) the hardened rare-type test gives 4/6, as at k=4: NFD switches on between k=2 and k=4 (a crowding
    threshold), while entropy rises gently (.99 / 1.19 / 1.23 / 1.32 for k = 1/2/4/8).
-7. **Limits.** Two worlds; a third (procedural) world pending (B71).
+7. **Third world (B71).** A minimal procedural ecology from outside the C6 named set, chosen by a pre-set rule:
+   hardened rare-type CONC 6/6 (bootstrap lo .10-.16), SOLO 0/4, SHAM 0/2 testable; entropy and function criteria also
+   met.
+8. **Limits.** C6-generator worlds only; one VM and one search; no cooperation or communication (signal unused).
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
