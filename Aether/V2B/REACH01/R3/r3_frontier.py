@@ -238,8 +238,20 @@ def search(arm, op, seed, batches, batch, backend="gpu"):
             "lineage_parent": lineage_parent}, seen_combine
 
 
+GEOMS = {"R3": ((6, 1), (13, 1), (9, 18)),            # the frozen R3 task (default)
+         "G1": ((8, 1), (10, 1), (9, 6)),             # LADDER01: inputs 2 rows apart, output 5 columns in
+         "G2": ((8, 1), (10, 1), (9, 10)),            # output 9 columns in
+         "G3": ((8, 1), (10, 1), (9, 18))}            # output at the tile edge (R3 distance)
+
+
+def set_geom(name):
+    global INA, INB, OUT
+    INA, INB, OUT = GEOMS[name]
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--geom", choices=sorted(GEOMS), default="R3")
     ap.add_argument("--arm", choices=["A", "B", "C"], required=True)
     ap.add_argument("--op", default="XOR")
     ap.add_argument("--seed", type=int, required=True)
@@ -250,7 +262,9 @@ def main():
     a = ap.parse_args()
     if os.path.exists(a.out):
         return 0
+    set_geom(a.geom)
     res, combos = search(a.arm, a.op, a.seed, a.batches, a.batch, a.backend)
+    res["geom"] = a.geom
     res["schema"] = "aether.reach01.r3.search.v1"
     res["runner"] = RUNNER_VERSION
     npz = a.out[:-5] + "_combine.npz"

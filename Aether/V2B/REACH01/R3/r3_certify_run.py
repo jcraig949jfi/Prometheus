@@ -3,12 +3,14 @@ import json, os, sys
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import r3_certify as C  # noqa: E402
-CAP = 20
+CAP = 10
 def main():
     unit, out = sys.argv[1], sys.argv[2]
     if os.path.exists(out):
         return 0
     u = json.load(open(unit))
+    import r3_frontier as F
+    F.set_geom(u.get("geom", "R3"))
     res = {"schema": "aether.reach01.r3.cert.v1", "unit": os.path.basename(unit), "arm": u["arm"], "op": u["op"],
            "seed": u["seed"], "certified": []}
     if u.get("combine_npz"):
