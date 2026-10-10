@@ -48,3 +48,12 @@ date | call made | what was true | corrected by | changed practice
 - U3-P2/P3 tested a post-hoc mechanism (staging-copier self-damage) that could not affect FIRST origins at all: before
   the first replicator no organism self-copies. The selective block acted 0 times. Rule: before freezing a mechanism
   test, check that the mechanism can operate in the window the endpoint measures.
+
+## 2026-10-10 BEL-RD-72 operational incidents
+- `git archive <commit>` run from a SUBDIRECTORY archives only that subtree: the first E1 pin (b6e0fc97c) lacked the
+  kernel; caught before any run (the chain's cd failed). Rule: pin with `git -C <worktree root> archive <c> prometheus roles/Bellerophon`.
+- Self-kill a third time: `pkill -f 'tar -x -C <pin>'` matched my own shell, whose command line contained the pattern.
+  Rule (restated): never pkill -f in the same command line that contains the pattern; use pgrep -> exact pid.
+- K design review found a leaking attribution endpoint (shared bytes carry uninformative founder tags) -- the same class
+  as DEF-008 (a label that is true of material, not of function). Rule: attribution endpoints are computed only on
+  positions that distinguish the candidate sources.

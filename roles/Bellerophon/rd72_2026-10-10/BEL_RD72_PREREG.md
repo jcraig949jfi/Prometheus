@@ -75,3 +75,25 @@ NONE_PRIOR). Survival and exposure are reported per cell; no run is excluded for
 - E1-c (descriptive): the ordering distribution of BOTH events. "Cumulative" requires LO_FIRST or HI_FIRST or BOTH_PRIOR AND,
   on replay under HalvesWorld, critical bytes from >= 2 epochs; a NONE_PRIOR event or a single-epoch composite is "assembled at once".
 - Every run with a BOTH event is replayed deterministically under HalvesWorld (end-hash must match) for temporal depth.
+
+## 3-A1. K amendment A1 (registered 2026-10-10T12:56:41Z; BEFORE ANY K RUN -- K was held at 0 runs since 10:26:52Z)
+
+Cause: adversarial review of the K design (BEL_RD72_REVIEW_RECORD.md R1). The desert itself SURVIVED (0 competent tapes in
+~3.0e9 two-step neighbours per fixture, 6.0e9 three-substitution, 2.0e9 reduced-alphabet three-step mixed, 8.4M short
+programs; minimum distance 4 substitutions from X, 5 from Y; 0/300,000 random tapes competent). Defects found and fixed:
+(1) TWO_SOURCE leaked: 5 of the composite's 14 competence-critical positions hold identical bytes in X and Y, so their
+founder tags do not say which fixture supplied function; reproduced 9/9 single-source machines labelled two-source.
+NOW: TWO_SOURCE_STRICT = >= 1 critical position where the fixtures DIFFER carrying fixture 0's byte with a transplant0
+tag AND >= 1 carrying fixture 1's byte with a transplant1 tag. (2) Extinction made outcomes trivially null: INFORMATIVE
+run = alive at tick 500; every Fisher test is computed on all runs and on informative runs and passes only if both do;
+K-P1 is NOT_TESTABLE when a cell has < 30 informative runs. (3) K-P4 confounded selection with parent survival: the
+control is now RANDOM_REWARD (same total bonus, no individual link) in every regime; the K-P4 endpoint is COMP_PERSIST
+(a competent FUNC organism alive at tick 1,000), where selection can act; COMP_ANY vs RANDOM_REWARD and vs OFF (OFF kept
+under PARTIAL_BYTE only) are reported, not tested. (4) Dose: X_ONLY and Y_ONLY now carry 16 fixture + 16 copier (REP)
+transplants. (5) XY_SH / XY_NS: under the real physics single-mutation assembly routes are 0 for both (1 for XY_AL);
+the "1 vs >= 2 donor steps" gradient is withdrawn; the cells stay descriptive. (6) Every competent machine is re-checked
+on all 256 inputs (reported).
+Plan tools/plan_k2.py: 1320 727cea06826695868ae7215994ea6599d73470b2623ba9cc7529d11faebbbdc5 (seed base 71.5e12, distinct).
+Analysis tools/analyze_k2.py (synthetic tests incl. the reviewer's mislabel specimen, tools/tests/test_analyze_k2.py).
+K-P1..K-P3 wording otherwise unchanged; K-P4 now reads: XY_AL PARTIAL_BYTE COMP_PERSIST ON > RANDOM_REWARD. plan_k.py is
+superseded and never run.
