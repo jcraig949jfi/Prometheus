@@ -7,9 +7,8 @@ C-012 native execution fabric (OP-NF2, 48 h from 2026-10-10T07:15Z):
 
 - [ ] Operator decision on the review packet's s7 (moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md): A adopt and
       park (lean) / B harden now / C stop / D offer to the RSO Observatory -- awaiting the operator
-- [ ] T001 contract: Pan reviewed s6, no change (#2031); Odysseus #1987 pending (last active 2026-10-03); write
-      contract v0.3 recording what T004-T007 added (receipts and materializations as events, catalog_v, the
-      native runtime, the production schema)
+- [ ] T001 contract: Pan reviewed s6, no change (#2031); Odysseus #1987 pending (last active 2026-10-03);
+      v0.3 written (records T003-T007 as built; asks nothing new of either reviewer) -- Odysseus reviews v0.3
 - [ ] T004 Arm S (P5): only if the operator wants it, M2 idle, under the frozen preregistration
 - [ ] Odysseus backlog proposals (#2026): worker-side capability demand; signal-stopped workers do not deregister
 - (closed 2026-10-10, de91e199e) T002 PostgreSQL publication layer
@@ -31,3 +30,5 @@ Housekeeping:
 
 - [ ] First chartered wake still owes a full read of roles/base-role/MONITORS.md (no loop is owned yet)
 - [ ] evidence_wiki pool leak reported as #2002 to Mnemosyne; await acknowledgement
+- [ ] moonshot/nf/coordinator.py:126 -- a condition line joined by the heredoc backslash defect (cosmetic, same
+      behaviour); re-wrap it with the next code change to that file, tests rerun then

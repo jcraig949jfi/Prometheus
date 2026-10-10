@@ -23,5 +23,5 @@ residual risks: every program login is the postgres superuser, Fabric node worke
   workers cannot demand a capability; database growth ~42 KB per epoch with no retention rule.
 blockers: none hard. Waiting: the operator's decision (packet s7), Odysseus's contract review, the F09 owner's
   answer, Palamedes after C-013 (Lane A).
-next executable action: contract v0.3 (records the T004-T007 additions); then Lane A/B follow-ups as answers
+next executable action: none owed in C-012 until the operator decides (contract v0.3 written); Lane A/B follow-ups as answers
   arrive. No fabric engineering beyond that until the operator decides (lean A: adopt and park).

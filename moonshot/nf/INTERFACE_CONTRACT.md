@@ -1,12 +1,19 @@
-# Fabric / Moonshot / Pan interface contract -- v0.2 (C-012-T001, OP-NF2)
+# Fabric / Moonshot / Pan interface contract -- v0.3 (C-012-T001, OP-NF2)
 
 Owner: Themis (Moonshot). Reviewers: Odysseus (Fabric), Pan (Pan). Date: 2026-10-10.
 Authority: operator OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/). Status: DRAFT FOR REVIEW -- review
-requests sent (comms #1986 Pan, #1987 Odysseus); Odysseus has been offline since 2026-10-03.
+requests sent (comms #1986 Pan, #1987 Odysseus). Pan reviewed s6 (#2031, no change requested); Odysseus has been
+offline since 2026-10-03.
 v0.2 (same day, after T002's mutation table and review of the GREEN tree): s4 records the schema as built --
 validations name the digest they examined, an adverse validation behind an open contest stays pending instead of
 being dropped, guards on chains and contests, TRUNCATE refused on every evidence table, connection-loss semantics.
 Nothing in s1-s3 or s6-s7 changed. The interfaces Pan and Odysseus were asked to review (s3, s6) are as in v0.1.
+v0.3 (same day, after T003-T007 ran): records what was built and measured, with NO change to any interface a
+reviewer was asked about. s3: the dispatch idempotency key as built (it includes the schema), the publisher's
+candidate rule, the runtimes the executor accepts (synthetic.v1 and the native moonshot.native.wforge v1), and
+what T004 measured about the inline checkpoint. s4: record_receipt, record_materialization, the catalog_v view,
+the grants, and where each schema lives (production `moonshot` exists since T007). s6: the lake tables as built
+(six; Pan inspected them, #2031), the settle window and the oracle verdicts. s7: the node runtime as used.
 Design of record for Moonshot semantics: moonshot/epoch/CONTRACT.md v1.1 (C-008), whose IDENTITY rules carry
 over unchanged and whose git TRANSPORT is replaced here.
 
@@ -48,16 +55,41 @@ rows and database ids are locators and accounting, never identity. The C-008 kno
 Calls Moonshot makes into Fabric (Python API of fabric.store, read-only except submit):
 - `submit(principal="Themis", executor="script", base_sha=<approved>, params={"module": "moonshot.epoch.fabric_exec",
   "args": [...], "wall_s": N}, required_caps=["fabric.runtime==0.2", "moonshot.epoch.v1"],
-  idempotency_key="moonshot/<namespace>/<chain>/<k>/g<generation>[-r<i>]", metadata={"moonshot": {...}},
-  campaign_id="C-012", host_affinity=<optional, for the two-node race>)`.
+  idempotency_key="moonshot/<schema>/<namespace>/<chain>/<k>/g<generation>[-r<i>][-sha<12>][<tag>]",
+  metadata={"moonshot": {schema, chain_id, namespace, epoch_index, expected_parent, expected_generation}},
+  campaign_id="C-012", host_affinity=<optional, for the two-node race>)`. As built (v0.3): the schema is part of
+  the key, so a test, qualification or benchmark schema can never collide with production keys; `-r<i>` only for
+  replicas; `-sha<12>` only when a test dispatches a base other than the chain's approved one; `<tag>` is a
+  caller-chosen suffix for a deliberate re-dispatch of the same epoch and generation (the benchmark uses it after a
+  non-PUBLISHED classification).
 - `get_task`, attempts and `artifact_content` reads (read-only). Nothing else; no lease, reap or finish calls.
 - Node workers (s7) are Fabric workers run exactly per fabric/FREEZE.md "Node runtime", named
   `worker.<host>.moonshot`, caps `moonshot.epoch.v1`, executors `script` only.
+- Publisher candidates (as built, 01936df0a): the succeeded attempt of each completed task submitted by the
+  Moonshot principal whose metadata names this schema, skipping tasks already classified in `<schema>.attempts`.
+  (Fabric clears tasks.current_attempt when an attempt ends, so that column cannot be the skip key; using it made
+  every pass refetch every completed task.)
 
 The executor receives only its args and FABRIC_OUT_DIR (Fabric's script executor gives it no database or network
 configuration). For synthetic epochs the 4 KB input checkpoint travels inline as a base64 argument with its sha256,
 and the executor refuses a mismatch. Native epochs with large checkpoints need an object-fetch path: DESIGN ITEM,
-not built (Fabric artifacts are capped at 16 MB each).
+not built (Fabric artifacts are capped at 16 MB each). Measured by T004 (v0.3): the inline checkpoint is then
+stored three times -- in fabric.tasks params (base64), as a Fabric artifact blob and as a Moonshot object -- and
+Fabric's per-attempt record is about two thirds of the database's growth per epoch (~42 KB at the margin). The
+proposed fix, checkpoints by reference (a checkpoint_refs row: sha256, bytes, uri; identity unchanged), is a
+schema v2 item, cut only when a workload needs it. With Fabric's 1 s idle poll and one epoch in flight per chain,
+an epoch needs at least a few seconds of work for coordination to stay small (T* = 3 s on two nodes).
+
+Runtimes the executor accepts (the genesis names one; `moonshot.epoch.runtime.REGISTRY`):
+- `moonshot.synthetic` v1 (synthetic.v1, C-008): deterministic CPU busy-work, the benchmark and fault-injection
+  workload.
+- `moonshot.native.wforge` v1 (C-012-T007): one wforge Encounter -- the world wforge's grammar expands from a
+  genome -- advanced ticks_per_epoch ticks per epoch, the checkpoint holding the Encounter's ENTIRE state (chained
+  epochs == one monolithic run, tick for tick). Spec params: genome, world_id (must be the genome's),
+  episode_seed, ticks_per_epoch, policy {"name": "affordable-seeded", "version": 1, "seed"}, wforge_world_sha256
+  (sha256 of wforge's world.py + genome.py, LF-normalised). A different wforge implementation, world or episode is
+  REFUSED, so a repaired wforge is a different runtime input, never a silent change. The policy is fixed
+  plumbing: it never takes an unaffordable action, so wforge's F09 defect path is avoided, not repaired.
 
 ## 4. The Moonshot schema (versioned; `moonshot/nf/schema.sql`, meta.schema_version = 1)
 
@@ -104,6 +136,21 @@ Functions (PL/pgSQL, SECURITY DEFINER, owned by a NOLOGIN owner role, fixed sear
   k-1 with that epoch's checkpoint, generation +1); otherwise UNRESOLVED (still open, still halted, resolvable
   later). After UPHELD or OVERTURNED, the earliest pending adverse validation of a live epoch opens the next contest.
 - `create_chain(...)` (the genesis bytes must describe the row), `put_object(...)`.
+- `record_receipt(chain, receipt_bytes, actor)` (v0.3): stores a canonical receipt content-addressed and appends a
+  `receipt` event naming its sha256 with the head it describes (index, generation, state).
+- `record_materialization(report, actor)` (v0.3): appends a `materialization` event carrying a lake run's report
+  (per table: appended, watermark, lake and Postgres counts, oracle verdict) -- Moonshot's own record, never pan.run.
+- View `catalog_v(object_sha256, kind, title, summary, published_at, ref)` (v0.3): one row per LIVE published
+  epoch (rejected publications excluded); object_sha256 = the epoch's manifest sha256, kind 'moonshot.epoch',
+  ref '<schema>:<chain>/<k>'. Pan's collector reads it (s6).
+
+Grants (EXECUTE only; PUBLIC has nothing): coordinator -- create_chain, put_object, record_receipt,
+record_materialization; publisher -- publish, record_attempt_outcome, put_object; validator -- record_validation;
+resolver -- resolve_contest; reader -- SELECT.
+
+Where the schema lives (v0.3): production `moonshot` on M1, created by C-012-T007's run N20261010A
+(2026-10-10T11:23Z), schema_version 1; `moonshot_qual` holds the qualification evidence (T003 Q20261010A, T005
+D20261010A); throwaway `moonshot_t_*` (tests) and `moonshot_b_*` (T004 benchmark points) are dropped after use.
 
 Division of labour on verification. The database checks every byte hash, the manifest's position and the lineage
 guard. It cannot recompute work_id and epoch_digest (jsonb is not canonical JSON), nor whether SPEC is the one the
@@ -160,13 +207,25 @@ submitter could make a node RUN unapproved code; Moonshot cannot prevent that ex
   in the canonical trace), `record` (the canonical JSON text where kept), `object_sha256` for content addresses (not
   blob_sha, which means a git blob in Pan's tables); plus `publication_id` (orders the watermark), `published_at`
   (world time, from Postgres), `materialized_at`, `materializer` (instance id).
+  As built (v0.3; the tables Pan inspected, #2031): SIX tables, contests split in two so each is append-only --
+  epochs (key publication_id), trace_lines (publication_id + line_no), attempts (the classification event_id),
+  validations (validation_id), contests_opened (contest_id), resolutions (the resolution event_id). Qualification
+  tables carry the prefix `qual_` (Pan: keep them); production tables have none and were first written by T007.
 - Idempotent and recoverable: each append carries a watermark (the last publication id it covers) in the new
   snapshot's summary; a restart reads the CURRENT snapshot's watermark and resumes after it, so a crash between the
   Iceberg commit and anything else neither loses nor duplicates rows. Oracle per run: row counts per table vs
   Postgres, logged in Moonshot's own records (not pan.run).
+  As built (v0.3): each table's watermark is the largest of ITS key covered. A row is eligible once older than a
+  settle window (default 60 s, server clock), because a transaction that drew a smaller key can commit after a
+  larger one. The oracle compares keys, not only counts: OK, or MISSED (Postgres rows behind the watermark absent
+  from the lake, with their keys), INVENTED (lake rows Postgres does not have) or DUPLICATED (a key twice); a
+  MISSED row is restored exactly by a repair run. One materializer per (schema, namespace) at a time (a Postgres
+  advisory lock). Reports go to record_materialization (s4).
 - Catalogue (pull): a stable view `moonshot.catalog_v(object_sha256, kind, title, summary, published_at, ref)`
   of PUBLISHED EPOCHS (not trace lines); Pan's refresh collects it into pan.artifact (source 'moonshot'). While
-  logins are superuser Pan's collector can read it; with per-role logins it needs moonshot_reader.
+  logins are superuser Pan's collector can read it; with per-role logins it needs moonshot_reader. Built (v0.3):
+  live epochs only (s4); Pan's collector pan/moonshot_index.py (229fe50a4) reads moonshot.catalog_v and
+  moonshot_qual.catalog_v, whichever exist.
 - Size: synthetic epochs are bytes; < 50 MB is fine (Pan); the lake volume has ~630 GB free.
 - Publication never waits on the lake; a lake outage only delays materialization.
 
@@ -177,6 +236,12 @@ pre-freeze, so a separate detached worktree at the same commit is used; nothing 
 modified. Workers: `EW_DB_HOST=192.168.1.202 python3 -m fabric worker --agent worker.<host>.moonshot --caps
 moonshot.epoch.v1 --executors script`. Fault injection for the conflicting-result race is node-local (a file
 under /var/tmp naming a TEST namespace) so no task submitter can trigger it; production namespaces ignore it.
+As used (v0.3; T003, T004, T007): BOTH nodes run the workers from a dedicated checkout `~/fabric-runtime-moonshot`
+at 9c022347e (clean; verified 2026-10-10T11:53:16Z) with work root `~/fabric-work-moonshot`; each node's own
+`~/fabric-runtime` is untouched (ubu001 at 9c022347e, ubu002 still pre-freeze 78156ba1d). T003 and T007 ran on
+the canonical Fabric schema with `--poll-s 2 --idle-exit-s 1800`; T004 set FABRIC_SCHEMA to a throwaway schema
+per point with `--poll-s 1 --idle-exit-s 900`. Workers are stopped after each window; none runs between windows
+(0 at the verification above).
 
 ## 8. Review record
 
@@ -184,3 +249,8 @@ under /var/tmp naming a TEST namespace) so no task submitter can trigger it; pro
 |---|---|---|
 | Pan | comms #1986, 2026-10-10 | questions answered #2004 (s6 rewritten to match); committed text reviewed #2031 (2026-10-10T10:01Z): "no change requested to s6"; collector built against catalog_v |
 | Odysseus | comms #1987, 2026-10-10 | pending (offline since 2026-10-03) |
+
+v0.3 asks nothing new of either reviewer: it records the system as built and measured. Pan's interface (s6) is
+the one Pan reviewed and inspected; Moonshot's use of Fabric (s3) is unchanged (submit, reads; no lease, reap or
+finish calls), and the as-built key and candidate rule are Moonshot-side. Odysseus's review, when it comes, is
+of v0.3. T001 stays open until then.
