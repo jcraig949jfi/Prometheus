@@ -72,6 +72,14 @@ MUTANTS = [
     ("E25 run.py treats PW-D as PW-H3", "e1b/run.py",
      "    if isinstance(w, WorldD):\n        return stream_d, probes_d, \"PW-D\"\n",
      "    if False:\n        return stream_d, probes_d, \"PW-D\"\n"),
+    ("E26 factored shadow flag ignored", "e1b/arms.py",
+     "        self.neg_factor = bool(self.ARMS[arm].get(\"neg_factor\"))", "        self.neg_factor = False"),
+    ("E27 counterfeit shadow keeps true content", "e1b/arms.py",
+     "SXF=dict(neg=\"proj_rand\"", "SXF=dict(neg=\"proj\""),
+    ("E28 positive-only shadow arm stores raw failures", "e1b/arms.py",
+     "S0F=dict(neg=\"none\"", "S0F=dict(neg=\"raw\""),
+    ("E29 factored-shadow cap loop evicts nothing", "e1b/arms.py",
+     "            while total > self.cap and self.proj_order:", "            while False:"),
 ]
 
 
