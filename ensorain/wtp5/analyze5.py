@@ -125,7 +125,7 @@ def curves(rows, path_png=None):
 def verdict(screen_tab, deep_tab, admission, controls_ok, planted_ok):
     v = {}
     v["INSTRUMENT_FAILURE"] = (not planted_ok) or not any(a["label"] in ("DESERT_CONTROL", "GOLDILOCKS") for a in admission)
-    final = deep_tab or screen_tab
+    final = dict(screen_tab, **(deep_tab or {}))     # cells killed at SCREEN keep their SCREEN rows (not vacuous)
     crossed = []
     for k, c in final.items():
         world = "-".join(c["spec"].split("-")[:2])
