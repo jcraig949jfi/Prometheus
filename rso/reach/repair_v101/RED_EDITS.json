@@ -1,0 +1,23 @@
+{
+ "schema": "prometheus.argus.red_edits.v1",
+ "task": "C-013-T013",
+ "note": "E1, E3, E4 copied verbatim from rso/reach/challenge/D1/edits.json (Pallas, C-013-T011, commit 1e0c9c1bc). M80 is the integrator's finding in ops/campaigns/C-013/tasks/C-013-T010/TASK.json (INTEGRATED note, Palamedes 09:33Z: 'mutating certify.selection_ok from >= 90% to >= 80%'), rendered here as the one-token edit 9 -> 8 in the integer form of the threshold. Each edit is applied once (find count must be 1), the named test is run in a -B subprocess, the file is restored byte-for-byte and verified.",
+ "edits": [
+  {"id": "E1_CERT_SELECTION_ON_TRAINING", "file": "rso/reach/certify.py",
+   "find": "sel = ru.evaluate(prog, store0, P, SELECT0, N_SELECT, sealed=False)[\"counts\"]",
+   "replace": "sel = ru.evaluate(prog, store0, P, TRAIN0, N_TRAIN, sealed=False)[\"counts\"]",
+   "test": "rso/reach/tests/test_repair_v101.py::test_selection_reads_the_selection_lives_not_the_training_lives"},
+  {"id": "E3_ANALYZE_NO_HOLM", "file": "rso/reach/analyze.py",
+   "find": "sep = adj[name] <= ALPHA",
+   "replace": "sep = raw[name] <= ALPHA",
+   "test": "rso/reach/tests/test_repair_v101.py::test_holm_not_the_raw_p_decides_separation"},
+  {"id": "E4_RUNNER_RESUME_DROPS_PRIOR_CPU", "file": "rso/reach/run_d1.py",
+   "find": "cpu, status = sum(r[\"cpu_s\"] for r in prior), \"COMPLETE\"",
+   "replace": "cpu, status = 0.0, \"COMPLETE\"",
+   "test": "rso/reach/tests/test_repair_v101.py::test_resume_counts_the_cpu_already_in_the_ledger"},
+  {"id": "M80_SELECTION_THRESHOLD_80", "file": "rso/reach/certify.py",
+   "find": "out[\"selection_ok\"] = 10 * int(sel[wm.T_PROBE, 1]) >= 9 * int(sel[wm.T_PROBE, 0])",
+   "replace": "out[\"selection_ok\"] = 10 * int(sel[wm.T_PROBE, 1]) >= 8 * int(sel[wm.T_PROBE, 0])",
+   "test": "rso/reach/tests/test_repair_v101.py::test_the_90_percent_selection_boundary_builder7_misses_by_one_probe"}
+ ]
+}

@@ -1,4 +1,7 @@
-# D1 -- archive-arm ladder on the p1_slice reach world: PREREGISTRATION v1.0.0
+# D1 -- archive-arm ladder on the p1_slice reach world: PREREGISTRATION v1.0.1
+
+Version: v1.0.1 = v1.0.0 (frozen at 307afe4b1, sha256 879efd39) + wording-only amendment A1 (s9). Where A1 restates
+a line of s4, s5 or s7, A1 governs; every number in s2-s6 is unchanged.
 
 C-013-T010, Argus[harry1-6417c3ea] (claude-opus-5-5, Q2), 2026-10-10. Frozen by FREEZE_D1.md BEFORE any confirmatory
 lineage has been executed. The run is C-013-T012, after Pallas's Q3 challenge (C-013-T011); Pallas receives no outcome
@@ -147,3 +150,56 @@ Effects smaller than the s6 power table. Anything about other engines.
 Any change to s2-s7 after FREEZE_D1 and before the run is a versioned amendment committed BEFORE the first confirmatory
 lineage, with its reason; the runner refuses to start if any frozen file's hash differs from FROZEN_D1.json. A change
 after any confirmatory lineage has run makes the run exploratory and is reported as such.
+
+### Amendment A1 (v1.0.0 -> v1.0.1), wording only -- C-013-T013, Argus[harry1-91546d7d], 2026-10-10
+
+Committed BEFORE the first confirmatory lineage (none has run: no rso/reach/runs/ exists at this commit; seed 20261011
+lineages 0..23 untouched). Reason: Pallas's Q3 challenge of the v1.0.0 freeze (C-013-T011,
+rso/reach/challenge/D1/REPORT.md, s3 and s4) found the registered test, stopping rule and certification code sound and
+nothing blocking, but three s7 rows, one s5 description and one s4 phrase that the frozen ledger cannot support as
+written. Authority: operator ruling 2026-10-10 s4 (one bounded repair round); packet C-013-T013. Unchanged, and not
+reopened: the arms, seeds, budgets, B_d, the test, alpha, Holm over five, the power table, the CPU cap and its numbers,
+the 12-round minimum, the certification rule (90% on lives 2000..2063, sealed PASS, oracle agreement), the controls.
+No code that the run executes changes in this amendment; the behavioural tests it adds are listed at the end.
+
+A1.1 (s4, CPU cap; REPORT.md:111-117, F4). For "outcome-independent stopping" read "OUTCOME-SYMMETRIC stopping". The
+stop time depends on outcomes (a hit ends a lineage early and only hits are certified, so the CPU spent per round
+moves with the round's outcomes; S1 saw N vary 20-22 under the cap). What the test's validity needs is that the
+per-round cost is the same symmetric function of all 18 arms' outcomes, so the cap cannot favour an arm; S1 measured
+the size under the cap at 0.002-0.027 (<= alpha everywhere).
+
+A1.2 (s5, certification; REPORT.md:121-146, P1 / E2 / E1). (a) The selection lives 2000..2063 (certify.SELECT0,
+N_SELECT) are a band of their own: they lie in none of the prototype rulers' declared bands (TRAIN 0..999, SELECT
+1000..1999, SEALED >= SEALED_BASE) and are disjoint from training (0..15), from reach.py's confirm block (1000..1063)
+and from every sealed block. (b) The sealed class-exclusion ruler is the REPORTING block (the numbers a result quotes
+come from lives the search never saw, exposure hygiene), NOT a second discriminator: on every program tried (the
+target, 24 synonyms, the impostors, builder(4..8), 24 random programs) the selection gate alone decided, and every
+program failing selection had sealed INDETERMINATE or PASS, never FAIL. "Certified" therefore means: at least 90% of
+BUILD probes correct on the 64 selection lives AND oracle agreement (with sealed PASS, which has not been observed to
+bind). The boundary is a 7-of-8 mechanism: builder(7) scores 449/500 = 89.8% on the selection lives and is
+NOT_CERTIFIED by one probe (pinned by tests/test_repair_v101.py). (c) The selection block is not oracle-rechecked
+(only the training and sealed blocks are); recorded, not changed.
+
+A1.3 (s6/s7, direction; REPORT.md:84-94, B1 / P4). Every s7 verdict row is a statement POOLED OVER d = {1, 3, 8}:
+"X3 > X2" means the pooled certified count of X3 exceeds X2's and the stratified test separates. The result must
+print the per-(arm, d) counts (RESULT.json `cells`) beside each separating contrast; where any stratum's direction
+opposes the pooled sign, the row's mechanism gloss does not apply at that d and the result says so for that d
+(the post-hoc probe posthoc_p4.json shows a separation with two of three strata opposed is possible). s6 unchanged.
+
+A1.4 (s7, rows restated). The table in s7 is read with these rows replacing the v1.0.0 wording; rows not listed are
+unchanged (C1, C3, "nothing separates").
+
+| reading | permitted conclusion (v1.0.1) |
+|---|---|
+| C2 separates, X1 > chain | keeping cell elites with best-cell parent choice raises the pooled certified-reach rate here; NOT that the near-target start is retained (an equal-score same-cell child replaces the elite, arms.py:228-229; REPORT.md:187-190) |
+| C4 separates, X3 > X2 | admitting, and preferentially selecting (a new cell enters with chosen = 0, the maximum weight, arms.py:207, 230-231), worse-but-new genomes changes the pooled rate, with an archive several times larger than X2's (B3: X2 at the end held 10-15% of X3's cells). A RATE statement only: D1 records no route (no parent chain, no cells passed through; run_d1.py:64-74, REPORT.md:180-183), so "the route crosses downhill steps" is withdrawn |
+| C5 separates, X3 > X3G | the behaviour-cell structure matters beyond FINAL archive size. The X3G control is matched at the END of the budget only: it fills 87-99% of its buckets by b/8 .. b/4 and admits its children almost unfiltered, so its parent pool is larger for most of the run (REPORT.md:166-178); a difference in either direction may be a parent-pool-size or admission-rate effect. NOT that the descriptor kept stepping stones |
+| C5 separates, X3G > X3 | a structure-free archive matched in FINAL size does better: the descriptor is not what helps at this budget; the same end-of-budget caveat applies |
+| C4 or C5 X3 > ... with the stepping-stone counts | WITHDRAWN as an inferential row. The stone instrument counts a genome on a shortest path only by exact equality of all four fields of every row (arms._path_restored, arms.py:105-130); an exact restoration costs about 1.2 M proposals on average, six times the lineage budget, and development lineages evaluated zero stones under both the exact and a functional predicate (REPORT.md:149-164, B2a / B2b / P3). The counts are reported (s6 secondary) with the sentence "stone counts cannot support or refute path preservation at this budget and operator"; no conclusion about off-path routes or parent diversity is drawn from them. A functional-equivalence stone count may be added later only as a labelled secondary, never as a claim |
+| any certified hit in any arm | a CERTIFIED builder (s5 / A1.2: >= 90% on the 64 selection lives, oracle-agreeing) is reachable from that start by that search at that budget -- not necessarily builder_min or a synonym of it (REPORT.md:185-186, F1) |
+
+A1.5 Behavioural pins added with this amendment (rso/reach/tests/test_repair_v101.py; RED evidence
+rso/reach/repair_v101/red_rows.jsonl). Each fails on its mutant applied verbatim and passes on the frozen code:
+E1 selection reads the selection lives (certify.py:52); E3 Holm, not the raw p, decides SEPARATES (analyze.py:93); E4
+--resume counts the CPU already in the ledger (run_d1.py:141); M80 the 90% threshold (certify.py:54) with builder(7)
+at 449/500 as the boundary witness. Until v1.0.0 these lines were held only by the hash manifest.
