@@ -1,0 +1,72 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T003",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T082606Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "start_sha": "de91e199e4e1f0ed7e5d84ac5d4822701c18e60a",
+ "end_sha": "2bd2804524ecce5f12f12f3ca100a80c5cc7ca51",
+ "files_changed": [
+  "moonshot/epoch/fabric_exec.py",
+  "moonshot/nf/coordinator.py",
+  "moonshot/nf/pg.py",
+  "moonshot/nf/schema.sql",
+  "moonshot/nf/tests/test_fabric_exec.py",
+  "moonshot/nf/tests/test_coordinator.py",
+  "moonshot/nf/tests/fake_exec.py",
+  "moonshot/nf/INTERFACE_CONTRACT.md",
+  "ops/campaigns/C-012/evidence/T002/mutate_pg.py",
+  "ops/campaigns/C-012/evidence/T003/mutate_t003.py",
+  "ops/campaigns/C-012/evidence/T003/MUTATION_TABLE.json",
+  "ops/campaigns/C-012/evidence/TWO_NODE/run_two_node.py",
+  "ops/campaigns/C-012/evidence/TWO_NODE/Q20261010A/"
+ ],
+ "evidence_added": [
+  "moonshot/nf/tests/test_fabric_exec.py (12): the executor as Fabric's script executor runs it; refusals; node-local faults only in test namespaces; no DB/network/subprocess/git imports (AST scan)",
+  "moonshot/nf/tests/test_coordinator.py (19): throwaway Fabric + Moonshot schemas, worker simulated with Fabric's own calls: end to end = C-008 identity; validation; receipts; idempotent dispatch; once-only classification; accounting outside the trace; Fabric retry; races; INVALID; three provenance refusals; a forged identity slipped past verification caught by replay and overturned; straggler STALE; publisher killed in its transaction; lost acknowledgement; the publisher CLI",
+  "ops/campaigns/C-012/evidence/T003/MUTATION_TABLE.json: 16 planted bugs",
+  "ops/campaigns/C-012/evidence/TWO_NODE/Q20261010A/: RUN.json, DB_SUMMARY.json (outcomes, contests, replay digests, UNVALIDATED intervals), receipts/, preflight before/after, audit.json, node worker logs, reap record"
+ ],
+ "evidence_executed": [
+  "RED at e476813d2 (M2): Ran 27, failures=10, errors=16 (NotImplementedError: C-012-T003); the import-boundary test passed against the stub",
+  "GREEN code at 798f58456 (M2): moonshot/nf suites 69 OK, 31.8 s",
+  "mutation table vs 798f58456: 15/16 killed; TM04b EQUIVALENT (exclusive writes are a backstop behind the existing-output check); the harness had counted a target that failed to load as a kill -- fixed (TARGET_ERROR) before the recorded run",
+  "publisher CLI + coordinator-level crash/lost-ack tests at c1627193d: moonshot/nf suites 72 OK, 42.9 s (M2); same on the merged tree 55c74f7cb",
+  "two-node run Q20261010A, window 2026-10-10T08:41:09Z-08:55:31Z, ubu001 + ubu002 (Fabric v0.2 9c022347e), approved executor 55c74f7cb, unapproved 798f58456: attempts PUBLISHED 23, DUPLICATE 3, DISAGREEMENT 1, STALE 1, INVALID 1, REFUSED_UNAPPROVED 1 (= 30 Fabric tasks); contests DISAGREEMENT RESOLVED_UPHELD, AUDIT_MISMATCH RESOLVED_OVERTURNED; validations VALIDATED 22 + MISMATCH 1 (replays on M2 Windows equal the Linux-produced digests 22/22); 8 chains COMPLETE; worker kills x3 reaped after 90-92 s and retried; publisher kills x3 committed nothing; lost acks x3 answered from the record",
+  "no git remote: FETCH_HEAD mtimes unchanged on both nodes (1791621606, 1791621619) across the window",
+  "audit: 33 moonshot-worker attempts, 0 foreign claims, 0 Fabric events by other actors in the window",
+  "evidence integrated to main at 2bd280452 (fast-forward from 16264829f)"
+ ],
+ "red_observed": {
+  "observed": true,
+  "sha": "e476813d20a9d7af3e287c9a95597b6966d7406e",
+  "detail": "27 tests against API stubs before the executor and coordinator existed"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "one run (Q20261010A); every scenario once except the worker kill, publisher kill and lost ack (x3 each): a demonstration of the path and its classifications, not a reliability measurement",
+  "the conflicting result is a planted node-local fault (flip_checkpoint after an honest run) modelling a faulty host; no natural fault was observed",
+  "S8's lost acknowledgement is injected client-side after COMMIT; the publisher kill (SIGKILL of the process inside its transaction) and the worker kill (SIGKILL mid-execution) are real",
+  "replays for validation and resolution ran on one independent host (M2); the nodes never replayed each other",
+  "authentication NOT achieved (superuser logins for every client; Fabric does not authenticate submitters); the executor is not sandboxed (node user, script executor, promexec unused); wall_s is the only resource bound",
+  "Fabric v0.2 workers cannot demand a capability: non-interference with other seats rested on procedure (empty queue, posted window, audit), not mechanism",
+  "publish_ready scans every completed task of the principal on each pass (O(tasks)); fine at 30 tasks, T004 must measure it",
+  "the publisher CLI and the coordinator-level crash/lost-ack tests were written after their hooks (test-after)",
+  "the demonstration driver has no unit tests; its defects (pgrep/pkill self-match, &&-chain backgrounding) were found when starting the workers, before any task"
+ ],
+ "unresolved": [
+  "contract reviews: Odysseus #1987 pending (offline since 2026-10-03); Pan answered the lake questions (#2004) and will review the committed contract",
+  "for Odysseus (BACKLOG_AFTER_FREEZE candidate): worker-side capability demand; signal-stopped workers do not deregister (stale 'online' until a reaper runs)"
+ ],
+ "unblocks": [
+  "C-012-T004",
+  "C-012-T006"
+ ],
+ "created_at_utc": "2026-10-10T09:03:57Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Coordination: #2003 ack, #2008 window + correction (Fabric's reaper changes rows when any worker runs), #2009 window closed. Process lapse recorded in the journal: parallel mutation runs on M2 without the canonical spectrex5:cpu12 lease (no overlap with peers' leases; < 2 core-hours)."
+}

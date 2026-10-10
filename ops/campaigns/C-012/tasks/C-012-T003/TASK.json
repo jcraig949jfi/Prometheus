@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,42 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T08:26:06Z",
       "note": "Themis builds the two-node demonstration; claim recorded after the RED commit e476813d2 (08:25:55Z) -- the record lagged the work by minutes"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "RED observed at e476813d2 (committed 2026-10-10T08:25:55Z): Ran 27, failures=10, errors=16"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "T003 IMPLEMENTING: RED e476813d2 -> GREEN 798f58456 -> two-node run Q20261010A -> integrated 2bd280452 (72 OK; mutation 15/16 + 1 equivalent; all listed outcomes observed)"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "T003 GREEN: RED e476813d2 -> GREEN 798f58456 -> two-node run Q20261010A -> integrated 2bd280452 (72 OK; mutation 15/16 + 1 equivalent; all listed outcomes observed)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "T003 INTEGRATION_READY: RED e476813d2 -> GREEN 798f58456 -> two-node run Q20261010A -> integrated 2bd280452 (72 OK; mutation 15/16 + 1 equivalent; all listed outcomes observed)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "T003 INTEGRATED: RED e476813d2 -> GREEN 798f58456 -> two-node run Q20261010A -> integrated 2bd280452 (72 OK; mutation 15/16 + 1 equivalent; all listed outcomes observed)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:03:57Z",
+      "note": "T003 CLOSED: RED e476813d2 -> GREEN 798f58456 -> two-node run Q20261010A -> integrated 2bd280452 (72 OK; mutation 15/16 + 1 equivalent; all listed outcomes observed); receipt attempts/A-20261010T082606Z-Themis-m2-0e9b1ed2"
     }
   ],
   "task_id": "C-012-T003",
