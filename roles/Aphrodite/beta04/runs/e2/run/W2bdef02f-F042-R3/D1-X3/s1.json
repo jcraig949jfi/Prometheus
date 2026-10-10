@@ -1,0 +1,169 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 176469,
+  "live_entries": 78660,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": 78660,
+  "replacements": 97809
+ },
+ "archive_assisted_tag": null,
+ "arm": "D1-X3",
+ "arm_code": "D1-X3",
+ "arm_view_file_sha256": "ee7004d72eaa4f2e159f0895917f2dc527223277397521a409534dd4b2eeea80",
+ "budget": 200000,
+ "burst_L": 1,
+ "censored": true,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 200000,
+  "consultations_stored": [],
+  "hit": null,
+  "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+  "n_consultations": 0,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (mod x (pow 3 2))) (filter (lam x (lt (sub 3 x) (neg 2))) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [],
+ "cpu_s": 239.922,
+ "credit": "exact",
+ "decision_log_sha256": "ced134324f462ed1e4a041174305ba220b5e533fa21f2e4ef71ae565a9a70d6b",
+ "descriptor": "D-BEH",
+ "driver": "e2-driver-v1",
+ "e2_arm": "D1-X3",
+ "family_id": "W2bdef02f-F042-R3",
+ "first_dev_consistent": null,
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": false,
+ "hit_charge": null,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 0
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "d96fd12a7bdb2f9d"
+  },
+  "organism": {
+   "program": null
+  },
+  "search": {
+   "archive_admissions": 176469,
+   "charges": 200000,
+   "genotype_restores": 199999,
+   "probe_runs": 1600000,
+   "rejected_mutations": 2,
+   "state_restores": 0,
+   "units_dev_expanded": 70349818,
+   "units_dev_promoted": 59666392,
+   "units_probe_expanded": 36467345
+  }
+ },
+ "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000001": 96,
+   "000000000010": 9337,
+   "000000000011": 49581,
+   "000000000100": 26296,
+   "000000000101": 48449,
+   "000000001000": 8504,
+   "000000010000": 1624,
+   "000000010001": 44741,
+   "000000010100": 133384,
+   "000000100000": 1311,
+   "000000100001": 75162,
+   "000000110000": 88478,
+   "000001000000": 45465,
+   "000100000000": 994,
+   "000100000001": 45434,
+   "000100010000": 16,
+   "000100010001": 810,
+   "000100100000": 17854,
+   "000100110000": 1277,
+   "001001001010": 134578,
+   "010000000000": 3046,
+   "010000000001": 155,
+   "010000010001": 43710,
+   "010000100001": 29559,
+   "010001000001": 20034,
+   "010010000101": 84713,
+   "010011101111": 76117,
+   "010100000000": 53510,
+   "010100000001": 105243,
+   "010100010000": 4113,
+   "010100010001": 1049,
+   "010111101111": 78551
+  },
+  "cert_patterns_seen": 32,
+  "qualified_genotypes": 0,
+  "qualified_skeletons": {}
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 0,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 15480,
+ "primary_hit": false,
+ "program": null,
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": false,
+ "seed": 1,
+ "shard": "run/W2bdef02f-F042-R3/D1-X3/s1",
+ "shard_cpu_s": 239.95,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

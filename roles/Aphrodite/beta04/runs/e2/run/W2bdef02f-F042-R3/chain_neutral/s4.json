@@ -1,0 +1,207 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 0,
+  "live_entries": 0,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": null,
+  "replacements": 0
+ },
+ "archive_assisted_tag": null,
+ "arm": "chain_neutral",
+ "arm_code": "D1-chain_neutral",
+ "arm_view_file_sha256": "ee7004d72eaa4f2e159f0895917f2dc527223277397521a409534dd4b2eeea80",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 200001,
+ "censored": false,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 1204,
+  "consultations_stored": [
+   {
+    "FINAL": true,
+    "T0": true,
+    "charge": 1204,
+    "dev_consistent": true,
+    "index": 0,
+    "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))",
+    "qualified": true,
+    "task_tribunal_ok": true,
+    "test_ok": true,
+    "tribunal_FINAL_ok": true,
+    "tribunal_T0_ok": true
+   }
+  ],
+  "hit": {
+   "charge": 1204,
+   "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))"
+  },
+  "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+  "n_consultations": 1,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (mod x (pow 3 2))) (filter (lam x (lt (sub 3 x) (neg 2))) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [
+  {
+   "FINAL": true,
+   "T0": true,
+   "charge": 1204,
+   "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))",
+   "qualified": true,
+   "task_tribunal_ok": true,
+   "test_ok": true,
+   "tribunal_FINAL_ok": true,
+   "tribunal_T0_ok": true
+  }
+ ],
+ "cpu_s": 0.328,
+ "credit": "exact",
+ "decision_log_sha256": "cabbb4afda030fac9a9158e9c732d1de3ac690697b2ee8d6914ba10135ac3234",
+ "descriptor": null,
+ "driver": "e2-driver-v1",
+ "e2_arm": "chain_neutral",
+ "family_id": "W2bdef02f-F042-R3",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": true,
+  "T0": true,
+  "charge": 1204,
+  "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))",
+  "qualified": true,
+  "task_tribunal_ok": true,
+  "test_ok": true,
+  "tribunal_FINAL_ok": true,
+  "tribunal_T0_ok": true
+ },
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 1204,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 1
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "d96fd12a7bdb2f9d"
+  },
+  "organism": {
+   "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))"
+  },
+  "search": {
+   "archive_admissions": 0,
+   "charges": 1204,
+   "genotype_restores": 1,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 191346,
+   "units_dev_promoted": 162506,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000001": 464,
+   "000100000000": 144,
+   "000100010000": 2,
+   "000100010001": 1052,
+   "010000000000": 109,
+   "010000000001": 7,
+   "010000010001": 57,
+   "010100000000": 85,
+   "010100000001": 17,
+   "010100010000": 128,
+   "010100010001": 181,
+   "010100110101": 1164,
+   "010100110111": 1160,
+   "010100111101": 1163,
+   "010100111111": 1154,
+   "010101110001": 1187,
+   "010110110101": 1175,
+   "110110110111": 1182,
+   "110111111111": 1173,
+   "111111111111": 1204
+  },
+  "cert_patterns_seen": 20,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "div3,drop1,filter3,lt3,mod2,mul2,sum1,zipw2": 1204
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 1,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 3720,
+ "primary_hit": true,
+ "program": "(drop (L_0bf79aed6037 (sum (filter (lam x (L_f751d3f4556a 3)) (zipw (lam a (lam b 0)) xs (filter (lam x (L_f751d3f4556a 1)) xs))))) (zipw (lam a (lam b (L_0bf79aed6037 b))) xs (filter (lam x (L_f751d3f4556a x)) xs)))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 4,
+ "shard": "run/W2bdef02f-F042-R3/chain_neutral/s4",
+ "shard_cpu_s": 0.34,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

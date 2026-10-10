@@ -1,0 +1,64 @@
+{
+ "id": "CERT-R1-RX-s4",
+ "kind": "clamp-verified 6-generation causal chain (recoil+exchange)",
+ "semantics": "aeth03.mob_r1x1e0",
+ "replay": "R1 trace unit RX_s4 (warm 1000, H 3000, 512^2, payload bit impulse)",
+ "row": {
+  "seed": 4,
+  "max_gen": 6,
+  "ever_sites": 18,
+  "ever_radius": 4,
+  "peak_concurrent": 18,
+  "unknown_sites": 0,
+  "extinct_tick": null,
+  "reentry": 1289,
+  "struct_ge2": 11,
+  "by_gen": {
+   "1": 4,
+   "2": 3,
+   "3": 1,
+   "4": 3,
+   "5": 3,
+   "6": 3
+  },
+  "type_counts": {
+   "STRUCT": 14,
+   "CARRY": 1,
+   "RULE": 2
+  },
+  "multiplies": true,
+  "clamp": {
+   "B": 198114,
+   "descendants": 13,
+   "cut_desc_frac": 0.0,
+   "cut_ctrl_frac": 0.0,
+   "pass": true
+  },
+  "class": "MULTIGENERATION"
+ },
+ "nonanc_control": {
+  "multigen": [
+   3,
+   4,
+   5
+  ],
+  "nonanc": [
+   [
+    3,
+    null,
+    "no nonanc site"
+   ],
+   [
+    4,
+    1.0,
+    true
+   ],
+   [
+    5,
+    1.0,
+    true
+   ]
+  ],
+  "certified": 2
+ }
+}

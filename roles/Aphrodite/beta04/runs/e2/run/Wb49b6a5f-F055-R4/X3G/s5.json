@@ -1,0 +1,190 @@
+{
+ "K": 85327,
+ "archive": {
+  "entries": 4291,
+  "live_entries": 4185,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": 4185,
+  "replacements": 106
+ },
+ "archive_assisted_tag": "SEARCH_INFRASTRUCTURE (lineage from a genotype archive)",
+ "arm": "X3G",
+ "arm_code": "D1-X3G",
+ "arm_view_file_sha256": "87dd89360bf6864f933a56cfa90a520ce036286f5b1601a0aceeb36089a50a36",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 1,
+ "censored": false,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 5153,
+  "consultations_stored": [
+   {
+    "FINAL": true,
+    "T0": true,
+    "charge": 5153,
+    "dev_consistent": true,
+    "index": 0,
+    "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))",
+    "qualified": true,
+    "task_tribunal_ok": true,
+    "test_ok": true,
+    "tribunal_FINAL_ok": true,
+    "tribunal_T0_ok": true
+   }
+  ],
+  "hit": {
+   "charge": 5153,
+   "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))"
+  },
+  "library_sha256": "66e0888c093457542f008ec5a2a4e3fdf742f98f9f8ab473618d6a96785aad16",
+  "n_consultations": 1,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (mul (mul x x) 3)) (filter (lam x (lt (sub (neg x) 3) 2)) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [
+  {
+   "FINAL": true,
+   "T0": true,
+   "charge": 5153,
+   "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))",
+   "qualified": true,
+   "task_tribunal_ok": true,
+   "test_ok": true,
+   "tribunal_FINAL_ok": true,
+   "tribunal_T0_ok": true
+  }
+ ],
+ "cpu_s": 3.969,
+ "credit": "exact",
+ "decision_log_sha256": "e6ec5db6a033c3e6f6ac9b08dbba32e10b58a16c57e6830f8ad91735778e1d46",
+ "descriptor": "RAND:85327",
+ "driver": "e2-driver-v1",
+ "e2_arm": "X3G",
+ "family_id": "Wb49b6a5f-F055-R4",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": true,
+  "T0": true,
+  "charge": 5153,
+  "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))",
+  "qualified": true,
+  "task_tribunal_ok": true,
+  "test_ok": true,
+  "tribunal_FINAL_ok": true,
+  "tribunal_T0_ok": true
+ },
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 5153,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 1
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "66e0888c09345754"
+  },
+  "organism": {
+   "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))"
+  },
+  "search": {
+   "archive_admissions": 4291,
+   "charges": 5153,
+   "genotype_restores": 5152,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 1587551,
+   "units_dev_promoted": 1125403,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "66e0888c093457542f008ec5a2a4e3fdf742f98f9f8ab473618d6a96785aad16",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000001": 460,
+   "000010000010": 1581,
+   "111111111111": 5153
+  },
+  "cert_patterns_seen": 3,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "add3,div1,filter2,if1,lt3,mul3,neg3,rev4,zipw2": 5153
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 1,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 4004,
+ "primary_hit": true,
+ "program": "(zipw (lam a (lam b b)) (rev (filter (lam x (L_9bc9c358d90d 1)) (rev xs))) (zipw (lam a (lam b (L_0baff3dd7c47 a))) (filter (lam x (L_9bc9c358d90d (if (L_9bc9c358d90d 2) x (mul (div x 2) 3)))) (rev (rev xs))) xs))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 5,
+ "shard": "run/Wb49b6a5f-F055-R4/X3G/s5",
+ "shard_cpu_s": 4.03,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

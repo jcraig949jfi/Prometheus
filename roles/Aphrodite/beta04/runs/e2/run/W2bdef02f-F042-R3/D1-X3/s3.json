@@ -1,0 +1,173 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 170298,
+  "live_entries": 72601,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": 72601,
+  "replacements": 97697
+ },
+ "archive_assisted_tag": null,
+ "arm": "D1-X3",
+ "arm_code": "D1-X3",
+ "arm_view_file_sha256": "ee7004d72eaa4f2e159f0895917f2dc527223277397521a409534dd4b2eeea80",
+ "budget": 200000,
+ "burst_L": 1,
+ "censored": true,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 200000,
+  "consultations_stored": [],
+  "hit": null,
+  "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+  "n_consultations": 0,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (mod x (pow 3 2))) (filter (lam x (lt (sub 3 x) (neg 2))) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [],
+ "cpu_s": 214.141,
+ "credit": "exact",
+ "decision_log_sha256": "863137da7d0927d95a57a837ddd1beb660748b0e1215616a365ada1807541f7f",
+ "descriptor": "D-BEH",
+ "driver": "e2-driver-v1",
+ "e2_arm": "D1-X3",
+ "family_id": "W2bdef02f-F042-R3",
+ "first_dev_consistent": null,
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": false,
+ "hit_charge": null,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 0
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "d96fd12a7bdb2f9d"
+  },
+  "organism": {
+   "program": null
+  },
+  "search": {
+   "archive_admissions": 170298,
+   "charges": 200000,
+   "genotype_restores": 199999,
+   "probe_runs": 1600000,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 55535212,
+   "units_dev_promoted": 47494317,
+   "units_probe_expanded": 29345830
+  }
+ },
+ "library_sha256": "d96fd12a7bdb2f9ddc489fff6d04a5f6956ebc82da687e8118fc4da59984ffe0",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000001": 12,
+   "000000000010": 40531,
+   "000000000011": 165210,
+   "000000000100": 37365,
+   "000000001000": 67925,
+   "000000010000": 881,
+   "000000010001": 14061,
+   "000000100000": 897,
+   "000000100001": 8160,
+   "000001000000": 14461,
+   "000010000000": 49748,
+   "000010000001": 38687,
+   "000100000000": 853,
+   "000100000001": 6646,
+   "000100000010": 143401,
+   "000100010000": 123,
+   "000100010001": 32,
+   "000100010010": 133570,
+   "000100010100": 81762,
+   "000100011000": 91656,
+   "000100100000": 174334,
+   "000100110000": 14454,
+   "000101000000": 94125,
+   "010000000000": 310,
+   "010000000001": 13,
+   "010000010000": 93006,
+   "010000010001": 12149,
+   "010000100001": 1151,
+   "010001000001": 48911,
+   "010001100001": 15702,
+   "010010000001": 9059,
+   "010100000000": 97748,
+   "010100000001": 207,
+   "010100010000": 2116,
+   "010100010001": 27,
+   "100000000000": 12319
+  },
+  "cert_patterns_seen": 36,
+  "qualified_genotypes": 0,
+  "qualified_skeletons": {}
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 0,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 16512,
+ "primary_hit": false,
+ "program": null,
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": false,
+ "seed": 3,
+ "shard": "run/W2bdef02f-F042-R3/D1-X3/s3",
+ "shard_cpu_s": 214.19,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

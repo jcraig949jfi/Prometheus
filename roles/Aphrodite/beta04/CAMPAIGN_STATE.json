@@ -34,13 +34,14 @@
    "id": "W03",
    "kind": "DEV",
    "start_utc": "2026-10-10T17:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W03_DEV_REPORT.md"
   },
   {
    "id": "W04",
    "kind": "EXP",
    "start_utc": "2026-10-10T21:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W05",
@@ -127,7 +128,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W03",
+ "active_window": "W04",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -137,11 +138,12 @@
   "ALIEN": "PENDING"
  },
  "jobs": {
-  "E2_SCREEN": "RUNNING from worktree aphrodite-beta01 (atlas mode then 720-shard screen, 2 workers; started ~17:30Z; do NOT merge main into that worktree until done)",
+  "E2_SCREEN": "DONE 22:5xZ; analysis runs/e2/E2_ANALYSIS.json; committed",
   "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
   "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
   "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
-  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production"
+  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
+  "ALIEN_AR1": "FROZEN (FREEZE_ALIEN_AR1, 6c92d3b08); production primary RUNNING from worktree aph-b04-alien, 1 worker"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -171,6 +173,10 @@
    {
     "utc": "2026-10-10T17:25Z",
     "est_core_h_since_activation": 19.0
+   },
+   {
+    "utc": "2026-10-10T21:29Z",
+    "est_core_h_since_activation": 33.0
    }
   ]
  },
@@ -180,7 +186,8 @@
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
   "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)",
   "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning.",
-  "E3ID (diagnostic; FREEZE_E3ID)": "ID_IDENTIFIABILITY: 4/4 UNDERDETERMINED_STONE units are one-class NOT sealed-equivalent -> UNIQUE_WRONG (ID-A1.4; code printed UNIQUE / interpretation INSTRUMENT, superseded by the frozen ID-A1.4 relabel). In each, TFS-1 enumeration at 1e6 found exactly ONE dev-consistent program on the R1 family and it is not the sealed mechanism (3/4 also pass R1 test+tribunal). ID_RETENTION_REPAIR = NO (designated uncertified RETAIN-4 7/15; CERT secondary RETAIN-4-CERT 9/15, also < 12; agree). Interpretation (frozen map + ID-A1.4): WORLD/RULER-or-HORIZON -- the R1 stepping-stone families do not identify their mechanism over the domain the composite uses, and the sealed stone lies beyond the TFS-1 R1 horizon; retention of hypotheses does not repair."
+  "E3ID (diagnostic; FREEZE_E3ID)": "ID_IDENTIFIABILITY: 4/4 UNDERDETERMINED_STONE units are one-class NOT sealed-equivalent -> UNIQUE_WRONG (ID-A1.4; code printed UNIQUE / interpretation INSTRUMENT, superseded by the frozen ID-A1.4 relabel). In each, TFS-1 enumeration at 1e6 found exactly ONE dev-consistent program on the R1 family and it is not the sealed mechanism (3/4 also pass R1 test+tribunal). ID_RETENTION_REPAIR = NO (designated uncertified RETAIN-4 7/15; CERT secondary RETAIN-4-CERT 9/15, also < 12; agree). Interpretation (frozen map + ID-A1.4): WORLD/RULER-or-HORIZON -- the R1 stepping-stone families do not identify their mechanism over the domain the composite uses, and the sealed stone lies beyond the TFS-1 R1 horizon; retention of hypotheses does not repair. || SUPERSEDED INTERPRETATION (review v1 F2/F3/F7/F8 accepted): 3/4 UD units are extraction mis-cuts of globally correct R1 programs; seed1/seed2 acquire all 4 correctly (order-dependence); RETAIN non-discriminating; world dev-gap 1/4 (Wc025415a p0). First failure = stone ACQUISITION (search horizon + extraction non-invariance).",
+  "REACHABILITY_ATLAS_COMPLETE": "YES (A1-B.9: atlas 53/53; 1x screen 720/720 on the 15 R3/R4; prelaunch PASS; analyzer re-derivation 0 mismatches over 1468 programs)"
  },
  "contract_decisions_pending": [
   "scanl includes init (n+1)? (match foundry)",
@@ -197,5 +204,44 @@
  "known_answers": {
   "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
  },
- "experiments_gate_note": "E3 2x2 lifetime screen NOT RUN (gate: TFS1_INSTRUMENT_QUALIFIED = NO). E4 barred (E1 NO)."
+ "experiments_gate_note": "E3 2x2 lifetime screen NOT RUN (gate: TFS1_INSTRUMENT_QUALIFIED = NO). E4 barred (E1 NO).",
+ "interpretation_current": "First demonstrated failure: stepping-stone ACQUISITION (search horizon at 1e6 + extraction non-invariance; world dev-gap minority). Composition: 14/15 with foundry stones on foundry-selected families (order-fragile). Recommendation leaning CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY pending AR-1 and E2.",
+ "E2_results": {
+  "headline_labels": {
+   "REACHED": 13,
+   "DESERT_OR_HORIZON": 2,
+   "CREDIT_GRADIENT": 0,
+   "CREDIT_MISLEADING": 0,
+   "UNRESOLVED": 0
+  },
+  "co_labels_by_frozen_rule_A2_1 (coordinator-derived from hit table; analyzer lists headline only)": {
+   "CREDIT_GRADIENT": [
+    "W2bdef02f-F051-R4",
+    "W483b8c31-F045-R3",
+    "Wb49b6a5f-F052-R4",
+    "Wc025415a-F041-R4"
+   ],
+   "CREDIT_MISLEADING": [
+    "W483b8c31-F046-R3"
+   ]
+  },
+  "primary_hits_total_of_120": {
+   "credit_blind": 68,
+   "chain_strict": 44,
+   "chain_neutral": 80,
+   "desert_ref": 0
+  },
+  "archive_arms_on_5_qualified_of_40": {
+   "D1-X3": 17,
+   "X3G": 25,
+   "chain_neutral_same_5": 27
+  },
+  "desert_families": [
+   "W2bdef02f-F048-R4 (fs:post_fold)",
+   "W6eb945cc-F047-R3 (fs:post_fold)"
+  ],
+  "4x_escalation": "NOT RUN: eligible (family,arm) pairs are those with >=1 primary hit, and most are at or near ceiling (7-8/8) so 4x cannot change a label; desert families are ineligible by A1-B.7; the directive escalates only when it resolves uncertainty",
+  "screening_caveat": "8 seeds; no significance; P(|d|>=3) ~ 0.21 per family under the null",
+  "library_caveat": "library = foundry-acquired stones (oracle decomposition supplied); not stone discovery"
+ }
 }

@@ -1,0 +1,440 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 0,
+  "live_entries": 0,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": null,
+  "replacements": 0
+ },
+ "archive_assisted_tag": null,
+ "arm": "chain_neutral",
+ "arm_code": "D1-chain_neutral",
+ "arm_view_file_sha256": "5cdf80e22f808fff8fc166249b3ddbe47dd3a9c0c026d84cdddc6790f31c8c98",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 200001,
+ "censored": false,
+ "certifier_assisted": true,
+ "components": {
+  "budget": 200000,
+  "charges": 155908,
+  "consultations_stored": [
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155889,
+    "dev_consistent": true,
+    "index": 0,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (min xs)) xs))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155890,
+    "dev_consistent": true,
+    "index": 1,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155896,
+    "dev_consistent": true,
+    "index": 2,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155897,
+    "dev_consistent": true,
+    "index": 3,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 1) xs))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155903,
+    "dev_consistent": true,
+    "index": 4,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 0) xs))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155905,
+    "dev_consistent": true,
+    "index": 5,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x (neg x)) (map (lam x 0) xs)))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 155906,
+    "dev_consistent": true,
+    "index": 6,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": false,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": true,
+    "T0": true,
+    "charge": 155908,
+    "dev_consistent": true,
+    "index": 7,
+    "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))",
+    "qualified": true,
+    "task_tribunal_ok": true,
+    "test_ok": true,
+    "tribunal_FINAL_ok": true,
+    "tribunal_T0_ok": true
+   }
+  ],
+  "hit": {
+   "charge": 155908,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))"
+  },
+  "library_sha256": "4268cb8c5c3519034245fe021c8d5c8c551859d9593fa6e6c129380e58e3aabe",
+  "n_consultations": 8,
+  "n_starts": 3,
+  "witness_reference": "(sub 1 (mul (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs) (foldl (lam a (lam b (mul b (pow 2 a)))) 0 xs)))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155889,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (min xs)) xs))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155890,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155896,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155897,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 1) xs))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155903,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 0) xs))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155905,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x (neg x)) (map (lam x 0) xs)))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 155906,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": false,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": true,
+   "T0": true,
+   "charge": 155908,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))",
+   "qualified": true,
+   "task_tribunal_ok": true,
+   "test_ok": true,
+   "tribunal_FINAL_ok": true,
+   "tribunal_T0_ok": true
+  }
+ ],
+ "cpu_s": 45.75,
+ "credit": "exact",
+ "decision_log_sha256": "13776a4511a0eb71f47bebf32fea9a22af4785b0a9ffba96ca1836ffb6886226",
+ "descriptor": null,
+ "driver": "e2-driver-v1",
+ "e2_arm": "chain_neutral",
+ "family_id": "W6eb945cc-F047-R3",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": false,
+  "T0": false,
+  "charge": 155889,
+  "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (min xs)) xs))))",
+  "qualified": false,
+  "task_tribunal_ok": false,
+  "test_ok": false,
+  "tribunal_FINAL_ok": false,
+  "tribunal_T0_ok": false
+ },
+ "first_false_hits": [
+  {
+   "charge": 155889,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (min xs)) xs))))"
+  },
+  {
+   "charge": 155890,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))"
+  },
+  {
+   "charge": 155896,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (take (sub (head xs) (sub (min xs) 0)) xs))))"
+  },
+  {
+   "charge": 155897,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 1) xs))))"
+  },
+  {
+   "charge": 155903,
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (drop 3 (rev (map (lam x 0) xs))))"
+  }
+ ],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 155908,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 8
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "4268cb8c5c351903"
+  },
+  "organism": {
+   "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))"
+  },
+  "search": {
+   "archive_admissions": 0,
+   "charges": 155908,
+   "genotype_restores": 1,
+   "probe_runs": 0,
+   "rejected_mutations": 6,
+   "state_restores": 0,
+   "units_dev_expanded": 19666108,
+   "units_dev_promoted": 16670711,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "4268cb8c5c3519034245fe021c8d5c8c551859d9593fa6e6c129380e58e3aabe",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000001": 10003,
+   "000000000100": 234,
+   "000000001000": 236,
+   "000000001001": 23035,
+   "000000010000": 2282,
+   "000000010001": 178,
+   "000000011000": 5734,
+   "000000011001": 17955,
+   "000000100000": 3862,
+   "000000100100": 78023,
+   "000001000000": 2440,
+   "000001000001": 1819,
+   "000001001000": 3089,
+   "000001001001": 23036,
+   "000001010000": 642,
+   "000001010001": 443,
+   "000001011000": 840,
+   "000001011001": 1586,
+   "000010000000": 4133,
+   "000010001000": 61612,
+   "000010100000": 7953,
+   "000010100100": 7951,
+   "000010101100": 123987,
+   "000010110000": 126579,
+   "000010110100": 124969,
+   "000010111100": 134954,
+   "000011100101": 123312,
+   "000011110000": 122571,
+   "000011110001": 122104,
+   "000011110100": 123439,
+   "000011110101": 125202,
+   "000011111000": 134958,
+   "000011111100": 121885,
+   "000011111101": 124970,
+   "000100000000": 16666,
+   "000100000001": 13542,
+   "000100001000": 936,
+   "000100001001": 13320,
+   "000100010000": 1804,
+   "000100010001": 14901,
+   "000100011000": 11194,
+   "000100011001": 853,
+   "000101000000": 55765,
+   "000101000001": 1381,
+   "000101001000": 15686,
+   "000101001001": 479,
+   "000101010001": 3447,
+   "000101011000": 1482,
+   "000101011001": 4,
+   "000110110100": 135270,
+   "000111100101": 122451,
+   "001000000000": 1181,
+   "001000000100": 125382,
+   "001000000101": 122567,
+   "001000010000": 127148,
+   "001000010100": 141881,
+   "001000010101": 139058,
+   "001000011000": 122398,
+   "001000100000": 1141,
+   "001000111000": 122403,
+   "001001010001": 150618,
+   "001001010100": 147497,
+   "001001011000": 121665,
+   "001001011100": 145154
+  },
+  "cert_patterns_seen": 203,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "foldl3,map2,mul5,pow2,sub2": 155908
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 8,
+ "n_false_hits": 7,
+ "n_starts": 3,
+ "pid": 10648,
+ "primary_hit": false,
+ "program": "(foldl (lam a (lam b (mul 1 (L_8a1a00b328d3 (foldl (lam a1 (lam b1 (L_489a97e629cf a1 b1))) 0 xs))))) 1 (map (lam x (L_8a1a00b328d3 3)) (map (lam x 0) xs)))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 4,
+ "shard": "run/W6eb945cc-F047-R3/chain_neutral/s4",
+ "shard_cpu_s": 45.8,
+ "start_hit": false,
+ "status": "COMPLETE"
+}
