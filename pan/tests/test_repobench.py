@@ -137,3 +137,14 @@ def test_precommitment_scoring():
     assert pc["P3"]["status"] == "PENDING"
     an["configs"]["ollama:gemma3:12b@nothink1024"]["pass_at_1"] = 0.70    # within 0.15 of 0.773
     assert rb.precommitments(an, he)["P1"]["status"] == "LOST"
+
+
+def test_size_arm_scoring_outside_family():
+    he = {}
+    an = {"configs": {"ollama:qwen2.5-coder:14b@nothink1024": {"pass_at_1": 0.415},
+                      "ollama:qwen2.5-coder:32b@nothink1024": {"pass_at_1": 0.52}},
+          "size_arm": {"only_big": 20, "only_small": 5, "p": rb.mcnemar_p(20, 5)}}
+    assert rb.precommitments(an, he)["P4"]["status"] == "HOLDS"
+    an["size_arm"] = {"only_big": 12, "only_small": 5, "p": rb.mcnemar_p(12, 5)}     # gain ok, p >= 0.05
+    assert rb.precommitments(an, he)["P4"]["status"] == "LOST"
+    assert "ollama:qwen2.5-coder:32b@nothink1024" not in rb.FAMILY

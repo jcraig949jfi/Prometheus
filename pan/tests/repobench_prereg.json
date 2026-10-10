@@ -86,6 +86,15 @@
         "RB-134",
         "RB-142"
       ]
+    },
+    {
+      "id": "A3",
+      "date": "2026-10-10",
+      "before_this_configuration_runs": true,
+      "change": "ADDS one configuration, the SIZE ARM: qwen2.5-coder:32b, think false, budget 1024, same tasks, prompt, num_ctx 8192, splice and verdict. On M2's 16 GB card it runs partly offloaded to CPU RAM (19.85 GB at Q4); the GPU share is recorded and speed is NOT compared. It stays OUTSIDE the frozen comparison family (the Holm family remains the 10 pairs of the original 5 configurations); its one pre-specified comparison is against qwen2.5-coder:14b (same family, size changed).",
+      "reason": "Operator question 2026-10-10: is a 32 GB card worth buying? The decision turns on whether a ~32B model beats the 14B on the program's own code; the 14B result is already measured (59/142).",
+      "precommitment": "P4: qwen2.5-coder:32b scores at least 0.08 higher than qwen2.5-coder:14b on the primary set (>= 71/142 against 59/142) AND the exact two-sided McNemar test on the paired outcomes gives p < 0.05. Loses if either clause fails.",
+      "excluded_tasks": []
     }
   ]
 }

@@ -599,6 +599,11 @@ def shape(ok, detail, response):
     return "test failed"
 
 
+FAMILY = ("ollama:gpt-oss:20b@nothink1024", "ollama:qwen2.5-coder:14b@nothink1024", "ollama:gemma3:12b@nothink1024",
+          "ollama:qwen3:8b@nothink1024", "ollama:gpt-oss:20b@nothink4096")
+SIZE_ARM = ("ollama:qwen2.5-coder:32b@nothink1024", "ollama:qwen2.5-coder:14b@nothink1024")   # A3
+
+
 def mcnemar_p(b, c):
     """Exact two-sided McNemar (binomial on the discordant pairs)."""
     from math import comb
@@ -634,10 +639,11 @@ def analyze(out=print, write=True):
         res["configs"][m] = dict(passed=k, of=len(prim), pass_at_1=round(k / len(prim), 3), wilson95=wilson(k, len(prim)),
                                  shapes=shapes)
     ms = sorted(rows)
+    fam = [m for m in ms if m in FAMILY]                   # the frozen Holm family: the 5 original configurations
     pairs = []
-    for i in range(len(ms)):
-        for j in range(i + 1, len(ms)):
-            a, b = ms[i], ms[j]
+    for i in range(len(fam)):
+        for j in range(i + 1, len(fam)):
+            a, b = fam[i], fam[j]
             only_a = sum(1 for t in prim if rows[a][t][0] and not rows[b][t][0])
             only_b = sum(1 for t in prim if rows[b][t][0] and not rows[a][t][0])
             wa, wb = res["configs"][a]["wilson95"], res["configs"][b]["wilson95"]
@@ -651,6 +657,11 @@ def analyze(out=print, write=True):
         pr["holm_reject"] = (not stop) and pr["p"] <= pr["holm_threshold"]
         stop = stop or not pr["holm_reject"]
     res["pairs"] = pairs
+    if SIZE_ARM[0] in rows and SIZE_ARM[1] in rows:       # A3: one pre-specified comparison, outside the family
+        big, small = SIZE_ARM
+        ob = sum(1 for t in prim if rows[big][t][0] and not rows[small][t][0])
+        os_ = sum(1 for t in prim if rows[small][t][0] and not rows[big][t][0])
+        res["size_arm"] = dict(big=big, small=small, only_big=ob, only_small=os_, p=mcnemar_p(ob, os_))
     solved = {t: sum(rows[m][t][0] for m in ms) for t in prim}
     res["agreement"] = dict(solved_by_none=sum(1 for v in solved.values() if v == 0),
                             solved_by_all=sum(1 for v in solved.values() if v == len(ms)), configs=len(ms))
@@ -778,6 +789,14 @@ def precommitments(an, he):
     a, b = keys[4], keys[0]
     out["P3"] = dict(status=("PENDING" if a not in c or b not in c else ("HOLDS" if c[a] >= c[b] else "LOST")),
                      values={k: c.get(k) for k in (b, a)})
+    big, small = SIZE_ARM                                   # A3 / P4: +0.08 AND exact McNemar p < 0.05
+    sa = an.get("size_arm")
+    if big not in c or small not in c or not sa:
+        out["P4"] = dict(status="PENDING")
+    else:
+        gain = round(c[big] - c[small], 3)
+        out["P4"] = dict(status="HOLDS" if gain >= 0.08 and sa["p"] < 0.05 else "LOST", gain=gain, p=sa["p"],
+                         only_big=sa["only_big"], only_small=sa["only_small"])
     return out
 
 
@@ -823,7 +842,7 @@ def report(out=print):
     L += ["", "Tasks no configuration solved: {} of {}; solved by all {}: {}.".format(
         an["agreement"]["solved_by_none"], f["tasks"] - n_ex, an["agreement"]["configs"], an["agreement"]["solved_by_all"]), "",
           "## Precommitments (written before any model ran)", ""]
-    for k in ("P1", "P2", "P3"):
+    for k in ("P1", "P2", "P3", "P4"):
         L.append("    {}: {}  {}".format(k, pc[k]["status"], json.dumps({a: b for a, b in pc[k].items() if a != "status"})))
     L.append("")
     p = REPO / "roles" / "Pan" / "reports" / "REPOBENCH_{}.md".format(now.strftime("%Y-%m-%d"))
