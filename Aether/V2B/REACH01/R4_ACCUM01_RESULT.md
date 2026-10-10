@@ -83,3 +83,50 @@ Reading:
 - Duplication + relocation of a certified transport unit is the mechanism, and the search exploits any geometry that
   places a copy near the new input.
 Still ASSISTED CONTROL, and still fragile (R4: ~1.6% of tile positions).
+
+## R4c -- GENUINE reuse of a DISCOVERED mechanism (separately preregistered, PREREGISTRATION_R4c.md, freeze 74bd235d2)
+Component: the AUTONOMOUS COMBINE discovered by certificate-guided search in LADDER01 (G1, seed 7). Its 7-cell
+minimal sufficient substructure works at 100% of positions. NOT an assisted control. Its provenance is search
+infrastructure (archive-assisted), not experimenter design. (The reducer's printed "ASSISTED CONTROL" label is a
+leftover hardcoded string; R4c is the genuine test.)
+New capability: COMBINE3 on G1 plus input C at (12, 1); alphabet {0x55, 0xAA}, chosen after seeing the mechanism
+(disclosed).
+
+### Frozen disposition: REUSE_NOT_SUPPORTED
+| arm | seeds acquiring COMBINE3 | median first-success evaluation |
+|---|---|---|
+| N none | 0/8 | budget+1 |
+| S shuffled | 0/8 | budget+1 |
+| U unpromoted | 0/8 | budget+1 |
+| **P promoted** | **7/8** | **11,691** |
+
+- The acquisition advantage is large and clean (7/8 vs 0/8 x 3).
+- The disposition fails on the necessity clause: inerting component copies destroys COMBINE3 in 19/29 checked
+  working solutions (0.66 < 0.8).
+- Copy structure: 15 solutions have 2 copies, 5 have 3, 3 have 1, and 10 have none at >= 80% match.
+  - The dominant reuse shifts the component +2 rows, landing it exactly between inputs B and C (the original sits
+    between A and B). Duplication assigns the same 2-input combiner a new input pair.
+- Post-hoc (labelled; does not change the verdict), the 0-copy solutions split two ways:
+  - P s4: mutated partial copies (5/7 and 4/7 cells) whose inertion kills the capability, so the component WAS
+    necessary and the >= 80% detector missed it;
+  - P s3: no partial copy at all. A component-free solution reached along a promotion-altered trajectory.
+- Position robustness of P solutions: median 11% of tile positions. The discovered component alone is autonomous
+  (100%), but the reused, composed solutions are not.
+- Transplant of the component's ORIGINAL role: 100% at offset (0,0), 0% at all 8 other offsets. Like the planted
+  component, its interface is bound to where the inputs land.
+
+### Reading
+- A mechanism DISCOVERED by Aether's search, promoted into a reusable unit, made a new 3-input capability
+  acquirable in 7/8 runs where no control succeeded at equal budget. In most solutions it is causally necessary,
+  as duplicated copies taking new input pairs.
+- By the frozen bar (necessity >= 0.8) this is NOT certified reuse: about a third of the solutions either hid
+  degraded copies or did not use the component at all.
+- The capability built on it is position-fragile (~11%) and low-information (inherited from the component's
+  value-detector function).
+
+Cognitive accounting:
+- Substrate: the 7-cell XOR motif.
+- Search infrastructure: discovered the motif (archive-assisted).
+- Developmental machinery: PROMOTION (duplicate / relocate). Decisive: U = 0/8.
+- Experimenter: geometries and alphabet.
+- Certifier: necessity and robustness.

@@ -58,7 +58,16 @@ def main():
     ap.add_argument("--rules", required=True)
     ap.add_argument("--component", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--geom", default="R3")
+    ap.add_argument("--inc", default=None)
+    ap.add_argument("--in2", default=None)
+    ap.add_argument("--transplant", default=None, help="transplant JSON (default R4/transplant_task1.json)")
     a = ap.parse_args()
+    A.F.set_geom(a.geom)
+    if a.inc:
+        A.INC = tuple(int(v) for v in a.inc.split(","))
+    if a.in2:
+        A.IN2 = tuple(int(v, 0) for v in a.in2.split(","))
     R = json.load(open(a.rules))
     comp, _cp = A.load_component(a.component)
     ev = A.Eval3("XOR", side=32)
@@ -108,7 +117,7 @@ def main():
                      "position_frac_median": st.median([s["position_frac_combine3"] for s in sols]) if sols else None,
                      "max_rung_median": st.median(r["max_rung"] for r in rows)}
     P_, U_, N_, S_ = (summ.get(k, {}) for k in "PUNS")
-    trans = json.load(open(os.path.join(HERE, "transplant_task1.json")))
+    trans = json.load(open(a.transplant or os.path.join(HERE, "transplant_task1.json")))
     trans_ok = sum(1 for k, v in trans.items() if k != "(0, 0)" and v >= R["transplant_frac_min"]) >= R["transplant_offsets_min"]
 
     def reuse(X):
