@@ -210,6 +210,7 @@ def main(argv=None):
     ap.add_argument("--aligned-binding", action="store_true", help="THESEUS-34: collisions keep parent channel indices")
     ap.add_argument("--master-seed", type=int, default=None, help="THESEUS-35: replication seed")
     ap.add_argument("--inject", default=None, help="THESEUS-39: jsonl of genomes injected at gen 0 as synthetic parents")
+    ap.add_argument("--random-law-gains", action="store_true", help="THESEUS-51: law gains from an independent RNG, not the tensor")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
@@ -229,6 +230,7 @@ def main(argv=None):
     if a.master_seed is not None:
         cfg["master_seed"] = a.master_seed
     cfg["inject"] = a.inject
+    cfg["random_law_gains"] = bool(a.random_law_gains)
     sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
@@ -353,7 +355,8 @@ def main(argv=None):
                             continue
                         cidn += 1
                         cid = f"c{cidn:06d}"
-                        g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False))
+                        g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False),
+                                                random_law_gains=cfg.get("random_law_gains", False))
                         rec.update({"lane": lane, "gen": gen, "modes": modes})
                         jobs.append((cid, pids, g, rec))
             res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True, {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for (_, _, g, _) in jobs])
@@ -462,7 +465,8 @@ def main(argv=None):
             seen.add(tuple(pids))
             cidn += 1
             cid = f"o{cidn:06d}"
-            g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False))
+            g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False),
+                                                random_law_gains=cfg.get("random_law_gains", False))
             rows.append((f"{arm}{cid[1:]}", g, {"parents": pids, "collision": rec}))
         arms[arm] = rows
     llm_path = f"{root}/controls/llm_arm_v0/GENOMES.jsonl"
