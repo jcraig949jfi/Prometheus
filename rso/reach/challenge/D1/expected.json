@@ -1,0 +1,51 @@
+{
+ "schema": "prometheus.pallas.challenge_expected.v1",
+ "task": "C-013-T011",
+ "surface": "FREEZE_D1 code 307afe4b1; FROZEN_D1.json 34/34 verified at base 7f4ed9f2d",
+ "written_before_any_outcome": true,
+ "cases": {
+  "S1_SOUND_NULL_STOP": {"kind": "sound", "surface": "inference",
+   "prediction": "FWER <= 0.05 in all four configurations (cap / no cap; rate 1/24 / rate 0.25 with shared start multipliers); expected <= 0.02; N varies under the cap",
+   "scored_as_expected_if": "every fwer <= 0.05"},
+  "S2_SOUND_POWER_RECHECK": {"kind": "sound", "surface": "inference",
+   "prediction": "power(N=24, +0.20) in [0.78, 0.86]; power(N=12, +0.20) in [0.29, 0.37]",
+   "scored_as_expected_if": "both within range"},
+  "S3_SOUND_CERT_SYNONYMS": {"kind": "sound", "surface": "certification",
+   "prediction": "24/24 synonyms CERTIFIED, trace hash equal to the target's, training 126, 0 VOID",
+   "scored_as_expected_if": "all four hold"},
+  "B1_BROKEN_HETEROGENEITY": {"kind": "broken", "surface": "inference",
+   "prediction": "C4 verdict 'SEPARATES: X3 > X2' with p_holm <= 0.05 while X3 < X2 at d=3 and d=8; no heterogeneity field in the output",
+   "scored_survivor_if": "verdict separates with direction X3 > X2 and the output has no per-stratum direction or interaction field",
+   "bearing_if_survivor": "NARROWING"},
+  "B2a_BROKEN_STONE_SYNONYM": {"kind": "broken", "surface": "interpretation",
+   "prediction": "_path_restored == -1 for the functional restore and for the unused-field drift of the start; trace hashes and training scores equal to the exact intermediate / the start",
+   "scored_survivor_if": "both -1 and both behavioural equalities hold",
+   "bearing_if_survivor": "NARROWING"},
+  "B2b_BROKEN_STONES_DRIFT": {"kind": "broken", "surface": "interpretation",
+   "prediction": "production stones_evaluated == 0 in >= 7 of 8 lineages; chain_neutral exact on-path lifetime <= 50 proposals in >= 3 of 4; functional stones <= 5 everywhere; X3 retains no stone at the end (either predicate) in 4 of 4",
+   "scored_survivor_if": "the first and the last hold (the s7 premise is vacuous)",
+   "bearing_if_survivor": "NARROWING"},
+  "B3_BROKEN_C5_SIZE_TRAJECTORY": {"kind": "broken", "surface": "interpretation",
+   "prediction": "at b/4: X3G cells >= 0.85 B and X3 cells <= 0.40 c_b, ratio X3G/X3 >= 2.0, for d=3 and d=8; X2 cells at b <= 0.05 X3 cells at b",
+   "scored_survivor_if": "ratio >= 2.0 at b/4 for both d",
+   "bearing_if_survivor": "NARROWING"},
+  "P1_PROBE_GATE_REDUNDANCY": {"kind": "probe", "surface": "certification",
+   "prediction": "no program in the family has selection_ok with sealed != PASS; every impostor fails selection; builder(6) selection False sealed PASS; builder(7) at the boundary; certify.SELECT lives outside rulers.SELECT_LIVES"},
+  "P2_PROBE_LEDGER_ANCESTRY": {"kind": "probe", "surface": "interpretation",
+   "prediction": "no ancestry / parent-chain / cells-visited field in a worker row"},
+  "P3_PROBE_RESTORE_ODDS": {"kind": "probe", "surface": "interpretation",
+   "prediction": "exact/functional restore ratio per row: 1/1024 (PH, SKZ, IN, OUT), 1/512 (JMP), 1/16 (STR, STW)"}
+ },
+ "edits": {
+  "E1_CERT_SELECTION_ON_TRAINING": {"prediction": "SURVIVES", "witness": "NOT_EQUIVALENT at record level: selection_probe [~504, ~504] vs [126, 126] for builder_min; verdicts unchanged over the family", "bearing_if_survives": "coverage (certification): which lives the selection gate reads is unpinned"},
+  "E2_CERT_SEALED_GATE_NOT_FAIL": {"prediction": "SURVIVES", "witness": "EQUIVALENT_ON_FAMILY", "bearing_if_survives": "the sealed class-exclusion gate is not load-bearing given selection (P1)"},
+  "E3_ANALYZE_NO_HOLM": {"prediction": "SURVIVES (moderate confidence)", "witness": "NOT_EQUIVALENT: a C2 ledger with raw p in (0.0101, 0.05): original NOT SEPARATED, mutant SEPARATES", "bearing_if_survives": "coverage (inference): the registered multiplicity correction is unpinned by the frozen suite"},
+  "E4_RUNNER_RESUME_DROPS_PRIOR_CPU": {"prediction": "SURVIVES", "witness": "NOT_EQUIVALENT: original STOPPED_AT_CPU_CAP after 2 rounds and refuses call 3; mutant PAUSED then COMPLETE at 3 rounds", "bearing_if_survives": "coverage (inference, stopping rule): the cap's resume accounting is unpinned; T012 runs in resume slices"},
+  "E5_CTRL_STATS_ONE_SIDED": {"prediction": "KILLED", "witness": null, "bearing_if_survives": "would mean the quoted anchors do not pin two-sidedness (not expected)"}
+ },
+ "surfaces_expected": {
+  "inference": "NOT CLOSED (B1 narrowing; E3/E4 coverage); the stopping rule and the test itself expected sound (S1, S2)",
+  "certification": "NOT CLOSED on coverage (E1, E2) with the frozen code expected correct on the discovery path; bearing on the registered inference low (no overfit hit in the prototype's 360 lineages)",
+  "interpretation": "NOT CLOSED (B2, B3, P2: s7 rows C4, C5 and the off-path row need narrowing before any result is read)"
+ }
+}
