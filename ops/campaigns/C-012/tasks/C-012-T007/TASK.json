@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/): \"Once PostgreSQL-backed synthetic epochs are qualified, put the first deterministic native-world epoch through the new path.\"",
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,42 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T09:42:55Z",
       "note": "runtime + conformance built test-first now; the run through the path waits for T004's verdict"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 RED: RED observed at 8507ee3fb: Ran 11, errors=16"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 IMPLEMENTING: RED 8507ee3fb -> GREEN 4792fedc8 (mutation 10/10) -> frugal policy f54c3cf82 -> main 3f6c23ee4 -> run N20261010A: 12/12 published + validated, = reference replay"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 GREEN: RED 8507ee3fb -> GREEN 4792fedc8 (mutation 10/10) -> frugal policy f54c3cf82 -> main 3f6c23ee4 -> run N20261010A: 12/12 published + validated, = reference replay"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 INTEGRATION_READY: RED 8507ee3fb -> GREEN 4792fedc8 (mutation 10/10) -> frugal policy f54c3cf82 -> main 3f6c23ee4 -> run N20261010A: 12/12 published + validated, = reference replay"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 INTEGRATED: RED 8507ee3fb -> GREEN 4792fedc8 (mutation 10/10) -> frugal policy f54c3cf82 -> main 3f6c23ee4 -> run N20261010A: 12/12 published + validated, = reference replay"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:31:33Z",
+      "note": "T007 CLOSED: RED 8507ee3fb -> GREEN 4792fedc8 (mutation 10/10) -> frugal policy f54c3cf82 -> main 3f6c23ee4 -> run N20261010A: 12/12 published + validated, = reference replay; receipt attempts/A-20261010T094255Z-Themis-m2-0e9b1ed2"
     }
   ],
   "task_id": "C-012-T007",
