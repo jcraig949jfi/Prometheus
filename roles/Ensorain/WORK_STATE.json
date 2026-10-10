@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-10T00:00:00Z",
+  "updated_at_utc": "2026-10-10T11:20:00Z",
   "state": "ACTIVE",
-  "state_reason": "WTP-05 DESERT CROSSING adopted (operator directive 2026-10-10; Phase 2-B restart campaign C-014). BUILD stage. WTP-04 preserved as recorded (ISLANDS_MAPPED). LM01 HOLD.",
+  "state_reason": "WTP-05 SCREEN RUNNING (prereg efef48bcb; 40 cells x 8 seeds x 16k evals; shards 0/3,1/3 now, 2/3 after E2). E2 revival sub-assay running. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
   "head_sha": "63b8e4b8f",
   "base_sha": "9c1ba77bd",
@@ -77,10 +77,19 @@
     },
     {
       "id": "E-ENS-WTP05",
-      "status": "BUILD",
+      "status": "SCREEN_RUNNING",
       "campaign": "C-014",
-      "prereg": "ensorain/PREREG_WTP05.md (pending)",
-      "deliverable": "ensorain/ENSORAIN_WTP05_DESERT_REPORT.md"
+      "prereg": "ensorain/PREREG_WTP05.md",
+      "deliverable": "ensorain/ENSORAIN_WTP05_DESERT_REPORT.md",
+      "precommit": "efef48bcbd1c92523318ec29d08c3e713690916c",
+      "probe": "ensorain/runs/wtp05/probe/ (R0 certified once: A-R2-stepping RPL; nothing at R2)",
+      "admission": "ensorain/runs/wtp05/admission.json"
+    },
+    {
+      "id": "E-ENS-WTP05-E2",
+      "status": "RUNNING",
+      "prereg": "ensorain/wtp5/PREREG_E2_REVIVAL.md @232dbe90f (+ runner robustness amendment)",
+      "rows": "ensorain/runs/wtp05/revival/e2.jsonl"
     }
   ],
   "fabric_tasks": [
@@ -137,7 +146,19 @@
       "state": "completed (succeeded; outputs identical across replicas)"
     }
   ],
-  "running": [],
+  "running": [
+    {
+      "what": "WTP-05 SCREEN",
+      "cmd": "python -m ensorain.wtp5.campaign5 screen --plan ensorain/wtp5/plans/screen.json --workers 1 --shard k/3 --max-wall-h 14",
+      "shards": "0/3 and 1/3 started 11:15Z; 2/3 after E2",
+      "restart": "same command per shard; resumes from ckpt/"
+    },
+    {
+      "what": "E2 revival",
+      "cmd": "python -m ensorain.wtp5.revival run e2 --workers 2",
+      "restart": "same command; skips finished rows"
+    }
+  ],
   "dependencies": {
     "LM01_b_bellerophon_campaign_ended": {
       "status": "SATISFIED",
