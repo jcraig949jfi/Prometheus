@@ -168,6 +168,62 @@ CREATE OR REPLACE TRIGGER publications_no_truncate BEFORE TRUNCATE ON {schema}.p
     FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
 CREATE OR REPLACE TRIGGER attempts_no_truncate BEFORE TRUNCATE ON {schema}.attempts
     FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
+CREATE OR REPLACE TRIGGER chains_no_truncate BEFORE TRUNCATE ON {schema}.chains
+    FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
+CREATE OR REPLACE TRIGGER contests_no_truncate BEFORE TRUNCATE ON {schema}.contests
+    FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
+CREATE OR REPLACE TRIGGER validations_no_truncate BEFORE TRUNCATE ON {schema}.validations
+    FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
+CREATE OR REPLACE TRIGGER events_no_truncate BEFORE TRUNCATE ON {schema}.events
+    FOR EACH STATEMENT EXECUTE FUNCTION {schema}.forbid_change();
+
+-- A chain's identity is fixed at creation (its genesis bytes say the same); its generation never decreases, and
+-- every head move -- advance or rewind -- raises it, which is what makes the (parent, generation) guard sound.
+CREATE OR REPLACE FUNCTION {schema}.chain_guard() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+        RAISE EXCEPTION 'moonshot: chains are never deleted';
+    END IF;
+    IF (NEW.chain_id, NEW.namespace, NEW.genesis_sha256, NEW.initial_checkpoint_sha256, NEW.runtime,
+        NEW.approved_code_sha, NEW.epochs_target, NEW.created_by, NEW.created_at)
+       IS DISTINCT FROM
+       (OLD.chain_id, OLD.namespace, OLD.genesis_sha256, OLD.initial_checkpoint_sha256, OLD.runtime,
+        OLD.approved_code_sha, OLD.epochs_target, OLD.created_by, OLD.created_at) THEN
+        RAISE EXCEPTION 'moonshot: a chain''s identity is immutable';
+    END IF;
+    IF NEW.generation < OLD.generation THEN
+        RAISE EXCEPTION 'moonshot: a chain''s generation never decreases';
+    END IF;
+    IF (NEW.head_index, NEW.head_epoch_digest, NEW.head_checkpoint_sha256)
+       IS DISTINCT FROM (OLD.head_index, OLD.head_epoch_digest, OLD.head_checkpoint_sha256)
+       AND NEW.generation <= OLD.generation THEN
+        RAISE EXCEPTION 'moonshot: a head move must advance the generation';
+    END IF;
+    RETURN NEW;
+END $$;
+CREATE OR REPLACE TRIGGER chains_guarded BEFORE UPDATE OR DELETE ON {schema}.chains
+    FOR EACH ROW EXECUTE FUNCTION {schema}.chain_guard();
+
+-- A contest's grounds never change; only its resolution moves, and a resolution (upheld/overturned) is final.
+CREATE OR REPLACE FUNCTION {schema}.contest_guard() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+        RAISE EXCEPTION 'moonshot: contests are never deleted';
+    END IF;
+    IF (NEW.contest_id, NEW.chain_id, NEW.epoch_index, NEW.work_id, NEW.published_epoch_digest,
+        NEW.challenger_epoch_digest, NEW.reason, NEW.opened_by, NEW.opened_at, NEW.detail)
+       IS DISTINCT FROM
+       (OLD.contest_id, OLD.chain_id, OLD.epoch_index, OLD.work_id, OLD.published_epoch_digest,
+        OLD.challenger_epoch_digest, OLD.reason, OLD.opened_by, OLD.opened_at, OLD.detail) THEN
+        RAISE EXCEPTION 'moonshot: a contest''s grounds are immutable';
+    END IF;
+    IF OLD.state IN ('RESOLVED_UPHELD', 'RESOLVED_OVERTURNED') THEN
+        RAISE EXCEPTION 'moonshot: a resolved contest stays resolved';
+    END IF;
+    RETURN NEW;
+END $$;
+CREATE OR REPLACE TRIGGER contests_guarded BEFORE UPDATE OR DELETE ON {schema}.contests
+    FOR EACH ROW EXECUTE FUNCTION {schema}.contest_guard();
 
 -- A publication's content never changes; it may be marked rejected exactly once (by a resolution).
 CREATE OR REPLACE FUNCTION {schema}.publication_guard() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -267,6 +323,9 @@ BEGIN
         IF m->>'trace_sha256' IS DISTINCT FROM h_trace THEN errs := errs || 'trace_sha256'::text; END IF;
         IF m->>'output_checkpoint_sha256' IS DISTINCT FROM h_ckpt THEN errs := errs || 'output_checkpoint_sha256'::text; END IF;
         IF (m->>'trace_bytes')::bigint IS DISTINCT FROM octet_length(p_trace) THEN errs := errs || 'trace_bytes'::text; END IF;
+        IF (m->>'output_checkpoint_bytes')::bigint IS DISTINCT FROM octet_length(p_checkpoint) THEN
+            errs := errs || 'output_checkpoint_bytes'::text;
+        END IF;
         IF (m->>'epoch_index')::int IS DISTINCT FROM p_epoch_index OR m->>'chain_id' IS DISTINCT FROM p_chain_id THEN
             errs := errs || 'position'::text;
         END IF;
@@ -370,9 +429,11 @@ BEGIN
 END $$;
 
 -- Validation is a separate axis. MISMATCH (a replay disagrees) or INVALID (the published bytes do not verify)
--- opens a contest and halts the chain: fail closed.
-CREATE OR REPLACE FUNCTION {schema}.record_validation(p_chain_id TEXT, p_epoch_index INT, p_state TEXT, p_checks TEXT[],
-                                                      p_replay_digest TEXT, p_replay_host TEXT, p_validator TEXT)
+-- opens a contest and halts the chain: fail closed. A validation names the digest it examined: one about a digest
+-- that is no longer live (overturned and re-published meanwhile) is stale and refused, never re-attributed.
+CREATE OR REPLACE FUNCTION {schema}.record_validation(p_chain_id TEXT, p_epoch_index INT, p_epoch_digest TEXT,
+                                                      p_state TEXT, p_checks TEXT[], p_replay_digest TEXT,
+                                                      p_replay_host TEXT, p_validator TEXT)
 RETURNS BIGINT LANGUAGE plpgsql SECURITY DEFINER SET search_path = {schema}, pg_temp AS $$
 DECLARE
     c    chains%ROWTYPE;
@@ -387,6 +448,19 @@ BEGIN
     WHERE p.chain_id = p_chain_id AND p.epoch_index = p_epoch_index AND p.rejected_at IS NULL;
     IF NOT FOUND THEN
         RAISE EXCEPTION 'moonshot: epoch % of % is not published', p_epoch_index, p_chain_id;
+    END IF;
+    IF live.epoch_digest IS DISTINCT FROM p_epoch_digest THEN
+        RAISE EXCEPTION 'moonshot: stale validation: epoch % of % is now %, not %', p_epoch_index, p_chain_id,
+            live.epoch_digest, p_epoch_digest;
+    END IF;
+    IF 'REPLAY' = ANY(p_checks) AND p_replay_digest IS NULL THEN
+        RAISE EXCEPTION 'moonshot: a REPLAY check needs its replay digest';
+    END IF;
+    IF p_state = 'VALIDATED' AND p_replay_digest IS DISTINCT FROM p_epoch_digest AND p_replay_digest IS NOT NULL THEN
+        RAISE EXCEPTION 'moonshot: a replay that disagrees is a MISMATCH, not VALIDATED';
+    END IF;
+    IF p_state = 'MISMATCH' AND (p_replay_digest IS NULL OR p_replay_digest = p_epoch_digest) THEN
+        RAISE EXCEPTION 'moonshot: a MISMATCH needs a disagreeing replay digest';
     END IF;
     INSERT INTO validations (publication_id, chain_id, epoch_index, epoch_digest, state, checks, replay_digest,
                              replay_host, validator)
@@ -418,6 +492,7 @@ DECLARE
     k        contests%ROWTYPE;
     c        chains%ROWTYPE;
     prev     publications%ROWTYPE;
+    pend     validations%ROWTYPE;
     d        TEXT;
     verdict  TEXT;
     new_ckpt TEXT;
@@ -473,5 +548,31 @@ BEGIN
     INSERT INTO events (actor, kind, chain_id, detail)
     VALUES (p_resolver, 'resolution', k.chain_id,
             jsonb_build_object('contest_id', p_contest_id, 'verdict', verdict, 'replay_digests', to_jsonb(p_replay_digests)));
+    IF verdict IN ('UPHELD', 'OVERTURNED') THEN
+        -- Fail closed: an adverse validation of a live epoch, recorded while this contest was open, could not open
+        -- its own (one open contest per chain). It opens now, and the chain stays halted.
+        SELECT v.* INTO pend FROM validations v JOIN publications p ON p.publication_id = v.publication_id
+        WHERE v.chain_id = k.chain_id AND p.rejected_at IS NULL AND v.state IN ('MISMATCH', 'INVALID')
+          AND NOT EXISTS (SELECT 1 FROM contests x
+                          WHERE x.chain_id = k.chain_id AND x.detail->>'validation_id' = v.validation_id::text)
+        ORDER BY v.epoch_index, v.validation_id LIMIT 1;
+        IF FOUND THEN
+            SELECT * INTO c FROM chains WHERE chains.chain_id = k.chain_id;          -- the head after this verdict
+            INSERT INTO contests (chain_id, epoch_index, work_id, published_epoch_digest, challenger_epoch_digest,
+                                  reason, state, opened_by, detail)
+            SELECT k.chain_id, pend.epoch_index, p.work_id, pend.epoch_digest,
+                   CASE WHEN pend.state = 'MISMATCH' THEN pend.replay_digest END,
+                   CASE WHEN pend.state = 'MISMATCH' THEN 'AUDIT_MISMATCH' ELSE 'CORRUPT_BYTES' END,
+                   CASE WHEN c.head_index > pend.epoch_index THEN 'TAINTED' ELSE 'CONTESTED' END, p_resolver,
+                   jsonb_build_object('validation_id', pend.validation_id, 'replay_host', pend.replay_host,
+                                      'pending_behind_contest', p_contest_id)
+            FROM publications p WHERE p.publication_id = pend.publication_id;
+            UPDATE chains SET state = 'HALTED', updated_at = now() WHERE chains.chain_id = k.chain_id;
+            INSERT INTO events (actor, kind, chain_id, detail)
+            VALUES (p_resolver, 'pending_validation_contested', k.chain_id,
+                    jsonb_build_object('validation_id', pend.validation_id, 'epoch_index', pend.epoch_index,
+                                       'after_contest', p_contest_id));
+        END IF;
+    END IF;
     RETURN verdict;
 END $$;

@@ -1,8 +1,12 @@
-# Fabric / Moonshot / Pan interface contract -- v0.1 (C-012-T001, OP-NF2)
+# Fabric / Moonshot / Pan interface contract -- v0.2 (C-012-T001, OP-NF2)
 
 Owner: Themis (Moonshot). Reviewers: Odysseus (Fabric), Pan (Pan). Date: 2026-10-10.
 Authority: operator OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/). Status: DRAFT FOR REVIEW -- review
 requests sent (comms #1986 Pan, #1987 Odysseus); Odysseus has been offline since 2026-10-03.
+v0.2 (same day, after T002's mutation table and review of the GREEN tree): s4 records the schema as built --
+validations name the digest they examined, an adverse validation behind an open contest stays pending instead of
+being dropped, guards on chains and contests, TRUNCATE refused on every evidence table, connection-loss semantics.
+Nothing in s1-s3 or s6-s7 changed. The interfaces Pan and Odysseus were asked to review (s3, s6) are as in v0.1.
 Design of record for Moonshot semantics: moonshot/epoch/CONTRACT.md v1.1 (C-008), whose IDENTITY rules carry
 over unchanged and whose git TRANSPORT is replaced here.
 
@@ -61,33 +65,59 @@ Tables, with the invariants the DATABASE enforces:
 - `objects(sha256 PK, content)`: immutable content-addressed bytes; CHECK sha256 = encode(sha256(content),'hex').
 - `chains(chain_id PK, genesis, approved_code_sha, epochs_target, head_index, head_epoch_digest,
   head_checkpoint_sha256, generation, state OPEN|HALTED|COMPLETE)`: generation +1 on EVERY head move (advance or
-  rewind), so an expected (parent, generation) pair cannot be satisfied twice (no ABA).
+  rewind), so an expected (parent, generation) pair cannot be satisfied twice (no ABA). A trigger enforces it: the
+  identity columns never change, the generation never decreases, a head move that does not raise it is refused.
 - `results(work_id, epoch_digest) PK`: every DISTINCT result ever seen for a work identity -- disagreements are
   preserved, never overwritten.
 - `publications`: the lineage, one row per head advance; partial UNIQUE (chain_id, epoch_index) WHERE not rejected
-  = exactly one live published successor per position; rejected rows stay as evidence.
+  = exactly one live published successor per position; rejected rows stay as evidence (content immutable, a
+  rejection is set once).
 - `attempts(attempt_id PK = the Fabric attempt id)`: one classification per attempt, the idempotency key of
   publication, durable accounting (host, worker, base_sha, timings, costs) OUTSIDE the canonical trace.
-- `contests`: partial UNIQUE open contest per chain; `validations`: separate from publication; `events`: append-only.
+- `contests`: partial UNIQUE open (CONTESTED | TAINTED | UNRESOLVED) contest per chain; the grounds never change,
+  only the resolution moves, and UPHELD / OVERTURNED is final. `validations`, `events`: append-only.
+- UPDATE/DELETE on objects, results, attempts, validations, events and TRUNCATE on every table but `meta` are refused
+  by triggers. These guard against accidental rewrites (a bug, an ad-hoc statement); they are not a boundary against
+  a superuser, who can disable triggers (s5).
 
 Functions (PL/pgSQL, SECURITY DEFINER, owned by a NOLOGIN owner role, fixed search_path):
 - `publish(...)`: locks the chain row; returns the recorded outcome if the attempt was already classified (the
-  lost-acknowledgement path); stores objects and checks the manifest's sha256 fields against the bytes; records the
-  result; ADVANCES only if `generation = expected_generation AND head_epoch_digest = expected_parent AND
-  head_index = k-1 AND head_checkpoint_sha256 = input sha AND state = OPEN`; otherwise classifies against the live
-  publication at k: same work_id + same digest -> DUPLICATE; same work_id + different digest -> DISAGREEMENT, a
-  contest (CONTESTED at the head, TAINTED with descendants) and the chain HALTED; anything else -> STALE.
+  lost-acknowledgement path); stores the four objects (also for attempts it then refuses: evidence) and checks the
+  manifest's claims against the bytes -- spec/trace/output-checkpoint sha256, trace_bytes, output_checkpoint_bytes,
+  (chain_id, epoch_index) = the call, identity fields present -- any failure -> INVALID; records the result;
+  ADVANCES only if `state = OPEN AND generation = expected_generation AND head_index = k-1 AND head_epoch_digest =
+  expected_parent AND head_checkpoint_sha256 = the manifest's input sha`; otherwise, on a HALTED chain -> HALTED,
+  else classifies against the live publication at k: same work_id + same digest -> DUPLICATE; same work_id +
+  different digest -> DISAGREEMENT, a contest (CONTESTED at the head, TAINTED with descendants) and the chain
+  HALTED; anything else -> STALE.
 - `record_attempt_outcome(...)`: INVALID / REFUSED_UNAPPROVED attempts (bytes that fail the publisher's checks;
-  code that is not approved), recorded without publishing.
-- `record_validation(...)`: VALIDATED | INVALID | MISMATCH; MISMATCH opens a contest and halts the chain.
-- `resolve_contest(...)`: the verdict is computed IN SQL from the resolver's replay digests -- all equal the
-  published digest -> UPHELD; all equal the challenger -> OVERTURNED (publications at k.. marked rejected, head
-  rewound to k-1, generation +1); otherwise UNRESOLVED (still halted).
-- `create_chain(...)`, `put_object(...)`.
+  code that is not approved), recorded without publishing; idempotent per attempt.
+- `record_validation(chain, k, epoch_digest, state, checks, replay_digest, host, validator)`: VALIDATED | INVALID |
+  MISMATCH about the named digest. Refused if that digest is no longer the live epoch k (overturned and re-published
+  meanwhile: a stale validation is never re-attributed), if VALIDATED comes with a disagreeing replay digest, if a
+  MISMATCH has none, or if a REPLAY check has no digest. MISMATCH (-> AUDIT_MISMATCH) and INVALID (-> CORRUPT_BYTES)
+  open a contest and halt the chain. If another contest is already open, the adverse validation is recorded as
+  PENDING; when that contest is resolved, the pending one opens its own contest and the chain stays halted.
+- `resolve_contest(contest, replay_digests, published_bytes_ok, resolver)`: the verdict is computed IN SQL -- a
+  unanimous replay equal to the published digest with the bytes ok -> UPHELD; unanimous and equal to the
+  challenger, or the published bytes not ok -> OVERTURNED (publications at k.. marked rejected, head rewound to
+  k-1 with that epoch's checkpoint, generation +1); otherwise UNRESOLVED (still open, still halted, resolvable
+  later). After UPHELD or OVERTURNED, the earliest pending adverse validation of a live epoch opens the next contest.
+- `create_chain(...)` (the genesis bytes must describe the row), `put_object(...)`.
 
-Semantic verification (recomputing work_id and epoch_digest from canonical bytes) runs in the PUBLISHER with
-moonshot.epoch.model.verify_epoch before `publish`; the database independently checks every byte hash and the
-lineage. A validator replays later on an independent host.
+Division of labour on verification. The database checks every byte hash, the manifest's position and the lineage
+guard. It cannot recompute work_id and epoch_digest (jsonb is not canonical JSON), nor whether SPEC is the one the
+chain's genesis derives at k. Those run in the PUBLISHER (moonshot.epoch.model.verify_epoch plus the derived-spec
+check) before `publish`. A self-consistent forged identity or a look-alike chain's epoch is therefore stopped by the
+publisher, not by the database -- which is why publication authority is one trusted role, and why a validator
+replays later on an independent host.
+
+Connection loss (pg.py). A Moonshot handle uses a DEDICATED connection, never evidence_wiki's pool: the pool returns
+connections with session state intact, and a handle's SET ROLE leaked into the next borrower (found 2026-10-10). A
+dead connection is replaced on the next call. `publish` is retried as a whole on a fresh connection after any
+OperationalError/InterfaceError (connection loss, also lock timeout, deadlock, serialization failure): every step
+is idempotent per attempt id, so an attempt is classified exactly once whether the connection died before the call,
+inside the transaction (the server rolls back) or after COMMIT (the retry gets the recorded answer).
 
 ## 5. Authority, authentication, isolation (OP-NF2 s7) -- explicit, including what is NOT achieved
 
@@ -101,7 +131,9 @@ are separate identities; every guard is in the database, not in a client.
 
 NOT achieved, stated plainly: every program client -- including Fabric node workers -- logs in as the `postgres`
 SUPERUSER through the git-tracked evidence_wiki/config.json default (verified 2026-10-10: rolsuper, bypassrls). A
-superuser bypasses every grant, so the role separation above is BUG CONTAINMENT, not a security boundary, until the
+superuser bypasses every grant and can disable the append-only triggers (ALTER TABLE ... DISABLE TRIGGER, or
+session_replication_role = replica), so the role separation and the guards above are BUG CONTAINMENT, not a
+security boundary, until the
 operator/DBA issues per-role logins (proposed: LOGIN roles granted moonshot_publisher / moonshot_validator only on
 M2; Fabric workers a fabric-only role -- Odysseus's call, BACKLOG_AFTER_FREEZE). Isolation of executed code is
 Fabric's script executor only (no shell, env allow-list, pinned SHA) running as the node user; promexec stays

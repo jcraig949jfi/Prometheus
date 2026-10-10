@@ -25,7 +25,7 @@ GRANTS = {
     "publisher": ["publish(text, text, text, integer, text, bigint, bytea, bytea, bytea, bytea, jsonb, text)",
                   "record_attempt_outcome(text, text, text, integer, text, bigint, text, text, text, jsonb, text)",
                   "put_object(bytea)"],
-    "validator": ["record_validation(text, integer, text, text[], text, text, text)"],
+    "validator": ["record_validation(text, integer, text, text, text[], text, text, text)"],
     "resolver": ["resolve_contest(bigint, text[], boolean, text)"],
 }
 REPO = Path(__file__).resolve().parents[2]
@@ -123,6 +123,19 @@ class Moonshot:
         cur.execute("SET ROLE {}_{}".format(self.schema, self.role))
         self.conn.commit()
 
+    def _heal(self):
+        """Replace a connection that has died (server restart, network fault, a terminated backend) with a fresh
+        dedicated one acting as the same role. Nothing is lost: every call ends its own transaction."""
+        if self.conn.closed:
+            self.conn = connect()
+            self._set_role()
+
+    def _discard(self):
+        try:
+            self.conn.close()
+        except Exception:
+            pass
+
     def close(self):
         """Reset the role before closing, so even a pooled connection goes back clean."""
         try:
@@ -137,6 +150,7 @@ class Moonshot:
             pass
 
     def _q(self, sql, args=(), one=False, commit=False):
+        self._heal()
         cur = self.conn.cursor()
         try:
             cur.execute(sql.format(s=self.schema), args)
@@ -146,7 +160,8 @@ class Moonshot:
             else:
                 self.conn.rollback()             # reads end their transaction; nothing to keep
         except Exception:
-            self.conn.rollback()
+            if not self.conn.closed:             # a dead connection has nothing to roll back
+                self.conn.rollback()
             raise
         return (rows[0] if rows else None) if one else rows
 
@@ -292,9 +307,32 @@ class Moonshot:
 
     def publish(self, attempt_id, task_id, chain_id, epoch_index, expected_parent, expected_generation, files, *,
                 detail=None, verify=True, approved=True, _hold_before_commit_s=0.0, _raise_before_commit=False,
-                _retries=3):
-        """One guarded publication. A lost acknowledgement (the connection dies around COMMIT) is resolved by
-        reconnecting and calling again with the same attempt id: the database answers from its record."""
+                _lose_acks=0, _retries=3):
+        """One guarded publication, classified exactly once per attempt id.
+
+        If the connection dies anywhere -- before the call, inside the transaction, or around COMMIT (a lost
+        acknowledgement) -- the whole call is repeated on a fresh connection with the same attempt id. That is safe
+        because every step is idempotent per attempt: the database answers a known attempt from its record.
+        Test hooks (first try only): `_hold_before_commit_s` parks inside the transaction holding an advisory lock;
+        `_raise_before_commit` fails there; `_lose_acks` = n drops the connection after the first n COMMITs succeed.
+        """
+        import psycopg2
+        lost = [_lose_acks]
+        for i in range(_retries + 1):
+            try:
+                return self._publish_once(attempt_id, task_id, chain_id, epoch_index, expected_parent,
+                                          expected_generation, files, detail, verify, approved,
+                                          _hold_before_commit_s if i == 0 else 0.0,
+                                          _raise_before_commit and i == 0, lost)
+            except (psycopg2.OperationalError, psycopg2.InterfaceError):
+                # the connection died: the transaction may or may not have committed -> ask the record again
+                if i == _retries:
+                    raise
+                self._discard()
+                time.sleep(0.5 * (i + 1))
+
+    def _publish_once(self, attempt_id, task_id, chain_id, epoch_index, expected_parent, expected_generation, files,
+                      detail, verify, approved, hold_s, raise_before_commit, lost):
         import psycopg2
         import psycopg2.extras
         work = epoch = None
@@ -315,35 +353,35 @@ class Moonshot:
         args = (attempt_id, task_id, chain_id, epoch_index, expected_parent, expected_generation,
                 files["manifest"], files["spec"], files["trace"], files["checkpoint"],
                 psycopg2.extras.Json(detail or {}), self.actor)
-        for attempt in range(_retries + 1):
-            cur = self.conn.cursor()
-            try:
-                cur.execute("SELECT * FROM {}.publish(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(self.schema),
-                            args)
-                row = cur.fetchone()
-                if _hold_before_commit_s:
-                    cur.execute("SELECT pg_advisory_xact_lock(%s, %s)", (HOLD_LOCK_CLASS, hold_key(self.schema)))
-                    cur.execute("SELECT pg_sleep(%s)", (_hold_before_commit_s,))
-                if _raise_before_commit:
-                    raise RuntimeError("injected failure before commit")
-                self.conn.commit()
-                return {"outcome": row[0], "publication_id": row[1], "contest_id": row[2], "generation": row[3],
-                        "replayed": row[4]}
-            except (psycopg2.OperationalError, psycopg2.InterfaceError):
-                # the connection died: the transaction may or may not have committed -> ask the record
-                if attempt == _retries:
-                    raise
-                time.sleep(0.5 * (attempt + 1))
-                self.conn = connect()
-                self._set_role()
-            except Exception:
-                self.conn.rollback()
-                raise
+        self._heal()
+        cur = self.conn.cursor()
+        try:
+            cur.execute("SELECT * FROM {}.publish(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)".format(self.schema),
+                        args)
+            row = cur.fetchone()
+            if hold_s:
+                cur.execute("SELECT pg_advisory_xact_lock(%s, %s)", (HOLD_LOCK_CLASS, hold_key(self.schema)))
+                cur.execute("SELECT pg_sleep(%s)", (hold_s,))
+            if raise_before_commit:
+                raise RuntimeError("injected failure before commit")
+            self.conn.commit()
+        except (psycopg2.OperationalError, psycopg2.InterfaceError):
+            raise
+        except Exception:
+            self.conn.rollback()
+            raise
+        if lost[0] > 0:                          # test hook: the server committed; the client never hears it
+            lost[0] -= 1
+            self.conn.close()
+            raise psycopg2.OperationalError("injected: acknowledgement lost after COMMIT")
+        return {"outcome": row[0], "publication_id": row[1], "contest_id": row[2], "generation": row[3],
+                "replayed": row[4]}
 
-    def record_validation(self, chain_id, epoch_index, state, checks, replay_digest, replay_host):
-        return self._q("SELECT {s}.record_validation(%s, %s, %s, %s, %s, %s, %s)",
-                       (chain_id, epoch_index, state, list(checks), replay_digest, replay_host, self.actor),
-                       one=True, commit=True)[0]
+    def record_validation(self, chain_id, epoch_index, epoch_digest, state, checks, replay_digest, replay_host):
+        """Record one validation of the live epoch `epoch_digest`; refused if that digest is no longer live."""
+        return self._q("SELECT {s}.record_validation(%s, %s, %s, %s, %s, %s, %s, %s)",
+                       (chain_id, epoch_index, epoch_digest, state, list(checks), replay_digest, replay_host,
+                        self.actor), one=True, commit=True)[0]
 
     def resolve_contest(self, contest_id, replay_digests, published_bytes_ok=True):
         return self._q("SELECT {s}.resolve_contest(%s, %s, %s, %s)",
