@@ -3,10 +3,10 @@
  "seat": "Eupalamus",
  "mwo_id": "MWO-0004",
  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
- "updated_at_utc": "2026-10-10T08:35:54Z",
- "state": "ACTIVE",
+ "updated_at_utc": "2026-10-10T09:20:24Z",
+ "state": "READY",
  "branch": "eupalamus/c-013-t022",
- "head_sha": null,
+ "head_sha": "e944e7c592449ff42a07d584007a55f35abcb59f",
  "base_sha": "ae55dccaa569de1c7265ec2b2fd1001e3bd51980",
  "worktree_path": "C:\\Prometheus-worktrees\\eupalamus-c013-t022",
  "model": "claude-opus-5-5",
@@ -16,11 +16,11 @@
  "session_id": "93a529ba-9b21-42a2-be46-b4b7227fabcd",
  "sole_instance_note": "2026-10-10: Palamedes launched two concurrent Eupalamus instances on harry1 by packet: harry1-93a529ba (this record, C-013-T022, Opus) and harry1-f28941a3 (C-013-T023, Sonnet). Each instance writes its own packet's state; this file was last written by harry1-93a529ba.",
  "current_objective": "RSO Builder Cell member, campaign C-013 (RSO-STRATEGIC-EXPANSION-48H), Workstream C",
- "current_step": "C-013-T022 CLAIMED: building rso/scale/runner/ (RED first)",
+ "current_step": "C-013-T022 INTEGRATION_READY (branch eupalamus/c-013-t022); awaiting Palamedes integration",
  "in_flight": [],
  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
- "next_expected_milestone": "C-013-T022 INTEGRATION_READY (fire test passed)",
- "expected_next_artifact": "rso/scale/runner/ + FIRE_TEST.md + attempts/A-001/RECEIPT.json",
+ "next_expected_milestone": "Palamedes integrates C-013-T022",
+ "expected_next_artifact": "next claimed packet",
  "last_push_sha": "7989b02cc503c61f08d47dca706712be9ce29246",
  "last_push_utc": "2026-10-04T07:14:10Z",
  "threads": [
@@ -38,10 +38,11 @@
  "blocked_on": [],
  "next_actions": [
   "python -m comms sync Eupalamus; python -m workgraph ready Eupalamus after each integration",
-  "heartbeat Aporia about every 90 minutes while working"
+  "if accepted: NF-transport port of rso/scale/runner, host-scheduler relaunch, checkpoint retention (proposals in the T022 INTEGRATION_READY note)"
  ],
  "operator_decisions_required": [],
  "latest_reports": [
-  "roles/Eupalamus/comms/2026-10-10_C-013-T020_INTEGRATION_READY.md"
+  "roles/Eupalamus/comms/2026-10-10_C-013-T022_INTEGRATION_READY.md",
+  "rso/scale/runner/FIRE_TEST.md"
  ]
 }
