@@ -143,7 +143,7 @@
   "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
   "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
   "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
-  "ALIEN_AR1": "FROZEN (FREEZE_ALIEN_AR1, 6c92d3b08); production primary RUNNING from worktree aph-b04-alien, 1 worker"
+  "ALIEN_AR1": "DONE ~23:15Z; alien/runs/production committed (34912f59a)"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -243,5 +243,6 @@
   "4x_escalation": "NOT RUN: eligible (family,arm) pairs are those with >=1 primary hit, and most are at or near ceiling (7-8/8) so 4x cannot change a label; desert families are ineligible by A1-B.7; the directive escalates only when it resolves uncertainty",
   "screening_caveat": "8 seeds; no significance; P(|d|>=3) ~ 0.21 per family under the null",
   "library_caveat": "library = foundry-acquired stones (oracle decomposition supplied); not stone discovery"
- }
+ },
+ "AR1_result": "EXPLORATORY (FREEZE_ALIEN_AR1; primary only): 0/15 chain-qualified, scratch fails 15/15; first failing links HORIZON_R1 12, UNDERDETERMINED_STONE 3. Confounded (representation AND search differ from TFS-1). Same failing link as TFS-1 (stone acquisition), more severe; no evidence that this alternative representation escapes it."
 }
