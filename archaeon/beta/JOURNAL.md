@@ -854,6 +854,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   shaped; SHAM 7106 has entropy 1.58 but no NFD (3rd case of entropy without niches). Note: in this minimal world SOLO
   HET>HOM is also positive (+.00..+.05), so the function test discriminates less there; the rare-type test does.
   VERDICT: Finding 4 REPLICATES ON 3/3 WORLDS (P-boom, B-scatter, procedural minimal) at k=4 (and k=8 on P-boom).
+- WINDOW 4 TALLY CORRECTED (mine; re-derived from wall-clock receipts at 04:45Z): B66 k=8 2.6 + B69 6.8 + B71 ~14 (6 procs
+  00:56-03:00, then 1 proc for SHAM 7103) + B69c 4.7 + B69d ~10 + evals ~1 = ~39 of 48. The running estimate ('~23 on
+  completion', journaled 01:40Z) undercounted. Within the envelope; NO further heavy runs until window 5
+  (~2026-10-11 00:29Z). Campaign update 8 written (CAMPAIGN_UPDATE_2026-10-10.md).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
