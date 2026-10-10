@@ -18,12 +18,17 @@ never P, so P can sit over the cap (over_budget). With pevict, after N and U are
 whole cells are evicted, the lowest support first, then the oldest, until the cap is
 met. The rule is the same for every arm.
 
+Factoring (HADES-28; factor.py): O0F, O3WF, O4LWF are O0, O3W, O4LW whose premises are
+stored with shared abstraction vertices (Re-Pair). Lossless: behaviour differs from the
+flat twin only through the byte cap.
+
 Every E1 arm is chiasma.organisms.Organism unchanged.
 """
 from typing import Optional
 
 from ..organisms import Cell, Organism, make as make_e1
-from ..world import bits
+from ..world import bits, popcount
+from .factor import RULE_BYTES, FactorCache
 
 
 class E1bOrganism(Organism):
@@ -31,13 +36,32 @@ class E1bOrganism(Organism):
                 O3U=dict(neg="proj", consolidate=True, seams="none", uncapped=True),
                 O4LR=dict(neg="proj", consolidate=True, seams="lazyrand"),
                 O3W=dict(neg="proj", consolidate=True, seams="none", weldable=True),
-                O4LW=dict(neg="proj", consolidate=True, seams="lazy", weldable=True))
+                O4LW=dict(neg="proj", consolidate=True, seams="lazy", weldable=True),
+                O0F=dict(neg="proj", consolidate=False, seams="none", factor=True),
+                O3WF=dict(neg="proj", consolidate=True, seams="none", weldable=True, factor=True),
+                O4LWF=dict(neg="proj", consolidate=True, seams="lazy", weldable=True, factor=True))
 
     def __init__(self, arm, m, cap, seed=0, pevict=False):
         super().__init__(arm, m, cap, seed)
         self.weldable = bool(self.ARMS[arm].get("weldable"))
         self.pevict = pevict
         self.events["p_evicted"] = 0
+        self.factor = bool(self.ARMS[arm].get("factor"))
+        self._fcache = FactorCache()
+        if self.factor:
+            self.events["rules"] = 0
+
+    def nbytes(self):
+        b = super().nbytes()
+        if not self.factor:
+            return b
+        premises = [c.premise for cells in self.cells.values() for c in cells]
+        stored, rules, ops = self._fcache.get(premises)
+        self.ops += ops
+        self.events["rules"] = rules
+        flat = sum(popcount(p) for p in premises)
+        P = b["P"] - flat + stored + RULE_BYTES * rules
+        return {"P": P, "N": b["N"], "U": b["U"], "total": P + b["N"] + b["U"]}
 
     def _enforce_cap(self) -> None:
         super()._enforce_cap()
@@ -90,10 +114,11 @@ class E1bOrganism(Organism):
 
 
 E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U", "O3W", "O4LW"]
+FACTOR_ARMS = ["O0F", "O3WF", "O4LWF"]
 UNCAPPED = {"O3U", "CEIL"}
 
 
 def make(arm: str, m: int, cap: Optional[int], seed: int = 0, pevict: bool = False):
-    if pevict or arm in ("O3U", "O4LR", "O3W", "O4LW"):
+    if pevict or arm in ("O3U", "O4LR", "O3W", "O4LW") or arm in FACTOR_ARMS:
         return E1bOrganism(arm, m, cap, seed, pevict)
     return make_e1(arm, m, cap, seed)

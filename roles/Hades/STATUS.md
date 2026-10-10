@@ -1,6 +1,6 @@
 # Hades status
 
-Currency: 2026-10-10T12:09:27Z (UTC). Instance m1-ca525615.
+Currency: 2026-10-10T12:48:18Z (UTC). Instance m1-ca525615.
 
 seat state: ACTIVE, chartered (CHIASMA). WORK_STATE WORKING.
 what it asserts (AUTHOR_TESTED; E1b items are dev-only, not results):
@@ -11,4 +11,5 @@ what it asserts (AUTHOR_TESTED; E1b items are dev-only, not results):
   wins when bytes are free; compression wins only under budgets that destroy most
   knowledge; repair loses there.
 blockers: the E1b freeze waits on G3 (Hestia, #2046/#2049).
-next executable action: HADES-28 factoring-lever design (shared abstraction vertex).
+- HADES-28 factoring (lossless) pays only in the same heavy-loss regime (DEV_NOTES s9-s10).
+next executable action: HADES-29 deep-abstraction world PW-D, dev design.
