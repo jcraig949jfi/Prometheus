@@ -91,3 +91,30 @@ arguments as lambdas.
 - **Production runs:** <= 4 workers, scheduled against the rolling cap, with a scout + throughput measurement first.
 - **E2 / E3 at 1x first.** 4x / 16x only when it resolves uncertainty.
 - **Total budget:** <= 120 core-h over 72 h (cap-limited).
+
+## 5. Principles adopted from the required reading (beta04/READING_DIGEST.md; design-level, pre-data)
+1. **Archive factorisation (Nyx attack on Atlas G1-G6, 62024dbba).** "Archive" bundles three effects: (i) genome
+   retention, (ii) novelty / descriptor-guided selection, (iii) admission of new cells.
+   - E2 tests them as ONE-FACTOR arms, not one bundled arm.
+   - The random-archive control MATCHES the certificate archive's cell count and restore frequency.
+   - Restoring a program is a copy; the term "Go-Explore" is not used. Genotype restore and state restore are reported
+     separately.
+2. **Descriptor qualification first (C-013 D1, FREEZE 66c7ccdae).** Behaviour descriptors, even full traces, failed to
+   separate shortest-route intermediates from random same-score programs (separation about 0.006).
+   - **Every E2 descriptor must pass an outcome-free separation test** (intermediates of the known-positive route vs
+     score-matched random programs) BEFORE it may guide an archive.
+   - A descriptor that fails is reported as such, and its archive arm is INSTRUMENT_UNVALIDATED.
+3. **Foundry rigor (Fable REVISE on the Enceladus foundry, 9beeff57f; WTP-05):**
+   - positive and negative controls run first;
+   - a paper proof that a positive outcome has headroom (the known-positive hitting cost lies within the budget, and
+     the null ladder fails);
+   - a history-contingency arm (the curriculum order matters vs shuffled order);
+   - the 0.2-0.8 admission band where applicable (desert / stepping-stone / yoked controls).
+4. **Hestia, 2026-10-08:**
+   - archive OFF at final evaluation;
+   - shuffled-history and random-library controls;
+   - the four-row cognitive ledger (organism / developmental / search / certifier);
+   - escalate 1x -> 4x -> 16x only when the certified-mechanism rate rises;
+   - **MDL is a triviality gate, never proof of reachability.**
+5. **Coordination:** C-013 D1 (Palamedes) and C-014 / WTP-05 (Ensorain) overlap E1/E2. Beta-04 reuses their
+   conventions and results where available and does not duplicate them; contacted via comms.
