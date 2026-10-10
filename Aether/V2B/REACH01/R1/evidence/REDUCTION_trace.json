@@ -1,0 +1,889 @@
+{
+ "schema": "aether.prop01.reduction.v1",
+ "reducer": "prop01_reduce.v1",
+ "rules_sha256": "c2570e1cb9d1b6ca2fecb7693293e82c999ea84f73f952b4217e37db0e8a98e2",
+ "candidate": "RX",
+ "comparators": [
+  "X",
+  "R",
+  "V1"
+ ],
+ "per_law": {
+  "RX": [
+   {
+    "seed": 0,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 767,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 3,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 1,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 14,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 2,
+    "max_gen": 3,
+    "ever_sites": 9,
+    "ever_radius": 3,
+    "peak_concurrent": 9,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1125,
+    "struct_ge2": 3,
+    "by_gen": {
+     "1": 4,
+     "2": 1,
+     "3": 3
+    },
+    "type_counts": {
+     "STRUCT": 6,
+     "CARRY": 1,
+     "RULE": 1
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "MULTIGEN_UNCLAMPED"
+   },
+   {
+    "seed": 3,
+    "max_gen": 8,
+    "ever_sites": 42,
+    "ever_radius": 6,
+    "peak_concurrent": 38,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1469,
+    "struct_ge2": 34,
+    "by_gen": {
+     "1": 4,
+     "2": 7,
+     "3": 5,
+     "4": 6,
+     "5": 5,
+     "6": 5,
+     "7": 4,
+     "8": 5
+    },
+    "type_counts": {
+     "STRUCT": 37,
+     "CARRY": 2,
+     "RULE": 2
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 129014,
+     "descendants": 9,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 4,
+    "max_gen": 6,
+    "ever_sites": 18,
+    "ever_radius": 4,
+    "peak_concurrent": 18,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1289,
+    "struct_ge2": 11,
+    "by_gen": {
+     "1": 4,
+     "2": 3,
+     "3": 1,
+     "4": 3,
+     "5": 3,
+     "6": 3
+    },
+    "type_counts": {
+     "STRUCT": 14,
+     "CARRY": 1,
+     "RULE": 2
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 198114,
+     "descendants": 13,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 5,
+    "max_gen": 3,
+    "ever_sites": 10,
+    "ever_radius": 2,
+    "peak_concurrent": 9,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 266,
+    "struct_ge2": 5,
+    "by_gen": {
+     "1": 4,
+     "2": 3,
+     "3": 2
+    },
+    "type_counts": {
+     "STRUCT": 8,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 249532,
+     "descendants": 5,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 6,
+    "max_gen": 3,
+    "ever_sites": 8,
+    "ever_radius": 2,
+    "peak_concurrent": 8,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1293,
+    "struct_ge2": 3,
+    "by_gen": {
+     "1": 3,
+     "2": 1,
+     "3": 3
+    },
+    "type_counts": {
+     "STRUCT": 4,
+     "CARRY": 2,
+     "RULE": 1
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "MULTIGEN_UNCLAMPED"
+   },
+   {
+    "seed": 7,
+    "max_gen": 1,
+    "ever_sites": 9,
+    "ever_radius": 3,
+    "peak_concurrent": 9,
+    "unknown_sites": 4,
+    "extinct_tick": null,
+    "reentry": 922,
+    "struct_ge2": 0,
+    "by_gen": {
+     "-1": 4,
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 5,
+     "CARRY": 2,
+     "RULE": 1
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   }
+  ],
+  "R": [
+   {
+    "seed": 0,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 3,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 1,
+    "max_gen": 2,
+    "ever_sites": 8,
+    "ever_radius": 2,
+    "peak_concurrent": 6,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 3,
+    "by_gen": {
+     "1": 4,
+     "2": 3
+    },
+    "type_counts": {
+     "STRUCT": 3,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 117250,
+     "descendants": 2,
+     "cut_desc_frac": 0.5,
+     "cut_ctrl_frac": 1.0,
+     "pass": false
+    },
+    "class": "MULTIGEN_UNCLAMPED"
+   },
+   {
+    "seed": 2,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 2,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 3,
+    "max_gen": 2,
+    "ever_sites": 6,
+    "ever_radius": 1,
+    "peak_concurrent": 6,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 1,
+    "by_gen": {
+     "1": 4,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 3,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 129132,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 4,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 4,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 5,
+    "max_gen": 1,
+    "ever_sites": 5,
+    "ever_radius": 1,
+    "peak_concurrent": 5,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 4
+    },
+    "type_counts": {
+     "STRUCT": 3,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 4,
+    "ever_sites": 13,
+    "ever_radius": 2,
+    "peak_concurrent": 12,
+    "unknown_sites": 1,
+    "extinct_tick": null,
+    "reentry": 754,
+    "struct_ge2": 6,
+    "by_gen": {
+     "-1": 1,
+     "1": 4,
+     "2": 4,
+     "3": 2,
+     "4": 1
+    },
+    "type_counts": {
+     "STRUCT": 7,
+     "CARRY": 3,
+     "RULE": 2
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 220176,
+     "descendants": 6,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.8333333333333334,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 7,
+    "max_gen": 2,
+    "ever_sites": 8,
+    "ever_radius": 2,
+    "peak_concurrent": 8,
+    "unknown_sites": 1,
+    "extinct_tick": null,
+    "reentry": 3,
+    "struct_ge2": 2,
+    "by_gen": {
+     "-1": 1,
+     "1": 4,
+     "2": 2
+    },
+    "type_counts": {
+     "STRUCT": 4,
+     "CARRY": 2,
+     "RULE": 1
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 142910,
+     "descendants": 2,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   }
+  ],
+  "V1": [
+   {
+    "seed": 0,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 1,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 2,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 3,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 4,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 197689,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 5,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 2,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 282,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 7,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 0,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 143504,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 1.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   }
+  ],
+  "X": [
+   {
+    "seed": 0,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1523,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   },
+   {
+    "seed": 1,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1547,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 2,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 813,
+    "struct_ge2": 1,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 1,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 235357,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 3,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 2,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 6,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 2,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 129064,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 4,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1381,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 5,
+    "max_gen": 1,
+    "ever_sites": 2,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1626,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "LOCAL_ONLY"
+   },
+   {
+    "seed": 6,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 2,
+    "peak_concurrent": 3,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1680,
+    "struct_ge2": 1,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 1,
+     "CARRY": 1,
+     "RULE": 0
+    },
+    "multiplies": true,
+    "clamp": {
+     "B": 220088,
+     "descendants": 1,
+     "cut_desc_frac": 0.0,
+     "cut_ctrl_frac": 0.0,
+     "pass": true
+    },
+    "class": "MULTIGENERATION"
+   },
+   {
+    "seed": 7,
+    "max_gen": 2,
+    "ever_sites": 3,
+    "ever_radius": 1,
+    "peak_concurrent": 1,
+    "unknown_sites": 0,
+    "extinct_tick": null,
+    "reentry": 1940,
+    "struct_ge2": 0,
+    "by_gen": {
+     "1": 1,
+     "2": 1
+    },
+    "type_counts": {
+     "STRUCT": 0,
+     "CARRY": 1,
+     "RULE": 1
+    },
+    "multiplies": false,
+    "clamp": null,
+    "class": "DIRECT_TRANSPORT"
+   }
+  ]
+ },
+ "summary": {
+  "RX": {
+   "seeds": 8,
+   "classes": {
+    "LOCAL_ONLY": 3,
+    "MULTIGENERATION": 3,
+    "MULTIGEN_UNCLAMPED": 2
+   },
+   "median_ever_sites": 9.0,
+   "median_max_gen": 3.0,
+   "median_radius": 2.5,
+   "median_peak": 9.0,
+   "median_struct_ge2": 3.0,
+   "unknown_total": 4
+  },
+  "R": {
+   "seeds": 8,
+   "classes": {
+    "LOCAL_ONLY": 4,
+    "MULTIGENERATION": 3,
+    "MULTIGEN_UNCLAMPED": 1
+   },
+   "median_ever_sites": 5.5,
+   "median_max_gen": 1.5,
+   "median_radius": 1.0,
+   "median_peak": 5.5,
+   "median_struct_ge2": 0.5,
+   "unknown_total": 2
+  },
+  "V1": {
+   "seeds": 8,
+   "classes": {
+    "LOCAL_ONLY": 6,
+    "MULTIGENERATION": 2
+   },
+   "median_ever_sites": 2.0,
+   "median_max_gen": 1.0,
+   "median_radius": 1.0,
+   "median_peak": 2.0,
+   "median_struct_ge2": 0.0,
+   "unknown_total": 0
+  },
+  "X": {
+   "seeds": 8,
+   "classes": {
+    "DIRECT_TRANSPORT": 2,
+    "LOCAL_ONLY": 3,
+    "MULTIGENERATION": 3
+   },
+   "median_ever_sites": 3.0,
+   "median_max_gen": 2.0,
+   "median_radius": 1.0,
+   "median_peak": 1.0,
+   "median_struct_ge2": 0.0,
+   "unknown_total": 0
+  }
+ },
+ "disposition": "MULTIGENERATION_WEAK"
+}

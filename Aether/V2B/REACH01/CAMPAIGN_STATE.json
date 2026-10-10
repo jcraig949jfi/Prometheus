@@ -8,7 +8,7 @@
   "base_main": "5956b542e",
   "started_utc": "2026-10-10T09:23:11Z",
   "deadline_utc": "2026-10-13T09:23:11Z",
-  "current_phase": "R1 EXPERIMENT (tracer) + R3 EXPERIMENT (search)",
+  "current_phase": "R3 EXPERIMENT (attempt 2 search)",
   "current_experiment": "R1 TEST-4",
   "attempt": 1,
   "frozen_sha": {
@@ -16,10 +16,6 @@
     "R3": "e5bbeedcd (attempt 2; attempt 1 99d6e38bd stopped for instrument defect)"
   },
   "active_workloads": [
-    {
-      "id": "R1 phase1+2",
-      "ledgers": "C:/Prometheus-data/aether_reach01/R1/ledger_plan_phase1.jsonl, ledger_plan_phase2.jsonl"
-    },
     {
       "id": "R3 search+certify",
       "ledgers": "C:/Prometheus-data/aether_reach01/R3/ledger_plan_search.jsonl, ledger_plan_certify.jsonl",
@@ -29,7 +25,7 @@
   "completed_units": {},
   "artifact_root": "Aether/V2B/REACH01/ (tracked, small); C:/Prometheus-data/aether_reach01/ (large, untracked)",
   "dispositions": {
-    "R1": "pending (decodability half reduced: 0/8 seeds meet margin -> NOT_SUPPORTED expected; tracer running)",
+    "R1": "RECOIL_EXCHANGE_CAUSAL_REACH_NOT_SUPPORTED (decode margin 0/8; certified chains RX 2 vs X 3; RX deepest trees gen 6-8)",
     "R2": "XOR/ADD/ROTX PLANTED_COMPOSITION_SUPPORTED; v1 EXPRESSIBILITY_STILL_BLOCKED (missing: state-dependent combination); AND/SPLICE partial",
     "R3": null,
     "R4": null
