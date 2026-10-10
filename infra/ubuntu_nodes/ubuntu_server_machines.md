@@ -11,7 +11,7 @@ Don't record passwords here.
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token pending; Claude logged in 2026-10-06 |
 | 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
-| 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **Provisioned** (shared token, Claude token); worker NOT enabled until memtester pass 2 |
+| 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **HOLD -- BAD RAM** (one weak cell, confirmed); worker OFF until a DIMM is pulled/replaced |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
 
 ## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
@@ -217,6 +217,12 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   tmux `memtest` (log ~/memtester_*.log). Pass 1 (12 GB) clean ~19:20Z. Re-clone 19:3xZ during pass 2: 2m10s,
   `git fsck` clean. provision_node.sh re-run: push dry-run OK; Claude token copied from ubu006, claude -p OK.
   Battery and HDD 2 bay left empty; fan blown out (operator). Screen blanked (backlight off + consoleblank=300).
+- **BAD RAM CONFIRMED 2026-10-10 ~22:30Z:** memtester 12G (run 2, after a power cut ended run 1 in pass 2) failed 3x at the
+  SAME offset 0x1678df398, SAME bit (bit 26 reads 0 instead of 1) under three different patterns: a single weak cell
+  (charge-retention failure), not seating/timing (those scatter). Explains both install corruptions. Not localizable to a
+  DIMM from software (interleaved; SPD serials blank). Fix: pull DIMM_D, memtest DIMM_B alone; if clean, the pulled stick
+  is bad (replace, 8 GB DDR3-1333 SODIMM ~$10-15, or run 8 GB). Fallback: memmap= the page (needs its physical address)
+  + 12-24 h hot test. Thermals, lid closed, 1-thread load: median 75 C, max 77 C.
 - Wi-Fi: the Intel 6300 enumerated during installer boot 1 (iwlwifi 0000:0c:00.0) but is absent from lspci now: likely
   unseated at reassembly, or Internal WLAN disabled in BIOS. Not needed while wired.
 
