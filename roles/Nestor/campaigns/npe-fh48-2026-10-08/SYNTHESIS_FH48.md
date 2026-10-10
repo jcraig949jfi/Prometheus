@@ -35,7 +35,8 @@ does not suffice for competence to bias the RATE of encounters.
   - Robust implementations displace fragile ones when both establish (not confirmed).
   - Under in-context selection, function can become PAIR-DISTRIBUTED: a genome answers by executing its partner's
     code. That form is a neutral alternative state, not a selected improvement.
-- **Re-discovery** of lost function is supply-limited: one mutational step only.
+- **Re-discovery** of lost function works only one mutational step away and only early: the unselected routine
+  erodes the target (F17).
 - **De novo emergence** is blocked earlier, at the copier rung.
 
 ## 1. Experiment-graph delta (all nodes this window; parent X-TASK-GATE-V2)
@@ -48,8 +49,8 @@ does not suffice for competence to bias the RATE of encounters.
 | C-DIR-MAINTAIN | CONFIRM | **CONFIRMED** 12/12 vs 0/12 (C1) |
 | X-DIR-SURFACE | EXPLORE | SIGNAL: monotone q x mutation boundary; the copier threshold is above the function threshold (F6) |
 | X-RANDOM-DIR | EXPLORE | CLEAN_NULL, structural: no copier regime de novo (F5) |
-| X-REDISCOVER | EXPLORE | WEAK_SIGNAL: supply-limited, 1-step only (F7) |
-| X-REDISCOVER-SUPPLY | EXPLORE | [PENDING] |
+| X-REDISCOVER | EXPLORE | WEAK_SIGNAL: 1-step only (F7; its "supply-limited" reading was replaced by F17) |
+| X-REDISCOVER-SUPPLY | EXPLORE | CLEAN_NULL: the supply hypothesis is falsified; the target ERODES (F17) |
 | X-ONTAPE | EXPLORE | SIGNAL: endogenous priority maintains function; pair-distributed function discovered (F8) |
 | C-ONTAPE-MAINTAIN | CONFIRM | **CONFIRMED** 12/12 vs 0/12 (C2; DEF-FH-4 rescoring leaves it unchanged) |
 | X-ONTAPE-LONG | EXPLORE | WEAK_SIGNAL, provisional: distributed forms are a recurring minority over 6000 epochs (F11) |
@@ -78,11 +79,15 @@ does not suffice for competence to bias the RATE of encounters.
 - **"The pair-distributed form spreads because it is advantaged":** killed. It is neutral vs a marker from rare and
   from common (F13).
 - **"The robust architecture's advantage is confirmed":** NOT confirmed. It stays EXPLORE (C3).
+- **"Re-discovery is supply-limited":** falsified. About 7x the supply gave no gain; the one-step-from-use share
+  falls to 0 by epoch 50 while the copier persists (F17).
 
 ## 4. Nulls, and what they taught
 
 - **X-RANDOM-DIR:** de novo heredity is blocked at the COPIER rung at this rate and horizon. DIR is inert without
   competence, so its rows are identical to RND by construction.
+- **X-REDISCOVER-SUPPLY:** a lost function is not waiting to be re-found. Without selection its code decays, so
+  re-discovery needs the routine to be held by something other than its own function.
 - **X-DISTRIB-GAME:** in-context function admits several neutral implementations. Selection reads behavior, not
   structure.
 - **C-ARCH-COMPETE:** single-founder establishment is a lottery. Architecture confirms need several founders.
@@ -114,7 +119,7 @@ does not suffice for competence to bias the RATE of encounters.
 | functional persistence | PRESENT iff competence biases copy DIRECTION. External ruler: C1. Endogenous: C2. Two worlds (F12, F15) |
 | selection on function | PRESENT under direction coupling. Also selects robust implementations (F10, EXPLORE) |
 | architectural integration | PARTIAL: neutral rewiring of tape-live code (F4 corrected); pair-distributed function as a neutral alternative state (F8, F13, F14); modest robustness gain under high mutation (F16, weak); no task-copier fusion seen over 8000 epochs |
-| endogenous re-discovery | 1-step only, supply-limited (F7). [SUPPLY pending] |
+| endogenous re-discovery | 1-step only, in a brief early window. The unselected routine decays within dozens of interactions, so the target erodes (F17); more supply does not help |
 
 ## 7. Why the function was transient, and how persistence was achieved
 
@@ -160,7 +165,11 @@ does not suffice for competence to bias the RATE of encounters.
 
 ## 10. Compute used
 
-[filled at close from `compute_tally.py`]
+- Valid runs: 560. Total: 66.0 CPU-hours (sum of process CPU), all on BUCKKEEP, CPU only, 4 workers.
+- Wall time: about 2026-10-08 01:09 -> 14:42, then 2026-10-10 02:48 -> 08:24 (about 19 h of compute wall).
+- Excluded: 5 runs quarantined under DEF-FH-3 (0.5 CPU-hours), and 4 supply runs discarded at the demo pause.
+- Per experiment: `python -B compute_tally.py`. Peak RSS per worker: <= 205 MB (the p = 1.0 runs).
+- External spend: none.
 
 ## 11. Atlas-ready cross-pollination packet
 

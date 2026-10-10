@@ -584,3 +584,32 @@ function.
 - Under directional selection the function persists for 8000 epochs.
 - Mutational robustness rises modestly ("flatness") only when mutation is high.
 - **No integration of task and copier** (shared or overlapping bytes) was observed at this horizon.
+
+## F17. X-REDISCOVER-SUPPLY: CLEAN_NULL. The supply hypothesis is FALSIFIED; re-discovery is limited by an ERODING TARGET (12 runs + 1 replay)
+
+**Setup:** DIR at CONST p = 1.0 for 2000 epochs, about 7x the X-REDISCOVER mutational supply at the same physics per
+interaction.
+
+| distance | runs with a creation root | runs maintained |
+|---|---|---|
+| d = 1 | 2/5 established | 1/5 (CS 0.95) |
+| d = 2 | 0/5 established | 0 |
+
+- At 1x supply (X-REDISCOVER) d = 1 gave 2/6 and 1/6. **More supply did not help.**
+- The one success was already at CS 0.90 by epoch 50: an early event.
+
+**Mechanism** (`mine_erosion.py`, a deterministic replay of RS1 seed 45100000):
+
+| epoch | share of the population ONE STEP from use (u >= 0.75 once byte 31 = 0x25) | copier prefix intact |
+|---|---|---|
+| 25 | 0.023 | -- |
+| 50-325 | 0.000 | 0.84-0.98 throughout |
+
+**Reading:**
+- With no function, nothing purifies the routine. Its other bytes decay within a few dozen interactions, so the
+  distance-1 target ERODES before supply can accumulate.
+- Re-discovery is possible only in a brief early window. More time or supply cannot buy it.
+- **The F7 reading ("supply-limited") is REPLACED by "eroding target".**
+- **Implication:** endogenous re-discovery needs the routine to be held by something other than its own function
+  (linkage to the copier, or partial credit) while it is broken. This connects to the integration rung (synthesis
+  s12).

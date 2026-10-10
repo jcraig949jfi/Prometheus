@@ -1,5 +1,18 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
+## NPE-48h FUNCTIONAL-HEREDITY WINDOW -- CLOSED 2026-10-10 08:24 EDT (directive prompts/2026-10-08_npe_48h_functional_heredity/)
+
+Worktree C:/Prometheus-worktrees/nestor-npe48-2026-10-08, branch nestor/npe48-2026-10-08 (base origin/main 3d85e1df4
++ XTG-v2 merge). Paused for the operator demo 10-08 14:42 -> 10-10 02:48 (prompts/2026-10-10_resume_after_demo/).
+Nothing running; no lease. Synthesis: campaigns/npe-fh48-2026-10-08/SYNTHESIS_FH48.md; findings F1-F17, C1-C3.
+- CONFIRMED: C-DIR-MAINTAIN (copy-DIRECTION coupling maintains function, 12/12 vs 0/12);
+  C-ONTAPE-MAINTAIN (ENDOGENOUS on-tape-earned priority maintains function, 12/12 vs 0/12).
+- NOT_CONFIRMED: C-ARCH-COMPETE (robust-architecture substitution, 7/9 vs bar 8; founder lottery).
+- Killed: rate-gate selection (harmful), counter-copy invader, distributed-form advantage (neutral), supply-limited
+  re-discovery (eroding target).
+- Defects DEF-FH-1..4 repaired with fail-on-old regression tests (fh.py, test_fh.py 13/13).
+- Next (recommended): the integration rung (function causally coupled into copying); multi-founder architecture confirm.
+
 ## XTG-v2 (operator science order 2026-10-05, prompts/2026-10-05_xtg_v2_science_order/) -- CLOSED
 
 Seat moved to BUCKKEEP (worktree C:/Prometheus-worktrees/nestor-buckkeep-2026-10-05, branch
