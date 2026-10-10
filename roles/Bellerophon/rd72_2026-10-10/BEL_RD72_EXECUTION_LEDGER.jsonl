@@ -7,3 +7,5 @@
 {"t":"2026-10-10T12:56:54Z","event":"queue","block":"K2","freeze_commit":"cbc7a1eb6","plan":"1320 727cea06826695868ae7215994ea6599d73470b2623ba9cc7529d11faebbbdc5","workers":7,"starts_after":"E1 complete","note":"K (plan_k) superseded by K2 per amendment A1; never run"}
 {"t":"2026-10-10T15:06:52Z","event":"complete","block":"D1","runs":1900,"voids":0,"active_s":18731.4}
 {"t":"2026-10-10T15:06:52Z","event":"launch","block":"E1","freeze_commit":"b6e0fc97c","runs":80,"workers":7,"via":"chain_e1.sh"}
+{"t":"2026-10-10T15:08:53Z","event":"dequeue","block":"K2","reason":"re-sequenced: C2/C3 (generated from E1) run before K2; chain_k2 stopped before start (0 runs)"}
+{"t":"2026-10-10T15:08:53Z","event":"frozen","block":"D2","freeze_commit":"ce4bcd5e7","plan":"3200 93560f5bdd2c2ff0ea7abc0a88f7c852f9ac4e5301de3b6d5cf2aea13f46f0e1","queue":"after C2/C3 and K2"}
