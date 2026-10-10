@@ -211,3 +211,34 @@ The conservative readings chosen by the driver become the frozen rules:
      0.30 against 0.05.
    - At the D1-observed rates (about 0.1) power is about 0.15.
    - A NO therefore rules out only large effects. It is reported as such.
+
+## AMENDMENT A3 (pre-data rulings on E3-KP; SUBSTRATE build 8d0383ca0; no production KP run yet)
+
+Rulings on E3_RUNNER s4B. The implemented reading is CONFIRMED unless stated otherwise.
+
+1. **Scratch rule.** >= 80% of families fail from scratch (A1-A.4). `scratch_fails_all` is reported beside it.
+2. **Horizon** = the witness size class was not COMPLETED within budget. This is the mechanism predicted in A1-A.2 /
+   M1. CLASS_NOT_ENTERED is reported as a sub-label.
+3. **OE trigger:** horizon labels make up a strict majority of the not-qualified families. The plurality count is
+   reported.
+4. **Label precedence** (s4B items 4-6, 9, 10) is confirmed.
+5. **OE semantics (s4B item 7).**
+   - Pruned subterms are never candidates and are never charged; their signature work goes on an INFRA ledger, which
+     is reported.
+   - **The lambda-body probe set is ACCEPTED as the pre-registered OE equivalence.** It can only remove reachable
+     programs (it biases toward FAIL), never add one.
+   - The OE row's scratch control also uses OE (item 8).
+6. **Process caps.** The 15 CPU-min cap is a LEAD build rule. Production KP processes have no per-process CPU cap;
+   the 48 core-h / 24 h rolling cap and <= 4 total workers govern.
+   - A search that cannot complete for any other reason is labelled CENSORED.
+   - A CENSORED scratch control counts as NOT failed (conservative toward FAIL).
+7. **Run order.**
+   - Primary first, then fallback-off, given-foundry-primitives, all-acquired, then seeds 1 and 2.
+   - The OE re-run happens ONLY if the primary pooled verdict is NO AND the trigger (item 3) fires.
+   - The final TFS1_INSTRUMENT_QUALIFIED is: the primary verdict; or, if the repair ran, the OE re-run's verdict. That
+     makes exactly one neutral repair.
+8. **Production world set:** the 7 worlds with admitted R3 / R4 families (W0321d83c, W2bdef02f, W480ffd54, W483b8c31,
+   W6eb945cc, Wb49b6a5f, Wc025415a), i.e. the 15 families in FREEZE_E2.
+
+Development pilot (exposed, not evidence): primary 3/7 (all failures horizons); OE 7/7 chain-qualified with the scratch
+control incomplete. These pilot numbers inform cost only.
