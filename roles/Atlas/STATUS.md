@@ -2,26 +2,23 @@
 
 ## WORK_STATE (CWO-2026-09-30C s15; informational, not authority)
 
-state: DRAINED (M1-DRAIN-2026-10-03, comms #1294; ops/fleet/M1_DRAIN_2026-10-03/ORDER.md).
-  Session Atlas[m1-a5680f90] ended after the drain receipt. A Phase 2-B restart
-  is a fresh session from origin/main. Do not resume this one.
-last_work: 2026-10-02, two PROPOSALS written at the operator's request, NOT executed:
-  roles/Atlas/proposals/2026-10-02_surprise_scheduler/ (E0-E6) and
-  roles/Atlas/proposals/2026-10-02_reachability_go_explore/ (G1-G6).
-open_on_restart:
-  - Nyx attacked both (operator-directed). Atlas has NOT yet responded or revised:
-    * reachability G1-G6: comms #1263, roles/Nyx/ATTACK_reachability_go_explore_2026-10-03.md
-      @62024dbba. 2 BLOCKING: G1 cannot attribute a gain to detachment (add S4-greedy and
-      S4-uniform arms); in genome space S4 is MAP-Elites, not Go-Explore.
-    * surprise scheduler E0-E6: comms #1268,
-      roles/Nyx/REVIEW_Nyx_claude-opus-5-5_2026-10-03_surprise_scheduler.md @a1b5b575c.
-      2 BLOCKING: key items undecidable from an as-of table; P3 reward sees the key.
-  - Inference-harvest Atlas-internal follow-ups (ATLAS-39 per-arm tagging, ruler-side
-    fields, missing adapters) wait for operator/Aporia direction.
-  - Index loop and Atlas-M2 parked. No watcher, cron, lease or process.
-next: awaiting Aporia/operator assignment after Phase 2-B reseating
-model: claude-opus-5-5[1m]
-session_started_utc: 2026-09-25T12:10Z (approx; first comms sync 12:15Z)
+state: ACTIVE (restarted 2026-10-10 on M1 as Atlas[m1-073da007], operator in chat; worktrees atlas-ops
+  (detached origin/main, comms) and atlas-catchup (branch atlas/catchup-2026-10-10)).
+last_work: 2026-10-10, on the operator's instruction ("Do all 3 steps"):
+  1. adapters workgraph/1, theseus/1, aether/1 + fleet hosts + migration 014 (0e278cad5 on main);
+     full harvest all + comb 12:27Z: 2,270 experiments, 2,377 attempts, 41,784 facts.
+  2. reports/CATCHUP_2026-10-10.md (what ran 09-30 -> 10-10; gaps listed in s6).
+  3. Nyx responses: proposals/*/04_RESPONSE_TO_NYX_2026-10-10.md. All BLOCKING/MAJOR accepted;
+     G1 WITHDRAWN (superseded by C-013 D1, rso/reach); surprise scheduler re-fronted as D0 -> D1 -> D2.
+  also: pgvector 0.8.7 built and installed on M1 for Pan (comms #2056); PAN-27 acked (#2053);
+     Pan's catalog is Atlas's discovery layer (pan search / pivot).
+open:
+  - Themis asked (#2045) to confirm Atlas-M2's M2 worktree holds nothing uncommitted.
+  - next adapters (report s6): rso ledgers, Bellerophon BEL-48H, Nestor NPE-48h, Aphrodite, chiasma.
+  - D0 decidability pass waits for the operator's word (REPORTS ONLY ruling stands).
+next: rso + Bellerophon adapters on the operator's word; hourly comms poll is running (session cron).
+model: claude-opus-5-5
+session_started_utc: 2026-10-10T11:32Z (date -u at boot)
 boundary: read-only toward other seats' science; no commands, adjudication,
   launches; Atlas scores are not authority; proposals are operator-facing only.
 
