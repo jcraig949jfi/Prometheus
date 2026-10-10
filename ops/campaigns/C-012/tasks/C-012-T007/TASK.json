@@ -1,0 +1,61 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/): \"Once PostgreSQL-backed synthetic epochs are qualified, put the first deterministic native-world epoch through the new path.\"",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:42:55Z",
+      "note": "added to C-012 for OP-NF2's native-epoch instruction"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:42:55Z",
+      "note": "READY by operator authority OP-NF2"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:42:55Z",
+      "note": "runtime + conformance built test-first now; the run through the path waits for T004's verdict"
+    }
+  ],
+  "task_id": "C-012-T007",
+  "title": "First deterministic native-world epoch through the PostgreSQL path",
+  "objective": "A native R-EP runtime over the primary substrate's world (wforge Encounter, design v0.3 s8) with exact checkpoint/restore conformance (k chained epochs == one monolithic run), driven by a fixed deterministic policy that never takes an unaffordable action (so the F09 path is not exercised; wforge's world.py hash is part of the spec); then one native chain through Fabric claim -> approved execution -> PostgreSQL publication -> independent replay -> durable receipt (-> the lake).",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [
+    "C-012-T003",
+    "C-012-T004"
+  ],
+  "problem": "The path is qualified on synthetic busy-work only; native epochs need a runtime whose checkpoint captures the whole world state, or chained epochs silently diverge from the world they claim to run.",
+  "non_goals": [
+    "evolutionary survival search (gated on F09)",
+    "Proteus organisms (a later epoch type)",
+    "any change to wforge (owner: see the F09 handoff)"
+  ],
+  "evidence_required": [
+    "RED conformance tests before the runtime",
+    "a native chain published, validated by replay on another host, receipted"
+  ],
+  "acceptance": {
+    "condition": "conformance tests green (chained == monolithic, cross-process determinism, F09 path never taken); one native chain through the real path with its receipt"
+  },
+  "deliverables": [
+    "moonshot/epoch/native_wforge.py",
+    "moonshot/epoch/tests/test_native_wforge.py",
+    "ops/campaigns/C-012/evidence/NATIVE/"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": true
+}
