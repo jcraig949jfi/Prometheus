@@ -46,7 +46,9 @@ def repair_probability(spec, n=8, budget=1500, seed=9_700_000, out_dir="/tmp"):
         res.append(dict(ops=ops, broken_rung=c0, repaired_rung=r.best_rung))
     target = int(rung[1])
     return dict(spec=spec, n=n, budget=budget, broken_still_ok=sum(x["broken_rung"] >= target for x in res),
-                repaired=sum(x["repaired_rung"] >= target for x in res), rows=res)
+                repaired=sum(x["repaired_rung"] >= target for x in res),
+                n_broken=sum(x["broken_rung"] < target for x in res),
+                repaired_of_broken=sum(x["broken_rung"] < target <= x["repaired_rung"] for x in res), rows=res)
 
 
 def partial_seed(spec, drop_last=2, budget=3000, n=4, seed=9_710_000, out_dir="/tmp"):

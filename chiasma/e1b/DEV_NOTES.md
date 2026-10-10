@@ -258,3 +258,67 @@ nested), so that shared structure is a large fraction of the representation and 
 compressing organism can keep its knowledge under a budget that ruins a flat one. That
 is a new world family (PW-D, "deep abstractions"), not a new organism. It is the seat's
 REVISE default (HADES-29, dev design first), unless the operator rules KILL.
+
+## 11. dev-5: PW-D, deep shared abstractions (HADES-29; 300 runs, 0.61 CPU core-hours; chiasma/runs/e1b-dev-5/)
+
+world_d.py: PW-H3's three staged false foundations and loads (12:4, 8:8, 4:12), with each
+abstraction Y_j = core_j & f_j and core_j = 4 primitives. Cores are instantiated as
+blocks (p = 1/3) or partially (each literal 1/4). f_j is independent at 1/2, forced on
+whole cores in A-C, removed in C exceptions, and free in D-F. m = 32.
+
+Sampler draft corrected on dev seed 910001 before any sweep. The first draft set f_j
+ONLY with a whole core in A-C. Then f_j implies all four core literals, consolidation
+prunes the core down to the marker f_j (O3W err_CDE 14772 vs O0 1720), and a second
+false foundation appears beside the first. That variant (PW-Dm) is kept for its own
+single-variable run later.
+
+Checks: 7 new known-answer tests (determinism; 4-literal disjoint cores; f forced on
+whole cores in A-B only and present without a whole core in A-C; at an exception rate
+of 1000 every C object breaks exactly one core; crit probes separate ydep from decoy;
+O0 ends with exactly the true term count, 67; factoring saves more than 20% of P with
+identical errors). Mutants 25/25. First pass 23/25 (chiasma/runs/e1b-dev-5/
+MUTATION_first_pass.txt): E21 (marker variant) and E22 (exceptions keep f) SURVIVED.
+Two tests were tightened.
+
+Uncapped, dev seed 910001: O0 and O0F both 1977 err_CDE. P at the end of B: 743 vs
+579 (-22%, 16 rules). With no single literal implying f, consolidation prunes nothing:
+O3W, O4LW and their factored twins equal O0/O0F exactly. **In PW-D the revision half of
+the dual mesh does not engage. PW-D tests compression only.**
+
+Binding budget (pevict), caps between and around the two P sizes, wins out of 10:
+
+| cap | O0F>O0 | O0F>O1 | O0F>O2 | median err_CDE O0 / O0F / O1 | cells evicted O0 / O0F |
+|---|---|---|---|---|---|
+| 550 | 10 | 10 | 10 | 16310 / 8038 / 23400 | 10636 / 3897 |
+| 600 | 10 | 10 | 10 | 13107 / 7079 / 21915 | 8233 / 515 |
+| 650 | 10 | 10 | 10 | 10609 / 6809 / 20775 | 5945 / 1 |
+| 700 | 10 | 10 | 10 | 7696 / 5266 / 20449 | 3097 / 0 |
+| 800 | 5 | 10 | 10 | 3338 / 3735 / 18529 | 28 / 0 |
+
+Reading (dev, sizing):
+1. This is the first regime in CHIASMA where compression keeps knowledge. At caps 650
+   and 700 the factored organism keeps its whole positive geometry (0-1 cells evicted),
+   while the flat organism loses 3,000-6,000 cells over the run. It wins 10/10.
+2. It is not lossless at the organism level. O0F's err_CDE at 650-700 is still 3-3.5x its
+   uncapped value. The cap squeezes the failure memory N (O0's natural N is about 17 KB),
+   so weld checks run against an emptied shadow. In PW-D the binding resource is the
+   shadow, not the geometry.
+3. Loose end, not chased: O4LW differs from O0 on 17/50 binding-cap rows (identical
+   uncapped). Under eviction churn, cells reach 6 supports and consolidate; rarely
+   something is pruned (one repair event in the row inspected).
+
+## 12. What PW-D changes
+
+The charter's question has two halves: (i) compression that keeps knowledge, and (ii)
+failure geometry and revision that retract false abstractions with less damage.
+- (i) has its first positive dev signal: lossless factoring on deep shared
+  abstractions, under a budget between the factored and flat sizes.
+- (ii) has none. In PW-H/H3 revision only helps when bytes are free, where not
+  compressing is as good. In PW-D nothing is pruned, so nothing needs revising.
+- N, the charter's negative mesh, is now the binding resource. A compressed shadow (the
+  charter's O3 idea) has a real job in PW-D for the first time: keep the weld checks
+  alive inside the cap. That is the next dev variable (HADES-30): shadow compression
+  {raw-FIFO, projected-maximal, factored} under PW-D binding caps, with O0F's geometry
+  fixed.
+- A confirmatory prereg for (i) can be drafted now (O0F beats O0 at caps 600-700 on
+  PW-D, 8/10 per cap). Its freeze waits on G3 like the rest.

@@ -1,0 +1,125 @@
+{
+ "what": "PAN-28 evidence behind migration 013: query-style recall of the 012 graph (m16/efc64), the trial graph m32/efc200 built and measured inside a rolled-back transaction, and the 62 frozen queries local-exact vs pg-HNSW before (m16) and after (m32) 013. Scripts: scratchpad qrecall.py, qrecall_trial.py, backend_cmp.py (2026-10-10).",
+ "query_recall_012_m16": {
+  "n": 500,
+  "label": "m16_efc64",
+  "results": {
+   "40": {
+    "recall10": 0.659,
+    "frozen62": 0.6984,
+    "headings438": 0.6534,
+    "share_below_0_8": 0.39,
+    "p50_ms": 3.1
+   },
+   "100": {
+    "recall10": 0.8252,
+    "frozen62": 0.8452,
+    "headings438": 0.8224,
+    "share_below_0_8": 0.212,
+    "p50_ms": 4.9
+   },
+   "400": {
+    "recall10": 0.9342,
+    "frozen62": 0.9645,
+    "headings438": 0.9299,
+    "share_below_0_8": 0.084,
+    "p50_ms": 13.7
+   },
+   "1000": {
+    "recall10": 0.9736,
+    "frozen62": 0.9823,
+    "headings438": 0.9724,
+    "share_below_0_8": 0.022,
+    "p50_ms": 28.0
+   }
+  }
+ },
+ "query_recall_trial_m32": {
+  "n": 500,
+  "m": 32,
+  "ef_construction": 200,
+  "build_s": 127,
+  "index_bytes": 548175872,
+  "results": {
+   "40": {
+    "recall10": 0.7966,
+    "frozen62": 0.8645,
+    "headings438": 0.787,
+    "share_below_0_8": 0.274,
+    "p50_ms": 4.8
+   },
+   "100": {
+    "recall10": 0.9158,
+    "frozen62": 0.9484,
+    "headings438": 0.9112,
+    "share_below_0_8": 0.07,
+    "p50_ms": 8.5
+   },
+   "400": {
+    "recall10": 0.973,
+    "frozen62": 0.9887,
+    "headings438": 0.9708,
+    "share_below_0_8": 0.016,
+    "p50_ms": 24.3
+   }
+  }
+ },
+ "frozen62_local_vs_pg_m16": {
+  "chunk": {
+   "queries": 62,
+   "same_rank": 59,
+   "hits_at10_local": 37,
+   "hits_at10_pg": 35,
+   "mean_top10_path_overlap": 0.9484,
+   "rank_differs": {
+    "H10": [
+     2,
+     null
+    ],
+    "K01": [
+     7,
+     8
+    ],
+    "K10": [
+     7,
+     null
+    ]
+   }
+  },
+  "doc": {
+   "queries": 62,
+   "same_rank": 62,
+   "hits_at10_local": 36,
+   "hits_at10_pg": 36,
+   "mean_top10_path_overlap": 0.9871,
+   "rank_differs": {}
+  }
+ },
+ "frozen62_local_vs_pg_m32": {
+  "chunk": {
+   "queries": 62,
+   "same_rank": 60,
+   "hits_at10_local": 37,
+   "hits_at10_pg": 36,
+   "mean_top10_path_overlap": 0.9823,
+   "rank_differs": {
+    "H10": [
+     2,
+     null
+    ],
+    "K01": [
+     7,
+     8
+    ]
+   }
+  },
+  "doc": {
+   "queries": 62,
+   "same_rank": 62,
+   "hits_at10_local": 36,
+   "hits_at10_pg": 36,
+   "mean_top10_path_overlap": 0.9903,
+   "rank_differs": {}
+  }
+ }
+}

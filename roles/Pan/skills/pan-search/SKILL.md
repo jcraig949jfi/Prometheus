@@ -25,9 +25,12 @@ sentence-transformers (M2's Pan venv has them).
     set EW_DB_HOST=192.168.1.202            (bash: export EW_DB_HOST=192.168.1.202)
     python -m pan status                    catalog SHA vs origin/main, last runs
 
-On hosts without the Pan lake (anything but M2) use `--mode fts` for now:
-vector search loads its matrix from the lake on M2 or, failing that, pulls it
-from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
+On hosts without the Pan lake (anything but M2) vector neighbours come from
+pgvector HNSW indexes on M1 (since 2026-10-10): `pivot`, `similar` and
+`frontier like` work with psycopg2 + numpy alone; a text query in `--mode
+vector|hybrid` also needs sentence-transformers to encode it (else use
+`--mode fts`). HNSW is approximate (recall@10 ~0.98 at the depth search uses);
+M2 stays exact.
 
 ## Commands
 

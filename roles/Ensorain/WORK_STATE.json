@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-10T11:20:00Z",
+  "updated_at_utc": "2026-10-10T13:15:00Z",
   "state": "ACTIVE",
   "state_reason": "WTP-05 SCREEN RUNNING (prereg efef48bcb; 40 cells x 8 seeds x 16k evals; shards 0/3,1/3 now, 2/3 after E2). E2 revival sub-assay running. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
@@ -150,13 +150,8 @@
     {
       "what": "WTP-05 SCREEN",
       "cmd": "python -m ensorain.wtp5.campaign5 screen --plan ensorain/wtp5/plans/screen.json --workers 1 --shard k/3 --max-wall-h 14",
-      "shards": "0/3 and 1/3 started 11:15Z; 2/3 after E2",
+      "shards": "0/3 and 1/3 started 11:15Z; 2/3 started 13:04Z (after E2)",
       "restart": "same command per shard; resumes from ckpt/"
-    },
-    {
-      "what": "E2 revival",
-      "cmd": "python -m ensorain.wtp5.revival run e2 --workers 2",
-      "restart": "same command; skips finished rows"
     }
   ],
   "dependencies": {
@@ -194,7 +189,8 @@
     "ensorain/lm01/ERRATA.md",
     "roles/Ensorain/DEFECTS.md",
     "ensorain/arc3/HIERARCHY.md",
-    "roles/Ensorain/DEFECTS.md#DEF-ENS-002"
+    "roles/Ensorain/DEFECTS.md#DEF-ENS-002",
+    "ensorain/RESULTS_E2_REVIVAL.md (E2: NOT_REVIVED x3; F11 band .5 crash-masked)"
   ],
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "migration_report": "roles/Ensorain/MIGRATION_REPORT_MWO-0002.json",

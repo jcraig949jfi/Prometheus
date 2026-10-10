@@ -190,18 +190,41 @@ class Run:
                 self.log()
                 self.save()
                 next_log += self.log_every
+                if getattr(self, "flat_stop", False) and self.frontier_flat():
+                    self.stopped_flat = True
+                    break
             if max_wall and time.time() - t_start > max_wall:
                 break
         if self.evals >= self.budget:
             self.log()
             self.done = True
+        if getattr(self, "stopped_flat", False):
+            self.done = True
         self.save()
         return self
+
+    def frontier_flat(self):
+        """PREREG_WTP05 s7.3 FLAT STOP: over the last max(50,000, 40% of evals) evaluations, no new best rung,
+        archive growth < 5% and best-fitness gain < .01. Never fires before that window has fully elapsed."""
+        win = max(50_000, 0.4 * self.evals)
+        if self.evals < win or not self.telemetry:
+            return False
+        cut = self.evals - win
+        before = [t for t in self.telemetry if t["evals"] <= cut]
+        after = [t for t in self.telemetry if t["evals"] > cut]
+        if not before or not after:
+            return False
+        b, a = before[-1], after[-1]
+        new_rung = a["best_rung"] > b["best_rung"]
+        arch_growth = (a["archive"] - b["archive"]) / max(1, b["archive"])
+        fit_gain = max(t["best_fit"] for t in after) - max(t["best_fit"] for t in before)
+        return (not new_rung) and arch_growth < 0.05 and fit_gain < 0.01
 
 
 def summary(r):
     t = r.telemetry
     return dict(spec=r.spec, arm=r.arm, seed=r.seed, evals=r.evals, gens=r.gen, wall=round(r.wall, 1), cpu=round(r.cpu, 1),
                 best_rung=r.best_rung, final_rung=t[-1]["elite_rung"] if t else None, first_rung_at=r.first_rung_at,
-                best_fit=t[-1]["best_fit"] if t else None, archive=len(r.archive), done=r.done, telemetry=t,
+                best_fit=t[-1]["best_fit"] if t else None, archive=len(r.archive), done=r.done,
+                stopped_flat=bool(getattr(r, "stopped_flat", False)), telemetry=t,
                 elite=copy.deepcopy(r.pop[0]["g"]) if r.pop else None)

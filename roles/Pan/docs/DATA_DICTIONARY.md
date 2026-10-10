@@ -1,6 +1,6 @@
 # Pan data dictionary (generated)
 
-Generated 2026-10-09T13:00Z by `python -m pan dictionary` from the live schema pan on the
+Generated 2026-10-10T13:30Z by `python -m pan dictionary` from the live schema pan on the
 canonical cluster and the Iceberg catalog in schema pan_iceberg. Do not edit by
 hand: change the table comments (pan/migrations/006_comments.sql) and regenerate.
 
@@ -8,7 +8,7 @@ hand: change the table comments (pan/migrations/006_comments.sql) and regenerate
 
 ### pan.artifact
 
-75,003 rows, 136 MB.
+~417,642 (estimate) rows, 387 MB.
 
 One row per artifact: a git blob at the catalog SHA (source git), a comms message (source comms), or a file on a host (source fs). Kind and seat come from path rules (conventions, not content). Producer: inventory, refresh, comms-index.
 
@@ -37,7 +37,7 @@ One row per artifact: a git blob at the catalog SHA (source git), a comms messag
 
 ### pan.chunk
 
-~397,889 (estimate) rows, 1119 MB.
+~397,889 (estimate) rows, 1134 MB.
 
 Text chunks of artifacts with line ranges, a heading path and a stored english tsvector (heading weight A, body B). Producer: python -m pan chunk / refresh / comms-index.
 
@@ -52,9 +52,42 @@ Text chunks of artifacts with line ranges, a heading path and a stored english t
     n_chars               integer
     tsv                   tsvector
 
+### pan.chunk_dup
+
+64,778 rows, 7608 kB.
+
+Exact duplicate chunks (>= 200 chars, normalised whitespace/case) across git artifacts; canonical = earliest-committed member. Producer: python -m pan dupes.
+
+    column                type
+    chunk_id              bigint
+    artifact_id           bigint
+    n_chars               integer
+    h                     text
+    canonical_id          bigint
+    cluster_size          bigint
+
+### pan.code_bench
+
+1,295 rows, 1120 kB.
+
+HumanEval+ (evalplus/humanevalplus) greedy pass@1 per task for local models; verdicts are executed hidden test suites; protocol in pan/tests/codebench_prereg.json. Producer: python -m pan codebench run.
+
+    column                type
+    run_id                text
+    model                 text
+    hf_repo               text
+    task_id               text
+    ok                    boolean
+    detail                text
+    latency_s             real
+    eval_tokens           integer
+    tok_per_s             real
+    response              text
+    created_at            timestamp with time zone
+
 ### pan.commit
 
-13,128 rows, 64 MB.
+13,440 rows, 64 MB.
 
 Git history reachable from the catalog SHA; seat/instance parsed from a "Seat[instance]:" subject prefix (a lower bound on attribution). Producer: python -m pan commits / refresh. Oracle: count equals git rev-list --count.
 
@@ -73,7 +106,7 @@ Git history reachable from the catalog SHA; seat/instance parsed from a "Seat[in
 
 ### pan.commit_file
 
-143,310 rows, 93 MB.
+144,857 rows, 94 MB.
 
 Files changed per commit (name-status, no rename detection): co-change and lineage queries. Producer: python -m pan commits.
 
@@ -84,7 +117,7 @@ Files changed per commit (name-status, no rename detection): co-change and linea
 
 ### pan.doc_embedding
 
-62,193 rows, 177 MB.
+62,575 rows, 276 MB.
 
 One vector per text artifact (path + title + heading outline + opening text), Qwen3-Embedding-0.6B 512 d. doc_blob is the blob the vector was computed from. Producer: python -m pan embed --docs.
 
@@ -98,7 +131,7 @@ One vector per text artifact (path + title + heading outline + opening text), Qw
 
 ### pan.embedding
 
-~398,374 (estimate) rows, 797 MB.
+~402,070 (estimate) rows, 1330 MB.
 
 Chunk vectors (L2-normalised real[]; pgvector pending, Q-001), several models side by side keyed by model name. Producer: python -m pan embed.
 
@@ -109,9 +142,29 @@ Chunk vectors (L2-normalised real[]; pgvector pending, Q-001), several models si
     vec                   real[]
     created_at            timestamp with time zone
 
+### pan.feed_state
+
+72 rows, 80 kB.
+
+(no comment)
+
+    column                type
+    feed_id               text
+    url                   text
+    kind                  text
+    final_url             text
+    etag                  text
+    last_modified         text
+    last_status           integer
+    last_error            text
+    last_checked_at       timestamp with time zone
+    last_ok_at            timestamp with time zone
+    entries_last          integer
+    consecutive_failures  integer
+
 ### pan.frontier_embedding
 
-5,440 rows, 15 MB.
+8,812 rows, 38 MB.
 
 Paper vectors (title + abstract) in the SAME space as pan.doc_embedding, for "outside work like this file". Producer: python -m pan frontier embed.
 
@@ -124,7 +177,7 @@ Paper vectors (title + abstract) in the SAME space as pan.doc_embedding, for "ou
 
 ### pan.frontier_item
 
-5,440 rows, 30 MB.
+8,812 rows, 39 MB.
 
 Outside research items (arXiv via export.arxiv.org, Hugging Face daily papers) with the seed queries that surfaced them; eos_type uses Eos's vocabulary and defaults to UNTYPED. Producer: python -m pan frontier arxiv / hf-daily.
 
@@ -151,7 +204,7 @@ Outside research items (arXiv via export.arxiv.org, Hugging Face daily papers) w
 
 ### pan.hf_model
 
-1,503 rows, 5952 kB.
+1,524 rows, 10 MB.
 
 Hugging Face models from seed orgs and discovery queries, with a 16 GB local-fit ESTIMATE (arithmetic on parameter counts; quantized repos marked unreliable). Producer: python -m pan frontier hf-models.
 
@@ -180,9 +233,26 @@ Hugging Face models from seed orgs and discovery queries, with a 16 GB local-fit
     run_id                text
     raw                   jsonb
 
+### pan.host_probe
+
+7 rows, 48 kB.
+
+(no comment)
+
+    column                type
+    probe_id              bigint
+    host                  text
+    address               text
+    method                text
+    probed_at             timestamp with time zone
+    ok                    boolean
+    facts                 jsonb
+    error                 text
+    run_id                text
+
 ### pan.intake_call
 
-105 rows, 112 kB.
+357 rows, 208 kB.
 
 Every external HTTP call made by the intake, for the rate audit (75 percent of documented limits). Producer: frontier intake.
 
@@ -200,7 +270,7 @@ Every external HTTP call made by the intake, for the rate audit (75 percent of d
 
 ### pan.lexeme_df
 
-~1,368,715 (estimate) rows, 190 MB.
+~1,388,684 (estimate) rows, 192 MB.
 
 Document frequency of every lexeme in pan.chunk (ts_stat); OR full-text keeps the 12 rarest query lexemes. Producer: python -m pan lexdf / refresh.
 
@@ -209,9 +279,21 @@ Document frequency of every lexeme in pan.chunk (ts_stat); OR full-text keeps th
     ndoc                  integer
     nentry                integer
 
+### pan.link
+
+46,255 rows, 5088 kB.
+
+Reference graph: citing artifact -> cited artifact, from file paths written in text (exact or relative to the citing file); bare ambiguous names are not linked. Producer: python -m pan links.
+
+    column                type
+    src_id                bigint
+    dst_id                bigint
+    n_mentions            integer
+    how                   text
+
 ### pan.migration
 
-6 rows, 32 kB.
+13 rows, 32 kB.
 
 Applied Pan migrations with their sha256 (a changed applied migration is an error).
 
@@ -223,7 +305,7 @@ Applied Pan migrations with their sha256 (a changed applied migration is an erro
 
 ### pan.model_bench
 
-0 rows, 16 kB.
+210 rows, 264 kB.
 
 Local model smoke tests: one row per (run, model, probe) with a deterministic verdict (executed hidden tests, exact integers, JSON shape), tokens/s, load time, GPU share. Producer: python -m pan modelbench.
 
@@ -279,9 +361,30 @@ Every table/view/matview/foreign table in the program databases on the canonical
     observed_at           timestamp with time zone
     run_id                text
 
+### pan.review_unit
+
+14,137 rows, 9664 kB.
+
+(no comment)
+
+    column                type
+    path                  text
+    repo_sha              text
+    seat                  text
+    lines                 integer
+    commits_7d            integer
+    commits_30d           integer
+    last_commit_at        timestamp with time zone
+    tested_by             integer
+    smells                jsonb
+    dup_chunks            integer
+    score                 double precision
+    run_id                text
+    built_at              timestamp with time zone
+
 ### pan.run
 
-14 rows, 64 kB.
+152 rows, 152 kB.
 
 One row per Pan collector run (inventory, commits, chunk, embed, refresh, frontier-*, consolidate, modelbench...): host, git SHA, params, counts, status. Producer: every pan command.
 
@@ -318,9 +421,12 @@ Every store the program writes on any host: repository tree at a SHA, data roots
 
 ## Iceberg tables (catalog pan_iceberg; data under the lake on M2)
 
-- pan.git_commit_files: 143,310 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/git_commit_files
-- pan.git_commits: 13,128 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/git_commits
+- pan.hf_model_daily: 1,524 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/hf_model_daily
+- pan.result_rows: 2,253,498 records, 22 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/result_rows
+- pan.inv_repo_blobs: 73,037 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/inv_repo_blobs
 - pan.inv_fs_files: 342,019 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/inv_fs_files
 - pan.inv_pg_relations: 345 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/inv_pg_relations
-- pan.inv_repo_blobs: 73,037 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/inv_repo_blobs
-- pan.result_rows: 2,253,498 records, 22 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/result_rows
+- pan.git_commits: 13,128 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/git_commits
+- pan.git_commit_files: 143,310 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/git_commit_files
+- pan.result_docs: 25,495 records, 26 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/result_docs
+- pan.frontier_daily: 5,444 records, 1 snapshots, location file:///C:/Prometheus-data/pan/lake/iceberg/pan/frontier_daily

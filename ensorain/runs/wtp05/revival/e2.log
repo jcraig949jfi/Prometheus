@@ -1,0 +1,97 @@
+e2: 270 jobs
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  20/270 1253s
+  40/270 2635s
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  60/270 4014s
+  80/270 5404s
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ~~~~^^^^^^^^^^^^^^^
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp5/revival.py", line 52, in _job
+    return dict(fid=fid, pair=pair, band=b, level=lab, **unit(tf(f["g"]), seed))
+                                                         ~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp4/habit.py", line 60, in unit
+    r = run_life(gc, seed, twin=tw, excursions=False)
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp3/world3.py", line 427, in run_life
+    trace.append(dict(t=tt, AC=ac, AC0=ac0, ACu=acu, ACu0=acu0, n_unseen=nun, rank=o0.mem.eff_rank(),
+                                                                                   ~~~~~~~~~~~~~~~^^
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp/organism.py", line 274, in eff_rank
+    s = np.linalg.svd(self.U @ self.V.T, compute_uv=False)
+  File "/usr/lib/python3/dist-packages/numpy/linalg/_linalg.py", line 1872, in svd
+    s = _umath_linalg.svd(a, signature=signature)
+  File "/usr/lib/python3/dist-packages/numpy/linalg/_linalg.py", line 172, in _raise_linalgerror_svd_nonconvergence
+    raise LinAlgError("SVD did not converge")
+numpy.linalg.LinAlgError: SVD did not converge
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp5/revival.py", line 117, in <module>
+    run(a.name, [int(s) for s in a.seeds.split(",")], a.workers)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jcraig/Prometheus-worktrees/ensorain-base-role/ensorain/wtp5/revival.py", line 74, in run
+    fh.write(json.dumps(pending.pop(0).get()) + "\n")
+                        ~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/multiprocessing/pool.py", line 774, in get
+    raise self._value
+numpy.linalg.LinAlgError: SVD did not converge
+e2: 189 jobs
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  20/189 800s
+  40/189 1489s
+  60/189 2171s
+  80/189 2870s
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  100/189 3612s
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  120/189 4667s
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  140/189 5655s
+  160/189 6664s
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+Parameter 4 to routine DLASCL was incorrect
+Parameter 5 to routine DLASCL was incorrect
+  180/189 7704s
+e2: done 189 in 8132s
