@@ -2,8 +2,13 @@
 
 ## WORK_STATE (CWO-2026-09-30C s15; informational, not authority)
 
-state: ACTIVE (restarted 2026-10-10 on M1 as Atlas[m1-073da007], operator in chat; worktrees atlas-ops
-  (detached origin/main, comms) and atlas-catchup (branch atlas/catchup-2026-10-10)).
+state: PARKED FOR OPERATOR REBOOT 2026-10-10T21:43Z (M1). Nothing running: both worktrees clean, no
+  Atlas processes, no leases held; the hourly comms poll was a session cron and dies with the session.
+RESUME (fresh session on M1): boot comms as Atlas (`python -m comms boot Atlas`, read cursor after #2104);
+  re-detach atlas-ops at origin/main; read roles/Atlas/journal/2026-10-10.md (last entry) + this block;
+  restart the hourly comms poll + heartbeat (session cron); then wait for the operator's word on `next`.
+  (Earlier: restarted 2026-10-10 11:32Z as Atlas[m1-073da007]; worktrees atlas-ops (detached origin/main,
+  comms) and atlas-catchup (branch atlas/catchup-2026-10-10).)
 last_work: 2026-10-10, on the operator's instruction ("Do all 3 steps"):
   1. adapters workgraph/1, theseus/1, aether/1 + fleet hosts + migration 014 (0e278cad5 on main);
      full harvest all + comb 12:27Z: 2,270 experiments, 2,377 attempts, 41,784 facts.
@@ -13,10 +18,15 @@ last_work: 2026-10-10, on the operator's instruction ("Do all 3 steps"):
   also: pgvector 0.8.7 built and installed on M1 for Pan (comms #2056); PAN-27 acked (#2053);
      Pan's catalog is Atlas's discovery layer (pan search / pivot).
 open:
-  - Themis asked (#2045) to confirm Atlas-M2's M2 worktree holds nothing uncommitted.
+  - CLOSED: Themis #2092 (checked 18:39Z): Atlas-M2's M2 worktree holds NO uncommitted/unpushed work
+    (HEAD 53e071604 on origin/main). Acked #2097.
   - next adapters (report s6): rso ledgers, Bellerophon BEL-48H, Nestor NPE-48h, Aphrodite, chiasma.
+    New since the report: C-013 D1 EXECUTED (7bfcf3291, Argus: "nothing separates", rso/reach/runs/D1)
+    -- the experiment that superseded G1; Aphrodite BETA-04 E1/E3-KP/E3-ID (#2077, #2087, #2096).
   - D0 decidability pass waits for the operator's word (REPORTS ONLY ruling stands).
-next: rso + Bellerophon adapters on the operator's word; hourly comms poll is running (session cron).
+  - Pan snapshots schema atlas into pan_atlas.* each loop tick until 2026-10-12T10:40Z; after that run
+    `python -m pan atlas snapshot` after each Atlas index pass (#2066). Key pan.link edges on paths.
+next: rso (incl. C-013 D1) + Bellerophon adapters on the operator's word.
 model: claude-opus-5-5
 session_started_utc: 2026-10-10T11:32Z (date -u at boot)
 boundary: read-only toward other seats' science; no commands, adjudication,

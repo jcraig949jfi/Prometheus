@@ -1,0 +1,31 @@
+{
+ "control": "PAN-37 reviewer runner (prereg v2 A1)",
+ "version": 2,
+ "verdict": "PASS",
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "an oracle reviewer scores recall 1, no false alarm, better than chance",
+   "ok": true,
+   "detail": "recall 1.0 FA 0.0 bar 0.0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "non-JSON replies are parse errors: recall 0, false alarms 0, no crash",
+   "ok": true,
+   "detail": "parse errors 60/60"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "the site-density non-reviewer is not better than chance",
+   "ok": true,
+   "detail": "recall 0.7 (lower 0.546) FA 1.0 bar 0.7"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "the same non-reviewer abstaining at random on half the items is not better than chance",
+   "ok": true,
+   "detail": "recall 0.275 (lower 0.161) FA 0.7 bar 0.49"
+  }
+ ]
+}

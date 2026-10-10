@@ -34,13 +34,14 @@
    "id": "W03",
    "kind": "DEV",
    "start_utc": "2026-10-10T17:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W03_DEV_REPORT.md"
   },
   {
    "id": "W04",
    "kind": "EXP",
    "start_utc": "2026-10-10T21:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W05",
@@ -127,7 +128,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W03",
+ "active_window": "W04",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -136,12 +137,19 @@
   "E5": "GATED",
   "ALIEN": "PENDING"
  },
- "jobs": [],
+ "jobs": {
+  "E2_SCREEN": "RUNNING 445/720 at 21:29Z (worktree aphrodite-beta01)",
+  "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
+  "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
+  "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
+  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
+  "ALIEN_AR1": "FROZEN (FREEZE_ALIEN_AR1, 6c92d3b08); production primary RUNNING from worktree aph-b04-alien, 1 worker"
+ },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
   "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
   "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending",
-  "SUBSTRATE_KP_ALIGN": "LAUNCHED 2026-10-10 W02: align e3_known_positive to A1-A (pooled verdict, link classes, secondaries, OE repair pre-built off), timing on pilot_v2; <=2 core-h",
+  "SUBSTRATE_KP_ALIGN": "DELIVERED 8d0383ca0 (E3 16/16, TFS1 15/15; ~1.7 core-h); merged to main 19a374fbf; A3 rulings; FREEZE_E3KP",
   "ATLAS_E2_DRIVER": "DELIVERED 2bfeeda16 (13/13 E2 + 14/14 atlas); merged; FREEZE_E2 written"
  },
  "attempts": {
@@ -165,14 +173,20 @@
    {
     "utc": "2026-10-10T17:25Z",
     "est_core_h_since_activation": 19.0
+   },
+   {
+    "utc": "2026-10-10T21:29Z",
+    "est_core_h_since_activation": 33.0
    }
   ]
  },
  "cloud_spend_usd": 0,
- "next_action": "On lead returns: review code vs A1, write FREEZE_E2_E3KP.json (hashes + family IDs), run E3-KP prelaunch then primary on production; E2 prelaunch + atlas + 1x screen within cap",
+ "next_action": "KP primary -> pooled verdict -> secondary rows -> OE repair iff triggered; E2 -> e2_analyze; close W03 21:27Z (coordinator commits from aph-b04-tfs1 worktree while E2 runs)",
  "outcomes_frozen_labels": {
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
-  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)"
+  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)",
+  "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning.",
+  "E3ID (diagnostic; FREEZE_E3ID)": "ID_IDENTIFIABILITY: 4/4 UNDERDETERMINED_STONE units are one-class NOT sealed-equivalent -> UNIQUE_WRONG (ID-A1.4; code printed UNIQUE / interpretation INSTRUMENT, superseded by the frozen ID-A1.4 relabel). In each, TFS-1 enumeration at 1e6 found exactly ONE dev-consistent program on the R1 family and it is not the sealed mechanism (3/4 also pass R1 test+tribunal). ID_RETENTION_REPAIR = NO (designated uncertified RETAIN-4 7/15; CERT secondary RETAIN-4-CERT 9/15, also < 12; agree). Interpretation (frozen map + ID-A1.4): WORLD/RULER-or-HORIZON -- the R1 stepping-stone families do not identify their mechanism over the domain the composite uses, and the sealed stone lies beyond the TFS-1 R1 horizon; retention of hypotheses does not repair. || SUPERSEDED INTERPRETATION (review v1 F2/F3/F7/F8 accepted): 3/4 UD units are extraction mis-cuts of globally correct R1 programs; seed1/seed2 acquire all 4 correctly (order-dependence); RETAIN non-discriminating; world dev-gap 1/4 (Wc025415a p0). First failure = stone ACQUISITION (search horizon + extraction non-invariance)."
  },
  "contract_decisions_pending": [
   "scanl includes init (n+1)? (match foundry)",
@@ -188,5 +202,7 @@
  },
  "known_answers": {
   "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
- }
+ },
+ "experiments_gate_note": "E3 2x2 lifetime screen NOT RUN (gate: TFS1_INSTRUMENT_QUALIFIED = NO). E4 barred (E1 NO).",
+ "interpretation_current": "First demonstrated failure: stepping-stone ACQUISITION (search horizon at 1e6 + extraction non-invariance; world dev-gap minority). Composition: 14/15 with foundry stones on foundry-selected families (order-fragile). Recommendation leaning CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY pending AR-1 and E2."
 }

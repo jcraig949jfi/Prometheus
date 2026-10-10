@@ -479,3 +479,153 @@ def floors(write=True, out=print, seed=37, draws=10000, version=1):
         out("tell gate: " + json.dumps(gate))
     out(doc["verdict"])
     return doc
+
+
+# ---------------------------------------------------------------- reviewer runs (prereg v2 A1)
+
+_JSON = re.compile(r"\{[^{}]*\}", re.S)
+
+
+def parse_finding(text):
+    """The first JSON object in a reply with a "bug" key -> {bug, line}; anything else -> no finding (counts as a
+    miss on a mutant and as no false alarm on a clean item), flagged parse_error."""
+    from .modelbench import strip_thinking
+    for m in _JSON.finditer(strip_thinking(text or "")):
+        try:
+            d = json.loads(m.group(0))
+        except ValueError:
+            continue
+        if isinstance(d, dict) and "bug" in d:
+            line = d.get("line")
+            return dict(bug=d.get("bug") is True, line=line if isinstance(line, int) and not isinstance(line, bool)
+                        else None, parse_error=False)
+    return dict(bug=False, line=None, parse_error=True)
+
+
+def floor_points(version=2):
+    """[(recall, false_alarm_rate)] of every floor in the newest floors control file of `version`."""
+    from . import REPO
+    pat = "REVIEWCAL_FLOORS_V2_*.json" if version == 2 else "REVIEWCAL_FLOORS_2*.json"
+    f = sorted((REPO / "roles" / "Pan" / "reports" / "controls").glob(pat))[-1]
+    d = json.loads(f.read_text(encoding="utf-8"))["floors"]
+    pts = []
+    for v in d.values():
+        r = v.get("recall", v.get("expected_recall"))
+        if r is not None and v.get("false_alarm_rate"):
+            pts.append((float(r), float(v["false_alarm_rate"])))
+    return pts, f.name
+
+
+def verdict(sc, points):
+    """Prereg v2 better_than_chance for one scored reviewer."""
+    bar = chance_bar(sc["false_alarm_rate"], points)
+    return dict(chance_bar=round(bar, 3), recall_lower95=sc["recall_wilson95"][0],
+                better_than_chance=sc["recall_wilson95"][0] > bar)
+
+
+def review_run(model, version=2, gen=None, think=False, budget=512, record=True, out=print):
+    """Ask `model` (Ollama, temperature 0, seed 1) for one finding per item of set `version`, score it, judge it
+    against the floors. gen(prompt) -> reply text replaces the model (controls). Results: pan.run row kind
+    'reviewcal-run' (summary) + the replies in the lake. Never dispatches anything to a seat."""
+    import time
+    from . import db, host
+    if gen is None:
+        from .modelbench import generate
+
+        def gen(prompt):
+            return generate(model, prompt, think=think, budget=budget, num_ctx=4096).get("response", "")
+    items = packets(version)
+    t0 = time.time()
+    findings, replies = {}, {}
+    for k, (item, prompt) in enumerate(items, 1):
+        try:
+            text = gen(prompt)
+        except Exception as e:                      # a failed call is no finding, recorded
+            text = "ERROR {}: {}".format(type(e).__name__, e)[:300]
+        replies[item] = text
+        findings[item] = parse_finding(text)
+        if k % 20 == 0:
+            out("  {} {}/{} items, {:.0f}s".format(model, k, len(items), time.time() - t0))
+    sc = score({i: f for i, f in findings.items()}, version=version)
+    pts, floors_file = floor_points(version)
+    summ = dict(model=model, version=version, think=think, budget=budget, items=len(items),
+                parse_errors=sum(1 for f in findings.values() if f["parse_error"]), floors=floors_file,
+                seconds=round(time.time() - t0, 1), **sc, **verdict(sc, pts))
+    if record:
+        stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        run_id = "reviewcal-run-{}-{}".format(stamp, host().lower())
+        d = lake() / "reviewcal"
+        (d / "RUN_{}_{}.json".format(model.replace(":", "_").replace("/", "_"), stamp)).write_text(
+            json.dumps(dict(summary=summ, findings=findings, replies=replies), indent=1), encoding="utf-8")
+        from .modelbench import ollama_version
+        with db.cursor() as cur:
+            cur.execute("""insert into pan.run (run_id, kind, host, params, counts, status, finished_at)
+                           values (%s, 'reviewcal-run', %s, %s, %s, 'OK', now())""",
+                        (run_id, host(), json.dumps(dict(model=model, version=version, think=think, budget=budget,
+                                                         ollama=ollama_version())), json.dumps(summ)))
+        summ["run_id"] = run_id
+    if not model.startswith("control:"):
+        # unload the model: Ollama keeps it in VRAM for minutes, and the GPU-idle gate counts memory (2026-10-10:
+        # the next PAN-34 run was refused for 10 GB left by this run)
+        import subprocess
+        subprocess.run(["ollama", "stop", model], capture_output=True, timeout=60)
+    out(json.dumps(summ))
+    return summ
+
+
+def run_controls(write=True, out=print, version=2):
+    """No GPU: fake reviewers through the same runner.
+    POSITIVE  an oracle that answers from the key: recall 1, no false alarm, better than chance.
+    NEGATIVE  replies that are not JSON: every item is a parse error, recall 0, false alarms 0, no crash.
+    CHEAT     the site-density non-reviewer (always flags its line) is NOT better than chance; neither is the
+              same non-reviewer abstaining at random on half the items."""
+    import textwrap
+    from . import REPO
+    key = {a["item"]: a for a in json.loads(latest("ANSWERS", version).read_text(encoding="utf-8"))}
+    code_of = {it["item"]: it["code"] for it in json.loads(latest("ITEMS", version).read_text(encoding="utf-8"))}
+    by_prompt = {pr: item for item, pr in packets(version)}
+
+    def oracle(prompt):
+        a = key[by_prompt[prompt]]
+        return json.dumps(dict(bug=a["kind"] == "mutant", line=a.get("line_in_function"), scenario="key"))
+
+    def density(prompt):
+        return json.dumps(dict(bug=True, line=heuristic_line(code_of[by_prompt[prompt]], version=version)))
+
+    rng = random.Random(4)
+    coin = {item: rng.random() < 0.5 for item in key}
+
+    def density_half(prompt):
+        item = by_prompt[prompt]
+        return json.dumps(dict(bug=coin[item], line=heuristic_line(code_of[item], version=version)))
+
+    quiet = lambda *a: None
+    o = review_run("control:oracle", version, gen=oracle, record=False, out=quiet)
+    g = review_run("control:garbage", version, gen=lambda p: "Looks fine to me, maybe line 3?", record=False, out=quiet)
+    d = review_run("control:site-density", version, gen=density, record=False, out=quiet)
+    h = review_run("control:site-density-half", version, gen=density_half, record=False, out=quiet)
+    checks = [
+        dict(kind="POSITIVE", name="an oracle reviewer scores recall 1, no false alarm, better than chance",
+             ok=o["recall"] == 1.0 and o["false_alarms"] == 0 and o["better_than_chance"],
+             detail="recall {} FA {} bar {}".format(o["recall"], o["false_alarm_rate"], o["chance_bar"])),
+        dict(kind="NEGATIVE", name="non-JSON replies are parse errors: recall 0, false alarms 0, no crash",
+             ok=g["parse_errors"] == g["items"] and g["hits"] == 0 and g["false_alarms"] == 0,
+             detail="parse errors {}/{}".format(g["parse_errors"], g["items"])),
+        dict(kind="CHEAT", name="the site-density non-reviewer is not better than chance",
+             ok=not d["better_than_chance"], detail="recall {} (lower {}) FA {} bar {}".format(
+                 d["recall"], d["recall_lower95"], d["false_alarm_rate"], d["chance_bar"])),
+        dict(kind="CHEAT", name="the same non-reviewer abstaining at random on half the items is not better than chance",
+             ok=not h["better_than_chance"], detail="recall {} (lower {}) FA {} bar {}".format(
+                 h["recall"], h["recall_lower95"], h["false_alarm_rate"], h["chance_bar"])),
+    ]
+    verdict_ = "PASS" if all(c["ok"] for c in checks) else "FAIL"
+    doc = dict(control="PAN-37 reviewer runner (prereg v2 A1)", version=version, verdict=verdict_, checks=checks)
+    if write:
+        at = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        f = REPO / "roles" / "Pan" / "reports" / "controls" / "REVIEWRUN_CONTROLS_{}.json".format(at)
+        f.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
+        out("wrote " + str(f))
+    for c in checks:
+        out("{:<8} {:<5} {}  ({})".format(c["kind"], "PASS" if c["ok"] else "FAIL", c["name"], c["detail"]))
+    out(verdict_)
+    return doc

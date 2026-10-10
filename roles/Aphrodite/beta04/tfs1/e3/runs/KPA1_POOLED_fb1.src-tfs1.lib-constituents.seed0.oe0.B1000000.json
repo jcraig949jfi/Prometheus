@@ -1,0 +1,425 @@
+{
+ "A1_C": {
+  "agree": true,
+  "fallback_off": "NO",
+  "primary_fallback_on": "NO",
+  "recommendation_uses": "both rows agree (state both)"
+ },
+ "claim_limits": "INSTRUMENT TEST GIVEN THE DECOMPOSITION (oracle decomposition); restricted to the motif-limited admitted R3/R4 set; not discovery evidence",
+ "families": [
+  {
+   "chain_qualified": true,
+   "chain_status": "SOLVED",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "s0"
+   ],
+   "cpu_s": {
+    "chain": 20.88,
+    "r1_units_attributed": 48.97,
+    "scratch": 59.34
+   },
+   "extraction": {
+    "f1": "readout_fallback",
+    "s0": "closed_lambda"
+   },
+   "family_id": "W1d5301d0-F035-R3",
+   "first_failing_link": null,
+   "link_detail": "CHAIN_QUALIFIED",
+   "link_info": {
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "stone_disagrees_sealed": []
+   },
+   "rung": "R3",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R3:fs:post_fold",
+   "world": "W1d5301d0"
+  },
+  {
+   "chain_qualified": false,
+   "chain_status": "NOT_FOUND_AT_BUDGET",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "p0"
+   ],
+   "cpu_s": {
+    "chain": 47.03,
+    "r1_units_attributed": 1.44,
+    "scratch": 77.84
+   },
+   "extraction": {
+    "f1": "readout_fallback",
+    "p0": "closed_lambda"
+   },
+   "family_id": "W1d5301d0-F077-R4",
+   "first_failing_link": "COMPOSITION_HORIZON",
+   "link_detail": "IN_CLASS",
+   "link_info": {
+    "bracket": [
+     124979,
+     1365260
+    ],
+    "detail": "IN_CLASS",
+    "link": "COMPOSITION_HORIZON",
+    "size_promoted_form": 8
+   },
+   "rung": "R4",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R4:fp:guard_p",
+   "world": "W1d5301d0"
+  },
+  {
+   "chain_qualified": true,
+   "chain_status": "SOLVED",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "p0"
+   ],
+   "cpu_s": {
+    "chain": 3.19,
+    "r1_units_attributed": 1.44,
+    "scratch": 69.56
+   },
+   "extraction": {
+    "f1": "readout_fallback",
+    "p0": "closed_lambda"
+   },
+   "family_id": "W1d5301d0-F071-R4",
+   "first_failing_link": null,
+   "link_detail": "CHAIN_QUALIFIED",
+   "link_info": {
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "stone_disagrees_sealed": []
+   },
+   "rung": "R4",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R4:fp:filter_of_map",
+   "world": "W1d5301d0"
+  },
+  {
+   "chain_qualified": true,
+   "chain_status": "SOLVED",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "s0"
+   ],
+   "cpu_s": {
+    "chain": 37.05,
+    "r1_units_attributed": 48.97,
+    "scratch": 42.52
+   },
+   "extraction": {
+    "f1": "readout_fallback",
+    "s0": "closed_lambda"
+   },
+   "family_id": "W1d5301d0-F027-R3",
+   "first_failing_link": null,
+   "link_detail": "CHAIN_QUALIFIED",
+   "link_info": {
+    "detail": "CHAIN_QUALIFIED",
+    "link": null,
+    "stone_disagrees_sealed": []
+   },
+   "rung": "R3",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R3:fs:step_of_f",
+   "world": "W1d5301d0"
+  },
+  {
+   "chain_qualified": false,
+   "chain_status": "CHAIN_C_FAIL",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "p0"
+   ],
+   "cpu_s": {
+    "chain": 0.0,
+    "r1_units_attributed": 132.26,
+    "scratch": 93.0
+   },
+   "extraction": {
+    "f1": "closed_lambda",
+    "p0": null
+   },
+   "family_id": "W0467897d-F085-R3",
+   "first_failing_link": "HORIZON_R1",
+   "link_detail": "IN_CLASS",
+   "link_info": {
+    "all_missing_unit_links": {
+     "p0": "HORIZON_R1"
+    },
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "unit": "p0"
+   },
+   "rung": "R3",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R3:fp:guard_p",
+   "world": "W0467897d"
+  },
+  {
+   "chain_qualified": false,
+   "chain_status": "CHAIN_C_FAIL",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "p0"
+   ],
+   "cpu_s": {
+    "chain": 0.0,
+    "r1_units_attributed": 132.26,
+    "scratch": 55.52
+   },
+   "extraction": {
+    "f1": "closed_lambda",
+    "p0": null
+   },
+   "family_id": "W0467897d-F081-R3",
+   "first_failing_link": "HORIZON_R1",
+   "link_detail": "IN_CLASS",
+   "link_info": {
+    "all_missing_unit_links": {
+     "p0": "HORIZON_R1"
+    },
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "unit": "p0"
+   },
+   "rung": "R3",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R3:fp:filter_of_map+red",
+   "world": "W0467897d"
+  },
+  {
+   "chain_qualified": false,
+   "chain_status": "CHAIN_C_FAIL",
+   "complete": true,
+   "constituents": [
+    "f1",
+    "p0"
+   ],
+   "cpu_s": {
+    "chain": 0.0,
+    "r1_units_attributed": 132.26,
+    "scratch": 51.89
+   },
+   "extraction": {
+    "f1": "closed_lambda",
+    "p0": null
+   },
+   "family_id": "W0467897d-F061-R3",
+   "first_failing_link": "HORIZON_R1",
+   "link_detail": "IN_CLASS",
+   "link_info": {
+    "all_missing_unit_links": {
+     "p0": "HORIZON_R1"
+    },
+    "detail": "IN_CLASS",
+    "link": "HORIZON_R1",
+    "unit": "p0"
+   },
+   "rung": "R3",
+   "scratch_fails": true,
+   "scratch_status": "NOT_FOUND_AT_BUDGET",
+   "skeleton": "R3:fp:map_of_filter+red",
+   "world": "W0467897d"
+  }
+ ],
+ "label": "EXPOSED DEV DATA (pilot)",
+ "per_world_descriptive": {
+  "W0467897d": {
+   "chain_qualified": 0,
+   "n": 3
+  },
+  "W1d5301d0": {
+   "chain_qualified": 3,
+   "n": 4
+  }
+ },
+ "root": "foundry/pilot_v2",
+ "row": {
+  "budget": 1000000,
+  "fallback": true,
+  "key": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+  "oe": false,
+  "row": "primary",
+  "scope": "constituents",
+  "seed": 0,
+  "source": "tfs1"
+ },
+ "units": [
+  {
+   "agrees_with_sealed_on_probe": 1.0,
+   "agrees_with_sealed_wide": 1.0,
+   "certifier_assisted_retry": false,
+   "cpu_s": 0.64,
+   "extraction": "readout_fallback",
+   "from": "W1d5301d0-F006-R1",
+   "lambda": "(lam x (div (add 1 x) 3))",
+   "link": null,
+   "link_detail": null,
+   "mechanism": "f1",
+   "n_attempts": 1,
+   "status": "ACQUIRED",
+   "world": "W1d5301d0"
+  },
+  {
+   "agrees_with_sealed_on_probe": 1.0,
+   "agrees_with_sealed_wide": 1.0,
+   "certifier_assisted_retry": false,
+   "cpu_s": 0.8,
+   "extraction": "closed_lambda",
+   "from": "W1d5301d0-F008-R1",
+   "lambda": "(lam x (lt x (add 2 3)))",
+   "link": null,
+   "link_detail": null,
+   "mechanism": "p0",
+   "n_attempts": 1,
+   "status": "ACQUIRED",
+   "world": "W1d5301d0"
+  },
+  {
+   "agrees_with_sealed_on_probe": 1.0,
+   "agrees_with_sealed_wide": 1.0,
+   "certifier_assisted_retry": false,
+   "cpu_s": 48.33,
+   "extraction": "closed_lambda",
+   "from": "W1d5301d0-F012-R1",
+   "lambda": "(lam a (lam b (sub b (div a 3))))",
+   "link": null,
+   "link_detail": null,
+   "mechanism": "s0",
+   "n_attempts": 2,
+   "status": "ACQUIRED",
+   "world": "W1d5301d0"
+  },
+  {
+   "agrees_with_sealed_on_probe": 1.0,
+   "agrees_with_sealed_wide": 1.0,
+   "certifier_assisted_retry": false,
+   "cpu_s": 78.44,
+   "extraction": "closed_lambda",
+   "from": "W0467897d-F007-R1",
+   "lambda": "(lam x (pow (gcd x x) 3))",
+   "link": null,
+   "link_detail": null,
+   "mechanism": "f1",
+   "n_attempts": 2,
+   "status": "ACQUIRED",
+   "world": "W0467897d"
+  },
+  {
+   "agrees_with_sealed_on_probe": null,
+   "agrees_with_sealed_wide": null,
+   "certifier_assisted_retry": false,
+   "cpu_s": 53.82,
+   "extraction": null,
+   "from": null,
+   "lambda": null,
+   "link": "HORIZON_R1",
+   "link_detail": "IN_CLASS",
+   "mechanism": "p0",
+   "n_attempts": 2,
+   "status": "NOT_ACQUIRED",
+   "world": "W0467897d"
+  }
+ ],
+ "verdict": {
+  "TFS1_INSTRUMENT_QUALIFIED": "NO",
+  "TFS1_REACHABILITY_INSTRUMENT": "FAIL",
+  "by_rung": {
+   "R3": {
+    "chain_qualified": 2,
+    "n": 5
+   },
+   "R4": {
+    "chain_qualified": 1,
+    "n": 2
+   }
+  },
+  "by_skeleton": {
+   "R3:fp:filter_of_map+red": {
+    "chain_qualified": 0,
+    "n": 1
+   },
+   "R3:fp:guard_p": {
+    "chain_qualified": 0,
+    "n": 1
+   },
+   "R3:fp:map_of_filter+red": {
+    "chain_qualified": 0,
+    "n": 1
+   },
+   "R3:fs:post_fold": {
+    "chain_qualified": 1,
+    "n": 1
+   },
+   "R3:fs:step_of_f": {
+    "chain_qualified": 1,
+    "n": 1
+   },
+   "R4:fp:filter_of_map": {
+    "chain_qualified": 1,
+    "n": 1
+   },
+   "R4:fp:guard_p": {
+    "chain_qualified": 0,
+    "n": 1
+   }
+  },
+  "by_world": {
+   "W0467897d": {
+    "chain_qualified": 0,
+    "n": 3
+   },
+   "W1d5301d0": {
+    "chain_qualified": 3,
+    "n": 4
+   }
+  },
+  "chain_qualified": 3,
+  "complete": true,
+  "dominant_link_plurality": "HORIZON_R1",
+  "first_failing_link_counts": {
+   "COMPOSITION_HORIZON": 1,
+   "COMPOSITION_UNDERDETERMINED": 0,
+   "HORIZON_R1": 3,
+   "INCOMPLETE": 0,
+   "R1_ACQUISITION": 0,
+   "UNDERDETERMINED_STONE": 0
+  },
+  "horizon_in_class_vs_not_entered": {
+   "CLASS_NOT_ENTERED": 0,
+   "IN_CLASS": 4
+  },
+  "horizon_links": 4,
+  "n_admitted_R3_R4": 7,
+  "n_not_chain_qualified": 4,
+  "oe_repair_trigger": {
+   "not_entered_only_reading": false,
+   "plurality_reading": true,
+   "rule": "primary NO AND HORIZON_R1 + COMPOSITION_HORIZON > 50% of the families not chain-qualified (strict-majority reading of 'dominant'); run --oe ONCE; if still NO: TFS1_REACHABILITY_INSTRUMENT = FAIL",
+   "triggered": true
+  },
+  "rule": "YES iff 5*chain_qualified >= 4*n AND 5*scratch_fails >= 4*n (>= 80%, pooled over the admitted R3/R4 families of the world set); else NO => TFS1_REACHABILITY_INSTRUMENT = FAIL",
+  "scratch_fails": 7,
+  "scratch_fails_all_descriptive": true
+ },
+ "worlds": [
+  "W1d5301d0",
+  "W0467897d"
+ ]
+}

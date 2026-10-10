@@ -40,5 +40,14 @@
     "revised_before_generation": "2026-10-10, before any v2 candidate existed: the first G3 draft (a reviewer flagging the line with the rarest raw-token bigram) scored recall 0.125 on v1 -- below the random-line floor 0.379 -- so it cannot see v1's tells; a syntax-shape version scored 0.35 (same failure: `return None` is in 9/142 clean functions, `not (` in 5/142, so they are rare only RELATIVE to mutants). The operator-informed rule G3 above flags 27 of 40 v1 mutants (negate_if 10/10, return_none 10/11, cmp_flip 5/7, arith_flip 1/2, bool_flip 1/1, off_by_one 0/9): it has teeth on v1. The raw-bigram reviewer stays as G4, reported."
   },
   "better_than_chance": "a reviewer with false-alarm rate FA counts as better than chance only if the LOWER end of its recall Wilson interval exceeds max over floors F of R_F x min(1, FA / FA_F) (abstaining at random moves floor F along that line; floors with FA_F = 0 are excluded). Replaces v1's 'upper end < 0.5 => unreliable', which passed every floor.",
-  "amendments": []
+  "amendments": [
+    {
+      "id": "A1",
+      "date": "2026-10-10",
+      "after_generation": true,
+      "before_any_reviewer_scored": true,
+      "change": "REVIEWER PROTOCOL, fixed before any reviewer is scored. Runner: python -m pan reviewcal run MODEL (pan.reviewcal.review_run). Each of the 60 v2 packets (code only, lines numbered, INSTRUCTIONS as in pan/reviewcal.py) goes to the model once through Ollama: temperature 0, seed 1, num_ctx 4096, num_predict 512, thinking off. Parse rule: the first JSON object in the reply (after removing <think> blocks) that has a 'bug' key; bug counts only if it is JSON true; line only if an integer; anything else is NO finding (a miss on a mutant, no false alarm on a clean item) and is counted as a parse error. Verdict: prereg v2 better_than_chance against the newest REVIEWCAL_FLOORS_V2 file (with set v2: recall Wilson lower bound > 0.70 x the reviewer's false-alarm rate). First reviewer: qwen2.5-coder:14b (best on PAN-34). Runs only on a GPU idle for 60 s, under the Fabric lease spectrex5:gpu0. Every run is reported, including failures and parse errors; nothing is dispatched to any seat (Q-011).",
+      "evidence": "runner controls roles/Pan/reports/controls/REVIEWRUN_CONTROLS_20261010T171626Z.json PASS 4/4 (oracle passes; non-JSON = 60 parse errors; site-density non-reviewer fails the bar with and without random abstention)"
+    }
+  ]
 }

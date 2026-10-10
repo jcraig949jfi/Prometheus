@@ -110,6 +110,61 @@
    "utc": "2026-10-10T17:24Z",
    "kind": "PRE_OUTCOME_DETERMINATION",
    "note": "D-BEH qualification (outcome-free): 5/15 qualified (W0321d83c-F040, W2bdef02f-F042, W480ffd54-F046, Wb49b6a5f-F055 [fp:map_of_filter]; W6eb945cc-F033 [fs:scan_of_map]). Clusters fp:guard_p, fp:filter_of_map, fs:post_fold have NO qualified family -> by A1-B.6/A2.3 informative units <= 2 < 5: FRONTIER_ARCHIVE_EFFECT = INCONCLUSIVE (INCONCLUSIVE_CENSORED; cause: descriptor unqualified on 10/15 families, 3/5 clusters). Determined before any screen outcome. Screen still runs as frozen (14.26 core-h, no truncation) for per-family descriptive data and credit labels."
+  },
+  {
+   "utc": "2026-10-10T18:05Z",
+   "kind": "FREEZE",
+   "note": "FREEZE_E3KP (A1-A, A1-C, A3; git-blob hashes); SUBSTRATE 8d0383ca0"
+  },
+  {
+   "utc": "2026-10-10T18:08Z",
+   "kind": "LAUNCH",
+   "note": "E3-KP primary on 7 production worlds (15 families), 2 workers; E2 atlas+screen 2 workers concurrently (4 total)"
+  },
+  {
+   "utc": "2026-10-10T18:40Z",
+   "kind": "RESULT",
+   "note": "E3-KP PRIMARY (FREEZE_E3KP): TFS1_INSTRUMENT_QUALIFIED = NO; chain 7/15, scratch fails 15/15; links UNDERDETERMINED_STONE 7 (stones pass own R1 test but disagree with sealed mechanism on probes [-40,40], or R1 first dev-consistent fails test), HORIZON_R1 1. Pre-data prediction was horizon-dominated; observed underdetermination-dominated. OE trigger not met -> no repair -> TFS1_REACHABILITY_INSTRUMENT = FAIL. E3 2x2 not run."
+  },
+  {
+   "utc": "2026-10-10T18:55Z",
+   "kind": "RESULT",
+   "note": "E3-KP SECONDARY ROWS (descriptive, FREEZE_E3KP): fallback_off 0/15 (R1_ACQ 6, UNDERDET 5, HORIZON_R1 4); given_foundry_primitives 14/15 (COMPOSITION_HORIZON 1) -- composition step reachable given correct stones; all_acquired 7/15; seed1 9/15 (UNDERDET 2, H_R1 2, COMP_H 2); seed2 8/15 (UNDERDET 3, H_R1 4). Scratch fails 15/15 all rows. A1-C agreement: fallback-off NO = primary NO. Reading: the break is TFS-1 stone ACQUISITION (identifiability/order-dependence), not composition."
+  },
+  {
+   "utc": "2026-10-10T19:03Z",
+   "kind": "FREEZE",
+   "note": "FREEZE_E3ID (E3ID_PREREG + ID-A1; build 767ee7adf); designated uncertified RETAIN-4"
+  },
+  {
+   "utc": "2026-10-10T19:04Z",
+   "kind": "LAUNCH",
+   "note": "E3-ID production, 7 worlds sequential, 1 worker (runs/id_production). Workers: E2 2 + E3-ID 1 + ALIEN lead 1 = 4. Note: some earlier ledger utc stamps (18:40Z, 18:55Z) were estimates a few minutes ahead of wall clock; commit times are authoritative."
+  },
+  {
+   "utc": "2026-10-10T19:35Z",
+   "kind": "RESULT",
+   "note": "E3-ID PRODUCTION: UD units 4/4 UNIQUE_WRONG (W483b8c31 f0, W6eb945cc f0, Wb49b6a5f f1, Wc025415a p0; n_dev_consistent=1 each, sealed class not found at 1e6); RETAIN-1/2/4 7/15, RETAIN-2/4-CERT 9/15 -> ID_RETENTION_REPAIR NO. Code-level interpretation string 'INSTRUMENT' is superseded by frozen ID-A1.4 (UNIQUE not sealed-equivalent = UNIQUE_WRONG -> WORLD/RULER-or-HORIZON). INSTRUMENT applies only to sealed-equivalent UNIQUE units labelled UD in KP: count 0."
+  },
+  {
+   "utc": "2026-10-10T20:44Z",
+   "kind": "FREEZE",
+   "note": "FREEZE_ALIEN_AR1 (exploratory; primary only; P-A1..3 accepted as pre-freeze development changes); production launched 1 worker"
+  },
+  {
+   "utc": "2026-10-10T21:29Z",
+   "kind": "WINDOW",
+   "note": "W03 CLOSED (W03_DEV_REPORT.md); W04 ACTIVE"
+  },
+  {
+   "utc": "2026-10-10T21:56Z",
+   "kind": "REVIEW",
+   "note": "INDEPENDENT_REVIEW_RESULTS_v1 (3ac85e783): headline labels supported; BLOCKERS F2/F3 against the coordinator's E3-ID 'world/ruler' reading ACCEPTED (3/4 UD units = extraction mis-cut of globally correct programs; order-dependence). Coordinator interpretation replaced: first failure = stone ACQUISITION (search horizon + extraction non-invariance; world dev-gap 1/4). See reviews/COORDINATOR_RESPONSE_REVIEW_v1.md. No frozen label changed."
+  },
+  {
+   "utc": "2026-10-10T21:56Z",
+   "kind": "CORRECTION",
+   "note": "Ledger/freeze utc stamps written 2026-10-10 as 17:15Z (FREEZE_E2), 18:05Z (FREEZE_E3KP), 18:40Z, 18:55Z, 19:35Z, 21:29Z were estimates and ran ahead of their commits by up to ~51 min; commit timestamps are authoritative; frozen files not edited. From here ledger utc is taken from date -u at write time."
   }
  ]
 }

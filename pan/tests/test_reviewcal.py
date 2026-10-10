@@ -85,3 +85,13 @@ def test_tell_line_and_site_density_read_only_the_code():
     dense = "def h(a, b):\n    c = 1\n    d = 2\n    e = 3\n    f = 4\n    g = 5\n    h = 6\n    if a < b and a + 1 > 2:\n        return a - b\n    return 0\n"
     assert reviewcal.heuristic_line(dense) in range(6, 11)
     assert reviewcal.heuristic_line("def k():\n    pass\n") == 1
+
+
+def test_parse_finding_takes_the_first_object_with_a_bug_key():
+    from pan import reviewcal
+    assert reviewcal.parse_finding('Sure. {"note": 1} then {"bug": true, "line": 7, "scenario": "x"}') == dict(
+        bug=True, line=7, parse_error=False)
+    assert reviewcal.parse_finding('<think>{"bug": true, "line": 2}</think>{"bug": false, "line": null}') == dict(
+        bug=False, line=None, parse_error=False)
+    assert reviewcal.parse_finding('{"bug": "yes", "line": true}') == dict(bug=False, line=None, parse_error=False)
+    assert reviewcal.parse_finding("no json here")["parse_error"] is True

@@ -292,7 +292,399 @@ def test_known_positive_extraction_and_judge():
     task = {"test": [[[1, 2], 3]], "tribunal": [[[], "FAIL"], [[4], 4]]}
     check(WD.judge("(sum xs)", task)["qualified"] is False, "sum([]) = 0 must not match FAIL")
     check(WD.judge("(add (head xs) (sum (drop 1 xs)))", task)["qualified"] is True, "FAIL agreement")
-    return {"cases": len(cases) + 2}
+    # fallback OFF: the readout form gives no mechanism, a closed lambda still does
+    check(KP.extract_mechanism("(div (add 1 (last xs)) 3)", "f", fallback=False) is None, "fallback off ignored")
+    ex = KP.extract_mechanism("(len (filter (lam x (lt x (add 2 3))) xs))", "p", fallback=False)
+    check(ex is not None and ex[1] == "closed_lambda", "closed lambda lost with fallback off")
+    return {"cases": len(cases) + 4}
+
+
+# ================================================================ E3-KP amendment A1: OE pruning, rows, links, verdict
+from tfs1.enum import Enumerator, oe_probe_assignments     # noqa: E402
+
+# Frozen BEFORE the OE change (enum.py blob e1c2993cb5dc20ea021306fc19bfc5d0c7846ca9 at f4a46d777): the keyed walk's
+# full evaluated-candidate trace (charge, text), charges, units and class counts. oe=False must reproduce them exactly.
+OE_OFF_REFERENCE = [
+    {"fid": "W1d5301d0-F006-R1", "lib": [], "budget": 60000, "seed": 0, "charges": 49862, "hit_charge": 49862,
+     "program": "(div (add 1 (last xs)) 3)", "units": [171043, 171043],
+     "trace_sha256": "f7c1ac862c9ef24c7a6c01e42bb13a8bc5f5adc03a58e3f382a2dba483769b13",
+     "counts": [4, 10, 110, 658, 6723, 55995, 563912]},
+    {"fid": "W1d5301d0-F071-R4", "lib": ["(lam x (lt x (add 2 3)))", "(lam x (div (add 1 x) 3))"], "budget": 70000,
+     "seed": 0, "charges": 64561, "hit_charge": 64561,
+     "program": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))", "units": [620942, 537660],
+     "trace_sha256": "17362243ccc6b4b1ff5542c2b9dd6e2fdad32192f6176b1874fb16246d092313",
+     "counts": [1, 1, 14, 106, 1072, 10640, 113144]},
+    {"fid": "W1d5301d0-F027-R3", "lib": [], "budget": 25000, "seed": 1, "charges": 25000, "hit_charge": None,
+     "program": None, "units": [76865, 76865],
+     "trace_sha256": "198b3fc60bc1a340c5749b3f6baf9d811cca2044f5fa01812f840e39675eea9c",
+     "counts": [4, 10, 110, 658, 6723, 55995, 563912]},
+]
+
+
+def _pilot_task(fid, world=WORLD):
+    ev = WD.Evaluator(str(ROOT), world)
+    by = {m["family_id"]: o for o, m in ev.id_map.items()}
+    return ev.task(by[fid])
+
+
+def _lib_of(lams):
+    if not lams:
+        return None
+    lib = Library(closed_args=True)
+    for s in lams:
+        lib.promote_lambda(C.parse(s), {"t": "ref"})
+    return lib
+
+
+def _trace_sha(tr):
+    import hashlib
+    return hashlib.sha256("\n".join("%d %s" % x for x in tr).encode()).hexdigest()
+
+
+@test
+def test_oe_off_byte_identical_to_pre_oe_enumerator():
+    for ref in OE_OFF_REFERENCE:
+        task = _pilot_task(ref["fid"])
+        for kw in ({}, {"oe": False}):
+            E = Enumerator(_lib_of(ref["lib"]), **kw)
+            tr = []
+            r = E.search(task["dev"], task["output_type"], ref["seed"], ref["fid"], ref["budget"], 12, trace=tr)
+            got = {"charges": r["charges"], "hit_charge": r["hit_charge"], "program": r["program"],
+                   "units": [r["units_expanded"], r["units_promoted"]], "trace_sha256": _trace_sha(tr),
+                   "counts": [E.count(task["output_type"], (), n) for n in range(1, 8)]}
+            for k, v in got.items():
+                check(v == ref[k], "%s %s: %r != frozen %r" % (ref["fid"], k, v, ref[k]))
+            check("oe" not in r and "oe_stats" not in r, "oe=False result carries OE fields")
+    return {"cases": len(OE_OFF_REFERENCE), "frozen_at": "f4a46d777 enum.py e1c2993c", "identical": True}
+
+
+def _fresh_sig(t, ctx_len, inputs, lib=None):
+    """Independent re-evaluation of an OE signature (fresh compile, no shared cache)."""
+    fn = C.compile_term(t, lib, None, swap=lib is not None)
+    out = []
+    for inp, assigns in zip(inputs, oe_probe_assignments(inputs, ctx_len)):
+        for env in assigns:
+            C.XS[0] = list(inp)
+            C.D[0] = 0
+            try:
+                v = fn(env)
+            except C.Fail:
+                v = C.FAIL
+            out.append(tuple(v) if isinstance(v, list) else v)
+    C.D[0] = 0
+    return tuple(out)
+
+
+@test
+def test_oe_pruned_terms_observationally_equal_on_dev():
+    """oe=True: every pruned subterm equals its kept representative on the OE probe set (dev inputs x binder probes);
+    for closed terms (ctx = ()) this is value-or-FAIL equality on every dev input, and substituting representatives
+    into every root program of a non-OE class leaves the dev vector unchanged (exactness of closed-context OE)."""
+    task = _pilot_task("W1d5301d0-F006-R1")
+    inputs = [i for i, _o in task["dev"]]
+    E = Enumerator(None, oe=True, oe_inputs=inputs)
+    E.oe_pruned_log = []
+    gen7 = E.count(C.INT, (), 7)                     # builds every pruned table up to size 6, all contexts used
+    log = E.oe_pruned_log
+    check(len(log) > 1000, "too little pruning to test (%d)" % len(log))
+    kept_text = {}
+    for (T, ctx, n), lst in E._tab.items():
+        for t, s in lst:
+            kept_text[(T, ctx, s)] = t
+    by_ctx, checked = {}, 0
+    for i, (T, ctx, n, s, rep) in enumerate(log):
+        by_ctx[len(ctx)] = by_ctx.get(len(ctx), 0) + 1
+        if i % max(1, len(log) // 4000):
+            continue
+        tp, tr = C.parse(s, ctx), kept_text[(T, ctx, rep)]
+        check(C.size(tr) <= C.size(tp), "representative larger than the pruned term")
+        check((C.size(tr), C.to_str(tr, ctx)) < (C.size(tp), s), "representative is not earlier")
+        check(_fresh_sig(tp, len(ctx), inputs) == _fresh_sig(tr, len(ctx), inputs),
+              "pruned %s not equal to representative %s on the probe set" % (s, rep))
+        if not ctx:
+            for inp in inputs:
+                a, _u, _v = C.evaluate(tp, inp)
+                b, _u, _v = C.evaluate(tr, inp)
+                check(C.same_value(a, b), "closed pruned term differs on a dev input")
+        checked += 1
+    # exactness of closed-context OE: substitute representatives for closed subterms of every non-OE root of size <= 6
+    rep_of = {(T, s): kept_text[(T, ctx, rep)] for (T, ctx, n, s, rep) in log if not ctx}
+
+    def subst(t):
+        if t[0] in ("int", "var", "xs", "hole", "lam"):
+            return t
+        new = (t[0],) + tuple(subst(a) for a in t[1:])
+        try:
+            T = C.type_of(new)
+        except C.TypeErr:
+            return new
+        return rep_of.get((T, C.to_str(new)), new)
+    base = Enumerator(None)
+    n_roots = n_changed = 0
+    for T in (C.INT, C.LIST, C.BOOL):
+        for n in range(1, 7):
+            for t, s in base.terms(T, (), n):
+                t2 = subst(t)
+                n_roots += 1
+                if t2 == t:
+                    continue
+                n_changed += 1
+                for inp in inputs:
+                    a = C.evaluate(t, inp)[0]
+                    b = C.evaluate(t2, inp)[0]
+                    check(C.same_value(a, b), "substitution changed the dev value of %s" % s)
+    check(n_changed > 1000, "substitution check exercised too little (%d)" % n_changed)
+    return {"pruned_logged": len(log), "pruned_checked": checked, "pruned_by_ctx_arity": by_ctx,
+            "oe_stats": E.oe_stats, "generated_Int7_oe": gen7, "Int7_base": Enumerator(None).count(C.INT, (), 7),
+            "roots_substituted": n_changed, "roots_scanned": n_roots}
+
+
+@test
+def test_oe_charges_exact_and_deterministic():
+    """oe=True: exactly 1 charge per evaluated root candidate; completed size classes are walked in full (count() =
+    the generated class); no root candidate is evaluated twice; deterministic; pruning does not lose the pilot stone
+    (same program as the base walk, fewer charges)."""
+    fid = "W1d5301d0-F006-R1"
+    task = _pilot_task(fid)
+    runs = []
+    for _ in range(2):
+        E = Enumerator(None, oe=True)
+        tr = []
+        r = E.search(task["dev"], task["output_type"], 0, fid, 60000, 12, trace=tr)
+        runs.append((r, tr, E))
+    (r, tr, E), (r2, tr2, _E2) = runs
+    check(_trace_sha(tr) == _trace_sha(tr2) and r["program"] == r2["program"], "OE walk not deterministic")
+    check(len(tr) == r["charges"] and [c for c, _s in tr] == list(range(1, r["charges"] + 1)), "charge != eval")
+    check(len({s for _c, s in tr}) == len(tr), "a root candidate was evaluated twice")
+    sizes = {}
+    for _c, s in tr:
+        n = C.size(C.parse(s))
+        sizes[n] = sizes.get(n, 0) + 1
+    for n in range(1, r["complete_through_size"] + 1):
+        check(sizes.get(n, 0) == E.count(task["output_type"], (), n), "size %d not walked in full" % n)
+    check(r["hit"] and r["program"] == OE_OFF_REFERENCE[0]["program"], "OE lost the stone")
+    check(r["charges"] < OE_OFF_REFERENCE[0]["charges"], "OE did not reduce charges")
+    check(r["oe_stats"]["signature_evals"] > 0 and r["oe_stats"]["pruned"] > 0, "no OE infra ledger")
+    return {"charges_oe": r["charges"], "charges_base": OE_OFF_REFERENCE[0]["charges"], "program": r["program"],
+            "oe_stats": r["oe_stats"], "walked_by_size": sizes}
+
+
+def _fam(link=None, q=False, sf=True, world="W", rung="R3", detail=None, complete=True, sk="k"):
+    return {"world": world, "family_id": "F", "rung": rung, "skeleton": sk, "chain_qualified": q,
+            "scratch_fails": sf, "complete": complete, "first_failing_link": link, "link_detail": detail}
+
+
+@test
+def test_kp_pooled_verdict_and_oe_trigger_rules():
+    V = KP.pooled_verdict
+    # 12 / 15 chain-qualified and 12 / 15 scratch failing -> YES (exactly 80%)
+    fams = [_fam(q=True) for _ in range(12)] + [_fam("HORIZON_R1", detail="IN_CLASS") for _ in range(3)]
+    for i in range(3):
+        fams[i]["scratch_fails"] = False
+    v = V(fams, primary=True)
+    check(v["TFS1_INSTRUMENT_QUALIFIED"] == "YES" and v["TFS1_REACHABILITY_INSTRUMENT"] is None, "12/15 must pass")
+    check(v["scratch_fails_all_descriptive"] is False, "scratch-all descriptive")
+    # 11 / 15 chain -> NO
+    fams2 = [_fam(q=True) for _ in range(11)] + [_fam("HORIZON_R1", detail="IN_CLASS") for _ in range(4)]
+    v2 = V(fams2, primary=True)
+    check(v2["TFS1_INSTRUMENT_QUALIFIED"] == "NO" and v2["TFS1_REACHABILITY_INSTRUMENT"] == "FAIL", "11/15")
+    check(v2["oe_repair_trigger"]["triggered"], "4/4 horizon must trigger the OE repair")
+    # scratch fails only 11 / 15 -> NO even with 15 / 15 chain
+    fams3 = [_fam(q=True) for _ in range(15)]
+    for i in range(4):
+        fams3[i]["scratch_fails"] = False
+    v3 = V(fams3, primary=True)
+    check(v3["TFS1_INSTRUMENT_QUALIFIED"] == "NO" and not v3["oe_repair_trigger"]["triggered"], "scratch rule")
+    # horizon exactly half of the failing families -> NOT triggered (strict majority); plurality reading reported
+    fams4 = [_fam(q=True) for _ in range(7)] + [_fam("HORIZON_R1", detail="IN_CLASS") for _ in range(4)] + \
+        [_fam("UNDERDETERMINED_STONE") for _ in range(3)] + [_fam("R1_ACQUISITION")]
+    v4 = V(fams4, primary=True)
+    check(not v4["oe_repair_trigger"]["triggered"] and v4["oe_repair_trigger"]["plurality_reading"], "4/8")
+    check(v4["first_failing_link_counts"]["HORIZON_R1"] == 4 and v4["dominant_link_plurality"] == "HORIZON_R1", "")
+    # incomplete -> INCOMPLETE; secondary rows carry no trigger
+    v5 = V([_fam(q=True, complete=False)], primary=False)
+    check(v5["TFS1_INSTRUMENT_QUALIFIED"] == "INCOMPLETE" and "oe_repair_trigger" not in v5, "incomplete")
+    # n = 7 generalisation: 6/7 >= 80% passes, 5/7 does not
+    check(V([_fam(q=True)] * 6 + [_fam("HORIZON_R1")], False)["TFS1_INSTRUMENT_QUALIFIED"] == "YES", "6/7")
+    check(V([_fam(q=True)] * 5 + [_fam("HORIZON_R1")] * 2, False)["TFS1_INSTRUMENT_QUALIFIED"] == "NO", "5/7")
+    return {"cases": 8}
+
+
+@test
+def test_kp_first_failing_link_rules():
+    kp = KP.KP(str(ROOT), WORLD)
+    fid = "W1d5301d0-F027-R3"                                # constituents f1, s0
+    cons = kp.constituents(fid)
+    acq = {m: {"status": "ACQUIRED", "agrees_with_sealed_on_probe": 1.0} for m in cons}
+
+    def miss(link, detail):
+        return {"status": "NOT_ACQUIRED", "link": link, "link_detail": detail}
+    st = {"size_promoted_form": 7, "hitting_cost_bracket": [131402, 1427485]}
+    cases = [
+        ({cons[0]: miss("HORIZON_R1", "IN_CLASS"), cons[1]: miss("UNDERDETERMINED_STONE", "x")}, None,
+         "HORIZON_R1"),                                                     # first missing unit in mechanisms_used order
+        ({cons[0]: acq[cons[0]], cons[1]: miss("R1_ACQUISITION", "NO_EXTRACTABLE_MECHANISM")}, None, "R1_ACQUISITION"),
+        (acq, {"status": "SOLVED"}, None),
+        ({cons[0]: dict(acq[cons[0]], agrees_with_sealed_on_probe=0.9), cons[1]: acq[cons[1]]},
+         {"status": "SOLVED"}, None),                                       # flagged, not failed
+        ({cons[0]: dict(acq[cons[0]], agrees_with_sealed_on_probe=0.9), cons[1]: acq[cons[1]]},
+         {"status": "NOT_FOUND_AT_BUDGET", "complete_through_size": 6, "static": st}, "UNDERDETERMINED_STONE"),
+        (acq, {"status": "FIRST_DEV_CONSISTENT_FAILS_TEST"}, "COMPOSITION_UNDERDETERMINED"),
+        (acq, {"status": "NOT_FOUND_AT_BUDGET", "complete_through_size": 6, "static": st}, "COMPOSITION_HORIZON"),
+        (acq, {"status": "NOT_FOUND_AT_BUDGET", "complete_through_size": 7, "static": st}, "UNDERDETERMINED_STONE"),
+    ]
+    for units, chain, want in cases:
+        got = kp.family_link(fid, units, chain)["link"]
+        check(got == want, "link %r != %r for %r / %r" % (got, want, units, chain))
+    check(kp.family_link(fid, acq, {"status": "NOT_FOUND_AT_BUDGET", "complete_through_size": 6,
+                                    "static": st})["detail"] == "IN_CLASS", "IN_CLASS detail")
+    check(kp.family_link(fid, acq, {"status": "NOT_FOUND_AT_BUDGET", "complete_through_size": 5,
+                                    "static": st})["detail"] == "CLASS_NOT_ENTERED", "NOT_ENTERED detail")
+    check(KP._horizon(7, 8) == "IN_CLASS" and KP._horizon(5, 8) == "CLASS_NOT_ENTERED" and KP._horizon(8, 8) is None,
+          "horizon helper")
+    return {"cases": len(cases) + 3}
+
+
+@test
+def test_kp_rows_separate_cache_keys_and_reuse():
+    """Every secondary row writes its own row key; identical searches are shared (fallback-off re-uses the primary's
+    R1 searches, every library-free row re-uses scratch); the foundry row runs no R1 search and cross-checks
+    FINAL.jsonl; extra seeds re-key every search. Small budget (development)."""
+    B = 20000
+    rows = {"primary": KP.Config(budget=B), "fallback_off": KP.Config(fallback=False, budget=B),
+            "foundry": KP.Config(source="foundry", budget=B), "seed1": KP.Config(seed=1, budget=B),
+            "all": KP.Config(scope="all", budget=B), "oe": KP.Config(oe=True, budget=B)}
+    check(len({c.key() for c in rows.values()}) == len(rows), "row keys collide")
+    with tempfile.TemporaryDirectory() as td:
+        n_search = {}
+        for name in ("primary", "fallback_off", "foundry", "seed1"):
+            d = KP.run_stages(str(ROOT), WORLD, rows[name], "all", td, log=lambda s: None)
+            n_search[name] = len(d["searches"])
+        check(set(d["rows"]) == {rows[n].key() for n in ("primary", "fallback_off", "foundry", "seed1")}, "rows")
+        prim, fbo = d["rows"][rows["primary"].key()], d["rows"][rows["fallback_off"].key()]
+        fnd = d["rows"][rows["foundry"].key()]
+        check(all(u["source"] == "foundry" and not u["attempts"] for u in fnd["units"].values()), "foundry ran R1")
+        check(all(u.get("final_jsonl_crosscheck") is True for u in fnd["units"].values()
+                  if u["status"] == "ACQUIRED"), "FINAL.jsonl cross-check")
+        # at B = 2e4 no R1 stone of this world is found, so fallback-off needs no new search (all shared with the
+        # primary); the foundry row adds exactly one chain search per admitted family (scratch shared); seed 1 re-keys
+        adm = KP.KP(str(ROOT), WORLD).admitted()
+        check(n_search["fallback_off"] == n_search["primary"], "fallback-off re-ran shared searches")
+        check(n_search["foundry"] == n_search["fallback_off"] + len(adm), "foundry row: one chain search per family")
+        new_seed1 = [k for k in d["searches"] if "|seed=1|" in k]
+        check(len(new_seed1) == n_search["seed1"] - n_search["foundry"] > 0, "seed-1 searches not re-keyed")
+        check(set(prim["scratch"]) == set(fbo["scratch"]) == set(fnd["scratch"]), "scratch rows")
+        desc = KP.KP(str(ROOT), WORLD).describe(d, rows["primary"])
+        check(desc["descriptive_only"] and all(f["complete"] for f in desc["families"]), "describe")
+        pooled = KP.pooled(str(ROOT), [WORLD], rows["primary"], td)
+        check(pooled["verdict"]["n_admitted_R3_R4"] == 4, "pooled family count")
+    return {"search_cache_sizes": n_search, "row_keys": [c.key() for c in rows.values()]}
+
+
+# ================================================================ E3-ID (windows/E3ID_PREREG.md)
+from tfs1.e3 import e3_identifiability as IDM          # noqa: E402
+
+
+@test
+def test_id_behaviour_classes_and_identifiability_labels():
+    """Classes on probe INPUTS (FAIL is a value), first-appearance ranks, NO_STONE programs counted, post-hoc
+    sealed-equivalent rank and R1 verdict, AMBIGUOUS / UNIQUE / NO_STONE labels."""
+    xs_dev = [[1, 5, 4, 9], [4, 6, 2], [0, 7, 3, 5]]
+    task = {"test": [[i, [v for v in i if v > 4]] for i in xs_dev],
+            "tribunal": [[[5, 4, 10], [5, 10]]]}
+    hits = [[10, "(filter (lam x (lt 3 x)) xs)"],          # x > 3            class 1
+            [20, "(rev (rev xs))"],                         # no stone
+            [30, "(filter (lam x (gt x 3)) xs)"],           # x > 3 again      class 1
+            [40, "(filter (lam x (gt x (add 2 2))) xs)"],   # x > 4 (sealed)   class 2
+            [50, "(filter (lam x (lt 4 x)) xs)"]]           # x > 4 again      class 2
+    r = IDM.classify(hits, "p", "(lam x (gt x (add 2 2)))", task)
+    check(r["n_classes"] == 2 and r["n_no_stone_programs"] == 1 and r["n_dev_consistent_programs"] == 5, "counts")
+    check(r["slot_order"][1] == IDM.NO_STONE and len(r["slot_order"]) == 3, "slot order")
+    check(r["classes"][0]["n_programs"] == 2 and r["classes"][1]["n_programs"] == 2, "class sizes")
+    check(r["ID_IDENTIFIABILITY"] == "AMBIGUOUS" and not r["first_class_sealed_equivalent"], "AMBIGUOUS")
+    check(r["sealed_equivalent_class_rank"] == 2 and r["sealed_equivalent_first_charge"] == 40
+          and r["sealed_equivalent_first_ordinal"] == 4, "sealed rank")
+    check(r["sealed_equivalent_first_program_r1_qualified"] is True and r["classes"][0]["r1_qualified"] is False,
+          "post-hoc R1 verdicts")
+    r2 = IDM.classify(hits[3:], "p", "(lam x (gt x (add 2 2)))", task)
+    check(r2["ID_IDENTIFIABILITY"] == "UNIQUE" and r2["n_classes"] == 1, "UNIQUE")
+    r3 = IDM.classify(hits[2:], "p", "(lam x (gt x (add 2 2)))", task)
+    check(r3["ID_IDENTIFIABILITY"] == "AMBIGUOUS", "first class wrong, 2 classes")
+    check(IDM.classify([[5, "(rev xs)"]], "p", "(lam x (gt x 4))", task)["ID_IDENTIFIABILITY"] == "NO_STONE", "")
+    # FAIL is a value: (div x x) and the constant 1 differ only at 0 (FAIL vs 1)
+    b1, b2 = IDM.behaviour(C.parse("(lam x (div x x))")), IDM.behaviour(C.parse("(lam x (div 3 3))"))
+    check(b1 != b2 and sum(u != v for u, v in zip(b1, b2)) == 1 and C.FAIL in b1, "FAIL as a value")
+    # binary stones on the [-12, 12]^2 grid
+    bs = IDM.behaviour(C.parse("(lam a (lam b (sub b (div a 3))))"))
+    check(len(bs) == 625, "pair grid")
+    return {"classes": r["n_classes"], "labels": [r["ID_IDENTIFIABILITY"], r2["ID_IDENTIFIABILITY"]]}
+
+
+def _id_case(td, world, B):
+    KP.run_stages(str(ROOT), world, KP.Config(budget=B), "chain", td, log=lambda s: None)
+    return IDM.run_stages(str(ROOT), world, td, td, "all", B, ks=(1, 2), cert=True, log=lambda s: None)
+
+
+@test
+def test_id_retain1_reproduces_e3kp_primary():
+    """RETAIN-1 (designated, uncertified) reproduces the E3-KP primary chain outcome EXACTLY (byte-identical library
+    sha, status, program, charge, charges) on every family whose constituents the primary acquired; RETAIN-1-CERT
+    reproduces it on EVERY family (CHAIN_C_FAIL included). Also: ID-1's first hit equals the primary attempt's.
+    Development budgets on EXPOSED pilot_v2: W1d5301d0 at 3e5 (all units acquired; one chain solved) and W0467897d
+    at 6e4 (no unit acquired; p0's first dev-consistent stone rejected by the R1 certifier)."""
+    out = {}
+    with tempfile.TemporaryDirectory() as td:
+        for world, B in (("W1d5301d0", 300000), ("W0467897d", 60000)):
+            d = _id_case(td, world, B)
+            I = IDM.ID(str(ROOT), world, td, B)
+            n_cmp = 0
+            for fid in I.kp.admitted():
+                acq = all(I.prim["units"][m]["status"] == "ACQUIRED" for m in I.kp.constituents(fid))
+                r1, rc = d["retain"]["RETAIN-1"][fid], d["retain"]["RETAIN-1-CERT"][fid]
+                check(rc["reproduces_primary"], "RETAIN-1-CERT differs from the primary on %s" % fid)
+                if acq:
+                    check(r1["reproduces_primary"], "RETAIN-1 differs from the primary on %s: %r vs %r" % (
+                        fid, (r1["status"], r1.get("found"), r1.get("charge")), r1["primary_chain"]))
+                    n_cmp += 1
+                else:
+                    check(r1["reproduces_primary"] or r1["retain1_differs_by_design"], "unflagged difference")
+            check(all(rec["primary_first_hit_matches"] for rec in d["id1"].values()), "ID-1 first hit")
+            out[world] = {"B": B, "families_exact": n_cmp,
+                          "statuses": {f: r["status"] for f, r in d["retain"]["RETAIN-1"].items()},
+                          "id1": {k: (v["n_classes"], v["ID_IDENTIFIABILITY"]) for k, v in d["id1"].items()}}
+        check(out["W1d5301d0"]["families_exact"] == 4, "exact comparison not exercised on all-acquired families")
+        check("W0467897d" in out and any(v[0] >= 1 for v in out["W0467897d"]["id1"].values()), "non-acquired path")
+    return out
+
+
+@test
+def test_id_pooled_outcome_rules():
+    def U(lab, und=True, used=True):
+        return {"world": "W", "mechanism": "m%d" % id(lab), "ID_IDENTIFIABILITY": lab, "underdetermined_stone_unit": und,
+                "used_by_failed_family": used}
+
+    def Fm(q4, link="UNDERDETERMINED_STONE"):
+        r = {"qualified": q4, "link": None if q4 else link, "reproduces_primary": True,
+             "retain1_differs_by_design": False}
+        return {"family_id": "F", "RETAIN-1": r, "RETAIN-2": r, "RETAIN-4": r}
+    f12 = [Fm(True) for _ in range(12)] + [Fm(False) for _ in range(3)]
+    f11 = [Fm(True) for _ in range(11)] + [Fm(False, "COMPOSITION_HORIZON") for _ in range(4)]
+    amb = [U("AMBIGUOUS") for _ in range(5)] + [U("UNIQUE") for _ in range(2)]
+    o = IDM.outcomes(amb, f12)
+    check(o["ID_RETENTION_REPAIR"] == "YES" and o["interpretation"] == "DEVELOPMENTAL_MACHINERY", "map 1")
+    check(o["ID_IDENTIFIABILITY"]["fraction_ambiguous"] == round(5 / 7, 4), "fraction")
+    o = IDM.outcomes(amb, f11)
+    check(o["ID_RETENTION_REPAIR"] == "NO" and o["interpretation"] == "WORLD_RULER_IDENTIFIABILITY", "map 2")
+    check(o["retain_rows"]["RETAIN-4"]["first_failing_link_counts"] == {"COMPOSITION_HORIZON": 4}, "link counts")
+    o = IDM.outcomes([U("UNIQUE") for _ in range(4)] + [U("AMBIGUOUS")], f12)
+    check(o["interpretation"] == "INSTRUMENT", "map 3")
+    o = IDM.outcomes([U("UNIQUE"), U("AMBIGUOUS"), U("NO_STONE")], f12)
+    check(o["interpretation"] == "MIXED" and o["ID_IDENTIFIABILITY"]["labelled"] == 2, "tie -> MIXED, NO_STONE excl.")
+    check(IDM.outcomes([U("AMBIGUOUS", und=False)], f12)["interpretation"] == "NOT_APPLICABLE", "no UND units")
+    inc = [dict(f) for f in f12]
+    inc[0] = {"family_id": "F"}
+    check(IDM.outcomes(amb, inc)["ID_RETENTION_REPAIR"] == "INCOMPLETE", "incomplete")
+    return {"cases": 7}
 
 
 def _run(fn):
