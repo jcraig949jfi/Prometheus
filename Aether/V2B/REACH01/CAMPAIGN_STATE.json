@@ -8,25 +8,32 @@
   "base_main": "5956b542e",
   "started_utc": "2026-10-10T09:23:11Z",
   "deadline_utc": "2026-10-13T09:23:11Z",
-  "current_phase": "R1 EXPERIMENT",
+  "current_phase": "R1 EXPERIMENT (tracer) + R3 EXPERIMENT (search)",
   "current_experiment": "R1 TEST-4",
   "attempt": 1,
-  "frozen_sha": "a2ce3c471",
+  "frozen_sha": {
+    "R1": "a2ce3c471",
+    "R3": "99d6e38bd"
+  },
   "active_workloads": [
     {
-      "id": "R1 phase1+phase2",
-      "ledgers": "C:/Prometheus-data/aether_reach01/R1/ledger_plan_phase1.jsonl, ledger_plan_phase2.jsonl",
-      "launched_utc": "2026-10-10T09:39Z"
+      "id": "R1 phase1+2",
+      "ledgers": "C:/Prometheus-data/aether_reach01/R1/ledger_plan_phase1.jsonl, ledger_plan_phase2.jsonl"
+    },
+    {
+      "id": "R3 search+certify",
+      "ledgers": "C:/Prometheus-data/aether_reach01/R3/ledger_plan_search.jsonl, ledger_plan_certify.jsonl",
+      "launched_utc": "2026-10-10T10:45Z"
     }
   ],
   "completed_units": {},
   "artifact_root": "Aether/V2B/REACH01/ (tracked, small); C:/Prometheus-data/aether_reach01/ (large, untracked)",
   "dispositions": {
-    "R1": null,
+    "R1": "pending (decodability half reduced: 0/8 seeds meet margin -> NOT_SUPPORTED expected; tracer running)",
     "R2": "XOR/ADD/ROTX PLANTED_COMPOSITION_SUPPORTED; v1 EXPRESSIBILITY_STILL_BLOCKED (missing: state-dependent combination); AND/SPLICE partial",
     "R3": null,
     "R4": null
   },
-  "next_action": "R1 production running (reduce when phase2 flight_end). Build R3 FRONTIER01 tiled GPU patch-search engine (XOR primary, ROTX alien arm).",
+  "next_action": "(1) when R1 phase2 ends: reduce trace with nonanc check, write R1_TEST4_RESULT.md. (2) when R3 certify ends: reduce R3, write R3 result. (3) design R4 ACCUM01 on planted XOR mechanism (assisted-control) unless R3 yields a discovered mechanism.",
   "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units)."
 }
