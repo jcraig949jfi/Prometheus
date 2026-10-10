@@ -1,0 +1,545 @@
+{
+ "admitted": [
+  "W483b8c31-F045-R3",
+  "W483b8c31-F046-R3"
+ ],
+ "alien_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "ar1_kp.py": "8590d46d6fda337eddc9588682baf0e1307e4fd5647987d5099050e82542ee1e",
+  "ar1_timing.py": "7f3834515e2f853cb1f9d01d9cb342f70397c1dce33a66cc7b4721c234c4b48a",
+  "conformance.py": "97c53feea10c6dc7f85063d898d425a26bd62616ac203fe1f672a343f8407d07",
+  "extract.py": "fc040f202eaa8e5c2188c313194be4ca4abceda771e1e4984dfe6cd4b99c0454",
+  "machine.py": "7b2b24c0194b32fd3297064fb4618302b088c66269ab2953e8c9a2733ca1b3d9",
+  "search.py": "eee69a054a9f7830d7b594ab1fc45d0d756a573c050553b568fd83da2ceb67cb"
+ },
+ "label": "PRODUCTION",
+ "rows": {
+  "ar1.mc1.lib-constituents.seed0.B1000000": {
+   "chain": {
+    "W483b8c31-F045-R3": {
+     "family_id": "W483b8c31-F045-R3",
+     "missing": [
+      "f0",
+      "p0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    },
+    "W483b8c31-F046-R3": {
+     "family_id": "W483b8c31-F046-R3",
+     "missing": [
+      "f1",
+      "p0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+    "r1_seeds": 1,
+    "row": "primary",
+    "scope": "constituents",
+    "seed": 0
+   },
+   "descriptive": {
+    "families": [
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f0",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 1054.41,
+       "scratch": 335.89
+      },
+      "family_id": "W483b8c31-F045-R3",
+      "first_failing_link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "link_info": {
+       "detail": "BUDGET_EXHAUSTED",
+       "link": "HORIZON_R1",
+       "unit": "f0"
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fp:guard_p",
+      "world": "W483b8c31"
+     },
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 1026.01,
+       "scratch": 345.73
+      },
+      "family_id": "W483b8c31-F046-R3",
+      "first_failing_link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "link_info": {
+       "detail": "BUDGET_EXHAUSTED",
+       "link": "HORIZON_R1",
+       "unit": "f1"
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fp:map_of_filter",
+      "world": "W483b8c31"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+     "r1_seeds": 1,
+     "row": "primary",
+     "scope": "constituents",
+     "seed": 0
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 6.0,
+        "charge": null,
+        "cpu_s": 290.56,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W483b8c31-F006-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 0.0,
+        "charge": null,
+        "cpu_s": 63.67,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W483b8c31-F007-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": false,
+      "cpu_s": 354.23,
+      "from": null,
+      "kind": "f",
+      "link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "macro": null,
+      "mechanism": "f0",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "W483b8c31"
+     },
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 4.1071,
+        "charge": null,
+        "cpu_s": 176.5,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W483b8c31-F008-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 8.0,
+        "charge": null,
+        "cpu_s": 149.33,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W483b8c31-F010-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": false,
+      "cpu_s": 325.83,
+      "from": null,
+      "kind": "f",
+      "link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "macro": null,
+      "mechanism": "f1",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "W483b8c31"
+     },
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 12.0,
+        "charge": 337951,
+        "cpu_s": 57.02,
+        "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+        "family_id": "W483b8c31-F011-R1",
+        "found": "0 [ 2 < ? [ a # p 3 * 3 A < + d ] a A ? A 0 ] a",
+        "label": "UNDERDETERMINED_STONE",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 4.0,
+        "charge": null,
+        "cpu_s": 643.16,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W483b8c31-F013-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": true,
+      "cpu_s": 700.18,
+      "from": null,
+      "kind": "p",
+      "link": "UNDERDETERMINED_STONE",
+      "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "macro": null,
+      "mechanism": "p0",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "W483b8c31"
+     }
+    ],
+    "world": "W483b8c31"
+   },
+   "scratch": {
+    "W483b8c31-F045-R3": {
+     "best_credit": 2.2137,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 335.89,
+     "family_id": "W483b8c31-F045-R3",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "W483b8c31-F046-R3": {
+     "best_credit": 4.8988,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 345.73,
+     "family_id": "W483b8c31-F046-R3",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    }
+   },
+   "units": {
+    "f0": {
+     "attempt_labels": [
+      "HORIZON_R1",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 6.0,
+       "best_tape": "[ 0 [ 1 s 2 % 2 ? ] < A s A n s = ? # d p + +",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 290.56,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W483b8c31-F006-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 6
+      },
+      {
+       "best_credit": 0.0,
+       "best_tape": "",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 63.67,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W483b8c31-F007-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 9
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "kind": "f",
+     "link": "HORIZON_R1",
+     "link_detail": "BUDGET_EXHAUSTED",
+     "mechanism": "f0",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    },
+    "f1": {
+     "attempt_labels": [
+      "HORIZON_R1",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 4.1071,
+       "best_tape": "# d + # n # [ < d d 2 / A A ? + . 2 a d A # 1 +",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 176.5,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W483b8c31-F008-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 7
+      },
+      {
+       "best_credit": 8.0,
+       "best_tape": "[ 2 3 p 2 + [ ] 2 . 3 . / ] 0 < ? 2 # * = = - /",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 149.33,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W483b8c31-F010-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 7
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "kind": "f",
+     "link": "HORIZON_R1",
+     "link_detail": "BUDGET_EXHAUSTED",
+     "mechanism": "f1",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    },
+    "p0": {
+     "attempt_labels": [
+      "UNDERDETERMINED_STONE",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 12.0,
+       "charge": 337951,
+       "charges": 337951,
+       "cpu_s": 57.02,
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "family_id": "W483b8c31-F011-R1",
+       "found": "0 [ 2 < ? [ a # p 3 * 3 A < + d ] a A ? A 0 ] a",
+       "label": "UNDERDETERMINED_STONE",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 2,
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": false,
+        "test_ok": false,
+        "tribunal_ok": false
+       }
+      },
+      {
+       "best_credit": 4.0,
+       "best_tape": "[ 1 ] [ % d * 2 < # 3 < * 1 ? 3 * + 2 * A d a %",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 643.16,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W483b8c31-F013-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 7
+      }
+     ],
+     "certifier_assisted_retry": true,
+     "kind": "p",
+     "link": "UNDERDETERMINED_STONE",
+     "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+     "mechanism": "p0",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    }
+   }
+  }
+ },
+ "searches": {
+  "W483b8c31-F006-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 6.0,
+   "best_tape": "[ 0 [ 1 s 2 % 2 ? ] < A s A n s = ? # d p + +",
+   "charges": 1000000,
+   "cpu_s": 290.56,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 18382,
+   "restarts": 6,
+   "trace": []
+  },
+  "W483b8c31-F007-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 0.0,
+   "best_tape": "",
+   "charges": 1000000,
+   "cpu_s": 63.67,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 15426,
+   "restarts": 9,
+   "trace": []
+  },
+  "W483b8c31-F008-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 4.1071,
+   "best_tape": "# d + # n # [ < d d 2 / A A ? + . 2 a d A # 1 +",
+   "charges": 1000000,
+   "cpu_s": 176.5,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 18681,
+   "restarts": 7,
+   "trace": []
+  },
+  "W483b8c31-F010-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 8.0,
+   "best_tape": "[ 2 3 p 2 + [ ] 2 . 3 . / ] 0 < ? 2 # * = = - /",
+   "charges": 1000000,
+   "cpu_s": 149.33,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 18500,
+   "restarts": 7,
+   "trace": []
+  },
+  "W483b8c31-F011-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 12.0,
+   "charges": 337951,
+   "cost": {
+    "len_expanded": 24,
+    "len_promoted": 24,
+    "macro_calls": 0,
+    "units_expanded_dev": 2798,
+    "units_promoted_dev": 2798
+   },
+   "cpu_s": 57.02,
+   "hit": true,
+   "hit_charge": 337951,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": "0 [ 2 < ? [ a # p 3 * 3 A < + d ] a A ? A 0 ] a",
+   "redraws": 6352,
+   "restarts": 2,
+   "trace": [],
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": false,
+    "test_ok": false,
+    "tribunal_ok": false
+   }
+  },
+  "W483b8c31-F013-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 4.0,
+   "best_tape": "[ 1 ] [ % d * 2 < # 3 < * 1 ? 3 * + 2 * A d a %",
+   "charges": 1000000,
+   "cpu_s": 643.16,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 18601,
+   "restarts": 7,
+   "trace": []
+  },
+  "W483b8c31-F045-R3|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 2.2137,
+   "best_tape": "a d s 1 [ p a . A d p d . [ d * 2 l s + d [ p A",
+   "charges": 1000000,
+   "cpu_s": 335.89,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 19038,
+   "restarts": 5,
+   "trace": []
+  },
+  "W483b8c31-F046-R3|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 4.8988,
+   "best_tape": "[ d # < 3 3 = = s 1 ? # a - / A a 1 A s 2 % ? .",
+   "charges": 1000000,
+   "cpu_s": 345.73,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 19190,
+   "restarts": 5,
+   "trace": []
+  }
+ },
+ "world": "W483b8c31"
+}
