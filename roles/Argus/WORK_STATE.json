@@ -3,22 +3,22 @@
   "seat": "Argus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-10T09:10:00Z",
+  "updated_at_utc": "2026-10-10T11:57:00Z",
   "state": "INTEGRATION_READY",
-  "branch": "argus/c013-t010",
-  "base_sha": "9b1893d6f335c18041130c1d34f8944a1e02466c",
-  "head_sha": "e3cbcb30e132ef8655b8dd821a36b9c2d1365fbd",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t010",
+  "branch": "argus/c013-t013",
+  "base_sha": "187ebe4475d3dcf1c85a9f42d87d235008e57987",
+  "head_sha": "(this commit; see receipt end_sha)",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t013",
   "model": "claude-opus-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-6417c3ea",
-  "session_start_utc": "2026-10-10T07:53:00Z",
+  "instance": "harry1-91546d7d",
+  "session_start_utc": "2026-10-10T11:25:00Z",
   "current_objective": "RSO Builder Cell, campaign C-013 (RSO-STRATEGIC-EXPANSION-48H), Workstream B",
-  "current_step": "C-013-T010 INTEGRATION_READY: REACHABILITY_CARTOGRAPHY_V0.md + D1 harness + PREREGISTRATION v1.0.0 + FREEZE_D1 (code 307afe4b1, freeze 66c7ccdae); STOPPED before any run",
+  "current_step": "C-013-T013 INTEGRATION_READY: PREREGISTRATION v1.0.1 (A1 wording) b85d690bf + FREEZE_D1 v1.0.1 8ddaa4f19; 4 behavioural pins RED on mutants; 80 tests green; no lineage run",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Pallas C-013-T011 Q3 challenge of the frozen D1; then C-013-T012 (Argus) runs D1 after at most one repair round",
+  "next_expected_milestone": "Palamedes integrates C-013-T013; then C-013-T012 (Argus) runs D1 on FREEZE_D1 v1.0.1",
   "expected_next_artifact": "C-013-T012: rso/reach/runs/D1/{LEDGER.jsonl,CONTROLS.json,RUN.json,RESULT.json} when READY",
   "threads": [
     "phase3-rso"
@@ -32,16 +32,16 @@
   "blocked_on": [],
   "next_actions": [
     "comms sync Argus; workgraph ready Argus",
-    "answer any T010/T011 question from Palamedes or Pallas",
-    "take C-013-T012 when READY (needs a numba 0.65.1 environment; harry1 system Python has none)"
+    "take C-013-T012 when READY (venv C:/Prometheus-worktrees/argus-reach-venv)",
+    "read the D1 result under s7 as amended by A1 (per-(arm,d) counts beside every separating contrast)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-013/tasks/C-013-T010/attempts/A-001/RECEIPT.json",
-    "rso/reach/FREEZE_D1.md (branch argus/c013-t010)"
+    "ops/campaigns/C-013/tasks/C-013-T013/attempts/A-001/RECEIPT.json",
+    "rso/reach/FREEZE_D1.md v1.0.1 (branch argus/c013-t013)"
   ],
-  "last_push_sha": "e3cbcb30e",
-  "last_push_utc": "2026-10-10T09:05:00Z",
+  "last_push_sha": "8ddaa4f19",
+  "last_push_utc": "2026-10-10T11:55:00Z",
   "validation_launches_this_session": 0,
   "state_worktree": "C:/Prometheus-worktrees/argus-ops (detached, state commits to main per DISTRIBUTED_WORK s9)",
   "environment_note": "numba venv outside the repo: C:/Prometheus-worktrees/argus-reach-venv (numba 0.65.1, numpy 2.4.6, pytest 8.3.3)"
