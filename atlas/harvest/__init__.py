@@ -8,4 +8,7 @@ ORDER = ["reference", "commits", "archaeon_campaigns", "frontier", "npe", "vivar
          "catalog",            # Atlas (M1): roles/Atlas/catalog/ECOSYSTEMS.jsonl -> atlas.ecosystem
          "proposals",           # Atlas (M1): roles/Atlas/proposals/*/EXPERIMENTS.jsonl (kind=proposal, PLANNED)
          "theory",             # Atlas (M1): roles/Atlas/theory/*.jsonl -> propositions, primitives, combinations
-         "cosmos"]             # Atlas (M1): roles/Cosmos/campaigns/atlas_export_c0 (MANIFEST-verified export)
+         "cosmos",             # Atlas (M1): roles/Cosmos/campaigns/atlas_export_c0 (MANIFEST-verified export)
+         "workgraph",          # Atlas (M1): ops/campaigns/C-*/ CAMPAIGN/TASK/RECEIPT (prometheus.workgraph.*)
+         "theseus",            # Atlas (M1): theseus/runs/*, roles/Theseus/prereg/*, BACKLOG depends-on
+         "aether"]             # Atlas (M1): Aether/V2B/*, ops/campaigns/C-002/E-*, roles/Aether/WORK_STATE.json
