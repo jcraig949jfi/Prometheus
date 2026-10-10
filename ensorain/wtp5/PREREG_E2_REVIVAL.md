@@ -41,3 +41,9 @@ reinterpreted. Its F11 band=.5 CHEAP_PAYS cell is a recorded single-axis pay and
 ## Use
 A revived world (a COUPLED or SINGLE-axis pay replicated in both seeds) is recorded as an extra WTP-05 test
 environment. Only its WTP-04-style label is claimed here. A null is preserved as a null.
+
+## Amendment 2026-10-10 ~10:50Z (runner robustness only; after 81 rows, no scoring rule changed)
+The run stopped at row 81 when one unit raised numpy LinAlgError ("SVD did not converge") inside the frozen
+WTP-04 harness, which has no exception guard for a whole unit. revival._job now records such a unit as
+status CRASH, which habit.classify labels ILLEGAL. The run resumed from the 81 finished rows (same seeds,
+same grid). WTP-04 code is unchanged.
