@@ -423,3 +423,8 @@ s7.3 already specified the DEEP rules, but they had no code. This adds the code 
   cell. This is disclosed, because a held-out training accuracy is not separately computed.
 - RESOURCE = some run's current best rung was first reached in the last 40% of its evaluations.
 - The certifier gap is reported as None (not computed).
+
+## Amendment 2026-10-10 ~18:50Z: verdict table merge (after SCREEN, before any DEEP result)
+analyze5.verdict used only the DEEP table when it existed. DEEP holds only the surviving cells, so the desert
+and yoked clauses ("0/8 in every arm") would have been vacuously true. The final table is now the SCREEN
+table with each continued cell replaced by its DEEP row. The s11 rules are unchanged.
