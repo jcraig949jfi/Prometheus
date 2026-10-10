@@ -60,3 +60,26 @@ budget. The reused component is causally necessary, in two copies with distinct 
 - The result is fragile (~2% of positions), rests on a planted component, and may depend on a generous relocation
   range. It is a demonstration that the harness can produce building-block reuse; it is not evidence of evolved
   cumulative development.
+
+## R4b geometry control (separately preregistered, PREREGISTRATION_R4b.md, freeze 4b2093ad2): PARTIAL
+
+| promoted-component arm | vertical insert offsets | seeds acquiring COMBINE3 |
+|---|---|---|
+| P (R4) | -3..+3 | 8/8 |
+| Pno3 | -3..+2 (the exact +3 row alignment excluded) | 5/8 |
+| Pdy0 | 0 only (horizontal relocation only) | 3/8 |
+| N / S / U (R4) | no promotion | 0/8 each |
+
+Copy structure (static, first 5 solutions per unit; R4/evidence/R4b_copy_structure.json):
+- Pno3 solutions use whichever available shift brings a relay row next to input C's row (-3: row 13 to row 10;
+  +1/+2: row 6 to rows 7-8) and bridge the gap by cell mutation.
+- Pdy0 solutions stack horizontally offset duplicates on the original rows, with C bridged into an existing relay.
+
+Reading:
+- The promotion advantage is partly alignment-dependent: removing the exact aligning shift costs 3 seeds, and
+  removing all vertical relocation costs 5.
+- It does not vanish: even horizontal-only duplication beats every non-promoted control (3/8 vs 0/8).
+- The "generous offset range" alternative explains part of R4's 8/8, not all of it.
+- Duplication + relocation of a certified transport unit is the mechanism, and the search exploits any geometry that
+  places a copy near the new input.
+Still ASSISTED CONTROL, and still fragile (R4: ~1.6% of tile positions).
