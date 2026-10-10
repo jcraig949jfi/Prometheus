@@ -7,7 +7,7 @@ date, purged after 24 h (base role s7).
       then report + review packet
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
-- [ ] Status report 5 by ~2026-10-10T10:03Z
+- [ ] Status report 6 by ~2026-10-10T16:00Z
 - [ ] PAN-37: first calibrated reviewer = a local model on the 60-item set (GPU, after PAN-34 runs); portal view
       of the review queue; dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-10T14:30Z)
