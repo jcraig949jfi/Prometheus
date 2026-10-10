@@ -17,9 +17,8 @@
   },
   "active_workloads": [
     {
-      "id": "R3 search+certify",
-      "ledgers": "C:/Prometheus-data/aether_reach01/R3/ledger_plan_search.jsonl, ledger_plan_certify.jsonl",
-      "launched_utc": "2026-10-10T10:45Z"
+      "id": "R4b geometry control",
+      "ledger": "C:/Prometheus-data/aether_reach01/R4b/ledger_plan_R4b.jsonl"
     }
   ],
   "completed_units": {},
@@ -27,10 +26,10 @@
   "dispositions": {
     "R1": "RECOIL_EXCHANGE_CAUSAL_REACH_NOT_SUPPORTED (decode margin 0/8; certified chains RX 2 vs X 3; RX deepest trees gen 6-8)",
     "R2": "XOR/ADD/ROTX PLANTED_COMPOSITION_SUPPORTED; v1 EXPRESSIBILITY_STILL_BLOCKED (missing: state-dependent combination); AND/SPLICE partial",
-    "R3": null,
+    "R3": "FRONTIER_NO_GAIN (attempt 2; C beats A&B on progress+bins in 5/8 seeds, bar 6/8; zero joint-dependent cells in any arm; no COMBINE)",
     "R4": "CUMULATIVE_ACQUISITION_ADVANTAGE (ASSISTED CONTROL; planted component; P 8/8 vs N/S/U 0/8; fragile ~2% positions; geometry caveat)"
   },
-  "next_action": "R3 attempt2 search+certify finishing; reduce R3; then decide follow-up (geometry-controlled R4 / autonomy) within remaining window; synthesis by deadline.",
+  "next_action": "R4b reduce when done; then decide next experiment(s) in remaining window (deadline 2026-10-13T09:23Z); final 72H_SYNTHESIS.md",
   "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units).",
   "attempts": {
     "R1": 1,
