@@ -62,3 +62,21 @@ def test_mutation_arms():
         g, _ = mutate.mutate(g, rng, promotion=True, plasticity=True)
         assert len(g["nodes"]) <= tape.N_MAX + 12
         tape.lifetime(g, worlds.make("A-R2-desert"), rng, L=1, K=4)
+
+
+def test_flat_stop_rule():
+    from ensorain.wtp5.search import Run
+    r = Run.__new__(Run)
+    r.evals = 100_000
+    r.telemetry = [dict(evals=e, best_rung=0, archive=100, best_fit=0.6) for e in range(0, 100_001, 10_000)]
+    assert r.frontier_flat()
+    r.telemetry[-1]["best_rung"] = 1
+    assert not r.frontier_flat()
+    r.telemetry[-1]["best_rung"] = 0
+    r.telemetry[-1]["archive"] = 106
+    assert not r.frontier_flat()
+    r.telemetry[-1]["archive"] = 100
+    r.telemetry[-2]["best_fit"] = 0.62
+    assert not r.frontier_flat()
+    r.evals, r.telemetry = 40_000, r.telemetry[:5]
+    assert not r.frontier_flat()

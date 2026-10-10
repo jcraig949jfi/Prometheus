@@ -11,6 +11,7 @@ import argparse
 import json
 import multiprocessing as mp
 import os
+import shutil
 import sys
 import time
 
@@ -33,16 +34,26 @@ def _enc(x):
 
 
 def _job(a):
-    spec, arm, seed, budget, log_every, ckdir, max_wall = a
+    spec, arm, seed, budget, log_every, ckdir, max_wall = a[:7]
+    from_ck, flat = (a[7:] + (None, False))[:2]        # 7-tuples from runners started before DEEP support
     os.nice(10) if os.nice(0) < 10 else None
-    path = os.path.join(ckdir, f"{spec}__{arm}__{seed}.pkl")
-    r = Run.load(path) if os.path.exists(path) else Run(spec, arm, seed, budget, ckdir, log_every=log_every)
-    r.budget = max(r.budget, budget)
+    name = f"{spec}__{arm}__{seed}.pkl"
+    path = os.path.join(ckdir, name)
+    if not os.path.exists(path) and from_ck and os.path.exists(os.path.join(from_ck, name)):
+        shutil.copy2(os.path.join(from_ck, name), path)        # continue from the earlier stage (finish in place)
+    if os.path.exists(path):
+        r = Run.load(path)
+        r.path, r.log_every = path, log_every
+    else:
+        r = Run(spec, arm, seed, budget, ckdir, log_every=log_every)
+    if budget > r.budget:
+        r.budget, r.done = budget, False
+    r.flat_stop = flat
     r.run(max_wall=max_wall)
     return summary(r)
 
 
-def run(stage, plan, workers=3, max_wall_h=None, shard=(0, 1)):
+def run(stage, plan, workers=3, max_wall_h=None, shard=(0, 1), from_stage=None, flat=False):
     d = os.path.join(ROOT, stage)
     ck = os.path.join(d, "ckpt")
     os.makedirs(ck, exist_ok=True)
@@ -55,7 +66,8 @@ def run(stage, plan, workers=3, max_wall_h=None, shard=(0, 1)):
                 if r.get("done"):
                     done.add((r["spec"], r["arm"], r["seed"]))
     alljobs = [(spec, arm, int(s)) for spec, arm in plan["cells"] for s in plan["seeds"]]
-    jobs = [(spec, arm, s, plan["budget"], plan.get("log_every", 2000), ck, None)
+    from_ck = os.path.join(ROOT, from_stage, "ckpt") if from_stage else None
+    jobs = [(spec, arm, s, plan["budget"], plan.get("log_every", 2000), ck, None, from_ck, flat)
             for i, (spec, arm, s) in enumerate(alljobs) if i % shard[1] == shard[0] and (spec, arm, s) not in done]
     print(f"{stage}: {len(jobs)} runs, budget {plan['budget']} evals, {workers} workers", flush=True)
     t0 = time.time()
@@ -70,7 +82,7 @@ def run(stage, plan, workers=3, max_wall_h=None, shard=(0, 1)):
                 if j is None:
                     break
                 if deadline:
-                    j = j[:-1] + (max(60, deadline - time.time()),)
+                    j = j[:6] + (max(60, deadline - time.time()),) + j[7:]
                 pending.append(pool.apply_async(_job, (j,)))
             if not pending:
                 break
@@ -90,7 +102,9 @@ if __name__ == "__main__":
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--max-wall-h", type=float)
     ap.add_argument("--shard", default="0/1", help="k/n: run jobs with index %% n == k (separate summaries file)")
+    ap.add_argument("--from-stage", help="continue each run from this stage's checkpoint (DEEP: screen)")
+    ap.add_argument("--flat-stop", action="store_true", help="PREREG s7.3 flat-frontier stop (DEEP, EXTENDED)")
     a = ap.parse_args()
     k, n = map(int, a.shard.split("/"))
-    run(a.stage, json.load(open(a.plan)), a.workers, a.max_wall_h, (k, n))
+    run(a.stage, json.load(open(a.plan)), a.workers, a.max_wall_h, (k, n), a.from_stage, a.flat_stop)
     sys.exit(0)

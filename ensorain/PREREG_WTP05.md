@@ -394,3 +394,17 @@ explicitly.
 - Budgets are ubu006-bound. A crossing that needs 10x the evaluations would read here as a wall, so the
   RESOURCE bottleneck is reported where the frontier is still rising.
 - A non-Claude adversarial review is requested (C-014 F-COI).
+
+## Amendment 2026-10-10 ~13:40Z: DEEP mechanics implemented (during SCREEN, before analysis, before any DEEP row)
+s7.3 already specified the DEEP rules, but they had no code. This adds the code and changes no rule:
+- `Run.frontier_flat` / `--flat-stop`: the s7.3 FLAT STOP, word for word.
+  - Window = max(50,000, 40% of evals). It never fires before the window has fully elapsed.
+  - The best-fitness gain is the window's maximum minus the maximum before the window.
+  - A flat-stopped run counts as finished and is flagged `stopped_flat`.
+- `campaign5 --from-stage screen`: a DEEP run copies its SCREEN checkpoint and continues it to B_deep. The
+  SCREEN checkpoint is left untouched.
+- Wall cap: DEEP runs with `--max-wall-h 48`.
+- `_job` still accepts the 7-field jobs of the SCREEN runners that were already running, so the running shards
+  are unaffected. Their logs show no error.
+- Test: tests/test_wtp5.py::test_flat_stop_rule. A scratch continuation run (600 -> 1,200 evals) was checked
+  for telemetry continuity.
