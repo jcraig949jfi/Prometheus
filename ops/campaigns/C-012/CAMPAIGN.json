@@ -1,0 +1,40 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-012",
+  "thread_id": "TH-MOON-M4",
+  "epic_id": "EP-MOONSHOT",
+  "status": "OPEN",
+  "label": "C-MOON-M4-NF2",
+  "title": "Native execution fabric -- Moonshot epochs on PostgreSQL + Fabric + Pan's lake (OP-NF2)",
+  "objective": "Replace Git-CAS runtime coordination with the program's PostgreSQL: Fabric (as-is, v0.2) claims and executes approved deterministic epochs; a versioned Moonshot schema publishes them by a guarded transaction (expected parent + chain generation), preserving C-008's transport-independent identity, duplicate/disagreement classification, separate validation and fail-closed contests; evidence materializes idempotently into Pan's Parquet/Iceberg lake; two-node demonstration with racing workers; a preregistered fleet benchmark if the two-node controls qualify.",
+  "coordinator_role": "Themis",
+  "members": [
+    "Themis"
+  ],
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "sources": "fabric/README.md, fabric/FREEZE.md, fabric/store.py, fabric/schema.sql, fabric/promexec/STATUS_EXPERIMENTAL.md; pan/iceberg.py, roles/Pan/docs/DATA_ARCHITECTURE.md; moonshot/epoch/CONTRACT.md (C-008)",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: fixtures, manifests, reruns of a frozen benchmark",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: transactional schema, concurrency TDD, integration with Fabric and the lake",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "adversarial: authority boundaries, lost acknowledgements, crash windows, credential exposure",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "cadence": {
+    "mode": "48 h engineering horizon (OP-NF2)",
+    "note": "interface contract first; benchmark only if the two-node controls qualify"
+  },
+  "created_by": "Themis[m2-0e9b1ed2]",
+  "created_at_utc": "2026-10-10T07:40:00Z"
+}

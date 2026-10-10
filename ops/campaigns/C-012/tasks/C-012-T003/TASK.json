@@ -1,0 +1,54 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    }
+  ],
+  "task_id": "C-012-T003",
+  "title": "Two-node native execution demonstration (Fabric claim -> publication -> replay)",
+  "objective": "One deterministic synthetic epoch through Fabric claim, approved execution, immutable evidence, PostgreSQL chain update, independent replay and a durable receipt; then two workers racing for one successor with identical and with conflicting results; crash and lost-acknowledgement cases repeated; no Git remote anywhere in claim/execute/publish.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [
+    "C-012-T002"
+  ],
+  "problem": "The design must hold on real nodes with Fabric's real workers, not only in tests.",
+  "non_goals": [
+    "promexec",
+    "the claude executor",
+    "evolutionary search"
+  ],
+  "evidence_required": [
+    "evidence directory with Fabric task/attempt ids, publication outcomes, replay digests, receipts"
+  ],
+  "acceptance": {
+    "condition": "PUBLISHED, DUPLICATE, CONTESTED, STALE, INVALID and UNVALIDATED->VALIDATED all observed as designed"
+  },
+  "deliverables": [
+    "moonshot/epoch/fabric_exec.py",
+    "moonshot/nf/coordinator.py",
+    "ops/campaigns/C-012/evidence/TWO_NODE/"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": false,
+  "notes": "field demonstration; tests live in T002."
+}

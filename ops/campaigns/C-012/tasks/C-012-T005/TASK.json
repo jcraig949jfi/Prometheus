@@ -1,0 +1,51 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    }
+  ],
+  "task_id": "C-012-T005",
+  "title": "Parquet/Iceberg evidence materialization (design or bounded demonstration, with Pan)",
+  "objective": "Map Moonshot's canonical artifacts to PostgreSQL metadata, content-addressed objects, Parquet event data and Iceberg history; an idempotent, recoverable materializer that never gates the authoritative publication; lake location agreed with Pan.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [
+    "C-012-T002"
+  ],
+  "problem": "Scientific evidence must be analysable in Pan's lake without the lake becoming a dependency of publication.",
+  "non_goals": [
+    "writes to schema pan / pan_iceberg or the lake before Pan agrees",
+    "bulk migration of historical data"
+  ],
+  "evidence_required": [
+    "design section in the contract; if Pan agrees, a bounded demonstration with a row-count oracle"
+  ],
+  "acceptance": {
+    "condition": "design reviewed by Pan; demonstration (if run) passes its oracle and its crash-replay check"
+  },
+  "deliverables": [
+    "moonshot/nf/materialize.py",
+    "ops/campaigns/C-012/evidence/LAKE/"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": false
+}

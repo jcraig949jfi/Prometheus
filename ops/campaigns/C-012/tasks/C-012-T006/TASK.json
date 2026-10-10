@@ -1,0 +1,46 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    }
+  ],
+  "task_id": "C-012-T006",
+  "title": "Engineering review: what is ready for native science",
+  "objective": "A concise review packet: what C-012 established, what it did not, the residual risks (credentials, isolation), and what is ready for the first native-world epoch.",
+  "quality_class": "Q3",
+  "kind": "review",
+  "depends_on": [
+    "C-012-T003"
+  ],
+  "problem": "OP-NF2 deliverable 7.",
+  "non_goals": [
+    "claiming scale or science the evidence does not support"
+  ],
+  "evidence_required": [
+    "review packet committed"
+  ],
+  "acceptance": {
+    "condition": "packet committed and delivered"
+  },
+  "deliverables": [
+    "moonshot/pivot/C012_NF2_REVIEW_<date>.md"
+  ],
+  "red_required": false
+}

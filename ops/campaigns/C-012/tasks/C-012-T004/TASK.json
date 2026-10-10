@@ -1,0 +1,49 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    }
+  ],
+  "task_id": "C-012-T004",
+  "title": "Preregistered multi-node benchmark on the Linux e-waste fleet",
+  "objective": "If T003's controls qualify: preregister and run a bounded benchmark measuring PostgreSQL coordination overhead separately from execution and artifact transfer, with throughput, claim latency, retry amplification, storage growth, recovery and correctness; document any bottleneck precisely before proposing a component.",
+  "quality_class": "Q2",
+  "kind": "science",
+  "depends_on": [
+    "C-012-T003"
+  ],
+  "problem": "Fabric was proven at pilot scale; Moonshot's scale is unmeasured.",
+  "non_goals": [
+    "interfering with other active experiments",
+    "paid compute"
+  ],
+  "evidence_required": [
+    "prereg committed before any benchmark data; report vs frozen bounds"
+  ],
+  "acceptance": {
+    "condition": "preregistered report produced (a failed bound is a valid result)"
+  },
+  "deliverables": [
+    "ops/campaigns/C-012/prereg/",
+    "ops/campaigns/C-012/evidence/BENCH/"
+  ],
+  "resource_ceiling": "MWO-0004 R2 (local, unpaid; <=16 core-hours per item, <=48 per seat per 24 h)",
+  "red_required": false
+}

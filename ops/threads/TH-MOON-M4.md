@@ -23,3 +23,6 @@ item). Seven e-waste boxes are the stress rig to find that threshold before 100-
   T005 D5 node auto-join without auto-authorization. Contract: moonshot/epoch/CONTRACT.md (git SHA
   = transport identity; successful CAS = PUBLISHED, validation separate). Entry point was
   roles/Themis/design/LANE_C_M4_KICKOFF.md.
+- C-012 (OPEN 2026-10-10, operator OP-NF2; ops/campaigns/C-012/): native execution fabric -- Moonshot epochs on
+  the program's PostgreSQL via Fabric v0.2 (as-is) with a versioned Moonshot publication schema and Pan's lake for
+  derived evidence. Supersedes C-008's Git-CAS runtime plan; C-008 T003/T004 SUPERSEDED unexecuted (no verdict).

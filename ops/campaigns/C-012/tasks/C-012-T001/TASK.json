@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:45Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "Themis starts OP-NF2"
+    }
+  ],
+  "task_id": "C-012-T001",
+  "title": "Fabric / Moonshot / Pan interface contract (reviewed)",
+  "objective": "A versioned interface contract naming each owner's responsibilities, the exact calls Moonshot makes into Fabric and Pan, what Moonshot will NOT change, the authority and credential boundaries, and the residual risks -- reviewed by Odysseus and Pan.",
+  "quality_class": "Q3",
+  "kind": "document",
+  "depends_on": [],
+  "problem": "OP-NF2 assigns Fabric, Moonshot and Pan distinct responsibilities and forbids conflating them or changing an owner's schema without review.",
+  "non_goals": [
+    "changes to fabric/ or pan/ code or schemas",
+    "a second task queue or lease authority"
+  ],
+  "evidence_required": [
+    "contract committed; review requests sent to Odysseus and Pan; their replies or the operator's ruling recorded"
+  ],
+  "acceptance": {
+    "condition": "both owners have reviewed (or the operator has ruled) and the contract records the outcome"
+  },
+  "deliverables": [
+    "moonshot/nf/INTERFACE_CONTRACT.md"
+  ],
+  "red_required": false,
+  "notes": "document task; Odysseus offline since 10-03 (review may arrive late; work proceeds on Fabric as-is meanwhile)."
+}

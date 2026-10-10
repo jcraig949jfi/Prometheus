@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:45Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "Themis starts OP-NF2"
+    }
+  ],
+  "task_id": "C-012-T002",
+  "title": "Minimal PostgreSQL epoch-publication implementation + transactional/adversarial tests",
+  "objective": "A versioned moonshot schema and guarded publication (expected parent + chain generation) that is idempotent for identical results, preserves and classifies disagreements, refuses stale advancement, keeps validation separate and attempt accounting durable; tested for concurrency, rollback, lost acknowledgement and crash recovery.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [],
+  "problem": "Git-CAS publication is replaced by the program's PostgreSQL; the semantics of C-008 must survive the change of transport.",
+  "non_goals": [
+    "a Moonshot lease table (Fabric's leases are the authority)",
+    "SQLite",
+    "changes to other schemas"
+  ],
+  "evidence_required": [
+    "RED tests before the implementation",
+    "GREEN on the canonical cluster in throwaway schemas"
+  ],
+  "acceptance": {
+    "command": "python -m unittest discover -s moonshot/nf/tests -t .",
+    "condition": "all pass; C-008 identity tests still pass"
+  },
+  "deliverables": [
+    "moonshot/nf/schema.sql",
+    "moonshot/nf/pg.py",
+    "moonshot/nf/tests/"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": true
+}
