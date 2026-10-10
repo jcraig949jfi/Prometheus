@@ -109,10 +109,14 @@ def progress3(k):
     return 1 + k[0] + k[1] + k[2] + 2 * k[3] + 2 * k[4] + 4 * k[5]
 
 
+DY_SET = None    # R4b geometry controls restrict the vertical relocation set (None = [-OFF, OFF])
+
+
 def insert(rng, patch, comp):
     cells, states = comp
     q = patch.copy()
-    dy, dx = rng.integers(-OFF, OFF + 1), rng.integers(-OFF, OFF + 1)
+    dy = rng.integers(-OFF, OFF + 1) if DY_SET is None else DY_SET[rng.integers(0, len(DY_SET))]
+    dx = rng.integers(-OFF, OFF + 1)
     for (y, x), st in zip(cells, states):
         yy, xx = y + dy, x + dx
         if 0 <= yy < q.shape[1] and 0 <= xx < q.shape[2]:
@@ -181,13 +185,17 @@ def main():
     ap.add_argument("--component", required=True)
     ap.add_argument("--batches", type=int, default=20)
     ap.add_argument("--batch", type=int, default=1024)
+    ap.add_argument("--dy-set", default=None, help="R4b: comma list restricting vertical insert offsets")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    global DY_SET
+    if a.dy_set:
+        DY_SET = [int(v) for v in a.dy_set.split(",")]
     if os.path.exists(a.out):
         return 0
     comp, cpatch = load_component(a.component)
     res, found = search(a.arm, a.seed, a.batches, a.batch, comp, cpatch)
-    res.update(schema="aether.reach01.r4.search.v1", runner=RUNNER_VERSION, component=os.path.basename(a.component))
+    res.update(schema="aether.reach01.r4.search.v1", runner=RUNNER_VERSION, component=os.path.basename(a.component), dy_set=DY_SET)
     if found:
         hs = sorted(found, key=lambda h: found[h][0])
         np.savez_compressed(a.out[:-5] + "_found.npz", patches=np.stack([found[h][1] for h in hs]),
