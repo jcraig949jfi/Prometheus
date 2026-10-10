@@ -812,6 +812,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   remaining deficit is in FINDING the pool (harvests), not in waiting. The preregistered mean-dependence readout
   diluted it (latch-like genomes are a minority of the top 30 in some pops). Consistent with Finding 3 (write-once
   latches are reachable). To confirm, preregister the census readout and replicate on new seeds.
+- B69c launched 01:40Z (prediction committed before run, 0dead854d): preregistered census replication on new seeds
+  6911-6916, SOLO/CONC, 6 procs; B71 still on the other 6. Lease lse-66beba5c83b5 RENEWED to ~04:40Z. Window 4 tally:
+  B66 k=8 ~2.5 + B69 ~6 + census/rare evals ~0.3 so far; B71 + B69c in flight (~14) -> ~23 of 48 on completion.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
