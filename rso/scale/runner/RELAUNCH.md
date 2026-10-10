@@ -22,7 +22,7 @@ and were NOT run. Use the absolute path of a worktree and of the run directory.
 
 Windows Task Scheduler, every 5 minutes, as the current user (schtasks has no start-in directory, hence the `cd /d` wrapper):
 
-    schtasks /Create /TN "Prometheuselaunch-<runname>" /SC MINUTE /MO 5 /F ^
+    schtasks /Create /TN "Prometheus\relaunch-<runname>" /SC MINUTE /MO 5 /F ^
       /TR "cmd /c cd /d C:\Prometheus-worktrees\<worktree> && python -m rso.scale.runner relaunch C:\Prometheus-runs\<runname>"
     schtasks /Delete /TN "Prometheus\relaunch-<runname>" /F          :: remove it when the run is done
 
