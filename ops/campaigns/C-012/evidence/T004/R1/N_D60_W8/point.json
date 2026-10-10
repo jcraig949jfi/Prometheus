@@ -1,0 +1,90 @@
+{
+ "D": 60,
+ "K": 0,
+ "W": 8,
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "arm": "N",
+ "drain_left_busy": 0,
+ "ended_at": "2026-10-10T09:48:38Z",
+ "fabric_schema": "fabric_b_r1_n_d60_w8_2135",
+ "iters": 101801267,
+ "kills": [],
+ "label": "N_D60_W8",
+ "loop_errors": [],
+ "metrics": {
+  "M1_coordination_wall_fraction": 0.0006517777786510868,
+  "M2_retries_per_published": 0.0,
+  "M3_p95_gap_over_median_execute": 0.00017412099652780105,
+  "M4_abandonment_rate": 0.0,
+  "M5_bytes_moved_per_published": 11766.75,
+  "M6_db_bytes_per_published": 84480.0,
+  "M7_tripwire_bytes_per_30d": 19454307721.189667,
+  "attempts_executed": 32,
+  "db_errors": 0,
+  "execute_s": {
+   "median": 162.0831755399704,
+   "p95": 176.63448905944824
+  },
+  "finish_s": {
+   "median": 0.01235055923461914,
+   "p95": 0.028408050537109375
+  },
+  "gap_s": {
+   "median": 0.019645094871520996,
+   "n": 24,
+   "p95": 0.028222084045410156
+  },
+  "moonshot_non_published": 0,
+  "publish_latency_s": {
+   "median": 0.14976441860198975,
+   "p95": 0.5088670253753662
+  },
+  "published": 32,
+  "queue_s": {
+   "median": 157.85853493213654,
+   "p95": 172.36901593208313
+  },
+  "tasks": 32,
+  "throughput_per_s": 0.08884374945741809,
+  "transfer_s": {
+   "median": 0.07268106937408447,
+   "p95": 0.11102008819580078
+  },
+  "wall_s": 360.18290758132935
+ },
+ "moonshot_schema": "moonshot_b_r1_n_d60_w8_2135",
+ "node_load_before": {
+  "ubu001": [
+   "09:37:17 up 7 days, 18:59,  2 users,  load average: 0.15, 0.19, 0.15",
+   "%CPU COMMAND",
+   " 3.5 sshd-session",
+   " 0.9 claude",
+   " 0.0 irq/139-iwlwifi",
+   " 0.0 kworker/2:0-events",
+   " 0.0 kworker/u16:4-ext4-rsv-conversion"
+  ],
+  "ubu002": [
+   "09:37:18 up 7 days, 18:55,  2 users,  load average: 0.17, 0.43, 0.28",
+   "%CPU COMMAND",
+   "12.0 sshd-session",
+   " 1.2 claude",
+   " 0.0 kworker/u16:0-ext4-rsv-conversion",
+   " 0.0 irq/138-iwlwifi",
+   " 0.0 kworker/u16:3-flush-252:0"
+  ]
+ },
+ "smoke": false,
+ "started_at": "2026-10-10T09:37:16Z",
+ "validation": {
+  "byte_failures": 0,
+  "byte_verified": 32,
+  "replay_mismatches": 0,
+  "replayed": 3
+ },
+ "verdict": [
+  "ADEQUATE",
+  []
+ ],
+ "wall_s": 360.0,
+ "wpn": 4
+}
