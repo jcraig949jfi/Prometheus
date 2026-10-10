@@ -136,12 +136,26 @@ def b_constant(dev):
     return [("const", lambda xs, c=c: c)]
 
 
+def _input_dist(a, b):
+    """Distance between two input lists: length difference first, then L1 over the aligned prefix plus the
+    absolute values of the unmatched tail (E1 v2 rule 6 / F13)."""
+    n = min(len(a), len(b))
+    tail = sum(abs(v) for v in a[n:]) + sum(abs(v) for v in b[n:])
+    return (abs(len(a) - len(b)), sum(abs(p - q) for p, q in zip(a, b)) + tail)
+
+
 def b_lookup(dev):
     tab = {}
     for x, y in dev:
         tab.setdefault(tuple(x), y)
     c = modal([y for _x, y in dev])
-    return [("lookup", lambda xs, tab=tab, c=c: tab.get(tuple(xs), c))]
+
+    def nearest(xs, dev=dev, tab=tab):
+        if tuple(xs) in tab:
+            return tab[tuple(xs)]
+        best = min(range(len(dev)), key=lambda i: (_input_dist(xs, dev[i][0]), i))
+        return dev[best][1]
+    return [("lookup", lambda xs, tab=tab, c=c: tab.get(tuple(xs), c)), ("lookup_nearest", nearest)]
 
 
 def _table(pairs):

@@ -382,11 +382,12 @@ def search(grammar: Grammar, T: str, dev, budget: int, max_size: int = 40, hinds
     complete = 0
     first, first_charge, first_n = None, None, None
     n_cons = 0
+    levels = {}                                       # size -> number of candidates (completed levels only)
 
     def res(found_charge, size_reached, hfound=None, hcharge=None):
         r = {"found": first, "charge": first_charge if first is not None else found_charge,
              "size_reached": first_n if first is not None and hindsight_test is None else size_reached,
-             "complete_size": complete}
+             "complete_size": complete, "level_counts": dict(levels)}
         if hindsight_test is not None:
             r.update({"hindsight_found": hfound, "hindsight_charge": hcharge, "n_dev_consistent": n_cons,
                       "walk_charge": found_charge})
@@ -394,6 +395,7 @@ def search(grammar: Grammar, T: str, dev, budget: int, max_size: int = 40, hinds
 
     for n in range(1, max_size + 1):
         it = grammar.iter_top(T, n)
+        start = charge
         for nd in it:
             charge += 1
             if charge > budget:
@@ -410,7 +412,20 @@ def search(grammar: Grammar, T: str, dev, budget: int, max_size: int = 40, hinds
                     it.close()
                     return res(charge, n, nd.ast, charge)
         complete = n
+        levels[n] = charge - start
     return res(charge, max_size)
+
+
+def order_free_rank(level_counts, k, est_next=None):
+    """E1 v2 rule 6 / F7: expected rank of a program of size k under a random order within each size level,
+    N(<k) + (N(k)+1)/2. level_counts holds the measured sizes of completed levels. If level k itself was not
+    completed, N(k) is estimated as est_next (the caller supplies it) and the result is flagged as estimated."""
+    below = sum(c for s, c in level_counts.items() if s < k)
+    if k in level_counts:
+        return below + (level_counts[k] + 1) / 2, False
+    if est_next is None:
+        return None, True
+    return below + (est_next + 1) / 2, True
 
 
 # ---------------------------------------------------------------- unpruned space counts (reporting only)
