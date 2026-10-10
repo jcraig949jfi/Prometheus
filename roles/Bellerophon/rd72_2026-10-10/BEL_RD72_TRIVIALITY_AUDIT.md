@@ -44,3 +44,13 @@ partial-program exploits: the LO half = ECHO is cheap (s1); half-capability is r
 never counted as composite. resource exploits: v3 ledger balanced in every run (asserted). single-mutation solutions: s2
 (none for composites). pre-existing mechanisms: founders are bare copiers (E1b) or fixtures whose competence is enumerated
 (K2); composites must be ABSENT at tick 0 (checked per run).
+
+## 4. Evolved E1b solvers under the ruler (added 2026-10-10 ~23:00Z; RESULTS_LOG RU-E1b, receipt receipts/RULER_E1b.json)
+Every evolved "LO" solver is a whole-panel ECHO machine (34/34), and every "HI" solver a whole-panel INC machine (13/13).
+They have 1-7 competence-critical bytes, mostly shared with replication (coupled architecture), and are heritable over 3
+copy generations (46/47). So the E1b half-acquisitions are the two cheapest single tasks of s1, not partial composites.
+Section 2 says ECHO and INC are one step from COND_ONE, not the reverse. The desert probe (RESULTS_LOG DP) adds that no
+evolved ECHO or INC tape, nor any splice of the coexisting pair, is within one operator step (or a sampled three) of a
+COND_ONE replicator. COLLAPSED under this audit: any reading of E1b LO/HI acquisition as "progress on the composite".
+SURVIVES: payment raises ECHO / INC acquisition in established worlds (descriptive only) and their retention (median
+0.97 vs 0.06 unpaid).
