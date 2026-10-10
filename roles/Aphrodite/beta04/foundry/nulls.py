@@ -393,19 +393,33 @@ def run_closed_form(dev, test, tribunal=None) -> Dict[str, dict]:
 
 
 def run_small_search(grammar: tenum.Grammar, out_type, dev, test, budget, tribunal=None):
+    """selected_solved = contract protocol (first dev-consistent program solves test).
+    solved = HINDSIGHT (some dev-consistent program within the budget solves test); the gate uses this."""
     T = "I" if out_type == "I" else ("L" if out_type == "L" else "B")
-    r = tenum.search(grammar, T, dev, budget)
-    out = {"budget": budget, "charge": r["charge"], "size_reached": r["size_reached"],
-           "complete_size": r["complete_size"], "found": A.show(r["found"]) if r["found"] else None}
+    r = tenum.search(grammar, T, dev, budget, hindsight_test=test)
+    out = {"budget": budget, "charge": r["charge"], "walk_charge": r["walk_charge"],
+           "size_reached": r["size_reached"], "complete_size": r["complete_size"],
+           "n_dev_consistent": r["n_dev_consistent"],
+           "found": A.show(r["found"]) if r["found"] else None, "mode": "hindsight"}
     if r["found"] is not None:
         prog = r["found"]
         ok = sum(1 for xs, y in test if A.run(prog, xs) == y)
         out["test_acc"] = round(ok / len(test), 4)
-        out["solved"] = ok == len(test)
+        out["selected_solved"] = ok == len(test)
         out["found_esize"] = A.esize(prog)
         if tribunal:
             out["tribunal_agree"] = round(sum(1 for xs, y in tribunal if A.run(prog, xs) == y) / len(tribunal), 4)
     else:
-        out["solved"] = False
+        out["selected_solved"] = False
         out["test_acc"] = 0.0
+    out["solved"] = False
+    if r["hindsight_found"] is not None:
+        h = r["hindsight_found"]
+        okA = all(A.run(h, xs) == y for xs, y in test)            # confirm on interpreter A
+        out["hindsight_found"] = A.show(h)
+        out["hindsight_charge"] = r["hindsight_charge"]
+        out["hindsight_esize"] = A.esize(h)
+        out["solved"] = okA
+        if not okA:
+            out["fastc_disagreement"] = True
     return out

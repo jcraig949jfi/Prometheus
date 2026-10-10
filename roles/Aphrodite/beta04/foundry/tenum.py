@@ -371,23 +371,46 @@ def _match(fn, dev):
     return True
 
 
-def search(grammar: Grammar, T: str, dev, budget: int, max_size: int = 40):
-    """First dev-consistent program in enumeration order within `budget` candidates.
-    Returns dict(found ast|None, charge, size_reached, complete_size)."""
+def search(grammar: Grammar, T: str, dev, budget: int, max_size: int = 40, hindsight_test=None):
+    """First dev-consistent program in enumeration order within `budget` candidates (contract protocol).
+    Returns dict(found ast|None, charge, size_reached, complete_size).
+
+    With hindsight_test (a list of test examples), the walk does not stop at the first dev-consistent program. It
+    continues until some dev-consistent program is also correct on hindsight_test (N6-style, favourable to the
+    null), or the budget runs out. Extra keys: hindsight_found, hindsight_charge, n_dev_consistent."""
     charge = 0
     complete = 0
+    first, first_charge, first_n = None, None, None
+    n_cons = 0
+
+    def res(found_charge, size_reached, hfound=None, hcharge=None):
+        r = {"found": first, "charge": first_charge if first is not None else found_charge,
+             "size_reached": first_n if first is not None and hindsight_test is None else size_reached,
+             "complete_size": complete}
+        if hindsight_test is not None:
+            r.update({"hindsight_found": hfound, "hindsight_charge": hcharge, "n_dev_consistent": n_cons,
+                      "walk_charge": found_charge})
+        return r
+
     for n in range(1, max_size + 1):
         it = grammar.iter_top(T, n)
         for nd in it:
             charge += 1
             if charge > budget:
                 it.close()
-                return {"found": None, "charge": budget, "size_reached": n, "complete_size": complete}
+                return res(budget, n)
             if _match(nd.fn, dev):
-                it.close()
-                return {"found": nd.ast, "charge": charge, "size_reached": n, "complete_size": complete}
+                n_cons += 1
+                if first is None:
+                    first, first_charge, first_n = nd.ast, charge, n
+                if hindsight_test is None:
+                    it.close()
+                    return res(charge, n)
+                if _match(nd.fn, hindsight_test):
+                    it.close()
+                    return res(charge, n, nd.ast, charge)
         complete = n
-    return {"found": None, "charge": charge, "size_reached": max_size, "complete_size": complete}
+    return res(charge, max_size)
 
 
 # ---------------------------------------------------------------- unpruned space counts (reporting only)

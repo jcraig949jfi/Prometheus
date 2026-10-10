@@ -40,6 +40,8 @@ QCONFIG = {
     "B_small": 100_000,
     "B_oracle": 1_000_000,
     "closed_form_mode": "hindsight",
+    "small_search_mode": "hindsight (any dev-consistent program within B_small solving test); the contract-protocol "
+                         "first-dev-consistent verdict is recorded as selected_solved",
     "ladder": ["constant", "lookup", "reactive", "history2", "library", "small_search"],
     "goldilocks_band": [0.2, 0.8],
     "base_memo_max": 7, "oracle_memo_max": 6,          # memory only; enumeration order is unchanged
@@ -265,7 +267,7 @@ def finalize(world, quals):
             if q["oracle"].get("status") == "SOLVED":
                 simplest = min(simplest, q["oracle"]["found_expanded_esize"])
             if q["small"].get("solved"):
-                simplest = min(simplest, q["small"]["found_esize"])
+                simplest = min(simplest, q["small"]["hindsight_esize"])
             q["simplest_known_esize"] = simplest
             q["small_reach_complete_size"] = q["small"]["complete_size"]
             q["gap_simplest_minus_reach"] = simplest - q["small"]["complete_size"]
@@ -440,6 +442,10 @@ def world_metrics(world, finals):
         d["goldilocks"][q["goldilocks"]] = d["goldilocks"].get(q["goldilocks"], 0) + 1
         if q["known_positive"]:
             d["kp_pass"] += 1
+            if set(r["mechanisms_used"]) <= set(q["oracle"].get("mechanisms_in_found", [])):
+                d["kp_uses_all_mechs"] = d.get("kp_uses_all_mechs", 0) + 1
+            if q["status"] == "ADMITTED" and set(r["mechanisms_used"]) <= set(q["oracle"].get("mechanisms_in_found", [])):
+                d["admitted_kp_uses_all_mechs"] = d.get("admitted_kp_uses_all_mechs", 0) + 1
             d["oracle_rank_solved"].append(q["oracle"]["charge"])
             if q["oracle"]["charge"] <= QCONFIG["B_small"]:
                 d["kp_within_B_small"] += 1
@@ -465,6 +471,8 @@ def world_metrics(world, finals):
             "class_histogram": dict(sorted(d["classes"].items())),
             "solved_by_counts": dict(sorted(d["solved_by_counts"].items())),
             "known_positive_pass": d["kp_pass"], "kp_within_B_small": d["kp_within_B_small"],
+            "kp_solution_uses_all_witness_mechanisms": d.get("kp_uses_all_mechs", 0),
+            "admitted_kp_solution_uses_all_witness_mechanisms": d.get("admitted_kp_uses_all_mechs", 0),
             "oracle_not_found": d["oracle_not_found"],
             "oracle_rank_median": _median(d["oracle_rank_solved"]),
             "oracle_rank_max": max(d["oracle_rank_solved"]) if d["oracle_rank_solved"] else None,
@@ -549,6 +557,8 @@ def cmd_report(seeds, out):
                           "witness_promoted": recs[q["family_id"]]["witness_promoted"],
                           "witness_esize": recs[q["family_id"]]["witness_esize"],
                           "oracle_found": q["oracle"]["found"], "oracle_rank": q["oracle"]["charge"],
+                          "oracle_uses_all_witness_mechanisms": set(recs[q["family_id"]]["mechanisms_used"]) <=
+                          set(q["oracle"].get("mechanisms_in_found", [])),
                           "headroom": q.get("headroom"), "goldilocks": q.get("goldilocks"),
                           "null_capture": q.get("null_capture"),
                           "base_at_B_oracle": (q.get("base_at_oracle_budget") or {}).get("solved")}
@@ -559,8 +569,53 @@ def cmd_report(seeds, out):
         json.dump(manifest, f, sort_keys=True, indent=1)
     with open(os.path.join(out, "QUALIFICATION_REPORT.json"), "w") as f:
         json.dump(report, f, sort_keys=True, indent=1)
+    with open(os.path.join(out, "QUALIFICATION_REPORT.md"), "w") as f:
+        f.write(render_md(report))
     print("wrote manifest + report")
     return report
+
+
+def render_md(rep):
+    L = ["# Beta-04 E1 foundry pilot: qualification report", "",
+         "generator config_sha `%s`; qualification config_sha `%s`; B_small=%d, B_oracle=%d. Closed-form nulls in "
+         "HINDSIGHT mode." % (rep["config_sha"], rep["qual_config_sha"], QCONFIG["B_small"], QCONFIG["B_oracle"]),
+         "", "## 1. Controls (run first)", "", "### 1a. Planted controls", "",
+         "| family | expectation | solved by | oracle-library KP |", "|---|---|---|---|"]
+    for c in rep.get("planted_controls", []):
+        L.append("| %s | %s | %s | %s |" % (c["family_id"], c["expect"], ", ".join(c["solved_by"]) or "none",
+                                            c["oracle_status"]))
+    L += ["", "### 1b. Per-world controls", "",
+          "| world | R0 solved by a trivial baseline | R1 KP pass | admitted with KP pass | witness verified (A) | "
+          "promoted==expanded |", "|---|---|---|---|---|---|"]
+    for wid, w in rep["worlds"].items():
+        c = w["controls"]
+        L.append("| %s | %d/%d | %d/%d | %d/%d | %d/%d | %d/%d |" % (
+            wid, c["R0_solved_by_trivial"], c["R0_total_ok"], c["R1_kp_pass"], c["R1_total_ok"],
+            c["admitted_kp_pass"], c["admitted"], c["witness_ok"], c["families_ok"], c["expansion_consistent"],
+            c["families_ok"]))
+    L += ["", "## 2. Admission by world and rung", "",
+          "| world | rung | generated | passed gen screens | admitted (R>=2) / qualified controls (R0-R1) | KP pass "
+          "| KP rank <= B_small | oracle median rank | class histogram |", "|---|---|---|---|---|---|---|---|---|"]
+    for wid, w in rep["worlds"].items():
+        for rung, m in w["by_rung"].items():
+            adm = m["admitted"] if m["admitted"] is not None else m["qualified_controls"]
+            L.append("| %s | %s | %d | %d | %s | %d | %d | %s | %s |" % (
+                wid, rung, m["generated"], m["passed_generation_screens"], adm, m["known_positive_pass"],
+                m["kp_within_B_small"], m["oracle_rank_median"],
+                "; ".join("%s %d" % kv for kv in m["class_histogram"].items())))
+    L += ["", "## 3. Admitted families (headroom proof)", "",
+          "| family | skeleton | promoted witness | witness esize | oracle solution | oracle rank | KP <= B_small | "
+          "oracle uses all witness mechanisms | base search solves at B_oracle | null capture (band) |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
+    for wid, w in rep["worlds"].items():
+        for a in w["admitted"]:
+            h = a["headroom"] or {}
+            L.append("| %s | %s | `%s` | %d | `%s` | %s | %s | %s | %s | %.3f (%s) |" % (
+                a["family_id"], a["skeleton"], a["witness_promoted"], a["witness_esize"], a["oracle_found"],
+                a["oracle_rank"], h.get("kp_within_B_small"), a["oracle_uses_all_witness_mechanisms"],
+                a["base_at_B_oracle"], a["null_capture"] or 0, a["goldilocks"]))
+    L.append("")
+    return "\n".join(L)
 
 
 def main():
