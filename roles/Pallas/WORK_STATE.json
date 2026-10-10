@@ -2,47 +2,42 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s6 and s10 (same-seat relaunch); Palamedes launch note 2026-10-07 13:40Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c010_t034/WAKE_Pallas.md: C-010-T034, headless, no run_in_background)",
-  "updated_at_utc": "2026-10-10T00:25:00Z",
-  "state": "READY",
-  "branch": "pallas/c010-t034",
-  "base_sha": "3e4859324",
-  "head_sha": "the commit carrying this file (branch; merged origin/main 5b4b75247 at f9d3866ee)",
-  "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t034",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator Strategic Expansion Directive + RULING 2026-10-10 s4 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_, 02_); Palamedes launch note 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/wake_pallas_c-013-t011/WAKE_Pallas.md: C-013-T011, headless, no run_in_background, <= 2 processes)",
+  "updated_at_utc": "2026-10-10T10:45:00Z",
+  "state": "INTEGRATION_READY",
+  "branch": "pallas/c013-t011",
+  "base_sha": "7f4ed9f2d9eb8578e8d42f6a7100641ec025ab3e",
+  "head_sha": "the commit carrying this file (branch pallas/c013-t011; set 1e0c9c1bc, results commit after it)",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c013-t011",
   "model": "claude-fable-5-1",
   "capability_class": "Q3",
   "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202), headless",
-  "instance": "harry1-dc8e608d",
-  "session_start_utc": "2026-10-07T13:36:00Z (comms boot)",
-  "current_objective": "RSO Builder Cell: all three campaigns of the completion push are closed (C-004 incomplete, C-009 scoped, C-010 witness executed). No READY packet exists for this seat.",
-  "current_step": "SESSION CLOSED at 2026-10-10T00:23Z: the operator's 72-hour hourly-loop window ended; both recurring loop jobs cancelled. Seat idle, no READY packet, nothing claimed.",
+  "instance": "harry1-00742ab2",
+  "session_start_utc": "2026-10-10T09:37:00Z (comms boot)",
+  "current_objective": "C-013-T011: Q3 challenge of the frozen D1 demonstration (inference, certification, interpretation) -- DONE; report rso/reach/challenge/D1/REPORT.md; one bounded repair round follows (owner's)",
+  "current_step": "INTEGRATION_READY: set committed before outcomes (1e0c9c1bc 10:00Z), executed, report + receipt A-001; per surface inference NOT CLOSED (narrowing + 2 coverage), certification NOT CLOSED on coverage (code correct), interpretation NOT CLOSED (s7 rows C4/C5/off-path need narrowing); nothing blocking the run, nothing in s2-s6 to change",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "none. C-010-T040 (positive-candidate replication) is PROPOSED FOR THE OPERATOR; if opened, the Pallas challenge after it would be Q3 and need a Fable instance.",
-  "expected_next_artifact": "none",
-  "threads": [
-    "phase3-rso"
-  ],
-  "campaigns": [
-    "C-004",
-    "C-009",
-    "C-010"
-  ],
+  "next_expected_milestone": "Palamedes integrates C-013-T011; the repair round (owner) and C-013-T012 (the run) follow; a re-check packet, if any, would be Q3",
+  "expected_next_artifact": "none from this seat unless a re-check packet is opened",
+  "threads": ["phase3-rso"],
+  "campaigns": ["C-004", "C-009", "C-010", "C-013"],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "none; seat idle. A future session boots from roles/Pallas/WAKE.md.",
-    "if revived: claim only a packet the runtime meets; workgraph ready does NOT enforce capability (core.ready_for)"
+    "none; seat idle after INTEGRATION_READY. A future session boots from roles/Pallas/WAKE.md or a Palamedes wake prompt",
+    "if revived: claim only a packet the runtime meets; workgraph ready does NOT enforce capability (core.ready_for)",
+    "tooling rule for mutation sets: purge __pycache__ and run subprocesses with -B (stale-pyc hazard, journal 2026-10-10)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Pallas/journal/2026-10-06.md",
-    "rso/slice001/challenge/R2/REPORT.md",
-    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md",
-    "roles/Pallas/comms/T034_RUNTIME_NOTICE_2026-10-07.md"
+    "rso/reach/challenge/D1/REPORT.md",
+    "rso/reach/challenge/D1/CHALLENGE_SET.md",
+    "roles/Pallas/journal/2026-10-10.md",
+    "rso/witness/challenge/W2/REPORT.md"
   ],
-  "last_push_sha": "the commit carrying this file (branch pallas/c010-t034); state commits on main: 27b3d2f82 (claim), 5b4b75247 (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
-  "last_push_utc": "2026-10-10T00:25:00Z"
+  "last_push_sha": "the commit carrying this file (branch pallas/c013-t011); state commits on main: d1cd386a6 (claim), a29dc5679 (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
+  "last_push_utc": "2026-10-10T10:45:00Z"
 }
