@@ -78,3 +78,21 @@ tools/analyze_c23.py; receipt receipts/C23_analysis.json.
   because B (the composite) is never reached with or without A. See E1b and the desert probe.
 - C3F, descriptive: implanting a foreign LO solver left LO present at the end in 6/10 worlds vs 4/10 for the sham, and
   FUNC alive in 8/10 vs 5/10. Not tested (n is small).
+
+## DP -- composition-desert geometry probe (EXPLORATORY, post hoc after E1b, static; tool tools/desert_probe.py, commit 62e1609e2)
+In each of the 13 E1b worlds where FUNC LO and FUNC HI solvers coexisted, I took the most common LO and HI FUNC tapes at
+the first coexistence census and counted one-step routes to a FUNC BOTH tape from each.
+- Operators: SUB 16,320, MOVE 50,512, INS 16,384, DEL 64, and DONOR 51,416 neighbours (DONOR = segments of the partner
+  tape, i.e. uptake from the coexisting solver).
+- Paths: 2,000 random 3-step paths over all five operators, with the partner as donor.
+Result: 0 routes from either side in all 13 worlds (26 tapes, ~3.9M one-step neighbours) and 0 of 52,000 three-step paths.
+The LO and HI tapes are unrelated programs (Hamming distance 27-64 of 64 bytes). They are not two variants of one machine.
+Positive control (receipt in this section; same predicate, world e1b_00011's config):
+- The hand-built composite (copier + COND_ONE witness, 8 bytes) is BOTH and FUNC.
+- 13 of its single-byte zero knockouts break it, and the probe finds the way back (SUB 1 route each, MOVE 2 in one case).
+So the instrument sees routes where they exist.
+Reading: the composite is not one or a few operator steps from the partial solvers the dynamics actually produces. Nor
+is it a donor splice away from the coexisting partner. COND_ONE needs a compare-and-branch structure that neither half
+contains, and payment for each half does not build it. This is a reachability desert in the directive's sense, located
+by geometry: the obstacle is the missing control-flow element, not the distance between the two halves.
+Limit: geometric only (no selection, no rates); 3-step paths are sampled, not exhaustive.
