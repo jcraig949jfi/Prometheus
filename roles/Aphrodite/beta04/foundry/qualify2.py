@@ -771,7 +771,9 @@ def make_orders(seed, fams, ids, yfams=None, yids=None):
     if yfams is not None:
         yok = [r for r in yfams if r["gen_class"] == "OK"]
         yr = {yids[(r["yoked_source"], r["family_id"])]: r["rung"] for r in yok}
-        yu = {yids[(r["yoked_source"], r["family_id"])]: r["mechanisms_used"] for r in yok}
+        # mechanisms are namespaced by world: the sibling's "f0" is not the target's "f0" (reporting fix, post-pilot)
+        yu = {yids[(r["yoked_source"], r["family_id"])]: [r["yoked_source"] + ":" + m for m in r["mechanisms_used"]]
+              for r in yok}
         ycur = [yids[(r["yoked_source"], r["family_id"])] for r in
                 sorted(yok, key=lambda r: (r["rung"], r["yoked_source"], r["index"]))]
         res["YOKED_CURRICULUM"] = {"order": ycur, "r3plus_prereq_first_frac": _prereq_frac(ycur, yr, yu),
