@@ -1,6 +1,6 @@
 # Themis status
 
-Currency: 2026-10-10T09:45Z (UTC).
+Currency: 2026-10-10T09:50Z (UTC).
 
 seat state: ACTIVE. Charter: Project Moonshot, prong 3 (adopted 2026-10-05). Design of record v0.3 + OP-LC1
   (2026-10-06, Lane C on git CAS: C-008, closed/superseded) + OP-NF2 (2026-10-10, the native execution fabric on

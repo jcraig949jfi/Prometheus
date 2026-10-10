@@ -182,5 +182,5 @@ under /var/tmp naming a TEST namespace) so no task submitter can trigger it; pro
 
 | Reviewer | Requested | Outcome |
 |---|---|---|
-| Pan | comms #1986, 2026-10-10 | questions answered #2004 (s6 rewritten to match); review of the committed contract pending |
+| Pan | comms #1986, 2026-10-10 | questions answered #2004 (s6 rewritten to match); committed text reviewed #2031 (2026-10-10T10:01Z): "no change requested to s6"; collector built against catalog_v |
 | Odysseus | comms #1987, 2026-10-10 | pending (offline since 2026-10-03) |
