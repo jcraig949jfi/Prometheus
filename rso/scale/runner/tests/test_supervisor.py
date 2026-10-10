@@ -47,6 +47,21 @@ class TestSupervisor(unittest.TestCase):
         self.assertGreater(acct["wasted"]["ticks_lower_bound"], 0)
         self.assertTrue(os.path.exists(os.path.join(self.rd, "FINAL_ACCOUNT.json")))
 
+    def test_waits_for_orphan_worker(self):
+        """A live lease (an orphan worker left by a killed supervisor) is waited for: no second worker is spawned
+        beside it (<= 2 processes), and no spawn is wasted on a worker that could only answer LEASE_HELD."""
+        import threading
+        from rso.scale.runner import lease as L
+        from rso.scale.runner import store as S
+        c = RUN.chain_ids(RUN.load_manifest(self.rd)[0])[0]
+        tok = L.acquire(self.rd, c)                                 # this process plays the orphan
+        threading.Timer(1.5, L.release, args=(self.rd, c, tok)).start()
+        st = SUP.supervise(self.rd, poll_s=0.05)
+        self.assertEqual(st["state"], "COMPLETE", st)
+        rows, _ = S.read_jsonl(os.path.join(SUP.sdir(self.rd), "events.jsonl"))
+        self.assertEqual([r for r in rows if r.get("returncode") == 3], [])
+        self.assertEqual(sum(1 for r in rows if r.get("kind") == "WORKER_SPAWN"), 2)
+
     def test_single_supervisor(self):
         lock = SUP.acquire_supervisor(self.rd)
         self.assertIsNotNone(lock)
