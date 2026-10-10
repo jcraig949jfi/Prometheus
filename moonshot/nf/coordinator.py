@@ -111,9 +111,12 @@ class Coordinator:
     def _candidates(self, only_attempts=None):
         """(task, attempt) pairs: a succeeded Fabric attempt of a Moonshot task of THIS schema, not yet classified."""
         done = self.reader.classified_attempt_ids()
+        # A completed Fabric task has exactly one succeeded attempt, so a task Moonshot has classified is finished
+        # for good. (Fabric clears tasks.current_attempt when an attempt ends: it cannot serve as the skip key.)
+        done_tasks = self.reader.classified_task_ids()
         found = []
         for row in self.S.list_tasks(self.fab, principal=self.principal, state="completed", limit=100000):
-            if row.get("current_attempt") in done:
+            if row["task_id"] in done_tasks:
                 continue
             t = self.S.get_task(self.fab, row["task_id"])
             m = (t.get("metadata") or {}).get("moonshot") or {}

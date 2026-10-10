@@ -1,9 +1,10 @@
 # RSO Scaling Assessment (C-013-T030, Workstream A)
 
-Palamedes[harry1-679179c6], 2026-10-10. Case studies: C-004 (RSO methods slice), C-009 (execution binding), C-010
+Palamedes[harry1-679179c6], 2026-10-10 (v1). Case studies: C-004 (RSO methods slice), C-009 (execution binding), C-010
 (first native witness). Every number is marked MEASURED (from the ledgers, packet histories or git, with the command
-or file) or ESTIMATED (with the method). Eupalamus's C-013-T020 numbers table, when it lands, is the check on the
-measured figures; differences are recorded, not reconciled silently.
+or file) or ESTIMATED (with the method). CROSS-CHECK: Eupalamus's independent tool (rso/scale/ledger_numbers.py,
+C-013-T020, with a known-answer test and a self-crosscheck against rso.slice001.ledger usage()) reproduces the ledger
+figures exactly: 53.1 / 31.8 / 26.2 CPU-minutes, 17 / 10 / 8 launches, all MATCH.
 
 ## 0. Answers (directive s17, questions 1 and 2)
 
@@ -107,10 +108,13 @@ operator dependency that remains is the right kind: authorising spend, scope and
      records of C-004 generalised to rso/binding, rso/witness ruler and driver -- so the next runtime pays only for its
      adapter. Target: next runtime's witness-specific work < 500 lines, one challenge.
   B2 coordination latency -> THE JOB OWNS ITS STATE: immutable manifests, append-only progress events and checkpoint
-     records that a job writes and any seat can resume (C-013-T020); event-driven claiming instead of hourly polls;
-     integration that seats can do for each other's mechanical packets. Smallest step: a durable run-record format plus
-     a local runner that survives the session (no new scheduler; Themis's C-012 Fabric/PostgreSQL work is the shared
-     substrate to build on, not duplicate).
+     records that a job writes and any seat can resume; event-driven claiming instead of hourly polls; integration that
+     seats can do for each other's mechanical packets. DONE IN THIS WINDOW (single host): the session-independent
+     runner rso/scale/runner/ (C-013-T022) passed its kill-everything fire test 13/13 -- worker, supervisor and the
+     launching session killed mid-epoch, resumed by a DIFFERENT session from one command line, final digest equal to
+     the uninterrupted control (rso/scale/runner/FIRE_TEST.md); retention (T024) and an idempotent relaunch entry
+     tested with a simulated scheduler (T025) followed. Remaining: cross-host transport (port onto Themis's C-012
+     NF transport, P-4) and a live worker plane (Fabric: 0 live workers; Themis's bounded workers ran C-012-T003).
   B3 scarce discriminating experiments -> MAKE TARGETS, NOT RUNS: reachability cartography on existing deserts with
      known constructions (C-013 D1), and the World-Demand Foundry admission ladder (reference solver succeeds, specified
      simpler alternatives fail). Smallest step: D1 itself, then one Foundry world with a qualified admission ladder.

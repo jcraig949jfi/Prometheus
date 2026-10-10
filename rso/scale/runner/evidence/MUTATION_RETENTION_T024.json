@@ -1,0 +1,22 @@
+[
+ {
+  "mutant": "retention: drop last-M window",
+  "result": "KILLED",
+  "tail": "FAILED (failures=2, errors=2)"
+ },
+ {
+  "mutant": "retention: ignore contests",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "retention: delete shared/kept objects",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "retention: drop every-Kth",
+  "result": "KILLED",
+  "tail": "FAILED (failures=5)"
+ }
+]
