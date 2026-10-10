@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+import shutil
 import subprocess
 import sys
 import time
@@ -56,9 +57,18 @@ class Mutant:
         return False
 
 
+def purge_pyc():
+    """Bytecode hygiene (tooling repair after the first E3 witness, disclosed in REPORT.md): a mutation and its restore
+    that land in the same second with equal file size leave a .pyc compiled from the MUTANT that Python considers valid
+    for the restored original. Every subprocess now runs with -B and after a purge of rso/reach's caches."""
+    for d in list((ROOT / "rso" / "reach").rglob("__pycache__")):
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def pytest_run(python, tests):
+    purge_pyc()
     t = time.perf_counter()
-    r = subprocess.run([python, "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests], cwd=str(ROOT),
+    r = subprocess.run([python, "-B", "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests], cwd=str(ROOT),
                        capture_output=True, text=True)
     tail = [ln for ln in r.stdout.splitlines() if ln.strip()][-3:]
     return dict(rc=r.returncode, seconds=round(time.perf_counter() - t, 1), tail=tail,
@@ -66,7 +76,8 @@ def pytest_run(python, tests):
 
 
 def witness_run(python, w):
-    r = subprocess.run([python, str(HERE / "witnesses.py"), w], cwd=str(ROOT), capture_output=True, text=True)
+    purge_pyc()
+    r = subprocess.run([python, "-B", str(HERE / "witnesses.py"), w], cwd=str(ROOT), capture_output=True, text=True)
     last = [ln for ln in r.stdout.splitlines() if ln.strip()]
     try:
         return json.loads(last[-1])
@@ -75,7 +86,8 @@ def witness_run(python, w):
 
 
 def check_frozen(python):
-    r = subprocess.run([python, "-c", "from rso.reach import run_d1; run_d1.check_frozen(); print('FROZEN_OK')"],
+    purge_pyc()
+    r = subprocess.run([python, "-B", "-c", "from rso.reach import run_d1; run_d1.check_frozen(); print('FROZEN_OK')"],
                        cwd=str(ROOT), capture_output=True, text=True)
     return "FROZEN_OK" in r.stdout
 
@@ -87,7 +99,8 @@ def main():
     ap.add_argument("--python", default=sys.executable)
     a = ap.parse_args()
     edit = next(e for e in SPEC["edits"] if e["id"] == a.edit)
-    row = dict(edit=a.edit, phase=a.phase, started_at_utc=now(), file=edit["file"], predicted=edit["predicted"])
+    row = dict(edit=a.edit, phase=a.phase, started_at_utc=now(), file=edit["file"], predicted=edit["predicted"],
+               bytecode_hygiene="purge+-B (rerun after the stale-pyc finding)")
     m = Mutant(edit)
     row["find_count"] = m.count
     if a.phase == "witness":
