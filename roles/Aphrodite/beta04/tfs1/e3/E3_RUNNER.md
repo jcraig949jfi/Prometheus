@@ -33,6 +33,8 @@ python -m tfs1.e3.e3_known_positive --root foundry/<set> --world W --verdict [RO
 python -m tfs1.e3.e3_known_positive --root foundry/<set> --pooled [--worlds W1,..] [ROW]    (the verdict; KPA1_POOLED_<row>.json)
     ROW = (none: primary) | --fallback off | --given-foundry-primitives | --seeds 1,2 | --all-acquired-library | --oe
 python -m tfs1.e3.kp_timing --root foundry/<set> --worlds W1,W2
+python -m tfs1.e3.e3_known_positive --root foundry/<set> --world W --stage all --out <E3R dir> --seed-cache-from <frozen KPA1 dir> [--oe] [--extract xabs]   (E3-R cells)
+python -m tfs1.e3.e3_known_positive --root foundry/<set> --repair-class --out <E3R dir>      (E3R_REPAIR_CLASS_seed0_B1000000.json)
 python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --world W --stage id1|retain|all [--out D] [--no-cert]
 python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --pooled [--worlds ..] [--out D]
 python -m tfs1.e3.resumable --root foundry/<set> --world W --arm ARM --seed S --B 200000 --ckpt runs/L_<W>_<ARM>_s<S>.json --max-cpu 780
@@ -169,7 +171,7 @@ For each qualified admitted R3/R4 solution that calls an entry e, three re-runs:
 SUPPORTED iff REPLAY qualifies and both REMOVED and SHAM fail. Supported depth = the max depth over the supported
 entries.
 
-## 3. Tests (`E3_TEST_RESULTS.json`): 19 PASS / 0 FAIL
+## 3. Tests (`E3_TEST_RESULTS.json`): 23 PASS / 0 FAIL
 
 The base TFS-1 suite (`tfs1/tests`) gives 15/15 after the OE change.
 
@@ -193,6 +195,10 @@ The base TFS-1 suite (`tfs1/tests`) gives 15/15 after the OE change.
 | id_behaviour_classes_and_identifiability_labels | E3-ID classes on probe inputs (FAIL as a value, pair grid), NO_STONE programs counted, sealed-equivalent rank / ordinal / charge and R1 verdict post hoc, AMBIGUOUS / UNIQUE / NO_STONE |
 | **id_retain1_reproduces_e3kp_primary** | RETAIN-1 reproduces the E3-KP primary chain EXACTLY (library sha, status, program, charge, charges) on every all-acquired family (W1d5301d0 at 3e5: 4/4); RETAIN-1-CERT reproduces it on every family incl. CHAIN_C_FAIL (W0467897d at 6e4); ID-1's first hit equals the primary's |
 | id_pooled_outcome_rules | ID_RETENTION_REPAIR 12/15 YES, 11/15 NO + link counts, INCOMPLETE; interpretation map 1 / 2 / 3, tie -> MIXED, NO_STONE excluded, NOT_APPLICABLE |
+| **e3r_frozen_extraction_and_keys_byte_identical** | The frozen E3-KP extraction is unchanged. The FREEZE_E3KP blob (2b9845fe) is loaded from git and compared on 459 programs (every pilot E3-ID dev-consistent program + every stored production R1 / chain program), x kinds f/p/s x fallback on/off: 2,754 identical. Frozen Config keys and row JSON are identical. Pilot primary units re-derive identically from the cache, with no search |
+| **e3r_xabs_reviewer_cases_from_stored_production_programs** | The 3 reviewer mis-cut programs are LOADED from `runs/kp_production` (no production search; the R1 dev inputs are read for the validity check). X-ABS gives `(lam x (add 2 (pow x 2)))`, `(lam x (sub 1 (mul x x)))` (via the dual reducer) and `(lam x (mul 3 (mul x x)))`, each equal to the sealed mechanism on [-40, 40]. The frozen rule still gives the mis-cut map body. For p / s, X-ABS = the frozen rule |
+| **e3r_xabs_validity_rejects_non_equivalent_absorption** | `(mod (max (map (lam x (add x 1)) xs)) 3)`: the absorbed candidate agrees on the dev inputs but the 200 seeded probes reject it, so it falls back to the frozen stone. A decreasing context is accepted only via the dual reducer. head absorbs any context. Absorption is maximal. A context reading xs is excluded |
+| e3r_repair_class_rules | SEARCH / DEVELOPMENTAL / EITHER / BOTH_REQUIRED / NONE (best cell + dominant link + reading) / TRIVIALISED not counted / INCOMPLETE; a CENSORED scratch counts as NOT failed |
 | kp_rows_separate_cache_keys_and_reuse | 6 rows have distinct keys; at B = 2e4 fallback-off adds 0 searches, foundry adds exactly one chain search per family and no R1, seed 1 re-keys; FINAL.jsonl cross-check true; describe / pooled run |
 
 ## 4. Known-positive results (EXPOSED pilot_v2; `runs/KP_<world>.json`)
@@ -362,6 +368,60 @@ The module docstring is normative. In brief:
   primary acquired every constituent). At 30-50 s each (larger libraries are slower) that is 0.6-1.0 core-h.
 - **Total: about 0.9-1.45 core-h with CERT; about 0.6-1.0 core-h with `--no-cert`.** That is below the prereg's 2-4
   core-h. Run one world per process, sequentially.
+
+## 4D. E3-R: X-ABS extraction and the {OE} x {extraction} 2x2 (`windows/E3R_PREREG.md`; NOT frozen E3-KP)
+
+**X-ABS** is `extract_mechanism(..., mode="xabs", dev_inputs=R1 dev inputs)`. The default `mode="frozen"` is the frozen
+rule, byte-identical (tested against the FREEZE_E3KP blob). It applies to kind f only:
+1. **Candidates.** N = `(map L xs)` with L a closed Int->Int lambda (body references x, no xs, body size >= 2). Its
+   parent R is max / min / head / last. Neither R(N) nor any ancestor used may lie under a lambda.
+   - For each proper ancestor A = C[R(N)], the candidate is L' = `(lam x C[body(L)])`.
+   - L' must type as Int->Int and be closed and xs-free.
+2. **Validity (target-blind).** P' = `(R' (map L' xs))` must agree with P, value-or-FAIL, on every R1 dev input AND on
+   200 probe lists.
+   - The probe lists come from one fixed seed `TFS1/XABS/v0`. Elements are uniform in [min, max] of all dev input
+     elements; lengths are uniform in [0, the longest dev input].
+   - R' = R is tried first, then its dual (max <-> min; head / last are self-dual).
+3. **Choice.** The maximally absorbed valid candidate (most absorbed nodes) wins. Ties go to the smaller term, then
+   its text. If no absorbed candidate is valid, the frozen rule applies (readout fallback included).
+
+Kinds p / s use the frozen rule.
+
+**2x2 runner.** `--oe` x `--extract frozen|xabs`.
+- An `xabs` key is the frozen key + `.x-xabs`; frozen keys are unchanged.
+- `--seed-cache-from <dir>` imports the frozen E3-KP cache (every search + the PRIMARY row, marked `copied_from`).
+  So OE-off x X-FROZEN IS the frozen primary. Every shared search (R1, non-OE scratch) is re-used, and the two OE cells
+  share their OE R1 and OE scratch searches.
+- `--scratch-cpu-cap` (development only) runs a scratch search in one child process and CENSORs it above the cap.
+  CENSORED counts as NOT failed (A3.6); the censoring is cached per search key.
+- `--repair-class` writes REPAIR_CLASS per the prereg table, including TRIVIALISED (5q >= 4n but too few scratch
+  failures: not counted), the best cell's links / dominant link, and the fixed reading.
+
+**Pilot (EXPOSED pilot_v2, seed 0, 1e6; `runs/e3r_pilot/`).**
+
+| Cell | Chain-qualified | Scratch fails | Links (not qualified) |
+|---|---|---|---|
+| OE off x X-FROZEN (= E3-KP pilot primary) | 3/7 | 7/7 | HORIZON_R1 3, COMPOSITION_HORIZON 1 |
+| OE off x X-ABS | 3/7 | 7/7 | identical (no pilot R1 program has a hoisted reducer context) |
+| OE on x X-FROZEN | 7/7 | 6/7 (F085 OE scratch CENSORED at 1,500 CPU-s) | none |
+| OE on x X-ABS | 7/7 | 6/7 | none |
+
+- REPAIR_CLASS (pilot, development only) = SEARCH.
+- X-ABS is a no-op on the pilot.
+- **CPU.** The only new search was the F085 OE scratch: 1,500 s, censored. A duplicate of it was stopped by me (my own
+  process) before the censoring cache existed. Everything else came from the cache.
+
+**Production projection (no production search run).**
+
+| Cell | New work | Core-h |
+|---|---|---|
+| OE off x X-ABS | R1 searches all cached; new chain searches only for families whose library changes (the 3 mis-cut units' families, about 5-8) at 35-50 s; scratch cached | about 0.1 |
+| OE on (both cells) | OE R1 about 17 units x <= 2 families x 30-240 s; OE chains about 15 x 2 x 10-80 s | about 1-3 |
+| OE on (both cells) | OE scratch about 15 x 140-240 s for Int / short-List roots, but List families walking size 10 exceed 1,500 s each (pilot F085) | about 1-6+ |
+| **Total** | | **about 2-9 core-h** |
+
+The prereg's estimate is 3.3-7 core-h. **OE scratch on List-output families is the risk.** A3.6 sets no per-process
+cap, so a long OE scratch can run for hours; budget the rolling window, or decide a cap and CENSORED in advance.
 
 ## 5. Development smoke (EXPOSED pilot_v2; `runs/SMOKE_*.json`, `runs/SMOKE_SUMMARY.json`)
 

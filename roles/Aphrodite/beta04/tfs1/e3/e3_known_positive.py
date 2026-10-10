@@ -78,6 +78,11 @@ rows -- e.g. every scratch search, or every R1 search under fallback OFF that th
   oe_repair              --oe                                     Config(oe=True): the single pre-registered repair,
                          run ONCE only if the primary triggers it (tfs1/enum.py OE pruning; scratch uses OE too)
 
+E3-R (windows/E3R_PREREG.md; NOT part of the frozen E3-KP): extraction option X-ABS (`--extract xabs`; default
+`frozen` = the rule above, byte-identical) and the 2x2 {OE off/on} x {X-FROZEN/X-ABS} with `--repair-class`. See
+xabs_extract() for the exact rule. Frozen-row keys and records are unchanged (the extract component is added to a key
+only when it is not `frozen`).
+
 Commands (from roles/Aphrodite/beta04, OMP_NUM_THREADS=1; one process per world file at a time):
   python -m tfs1.e3.e3_known_positive --root foundry/<set> --world W --stage r1|chain|scratch|all [row flags]
          [--family F] [--mech m]
@@ -89,6 +94,7 @@ import argparse
 import hashlib
 import json
 import os
+import random
 import time
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -110,6 +116,7 @@ HERE = Path(__file__).resolve().parent
 LINKS = ("R1_ACQUISITION", "UNDERDETERMINED_STONE", "HORIZON_R1", "COMPOSITION_HORIZON",
          "COMPOSITION_UNDERDETERMINED")
 HORIZON_LINKS = ("HORIZON_R1", "COMPOSITION_HORIZON")
+EXTRACT_MODES = ("frozen", "xabs")
 PROBE_NARROW = list(range(-40, 41))
 PROBE_WIDE = list(range(-200, 201, 3))
 
@@ -117,18 +124,24 @@ PROBE_WIDE = list(range(-200, 201, 3))
 # ================================================================ rows
 class Config:
     def __init__(self, fallback: bool = True, source: str = "tfs1", scope: str = "constituents", seed: int = SEED,
-                 oe: bool = False, budget: int = BUDGET):
+                 oe: bool = False, budget: int = BUDGET, extract: str = "frozen"):
         assert source in ("tfs1", "foundry") and scope in ("constituents", "all")
+        assert extract in EXTRACT_MODES
         self.fallback, self.source, self.scope = bool(fallback), source, scope
         self.seed, self.oe, self.budget = int(seed), bool(oe), int(budget)
+        self.extract = extract
 
     def key(self) -> str:
-        return "fb%d.src-%s.lib-%s.seed%d.oe%d.B%d" % (self.fallback, self.source, self.scope, self.seed, self.oe,
-                                                       self.budget)
+        k = "fb%d.src-%s.lib-%s.seed%d.oe%d.B%d" % (self.fallback, self.source, self.scope, self.seed, self.oe,
+                                                    self.budget)
+        return k if self.extract == "frozen" else k + ".x-" + self.extract   # frozen keys unchanged
 
     def to_json(self) -> Dict:
-        return {"fallback": self.fallback, "source": self.source, "scope": self.scope, "seed": self.seed,
-                "oe": self.oe, "budget": self.budget, "key": self.key(), "row": self.row_name()}
+        out = {"fallback": self.fallback, "source": self.source, "scope": self.scope, "seed": self.seed,
+               "oe": self.oe, "budget": self.budget, "key": self.key(), "row": self.row_name()}
+        if self.extract != "frozen":
+            out["extract"] = self.extract
+        return out
 
     def row_name(self) -> str:
         d = []
@@ -142,6 +155,8 @@ class Config:
             d.append("seed%d" % self.seed)
         if self.oe:
             d.append("oe_repair")
+        if self.extract != "frozen":
+            d.append(self.extract)
         if self.budget != BUDGET:
             d.append("B%d" % self.budget)
         return "+".join(d) if d else "primary"
@@ -215,8 +230,16 @@ def readout_fallback(t, kind: str) -> Optional[tuple]:
     return None
 
 
-def extract_mechanism(program: str, kind: str, lib=None, fallback: bool = True) -> Optional[tuple]:
-    """Returns (lambda, how) or None. how = 'closed_lambda' | 'readout_fallback' (only if fallback=True)."""
+def extract_mechanism(program: str, kind: str, lib=None, fallback: bool = True, mode: str = "frozen",
+                      dev_inputs=None) -> Optional[tuple]:
+    """Returns (lambda, how) or None. how = 'closed_lambda' | 'readout_fallback' (only if fallback=True)
+    | 'xabs_absorbed' (mode='xabs' only). mode='frozen' (default) is the frozen E3-KP rule, unchanged."""
+    if mode == "xabs":
+        ab = xabs_extract(program, kind, dev_inputs)
+        if ab is not None:
+            return ab["stone"], "xabs_absorbed"
+    elif mode != "frozen":
+        raise ValueError("unknown extraction mode %r" % mode)
     t = C.parse(program)
     want = KIND_TYPE[kind]
     for lam, ty in lambdas_in(t, 0, lib):
@@ -226,6 +249,113 @@ def extract_mechanism(program: str, kind: str, lib=None, fallback: bool = True) 
         return None
     lam = readout_fallback(t, kind)
     return (lam, "readout_fallback") if lam is not None else None
+
+
+# ================================================================ X-ABS (E3-R; not frozen E3-KP)
+ELEMENT_REDUCERS = ("max", "min", "head", "last")
+REDUCER_DUAL = {"max": "min", "min": "max", "head": "head", "last": "last"}
+XABS_SEED = "TFS1/XABS/v0"
+XABS_N_PROBES = 200
+
+
+def xabs_probe_lists(dev_inputs) -> List[List[int]]:
+    """The fixed target-blind probe set: 200 lists from one fixed seed; elements uniform in [lo, hi], the union of the
+    R1 dev input element range; lengths uniform in [0, the longest dev input]. Uses dev INPUTS only."""
+    els = [int(v) for i in dev_inputs for v in i]
+    lo, hi = (min(els), max(els)) if els else (0, 0)
+    lmax = max((len(i) for i in dev_inputs), default=1)
+    rng = random.Random(XABS_SEED)
+    return [[rng.randint(lo, hi) for _ in range(rng.randint(0, lmax))] for _ in range(XABS_N_PROBES)]
+
+
+def _value(t, inp):
+    v = C.evaluate(t, list(inp))[0]
+    return v
+
+
+def _agree_all(p, q, inputs) -> bool:
+    for inp in inputs:
+        if not C.same_value(_value(p, inp), _value(q, inp)):
+            return False
+    return True
+
+
+def _plug(t, path, filler):
+    if not path:
+        return filler
+    i = path[0]
+    return t[:i] + (_plug(t[i], path[1:], filler),) + t[i + 1:]
+
+
+def xabs_candidates(t) -> List[Dict]:
+    """Every absorbed candidate of a program t (kind f). N = (map L xs) with L a closed Int->Int lambda (body references
+    its parameter, no xs, body size >= 2) whose parent R is max / min / head / last, with R(N) and every ancestor used
+    NOT under any lambda. For each proper ancestor A of R(N) (A = C[R(N)], C an Int context on the path), the
+    candidate L' = (lam x C[body(L)]); it must be closed, xs-free and of type Int->Int."""
+    out = []
+
+    def walk(u, path):
+        if u[0] == "lam":
+            return                                   # nothing under a lambda (absorbed contexts must be closed)
+        if (u[0] in ELEMENT_REDUCERS and len(u) == 2 and u[1][0] == "map" and u[1][1][0] == "lam"
+                and u[1][1][1] == 1 and u[1][2] == ("xs",)):
+            L = u[1][1]
+            if (not C.free_var_min_escape(L) and body_refs_param(L) and not references_xs(L)
+                    and C.size(L[2]) >= 2):
+                for j in range(len(path)):            # ancestors: path[:j] addresses A; path[j:] = hole inside A
+                    A = _get(t, path[:j])
+                    body = _plug(A, path[j:], L[2])
+                    lam = ("lam", 1, body)
+                    try:
+                        ok = (C.type_of(lam) == C.F_II and not references_xs(lam)
+                              and not C.free_var_min_escape(lam))
+                    except C.TypeErr:
+                        ok = False
+                    if ok:
+                        out.append({"L": L, "reducer": u[0], "stone": lam, "absorbed": C.size(A) - C.size(u),
+                                    "ancestor_path": list(path[:j])})
+        for i, c in enumerate(u[1:], 1):
+            if isinstance(c, tuple):
+                walk(c, path + [i])
+    walk(t, [])
+    return out
+
+
+def _get(t, path):
+    for i in path:
+        t = t[i]
+    return t
+
+
+def xabs_extract(program: str, kind: str, dev_inputs) -> Optional[Dict]:
+    """X-ABS (E3R_PREREG): kind f only. A candidate L' is VALID iff P' = R'(map L' xs) agrees with P (value-or-FAIL) on
+    every dev input AND on the 200 fixed probe lists, for R' = R (tried first) or, failing that, the dual reducer
+    (max <-> min; head / last are self-dual) -- the dual covers a sign-flipping context (e.g. (sub 1 (min ..)) =
+    (max (map (lam x (sub 1 ..)) xs))); the check uses P's own outputs, never the sealed mechanism. The MAXIMALLY
+    absorbed valid candidate is the stone (ties: the smaller term, then its text). None if no absorbed candidate is
+    valid (the caller then applies the frozen rule, readout fallback included)."""
+    if kind != "f":
+        return None
+    if dev_inputs is None:
+        raise ValueError("X-ABS needs the R1 dev inputs")
+    t = C.parse(program)
+    cands = xabs_candidates(t)
+    if not cands:
+        return None
+    inputs = [list(i) for i in dev_inputs] + xabs_probe_lists(dev_inputs)
+    valid = []
+    for c in cands:
+        for r in (c["reducer"], REDUCER_DUAL[c["reducer"]]):
+            p2 = (r, ("map", c["stone"], ("xs",)))
+            if _agree_all(t, p2, inputs):
+                valid.append(dict(c, reducer_used=r))
+                break
+            if REDUCER_DUAL[c["reducer"]] == c["reducer"]:
+                break
+    if not valid:
+        return None
+    best = sorted(valid, key=lambda c: (-c["absorbed"], C.size(c["stone"]), C.to_str(c["stone"])))[0]
+    return best
 
 
 # ================================================================ search + cache
@@ -382,7 +512,11 @@ class KP:
                 if not r["verdict"]["qualified"]:
                     row["label"], row["detail"] = "UNDERDETERMINED_STONE", "R1_FIRST_DEV_CONSISTENT_FAILS_TEST"
                 else:
-                    ex = extract_mechanism(r["program"], kind, fallback=cfg.fallback)
+                    if cfg.extract == "frozen":
+                        ex = extract_mechanism(r["program"], kind, fallback=cfg.fallback)
+                    else:
+                        ex = extract_mechanism(r["program"], kind, fallback=cfg.fallback, mode=cfg.extract,
+                                               dev_inputs=[i for i, _o in self.task(fid)["dev"]])
                     if ex is None:
                         row["label"] = "R1_ACQUISITION"
                         row["detail"] = "NO_EXTRACTABLE_MECHANISM" + ("" if cfg.fallback else "_FALLBACK_OFF")
@@ -592,7 +726,7 @@ class KP:
                 "skeleton": self.fams[fid].get("skeleton"), "constituents": self.constituents(fid),
                 "chain_status": ch["status"] if ch else None, "chain_qualified": bool(ch and ch["status"] == "SOLVED"),
                 "scratch_status": sc["status"] if sc else None,
-                "scratch_fails": None if sc is None else sc["status"] != "SOLVED_FROM_SCRATCH",
+                "scratch_fails": None if sc is None else sc["status"] not in ("SOLVED_FROM_SCRATCH", "CENSORED"),
                 "complete": ch is not None and sc is not None and all(m in units for m in self.constituents(fid)),
                 "first_failing_link": ln["link"], "link_detail": ln["detail"], "link_info": ln,
                 "extraction": {m: units.get(m, {}).get("extraction") for m in self.constituents(fid)},
@@ -698,9 +832,81 @@ def _label(root) -> str:
 
 
 # ================================================================ stages
-def run_stages(root, world, cfg: Config, stage: str, out_dir, family=None, mech=None, log=print) -> Dict:
+def seed_cache(d, seed_dir, world) -> bool:
+    """E3-R: import the frozen E3-KP cache (every search + the PRIMARY row, marked copied_from) into a fresh world file,
+    so the OE-off x X-FROZEN cell IS the frozen primary and every shared search (R1, non-OE scratch) is re-used."""
+    if seed_dir is None or d.get("seeded_from"):
+        return False
+    src = _load(seed_dir, world)
+    if PRIMARY.key() not in src.get("rows", {}):
+        raise ValueError("no frozen E3-KP primary row for %s in %s" % (world, seed_dir))
+    for k, v in src["searches"].items():
+        d["searches"].setdefault(k, v)
+    if PRIMARY.key() not in d["rows"]:
+        d["rows"][PRIMARY.key()] = dict(src["rows"][PRIMARY.key()], copied_from=str(seed_dir))
+    d["seeded_from"] = {"dir": str(seed_dir), "n_searches": len(src["searches"]),
+                        "code_sha256_of_source": src.get("e3_code_sha256")}
+    return True
+
+
+def _scratch_child(root, world, fid, cfg_json, q):
+    os.environ["OMP_NUM_THREADS"] = "1"
+    kp = KP(root, world)
+    cfg = Config(**{k: cfg_json[k] for k in ("fallback", "source", "scope", "seed", "oe", "budget")},
+                 extract=cfg_json.get("extract", "frozen"))
+    r = _search(kp.task(fid), None, cfg.seed, cfg.budget, cfg.oe)
+    if r["hit"]:
+        r["verdict"] = WD.judge(r["program"], kp.task(fid))
+    q.put(r)
+
+
+def run_scratch_capped(kp, d, fid, cfg: Config, cap_s: float) -> Dict:
+    """Development only: the scratch search in ONE child process; if its CPU exceeds cap_s it is stopped (it is this
+    process's own child) and the row is CENSORED, which counts as NOT failed (prereg A3.6)."""
+    k = search_key(fid, None, cfg)
+    if k in d["searches"]:
+        return kp.run_scratch(d, fid, cfg)
+    cen = d.setdefault("censored_searches", {}).get(k)
+    if cen is not None and cen["cap_s"] >= cap_s:            # the same search was already censored at >= this cap
+        return dict(cen["row"], reused_censored_search=k)
+    import multiprocessing as mp
+    import psutil
+    q = mp.get_context("spawn").Queue()
+    pr = mp.get_context("spawn").Process(target=_scratch_child, args=(str(kp.root), kp.world, fid, cfg.to_json(), q))
+    pr.start()
+    ps = psutil.Process(pr.pid)
+    cpu = 0.0
+    while True:
+        try:
+            r = q.get(timeout=2.0)
+            pr.join()
+            d["searches"][k] = r
+            return kp.run_scratch(d, fid, cfg)
+        except Exception:                      # noqa: BLE001 (queue.Empty)
+            pass
+        try:
+            t = ps.cpu_times()
+            cpu = t.user + t.system
+        except psutil.NoSuchProcess:
+            pass
+        if cpu > cap_s:
+            pr.terminate()
+            pr.join()
+            row = {"family_id": fid, "status": "CENSORED", "cpu_s": round(cpu, 1), "cap_s": cap_s,
+                   "found": None, "charge": None, "charges": None, "complete_through_size": None,
+                   "witness_size": kp.witness_size(fid), "censored_reason": "development CPU cap"}
+            d["censored_searches"][k] = {"cap_s": cap_s, "row": row}
+            return row
+        if not pr.is_alive() and q.empty():
+            raise RuntimeError("scratch child died: %s %s" % (kp.world, fid))
+
+
+def run_stages(root, world, cfg: Config, stage: str, out_dir, family=None, mech=None, log=print, seed_from=None,
+               scratch_cpu_cap=None) -> Dict:
     kp = KP(root, world)
     d = _load(out_dir, world)
+    if seed_cache(d, seed_from, world):
+        log("seeded cache from %s (%d searches)" % (seed_from, d["seeded_from"]["n_searches"]))
     adm = kp.admitted()
     d["admitted"] = adm
     d["label"] = _label(root)
@@ -722,7 +928,8 @@ def run_stages(root, world, cfg: Config, stage: str, out_dir, family=None, mech=
     if stage in ("scratch", "all"):
         for f in ([family] if family else adm):
             if f not in row["scratch"]:
-                row["scratch"][f] = kp.run_scratch(d, f, cfg)
+                row["scratch"][f] = (kp.run_scratch(d, f, cfg) if scratch_cpu_cap is None
+                                     else run_scratch_capped(kp, d, f, cfg, scratch_cpu_cap))
                 _save(out_dir, world, d)
                 log("scratch %s %s" % (f, row["scratch"][f]["status"]))
     row["descriptive"] = kp.describe(d, cfg)
@@ -733,8 +940,89 @@ def run_stages(root, world, cfg: Config, stage: str, out_dir, family=None, mech=
 def configs_from_args(a) -> List[Config]:
     seeds = [int(s) for s in a.seeds.split(",")] if a.seeds else [a.seed]
     return [Config(fallback=(a.fallback == "on"), source="foundry" if a.given_foundry_primitives else "tfs1",
-                   scope="all" if a.all_acquired_library else "constituents", seed=s, oe=a.oe, budget=a.budget)
+                   scope="all" if a.all_acquired_library else "constituents", seed=s, oe=a.oe, budget=a.budget,
+                   extract=a.extract)
             for s in seeds]
+
+
+# ================================================================ E3-R 2x2 and REPAIR_CLASS (windows/E3R_PREREG.md)
+def e3r_cells(budget=BUDGET, seed=SEED) -> Dict[str, Config]:
+    return {"off_frozen": Config(budget=budget, seed=seed),
+            "on_frozen": Config(oe=True, budget=budget, seed=seed),
+            "off_xabs": Config(extract="xabs", budget=budget, seed=seed),
+            "on_xabs": Config(oe=True, extract="xabs", budget=budget, seed=seed)}
+
+
+def repair_class_from(cells: Dict[str, Dict]) -> Dict:
+    """Pure: cells name -> pooled_verdict(...) dict. A cell COUNTS as >= 80% iff complete, 5q >= 4n AND
+    5 * scratch_fails >= 4n; a cell with 5q >= 4n but too few scratch failures is TRIVIALISED (not counted)."""
+    st = {}
+    for name, v in cells.items():
+        n, q, sf = v["n_admitted_R3_R4"], v["chain_qualified"], v["scratch_fails"]
+        hi = v["complete"] and n > 0 and 5 * q >= 4 * n
+        st[name] = {"n": n, "chain_qualified": q, "scratch_fails": sf, "complete": v["complete"],
+                    "chain_ge_80pct": hi, "trivialised": hi and not (5 * sf >= 4 * n),
+                    "counts": hi and 5 * sf >= 4 * n,
+                    "first_failing_link_counts": v["first_failing_link_counts"]}
+    c = {k: st[k]["counts"] for k in st}
+    if not all(st[k]["complete"] for k in st):
+        label = "INCOMPLETE"
+    elif c["on_frozen"] and c["off_xabs"]:
+        label = "EITHER"
+    elif c["on_frozen"]:
+        label = "SEARCH"
+    elif c["off_xabs"]:
+        label = "DEVELOPMENTAL"
+    elif c["on_xabs"]:
+        label = "BOTH_REQUIRED"
+    else:
+        label = "NONE"
+    order = ["on_xabs", "on_frozen", "off_xabs", "off_frozen"]       # tie-break for the best cell
+    best = max(order, key=lambda k: (st[k]["chain_qualified"], -order.index(k)))
+    lk = {k: v for k, v in st[best]["first_failing_link_counts"].items() if k in LINKS}
+    nf = sum(lk.values())
+    hz = lk.get("HORIZON_R1", 0) + lk.get("COMPOSITION_HORIZON", 0)
+    ud = lk.get("UNDERDETERMINED_STONE", 0) + lk.get("COMPOSITION_UNDERDETERMINED", 0)
+    dom = (None if nf == 0 else "HORIZON" if 2 * hz > nf else "UNDERDETERMINED" if 2 * ud > nf else "MIXED")
+    if label in ("SEARCH", "DEVELOPMENTAL", "BOTH_REQUIRED", "EITHER"):
+        rec = "CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY (class %s)" % label
+    elif label == "NONE" and dom == "HORIZON":
+        rec = "CHANGE_SEARCH (a larger search change is needed)"
+    elif label == "NONE" and dom == "UNDERDETERMINED":
+        rec = "toward WORLD (foundry identifiability) or MIGRATE; state with the AR-1 result"
+    else:
+        rec = "no fixed reading (%s / %s)" % (label, dom)
+    return {"REPAIR_CLASS": label, "cells": st, "best_cell": best,
+            "best_cell_first_failing_links": lk, "best_cell_dominant": dom, "recommendation_reading": rec,
+            "rule": "SEARCH: on_frozen counts AND off_xabs not; DEVELOPMENTAL: off_xabs counts AND on_frozen not; "
+                    "EITHER: both single-factor cells count; BOTH_REQUIRED: only on_xabs counts; NONE: no cell counts. "
+                    "A cell counts iff 5q >= 4n AND 5*scratch_fails >= 4n (else TRIVIALISED if 5q >= 4n); "
+                    "CENSORED scratch = not failed (A3.6)"}
+
+
+def repair_class(root, worlds, out_dir, budget=BUDGET, seed=SEED) -> Dict:
+    man = WD.world_manifest(root)
+    worlds = worlds or sorted(w for w in man["worlds"] if KP(root, w).admitted())
+    cells = {}
+    for name, cfg in e3r_cells(budget, seed).items():
+        fams = []
+        for w in worlds:
+            kp = KP(root, w)
+            if kp.admitted():
+                fams += kp.describe(_load(out_dir, w), cfg)["families"]
+        cells[name] = pooled_verdict(fams, primary=False)
+        cells[name]["families"] = [{k: f[k] for k in ("world", "family_id", "chain_status", "scratch_status",
+                                                      "first_failing_link", "link_detail", "extraction")}
+                                   for f in fams]
+    res = repair_class_from(cells)
+    res.update({"root": str(root), "worlds": worlds, "label": _label(root), "budget": budget, "seed": seed,
+                "claim_limits": "informs the recommendation only; no frozen Beta-04 label is relabelled; not "
+                                "COMPOSITIONAL_DISCOVERY (stones from sealed-decomposition-indexed R1 tasks)",
+                "cell_verdicts": {k: {kk: v[kk] for kk in ("chain_qualified", "scratch_fails", "n_admitted_R3_R4",
+                                                          "complete", "first_failing_link_counts")}
+                                  for k, v in cells.items()},
+                "cell_families": {k: v["families"] for k, v in cells.items()}})
+    return res
 
 
 def main():
@@ -755,7 +1043,19 @@ def main():
     ap.add_argument("--seeds", help="comma list of keyed seeds (e.g. 1,2); one row per seed")
     ap.add_argument("--oe", action="store_true", help="the pre-registered OE repair row (NOT the default)")
     ap.add_argument("--budget", type=int, default=BUDGET, help="development only; the prereg budget is 1e6")
+    ap.add_argument("--extract", choices=list(EXTRACT_MODES), default="frozen",
+                    help="E3-R: stone extraction (frozen = E3-KP rule; xabs = X-ABS)")
+    ap.add_argument("--seed-cache-from", help="E3-R: import the frozen E3-KP cache (searches + primary row) first")
+    ap.add_argument("--scratch-cpu-cap", type=float, help="development only: CENSOR a scratch search above this CPU-s")
+    ap.add_argument("--repair-class", action="store_true", help="E3-R: pooled REPAIR_CLASS over the 2x2 cells")
     a = ap.parse_args()
+    if a.repair_class:
+        res = repair_class(a.root, a.worlds.split(",") if a.worlds else None, a.out, a.budget, a.seed)
+        p = Path(a.out) / ("E3R_REPAIR_CLASS_seed%d_B%d.json" % (a.seed, a.budget))
+        p.write_text(json.dumps(res, indent=1, sort_keys=True))
+        print(json.dumps({k: res[k] for k in ("REPAIR_CLASS", "cell_verdicts", "best_cell", "best_cell_dominant",
+                                              "recommendation_reading")}, indent=1), flush=True)
+        return
     for cfg in configs_from_args(a):
         if a.pooled:
             res = pooled(a.root, a.worlds.split(",") if a.worlds else None, cfg, a.out)
@@ -770,7 +1070,8 @@ def main():
             ap.error("--world is required unless --pooled")
         if a.stage:
             run_stages(a.root, a.world, cfg, a.stage, a.out, a.family, a.mech,
-                       log=lambda s: print(cfg.row_name(), s, flush=True))
+                       log=lambda s: print(cfg.row_name(), s, flush=True), seed_from=a.seed_cache_from,
+                       scratch_cpu_cap=a.scratch_cpu_cap)
         if a.verdict or not a.stage:
             kp = KP(a.root, a.world)
             desc = kp.describe(_load(a.out, a.world), cfg)

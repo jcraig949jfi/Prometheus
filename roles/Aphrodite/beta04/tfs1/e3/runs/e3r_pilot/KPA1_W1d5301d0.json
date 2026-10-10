@@ -1,0 +1,3378 @@
+{
+ "admitted": [
+  "W1d5301d0-F035-R3",
+  "W1d5301d0-F077-R4",
+  "W1d5301d0-F071-R4",
+  "W1d5301d0-F027-R3"
+ ],
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "72084f13698788a277ed2522cd657e3bb9f57e0baac4d064a000a0c8f01c4ddb",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "e3_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependency.py": "d61122aed0801ba8d41d2911c3d7bf144c2fb7c53dfbf5a80011e86cbdc8ec01",
+  "e3_identifiability.py": "e525e356f0385a0913a7efbed42042b8021dd93a6573fd3c7a232399f53892b1",
+  "e3_known_positive.py": "598b96e196047a10d5d6ed664afeabe96a9b757ea47d43e48a360225f08c4976",
+  "final_eval.py": "39f51af061c9ddc358d52dff81b20a730cc081b656adc33a75082e9e85c2df3e",
+  "kp_timing.py": "0d5030970cc3c04369fa41311f56a8db97a26277b42f96dcc3517926074bda33",
+  "organism.py": "93f0e2c0a9a99f3666b419909b771aa2373a787f17e5d75402f0d0fee7a17daa",
+  "resumable.py": "d87e55f3a18ed7e6e14cc4be39e5b5d0ee6199d1ff83a476d0e8467998910238",
+  "smoke.py": "cf8271284fd2dae5a8810a2f2a2fe92134fc094e193ec708b40ec2c179ffe4f4",
+  "summarize_smoke.py": "e0e65b34d6ba6538371e004796af0c6a5be5ce481ddd17c50a2fc124e23b049a",
+  "worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444"
+ },
+ "label": "EXPOSED DEV DATA (pilot)",
+ "rows": {
+  "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000": {
+   "chain": {
+    "W1d5301d0-F027-R3": {
+     "charge": 650459,
+     "charges": 650459,
+     "complete_through_size": 6,
+     "cpu_s": 37.05,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+      "witness_promoted_form": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 3107598,
+     "units_promoted": 2573603,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": 410735,
+     "charges": 410735,
+     "complete_through_size": 6,
+     "cpu_s": 20.88,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+      "witness_promoted_form": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 1881341,
+     "units_promoted": 1559316,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": 64561,
+     "charges": 64561,
+     "complete_through_size": 6,
+     "cpu_s": 3.19,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+     "library_entries": [
+      {
+       "body": "(lt h0 (add 2 3))",
+       "id": "L_91245740aedc",
+       "slot": "p0"
+      },
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      }
+     ],
+     "library_sha256": "c07442700776b7f8766af435560a0f9e454cd113ba18451c4f4eef990f2352c5",
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       11835,
+       124978
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_91245740aedc",
+       "L_a7616ca2cd22"
+      ],
+      "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+      "witness_promoted_form": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 620942,
+     "units_promoted": 537660,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 47.03,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "library_entries": [
+      {
+       "body": "(lt h0 (add 2 3))",
+       "id": "L_91245740aedc",
+       "slot": "p0"
+      },
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      }
+     ],
+     "library_sha256": "c07442700776b7f8766af435560a0f9e454cd113ba18451c4f4eef990f2352c5",
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       124979,
+       1365260
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 8,
+      "uses_entries": [
+       "L_91245740aedc",
+       "L_a7616ca2cd22"
+      ],
+      "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+      "witness_promoted_form": "(map (lam x (if (L_91245740aedc x) (L_a7616ca2cd22 x) x)) xs)"
+     },
+     "status": "NOT_FOUND_AT_BUDGET",
+     "units_expanded": 9456510,
+     "units_promoted": 8292270
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "fallback": true,
+    "key": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+    "oe": false,
+    "row": "primary",
+    "scope": "constituents",
+    "seed": 0,
+    "source": "tfs1"
+   },
+   "copied_from": "tfs1/e3/runs",
+   "descriptive": {
+    "descriptive_only": "per-world output is descriptive; the verdict is POOLED (A1-A item 4)",
+    "families": [
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 20.88,
+       "r1_units_attributed": 48.97,
+       "scratch": 59.34
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F035-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:post_fold",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": false,
+      "chain_status": "NOT_FOUND_AT_BUDGET",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 47.03,
+       "r1_units_attributed": 1.44,
+       "scratch": 77.84
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F077-R4",
+      "first_failing_link": "COMPOSITION_HORIZON",
+      "link_detail": "IN_CLASS",
+      "link_info": {
+       "bracket": [
+        124979,
+        1365260
+       ],
+       "detail": "IN_CLASS",
+       "link": "COMPOSITION_HORIZON",
+       "size_promoted_form": 8
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:guard_p",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 3.19,
+       "r1_units_attributed": 1.44,
+       "scratch": 69.56
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F071-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:filter_of_map",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 37.05,
+       "r1_units_attributed": 48.97,
+       "scratch": 42.52
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F027-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:step_of_f",
+      "world": "W1d5301d0"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "fallback": true,
+     "key": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+     "oe": false,
+     "row": "primary",
+     "scope": "constituents",
+     "seed": 0,
+     "source": "tfs1"
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.64,
+      "extraction": "readout_fallback",
+      "from": "W1d5301d0-F006-R1",
+      "lambda": "(lam x (div (add 1 x) 3))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.8,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F008-R1",
+      "lambda": "(lam x (lt x (add 2 3)))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 48.33,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F012-R1",
+      "lambda": "(lam a (lam b (sub b (div a 3))))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     }
+    ],
+    "world": "W1d5301d0"
+   },
+   "scratch": {
+    "W1d5301d0-F027-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 42.52,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 59.34,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 69.56,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 13
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 77.84,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 14
+    }
+   },
+   "units": {
+    "f1": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 49862,
+       "charges": 49862,
+       "complete_through_size": 5,
+       "cpu_s": 0.64,
+       "detail": "ACQUIRED",
+       "extraction": "readout_fallback",
+       "family_id": "W1d5301d0-F006-R1",
+       "found": "(div (add 1 (last xs)) 3)",
+       "label": null,
+       "mechanism_lambda": "(lam x (div (add 1 x) 3))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "readout_fallback",
+     "from": "W1d5301d0-F006-R1",
+     "kind": "f",
+     "lambda": "(lam x (div (add 1 x) 3))",
+     "mechanism": "f1",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "p0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 27841,
+       "charges": 27841,
+       "complete_through_size": 6,
+       "cpu_s": 0.8,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F008-R1",
+       "found": "(filter (lam x (lt x (add 2 3))) xs)",
+       "label": null,
+       "mechanism_lambda": "(lam x (lt x (add 2 3)))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        9045,
+        90618
+       ],
+       "witness_size": 7
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F008-R1",
+     "kind": "p",
+     "lambda": "(lam x (lt x (add 2 3)))",
+     "mechanism": "p0",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "s0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": null,
+       "charges": 1000000,
+       "complete_through_size": 7,
+       "cpu_s": 37.88,
+       "detail": "IN_CLASS",
+       "family_id": "W1d5301d0-F010-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      },
+      {
+       "charge": 286293,
+       "charges": 286293,
+       "complete_through_size": 7,
+       "cpu_s": 10.45,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F012-R1",
+       "found": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+       "label": null,
+       "mechanism_lambda": "(lam a (lam b (sub b (div a 3))))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        90619,
+        916438
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F012-R1",
+     "kind": "s",
+     "lambda": "(lam a (lam b (sub b (div a 3))))",
+     "mechanism": "s0",
+     "n_attempts": 2,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    }
+   }
+  },
+  "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000.x-xabs": {
+   "chain": {
+    "W1d5301d0-F027-R3": {
+     "charge": 650459,
+     "charges": 650459,
+     "complete_through_size": 6,
+     "cpu_s": 37.05,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+      "witness_promoted_form": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 3107598,
+     "units_promoted": 2573603,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": 410735,
+     "charges": 410735,
+     "complete_through_size": 6,
+     "cpu_s": 20.88,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+      "witness_promoted_form": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 1881341,
+     "units_promoted": 1559316,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": 64561,
+     "charges": 64561,
+     "complete_through_size": 6,
+     "cpu_s": 3.19,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+     "library_entries": [
+      {
+       "body": "(lt h0 (add 2 3))",
+       "id": "L_91245740aedc",
+       "slot": "p0"
+      },
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      }
+     ],
+     "library_sha256": "c07442700776b7f8766af435560a0f9e454cd113ba18451c4f4eef990f2352c5",
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       11835,
+       124978
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_91245740aedc",
+       "L_a7616ca2cd22"
+      ],
+      "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+      "witness_promoted_form": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 620942,
+     "units_promoted": 537660,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 47.03,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "library_entries": [
+      {
+       "body": "(lt h0 (add 2 3))",
+       "id": "L_91245740aedc",
+       "slot": "p0"
+      },
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      }
+     ],
+     "library_sha256": "c07442700776b7f8766af435560a0f9e454cd113ba18451c4f4eef990f2352c5",
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       124979,
+       1365260
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 8,
+      "uses_entries": [
+       "L_91245740aedc",
+       "L_a7616ca2cd22"
+      ],
+      "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+      "witness_promoted_form": "(map (lam x (if (L_91245740aedc x) (L_a7616ca2cd22 x) x)) xs)"
+     },
+     "status": "NOT_FOUND_AT_BUDGET",
+     "units_expanded": 9456510,
+     "units_promoted": 8292270
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "extract": "xabs",
+    "fallback": true,
+    "key": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000.x-xabs",
+    "oe": false,
+    "row": "xabs",
+    "scope": "constituents",
+    "seed": 0,
+    "source": "tfs1"
+   },
+   "descriptive": {
+    "descriptive_only": "per-world output is descriptive; the verdict is POOLED (A1-A item 4)",
+    "families": [
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 20.88,
+       "r1_units_attributed": 48.97,
+       "scratch": 59.34
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F035-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:post_fold",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": false,
+      "chain_status": "NOT_FOUND_AT_BUDGET",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 47.03,
+       "r1_units_attributed": 1.44,
+       "scratch": 77.84
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F077-R4",
+      "first_failing_link": "COMPOSITION_HORIZON",
+      "link_detail": "IN_CLASS",
+      "link_info": {
+       "bracket": [
+        124979,
+        1365260
+       ],
+       "detail": "IN_CLASS",
+       "link": "COMPOSITION_HORIZON",
+       "size_promoted_form": 8
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:guard_p",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 3.19,
+       "r1_units_attributed": 1.44,
+       "scratch": 69.56
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F071-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:filter_of_map",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 37.05,
+       "r1_units_attributed": 48.97,
+       "scratch": 42.52
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F027-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:step_of_f",
+      "world": "W1d5301d0"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "extract": "xabs",
+     "fallback": true,
+     "key": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000.x-xabs",
+     "oe": false,
+     "row": "xabs",
+     "scope": "constituents",
+     "seed": 0,
+     "source": "tfs1"
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.64,
+      "extraction": "readout_fallback",
+      "from": "W1d5301d0-F006-R1",
+      "lambda": "(lam x (div (add 1 x) 3))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.8,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F008-R1",
+      "lambda": "(lam x (lt x (add 2 3)))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 48.33,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F012-R1",
+      "lambda": "(lam a (lam b (sub b (div a 3))))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     }
+    ],
+    "world": "W1d5301d0"
+   },
+   "scratch": {
+    "W1d5301d0-F027-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 42.52,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 59.34,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 69.56,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 13
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 77.84,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 14
+    }
+   },
+   "units": {
+    "f1": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 49862,
+       "charges": 49862,
+       "complete_through_size": 5,
+       "cpu_s": 0.64,
+       "detail": "ACQUIRED",
+       "extraction": "readout_fallback",
+       "family_id": "W1d5301d0-F006-R1",
+       "found": "(div (add 1 (last xs)) 3)",
+       "label": null,
+       "mechanism_lambda": "(lam x (div (add 1 x) 3))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "readout_fallback",
+     "from": "W1d5301d0-F006-R1",
+     "kind": "f",
+     "lambda": "(lam x (div (add 1 x) 3))",
+     "mechanism": "f1",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "p0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 27841,
+       "charges": 27841,
+       "complete_through_size": 6,
+       "cpu_s": 0.8,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F008-R1",
+       "found": "(filter (lam x (lt x (add 2 3))) xs)",
+       "label": null,
+       "mechanism_lambda": "(lam x (lt x (add 2 3)))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        9045,
+        90618
+       ],
+       "witness_size": 7
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F008-R1",
+     "kind": "p",
+     "lambda": "(lam x (lt x (add 2 3)))",
+     "mechanism": "p0",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "s0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": null,
+       "charges": 1000000,
+       "complete_through_size": 7,
+       "cpu_s": 37.88,
+       "detail": "IN_CLASS",
+       "family_id": "W1d5301d0-F010-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      },
+      {
+       "charge": 286293,
+       "charges": 286293,
+       "complete_through_size": 7,
+       "cpu_s": 10.45,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F012-R1",
+       "found": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+       "label": null,
+       "mechanism_lambda": "(lam a (lam b (sub b (div a 3))))",
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        90619,
+        916438
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F012-R1",
+     "kind": "s",
+     "lambda": "(lam a (lam b (sub b (div a 3))))",
+     "mechanism": "s0",
+     "n_attempts": 2,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    }
+   }
+  },
+  "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000": {
+   "chain": {
+    "W1d5301d0-F027-R3": {
+     "charge": 64591,
+     "charges": 64591,
+     "complete_through_size": 6,
+     "cpu_s": 4.47,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "oe_stats": {
+      "cpu_s": 3.661,
+      "generated": 29143,
+      "kept": 11006,
+      "pruned": 18137,
+      "signature_evals": 1028304
+     },
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+      "witness_promoted_form": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 346146,
+     "units_promoted": 300353,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": 45655,
+     "charges": 45655,
+     "complete_through_size": 6,
+     "cpu_s": 3.84,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "oe_stats": {
+      "cpu_s": 3.126,
+      "generated": 29619,
+      "kept": 11121,
+      "pruned": 18498,
+      "signature_evals": 1041736
+     },
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+      "witness_promoted_form": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 225551,
+     "units_promoted": 196869,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": 7137,
+     "charges": 7137,
+     "complete_through_size": 6,
+     "cpu_s": 6.3,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": "(filter (lam x (L_dfed6e11f262 x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(gt (add 2 3) h0)",
+       "id": "L_dfed6e11f262",
+       "slot": "p0"
+      }
+     ],
+     "library_sha256": "34d5e9dce56a4edce7714ea67e87d2698c88cf08c790a55667022330862e293b",
+     "oe_stats": {
+      "cpu_s": 6.191,
+      "generated": 17327,
+      "kept": 7204,
+      "pruned": 10123,
+      "signature_evals": 1724907
+     },
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       11835,
+       124978
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_dfed6e11f262"
+      ],
+      "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+      "witness_promoted_form": "(filter (lam x (L_dfed6e11f262 x)) (map (lam x (L_a7616ca2cd22 x)) xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 56592,
+     "units_promoted": 51249,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": 149787,
+     "charges": 149787,
+     "complete_through_size": 7,
+     "cpu_s": 51.69,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": "(map (lam x (if (L_dfed6e11f262 x) (L_a7616ca2cd22 x) x)) xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(gt (add 2 3) h0)",
+       "id": "L_dfed6e11f262",
+       "slot": "p0"
+      }
+     ],
+     "library_sha256": "34d5e9dce56a4edce7714ea67e87d2698c88cf08c790a55667022330862e293b",
+     "oe_stats": {
+      "cpu_s": 48.299,
+      "generated": 119468,
+      "kept": 49345,
+      "pruned": 70123,
+      "signature_evals": 12876477
+     },
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       124979,
+       1365260
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 8,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_dfed6e11f262"
+      ],
+      "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+      "witness_promoted_form": "(map (lam x (if (L_dfed6e11f262 x) (L_a7616ca2cd22 x) x)) xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 1411140,
+     "units_promoted": 1272906,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "fallback": true,
+    "key": "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000",
+    "oe": true,
+    "row": "oe_repair",
+    "scope": "constituents",
+    "seed": 0,
+    "source": "tfs1"
+   },
+   "descriptive": {
+    "descriptive_only": "per-world output is descriptive; the verdict is POOLED (A1-A item 4)",
+    "families": [
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 3.84,
+       "r1_units_attributed": 52.67,
+       "scratch": 159.34
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F035-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:post_fold",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 51.69,
+       "r1_units_attributed": 3.28,
+       "scratch": 237.88
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F077-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:guard_p",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 6.3,
+       "r1_units_attributed": 3.28,
+       "scratch": 237.23
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F071-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:filter_of_map",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 4.47,
+       "r1_units_attributed": 52.67,
+       "scratch": 140.19
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F027-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:step_of_f",
+      "world": "W1d5301d0"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "fallback": true,
+     "key": "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000",
+     "oe": true,
+     "row": "oe_repair",
+     "scope": "constituents",
+     "seed": 0,
+     "source": "tfs1"
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.31,
+      "extraction": "readout_fallback",
+      "from": "W1d5301d0-F006-R1",
+      "lambda": "(lam x (div (add 1 x) 3))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 2.97,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F008-R1",
+      "lambda": "(lam x (gt (add 2 3) x))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": true,
+      "cpu_s": 52.36,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F012-R1",
+      "lambda": "(lam a (lam b (sub b (div a 3))))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     }
+    ],
+    "world": "W1d5301d0"
+   },
+   "scratch": {
+    "W1d5301d0-F027-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 140.19,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 159.34,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 237.23,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 13
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 237.88,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 14
+    }
+   },
+   "units": {
+    "f1": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 11626,
+       "charges": 11626,
+       "complete_through_size": 5,
+       "cpu_s": 0.31,
+       "detail": "ACQUIRED",
+       "extraction": "readout_fallback",
+       "family_id": "W1d5301d0-F006-R1",
+       "found": "(div (add 1 (last xs)) 3)",
+       "label": null,
+       "mechanism_lambda": "(lam x (div (add 1 x) 3))",
+       "oe_stats": {
+        "cpu_s": 0.205,
+        "generated": 3350,
+        "kept": 1205,
+        "pruned": 2145,
+        "signature_evals": 138532
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "readout_fallback",
+     "from": "W1d5301d0-F006-R1",
+     "kind": "f",
+     "lambda": "(lam x (div (add 1 x) 3))",
+     "mechanism": "f1",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "p0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 15400,
+       "charges": 15400,
+       "complete_through_size": 6,
+       "cpu_s": 2.97,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F008-R1",
+       "found": "(filter (lam x (gt (add 2 3) x)) xs)",
+       "label": null,
+       "mechanism_lambda": "(lam x (gt (add 2 3) x))",
+       "oe_stats": {
+        "cpu_s": 2.801,
+        "generated": 14114,
+        "kept": 5531,
+        "pruned": 8583,
+        "signature_evals": 1447468
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        9045,
+        90618
+       ],
+       "witness_size": 7
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F008-R1",
+     "kind": "p",
+     "lambda": "(lam x (gt (add 2 3) x))",
+     "mechanism": "p0",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "s0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 234879,
+       "charges": 234879,
+       "complete_through_size": 7,
+       "cpu_s": 23.58,
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "family_id": "W1d5301d0-F010-R1",
+       "found": "(foldl (lam a (lam b (sub b (div a 3)))) 2 xs)",
+       "label": "UNDERDETERMINED_STONE",
+       "oe_stats": {
+        "cpu_s": 19.956,
+        "generated": 116734,
+        "kept": 44848,
+        "pruned": 71886,
+        "signature_evals": 4791480
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": false,
+        "test_ok": true,
+        "tribunal_ok": false
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      },
+      {
+       "charge": 53348,
+       "charges": 53348,
+       "complete_through_size": 7,
+       "cpu_s": 28.78,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F012-R1",
+       "found": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+       "label": null,
+       "mechanism_lambda": "(lam a (lam b (sub b (div a 3))))",
+       "oe_stats": {
+        "cpu_s": 27.83,
+        "generated": 93448,
+        "kept": 37449,
+        "pruned": 55999,
+        "signature_evals": 9788848
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        90619,
+        916438
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": true,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F012-R1",
+     "kind": "s",
+     "lambda": "(lam a (lam b (sub b (div a 3))))",
+     "mechanism": "s0",
+     "n_attempts": 2,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    }
+   }
+  },
+  "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000.x-xabs": {
+   "chain": {
+    "W1d5301d0-F027-R3": {
+     "charge": 64591,
+     "charges": 64591,
+     "complete_through_size": 6,
+     "cpu_s": 4.47,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "oe_stats": {
+      "cpu_s": 3.661,
+      "generated": 29143,
+      "kept": 11006,
+      "pruned": 18137,
+      "signature_evals": 1028304
+     },
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+      "witness_promoted_form": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 346146,
+     "units_promoted": 300353,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": 45655,
+     "charges": 45655,
+     "complete_through_size": 6,
+     "cpu_s": 3.84,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(sub h1 (div h0 3))",
+       "id": "L_bb32638da314",
+       "slot": "s0"
+      }
+     ],
+     "library_sha256": "910d7dfa44e630b5ee55360903618f9b5087abdcb2a0b1b5e8fe0afd9ea9b9d8",
+     "oe_stats": {
+      "cpu_s": 3.126,
+      "generated": 29619,
+      "kept": 11121,
+      "pruned": 18498,
+      "signature_evals": 1041736
+     },
+     "rung": "R3",
+     "static": {
+      "hitting_cost_bracket": [
+       131402,
+       1427485
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_bb32638da314"
+      ],
+      "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+      "witness_promoted_form": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 225551,
+     "units_promoted": 196869,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": 7137,
+     "charges": 7137,
+     "complete_through_size": 6,
+     "cpu_s": 6.3,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": "(filter (lam x (L_dfed6e11f262 x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(gt (add 2 3) h0)",
+       "id": "L_dfed6e11f262",
+       "slot": "p0"
+      }
+     ],
+     "library_sha256": "34d5e9dce56a4edce7714ea67e87d2698c88cf08c790a55667022330862e293b",
+     "oe_stats": {
+      "cpu_s": 6.191,
+      "generated": 17327,
+      "kept": 7204,
+      "pruned": 10123,
+      "signature_evals": 1724907
+     },
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       11835,
+       124978
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 7,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_dfed6e11f262"
+      ],
+      "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+      "witness_promoted_form": "(filter (lam x (L_dfed6e11f262 x)) (map (lam x (L_a7616ca2cd22 x)) xs))"
+     },
+     "status": "SOLVED",
+     "units_expanded": 56592,
+     "units_promoted": 51249,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": 149787,
+     "charges": 149787,
+     "complete_through_size": 7,
+     "cpu_s": 51.69,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": "(map (lam x (if (L_dfed6e11f262 x) (L_a7616ca2cd22 x) x)) xs)",
+     "library_entries": [
+      {
+       "body": "(div (add 1 h0) 3)",
+       "id": "L_a7616ca2cd22",
+       "slot": "f1"
+      },
+      {
+       "body": "(gt (add 2 3) h0)",
+       "id": "L_dfed6e11f262",
+       "slot": "p0"
+      }
+     ],
+     "library_sha256": "34d5e9dce56a4edce7714ea67e87d2698c88cf08c790a55667022330862e293b",
+     "oe_stats": {
+      "cpu_s": 48.299,
+      "generated": 119468,
+      "kept": 49345,
+      "pruned": 70123,
+      "signature_evals": 12876477
+     },
+     "rung": "R4",
+     "static": {
+      "hitting_cost_bracket": [
+       124979,
+       1365260
+      ],
+      "promoted_form_how": "witness_promoted_by_slot",
+      "size_promoted_form": 8,
+      "uses_entries": [
+       "L_a7616ca2cd22",
+       "L_dfed6e11f262"
+      ],
+      "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+      "witness_promoted_form": "(map (lam x (if (L_dfed6e11f262 x) (L_a7616ca2cd22 x) x)) xs)"
+     },
+     "status": "SOLVED",
+     "units_expanded": 1411140,
+     "units_promoted": 1272906,
+     "uses_library": true,
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "extract": "xabs",
+    "fallback": true,
+    "key": "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000.x-xabs",
+    "oe": true,
+    "row": "oe_repair+xabs",
+    "scope": "constituents",
+    "seed": 0,
+    "source": "tfs1"
+   },
+   "descriptive": {
+    "descriptive_only": "per-world output is descriptive; the verdict is POOLED (A1-A item 4)",
+    "families": [
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 3.84,
+       "r1_units_attributed": 52.67,
+       "scratch": 159.34
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F035-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:post_fold",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 51.69,
+       "r1_units_attributed": 3.28,
+       "scratch": 237.88
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F077-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:guard_p",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 6.3,
+       "r1_units_attributed": 3.28,
+       "scratch": 237.23
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "p0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F071-R4",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:filter_of_map",
+      "world": "W1d5301d0"
+     },
+     {
+      "chain_qualified": true,
+      "chain_status": "SOLVED",
+      "complete": true,
+      "constituents": [
+       "f1",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 4.47,
+       "r1_units_attributed": 52.67,
+       "scratch": 140.19
+      },
+      "extraction": {
+       "f1": "readout_fallback",
+       "s0": "closed_lambda"
+      },
+      "family_id": "W1d5301d0-F027-R3",
+      "first_failing_link": null,
+      "link_detail": "CHAIN_QUALIFIED",
+      "link_info": {
+       "detail": "CHAIN_QUALIFIED",
+       "link": null,
+       "stone_disagrees_sealed": []
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:step_of_f",
+      "world": "W1d5301d0"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "extract": "xabs",
+     "fallback": true,
+     "key": "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000.x-xabs",
+     "oe": true,
+     "row": "oe_repair+xabs",
+     "scope": "constituents",
+     "seed": 0,
+     "source": "tfs1"
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 0.31,
+      "extraction": "readout_fallback",
+      "from": "W1d5301d0-F006-R1",
+      "lambda": "(lam x (div (add 1 x) 3))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": false,
+      "cpu_s": 2.97,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F008-R1",
+      "lambda": "(lam x (gt (add 2 3) x))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "p0",
+      "n_attempts": 1,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     },
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "certifier_assisted_retry": true,
+      "cpu_s": 52.36,
+      "extraction": "closed_lambda",
+      "from": "W1d5301d0-F012-R1",
+      "lambda": "(lam a (lam b (sub b (div a 3))))",
+      "link": null,
+      "link_detail": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "status": "ACQUIRED",
+      "world": "W1d5301d0"
+     }
+    ],
+    "world": "W1d5301d0"
+   },
+   "scratch": {
+    "W1d5301d0-F027-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 140.19,
+     "family_id": "W1d5301d0-F027-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F035-R3": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 159.34,
+     "family_id": "W1d5301d0-F035-R3",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 12
+    },
+    "W1d5301d0-F071-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 237.23,
+     "family_id": "W1d5301d0-F071-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 13
+    },
+    "W1d5301d0-F077-R4": {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 8,
+     "cpu_s": 237.88,
+     "family_id": "W1d5301d0-F077-R4",
+     "found": null,
+     "status": "NOT_FOUND_AT_BUDGET",
+     "witness_size": 14
+    }
+   },
+   "units": {
+    "f1": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 11626,
+       "charges": 11626,
+       "complete_through_size": 5,
+       "cpu_s": 0.31,
+       "detail": "ACQUIRED",
+       "extraction": "readout_fallback",
+       "family_id": "W1d5301d0-F006-R1",
+       "found": "(div (add 1 (last xs)) 3)",
+       "label": null,
+       "mechanism_lambda": "(lam x (div (add 1 x) 3))",
+       "oe_stats": {
+        "cpu_s": 0.205,
+        "generated": 3350,
+        "kept": 1205,
+        "pruned": 2145,
+        "signature_evals": 138532
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "readout_fallback",
+     "from": "W1d5301d0-F006-R1",
+     "kind": "f",
+     "lambda": "(lam x (div (add 1 x) 3))",
+     "mechanism": "f1",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "p0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 15400,
+       "charges": 15400,
+       "complete_through_size": 6,
+       "cpu_s": 2.97,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F008-R1",
+       "found": "(filter (lam x (gt (add 2 3) x)) xs)",
+       "label": null,
+       "mechanism_lambda": "(lam x (gt (add 2 3) x))",
+       "oe_stats": {
+        "cpu_s": 2.801,
+        "generated": 14114,
+        "kept": 5531,
+        "pruned": 8583,
+        "signature_evals": 1447468
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        9045,
+        90618
+       ],
+       "witness_size": 7
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F008-R1",
+     "kind": "p",
+     "lambda": "(lam x (gt (add 2 3) x))",
+     "mechanism": "p0",
+     "n_attempts": 1,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    },
+    "s0": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "charge": 234879,
+       "charges": 234879,
+       "complete_through_size": 7,
+       "cpu_s": 23.58,
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "family_id": "W1d5301d0-F010-R1",
+       "found": "(foldl (lam a (lam b (sub b (div a 3)))) 2 xs)",
+       "label": "UNDERDETERMINED_STONE",
+       "oe_stats": {
+        "cpu_s": 19.956,
+        "generated": 116734,
+        "kept": 44848,
+        "pruned": 71886,
+        "signature_evals": 4791480
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": false,
+        "test_ok": true,
+        "tribunal_ok": false
+       },
+       "witness_bracket": [
+        627413,
+        6007202
+       ],
+       "witness_size": 8
+      },
+      {
+       "charge": 53348,
+       "charges": 53348,
+       "complete_through_size": 7,
+       "cpu_s": 28.78,
+       "detail": "ACQUIRED",
+       "extraction": "closed_lambda",
+       "family_id": "W1d5301d0-F012-R1",
+       "found": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+       "label": null,
+       "mechanism_lambda": "(lam a (lam b (sub b (div a 3))))",
+       "oe_stats": {
+        "cpu_s": 27.83,
+        "generated": 93448,
+        "kept": 37449,
+        "pruned": 55999,
+        "signature_evals": 9788848
+       },
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "witness_bracket": [
+        90619,
+        916438
+       ],
+       "witness_size": 8
+      }
+     ],
+     "certifier_assisted_retry": true,
+     "extraction": "closed_lambda",
+     "from": "W1d5301d0-F012-R1",
+     "kind": "s",
+     "lambda": "(lam a (lam b (sub b (div a 3))))",
+     "mechanism": "s0",
+     "n_attempts": 2,
+     "source": "tfs1",
+     "status": "ACQUIRED"
+    }
+   }
+  }
+ },
+ "searches": {
+  "W1d5301d0-F006-R1|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 49862,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 110,
+    "4": 658,
+    "5": 6723,
+    "6": 55995,
+    "7": 563912,
+    "8": 5379790
+   },
+   "complete_through_size": 5,
+   "cpu_s": 0.64,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 49862,
+   "library_entries": 0,
+   "program": "(div (add 1 (last xs)) 3)",
+   "units_expanded": 171043,
+   "units_promoted": 171043,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F006-R1|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 11626,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 109,
+    "4": 499,
+    "5": 1647,
+    "6": 12389
+   },
+   "complete_through_size": 5,
+   "cpu_s": 0.31,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 11626,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 0.205,
+    "generated": 3350,
+    "kept": 1205,
+    "pruned": 2145,
+    "signature_evals": 138532
+   },
+   "program": "(div (add 1 (last xs)) 3)",
+   "units_expanded": 41654,
+   "units_promoted": 41654,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F007-R1|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 18596,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 110,
+    "4": 658,
+    "5": 6723,
+    "6": 55995,
+    "7": 563912,
+    "8": 5379790
+   },
+   "complete_through_size": 5,
+   "cpu_s": 0.48,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 18596,
+   "library_entries": 0,
+   "program": "(div (add 1 (max xs)) 3)",
+   "units_expanded": 54326,
+   "units_promoted": 54326,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F008-R1|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 27841,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 88,
+    "5": 904,
+    "6": 8036,
+    "7": 81574,
+    "8": 825820
+   },
+   "complete_through_size": 6,
+   "cpu_s": 0.8,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 27841,
+   "library_entries": 0,
+   "program": "(filter (lam x (lt x (add 2 3))) xs)",
+   "units_expanded": 220217,
+   "units_promoted": 220217,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F008-R1|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 15400,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 82,
+    "5": 453,
+    "6": 3212,
+    "7": 19110
+   },
+   "complete_through_size": 6,
+   "cpu_s": 2.97,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 15400,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 2.801,
+    "generated": 14114,
+    "kept": 5531,
+    "pruned": 8583,
+    "signature_evals": 1447468
+   },
+   "program": "(filter (lam x (gt (add 2 3) x)) xs)",
+   "units_expanded": 122111,
+   "units_promoted": 122111,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F010-R1|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 110,
+    "4": 658,
+    "5": 6723,
+    "6": 55995,
+    "7": 563912,
+    "8": 5379790
+   },
+   "complete_through_size": 7,
+   "cpu_s": 37.88,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "program": null,
+   "units_expanded": 3990968,
+   "units_promoted": 3990968,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F010-R1|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 234879,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 109,
+    "4": 499,
+    "5": 1637,
+    "6": 12557,
+    "7": 62673,
+    "8": 389821
+   },
+   "complete_through_size": 7,
+   "cpu_s": 23.58,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 234879,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 19.956,
+    "generated": 116734,
+    "kept": 44848,
+    "pruned": 71886,
+    "signature_evals": 4791480
+   },
+   "program": "(foldl (lam a (lam b (sub b (div a 3)))) 2 xs)",
+   "units_expanded": 1201290,
+   "units_promoted": 1201290,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": false,
+    "test_ok": true,
+    "tribunal_ok": false
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F012-R1|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 286293,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 88,
+    "5": 904,
+    "6": 8036,
+    "7": 81574,
+    "8": 825820
+   },
+   "complete_through_size": 7,
+   "cpu_s": 10.45,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 286293,
+   "library_entries": 0,
+   "program": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+   "units_expanded": 1543768,
+   "units_promoted": 1543768,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F012-R1|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 53348,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 82,
+    "5": 451,
+    "6": 3161,
+    "7": 18694,
+    "8": 130672
+   },
+   "complete_through_size": 7,
+   "cpu_s": 28.78,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 53348,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 27.83,
+    "generated": 93448,
+    "kept": 37449,
+    "pruned": 55999,
+    "signature_evals": 9788848
+   },
+   "program": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+   "units_expanded": 288028,
+   "units_promoted": 288028,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F027-R3|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 110,
+    "4": 658,
+    "5": 6723,
+    "6": 55995,
+    "7": 563912,
+    "8": 5379790
+   },
+   "complete_through_size": 7,
+   "cpu_s": 42.52,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "program": null,
+   "units_expanded": 4269164,
+   "units_promoted": 4269164,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F027-R3|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 109,
+    "4": 499,
+    "5": 1633,
+    "6": 12345,
+    "7": 61281,
+    "8": 376395
+   },
+   "complete_through_size": 8,
+   "cpu_s": 140.19,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 121.658,
+    "generated": 721345,
+    "kept": 251486,
+    "pruned": 469859,
+    "signature_evals": 32508378
+   },
+   "program": null,
+   "units_expanded": 6939611,
+   "units_promoted": 6939611,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F027-R3|seed=0|lib=910d7dfa44e630b5|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 650459,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 144,
+    "4": 1124,
+    "5": 11817,
+    "6": 118298,
+    "7": 1296084,
+    "8": 14275956
+   },
+   "complete_through_size": 6,
+   "cpu_s": 37.05,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 650459,
+   "library_entries": 2,
+   "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+   "units_expanded": 3107598,
+   "units_promoted": 2573603,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F027-R3|seed=0|lib=910d7dfa44e630b5|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 64591,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 134,
+    "4": 596,
+    "5": 2402,
+    "6": 18282,
+    "7": 107621
+   },
+   "complete_through_size": 6,
+   "cpu_s": 4.47,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 64591,
+   "library_entries": 2,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 3.661,
+    "generated": 29143,
+    "kept": 11006,
+    "pruned": 18137,
+    "signature_evals": 1028304
+   },
+   "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+   "units_expanded": 346146,
+   "units_promoted": 300353,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F027-R3|seed=0|lib=e809123d255d39f9|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 650459,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 144,
+    "4": 1124,
+    "5": 11817,
+    "6": 118298,
+    "7": 1296084,
+    "8": 14275956
+   },
+   "complete_through_size": 6,
+   "cpu_s": 27.75,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 650459,
+   "library_entries": 2,
+   "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+   "units_expanded": 3107598,
+   "units_promoted": 2573603,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F035-R3|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 110,
+    "4": 658,
+    "5": 6723,
+    "6": 55995,
+    "7": 563912,
+    "8": 5379790
+   },
+   "complete_through_size": 7,
+   "cpu_s": 59.34,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "program": null,
+   "units_expanded": 4224745,
+   "units_promoted": 4224745,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F035-R3|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 4,
+    "2": 10,
+    "3": 109,
+    "4": 499,
+    "5": 1651,
+    "6": 12639,
+    "7": 63137,
+    "8": 382351
+   },
+   "complete_through_size": 8,
+   "cpu_s": 159.34,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 144.034,
+    "generated": 732272,
+    "kept": 250341,
+    "pruned": 481931,
+    "signature_evals": 33111410
+   },
+   "program": null,
+   "units_expanded": 6863083,
+   "units_promoted": 6863083,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F035-R3|seed=0|lib=910d7dfa44e630b5|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 410735,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 144,
+    "4": 1124,
+    "5": 11817,
+    "6": 118298,
+    "7": 1296084,
+    "8": 14275956
+   },
+   "complete_through_size": 6,
+   "cpu_s": 20.88,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 410735,
+   "library_entries": 2,
+   "program": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+   "units_expanded": 1881341,
+   "units_promoted": 1559316,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F035-R3|seed=0|lib=910d7dfa44e630b5|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 45655,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 134,
+    "4": 596,
+    "5": 2426,
+    "6": 18690,
+    "7": 110573
+   },
+   "complete_through_size": 6,
+   "cpu_s": 3.84,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 45655,
+   "library_entries": 2,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 3.126,
+    "generated": 29619,
+    "kept": 11121,
+    "pruned": 18498,
+    "signature_evals": 1041736
+   },
+   "program": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+   "units_expanded": 225551,
+   "units_promoted": 196869,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F035-R3|seed=0|lib=e809123d255d39f9|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 410735,
+   "class_sizes": {
+    "1": 4,
+    "2": 14,
+    "3": 144,
+    "4": 1124,
+    "5": 11817,
+    "6": 118298,
+    "7": 1296084,
+    "8": 14275956
+   },
+   "complete_through_size": 6,
+   "cpu_s": 20.92,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 410735,
+   "library_entries": 2,
+   "program": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+   "units_expanded": 1881341,
+   "units_promoted": 1559316,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F071-R4|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 88,
+    "5": 904,
+    "6": 8036,
+    "7": 81574,
+    "8": 825820
+   },
+   "complete_through_size": 8,
+   "cpu_s": 69.56,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "program": null,
+   "units_expanded": 9997131,
+   "units_promoted": 9997131,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F071-R4|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 82,
+    "5": 451,
+    "6": 3177,
+    "7": 18850,
+    "8": 132226
+   },
+   "complete_through_size": 8,
+   "cpu_s": 237.23,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 213.94,
+    "generated": 597118,
+    "kept": 233936,
+    "pruned": 363182,
+    "signature_evals": 62354844
+   },
+   "program": null,
+   "units_expanded": 12643726,
+   "units_promoted": 12643726,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F071-R4|seed=0|lib=34d5e9dce56a4edc|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 7137,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 85,
+    "5": 493,
+    "6": 3532,
+    "7": 23031
+   },
+   "complete_through_size": 6,
+   "cpu_s": 6.3,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 7137,
+   "library_entries": 2,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 6.191,
+    "generated": 17327,
+    "kept": 7204,
+    "pruned": 10123,
+    "signature_evals": 1724907
+   },
+   "program": "(filter (lam x (L_dfed6e11f262 x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+   "units_expanded": 56592,
+   "units_promoted": 51249,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F071-R4|seed=0|lib=972e7e3f3da86513|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 64561,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 6,
+   "cpu_s": 2.55,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 64561,
+   "library_entries": 2,
+   "program": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+   "units_expanded": 620942,
+   "units_promoted": 537660,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F071-R4|seed=0|lib=c07442700776b7f8|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 64561,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 6,
+   "cpu_s": 3.19,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 64561,
+   "library_entries": 2,
+   "program": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+   "units_expanded": 620942,
+   "units_promoted": 537660,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F077-R4|seed=0|lib=-|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 88,
+    "5": 904,
+    "6": 8036,
+    "7": 81574,
+    "8": 825820
+   },
+   "complete_through_size": 8,
+   "cpu_s": 77.84,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "program": null,
+   "units_expanded": 7803032,
+   "units_promoted": 7803032,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F077-R4|seed=0|lib=-|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 82,
+    "5": 451,
+    "6": 3144,
+    "7": 18560,
+    "8": 129022
+   },
+   "complete_through_size": 8,
+   "cpu_s": 237.88,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 0,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 219.238,
+    "generated": 586873,
+    "kept": 226152,
+    "pruned": 360721,
+    "signature_evals": 63395517
+   },
+   "program": null,
+   "units_expanded": 9693841,
+   "units_promoted": 9693841,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F077-R4|seed=0|lib=34d5e9dce56a4edc|oe=1|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 149787,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 85,
+    "5": 493,
+    "6": 3502,
+    "7": 22742,
+    "8": 164462
+   },
+   "complete_through_size": 7,
+   "cpu_s": 51.69,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 149787,
+   "library_entries": 2,
+   "oe": true,
+   "oe_stats": {
+    "cpu_s": 48.299,
+    "generated": 119468,
+    "kept": 49345,
+    "pruned": 70123,
+    "signature_evals": 12876477
+   },
+   "program": "(map (lam x (if (L_dfed6e11f262 x) (L_a7616ca2cd22 x) x)) xs)",
+   "units_expanded": 1411140,
+   "units_promoted": 1272906,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  },
+  "W1d5301d0-F077-R4|seed=0|lib=972e7e3f3da86513|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 7,
+   "cpu_s": 42.75,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 2,
+   "program": null,
+   "units_expanded": 9456510,
+   "units_promoted": 8292270,
+   "verify_evals": 0
+  },
+  "W1d5301d0-F077-R4|seed=0|lib=c07442700776b7f8|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": true,
+   "charges": 1000000,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 7,
+   "cpu_s": 47.03,
+   "false_hits": 0,
+   "hit": false,
+   "hit_charge": null,
+   "library_entries": 2,
+   "program": null,
+   "units_expanded": 9456510,
+   "units_promoted": 8292270,
+   "verify_evals": 0
+  }
+ },
+ "seeded_from": {
+  "code_sha256_of_source": {
+   "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "dependency.py": "d61122aed0801ba8d41d2911c3d7bf144c2fb7c53dfbf5a80011e86cbdc8ec01",
+   "e3_known_positive.py": "1efd24d1fe0620179388b2ac7f4cdb73b13752ca521674a37167407b3d385d15",
+   "final_eval.py": "39f51af061c9ddc358d52dff81b20a730cc081b656adc33a75082e9e85c2df3e",
+   "kp_timing.py": "0706bbeee6643cc514a9f4e4be6fec86089342f179b48d594d324ca1a24ce1f0",
+   "organism.py": "93f0e2c0a9a99f3666b419909b771aa2373a787f17e5d75402f0d0fee7a17daa",
+   "resumable.py": "d87e55f3a18ed7e6e14cc4be39e5b5d0ee6199d1ff83a476d0e8467998910238",
+   "smoke.py": "cf8271284fd2dae5a8810a2f2a2fe92134fc094e193ec708b40ec2c179ffe4f4",
+   "summarize_smoke.py": "e0e65b34d6ba6538371e004796af0c6a5be5ce481ddd17c50a2fc124e23b049a",
+   "worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444"
+  },
+  "dir": "tfs1/e3/runs",
+  "n_searches": 29
+ },
+ "world": "W1d5301d0"
+}

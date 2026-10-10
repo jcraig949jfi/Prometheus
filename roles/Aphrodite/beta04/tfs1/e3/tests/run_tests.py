@@ -687,6 +687,154 @@ def test_id_pooled_outcome_rules():
     return {"cases": 7}
 
 
+# ================================================================ E3-R (windows/E3R_PREREG.md): X-ABS + 2x2 REPAIR_CLASS
+FROZEN_KP_BLOB = "2b9845fedec302737ac5b3da3ef94616d625d68a"     # FREEZE_E3KP git blob of e3_known_positive.py
+KP_PRODUCTION = BETA04 / "runs" / "kp_production"
+REVIEWER_CASES = [   # (world, mechanism, sealed mechanism as stated in reviews/INDEPENDENT_REVIEW_RESULTS_v1.md F2)
+    ("W483b8c31", "f0", "(lam x (add 2 (mul x x)))"),
+    ("W6eb945cc", "f0", "(lam x (sub 1 (mul x x)))"),
+    ("Wb49b6a5f", "f1", "(lam x (mul (mul x x) 3))")]
+
+
+def _frozen_kp_module():
+    import importlib.util
+    src = subprocess.run(["git", "cat-file", "-p", FROZEN_KP_BLOB], capture_output=True, text=True, cwd=str(BETA04),
+                         check=True).stdout
+    spec = importlib.util.spec_from_loader("kp_frozen_blob", loader=None)
+    mod = importlib.util.module_from_spec(spec)
+    mod.__dict__["__file__"] = KP.__file__          # the frozen module locates HERE = tfs1/e3 from its own path
+    exec(compile(src, "kp_frozen_blob", "exec"), mod.__dict__)
+    return mod
+
+
+def _probe_beh(lam_text):
+    t = C.parse(lam_text)
+    return [C.evaluate(("app", t, ("int", v)), [])[0] for v in range(-40, 41)]
+
+
+@test
+def test_e3r_frozen_extraction_and_keys_byte_identical():
+    """The frozen E3-KP rule is unchanged: extract_mechanism (default and fallback off) equals the FROZEN blob's on
+    every dev-consistent pilot R1 program (E3-ID enumerations) and every stored production R1 / chain program; frozen
+    Config keys and row JSON are unchanged; the pilot primary units re-derive identically from the cached searches."""
+    F = _frozen_kp_module()
+    progs = set()
+    for p in (HERE / "runs").glob("ID_W*.json"):
+        for e in json.loads(p.read_text())["enumerations"].values():
+            progs |= {h[1] for h in e["hits"]}
+    for p in KP_PRODUCTION.glob("KPA1_W*.json"):
+        for r in json.loads(p.read_text())["searches"].values():
+            if r.get("program"):
+                progs.add(r["program"])
+    n = 0
+    for prog in sorted(progs):
+        for kind in ("f", "p", "s"):
+            for fb in (True, False):
+                a, b = KP.extract_mechanism(prog, kind, fallback=fb), F.extract_mechanism(prog, kind, fallback=fb)
+                check((a is None and b is None) or (a is not None and b is not None and a == b),
+                      "extraction differs from the frozen blob on %s/%s" % (prog, kind))
+                n += 1
+    for kw in ({}, {"fallback": False}, {"source": "foundry"}, {"scope": "all"}, {"seed": 2}, {"oe": True},
+               {"budget": 20000}):
+        check(KP.Config(**kw).key() == F.Config(**kw).key(), "frozen key changed %r" % kw)
+        check(KP.Config(**kw).to_json() == F.Config(**kw).to_json(), "frozen to_json changed %r" % kw)
+    check(KP.Config(extract="xabs").key() == KP.PRIMARY.key() + ".x-xabs", "xabs key")
+    # the pilot primary units re-derive identically (all searches cached: no search runs)
+    d = json.loads((HERE / "runs" / "KPA1_W1d5301d0.json").read_text())
+    kp = KP.KP(str(ROOT), WORLD)
+    n_s = len(d["searches"])
+    for m, u in d["rows"][KP.PRIMARY.key()]["units"].items():
+        check(kp.run_unit(d, m, KP.PRIMARY) == u, "unit %s re-derives differently" % m)
+    check(len(d["searches"]) == n_s, "a search was run")
+    return {"programs": len(progs), "comparisons": n, "frozen_blob": FROZEN_KP_BLOB}
+
+
+@test
+def test_e3r_xabs_reviewer_cases_from_stored_production_programs():
+    """X-ABS on the 3 reviewer mis-cut units: the R1 programs are LOADED from runs/kp_production (no search on
+    production; the R1 dev INPUTS are read for the validity check); X-ABS gives a stone equal to the sealed mechanism
+    on [-40, 40], while the frozen rule still gives the mis-cut map body."""
+    out = {}
+    for world, m, sealed in REVIEWER_CASES:
+        d = json.loads((KP_PRODUCTION / ("KPA1_%s.json" % world)).read_text())
+        u = d["rows"][KP.PRIMARY.key()]["units"][m]
+        prog, fid = u["attempts"][-1]["found"], u["from"]
+        ev = WD.Evaluator(str(BETA04 / "foundry" / "production"), world)
+        by = {mm["family_id"]: o for o, mm in ev.id_map.items()}
+        dev = [i for i, _o in ev.task(by[fid])["dev"]]
+        fr = KP.extract_mechanism(prog, "f")
+        xa = KP.extract_mechanism(prog, "f", mode="xabs", dev_inputs=dev)
+        check(C.to_str(fr[0]) == u["lambda"], "frozen rule changed on %s" % world)
+        check(_probe_beh(C.to_str(fr[0])) != _probe_beh(sealed), "frozen stone unexpectedly sealed-equivalent")
+        check(xa[1] == "xabs_absorbed" and _probe_beh(C.to_str(xa[0])) == _probe_beh(sealed),
+              "X-ABS stone %s not sealed-equivalent on %s" % (C.to_str(xa[0]), world))
+        out[world + "/" + m] = {"program": prog, "frozen": C.to_str(fr[0]), "xabs": C.to_str(xa[0])}
+    # kinds p / s: X-ABS = the frozen rule
+    for prog, kind in (("(len (filter (lam x (gt (sub x 2) 3)) xs))", "p"),
+                       ("(foldl (lam a (lam b (sub b (div a 3)))) 0 xs)", "s")):
+        check(KP.extract_mechanism(prog, kind, mode="xabs", dev_inputs=[[1, 2]]) == KP.extract_mechanism(prog, kind),
+              "p/s must use the frozen rule")
+    return out
+
+
+@test
+def test_e3r_xabs_validity_rejects_non_equivalent_absorption():
+    """A non-monotone context ((mod [] 3) around max) is a type-valid, closed, xs-free candidate but NOT equivalent:
+    it agrees on the dev inputs and is rejected by the 200 seeded probe lists, so X-ABS falls back to the frozen rule.
+    A monotone-decreasing context is accepted only through the dual reducer; head contexts always absorb."""
+    prog = "(mod (max (map (lam x (add x 1)) xs)) 3)"
+    dev = [[2], [3, 7]]
+    t = C.parse(prog)
+    cands = KP.xabs_candidates(t)
+    check(len(cands) == 1 and C.to_str(cands[0]["stone"]) == "(lam x (mod (add x 1) 3))", "candidate")
+    p2 = ("max", ("map", cands[0]["stone"], ("xs",)))
+    check(KP._agree_all(t, p2, dev), "construction: the absorption must agree on dev")
+    check(not KP._agree_all(t, p2, dev + KP.xabs_probe_lists(dev)), "probes must expose it")
+    check(KP.xabs_extract(prog, "f", dev) is None, "non-equivalent absorption accepted")
+    ex = KP.extract_mechanism(prog, "f", mode="xabs", dev_inputs=dev)
+    check(ex == KP.extract_mechanism(prog, "f") and C.to_str(ex[0]) == "(lam x (add x 1))", "fallback to frozen")
+    dec = KP.xabs_extract("(neg (max (map (lam x (add x 1)) xs)))", "f", [[1, 5, -2], [0, 3]])
+    check(dec is not None and dec["reducer_used"] == "min", "decreasing context via the dual reducer")
+    hd = KP.xabs_extract("(mod (head (map (lam x (add x 1)) xs)) 3)", "f", [[1, 5, -2], [0, 3]])
+    check(hd is not None and C.to_str(hd["stone"]) == "(lam x (mod (add x 1) 3))", "head absorbs any context")
+    nest = KP.xabs_extract("(add 1 (mul 2 (max (map (lam x (pow x 2)) xs))))", "f", [[1, 5, -2], [0, 3]])
+    check(nest is not None and nest["absorbed"] == 4 and C.to_str(nest["stone"]) ==
+          "(lam x (add 1 (mul 2 (pow x 2))))", "maximal absorption")
+    xs_ctx = KP.xabs_candidates(C.parse("(add (len xs) (max (map (lam x (pow x 2)) xs)))"))
+    check(not xs_ctx, "a context that reads xs is not absorbable")
+    return {"rejected": prog, "probes": KP.XABS_N_PROBES}
+
+
+@test
+def test_e3r_repair_class_rules():
+    def V(q, sf=15, n=15, complete=True, links=None):
+        return {"n_admitted_R3_R4": n, "chain_qualified": q, "scratch_fails": sf, "complete": complete,
+                "first_failing_link_counts": links or {"HORIZON_R1": n - q}}
+    R = KP.repair_class_from
+    check(R({"off_frozen": V(7), "on_frozen": V(12), "off_xabs": V(9), "on_xabs": V(14)})["REPAIR_CLASS"] == "SEARCH",
+          "SEARCH")
+    check(R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(12), "on_xabs": V(13)})["REPAIR_CLASS"] ==
+          "DEVELOPMENTAL", "DEVELOPMENTAL")
+    check(R({"off_frozen": V(7), "on_frozen": V(13), "off_xabs": V(12), "on_xabs": V(13)})["REPAIR_CLASS"] ==
+          "EITHER", "EITHER")
+    check(R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(9), "on_xabs": V(12)})["REPAIR_CLASS"] ==
+          "BOTH_REQUIRED", "BOTH")
+    r = R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(9),
+           "on_xabs": V(11, links={"HORIZON_R1": 3, "UNDERDETERMINED_STONE": 1})})
+    check(r["REPAIR_CLASS"] == "NONE" and r["best_cell"] == "on_xabs" and r["best_cell_dominant"] == "HORIZON"
+          and r["recommendation_reading"].startswith("CHANGE_SEARCH"), "NONE + horizon")
+    t = R({"off_frozen": V(7), "on_frozen": V(13, sf=11), "off_xabs": V(9), "on_xabs": V(13, sf=11)})
+    check(t["REPAIR_CLASS"] == "NONE" and t["cells"]["on_frozen"]["trivialised"], "TRIVIALISED does not count")
+    check(R({"off_frozen": V(7), "on_frozen": V(13), "off_xabs": V(9, complete=False),
+             "on_xabs": V(14)})["REPAIR_CLASS"] == "INCOMPLETE", "INCOMPLETE")
+    # CENSORED scratch counts as NOT failed (A3.6)
+    kp = KP.KP(str(ROOT), WORLD)
+    d = {"rows": {KP.PRIMARY.key(): {"units": {}, "chain": {},
+                                     "scratch": {f: {"status": "CENSORED"} for f in kp.admitted()}}}}
+    check(all(f["scratch_fails"] is False for f in kp.describe(d, KP.PRIMARY)["families"]), "CENSORED")
+    return {"cases": 8}
+
+
 def _run(fn):
     t0 = time.perf_counter()
     try:
