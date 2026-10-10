@@ -57,3 +57,6 @@ date | call made | what was true | corrected by | changed practice
 - K design review found a leaking attribution endpoint (shared bytes carry uninformative founder tags) -- the same class
   as DEF-008 (a label that is true of material, not of function). Rule: attribution endpoints are computed only on
   positions that distinguish the candidate sources.
+- Proxy-endpoint error: the RD-72 persistence probe scored "population alive", the downstream question needed "replicators
+  alive"; E1 (16 runs in) showed 0 FUNC tapes from tick 100 in every world. Rule: a pilot's success criterion must be the
+  downstream block's precondition (here FUNC organisms present), not a cheaper proxy.

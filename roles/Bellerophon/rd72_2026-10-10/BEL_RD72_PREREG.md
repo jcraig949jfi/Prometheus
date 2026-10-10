@@ -155,3 +155,13 @@ Analysis tools/analyze_d2.py:
 - The precursor-damage account HOLDS if P1 and P2 hold in BOTH substrates; reported in any case: block_all vs normal
   (replication), block_noldir vs normal, and import-execution dose per arm (the arms block different amounts; a dose
   difference is disclosed, not corrected).
+
+## 6-D1. E1 STOPPED (disclosure, 2026-10-10T15:22:03Z)
+
+E1 was stopped at 16/80 runs (2026-10-10T15:21:35Z, ~14 min after start) because the persistence setting it used does not
+keep REPLICATORS: in every completed world the census showed 0 FUNC tapes from tick 100 on (populations of 100-230
+organisms, almost all distinct, sustained by non-FUNC writing; 1 extinct). The pilot that chose the setting measured
+survival of ANY organism, not of FUNC organisms (my design error; calibration ledger). The stop is outcome-informed and
+E1 is DISCOVERY only; the 16 runs are kept and reported as a negative boundary (persistence without replicators). No
+confirmatory test is affected; C2/C3 (s7) take their worlds from whichever E1 successor is run, by the same frozen rules.
+A FUNC-persistence probe (48 pilot runs) chooses the successor setting by the criterion FUNC alive at tick 800.
