@@ -23,5 +23,20 @@
     "miss": "a mutant item with no hit",
     "false_alarm": "a clean item with any finding claiming a bug",
     "metrics": "recall = hits / 40 and false-alarm rate = false alarms / 20, each with a Wilson 95 percent interval; a reviewer whose recall interval lies below 0.5 is reported as unreliable for unsupervised review"
-  }
+  },
+  "amendments": [
+    {
+      "id": "A1",
+      "date": "2026-10-10",
+      "after_generation": true,
+      "before_any_reviewer_scored": true,
+      "change": "CHANNEL found on inspection: every item's unmutated original is in the repository, so a reviewer with repository (or pan search) access can find a seeded bug by diffing instead of reviewing. Calibration scores are therefore valid ONLY for reviewers run WITHOUT repository access (prompt-only: the item's code, optionally its module context from the sandbox). Packets handed to reviewers omit module path, task id and line numbers in the module; the items file in the lake keeps them for scoring.",
+      "evidence": "items file ITEMS_20261010T072739Z.json carries module/start/end/task_id (needed for scoring)"
+    },
+    {
+      "id": "A2",
+      "date": "2026-10-10",
+      "change": "Bookkeeping: the generator's 'survivors' was candidates tried minus mutants kept -- an upper bound, because the last batch's extra killed mutants were not needed. The counter now counts mutants the tests did NOT catch. First set: 64 tried, 40 kept, survivors <= 24."
+    }
+  ]
 }

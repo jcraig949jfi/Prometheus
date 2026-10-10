@@ -92,7 +92,7 @@ def build(workers=4, out=print):
     order = tasks[:]
     rng.shuffle(order)
     t0 = time.time()
-    mutants, used, tried = [], set(), 0
+    mutants, used, tried, survived = [], set(), 0, 0
     i = 0
     while len(mutants) < 40 and i < len(order):
         batch = []
@@ -112,7 +112,10 @@ def build(workers=4, out=print):
         jobs = [(t, mu[0], None) for t, fn, op, mu in batch]
         tried += len(jobs)
         for (t, fn, op, mu), (ok, detail) in zip(batch, rb.verdicts(dirs, jobs)):
-            if ok or len(mutants) >= 40:      # survived (tests pass): not a known-detectable bug
+            if ok:                            # survived (tests pass): not a known-detectable bug
+                survived += 1
+                continue
+            if len(mutants) >= 40:
                 continue
             used.add(t["task_id"])
             mutants.append(dict(item=None, task_id=t["task_id"], module=t["module"], function=t["name"],
@@ -141,7 +144,7 @@ def build(workers=4, out=print):
     pi.write_bytes(bi)
     pk.write_bytes(bk)
     summary = dict(stamp=stamp, items=len(items), mutants=len(mutants), clean=len(clean), candidates_tried=tried,
-                   survivors=tried - len(mutants), ops={o: sum(1 for m in mutants if m["answer"]["op"] == o)
+                   survivors=survived, ops={o: sum(1 for m in mutants if m["answer"]["op"] == o)
                                                         for o in pr["operators"]},
                    items_sha256=hashlib.sha256(bi).hexdigest(), answers_sha256=hashlib.sha256(bk).hexdigest(),
                    items_path=str(pi), answers_path=str(pk), seconds=round(time.time() - t0, 1))
