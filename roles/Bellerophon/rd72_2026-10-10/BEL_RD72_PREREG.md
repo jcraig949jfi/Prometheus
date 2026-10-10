@@ -114,3 +114,27 @@ Plan tools/plan_k2.py: 1320 727cea06826695868ae7215994ea6599d73470b2623ba9cc7529
 Analysis tools/analyze_k2.py (synthetic tests incl. the reviewer's mislabel specimen, tools/tests/test_analyze_k2.py).
 K-P1..K-P3 wording otherwise unchanged; K-P4 now reads: XY_AL PARTIAL_BYTE COMP_PERSIST ON > RANDOM_REWARD. plan_k.py is
 superseded and never run.
+
+## 7. C2 (source removal) and C3 (mechanism dependency) -- CONFIRMATORY on E1 worlds (frozen 2026-10-10T13:05:30Z; E1 NOT STARTED, no E1 result exists)
+
+Plans: tools/plan_c23.py E1_RESULTS E1_PLAN OUT -- a deterministic function of E1 output (sha256 logged at launch); the unit is
+an E1 world replayed exactly to an intervention tick (tools/intervene.py InterveneWorld: NONE is byte-identical to the
+light census world (test); kills go through the v3 resource ledger; the intervention RNG is separate). Rules (docstring of
+plan_c23.py is part of this section):
+C2: worlds with a FUNC LO-or-BOTH tape at a census tick in [t_LO + 200, 1,000]; at = the first such tick; arms REMOVE
+(every LO / BOTH carrier, FUNC or not), SHAM (same number of NONE organisms), NONE; continued 1,000 ticks.
+C3: COND_ONE worlds of C2 with no BOTH tape (FUNC or not) in any census up to at; arms A_PRESENT (no action), ABLATE (remove
+every LO carrier), SHAM (matched removal of NONE); continued 1,500 ticks. C3 FOREIGN: C1_ON worlds with no LO-or-BOTH
+FUNC tape up to tick 500 and alive at 500: IMPLANT (16 copies of a foreign LO FUNC tape from a C3 donor world) vs
+IMPLANT_SHAM (16 copies of the world's own NONE FUNC tapes) at 500; continued to 2,000.
+Analysis tools/analyze_c23.py (synthetic test tools/tests/test_c23.py):
+- C2-a: LO-or-BOTH FUNC present at the end, SHAM > REMOVE (Fisher one-sided; reported, not a claim by itself).
+- C2-b (regeneration / lineage-independent persistence): among REMOVE worlds where LO re-appears, re-acquisition delay
+  (from at) is SHORTER than the world's original t_LO (from tick 0) more often than longer: one-sided sign test p < 0.05;
+  NOT_TESTABLE with < 5 informative worlds. Disclosed confound: at  the population is copier-rich, at tick 0 it is a
+  seeded minority; a faster return therefore says the world (not the removed lineage) holds the route; WHERE it is held
+  (cryptic carriers vs fresh mutation) is NOT resolved by the light instrument and is not claimed.
+- C3-P1 (A makes B reachable): BOTH FUNC after at: A_PRESENT > ABLATE AND SHAM > ABLATE (Fisher one-sided, both p < 0.05);
+  NOT_TESTABLE if A_PRESENT + SHAM BOTH events < 5.
+- C3-P2 (transplanted A makes B reachable in foreign backgrounds): BOTH FUNC after 500, IMPLANT > IMPLANT_SHAM (Fisher
+  one-sided p < 0.05); NOT_TESTABLE if IMPLANT + IMPLANT_SHAM BOTH events < 5.
