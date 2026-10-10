@@ -1,8 +1,8 @@
 {
  "schema": "moonshot.nf.mutation_table.v1",
- "head": "8507ee3fbf28e5f34e18b31096b51278035ff4ac",
+ "head": "19f69064dd064ce6298074d6a15bd423fb918e8b",
  "moonshot_dirty": true,
- "seconds": 0.7,
+ "seconds": 0.5,
  "results": [
   {
    "id": "NM01",
@@ -12,11 +12,11 @@
     "moonshot.epoch.tests.test_native_wforge.TestConformance"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
-    "FAILED (failures=1)"
+    "FAILED (failures=2)"
    ],
-   "first_failure": "FAIL: test_several_worlds_conform (moonshot.epoch.tests.test_native_wforge.TestConformance.test_several_worlds_conform) (world_seed=3)"
+   "first_failure": "FAIL: test_several_worlds_conform (moonshot.epoch.tests.test_native_wforge.TestConformance.test_several_worlds_conform) (world_seed=1)"
   },
   {
    "id": "NM02",
@@ -26,7 +26,7 @@
     "moonshot.epoch.tests.test_native_wforge.TestConformance"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
     "FAILED (failures=3)"
    ],
@@ -54,7 +54,7 @@
     "moonshot.epoch.tests.test_native_wforge.TestConformance"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
     "FAILED (failures=7)"
    ],
@@ -68,11 +68,11 @@
     "moonshot.epoch.tests.test_native_wforge.TestConformance"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
-    "FAILED (failures=10)"
+    "FAILED (failures=9)"
    ],
-   "first_failure": "FAIL: test_a_finished_world_stays_finished (moonshot.epoch.tests.test_native_wforge.TestConformance.test_a_finished_world_stays_finished)"
+   "first_failure": "FAIL: test_chained_epochs_equal_one_monolithic_run (moonshot.epoch.tests.test_native_wforge.TestConformance.test_chained_epochs_equal_one_monolithic_run)"
   },
   {
    "id": "NM06",
@@ -82,7 +82,7 @@
     "moonshot.epoch.tests.test_native_wforge.TestConformance"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
     "FAILED (failures=9)"
    ],
@@ -124,7 +124,7 @@
     "moonshot.epoch.tests.test_native_wforge.TestIdentityAndRefusals"
    ],
    "verdict": "KILLED",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "tail": [
     "FAILED (failures=1)"
    ],

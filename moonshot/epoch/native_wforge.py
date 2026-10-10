@@ -12,9 +12,11 @@ policy {"name": "affordable-seeded", "version": 1, "seed"}, wforge_world_sha256 
 ran: world.py + genome.py, LF-normalised; a different implementation is REFUSED, so a repaired wforge is a different
 spec and a different work identity).
 
-Policy affordable-seeded v1: for each live slot, a seeded proposal per action channel (0..7) from wforge's own stream
-function keyed by (policy seed, world id, episode seed, tick, slot); if its cost exceeds the slot's charge the slot
-abstains. It is stateless, and it never issues an unaffordable action -- wforge's F09 path (unaffordable actions
+Policy affordable-seeded v1: for each live slot, wforge's own stream function keyed by (policy seed, world id, episode
+seed, tick, slot) draws: on one tick in four, an action of magnitude 1..3 on one channel, else abstention; if the
+action's cost exceeds the slot's charge, the slot abstains. Frugal by design, so a world lives long enough for its
+epochs to carry ticks (a policy acting on every channel every tick drained every surveyed world within ~10 ticks).
+It is stateless, and it never issues an unaffordable action -- wforge's F09 path (unaffordable actions
 queue unpaid writes) is never exercised, so these epochs do not depend on that defect. It is plumbing, not an
 organism: no survival search runs on it (OP-NF2).
 """
@@ -140,7 +142,9 @@ def policy_actions(p, mech, enc):
     for s in range(mech.n_slots):
         r = W.stream("moonshot.policy.affordable-seeded.v1", p["policy"]["seed"], p["world_id"], p["episode_seed"],
                      enc.tick, s)
-        a = [r.below(8) for _ in range(mech.act_width)]
+        a = [0] * mech.act_width
+        if r.below(4) == 0:
+            a[r.below(mech.act_width)] = 1 + r.below(3)
         if not enc.alive[s] or sum(a) * mech.act_cost > enc.charge[s]:
             a = [0] * mech.act_width                                      # abstain: never an unaffordable action
         out.append(a)
