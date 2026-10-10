@@ -1,0 +1,27 @@
+[
+ {
+  "mutant": "relaunch: ignore live supervisor",
+  "result": "KILLED",
+  "tail": "FAILED (failures=3)"
+ },
+ {
+  "mutant": "relaunch: relaunch a HALTED run",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "relaunch: ignore BLOCKED",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "relaunch: no lock",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "filelock: PermissionError not contention",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ }
+]

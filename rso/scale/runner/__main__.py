@@ -8,6 +8,8 @@
     verify <run_dir> <chain_id>             the s3.8 resume checks, replay forced (records a RESUME_CHECK row)
     account <run_dir> [--write]             the final account (JSON); --write stores FINAL_ACCOUNT.json once
     control <run_dir>                       the uninterrupted control digest (JSON)
+    relaunch <run_dir>                      idempotent host-relaunch entry for a scheduler timer (relaunch.py)
+    prune <run_dir> [--dry-run]             apply the manifest's checkpoint_retention policy (retention.py)
 """
 import argparse
 import json
@@ -19,6 +21,8 @@ from rso.scale.runner import control as CTL
 from rso.scale.runner import engine as E
 from rso.scale.runner import lease as L
 from rso.scale.runner import resume as RS
+from rso.scale.runner import relaunch as RL
+from rso.scale.runner import retention as RET
 from rso.scale.runner import run as RUN
 from rso.scale.runner import store as S
 from rso.scale.runner import supervisor as SUP
@@ -43,12 +47,15 @@ def main(argv=None):
     c = sub.add_parser("create")
     c.add_argument("run_dir")
     c.add_argument("--spec", required=True)
-    for name in ("launch", "supervise", "status", "control", "_spawn"):
+    for name in ("launch", "supervise", "status", "control", "_spawn", "relaunch"):
         sub.add_parser(name).add_argument("run_dir")
     for name in ("work", "verify"):
         s = sub.add_parser(name)
         s.add_argument("run_dir")
         s.add_argument("chain_id")
+    pr = sub.add_parser("prune")
+    pr.add_argument("run_dir")
+    pr.add_argument("--dry-run", action="store_true")
     a = sub.add_parser("account")
     a.add_argument("run_dir")
     a.add_argument("--write", action="store_true")
@@ -62,6 +69,10 @@ def main(argv=None):
     if args.cmd == "launch":
         print(json.dumps(SUP.launch_detached(rd)))
         return 0
+    if args.cmd == "relaunch":
+        out = RL.relaunch(rd)
+        print(json.dumps(out), flush=True)
+        return RL.EXIT[out["action"]]
     if args.cmd == "_spawn":
         SUP.spawn_supervisor(rd)
         return 0
@@ -78,6 +89,9 @@ def main(argv=None):
         return 0
     if args.cmd == "status":
         print(json.dumps(status(rd), indent=1, default=str))
+        return 0
+    if args.cmd == "prune":
+        print(json.dumps(RET.prune(rd, dry_run=args.dry_run), indent=1))
         return 0
     if args.cmd == "account":
         print(json.dumps(A.final_account(rd, write=args.write), indent=1))

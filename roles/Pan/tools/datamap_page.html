@@ -84,6 +84,17 @@
       <div class="dm-arch" id="dm-arch" data-source="architecture"></div>
     </article>
 
+    <article class="dm-card dm-wide" id="review">
+      <h2>Where a code review would pay</h2>
+      <p class="dm-note">Python modules ranked by recent change, whether any test imports them, and static smells. Signals, not verdicts: the score only orders the list, and nothing here has been sent to any seat. Rebuild with <code>python -m pan review build</code>.</p>
+      <div class="dm-scroll"><table id="dm-review" data-source="review_queue" data-row-key="path">
+        <thead><tr><th data-field="path">Module</th><th data-field="seat">Seat</th><th class="num" data-field="commits_7d">Commits, 7 days</th><th class="num" data-field="tested_by">Tests importing it</th><th data-field="smells">Smells</th></tr></thead><tbody></tbody>
+      </table></div>
+      <h2 id="smells">How common each smell is</h2>
+      <p class="dm-note">Modules carrying each smell anywhere in the repository, and how many of those changed in the last 30 days.</p>
+      <div class="dm-bars" id="dm-smells" data-source="review_smells"></div>
+    </article>
+
     <article class="dm-card" id="stores">
       <h2>Where the bytes are</h2>
       <p class="dm-note">Size of each store, on a log scale so the small live stores stay visible beside the large cold ones.</p>
@@ -425,8 +436,44 @@
     nSel.on('mouseenter focus', (ev, n) => focus(n)).on('mouseleave blur', blur);
   }
 
+  function drawSmells() {
+    const box = document.getElementById('dm-smells');
+    const d = dash.data('review_smells');
+    box.textContent = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.map(r => ({ kind: r.kind, modules: Number(r.modules), changed: Number(r.changed_30d) }));
+    const max = d3.max(rows, r => r.modules) || 1;
+    rows.forEach(r => {
+      const row = document.createElement('div'); row.className = 'dm-bar-row';
+      const lab = document.createElement('div'); lab.className = 'dm-bar-label';
+      const name = document.createElement('span'); name.textContent = r.kind;
+      const val = document.createElement('span');
+      val.textContent = fmtInt(r.modules) + ' modules, ' + fmtInt(r.changed) + ' changed in 30 days';
+      lab.append(name, val);
+      const track = document.createElement('div'); track.className = 'dm-bar-track';
+      track.style.position = 'relative';
+      const all = document.createElement('div'); all.className = 'dm-bar-fill';
+      all.style.width = Math.max(1, 100 * r.modules / max) + '%';
+      all.style.background = 'var(--cds-chart-muted)';
+      const recent = document.createElement('div'); recent.className = 'dm-bar-fill';
+      recent.style.width = (r.changed ? Math.max(1, 100 * r.changed / max) : 0) + '%';
+      recent.style.background = dash.colors[0];
+      recent.style.position = 'absolute'; recent.style.left = '0'; recent.style.top = '0';
+      track.append(all, recent);
+      row.append(lab, track);
+      box.append(row);
+    });
+  }
+
   dash.onData(() => {
     drawArch();
+    drawSmells();
+    drawTable('dm-review', 'review_queue', [
+      { cell: (td, r) => { td.textContent = r.path; td.style.overflowWrap = 'anywhere'; } },
+      { cell: (td, r) => { td.textContent = r.seat; } },
+      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.commits_7d)); } },
+      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.tested_by)); } },
+      { cell: (td, r) => { td.textContent = r.smells || '—'; } }]);
     drawTotals();
     drawStores();
     drawMonths();

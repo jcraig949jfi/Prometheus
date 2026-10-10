@@ -203,9 +203,31 @@ def architecture():
     dump("architecture", rows)
 
 
+def review():
+    """PAN-37 review queue for the dashboard: the top of pan.review_unit and smell prevalence. Signals, never
+    verdicts; nothing is dispatched (QUESTIONS.md Q-011)."""
+    kinds = {"abs_path": "Hard-coded path", "lan_ip": "Hard-coded LAN address", "bare_except": "Bare except",
+             "except_pass": "except Exception: pass", "shell_true": "shell=True", "eval_exec": "eval / exec",
+             "long_function": "Function over 150 lines", "syntax_error": "Does not parse"}
+    with db.cursor() as cur:
+        cur.execute("""select path, coalesce(seat, ''), commits_7d, commits_30d, tested_by, smells, score, repo_sha
+                       from pan.review_unit where score > 0 order by score desc, commits_7d desc, path limit 20""")
+        rows = cur.fetchall()
+        dump("review_queue", [dict(path=p, seat=s, commits_7d=a7, commits_30d=a30, tested_by=tb,
+                                   smells=", ".join(kinds.get(k, k) for k in sorted(sm)), score=sc, repo_sha=sha[:9])
+                              for p, s, a7, a30, tb, sm, sc, sha in rows])
+        cur.execute("""select k, count(*), count(*) filter (where commits_30d > 0) from pan.review_unit,
+                       jsonb_object_keys(smells) k group by 1 order by 2 desc""")
+        dump("review_smells", [dict(kind=kinds.get(k, k), modules=int(n), changed_30d=int(c))
+                               for k, n, c in cur.fetchall()])
+
+
 if __name__ == "__main__":
     if ONLY == "architecture":
         architecture()
+    elif ONLY == "review":
+        review()
     else:
         main()
         architecture()
+        review()

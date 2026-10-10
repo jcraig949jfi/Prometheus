@@ -1,11 +1,11 @@
-# Prometheus Sagacity Scaling Roadmap -- v0 (C-013-T031, Workstream D)
+# Prometheus Sagacity Scaling Roadmap -- v1 (C-013-T031, Workstream D)
 
 Palamedes[harry1-679179c6], 2026-10-10. A map of decisions, not a backlog and not a schedule. Sources:
 roles/Palamedes/notes/2026-10-10_strategic_sources/ (Hestia Audit 1 + Oct-8 response M1-M7; Atlas G1-G6 + Nyx's
 attack; ASTRA-6.0, FABLE-5.1, v0.4 synthesis, wind-tunnel reviews; execution inventory), rso/scale/
-RSO_SCALING_ASSESSMENT.md, and C-004/C-009/C-010 results. Status: DRAFT v0 -- revised when C-013's D1 result,
-LONG_DURATION_EXECUTION_ARCHITECTURE.md and CHECKPOINT_REPLAY_SURVEY.md land; external Astra/Fable reviews and Hestia's
-review are PENDING (none has occurred).
+RSO_SCALING_ASSESSMENT.md, and C-004/C-009/C-010 results. Status: v1 -- LONG_DURATION_EXECUTION_ARCHITECTURE.md,
+CHECKPOINT_REPLAY_SURVEY.md and the session-independent runner (fire test 13/13) are folded in; the D1 result is
+pending (challenge in progress); external Astra/Fable reviews and Hestia's review are PENDING (none has occurred).
 
 ## 0. The position in one paragraph
 
@@ -82,7 +82,9 @@ architecture, development, the world, search infrastructure and the evaluator su
   Also in Horizon I (platform): a qualified-component registry so the next native runtime pays only for its adapter
     (assessment B1); a durable run-record + local runner so a job survives its session (assessment B2); one
     World-Demand admission ladder (reference solver succeeds; reflex/register/memoryless baselines fail) on a world
-    from the existing Ensorain N0-N6 / Ludus / Cosmos parts, owned where Hestia's M3 places it.
+    from the existing Ensorain N0-N6 / Ludus / Cosmos parts, owned where Hestia's M3 places it. In flight elsewhere,
+    to be reused not duplicated: Aphrodite's Beta-04 (C-015: typed list-program foundry R0-R4 with a null ladder and a
+    known-positive gate, adopting D1's arms and descriptor test) and Ensorain's C-014/WTP-05 (0.2-0.8 admission band).
 
 ## 5. Horizon II -- about one quarter (developmental and evolutionary exploration)
 
@@ -161,8 +163,14 @@ architecture, development, the world, search infrastructure and the evaluator su
 
   The job owns its state: immutable manifest + seed partitions + append-only progress events + periodic checkpoint
   records with hashes, written to a retained store; any seat (or an operator command) resumes from the last verified
-  checkpoint; a lease prevents double execution; final accounting is computed from the event log. Detailed in
-  LONG_DURATION_EXECUTION_ARCHITECTURE.md (C-013-T020); built on Themis's C-012 Fabric/PostgreSQL work, not beside it.
+  checkpoint; a lease prevents double execution; final accounting is computed from the event log
+  (LONG_DURATION_EXECUTION_ARCHITECTURE.md s3). DEMONSTRATED on one host in this window: rso/scale/runner/ survived
+  worker, supervisor and session loss and a different session resumed it to the control's digest (FIRE_TEST.md, 13/13);
+  checkpoint retention (T024) bounds storage; an idempotent relaunch entry (T025) removes the "someone must run launch"
+  dependency once the operator chooses to install a host scheduler task (documented, deliberately not installed).
+  Missing for seven days on the fleet: cross-host transport (P-4: port onto Themis's C-012 NF transport; depends on its
+  large-object fetch path), a live worker plane (Fabric 0 live workers), and an engine save/load pair -- only Aether's
+  kernel, z80atlas (pickle) and Proteus checkpoint today without engine edits (CHECKPOINT_REPLAY_SURVEY.md).
 
 ## 12. Open disagreements (preserved, not synthesised away)
 
@@ -177,7 +185,8 @@ architecture, development, the world, search infrastructure and the evaluator su
 
 ## 13. The next decisions (to be finalised in RECOMMENDATION.md at closeout)
 
-  next engineering investment (provisional): the durable run-record + qualified-component registry pair -- relieves
-    assessment B1 and B2 together, is small, and every later horizon depends on it.
+  next engineering investment (provisional): port the now-demonstrated session-independent runner onto Themis's C-012
+    NF transport (cross-host, P-4) TOGETHER WITH a qualified-component registry -- relieves assessment B2 across hosts
+    and B1, is small relative to the alternatives, and every later horizon depends on it.
   next scientific experiment (provisional): D1, then the same frozen cartography on one audited desert (Ananke FLIP),
     routed to its owner.
