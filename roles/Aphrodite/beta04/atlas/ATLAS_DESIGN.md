@@ -4,7 +4,7 @@ Author: the ATLAS lead (Aphrodite Beta-04, C-015). Branch `aphrodite/b04-atlas`.
 `roles/Aphrodite/beta04/atlas/`, built on the TFS-1 substrate (`tfs1/`, imported, not modified).
 
 - **Contract.** Tasks are consumed ONLY as contract task JSON (EXPERIMENT_PLAN s1). `beta04/foundry/` was not read.
-- **Status.** BUILT; tests **14 PASS / 0 FAIL** (`ATLAS_TEST_RESULTS.json`); end-to-end calibration on four PLANTED
+- **Status.** BUILT; tests **14 PASS / 0 FAIL** (`ATLAS_TEST_RESULTS.json`); E2 production driver + tests in s13 (`E2_TEST_RESULTS.json`); end-to-end calibration on four PLANTED
   toys plus an atlas-pipeline pass on 6 FOUNDRY pilot task JSONs (`ATLAS_CALIBRATION_RESULT.json`, per-part files in
   `calibration/`). This is an **instrument build and
   calibration, not discovery**. `REACHABILITY_ATLAS_COMPLETE` needs FOUNDRY-admitted R2/R3 tasks, the coordinator's
@@ -418,3 +418,213 @@ Per-task part costs (CPU seconds):
 | O10 | magnitude: credit channel or diagnostic | diagnostic |
 | O11 | Mutator max_size vs FOUNDRY witness sizes | 16 (too small for W2-F028-R3) |
 | O12 | Run D-BEH-guided arms where D-BEH failed qualification? | run, labelled INSTRUMENT_UNVALIDATED |
+
+---
+
+## 13. E2 production driver (prereg AMENDMENT A1-B)
+
+**Files.**
+- `e2_driver.py`: modes qualify / plan / prelaunch / atlas / screen / status / timing.
+- `e2_analyze.py`: labels, FRONTIER, completeness. It runs only after the screen.
+- `e2_project.py`: compute projection, A1-B.10 truncation, power / MDE.
+- `tests/run_e2_tests.py`: writes `E2_TEST_RESULTS.json`.
+
+Development and timing used EXPOSED `foundry/pilot_v2` only. No arm, search or qualification was run on production
+families.
+
+**Commands** (from `roles/Aphrodite/beta04`, `OMP_NUM_THREADS=1`, at most 2 workers):
+
+```
+python -m atlas.e2_driver prelaunch                       # -> runs/E2_PRELAUNCH.json
+python -m atlas.e2_driver qualify   --workers 2           # outcome-free D-BEH (INFRA) -> runs/e2/qual/
+python -m atlas.e2_project --timing runs/e2_timing_pilot_v2/TIMING_RAW.json --out runs/e2 --write runs/e2/PROJECTION.json
+python -m atlas.e2_driver plan [--drop-chain-strict] [--seeds 6] [--drop-desert-ref]   # as PROJECTION.decision says
+python -m atlas.e2_driver atlas     --workers 2           # 53 families
+python -m atlas.e2_driver screen    --workers 2           # qual -> kcal -> runs; resumable; re-run to resume
+python -m atlas.e2_driver status
+python -m atlas.e2_analyze                                # -> runs/e2/E2_ANALYSIS.json
+```
+
+### 13.1 A1-B at code level
+
+| Item | Implementation |
+|---|---|
+| Screen families | the admitted R3/R4 families (WORLD_MANIFEST id_map status ADMITTED): 15 on production |
+| Atlas families | every admitted family (R2 + R3 + R4): 53 on production |
+| Library (B1) | the family's constituent mechanisms (sealed `mechanisms_used`, the oracle decomposition A1-B.1 names) as the FOUNDRY-ACQUIRED terms (`acquired_library.acquired[m].term`, learner-found by chain_c), via `Library(closed_args=True).promote_lambda`. DEVELOPMENTAL ledger. desert_ref has no library |
+| Library witness | the sealed `witness_promoted` with each mechanism renamed to its acquired entry; else the foundry's chain_d route solution. It must pass T0 + FINAL. It is used ONLY for D-BEH qualification and the atlas route, and is never shown to a search |
+| Arms (B2/B4) | see the arm table below |
+| Gate | D1-X3 / X3G shards run only if `descriptors.qualify` returns QUALIFIED on the learner view (C-013 R1 procedure, D-BEH: R1 and R2 >= 0.90, controls ok, >= 20 pairs). Otherwise the shard records INSTRUMENT_UNVALIDATED |
+| Search parameters | B = 2e5 charges; 8 CRN seeds; max_fill 3; max_size 28 (>= 27, M10). CRN stream `rng_for(seed, "<arm world>/<opaque>")`, identical across arms |
+| Information boundary | the search input is `tfs1.e3.worlds.ArmWorld` (opaque id + dev, sha-verified); the output type is inferred from dev. The certifier (test, generated tribunals, task tribunal, sealed expanded witness) only stops the run |
+| Endpoint (M6) | see the endpoint list below |
+| Shards | `qual/<fid>`, `kcal/<fid>`, `run/<fid>/<arm>/s<seed>`, `atlas/<fid>`. See the shard model below |
+| Raw components | each run shard stores: the consultations (first 200 + last 50; for each, the program, charge, and test / T0 / FINAL / task-tribunal verdicts); the hit (program, charge); budget; charges; library sha256 |
+
+**Arms (B2/B4).**
+
+| Arm | Code |
+|---|---|
+| credit_blind | D1-chain_neutral, credit="none" |
+| chain_strict | D1-chain_strict |
+| chain_neutral | D1-chain_neutral |
+| D1-X3 | D1-X3 with D-BEH |
+| X3G | D1-X3G |
+| desert_ref | D1-chain_neutral, credit="none", no library |
+
+- X3G's K comes from `calibrate_random_k`: seeds 1000-1002, full budget, no certifier, the same max_size. Realised
+  cells must match within 5%.
+- Restore frequency is equal by construction (L = 1).
+
+**Endpoint (M6).**
+- A *consultation* passes iff the program passes the T0 tribunal AND the fresh FINAL tribunal. Each tribunal is: all
+  test examples + the generated widened tribunal (value-or-FAIL agreement with the witness) + the task tribunal.
+- PRIMARY: the FIRST consultation passes.
+- SECONDARY: any consultation within B passes. It is CERTIFIER_ASSISTED if >= 1 earlier consultation failed.
+- START_HIT (a hit at a charge <= #starts) is not discovery.
+- The hit is re-judged alone (archive OFF).
+
+**Shard model.**
+- One JSON per shard, written atomically, skipped if present.
+- At most N spawned workers, one shard per process.
+- `--max-wall-s` stops starting new shards.
+- `--cpu-cap-s` writes `*.ABORTED.json`, which never counts as complete.
+- Results do not depend on the schedule (tested).
+
+### 13.2 Analysis (`e2_analyze.py`)
+
+**Re-derivation (Palamedes #2079).** No runner success field is trusted. The analyzer:
+- rebuilds the library (its sha must match);
+- re-reads the arm-view dev and the evaluator task;
+- re-judges every stored consultation and the hit, ALONE;
+- recomputes primary / secondary / CERTIFIER_ASSISTED / START_HIT.
+
+| Condition | Exit |
+|---|---|
+| Any disagreement with a stored component or runner field | 3 (`E2_ANALYSIS_MISMATCH.json`) |
+| Incomplete screen | 2 |
+
+An AUDIT-salt tribunal is reported descriptively.
+
+**Labels (A1-B.5)**, on primary hits: REACHED / CREDIT_GRADIENT / CREDIT_MISLEADING / DESERT_OR_HORIZON /
+UNRESOLVED.
+- The rules overlap. Every rule that holds is listed in `flags`; `label` is the first in table order.
+- After truncation, the rules use the credit chains actually run.
+
+**FRONTIER (A1-B.6).**
+- **Population:** families where D1-X3, X3G and chain_neutral all ran (D-BEH QUALIFIED).
+- **Unit:** skeleton cluster. This is the sealed witness skeleton label merged by the foundry's motif-control rules:
+  - rung dropped;
+  - "+red" dropped;
+  - fold_of_X == scan_of_X;
+  - step_of_f == scan_of_map;
+  - compose == two_maps.
+
+  On production this gives exactly the red team's 5 clusters: fp:map_of_filter 6, fp:guard_p 3, fp:filter_of_map 2,
+  fs:post_fold 2, fs:scan_of_map 2.
+- **Unit difference:** the mean over the unit's population families.
+- **Informative unit:** >= 1 primary hit in any arm.
+- **Test:** exact one-sided sign-flip over informative units.
+
+| Condition | Readout |
+|---|---|
+| < 5 informative units | INCONCLUSIVE_CENSORED |
+| both p < 0.05 and both sums > 0 | YES_SCREEN (final field "INCONCLUSIVE (screen-positive; confirmation required)") |
+| >= 5 informative units and sum <= 0 vs chain_neutral | NO |
+| otherwise | INCONCLUSIVE |
+
+**4x eligibility (A1-B.7):** (family, arm) pairs with >= 1 primary hit. Secondary pairs are listed descriptively.
+
+**REACHABILITY_ATLAS_COMPLETE (A1-B.9):** all atlas shards + all screen shards + `runs/E2_PRELAUNCH.json` pass.
+
+### 13.3 Pre-launch checks (A1-B.8) -> `runs/E2_PRELAUNCH.json`
+
+| Check | Pass rule |
+|---|---|
+| certifier re-check | see the list below |
+| start-at-target | every arm started AT the witness (the library witness; the expanded witness for desert_ref) hits at charge 1, i.e. 0 search steps, flagged START_HIT, not discovery |
+| constant / lookup | on CONTROL-CONSTANT (dev constant, test structureless) and CONTROL-LOOKUP (structureless, disjoint test), no arm qualifies anything (B = 2,000). The dev-modal constant and the sum-keyed dev-lookup program fail certification on every family |
+| target-blindness | per arm, on 2 screen families and CONTROL-CONSTANT, three runs (stop_on_hit=False, B = 3,000) must give an identical decision log and archive: the real certifier; perturbed test + a replaced witness; an always-ACCEPT stub. The certifier channel must be exercised (answers differ) for every arm. Arm-view loading runs under an AccessLog: no file outside `arm_view/`, and arm-view dev == evaluator dev |
+| restoration receipt | a snapshot at 1,500 charges, restored into a new Search, reproduces the uninterrupted log; stored genotypes re-evaluate to their stored credit |
+
+**Certifier re-check.**
+- Every sealed expanded witness (53) qualifies at T0 + FINAL.
+- Every screen family's library witness qualifies.
+- Every foundry route solution gets an E2 verdict EQUAL to the foundry's recorded verdict. If E2 is stricter or
+  looser on any route, the check FAILs.
+
+| Route solution | Foundry verdict counted as "qualified" |
+|---|---|
+| kp, with the SEALED mechanisms | SOLVED and tribunal_ok |
+| chain_d, with the acquired primitives | SOLVED |
+| each chain_c R1 acquisition, on its R1 family | ACQUIRED, test_ok and tribunal_ok |
+
+Pilot_v2 result: **PASS** on all five checks (`runs/E2_PRELAUNCH_pilot_v2.json`, 56 CPU-s). The check found and
+fixed one certifier defect (13.5).
+
+### 13.4 Timing and projection
+
+Timing setup: EXPOSED pilot_v2 W0467897d-F061-R3 (fp) and W1d5301d0-F035-R3 (fs); B = 2e5; full budget
+(stop_on_hit=False); 2 workers.
+
+| Arm / part | CPU-s per run (F061, F035) | Mean |
+|---|---|---|
+| credit_blind | 50.1, 47.2 | 48.7 |
+| chain_strict | 98.2, 70.0 | 84.1 |
+| chain_neutral | 78.2, 82.4 | 80.3 |
+| D1-X3 (72k / 71k cells) | 205.5, 189.2 | 197.3 |
+| X3G (K = 68k / 69k) | 147.2, 141.6 | 144.4 |
+| desert_ref | 38.8, 47.9 | 43.3 |
+| D-BEH qualification (INFRA) | 8.3 (QUALIFIED), 5.1 (FAIL) | 6.7 |
+| K calibration (INFRA) | X3 195 / 204 s per seed; X3G 129 / 125 s per seed per iteration | about 1,361 s (3 seeds, 2 iterations) |
+| atlas measurement | 61.0, 48.4 (R2 base-grammar witnesses of size 10-17: 24-31 s) | 54.7 |
+
+**Projection** (`runs/e2_timing_pilot_v2/PROJECTION.json`). The 1x screen is 15 families x 6 arms x 8 seeds.
+D1-X3, X3G and K calibration run only on D-BEH-qualified families.
+
+| Qualified families | Core-h, untruncated | Truncation |
+|---|---|---|
+| 15 (upper bound) | 25.6 | step 1 (drop chain_strict): 22.8 |
+| 12 | 22.2 | none |
+| 9 | 18.8 | none |
+| 6 | 15.4 | none |
+| 0 | 8.6 | none |
+
+- On pilot_v2, D-BEH qualified 2 / 7 R3/R4 families.
+- Atlas mode: 53 x 55 s = 0.8 core-h (1.15 with an allowance for the 5 oversize R2 witnesses).
+- The truncation decision uses the outcome-free qualified count, so run `qualify` before `plan`.
+
+**Power / MDE** (5-cluster FRONTIER design; cluster sizes 6/3/2/2/2).
+- YES_SCREEN requires every cluster to show X3 > chain_neutral AND X3 > X3G. The minimum attainable p is 1/32.
+- MDE at 80% power (the X3 per-seed hit rate needed, given the comparator rate p0):
+
+| p0 (comparator rate) | X3 rate needed, 8 seeds | X3 rate needed, 6 seeds |
+|---|---|---|
+| 0 | 0.16 | 0.205 |
+| 0.025 | 0.245 | 0.295 |
+| 0.05 | 0.30 | 0.35 |
+| 0.10 | 0.385 | 0.44 |
+| 0.20 | 0.525 | 0.58 |
+
+- At C-013 D1's observed rates (chain_neutral 1/45), a true X3 rate of 0.10 gives power 0.15.
+- If any cluster lacks a D-BEH-qualified family, YES_SCREEN is impossible (INCONCLUSIVE_CENSORED).
+
+### 13.5 Changes to existing atlas code
+
+All re-tested: ATLAS 14/14, E3 10/10, E2 13/13.
+
+**`arms.py`: performance repair (red team M13(d)), scientifically neutral.**
+- **Problem.** The cell_count restore rebuilt the weight list over all cells on every step, so the cost was
+  quadratic: D1-X3 took 4.6 s at 5k charges and 70 s at 20k, which projects to about 2 h per run at 2e5.
+- **Repair.** The weights and their sequential running sums are now float64 arrays. `random.choices` is reproduced
+  exactly: one `random()` call, then `bisect(cum, u * total, 0, n - 1)`.
+- **Check.** Decision logs are bit-identical to the original code (`reference_restore=True`) for D1-X3, X3G, X2, B2
+  and C2 (tested). D1-X3 now takes about 200 s at 2e5.
+- `calibrate_random_k(**kw)` now passes max_size to every calibration Search.
+
+**`common.py`: certifier defect, found by the pre-launch check.**
+- **Defect.** The task's own tribunal was scored with `check_dev`, which treats every FAIL as wrong. Evaluator files
+  encode expected FAILs (e.g. `min []`) as "FAIL", so correct programs failed, the sealed witnesses included.
+- **Fix.** The task tribunal now uses value-or-FAIL agreement, the foundry's definition.
+
+**`measure.py`:** `atlas(..., mutator_max_size=)` is new (default 16, unchanged); E2 passes 28.

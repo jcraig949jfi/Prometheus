@@ -24,6 +24,7 @@
   review build | review queue [--seat S] [-k N]   PAN-37: ranked review units (signals, never dispatched)
   reviewcal build [--set-version 2]   PAN-37/39: seeded-bug calibration set (items + key in the lake only)
   reviewcal floors            PAN-37: what a reviewer scores without reviewing (chance floors, prereg A3)
+  reviewcal run MODEL | controls   PAN-37: score a local model as a reviewer on set v2 (GPU) | runner controls
   fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
   atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
@@ -112,7 +113,10 @@ def main(argv=None):
     p.add_argument("what", choices=["snapshot", "manifest", "controls"])
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
-    p.add_argument("what", choices=["build", "floors"])
+    p.add_argument("what", choices=["build", "floors", "run", "controls"])
+    p.add_argument("model", nargs="?")
+    p.add_argument("--think", action="store_true")
+    p.add_argument("--budget", type=int, default=512)
     p.add_argument("--set-version", type=int, default=2, choices=[1, 2])
     p.add_argument("--workers", type=int, default=4)
     p = sub.add_parser("repobench")
@@ -267,6 +271,10 @@ def main(argv=None):
         from . import reviewcal
         if a.what == "floors":
             reviewcal.floors(version=a.set_version)
+        elif a.what == "controls":
+            reviewcal.run_controls(version=a.set_version)
+        elif a.what == "run":
+            reviewcal.review_run(a.model, version=a.set_version, think=a.think, budget=a.budget)
         else:
             reviewcal.build(workers=a.workers, version=a.set_version)
     elif a.cmd == "repobench":

@@ -1,0 +1,259 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-37 FLOORS + PAN-39: A REVIEWER TEST SET WITHOUT TELLS   |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-10 (work 14:35Z-16:43Z; packet 16:44Z)                      |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  v1 RETIRED (prereg A3); v2 BUILT, tell gate USABLE; no reviewer     |
+|          scored yet; nothing dispatched to any seat (Q-011 unanswered)       |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+The operator wants platform code reviews done by the agents already at
+work, with each reviewer's reliability MEASURED, not trusted (Q-011). Pan
+built a calibration set:
+  - 40 "seeded bugs": small mutations of the program's own functions, each
+    kept only because the function's own test file catches it;
+  - 20 clean functions;
+  - frozen scoring: one finding per item; a hit is a line within +-2 of the
+    bug.
+
+Before scoring any reviewer, Pan measured what a reviewer scores WITHOUT
+reading code. Verdict on set v1: UNFIT.
+  - A regex that flags only lines containing `return None` or `not (`
+    scored recall 0.45 with 1 false alarm in 20. That looks like a careful
+    reviewer.
+  - The frozen "unreliable" rule passed every non-reviewer tried.
+  - 21 of 40 seeded bugs carried their mutation operator's text signature.
+
+Set v2 was then built under rules frozen and pushed before generation.
+Operators were changed to render like ordinary code; candidates leaving a
+text tell are rejected; a four-part tell gate decides use. v2 passes the
+gate: the regex now scores 0.025.
+
+One property survives by design: the line with the most mutation sites
+locates 70% of v2's bugs. Line location is cheap, so a reviewer is judged
+on recall scaled by its false-alarm rate, not on recall alone.
+
+-----
+1. WHAT WAS BUILT (and what was committed before measurement)
+-----
+Committed before measurement:
+  - v1 rules (pan/tests/reviewcal_prereg.json, 2026-10-10) before v1 was
+    generated. Amendments A1 (no repository access) and A2 (bookkeeping)
+    were added before any reviewer was scored.
+  - v2 rules (pan/tests/reviewcal_prereg_v2.json) frozen and pushed in
+    03b9c37c1 at 14:44:57Z, BEFORE any v2 candidate existed. v2 was
+    generated at 16:42:07Z.
+
+Built:
+  python -m pan reviewcal floors [--set-version 1|2]
+      Scores six non-reviewers under the frozen rule and writes AGGREGATES
+      only (the answer key stays in the M2 lake):
+        silent; random line (analytic, Monte Carlo checked);
+        middle line;
+        site density   the line whose +-2 window holds most sites of the
+                       PUBLISHED operators;
+        surface tell   a regex for v1's signatures, else abstain;
+        rare bigram    the line whose tokens are rarest in the OTHER task
+                       functions.
+  python -m pan reviewcal build --set-version 2
+      v2 operators and mutation rule; per task, sites are tried in a drawn
+      order and the first that passes the rule is taken.
+  Helpers: shape_bigrams, introduced_rare, chance_bar.
+  4 new unit-test assertions. Suite: 73 passed.
+
+-----
+2. THE CLAIM AND WHY IT MATTERS
+-----
+Claim: on set v2, a reviewer's recall and false-alarm rate measure its
+REVIEWING. Pattern-spotting on the generator's text and line-location
+heuristics are bounded by measured floors that a reviewer must beat.
+Why: without floors, a reviewer's 0.45 recall at a 5% false-alarm rate
+would read as competent. On v1 a regex got exactly that. Weighting review
+findings by a broken instrument would mislead every downstream decision.
+
+-----
+3. DESIGN AS EXECUTED
+-----
+3.1 Common to v1 and v2.
+  - Source: the 142 primary tasks of PAN-34 (functions whose own test file
+    sees them).
+  - A mutant is kept only if its task's tests FAIL with it.
+  - 40 mutants + 20 clean items from unused tasks, in shuffled order.
+  - Reviewers get the function's code only: no path, no task id, no
+    repository access (A1). Otherwise the clean original is one search
+    away.
+3.2 v1 operators: comparison flip, and/or flip, +/- flip, int literal n+1,
+  `if T` -> `if not (T)`, `return X` -> `return None`.
+3.3 v2 operators: the first four unchanged. `return None` dropped.
+  negate_test inverts a test only in forms ordinary code uses: the
+  complement of a single comparison, adding or removing a bare `not`. It
+  never writes `not (...)`.
+3.4 v2 mutation rule, applied before the kill check. Reject a candidate
+  that (a) contains a v1 tell, or (b) INTRODUCES a syntax-shape bigram
+  found in fewer than 10% of the other clean task functions. A shape
+  bigram is a token pair with identifiers -> ID, numbers -> NUM and
+  strings -> STR; keywords and operators are kept.
+3.5 v2 tell gate (verdict USABLE only if all hold and >= 30 mutants):
+  G1  no tell in any mutated segment;
+  G2  surface-tell recall <= 0.10;
+  G3  no rare introduced shape;
+  G4  rare-bigram recall <= max(random line, site density) + 0.10.
+3.6 v2 reviewer bar: a reviewer with false-alarm rate FA beats chance only
+  if the lower end of its recall Wilson interval exceeds
+  max over floors of R_floor x min(1, FA / FA_floor).
+
+-----
+4. RESULTS
+-----
+4.1 Floors on v1 (40 mutants: return_none 11, negate_if 10, off_by_one 9,
+    cmp_flip 7, arith_flip 2, bool_flip 1):
+
+  non-reviewer            recall [Wilson 95%]    false alarms   frozen rule
+  silent                  0                      0/20           -
+  random line             0.379 (MC 0.385)       20/20          -
+  middle line             0.40  [0.263, 0.554]   20/20          passes
+  site density            0.525 [0.375, 0.671]   20/20          passes
+  surface tell (regex)    0.45  [0.307, 0.602]    1/20          passes
+  regex else density      0.80  [0.652, 0.895]   20/20          passes
+  rare bigram             0.125                  20/20          -
+
+  Tells: `return None` in 14/40 mutant items vs 0/20 clean; `not (` in
+  12/40 mutant items vs 1/20 clean.
+
+4.2 v2 build:
+  - 16:39:47-16:42:07Z (140 s), 2 workers at below-normal priority.
+  - 72 candidates sent to tests; 30 rejected by the mutation rule before
+    the kill check.
+  - 40 killed: off_by_one 15, negate_test 13, cmp_flip 7, arith_flip 5,
+    bool_flip 0. Plus 20 clean.
+  - sha256 items 79b11d6a...2f16, answers dbe79c19...9e42, verified on
+    disk.
+
+4.3 Floors and gate on v2:
+
+  non-reviewer            recall [Wilson 95%]    false alarms
+  random line             0.361 (MC 0.369)       20/20
+  middle line             0.475 [0.329, 0.625]   20/20
+  site density            0.70  [0.546, 0.819]   20/20
+  surface tell (regex)    0.025 [0.004, 0.129]    2/20
+  regex else density      0.675                  20/20
+  rare bigram             0.10  [0.040, 0.231]   20/20
+
+  Gate: G1 0 tells; G2 0.025 <= 0.10; G3 0 rare shapes;
+        G4 0.10 <= 0.80 -> USABLE.
+  Reviewer bar with these floors: recall lower bound > 0.70 x FA.
+  Examples: FA 0.10 -> above 0.07; FA 0.50 -> above 0.35; FA 1.0 -> above
+  0.70.
+
+-----
+5. INCIDENTS (and what they validated)
+-----
+5.1 "Run the tests" is not a reviewer floor. Every mutant was kept BECAUSE
+  its tests catch it, so a test-running reviewer scores 40/40 by
+  construction. The calibration therefore measures prompt-only review,
+  and says so.
+5.2 The first G3 draft was blind. It flagged the line with the rarest
+  raw-token bigram and scored 0.125 on v1, below the random floor; a
+  syntax-shape rarity version scored 0.35.
+  - Reason: `return None` is in 9 of 142 clean functions and `not (` in 5.
+    They are tells only RELATIVE to mutants, which an unsupervised rarity
+    test cannot see.
+  - Replaced before generation by the operator-informed rule, which flags
+    27/40 of v1's mutants (negate_if 10/10, return_none 10/11,
+    cmp_flip 5/7).
+  - Recorded in the v2 prereg itself.
+5.3 Gate change for the build, recorded. The plan was to wait for M2's CPU
+  to fall below 60%. It held at 60-93% for two hours under the operator's
+  experiments, so the build ran with 2 workers at below-normal priority
+  instead of 4 at normal priority.
+5.4 The tell rule shifts the operator mix: bool_flip 1 -> 0, off_by_one
+  9 -> 15. The set now over-represents literal and test-inversion bugs.
+
+-----
+6. CONTROLS
+-----
+REVIEWCAL_FLOORS_20261010T143738Z.json (v1) PASS 3/3;
+REVIEWCAL_FLOORS_V2_20261010T164224Z.json (v2) PASS 3/3 + tell gate USABLE.
+  POSITIVE  the answer key scores recall 1.0, 0 false alarms           PASS
+  NEGATIVE  a silent reviewer scores 0/0; a line 3 away from every bug
+            scores 0 hits (window edge)                                PASS
+  CHEAT     the analytic random-line floor equals a 200x Monte Carlo
+            within 0.02 (v1 0.379 vs 0.385; v2 0.361 vs 0.369)         PASS
+  Gate teeth: the G3 rule run on v1 flags 27/40 (it would have refused v1).
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does:
+  - v1 cannot calibrate reviewers. It is retired, and the record says why.
+  - v2 carries no tell that Pan's four detectors can see, and its
+    non-reviewer floors are known.
+Does NOT:
+  - prove v2 tell-free. A learned detector, such as a model fine-tuned on
+    mutant/clean pairs, might find patterns these four miss. The gate is
+    the detectors Pan thought of.
+  - measure reviewers who run code or read the repository; those are
+    out of scope (5.1, A1).
+  - represent real bugs. These are single-token mutations that the tests
+    already catch, which is the easy end of real defects.
+  - have power for small differences. With 40 mutants, a Wilson interval
+    is about +-0.15 wide at mid recall.
+  - say anything about any reviewer yet. None has been scored; the first
+    (a local model) waits for the GPU.
+
+-----
+8. DECISION / RECOMMENDATION (operator's call; Pan's lean)
+-----
+  a) Use v2 for the first calibrated reviewer. Pan's lean: yes, with the
+     0.70 x FA bar.
+  b) Q-011 (dispatch reviews to seats): unchanged; nothing is dispatched.
+     Pan's lean: score one local model first; dispatch only if some
+     reviewer clears the bar at FA <= 0.25.
+  c) Add a learned tell detector (train on half of v2, test on the other
+     half) before trusting v2 for promotion decisions? Pan's lean: yes if
+     reviewer scores will gate anything real; not needed for a first look.
+  d) "Not worth continuing" is a valid answer: seeded single-token bugs may
+     be too unlike real defects to say whether a reviewer helps.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  1. Site density locates 70% of v2's bugs. Is +-2 lines too generous a hit
+     window? Would an exact-line rule measure something better, or just
+     something noisier?
+  2. The tell rule threshold (10% of clean functions) was chosen by Pan
+     before generation, without a sensitivity run. At 5% or 20%, would the
+     set and its verdict differ much?
+  3. Dropping return_none and bool_flip makes the set easier to keep
+     tell-free but narrower. Does a narrower bug mix bias reviewers toward
+     looking for literals and inverted tests?
+  4. The reviewer bar uses the strongest floor scaled linearly by false-alarm
+     rate (random abstention). Could a smarter non-reviewer (abstain on
+     short functions, say) beat that line?
+  5. Is a calibration set whose bugs the tests already catch the right
+     instrument for reviews whose value is catching what tests miss?
+
+-----
+10. ARTIFACTS
+-----
+  commits: cb5b15e2d (floors, A3), 03b9c37c1 (prereg v2 frozen before
+    generation + generator), this packet's commit (manifest, v2 floors)
+  rules: pan/tests/reviewcal_prereg.json (A1-A3),
+    pan/tests/reviewcal_prereg_v2.json
+  code: pan/reviewcal.py, pan/__main__.py, pan/tests/test_reviewcal.py
+  controls: roles/Pan/reports/controls/REVIEWCAL_FLOORS_20261010T143738Z.json,
+    REVIEWCAL_FLOORS_V2_20261010T164224Z.json
+  manifests: roles/Pan/reports/review/CALIBRATION_MANIFEST_20261010T072739Z
+    .json (v1), CALIBRATION_MANIFEST_V2_20261010T164207Z.json (v2)
+  lake (M2 only): reviewcal/ITEMS_V2_20261010T164207Z.json,
+    ANSWERS_V2_20261010T164207Z.json
+  lease: lse-402f01b477bd spectrex5:cpu12 16:39:35Z-16:42:24Z
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "seeded bugs the tests already catch cannot calibrate a code reviewer".     |
++==============================================================================+

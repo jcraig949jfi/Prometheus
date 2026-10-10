@@ -1,0 +1,189 @@
+{
+ "K": 68477,
+ "archive": {
+  "entries": 160836,
+  "live_entries": 61828,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": 61828,
+  "replacements": 99008
+ },
+ "archive_assisted_tag": "SEARCH_INFRASTRUCTURE (lineage from a genotype archive)",
+ "arm": "D1-X3G",
+ "arm_code": "D1-X3G",
+ "arm_view_file_sha256": "d80254d9ebf7d3ed3ea4b441076b3b9d9d09ad11616dd3c6530660b8a7de7a44",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 1,
+ "censored": false,
+ "certifier_assisted": false,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "cpu_s": 147.219,
+ "credit": "exact",
+ "decision_log_sha256": "d3f18891479d0dbca635227f57605594d0404a642e705cf079ea5e4bc2648f72",
+ "descriptor": "RAND:68477",
+ "driver": "e2-driver-v1",
+ "e2_arm": "X3G",
+ "family_id": "W0467897d-F061-R3",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(sum (zipw (lam a (lam b (head (scanl (lam a1 (lam b1 (min xs))) (L_1060e619863f (if (L_5abaefe6aefe b) (neg a) 0)) xs)))) (zipw (lam a (lam b (neg a))) xs xs) xs))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": true,
+  "T0": true,
+  "charge": 170719,
+  "program": "(sum (zipw (lam a (lam b (head (scanl (lam a1 (lam b1 (min xs))) (L_1060e619863f (if (L_5abaefe6aefe b) (neg a) 0)) xs)))) (zipw (lam a (lam b (neg a))) xs xs) xs))",
+  "qualified": true,
+  "test_ok": true
+ },
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 170719,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 1
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "d80d1783cb1cf80b"
+  },
+  "organism": {
+   "program": "(sum (zipw (lam a (lam b (head (scanl (lam a1 (lam b1 (min xs))) (L_1060e619863f (if (L_5abaefe6aefe b) (neg a) 0)) xs)))) (zipw (lam a (lam b (neg a))) xs xs) xs))"
+  },
+  "search": {
+   "archive_admissions": 160836,
+   "charges": 200000,
+   "genotype_restores": 199997,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 28205106,
+   "units_dev_promoted": 23580678,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "d80d1783cb1cf80ba16a38fb6d9e9ee5bcc32fc70b739ef150c20ac189967b3a",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000010": 7114,
+   "000000000100": 544,
+   "000000000110": 101104,
+   "000000001000": 5476,
+   "000000001010": 14068,
+   "000000001100": 128395,
+   "000000001110": 6155,
+   "000000010000": 3153,
+   "000000010100": 100576,
+   "000000011000": 68143,
+   "000000100000": 47040,
+   "000001000000": 22679,
+   "000010100000": 23236,
+   "001000000000": 5749,
+   "001000000100": 11617,
+   "001000000110": 9778,
+   "001000001010": 61770,
+   "001000010000": 116886,
+   "001000010010": 102700,
+   "001000010100": 49258,
+   "001000011000": 103781,
+   "001000011010": 171324,
+   "001000011110": 37526,
+   "001000100000": 155410,
+   "100000000000": 947,
+   "100000000010": 71257,
+   "100000000100": 19600,
+   "100000000110": 13821,
+   "100000001000": 35943,
+   "100000001100": 26653,
+   "100000001110": 149697,
+   "100000010000": 67051,
+   "100000100000": 126516,
+   "101000000000": 79334,
+   "101000000110": 199629,
+   "101000001110": 34315,
+   "101000010000": 4647,
+   "101000010010": 151281,
+   "101000010100": 13601,
+   "101000010110": 46047,
+   "101000011000": 98520,
+   "101000011010": 22982,
+   "101000011110": 22,
+   "111111111111": 170719
+  },
+  "cert_patterns_seen": 44,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "gcd1,head1,if1,lt1,min1,neg2,pow1,scanl1,sub1,sum1,zipw2": 170719
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 1,
+ "n_false_hits": 0,
+ "n_starts": 3,
+ "pid": 3232,
+ "primary_hit": true,
+ "program": "(sum (zipw (lam a (lam b (head (scanl (lam a1 (lam b1 (min xs))) (L_1060e619863f (if (L_5abaefe6aefe b) (neg a) 0)) xs)))) (zipw (lam a (lam b (neg a))) xs xs) xs))",
+ "root": "foundry\\pilot_v2",
+ "root_label": "EXPOSED DEV DATA (pilot_v2)",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 0,
+ "shard": "trun/W0467897d-F061-R3/X3G/s0",
+ "shard_cpu_s": 147.3,
+ "start_hit": false,
+ "status": "COMPLETE",
+ "timing_note": "TIMING ONLY: qualification gate bypassed; X3G K = X3 realised cells (seed 1000)"
+}

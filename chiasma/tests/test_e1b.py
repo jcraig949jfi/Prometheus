@@ -120,6 +120,27 @@ class TestWorldD(unittest.TestCase):
         self.assertGreater(broken["D"], 50)
         self.assertGreater(f_without_core, 1000)     # in A-C f is not a marker of the core (not PW-Dm)
 
+    def test_marker_variant_makes_f_a_marker_until_D(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d, stream_d
+        w = make_world_d(WorldSpecD(marker=True), 21)
+        self.assertEqual(w.describe(), make_world_d(WorldSpecD(marker=True), 21).describe())
+        f_alone = {ph: 0 for ph in "ABCDEF"}
+        for _t, ph, x in stream_d(w):
+            for core, f in zip(w.cores, w.fs):
+                if (x >> f) & 1 and (x & core) != core:
+                    f_alone[ph] += 1
+        self.assertEqual(f_alone["A"] + f_alone["B"] + f_alone["C"], 0)
+        self.assertGreater(f_alone["D"], 300)
+
+    def test_counterfeit_repair_arm_on_the_weldable_factored_geometry(self):
+        o = arms.make("O4LRWF", 8, None)
+        self.assertEqual((o.seams, o.weldable, o.factor), ("lazyrand", True, True))
+        _o, true = _consolidated_cell("O4LWF")
+        _o, fake = _consolidated_cell("O4LRWF")
+        self.assertEqual(len(true.prov), len(fake.prov))
+        self.assertTrue(all(l & 0b111 for l, _j in true.prov))
+        self.assertFalse(any(l & 0b111 for l, _j in fake.prov))
+
     def test_every_exception_breaks_a_whole_core(self):
         from chiasma.e1b.world_d import WorldSpecD, make_world_d, stream_d
         w = make_world_d(WorldSpecD(exc_permille=1000), 21)
@@ -205,6 +226,42 @@ class TestShadowArms(unittest.TestCase):
         b = self._org_after("SPFF", self.w, cap=650, steps=600)
         self.assertLessEqual(b.nbytes()["total"], 650)
         self.assertGreater(b.events["evicted"], 0)
+
+
+class TestVerdictD(unittest.TestCase):
+    """Every verdict of PREREG_D is reachable, and the instrument checks can fail."""
+
+    def _rows(self, c650, c700, lossy=False, drop=False):
+        good, bad = [1] * 10, [9] * 10
+        spec = {1000000: {"O0": [5] * 10, "O0F": [5] * 10}}
+        for cap, (d1, d2) in ((650, c650), (700, c700), (800, (True, True))):
+            spec[cap] = {"O0F": good, "O0": bad if d1 else good, "SRF": bad if d2 else good,
+                         "SXF": bad, "S0F": bad, "SPFF": bad}
+        out = []
+        for cap, arms_ in spec.items():
+            for arm, vals in arms_.items():
+                for s, v in enumerate(vals):
+                    if drop and cap == 1000000 and arm == "O0F" and s == 3:
+                        continue
+                    if lossy and cap == 1000000 and arm == "O0F" and s == 3:
+                        v = 6
+                    out.append({"world": "D", "cap": cap, "arm": arm, "seed": s,
+                                "endpoints": {"err_CDE": v, "bytes_peak": min(cap, 500)}})
+        return out
+
+    def test_all_verdicts_reachable(self):
+        from chiasma.e1b.verdict_d import verdict
+        T, F = (True, True), (False, False)
+        self.assertEqual(verdict(self._rows(T, T))["claims"], {"D1": "PASS", "D2": "PASS"})
+        self.assertEqual(verdict(self._rows(F, F))["claims"], {"D1": "FAIL", "D2": "FAIL"})
+        self.assertEqual(verdict(self._rows(T, F))["claims"], {"D1": "MIXED", "D2": "MIXED"})
+        self.assertEqual(verdict(self._rows(T, T, drop=True))["claims"]["D1"], "NOT_VERIFIED")
+        self.assertEqual(verdict(self._rows(T, T, lossy=True))["claims"]["D2"], "NOT_VERIFIED")
+        r = self._rows(T, T)
+        r[-1]["endpoints"]["bytes_peak"] = r[-1]["cap"] + 1 if r[-1]["cap"] != 1000000 else 0
+        r.append({"world": "D", "cap": 650, "arm": "O0", "seed": 99,
+                  "endpoints": {"err_CDE": 9, "bytes_peak": 651}})
+        self.assertEqual(verdict(r)["claims"]["D1"], "NOT_VERIFIED")
 
 
 def _consolidated_cell(arm: str):
