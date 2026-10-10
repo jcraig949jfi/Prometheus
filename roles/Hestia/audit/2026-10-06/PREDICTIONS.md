@@ -60,3 +60,13 @@ Ladder-level (REPORT Part 5), if the ladder is run as specified:
 Bias statement: these are probably too pessimistic for tests that add a
 designed mechanism (because designed mechanisms usually work on toy
 tasks) and too optimistic for de novo tests. The ledger will show which.
+
+## Scoring (appended as results land; never edits the rows above)
+
+2026-10-08  #18 Theseus planted-structure: SCORED RIGHT on the detector
+            half (v2 flags planted 40/40, negatives 0/40 = AUC 1.0 on the
+            planted set; theseus/runs/composition_v2_2026-10-08/VERDICT.md)
+            after the first detector was blind (0/40). The substrate half
+            (0/1011 compositions, WALL-AT-v0_1) matches the audit's
+            reading. Note: P(0.45) was too low for a detector-building
+            seat; the pessimism bias named in the bias statement.

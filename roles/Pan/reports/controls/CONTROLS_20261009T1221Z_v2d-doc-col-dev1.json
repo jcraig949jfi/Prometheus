@@ -1,0 +1,2497 @@
+{
+ "when": "2026-10-09T12:21:44+00:00",
+ "model": "BAAI/bge-small-en-v1.5",
+ "label": "v2d-doc-col-dev1",
+ "qset": "D:\\Prometheus-worktrees\\pan-base-role-adopt-2026-10-09\\pan\\tests\\known_answers.json",
+ "fts_semantics": "or",
+ "rerank": null,
+ "pool": 30,
+ "docvec": "Qwen/Qwen3-Embedding-0.6B",
+ "collapse": true,
+ "evaluable_queries": 22,
+ "summary": {
+  "fts": {
+   "all": [
+    0.45454545454545453,
+    22
+   ],
+   "lexical": [
+    0.75,
+    12
+   ],
+   "paraphrase": [
+    0.1,
+    10
+   ],
+   "r1": [
+    0.09090909090909091,
+    22
+   ],
+   "r5": [
+    0.36363636363636365,
+    22
+   ],
+   "median_s": 1.279
+  },
+  "vector": {
+   "all": [
+    0.5909090909090909,
+    22
+   ],
+   "lexical": [
+    0.75,
+    12
+   ],
+   "paraphrase": [
+    0.4,
+    10
+   ],
+   "r1": [
+    0.2727272727272727,
+    22
+   ],
+   "r5": [
+    0.45454545454545453,
+    22
+   ],
+   "median_s": 0.3505
+  },
+  "hybrid": {
+   "all": [
+    0.7727272727272727,
+    22
+   ],
+   "lexical": [
+    0.9166666666666666,
+    12
+   ],
+   "paraphrase": [
+    0.6,
+    10
+   ],
+   "r1": [
+    0.45454545454545453,
+    22
+   ],
+   "r5": [
+    0.6818181818181818,
+    22
+   ],
+   "median_s": 2.2445
+  },
+  "doc": {
+   "all": [
+    0.6363636363636364,
+    22
+   ],
+   "lexical": [
+    0.75,
+    12
+   ],
+   "paraphrase": [
+    0.5,
+    10
+   ],
+   "r1": [
+    0.22727272727272727,
+    22
+   ],
+   "r5": [
+    0.5454545454545454,
+    22
+   ],
+   "median_s": 0.1295
+  }
+ },
+ "negative": [
+  {
+   "query": "zxqvb blorptangle frumious wombatic quazzle lattice",
+   "fts_rows": 0,
+   "fts_best_cov": null,
+   "vector_top1": 0.68603515625,
+   "vector_top": [
+    "aporia/docs/deep_research_reports/2026-05-21/00200_hall_littlewood_polynomial_positivity_interpretations_2024_2.md",
+    "aporia/docs/deep_research_batch7/report_131_siegel_g3.md",
+    "arcanum/docs/Xenolexicon_Master_Catalog_v3.md"
+   ]
+  },
+  {
+   "query": "purple elephant tax refund recipe for banana bread in Paris",
+   "fts_rows": 1,
+   "fts_best_cov": 3,
+   "vector_top1": 0.6064453125,
+   "vector_top": [
+    "evidence_wiki/tests/test_campaign_ingest.py",
+    "techne/fossils/migrate_recipe_status_20260930.py",
+    "SerendipityFoundry/worldfoundry/mhc/prodledger/verify.py"
+   ]
+  }
+ ],
+ "positive_vector_top1_p25": 0.7535400390625,
+ "cheat": {
+  "fts_rank": 1,
+  "vector_rank": 1,
+  "removed": true
+ },
+ "verdict": {
+  "positive_hybrid_all>=0.80": false,
+  "positive_fts_lexical>=0.60": true,
+  "positive_vector_paraphrase>=0.60": false,
+  "negative_fts_zero_rows": false,
+  "negative_vector_below_p25": true,
+  "cheat_fts_rank1": true,
+  "cheat_vector_top3": true,
+  "cheat_removed": true
+ },
+ "rows": [
+  {
+   "id": "Q01",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "work-conserving research loop portfolio READY BLOCKED",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/NORTH_STAR.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 1.935897409915924,
+   "top10": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/Aporia/prompts/2026-09-29_base_role_work_conserving/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "docs/fleet/index.html",
+    "pivot/session_telemetry_prompts_techne_aporia_2026-05-18.md",
+    "roles/base-role/README.md",
+    "roles/Achilles/census/registry/seats_part1.json",
+    "roles/base-role/WAKE_DIRECTIVE.md",
+    "docs/fleet/email_census.json",
+    "pivot/deep_research_agent_conventions_2026-05-18.md",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_text.txt"
+   ],
+   "seconds": 1.385,
+   "error": null
+  },
+  {
+   "id": "Q01",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "work-conserving research loop portfolio READY BLOCKED",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/NORTH_STAR.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.75537109375,
+   "top10": [
+    "roles/Nestor/prompts/2026-09-28_arc3_endogenous_heredity_portfolio/DIRECTIVE_VERBATIM.md",
+    "roles/Aporia/prompts/2026-09-29_base_role_work_conserving/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "aporia/docs/ALLOCATION_P137_2026-08-22.md",
+    "roles/Odysseus/prompts/2026-09-27_poi_frontier/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "docs/phase3/reviews/ASTRA-6.0/rso-v0.2/research_notes/Wind tunnel design hardening/design_audit.md",
+    "roles/Nestor/campaigns/cw01-2026-09-17/experiments/cw01-e09/close_e09.py",
+    "roles/Mnemosyne/prompts/CHARTER_SESSION_AFFINITY_PROVENANCE_2026-09-05.txt",
+    "roles/Pallas/comms/T034_RUNTIME_NOTICE_2026-10-07.md",
+    "roles/Nestor/prompts/2026-09-14_graphworld_swarm/24_OPERATOR_R8_BOUNDARY_REPLICATION_INSTRUMENT_DISCIPLINE.md",
+    "workgraph/core.py"
+   ],
+   "seconds": 0.466,
+   "error": null
+  },
+  {
+   "id": "Q01",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "work-conserving research loop portfolio READY BLOCKED",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/NORTH_STAR.md"
+   ],
+   "evaluable": true,
+   "rank": 7,
+   "top1_score": 0.03225806451612903,
+   "top10": [
+    "roles/Aporia/prompts/2026-09-29_base_role_work_conserving/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "ergon/WORK_QUEUE_2026-05-10.md",
+    "aporia/docs/ALLOCATION_P137_2026-08-22.md",
+    "roles/Ensorain/prompts/2026-09-28_arc3_directive/01_OPERATOR_ARC3_DIRECTIVE_verbatim.md",
+    "roles/Ananke/research/THREADS.md",
+    "roles/Nyx/prompts/2026-10-03_operator_unblock_queue/OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/Nestor/prompts/2026-09-28_arc3_endogenous_heredity_portfolio/DIRECTIVE_VERBATIM.md",
+    "roles/Hecate/WORK_STATE.json",
+    "docs/fleet/index.html"
+   ],
+   "seconds": 2.533,
+   "error": null
+  },
+  {
+   "id": "Q01",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "work-conserving research loop portfolio READY BLOCKED",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/NORTH_STAR.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.630859375,
+   "top10": [
+    "ergon/WORK_QUEUE_2026-05-10.md",
+    "roles/Hecate/WORK_STATE.json",
+    "roles/Proteus/TODO.md",
+    "roles/Odysseus/expedition/READY_PROTOCOL.md",
+    "techne/loop/rung_notes/R3_constraint_maintenance.md",
+    "roles/Nestor/prompts/2026-09-26_npe_window_donor_discovery/DIRECTIVE_VERBATIM.md",
+    "techne/loop/cycle_011.md",
+    "roles/Tityos/WORK_STATE.json",
+    "roles/Palamedes/comms/2026-10-03_C-004_graph_published.md",
+    "roles/Ananke/research/THREADS.md"
+   ],
+   "seconds": 0.125,
+   "error": null
+  },
+  {
+   "id": "Q02",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "seat creation tool new_seat.py one minute",
+   "answers": [
+    "roles/base-role/seat_kit/README.md",
+    "roles/template"
+   ],
+   "evaluable": true,
+   "rank": 5,
+   "top1_score": 1.8648648858070374,
+   "top10": [
+    "roles/base-role/README.md",
+    "roles/base-role/seat_kit/new_seat.py",
+    "docs/fleet/index.html",
+    "roles/Hestia/REVIEW_PACKET_CREATION_AND_SEAT_KIT_2026-10-04.txt",
+    "roles/base-role/seat_kit/README.md",
+    "roles/Nemesis/journal/2026-09-11.md",
+    "docs/fleet/email_census.json",
+    "roles/Aphrodite/harvest_2026-09-30/evidence/findings_A4_human_reuse.md",
+    "roles/Hestia/calibration/LEDGER.md",
+    "comms:#1448"
+   ],
+   "seconds": 0.99,
+   "error": null
+  },
+  {
+   "id": "Q02",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "seat creation tool new_seat.py one minute",
+   "answers": [
+    "roles/base-role/seat_kit/README.md",
+    "roles/template"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.81689453125,
+   "top10": [
+    "roles/base-role/seat_kit/new_seat.py",
+    "roles/base-role/seat_kit/README.md",
+    "roles/template",
+    "roles/Themis/journal/2026-10-04.md",
+    "roles/base-role/seat_kit/test_new_seat.py",
+    "roles/Pan/journal/2026-10-09.md",
+    "achilles/census/build.py",
+    "roles/Pheme/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Hades/journal/2026-10-07.md",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/MANIFEST.md"
+   ],
+   "seconds": 0.469,
+   "error": null
+  },
+  {
+   "id": "Q02",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "seat creation tool new_seat.py one minute",
+   "answers": [
+    "roles/base-role/seat_kit/README.md",
+    "roles/template"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.04839549075403121,
+   "top10": [
+    "roles/base-role/seat_kit/new_seat.py",
+    "roles/base-role/seat_kit/README.md",
+    "roles/Hestia/REVIEW_PACKET_CREATION_AND_SEAT_KIT_2026-10-04.txt",
+    "roles/template",
+    "roles/base-role/seat_kit/test_new_seat.py",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Pheme/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Dionysus/prompts/2026-10-01_creation/01_OPERATOR_CREATION_verbatim.md",
+    "roles/Themis/journal/2026-10-04.md",
+    "roles/Themis/prompts/2026-10-04_creation/01_OPERATOR_CREATION_verbatim.md"
+   ],
+   "seconds": 2.051,
+   "error": null
+  },
+  {
+   "id": "Q02",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "seat creation tool new_seat.py one minute",
+   "answers": [
+    "roles/base-role/seat_kit/README.md",
+    "roles/template"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.7119140625,
+   "top10": [
+    "roles/base-role/seat_kit/README.md",
+    "roles/Hestia/REVIEW_PACKET_CREATION_AND_SEAT_KIT_2026-10-04.txt",
+    "roles/base-role/seat_kit/new_seat.py",
+    "roles/Dionysus/prompts/2026-10-01_creation/01_OPERATOR_CREATION_verbatim.md",
+    "roles/Pheme/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/base-role/seat_kit/controls/validator_cheat_control_2026-10-04.py",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/base-role/seat_kit/test_new_seat.py",
+    "roles/Themis/prompts/2026-10-04_creation/01_OPERATOR_CREATION_verbatim.md",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/REPORT_ARCHAEON_new_seat.md"
+   ],
+   "seconds": 0.126,
+   "error": null
+  },
+  {
+   "id": "Q03",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "master work order gate clearance immediate default",
+   "answers": [
+    "ops/work_orders/CURRENT.md"
+   ],
+   "evaluable": true,
+   "rank": 4,
+   "top1_score": 1.845152429171971,
+   "top10": [
+    "docs/fleet/index.html",
+    "aporia/docs/deep_research_batch_2026-08-17/13_syntactic_dispatch_as_a_hidden_failure_mode_in_verification_.md",
+    "roles/base-role/NORTH_STAR.md",
+    "ops/work_orders/CURRENT.md",
+    "docs/phase3/intake/ixion/inference_dependency_map.md",
+    "ops/work_orders/archive/MWO-0004_2026-09-29.md",
+    "techne/acquisition/ITERATION_RECEIPT_2026-09-09.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py",
+    "aporia/docs/deep_research_batch_2026-08-17/09_certificate_checking_versus_decision_procedures_for_novelty_.md",
+    "roles/Nestor/sidequests/graphworld/SWARM_R8.md"
+   ],
+   "seconds": 1.589,
+   "error": null
+  },
+  {
+   "id": "Q03",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "master work order gate clearance immediate default",
+   "answers": [
+    "ops/work_orders/CURRENT.md"
+   ],
+   "evaluable": true,
+   "rank": 6,
+   "top1_score": 0.7529296875,
+   "top10": [
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "comms:#1296",
+    "comms:#1293",
+    "roles/Aporia/prompts/2026-10-03_m1_drain_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "comms:#1291",
+    "ops/work_orders/CURRENT.md",
+    "comms:#1297",
+    "comms:#1292",
+    "comms:#1294",
+    "ops/fleet/M1_DRAIN_2026-10-03/ORDER.md"
+   ],
+   "seconds": 0.35,
+   "error": null
+  },
+  {
+   "id": "Q03",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "master work order gate clearance immediate default",
+   "answers": [
+    "ops/work_orders/CURRENT.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.04643206256109482,
+   "top10": [
+    "ops/work_orders/CURRENT.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/Aporia/prompts/2026-10-03_m1_drain_phase2b/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "ops/work_orders/archive/MWO-0001_2026-09-28.md",
+    "archaeon/docs/expansion/WORK_PACKAGES.md",
+    "roles/Aporia/prompts/2026-09-30B_cwo_finish_in_place/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/MANIFEST.md",
+    "docs/fleet/index.html",
+    "aporia/docs/deep_research_batch_2026-08-17/13_syntactic_dispatch_as_a_hidden_failure_mode_in_verification_.md",
+    "roles/base-role/NORTH_STAR.md"
+   ],
+   "seconds": 2.439,
+   "error": null
+  },
+  {
+   "id": "Q03",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "master work order gate clearance immediate default",
+   "answers": [
+    "ops/work_orders/CURRENT.md"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.66259765625,
+   "top10": [
+    "ops/work_orders/archive/MWO-0004_2026-09-29.md",
+    "ops/work_orders/CURRENT.md",
+    "roles/Nyx/WORK_STATE.json",
+    "archaeon/campaign4/LAUNCH_GATE_RECEIPT.json",
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/Nestor/sidequests/graphworld/BUILD_R8.md",
+    "ops/fleet/QUEUE.json",
+    "roles/Ensorain/DEFECTS.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0002_authoring/01_OPERATOR_ASSIGNMENT_verbatim.md",
+    "roles/Nyx/prompts/2026-10-03_operator_unblock_queue/OPERATOR_DIRECTIVE_verbatim.md"
+   ],
+   "seconds": 0.123,
+   "error": null
+  },
+  {
+   "id": "Q04",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "system_identifier environment WrongEnvironment identity guard",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.782608687877655,
+   "top10": [
+    "evidence_wiki/ew/db.py",
+    "aporia/docs/deep_research_batch_2026-08-17/04_library_learning_and_abstraction_discovery_canon_band_s_lemm.md",
+    "docs/fleet/index.html",
+    "docs/phase3/design/ASTRA-6.0/evidence/IXION_AUDIT.md",
+    "docs/phase3/design/OPUS-5.5/salvage/infra.md",
+    "docs/phase3/design/FABLE-5.1/SALVAGE_MATRIX.md",
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "docs/phase3/design/ASTRA-6.0/SALVAGE_MATRIX.md",
+    "roles/Hermes/STATUS.md",
+    "roles/Lexis/archaeology/hct01_prior_art_2026-09-03/work/kumawat_2024_biorxiv.txt"
+   ],
+   "seconds": 0.737,
+   "error": null
+  },
+  {
+   "id": "Q04",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "system_identifier environment WrongEnvironment identity guard",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 4,
+   "top1_score": 0.78076171875,
+   "top10": [
+    "evidence_wiki/ew/db.py",
+    "docs/phase3/design/OPUS-5.5/salvage/infra.md",
+    "archaeon/producer/costs.py",
+    "comms/identity.py",
+    "vivarium/tests/test_db_identity.py",
+    "evidence_wiki/tests/test_store_identity_guard.py",
+    "vivarium/viv/db.py",
+    "roles/Aphrodite/engine/identity.py",
+    "comms/tests/test_identity.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/runtime.py"
+   ],
+   "seconds": 0.347,
+   "error": null
+  },
+  {
+   "id": "Q04",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "system_identifier environment WrongEnvironment identity guard",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.04399801587301587,
+   "top10": [
+    "comms/identity.py",
+    "evidence_wiki/ew/db.py",
+    "evidence_wiki/tests/test_store_identity_guard.py",
+    "docs/phase3/design/OPUS-5.5/salvage/infra.md",
+    "docs/phase3/design/FABLE-5.1/SALVAGE_MATRIX.md",
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "vivarium/deploy/g3_identity_proof.py",
+    "vivarium/tests/test_db_identity.py",
+    "comms/tests/test_identity.py",
+    "proteus/eval/identity.py"
+   ],
+   "seconds": 1.717,
+   "error": null
+  },
+  {
+   "id": "Q04",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "system_identifier environment WrongEnvironment identity guard",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 3,
+   "top1_score": 0.5751953125,
+   "top10": [
+    "evidence_wiki/tests/test_store_identity_guard.py",
+    "roles/Mnemosyne/comms_out/2026-09-11_hermes69_accept.md",
+    "comms/identity.py",
+    "roles/Ananke/research/harvest/wave2/W2-AE/scratch_apply/prometheus/ananke/audit/guards.py",
+    "roles/Ananke/research/harvest/wave2/W2-AE/pkg/prometheus/ananke/audit/guards.py",
+    "roles/Hermes/prompts/2026-09-11_comms_identity/05_MOVED_2026-09-11.md",
+    "roles/Ananke/research/harvest/wave2/W2-C/pte_mut/guards.py",
+    "roles/Ananke/research/harvest/wave2/W2-O/pte_mut/guards.py",
+    "agents/_shared/external_tools/tests/test_04_lean_repl_env_threading.py",
+    "proteus/eval/identity.py"
+   ],
+   "seconds": 0.242,
+   "error": null
+  },
+  {
+   "id": "Q05",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "pgvector install privileged host change question",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 1.8684210777282715,
+   "top10": [
+    "roles/Pan/QUESTIONS.md",
+    "roles/Pan/WORK_STATE.json",
+    "docs/fleet/index.html",
+    "roles/Pan/BACKLOG_H0H5.md",
+    "pivot/m2_apollo_revival_prompt_2026-05-17.md",
+    "techne/fossils/GHOST_WORLDS_2026-09-13.json",
+    "ops/work_orders/archive/MWO-0001_2026-09-28.md",
+    "ops/work_orders/archive/MWO-0004_2026-09-29.md",
+    "ops/work_orders/CURRENT.md",
+    "roles/Artemis/prompts/2026-09-27_sfe_retrospective_thread/01_OPERATOR_THREAD_verbatim.md"
+   ],
+   "seconds": 0.774,
+   "error": null
+  },
+  {
+   "id": "Q05",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "pgvector install privileged host change question",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.77392578125,
+   "top10": [
+    "roles/Pan/QUESTIONS.md",
+    "Aether/test/test_prometheus_gpu.py",
+    "roles/Techne/RESPONSE_TO_APORIA_HANDOFF_2026-05-06.md",
+    "aporia/meta/pressure_appliers/CONTRACT_CHANGE_WINDOW_TECHNE_2026-05-07.md",
+    "fabric/lease_compat.py",
+    "roles/Artemis/ABOUT.md",
+    "charon/src/db.py",
+    "agents/arachne/landscapes/_pg.py",
+    "roles/Achilles/superseded/RESPONSIBILITIES_pre_charter_2026-09-30.md",
+    "techne/acquisition/host.py"
+   ],
+   "seconds": 0.35,
+   "error": null
+  },
+  {
+   "id": "Q05",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "pgvector install privileged host change question",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.03278688524590164,
+   "top10": [
+    "roles/Pan/QUESTIONS.md",
+    "roles/Cosmos/journal/2026-10-06.md",
+    "roles/Pan/WORK_STATE.json",
+    "Aether/test/test_prometheus_gpu.py",
+    "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+    "docs/fleet/index.html",
+    "roles/Techne/RESPONSE_TO_APORIA_HANDOFF_2026-05-06.md",
+    "ops/campaigns/C-009/tasks/C-009-T030/LEASE.json",
+    "roles/Pan/BACKLOG_H0H5.md",
+    "aporia/meta/pressure_appliers/CONTRACT_CHANGE_WINDOW_TECHNE_2026-05-07.md"
+   ],
+   "seconds": 1.51,
+   "error": null
+  },
+  {
+   "id": "Q05",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "pgvector install privileged host change question",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.521484375,
+   "top10": [
+    "roles/Cosmos/journal/2026-10-06.md",
+    "fabric/promexec/OPERATOR_STEPS_ROUND2.md",
+    "ops/campaigns/C-009/tasks/C-009-T030/LEASE.json",
+    "ops/campaigns/C-004/tasks/C-004-T030/LEASE.json",
+    "ops/campaigns/C-004/tasks/C-004-T041/LEASE.json",
+    "roles/Bellerophon/journal/2026-10-06.md",
+    "ops/campaigns/C-004/tasks/C-004-T016/LEASE.json",
+    "ops/campaigns/C-004/tasks/C-004-T001/LEASE.json",
+    "roles/Herakles/journal/2026-09-17.md",
+    "ops/campaigns/C-004/tasks/C-004-T012/LEASE.json"
+   ],
+   "seconds": 0.159,
+   "error": null
+  },
+  {
+   "id": "Q06",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "half-open connection keepalive tcp_user_timeout",
+   "answers": [
+    "evidence_wiki/ew/db.py"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 1.9509803652763367,
+   "top10": [
+    "comms:#1166",
+    "evidence_wiki/ew/db.py",
+    "fabric/tests/test_store.py",
+    "roles/Archaeon/STATUS_2026-10-01.md",
+    "comms:#1115",
+    "docs/fleet/index.html",
+    "comms:#1148",
+    "roles/Odysseus/fabric_pilot/DEFECTS.md",
+    "fabric/store.py",
+    "evidence_wiki/tests/test_db_keepalive.py"
+   ],
+   "seconds": 0.931,
+   "error": null
+  },
+  {
+   "id": "Q06",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "half-open connection keepalive tcp_user_timeout",
+   "answers": [
+    "evidence_wiki/ew/db.py"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.8173828125,
+   "top10": [
+    "fabric/tests/test_store.py",
+    "fabric/store.py",
+    "nyx/atlas/cuts/bsd_tcp_4_2_1983.py",
+    "roles/Archaeon/STATUS_2026-10-01.md",
+    "evidence_wiki/tests/test_db_keepalive.py",
+    "SerendipityFoundry/SerendipityFoundryClient/test_harness/longrun_restart.py",
+    "comms:#1166",
+    "nyx/atlas/cuts/bsd_tcp_4_3_tahoe_1988.py",
+    "nyx/atlas/fossils/bsd-tcp-4.2-1983.json",
+    "genesis/harmonia_c/d16c/engine_lineage.py"
+   ],
+   "seconds": 0.363,
+   "error": null
+  },
+  {
+   "id": "Q06",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "half-open connection keepalive tcp_user_timeout",
+   "answers": [
+    "evidence_wiki/ew/db.py"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.045862565049819726,
+   "top10": [
+    "evidence_wiki/tests/test_db_keepalive.py",
+    "fabric/tests/test_store.py",
+    "nyx/atlas/cuts/bsd_tcp_4_2_1983.py",
+    "comms:#1166",
+    "roles/Archaeon/STATUS_2026-10-01.md",
+    "fabric/store.py",
+    "comms:#1115",
+    "techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988/record.json",
+    "nyx/atlas/cuts/bsd_tcp_4_3_tahoe_1988.py",
+    "comms:#1151"
+   ],
+   "seconds": 1.736,
+   "error": null
+  },
+  {
+   "id": "Q06",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "half-open connection keepalive tcp_user_timeout",
+   "answers": [
+    "evidence_wiki/ew/db.py"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.5732421875,
+   "top10": [
+    "evidence_wiki/tests/test_db_keepalive.py",
+    "nyx/catalog/bits/wikipedia_list_of_algorithms/predict_ignore_ambiguous_samples_and_back_off.json",
+    "roles/Cadmus/comms/2026-10-07_ack_1843.md",
+    "nyx/atlas/cuts/bsd_tcp_4_2_1983.py",
+    "ergon/learner/diagnostics/_session_close_2026-05-07_to_2026-05-09_full_arc.md",
+    "techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988/record.json",
+    "roles/Argus/comms/2026-10-07_HEARTBEAT_desktop_0950Z.md",
+    "roles/Ananke/research/workers/W-A/REPORT.md",
+    "roles/Argus/comms/2026-10-04_HEARTBEAT_desktop_1426Z.md",
+    "roles/Lexis/archaeology/hct01_prior_art_2026-09-03/recovered/.work/ch.html"
+   ],
+   "seconds": 0.122,
+   "error": null
+  },
+  {
+   "id": "Q07",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "Atlas research-policy layer portfolio propositions primitives",
+   "answers": [
+    "roles/Atlas/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.9295774698257446,
+   "top10": [
+    "comms:#556",
+    "roles/Atlas/MODEL.md",
+    "atlas/report.py",
+    "atlas/policy.py",
+    "atlas/sql/010_m1-1c645957_research_policy.sql",
+    "docs/fleet/index.html",
+    "roles/Achilles/census/registry/seats_part1.json",
+    "comms:#568",
+    "roles/Atlas-M2/RESUME.md",
+    "roles/Pan/RESPONSIBILITIES.md"
+   ],
+   "seconds": 1.196,
+   "error": null
+  },
+  {
+   "id": "Q07",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "Atlas research-policy layer portfolio propositions primitives",
+   "answers": [
+    "roles/Atlas/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 8,
+   "top1_score": 0.86376953125,
+   "top10": [
+    "roles/Atlas/MODEL.md",
+    "roles/Atlas/journal/2026-09-24.md",
+    "atlas/policy.py",
+    "atlas/sql/010_m1-1c645957_research_policy.sql",
+    "roles/Atlas/reports/ROADMAP_2026-09-24.txt",
+    "roles/Atlas/reports/ROADMAP_2026-09-25.txt",
+    "roles/Atlas/inference_harvest_2026-09-30/ATLAS_ONTOLOGY_GAPS_VNEXT.md",
+    "roles/Atlas/RESPONSIBILITIES.md",
+    "roles/Atlas/calibration/LEDGER.md",
+    "docs/phase3/intake/ixion/seats/Atlas.md"
+   ],
+   "seconds": 0.371,
+   "error": null
+  },
+  {
+   "id": "Q07",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "Atlas research-policy layer portfolio propositions primitives",
+   "answers": [
+    "roles/Atlas/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 4,
+   "top1_score": 0.04762704813108039,
+   "top10": [
+    "atlas/policy.py",
+    "atlas/sql/010_m1-1c645957_research_policy.sql",
+    "docs/phase3/intake/ixion/seats/Atlas.md",
+    "roles/Atlas/RESPONSIBILITIES.md",
+    "roles/Atlas/prompts/2026-09-24_promotion/OPERATOR_9_promotion_verbatim.md",
+    "roles/Atlas/reports/ROADMAP_2026-09-24.txt",
+    "roles/Atlas/BACKLOG_H0H5.md",
+    "roles/Atlas/MODEL.md",
+    "roles/Atlas/inference_harvest_2026-09-30/ATLAS_ONTOLOGY_GAPS_VNEXT.md",
+    "comms:#556"
+   ],
+   "seconds": 1.974,
+   "error": null
+  },
+  {
+   "id": "Q07",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "Atlas research-policy layer portfolio propositions primitives",
+   "answers": [
+    "roles/Atlas/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 9,
+   "top1_score": 0.64697265625,
+   "top10": [
+    "atlas/sql/010_m1-1c645957_research_policy.sql",
+    "atlas/policy.py",
+    "docs/phase3/intake/ixion/seats/Atlas.md",
+    "roles/Atlas/inference_harvest_2026-09-30/ATLAS_ONTOLOGY_GAPS_VNEXT.md",
+    "roles/Atlas/prompts/2026-09-24_promotion/OPERATOR_9_promotion_verbatim.md",
+    "roles/Atlas/reports/ROADMAP_2026-09-24.txt",
+    "roles/Atlas/reports/ROADMAP_2026-09-25.txt",
+    "aporia/docs/gemini_deep_research_deck_2026-05-14.md",
+    "roles/Atlas/RESPONSIBILITIES.md",
+    "atlas/harvest/theory.py"
+   ],
+   "seconds": 0.13,
+   "error": null
+  },
+  {
+   "id": "Q08",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "Eos acquisition typing rule ANCHOR ACQUIRE RESOURCE REFUSED",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 1.9836065769195557,
+   "top10": [
+    "docs/fleet/index.html",
+    "roles/Eos/RESPONSIBILITIES.md",
+    "roles/Pan/RESPONSIBILITIES.md",
+    "roles/Eos/prompts/2026-09-11_admission_queue/00_COMMON.md",
+    "roles/Eos/STATUS.md",
+    "roles/Achilles/census/registry/seats_part2.json",
+    "docs/phase3/intake/tityos/seats/Eos.md",
+    "roles/base-role/MONITORS.md",
+    "comms:#1964",
+    "roles/Eos/BACKLOG_H0H5.md"
+   ],
+   "seconds": 1.774,
+   "error": null
+  },
+  {
+   "id": "Q08",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "Eos acquisition typing rule ANCHOR ACQUIRE RESOURCE REFUSED",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.78857421875,
+   "top10": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "roles/Eos/prompts/2026-09-11_admission_queue/00_COMMON.md",
+    "roles/Eos/intake/REFUSALS_2026-09-11.md",
+    "comms:#57",
+    "roles/Eos/CALIBRATION.md",
+    "agents/eos/tests/test_intake.py",
+    "roles/Eos/intake/RESUBMISSION_acquire_2026-09-11.json",
+    "roles/Nemesis/prompts/2026-09-11_eos_intake_attack/REPORT_TO_EOS_EOS30.md",
+    "comms:#95",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/refusal_audit.py"
+   ],
+   "seconds": 0.342,
+   "error": null
+  },
+  {
+   "id": "Q08",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "Eos acquisition typing rule ANCHOR ACQUIRE RESOURCE REFUSED",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.047907090265630725,
+   "top10": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "roles/Eos/prompts/2026-09-11_admission_queue/00_COMMON.md",
+    "roles/Eos/intake/REFUSALS_2026-09-11.md",
+    "roles/Nemesis/prompts/2026-09-11_eos_intake_attack/REPORT_TO_EOS_EOS30.md",
+    "agents/eos/src/intake.py",
+    "roles/Achilles/census/registry/seats_part2.json",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/refusal_audit.json",
+    "agents/eos/tests/test_intake.py",
+    "roles/Eos/intake/results_2026-09-11.json",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/FINDING.md"
+   ],
+   "seconds": 2.605,
+   "error": null
+  },
+  {
+   "id": "Q08",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "Eos acquisition typing rule ANCHOR ACQUIRE RESOURCE REFUSED",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 5,
+   "top1_score": 0.6669921875,
+   "top10": [
+    "roles/Eos/intake/REFUSALS_2026-09-11.md",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/refusal_audit.json",
+    "roles/Eos/prompts/2026-09-11_admission_queue/00_COMMON.md",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/results_run1_generator_defect.json",
+    "roles/Eos/RESPONSIBILITIES.md",
+    "roles/Nemesis/prompts/2026-09-11_eos_intake_attack/REPORT_TO_EOS_EOS30.md",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/SECOND_OPINION_EOS30.md",
+    "roles/Nemesis/attacks/2026-09-11_eos_intake_gate/results.json",
+    "agents/eos/src/intake.py",
+    "ergon/learner/corpus/v1_0_tier_pending/by_file/theseus/ergon_outbox__inbox__theseus_training_anchors_20260519T092044Z/2026-05-19/ingest_summary.json"
+   ],
+   "seconds": 0.135,
+   "error": null
+  },
+  {
+   "id": "Q09",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "backlog schema at least 20 items evidence of done",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": 3,
+   "top1_score": 1.8979591727256775,
+   "top10": [
+    "roles/Clymene/BACKLOG_H0H5.md",
+    "roles/Nous/BACKLOG_H0H5.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md",
+    "roles/Pronoia/BACKLOG_H0H5.md",
+    "docs/fleet/index.html",
+    "roles/Eos/BACKLOG_H0H5.md",
+    "roles/Tantalus/BACKLOG_H0H5.md",
+    "roles/Arachne/BACKLOG_H0H5.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/MNEMOSYNE.md",
+    "roles/Harmonia/BACKLOG_H0H5.md"
+   ],
+   "seconds": 1.552,
+   "error": null
+  },
+  {
+   "id": "Q09",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "backlog schema at least 20 items evidence of done",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": 5,
+   "top1_score": 0.7744140625,
+   "top10": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/TECHNE.md",
+    "roles/Cosmos/BACKLOG_H0H5.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/MNEMOSYNE.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/HARMONIA.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md",
+    "roles/Ensorain/superseded/BACKLOG_H0H5_2026-09-23_precharter.md",
+    "roles/Talos/BACKLOG_H0H5.md",
+    "charon/BACKLOG.md",
+    "roles/Agora/BACKLOG_H0H5.md",
+    "engine/shadow/WORKLOG_SCHEMA.md"
+   ],
+   "seconds": 0.475,
+   "error": null
+  },
+  {
+   "id": "Q09",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "backlog schema at least 20 items evidence of done",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.04713064713064713,
+   "top10": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md",
+    "roles/Pronoia/BACKLOG_H0H5.md",
+    "roles/Nous/BACKLOG_H0H5.md",
+    "roles/Tantalus/BACKLOG_H0H5.md",
+    "roles/Clymene/BACKLOG_H0H5.md",
+    "roles/Harmonia/BACKLOG_H0H5.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/MNEMOSYNE.md",
+    "roles/Aether/BACKLOG_H0H5.md",
+    "roles/Cosmos/BACKLOG_H0H5.md",
+    "roles/Eos/BACKLOG_H0H5.md"
+   ],
+   "seconds": 2.364,
+   "error": null
+  },
+  {
+   "id": "Q09",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "backlog schema at least 20 items evidence of done",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": 3,
+   "top1_score": 0.66943359375,
+   "top10": [
+    "roles/Pronoia/BACKLOG_H0H5.md",
+    "roles/Nous/BACKLOG_H0H5.md",
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md",
+    "roles/Techne/BACKLOG_H0H5.md",
+    "roles/Tantalus/BACKLOG_H0H5.md",
+    "roles/Daedalus/BACKLOG_H0H5.md",
+    "roles/Atalanta/BACKLOG_H0H5.md",
+    "roles/Polyhymnia/BACKLOG_H0H5.md",
+    "roles/Ananke/BACKLOG_H0H5.md",
+    "roles/Harmonia/pivot/HARMONIA_M2CA1148_BACKLOG_PASS_REVIEW_2026-09-18.md"
+   ],
+   "seconds": 0.125,
+   "error": null
+  },
+  {
+   "id": "Q10",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "move SFE ledger to NVMe on M2",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.9756097793579102,
+   "top10": [
+    "docs/fleet/index.html",
+    "comms:#506",
+    "roles/Artemis/threads/sfe_retrospective/notes/A_chronology.md",
+    "comms:#448",
+    "SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md",
+    "atlas/registry.json",
+    "roles/Atlas-M2/prompts/2026-09-19_ongoing_directive/TO_ATLAS_tick1_report.md",
+    "roles/base-role/MONITORS.md",
+    "roles/Atlas-M2/SOURCES_M2.md",
+    "roles/Artemis/threads/sfe_retrospective/notes/P_portability.md"
+   ],
+   "seconds": 0.418,
+   "error": null
+  },
+  {
+   "id": "Q10",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "move SFE ledger to NVMe on M2",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.7900390625,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_volume.py",
+    "roles/Daedalus/journal/2026-09-16.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/relocate_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/adopt_m1_ledger.py",
+    "roles/Artemis/threads/sfe_retrospective/notes/P_portability.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LAUNCH_M2_2026-09-16/receipt.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json"
+   ],
+   "seconds": 0.344,
+   "error": null
+  },
+  {
+   "id": "Q10",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "move SFE ledger to NVMe on M2",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.04648551538288794,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/relocate_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/adopt_m1_ledger.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_volume.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_MOVE_2026-09-12/ACCEPTANCE.md",
+    "roles/Artemis/threads/sfe_retrospective/notes/P_portability.md",
+    "roles/Harmonia/rulings/RULING_SFE_LEDGER_TO_POSTGRES_ACCEPTANCE_2026-09-18.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json",
+    "roles/Atlas-M2/prompts/2026-09-19_ongoing_directive/TO_ATLAS_tick1_report.md"
+   ],
+   "seconds": 1.148,
+   "error": null
+  },
+  {
+   "id": "Q10",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "move SFE ledger to NVMe on M2",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.744140625,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_MOVE_2026-09-12/ACCEPTANCE.md",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/NOTICE_window.md",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/RECEIPT_after.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_volume.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "roles/Harmonia/rulings/RULING_SFE_LEDGER_TO_POSTGRES_ACCEPTANCE_2026-09-18.md",
+    "roles/Archaeon/prompts/2026-09-17_c4_convergence/08_DAEDALUS_M1_ARCHIVE_LEDGER.md",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/ACK_ARCHAEON_212_new_path.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"
+   ],
+   "seconds": 0.127,
+   "error": null
+  },
+  {
+   "id": "Q11",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "manifest sha256 LF-normalised bytes write verify",
+   "answers": [
+    "comms/manifest.py"
+   ],
+   "evaluable": true,
+   "rank": 10,
+   "top1_score": 1.9152542352676392,
+   "top10": [
+    "proteus/integration/ARCHAEOLOGY_REQUIREMENTS.json",
+    "docs/phase3/design/OPUS-5.5/salvage/NEW_DEFECTS.md",
+    "docs/phase3/design/OPUS-5.5/salvage/infra.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "engine/necropolis/workshop/adapters/manifest_verify.py",
+    "docs/phase3/design/FABLE-5.1/salvage_reports/06_infrastructure.md",
+    "techne/fossils/build_packet_asal.py",
+    "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md",
+    "techne/fossils/specimens/asal-sakana-2024/FOSSIL_PACKET.json",
+    "comms/manifest.py"
+   ],
+   "seconds": 1.174,
+   "error": null
+  },
+  {
+   "id": "Q11",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "manifest sha256 LF-normalised bytes write verify",
+   "answers": [
+    "comms/manifest.py"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.859375,
+   "top10": [
+    "roles/Talos/prompts/2026-09-11_talos01_ruling/MANIFEST.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0002_revision/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/second_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/first_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/third_version/tests/MANIFEST.md",
+    "roles/Nestor/prompts/2026-09-24_cycle9_final_rulings/MANIFEST.md",
+    "roles/Techne/prompts/2026-09-12_techne51_ruling/MANIFEST.md",
+    "roles/Hecate/prereg/2026-09-30_pass3_v2/MANIFEST.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0003_publication/MANIFEST.md",
+    "roles/Hecate/prereg/2026-09-29_meta_experiment_v1/MANIFEST.md"
+   ],
+   "seconds": 0.353,
+   "error": null
+  },
+  {
+   "id": "Q11",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "manifest sha256 LF-normalised bytes write verify",
+   "answers": [
+    "comms/manifest.py"
+   ],
+   "evaluable": true,
+   "rank": 4,
+   "top1_score": 0.031024531024531024,
+   "top10": [
+    "docs/phase3/hardening/FABLE-5.1/attack/second_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/first_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/third_version/tests/MANIFEST.md",
+    "comms/manifest.py",
+    "docs/phase3/review/FABLE-5.1/counterfeit/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/harness/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/third_version/rso_harness/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/harness/rso_harness/MANIFEST.md",
+    "proteus/integration/ARCHAEOLOGY_REQUIREMENTS.json",
+    "roles/Talos/prompts/2026-09-11_talos01_ruling/MANIFEST.md"
+   ],
+   "seconds": 2.033,
+   "error": null
+  },
+  {
+   "id": "Q11",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "manifest sha256 LF-normalised bytes write verify",
+   "answers": [
+    "comms/manifest.py"
+   ],
+   "evaluable": true,
+   "rank": 4,
+   "top1_score": 0.6650390625,
+   "top10": [
+    "ops/campaigns/C-008/evidence/D5_JOIN/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/second_reader/scripts/comp/MANIFEST.md",
+    "comms/tests/test_manifest.py",
+    "comms/manifest.py",
+    "docs/phase3/review/FABLE-5.1/counterfeit/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/second_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/second_reader/scripts/h1/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/third_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/attack/first_version/tests/MANIFEST.md",
+    "docs/phase3/hardening/FABLE-5.1/harness/tests/MANIFEST.md"
+   ],
+   "seconds": 0.147,
+   "error": null
+  },
+  {
+   "id": "Q12",
+   "type": "lexical",
+   "mode": "fts",
+   "query": "registry of standing loops watchdogs dormancy threshold accountable seat",
+   "answers": [
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 1.9861496090888977,
+   "top10": [
+    "docs/fleet/index.html",
+    "roles/base-role/MONITORS.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/README.md",
+    "comms:#160",
+    "roles/Elenchus/INBOX_APORIA_SHADOW_DECISION_2026-09-11.md",
+    "archaeon/docs/expansion/DECISIONS.md",
+    "roles/Mnemosyne/comms_out/2026-09-16_REVIEW_PACKET_m2_restoration.txt",
+    "comms:#63",
+    "docs/phase3/intake/ixion/seats/Achilles.md"
+   ],
+   "seconds": 1.148,
+   "error": null
+  },
+  {
+   "id": "Q12",
+   "type": "lexical",
+   "mode": "vector",
+   "query": "registry of standing loops watchdogs dormancy threshold accountable seat",
+   "answers": [
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.8056640625,
+   "top10": [
+    "roles/base-role/MONITORS.md",
+    "comms:#123",
+    "roles/Pronoia/prompts/2026-09-11_adoption/NOTICE_liveness_findings.md",
+    "comms:#122",
+    "comms:#120",
+    "comms:#121",
+    "roles/Atalanta/CENSUS_LOOP_RISK_2026-09-11.md",
+    "roles/Clymene/prompts/2026-09-11_adoption/REPORT_M2_UNREGISTERED_TASKS.md",
+    "roles/Pronoia/PRODUCTIVE_LIVENESS_SURVEY_2026-09-11.md",
+    "roles/Diomedes/BASE_ROLE_ADOPTION_2026-09-11.txt"
+   ],
+   "seconds": 0.343,
+   "error": null
+  },
+  {
+   "id": "Q12",
+   "type": "lexical",
+   "mode": "hybrid",
+   "query": "registry of standing loops watchdogs dormancy threshold accountable seat",
+   "answers": [
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.048915917503966164,
+   "top10": [
+    "roles/base-role/MONITORS.md",
+    "evidence_wiki/scripts/ew_watchdog_m2.ps1",
+    "archaeon/docs/expansion/DECISIONS.md",
+    "roles/Diomedes/BASE_ROLE_ADOPTION_2026-09-11.txt",
+    "roles/Aporia/STATUS.md",
+    "roles/Nous/RESPONSIBILITIES.md",
+    "roles/Clymene/prompts/2026-09-11_adoption/REPORT_M2_UNREGISTERED_TASKS.md",
+    "roles/Hermes/prompts/2026-09-11_m2_unregistered_loops/REPORT_M2_UNREGISTERED_LOOPS.md",
+    "roles/Aphrodite/library/NEWS_MONITOR_SPEC.md",
+    "vivarium/tests/test_rule10_park.py"
+   ],
+   "seconds": 2.327,
+   "error": null
+  },
+  {
+   "id": "Q12",
+   "type": "lexical",
+   "mode": "doc",
+   "query": "registry of standing loops watchdogs dormancy threshold accountable seat",
+   "answers": [
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.66259765625,
+   "top10": [
+    "roles/base-role/MONITORS.md",
+    "evidence_wiki/scripts/ew_watchdog.ps1",
+    "roles/Skopos/STATUS.md",
+    "evidence_wiki/scripts/ew_watchdog_m2.ps1",
+    "roles/Mnemosyne/comms_out/2026-09-11_REVIEW_PACKET_second_pass.txt",
+    "roles/Archaeon/prompts/2026-09-11_rulings_evening/ATALANTA_RULE10_BROADCAST.md",
+    "pivot/PREREG_watcher_scorecard_2026-08-20.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/sfengine_m2_watchdog.ps1",
+    "evidence_wiki/tests/test_watchdog.py",
+    "roles/Vivarium/STATUS.md"
+   ],
+   "seconds": 0.135,
+   "error": null
+  },
+  {
+   "id": "P01",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "what should an agent do when it is stuck waiting for someone else's decision",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/WORKING_CONTRACT.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.4743589560190835,
+   "top10": [
+    "roles/Hephaestus/META_ASSESSMENT_2026-08-12_fable_seat.md",
+    "aporia/docs/deep_research_batch_2026-08-17/15_do_multi_agent_systems_improve_by_restructuring_themselves.md",
+    "forge/candidates/t2_perspective_shift_019.py",
+    "forge/candidates/t2_perspective_shift_002.py",
+    "forge/candidates/t2_liar_detection_029.py",
+    "forge/v2/hephaestus_t2/scrap/t2_liar_detection_029.py",
+    "docs/fleet/index.html",
+    "forge/candidates/t2_liar_detection_006.py",
+    "forge/candidates/t2_liar_detection_014.py",
+    "forge/candidates/t2_strategic_deception_006.py"
+   ],
+   "seconds": 0.909,
+   "error": null
+  },
+  {
+   "id": "P01",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "what should an agent do when it is stuck waiting for someone else's decision",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/WORKING_CONTRACT.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.67529296875,
+   "top10": [
+    "engine/driver/README.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0011.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0010.md",
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0000.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0001.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0019.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0013.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0015.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0020.md"
+   ],
+   "seconds": 0.341,
+   "error": null
+  },
+  {
+   "id": "P01",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "what should an agent do when it is stuck waiting for someone else's decision",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/WORKING_CONTRACT.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.032266458495966696,
+   "top10": [
+    "engine/driver/README.md",
+    "roles/Hephaestus/META_ASSESSMENT_2026-08-12_fable_seat.md",
+    "roles/Aporia/prompts/2026-09-26_steward_freeze/01_OPERATOR_RULING_verbatim.md",
+    "aporia/docs/deep_research_batch_2026-08-17/15_do_multi_agent_systems_improve_by_restructuring_themselves.md",
+    "ama_game/arena/a0/A0_EVAL/prompts/A0_EVAL-0011.md",
+    "harmonia/memory/decisions_for_james.md",
+    "forge/candidates/t2_perspective_shift_019.py",
+    "forge/candidates/t2_perspective_shift_002.py",
+    "roles/Aporia/prompts/2026-09-29_mwo0004_gate_clearance/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "harmonia/proposals/2026-06-09/00_SEQUENCING_AND_HANDOFF.md"
+   ],
+   "seconds": 1.81,
+   "error": null
+  },
+  {
+   "id": "P01",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "what should an agent do when it is stuck waiting for someone else's decision",
+   "answers": [
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/WORKING_CONTRACT.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.5771484375,
+   "top10": [
+    "roles/Aporia/prompts/2026-09-26_steward_freeze/01_OPERATOR_RULING_verbatim.md",
+    "harmonia/memory/decisions_for_james.md",
+    "engine/driver/README.md",
+    "harmonia/proposals/2026-06-09/00_SEQUENCING_AND_HANDOFF.md",
+    "forge/candidates/t2_temporal_scheduling_002_REASONING_TRACE.md",
+    "pivot/ADVOCACY_REVIEW_APORIA_2026-06-24.md",
+    "roles/Nestor/prompts/2026-09-26_direct_operator_control/DIRECTIVE_VERBATIM.md",
+    "roles/Atlas-M2/prompts/2026-09-19_ongoing_directive/OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/Argus/comms/QUESTION_Palamedes_claims_2026-10-04.md",
+    "roles/Ananke/prompts/2026-09-25_pte_si01_directive/02_REPLY_TO_STEWARDS.md"
+   ],
+   "seconds": 0.166,
+   "error": null
+  },
+  {
+   "id": "P02",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "the long-term mission: let reasoning machinery evolve on its own instead of being designed by people",
+   "answers": [
+    "roles/base-role/NORTH_STAR.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "CHARTER_AND_CONTINUITY.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.7013659856536172,
+   "top10": [
+    "techne/research/evolution-as-learning/sources/watson2014_devmem.txt",
+    "techne/research/evolution-as-learning/sources/watson2016_howlearn.txt",
+    "roles/Lexis/archaeology/hct01_prior_art_2026-09-03/recovered/tiso2024_thesis_groningen_layout.txt",
+    "aporia/docs/deep_research_batch_2026-08-17/19_postgres_as_coordination_substrate_for_distributed_agent_wor.md",
+    "techne/research/evolution-as-learning/sources/kouvaris2017_generalise.txt",
+    "elenchus/kashtan-alon-mvg/sources/kashtan2005_text.txt",
+    "roles/Lexis/archaeology/hct01_prior_art_2026-09-03/work/misevic_2006_pmc.txt",
+    "ergon/kouvaris2017/work/tiso2024.txt",
+    "ergon/kouvaris2017/work/kounios_mphil_thesis_soton_453036.txt",
+    "docs/fleet/index.html"
+   ],
+   "seconds": 2.532,
+   "error": null
+  },
+  {
+   "id": "P02",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "the long-term mission: let reasoning machinery evolve on its own instead of being designed by people",
+   "answers": [
+    "roles/base-role/NORTH_STAR.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "CHARTER_AND_CONTINUITY.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.7724609375,
+   "top10": [
+    "apollo/archive/v1/design_v1.md",
+    "agents/hephaestus/humanreadable/Evolution---Kolmogorov_Complexity---Mechanism_Design.md",
+    "roles/Ludus/CHARTER.md",
+    "agents/hephaestus/humanreadable/Genetic_Algorithms---Theory_of_Mind---Model_Checking.md",
+    "docs/long_term_architecture.md",
+    "aporia/docs/deep_research_reports/2026-05-19/00037_substr_05_public_meta_reasoning_circuit_corpora.md",
+    "agents/hephaestus/humanreadable/Active_Inference---Mechanism_Design---Type_Theory.md",
+    "roles/Herakles/prompts/DIRECTIVE_HISTORICAL_COLLIDER_V0_2026-09-02.txt",
+    "aporia/docs/frontier_campaign_69/dossiers/60_evolutionary_epistemology.md",
+    "docs/notebook_lm/notebooklm_caitl_v3_and_apollo.md"
+   ],
+   "seconds": 0.351,
+   "error": null
+  },
+  {
+   "id": "P02",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "the long-term mission: let reasoning machinery evolve on its own instead of being designed by people",
+   "answers": [
+    "roles/base-role/NORTH_STAR.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "CHARTER_AND_CONTINUITY.md"
+   ],
+   "evaluable": true,
+   "rank": 9,
+   "top1_score": 0.03252247488101534,
+   "top10": [
+    "apollo/archive/v1/design_v1.md",
+    "roles/Hestia/prompts/2026-10-06_charter/01_OPERATOR_CHARTER_verbatim.md",
+    "techne/research/evolution-as-learning/sources/watson2014_devmem.txt",
+    "roles/Ares/prompts/2026-09-19_charter/CHARTER_verbatim.md",
+    "techne/research/evolution-as-learning/sources/watson2016_howlearn.txt",
+    "agents/hephaestus/humanreadable/Evolution---Kolmogorov_Complexity---Mechanism_Design.md",
+    "roles/Lexis/archaeology/hct01_prior_art_2026-09-03/recovered/tiso2024_thesis_groningen_layout.txt",
+    "roles/Ludus/CHARTER.md",
+    "roles/base-role/NORTH_STAR.md",
+    "aporia/docs/deep_research_batch_2026-08-17/19_postgres_as_coordination_substrate_for_distributed_agent_wor.md"
+   ],
+   "seconds": 3.392,
+   "error": null
+  },
+  {
+   "id": "P02",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "the long-term mission: let reasoning machinery evolve on its own instead of being designed by people",
+   "answers": [
+    "roles/base-role/NORTH_STAR.md",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "CHARTER_AND_CONTINUITY.md"
+   ],
+   "evaluable": true,
+   "rank": 3,
+   "top1_score": 0.6669921875,
+   "top10": [
+    "roles/Ares/prompts/2026-09-19_charter/CHARTER_verbatim.md",
+    "apollo/archive/v1/design_v1.md",
+    "roles/base-role/NORTH_STAR.md",
+    "roles/EvolutionaryArchitectAndReasoningSpeciesEngineer/Apollo_Role_Document.md",
+    "docs/phase3/design/OPUS-5.5/evidence/ext.md",
+    "agents/hephaestus/humanreadable/Reservoir_Computing---Abductive_Reasoning---Mechanism_Design.md",
+    "aporia/docs/frontier_campaign_69/dossiers/22_machine_evolution.md",
+    "agents/hephaestus/humanreadable/Abductive_Reasoning---Emergence---Mechanism_Design.md",
+    "roles/Hestia/prompts/2026-10-06_charter/01_OPERATOR_CHARTER_verbatim.md",
+    "aporia/docs/program/2026-09-09_evolutionary_substrate/astra_assessment.md"
+   ],
+   "seconds": 0.18,
+   "error": null
+  },
+  {
+   "id": "P03",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "which machine learning provider accounts are wired up and how to call a model",
+   "answers": [
+    "prometheus_llm/registry.py",
+    "prometheus_llm/README.md",
+    "prometheus_llm/MIGRATION.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.971098244190216,
+   "top10": [
+    "elenchus/kashtan-alon-mvg/sources/parter2008_pmc_text.txt",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_text.txt",
+    "techne/research/evolution-as-learning/sources/watson2016_howlearn.txt",
+    "techne/research/evolution-as-learning/sources/watson2014_devmem.txt",
+    "elenchus/kashtan-alon-mvg/sources/kashtan2007_text.txt",
+    "elenchus/kashtan-alon-mvg/sources/kashtan2005_text.txt",
+    "aporia/docs/deep_research_batch_2026-08-17/04_library_learning_and_abstraction_discovery_canon_band_s_lemm.md",
+    "aporia/docs/deep_research_batch_2026-08-17/06_process_supervision_versus_outcome_supervision.md",
+    "charon/research/package_1_spectral_tail/gemini-research.md",
+    "aporia/docs/deep_research_batch_2026-08-17/12_semantic_versus_behavioral_retrieval_keys.md"
+   ],
+   "seconds": 1.494,
+   "error": null
+  },
+  {
+   "id": "P03",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "which machine learning provider accounts are wired up and how to call a model",
+   "answers": [
+    "prometheus_llm/registry.py",
+    "prometheus_llm/README.md",
+    "prometheus_llm/MIGRATION.md"
+   ],
+   "evaluable": true,
+   "rank": 6,
+   "top1_score": 0.67578125,
+   "top10": [
+    "prometheus_llm/types.py",
+    "agents/hephaestus/src/model_sweep.py",
+    "aporia/docs/frontier_campaign_69/dossiers/28_empowerment.md",
+    "aporia/docs/deep_research_reports/2026-05-19/00057_para_p30_tensor_networks_meet_machine_learning_2025.md",
+    "scripts/llm_cascade.py",
+    "prometheus_llm/registry.py",
+    "pivot/techne_2026-05-04_status_and_pivot.md",
+    "aporia/docs/frontier_campaign_69/hypotheses/214_c2_method_audit.md",
+    "cartography/shared/scripts/council_client.py",
+    "aporia/docs/deep_research_batch_2026-05-13/02_dr_007_verify_aa_019_lmfdb_gl_3_root_number_ml_predicted_vs_.md"
+   ],
+   "seconds": 0.368,
+   "error": null
+  },
+  {
+   "id": "P03",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "which machine learning provider accounts are wired up and how to call a model",
+   "answers": [
+    "prometheus_llm/registry.py",
+    "prometheus_llm/README.md",
+    "prometheus_llm/MIGRATION.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.03955627705627705,
+   "top10": [
+    "prometheus_llm/registry.py",
+    "agents/hephaestus/src/model_sweep.py",
+    "aporia/docs/frontier_campaign_69/dossiers/28_empowerment.md",
+    "aporia/docs/frontier_campaign_69/dossiers/47_scientific_machine_learning.md",
+    "aporia/docs/deep_research_reports/2026-05-19/00057_para_p30_tensor_networks_meet_machine_learning_2025.md",
+    "cartography/shared/scripts/council_client.py",
+    "harmonia/experiments/zoo_reasoner.py",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_pmc_text.txt",
+    "prometheus_llm/types.py",
+    "prometheus_llm/README.md"
+   ],
+   "seconds": 2.409,
+   "error": null
+  },
+  {
+   "id": "P03",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "which machine learning provider accounts are wired up and how to call a model",
+   "answers": [
+    "prometheus_llm/registry.py",
+    "prometheus_llm/README.md",
+    "prometheus_llm/MIGRATION.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.5791015625,
+   "top10": [
+    "prometheus_llm/README.md",
+    "harmonia/experiments/zoo_inventory.py",
+    "agents/eos/data/api_registry.json",
+    "prometheus_llm/__init__.py",
+    "prometheus_llm/client.py",
+    "roles/Eos/archive/api_registry_2026-04-01.json",
+    "roles/Aphrodite/science/benchmark/bundle/model_candidates.json",
+    "hecate/llm.py",
+    "scripts/openrouter_probe.py",
+    "pivot/forge_model_matrix_2026-05-18.md"
+   ],
+   "seconds": 0.153,
+   "error": null
+  },
+  {
+   "id": "P04",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "a bound on how many useless iterations a scheduled job may run before it stops itself",
+   "answers": [
+    "roles/Atalanta/reference/test_null_bound.py",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.7459306584464178,
+   "top10": [
+    "docs/fleet/index.html",
+    "aporia/docs/deep_research_batch_2026-08-17/05_verifier_in_the_loop_discovery_systems_canon_band_g.md",
+    "Aether/pivot/AETHER_REVIEW_2026-09-27.md",
+    "roles/Herakles/deep_research/2026-09-04_constraint_transfer/01_cross_experiment_constraint_transfer.md",
+    "roles/Nestor/campaigns/z80atlas-2026-09-19/producer.py",
+    "roles/Mnemosyne/prompts/2026-09-17_point_release/00_OPERATOR_DIRECTIVE.md",
+    "roles/Nyx/REVIEW_Nyx_claude-opus-5-5_2026-10-03_surprise_scheduler.md",
+    "vivarium/docs/EXTERNAL_BACKEND_CONTRACT.md",
+    "aporia/docs/deep_research_batch_2026-08-17/18_sandboxing_model_generated_code_without_containers.md",
+    "nyx/atlas/cuts/libdai_mooij.py"
+   ],
+   "seconds": 1.992,
+   "error": null
+  },
+  {
+   "id": "P04",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "a bound on how many useless iterations a scheduled job may run before it stops itself",
+   "answers": [
+    "roles/Atalanta/reference/test_null_bound.py",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.79541015625,
+   "top10": [
+    "roles/Atalanta/DEAD_GATING_SPECIMEN.md",
+    "ops/campaigns/C-008/prereg/D4_PREREG.md",
+    "roles/Nestor/campaigns/cw01-2026-09-17/loop/cycle2_defects.py",
+    "roles/Atalanta/prompts/2026-09-11_specimen/REPORT_ARCHAEON_invariant.md",
+    "roles/Atalanta/reference/null_bound.py",
+    "roles/Nestor/sidequests/graphworld/prompts_bld_r8/P.md",
+    "roles/Nestor/sidequests/graphworld/journal/F.md",
+    "roles/Atalanta/PROPOSED_INVARIANT_2026-09-11.md",
+    "evidence_wiki/v2/arm_outputs/V2-T03_A_sonnet.md",
+    "comms:#86"
+   ],
+   "seconds": 0.347,
+   "error": null
+  },
+  {
+   "id": "P04",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "a bound on how many useless iterations a scheduled job may run before it stops itself",
+   "answers": [
+    "roles/Atalanta/reference/test_null_bound.py",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.029827662395050816,
+   "top10": [
+    "primordial/tests/test_r8_p_g3_scheduling.py",
+    "vivarium/viv/daemon.py",
+    "roles/Nestor/sidequests/graphworld/journal/F.md",
+    "roles/Nestor/sidequests/graphworld/prompts_bld_r8/P.md",
+    "roles/Nestor/prompts/2026-09-14_graphworld_swarm/19_OPERATOR_ROUND5_BOUNDED_PILOT_SUGGESTIONS.md",
+    "docs/fleet/index.html",
+    "roles/Atalanta/DEAD_GATING_SPECIMEN.md",
+    "aporia/docs/deep_research_batch_2026-08-17/05_verifier_in_the_loop_discovery_systems_canon_band_g.md",
+    "ops/campaigns/C-008/prereg/D4_PREREG.md",
+    "Aether/pivot/AETHER_REVIEW_2026-09-27.md"
+   ],
+   "seconds": 3.051,
+   "error": null
+  },
+  {
+   "id": "P04",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "a bound on how many useless iterations a scheduled job may run before it stops itself",
+   "answers": [
+    "roles/Atalanta/reference/test_null_bound.py",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "roles/base-role/MONITORS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.5576171875,
+   "top10": [
+    "vivarium/viv/daemon.py",
+    "primordial/tests/test_r8_p_g3_scheduling.py",
+    "archaeon/z80atlas/scheduler.py",
+    "roles/Ananke/research/workers/W-W/out/jobs/FC_P32_K3_worst.json",
+    "nyx/catalog/bits/wikipedia_list_of_algorithms/schedule_rotate_fixed_quanta_over_ready_queue.json",
+    "pivot/sprint1/a5_redundancy_reduction_findings_2026-05-29.md",
+    "nyx/catalog/bits/wikipedia_list_of_algorithms/schedule_demote_tasks_that_use_their_whole_quantum.json",
+    "harmonia/memory/cron_discipline.md",
+    "primordial/fabric/worker.py",
+    "nyx/catalog/bits/wikipedia_list_of_algorithms/schedule_run_the_shortest_remaining_work_first.json"
+   ],
+   "seconds": 0.137,
+   "error": null
+  },
+  {
+   "id": "P05",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "proving a database connection reached the intended server and not a copy",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.6958525095667158,
+   "top10": [
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "docs/fleet/index.html",
+    "charon/research/package_5_paramodular_computational/gemini-research.md",
+    "roles/Artemis/threads/sfe_retrospective/notes/A_chronology.md",
+    "aporia/docs/deep_research_batch_2026-08-17/13_syntactic_dispatch_as_a_hidden_failure_mode_in_verification_.md",
+    "roles/Achilles/census/registry/seats_part3.json",
+    "elenchus/kashtan-alon-mvg/sources/kashtan2005_text.txt",
+    "elenchus/kashtan-alon-mvg/sources/kashtan2007_text.txt",
+    "integration/HARMONIA_FIRST_INTEGRATION.md",
+    "charon/research/package_3_zero_geometry_prior_art/gemini-research Prior Art and Novelty Assessment of Zero.md"
+   ],
+   "seconds": 0.883,
+   "error": null
+  },
+  {
+   "id": "P05",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "proving a database connection reached the intended server and not a copy",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 3,
+   "top1_score": 0.7578125,
+   "top10": [
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "evidence_wiki/tests/test_db_keepalive.py",
+    "comms/identity.py",
+    "roles/Hermes/journal/2026-09-11b.md",
+    "vivarium/tests/test_db_identity.py",
+    "comms/tests/test_identity.py",
+    "comms/tests/test_identity_fail_closed.py",
+    "evidence_wiki/ew/closure.py",
+    "roles/Odysseus/fabric_pilot/d2_audit/v9/replica1_findings.md",
+    "roles/Harmonia/M2_FINAL_VERIFICATION_2026-09-04.txt"
+   ],
+   "seconds": 0.349,
+   "error": null
+  },
+  {
+   "id": "P05",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "proving a database connection reached the intended server and not a copy",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.04918032786885246,
+   "top10": [
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "comms/identity.py",
+    "vivarium/tests/test_db_identity.py",
+    "evidence_wiki/ops/pew_restore_verify.py",
+    "docs/fleet/index.html",
+    "evidence_wiki/tests/test_db_keepalive.py",
+    "charon/research/package_5_paramodular_computational/gemini-research.md",
+    "roles/Artemis/threads/sfe_retrospective/notes/A_chronology.md",
+    "roles/Hermes/journal/2026-09-11b.md",
+    "aporia/docs/deep_research_batch_2026-08-17/13_syntactic_dispatch_as_a_hidden_failure_mode_in_verification_.md"
+   ],
+   "seconds": 1.749,
+   "error": null
+  },
+  {
+   "id": "P05",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "proving a database connection reached the intended server and not a copy",
+   "answers": [
+    "comms/identity.py",
+    "comms/environments.json"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.626953125,
+   "top10": [
+    "roles/Hermes/prompts/2026-09-11_comms_identity/01_SPEC.md",
+    "comms/identity.py",
+    "vivarium/tests/test_db_identity.py",
+    "evidence_wiki/ops/pew_restore_verify.py",
+    "archaeon/envgate/OFF_MACHINE_COPY.json",
+    "charon/DUCKDB_REPOINT_2026-06-24.md",
+    "comms/environments.json",
+    "evidence_wiki/tests/distributed_demo_results.json",
+    "docs/prompts/track_D_replication.md",
+    "roles/Daedalus/INBOX_ARCHAEON_ENGINE_UNREACHABLE_AND_B1_ON_M2_2026-09-16.md"
+   ],
+   "seconds": 0.128,
+   "error": null
+  },
+  {
+   "id": "P06",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "who is responsible for scanning outside papers and APIs and how they classify findings",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "agents/eos/README.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.6031746097973416,
+   "top10": [
+    "techne/research/evolution-as-learning/sources/kouvaris2017_generalise.txt",
+    "docs/fleet/index.html",
+    "agents/pronoia/README.md",
+    "roles/Eos/ARCHAEOLOGY_2026-09-11.md",
+    "docs/portfolio_brief.md",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_pmc_text.txt",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_text.txt",
+    "agents/eos/src/eos_daemon.py",
+    "ergon/kouvaris2017/work/petak2025.xml",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_TextS1_text.txt"
+   ],
+   "seconds": 0.978,
+   "error": null
+  },
+  {
+   "id": "P06",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "who is responsible for scanning outside papers and APIs and how they classify findings",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "agents/eos/README.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.673828125,
+   "top10": [
+    "agents/eos/README.md",
+    "roles/Aporia/history/RESPONSIBILITIES_2026-04_void_detector.md",
+    "roles/Atlas/inference_harvest_2026-09-30/workers/digests/atlas_index_and_history.md",
+    "roles/Herakles/RESPONSIBILITIES.md",
+    "roles/Odysseus/fabric_pilot/s3/scoring/prompt_B2.md",
+    "roles/Eos/RESPONSIBILITIES.md",
+    "roles/Odysseus/fabric_pilot/s3/scoring/prompt_A3.md",
+    "agents/eos/src/credential_census.py",
+    "agents/aletheia/README.md",
+    "agents/eos/src/eos_daemon.py"
+   ],
+   "seconds": 0.356,
+   "error": null
+  },
+  {
+   "id": "P06",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "who is responsible for scanning outside papers and APIs and how they classify findings",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "agents/eos/README.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.029906956136464335,
+   "top10": [
+    "agents/eos/README.md",
+    "agents/eos/src/eos_daemon.py",
+    "roles/Eos/RESPONSIBILITIES.md",
+    "techne/research/evolution-as-learning/sources/kouvaris2017_generalise.txt",
+    "aporia/scouting/QUEUE.md",
+    "docs/fleet/index.html",
+    "roles/Aporia/history/RESPONSIBILITIES_2026-04_void_detector.md",
+    "harmonia/tmp/tensor_decomp_lit/lit_scan.py",
+    "agents/pronoia/README.md",
+    "roles/Atlas/inference_harvest_2026-09-30/workers/digests/atlas_index_and_history.md"
+   ],
+   "seconds": 2.162,
+   "error": null
+  },
+  {
+   "id": "P06",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "who is responsible for scanning outside papers and APIs and how they classify findings",
+   "answers": [
+    "roles/Eos/RESPONSIBILITIES.md",
+    "agents/eos/README.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.55029296875,
+   "top10": [
+    "aporia/scouting/QUEUE.md",
+    "harmonia/tmp/tensor_decomp_lit/lit_scan.py",
+    "roles/Artemis/selftest/SCORER_TEMPLATE.md",
+    "roles/ScienceAdvisor/RESPONSIBILITIES.md",
+    "evidence_wiki/v2/scores/V2-T02_scorer2.json",
+    "roles/Ananke/research/harvest/wave2/W2-AE/scratch_apply/prometheus/ananke/audit/kind_audit.py",
+    "roles/Ananke/research/harvest/wave2/W2-AE/pkg/prometheus/ananke/audit/kind_audit.py",
+    "watchers/README.md",
+    "roles/Aphrodite/BACKLOG_H0H5.md",
+    "roles/Ananke/research/harvest/wave2/W2-I/kind_audit.py"
+   ],
+   "seconds": 0.126,
+   "error": null
+  },
+  {
+   "id": "P07",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "relocating the engine's database file off the slow shingled hard drive",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.7150349617004395,
+   "top10": [
+    "docs/fleet/index.html",
+    "aporia/docs/deep_research_batch_2026-08-17/19_postgres_as_coordination_substrate_for_distributed_agent_wor.md",
+    "roles/Dionysus/prompts/2026-10-01_salvage_workers/00_COMMON.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py",
+    "aporia/docs/deep_research_batch_2026-08-17/18_sandboxing_model_generated_code_without_containers.md",
+    "roles/Herakles/deep_research/2026-09-04_constraint_transfer/01_cross_experiment_constraint_transfer.md",
+    "comms:#1558",
+    "aporia/meta/queue/aporia_inbox.jsonl.bak-2026-06-03",
+    "roles/Apollo/journal/2026-09-11.md"
+   ],
+   "seconds": 1.362,
+   "error": null
+  },
+  {
+   "id": "P07",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "relocating the engine's database file off the slow shingled hard drive",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.7578125,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "thesauros/harmonia_data_storage_recommendation.md",
+    "thesauros/duckdb_legacy.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md",
+    "SerendipityFoundry/wow/extract.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_service_out_of_canonical.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/ids.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/docs/RUNNING_M1_VS_M2.md",
+    "atlas/sql/007_m1-1c645957_storage_root_correction.sql",
+    "docs/phase3/hardening/FABLE-5.1/check_hardening.py"
+   ],
+   "seconds": 0.357,
+   "error": null
+  },
+  {
+   "id": "P07",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "relocating the engine's database file off the slow shingled hard drive",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"
+   ],
+   "evaluable": true,
+   "rank": 2,
+   "top1_score": 0.038747159850307404,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/docs/point_release_2026-09/SFE_901_REPAIR_RECEIPT.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md",
+    "thesauros/duckdb_legacy.md",
+    "atlas/sql/007_m1-1c645957_storage_root_correction.sql",
+    "SerendipityFoundry/SerendipityFoundryEngine/sfe/store.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_volume.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_service_out_of_canonical.py",
+    "roles/Daedalus/RUNBOOK.md",
+    "docs/fleet/index.html"
+   ],
+   "seconds": 2.075,
+   "error": null
+  },
+  {
+   "id": "P07",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "relocating the engine's database file off the slow shingled hard drive",
+   "answers": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.60107421875,
+   "top10": [
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/ACK_ARCHAEON_212_new_path.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/NOTICE_window.md",
+    "roles/Archaeon/prompts/2026-09-11_rulings_evening/DAEDALUS_209_REPLY.md",
+    "roles/Daedalus/prompts/2026-09-12_ledger_move/RECEIPT_after.md",
+    "roles/Harmonia/prompts/2026-09-18_operator_rulings/SFE_LEDGER_TO_POSTGRES_verbatim.md",
+    "atlas/sql/007_m1-1c645957_storage_root_correction.sql",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/C9_BURST_STALL_2026-09-11/FINDING.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/INBOX_VIVARIUM_STALL_RECURRED_2026-09-11.md"
+   ],
+   "seconds": 0.123,
+   "error": null
+  },
+  {
+   "id": "P08",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "the format every seat uses to list its upcoming work with proof of completion",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.8812084131770663,
+   "top10": [
+    "docs/fleet/index.html",
+    "roles/Techne/resume.md",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_pmc_text.txt",
+    "aporia/docs/deep_research_batch_2026-08-17/09_certificate_checking_versus_decision_procedures_for_novelty_.md",
+    "docs/fleet/email_census.json",
+    "techne/research/evolution-as-learning/sources/watson2014_devmem.txt",
+    "aporia/docs/deep_research_batch_2026-08-17/13_syntactic_dispatch_as_a_hidden_failure_mode_in_verification_.md",
+    "aporia/docs/deep_research_batch_2026-08-17/01_anti_anchor_slice_re_verification_attribution_integrity.md",
+    "aporia/docs/deep_research_batch_2026-08-17/02_anti_anchor_sweep_commonly_overstated_results.md",
+    "aporia/docs/deep_research_batch_2026-08-17/04_library_learning_and_abstraction_discovery_canon_band_s_lemm.md"
+   ],
+   "seconds": 3.047,
+   "error": null
+  },
+  {
+   "id": "P08",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "the format every seat uses to list its upcoming work with proof of completion",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.71337890625,
+   "top10": [
+    "roles/base-role/seat_kit/new_seat.py",
+    "workgraph/core.py",
+    "archaeon/tests/test_shared_roles.py",
+    "docs/phase3/intake/ixion/seats/Atlas.md",
+    "docs/phase3/intake/ixion/seats/Achilles.md",
+    "roles/base-role/seat_kit/test_new_seat.py",
+    "achilles/census/build.py",
+    "docs/phase3/intake/ixion/seats/Metis.md",
+    "rso/slice001/fixtures/evidence_cases.py",
+    "docs/phase3/design/OPUS-5.5/evidence/tit-a.md"
+   ],
+   "seconds": 0.354,
+   "error": null
+  },
+  {
+   "id": "P08",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "the format every seat uses to list its upcoming work with proof of completion",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.027046783625730993,
+   "top10": [
+    "ops/work_orders/archive/MWO-0002_2026-09-29.md",
+    "ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md",
+    "docs/fleet/index.html",
+    "roles/base-role/seat_kit/new_seat.py",
+    "roles/Metis/BACKLOG_H0H5.md",
+    "roles/Techne/resume.md",
+    "workgraph/core.py",
+    "roles/Skopos/RESPONSIBILITIES.md",
+    "elenchus/kashtan-alon-mvg/sources/parter2008_pmc_text.txt",
+    "archaeon/tests/test_shared_roles.py"
+   ],
+   "seconds": 4.107,
+   "error": null
+  },
+  {
+   "id": "P08",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "the format every seat uses to list its upcoming work with proof of completion",
+   "answers": [
+    "roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.5859375,
+   "top10": [
+    "roles/Metis/BACKLOG_H0H5.md",
+    "roles/Skopos/RESPONSIBILITIES.md",
+    "roles/Epimetheus/BACKLOG_H0H5.md",
+    "roles/Pheme/RESPONSIBILITIES.md",
+    "roles/Pronoia/RESPONSIBILITIES.md",
+    "ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md",
+    "roles/Agora/RESPONSIBILITIES.md",
+    "roles/Aporia/prompts/2026-09-30B_cwo_finish_in_place/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "roles/Pheme/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Nous/RESPONSIBILITIES.md"
+   ],
+   "seconds": 0.128,
+   "error": null
+  },
+  {
+   "id": "P09",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "the new data seat's open asks for the human, each with a fallback",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 1.8386926565851485,
+   "top10": [
+    "docs/fleet/index.html",
+    "roles/Aporia/DISSENT_LEDGER.md",
+    "aporia/docs/deep_research_batch_2026-08-17/05_verifier_in_the_loop_discovery_systems_canon_band_g.md",
+    "techne/research/evolution-as-learning/sources/kouvaris2017_generalise.txt",
+    "aporia/docs/deep_research_batch_2026-08-17/12_semantic_versus_behavioral_retrieval_keys.md",
+    "aporia/docs/deep_research_batch_2026-08-17/09_certificate_checking_versus_decision_procedures_for_novelty_.md",
+    "aporia/docs/deep_research_batch_2026-08-17/08_quality_diversity_and_open_endedness_canon_band_h2.md",
+    "comms:#386",
+    "roles/Metis/BACKLOG_H0H5.md",
+    "roles/Archaeon/BACKLOG_H0H5.md"
+   ],
+   "seconds": 1.498,
+   "error": null
+  },
+  {
+   "id": "P09",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "the new data seat's open asks for the human, each with a fallback",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.69921875,
+   "top10": [
+    "roles/Aphrodite/harvest_2026-09-30/evidence/findings_A4_human_reuse.md",
+    "roles/Ananke/superseded/RESPONSIBILITIES_pre-charter_2026-09-24.md",
+    "roles/Odysseus/prompts/2026-09-28_fabric/05_OPERATOR_RULINGS_S2_verbatim.md",
+    "roles/Odysseus/superseded/RESPONSIBILITIES_pre-charter_2026-09-25.md",
+    "docs/phase3/intake/ixion/seats/Mnemosyne.md",
+    "docs/phase3/intake/tantalus/seats/Aether.md",
+    "docs/phase3/intake/ixion/seats/Odysseus.md",
+    "roles/Archaeon/REVIEW_SEATS_2026-09-10.md",
+    "docs/phase3/intake/ixion/seats/Pronoia.md",
+    "roles/Aphrodite/harvest_2026-09-30/IMPROVEMENT_PROCESS_OBSERVATORY_DESIGN.md"
+   ],
+   "seconds": 0.348,
+   "error": null
+  },
+  {
+   "id": "P09",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "the new data seat's open asks for the human, each with a fallback",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.028006267136701922,
+   "top10": [
+    "roles/Skopos/RESPONSIBILITIES.md",
+    "roles/Metis/BACKLOG_H0H5.md",
+    "roles/Odysseus/superseded/RESPONSIBILITIES_pre-charter_2026-09-25.md",
+    "roles/Artemis/superseded/RESPONSIBILITIES_pre-charter_2026-09-27.md",
+    "docs/fleet/index.html",
+    "roles/Aphrodite/harvest_2026-09-30/evidence/findings_A4_human_reuse.md",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/REPORT_ARCHAEON_new_seat.md",
+    "roles/Aporia/DISSENT_LEDGER.md",
+    "roles/Ananke/superseded/RESPONSIBILITIES_pre-charter_2026-09-24.md",
+    "roles/Dionysus/prompts/2026-10-01_creation/01_OPERATOR_CREATION_verbatim.md"
+   ],
+   "seconds": 3.0,
+   "error": null
+  },
+  {
+   "id": "P09",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "the new data seat's open asks for the human, each with a fallback",
+   "answers": [
+    "roles/Pan/QUESTIONS.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.52685546875,
+   "top10": [
+    "roles/Nyx/prompts/2026-09-11_seat_creation/REPORT_ARCHAEON_new_seat.md",
+    "roles/Dionysus/prompts/2026-10-01_creation/01_OPERATOR_CREATION_verbatim.md",
+    "elenchus/kashtan-alon-mvg/CROSS_SEAT_COMPARISON.md",
+    "roles/Epimetheus/prompts/2026-10-01_to_aporia/01_HEARTBEAT_creation.md",
+    "roles/Pheme/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Talos/prompts/2026-09-11_seat_adoption/REPORT_ARCHAEON_old_seat.md",
+    "roles/Artemis/superseded/RESPONSIBILITIES_pre-charter_2026-09-27.md",
+    "roles/Nyx/prompts/2026-09-11_seat_creation/MANIFEST.md",
+    "roles/Skopos/RESPONSIBILITIES.md",
+    "roles/Hecate/prompts/2026-09-30_cwo_b_heartbeat/HEARTBEAT.md"
+   ],
+   "seconds": 0.233,
+   "error": null
+  },
+  {
+   "id": "P10",
+   "type": "paraphrase",
+   "mode": "fts",
+   "query": "hashing committed prompt files so line-ending differences cannot change the digest",
+   "answers": [
+    "comms/manifest.py",
+    "roles/base-role/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 6,
+   "top1_score": 1.895686062899503,
+   "top10": [
+    "docs/fleet/index.html",
+    "SerendipityFoundry/forensics/SFE_WOW0_FORENSIC_SURVEY.txt",
+    "SerendipityFoundry/forensics/SFE_WOW0_FORENSIC_SURVEY.md",
+    "roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt",
+    "nyx/atlas/predictions/MECH-POET-PATA-EC-001.json",
+    "roles/base-role/RESPONSIBILITIES.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/prepare_deployment.py",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/make_pin.py",
+    "roles/Apollo/INBOX_ARCHAEON_BASE_ROLE_SELFTEST_RED_2026-09-11.md",
+    "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD.json"
+   ],
+   "seconds": 3.067,
+   "error": null
+  },
+  {
+   "id": "P10",
+   "type": "paraphrase",
+   "mode": "vector",
+   "query": "hashing committed prompt files so line-ending differences cannot change the digest",
+   "answers": [
+    "comms/manifest.py",
+    "roles/base-role/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": null,
+   "top1_score": 0.77001953125,
+   "top10": [
+    "prometheus/cosmos/c3_holdout_D2/entry.py",
+    "techne/tests/test_acquisition.py",
+    "Aether/runpod/prometheus_gpu/bundle.py",
+    "stoa/proposals/2026-04-26-aporia-data-snapshot-ledger-v1.md",
+    "roles/Artemis/challenge/p11/common.py",
+    "docs/phase3/hardening/FABLE-5.1/check_hardening.py",
+    "roles/Odysseus/frontier/poi/runs/R4_A-001/r4lib.py",
+    "roles/Nestor/prompts/2026-09-14_laneD_review_round1/MANIFEST.md",
+    "Aether/observatory/aeth01_observatory.py",
+    "techne/fossils/vault.py"
+   ],
+   "seconds": 0.346,
+   "error": null
+  },
+  {
+   "id": "P10",
+   "type": "paraphrase",
+   "mode": "hybrid",
+   "query": "hashing committed prompt files so line-ending differences cannot change the digest",
+   "answers": [
+    "comms/manifest.py",
+    "roles/base-role/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 1,
+   "top1_score": 0.028309409888357256,
+   "top10": [
+    "comms/manifest.py",
+    "docs/fleet/index.html",
+    "prometheus/cosmos/c3_holdout_D2/entry.py",
+    "ergon/gen1/verify_d5_freeze.py",
+    "SerendipityFoundry/forensics/SFE_WOW0_FORENSIC_SURVEY.txt",
+    "techne/tests/test_acquisition.py",
+    "comms/tests/test_manifest.py",
+    "Aether/runpod/prometheus_gpu/bundle.py",
+    "ergon/gen1/input_fingerprint.py",
+    "roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt"
+   ],
+   "seconds": 4.35,
+   "error": null
+  },
+  {
+   "id": "P10",
+   "type": "paraphrase",
+   "mode": "doc",
+   "query": "hashing committed prompt files so line-ending differences cannot change the digest",
+   "answers": [
+    "comms/manifest.py",
+    "roles/base-role/RESPONSIBILITIES.md"
+   ],
+   "evaluable": true,
+   "rank": 6,
+   "top1_score": 0.66455078125,
+   "top10": [
+    "ergon/gen1/verify_d5_freeze.py",
+    "comms/tests/test_manifest.py",
+    "ergon/gen1/input_fingerprint.py",
+    "roles/Archaeon/INBOX_DIOMEDES_MANIFEST_CRLF_2026-09-11.md",
+    "roles/Ananke/research/harvest/wave2/W2-AE/make_diff.py",
+    "comms/manifest.py",
+    "roles/Hephaestus/prompts/2026-09-11_manifest_crlf/ARCHAEON.md",
+    "roles/Palamedes/comms/2026-10-06_registration_request_R2_fire_corrected.md",
+    "roles/Cadmus/comms/2026-10-04_T027_CLAIMED_re1450.md",
+    "roles/Aphrodite/engine/accel/ACCEL_CANARY_RUNPOD_v1_ADDENDUM_1.md"
+   ],
+   "seconds": 0.129,
+   "error": null
+  }
+ ],
+ "seconds": 97.4
+}

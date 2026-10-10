@@ -108,11 +108,15 @@ def _mark(rule, cid, how):
     return rule
 
 
-def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
+def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True, aligned=False, random_law_gains=False):
     """parents: ordered list of entity dicts. Returns (genome, record).
 
     law=False (THESEUS-28 ablation): the k-ary interaction law is generated (so every RNG
-    draw is identical to law=True) but NOT inserted into the child."""
+    draw is identical to law=True) but NOT inserted into the child.
+
+    aligned=True (THESEUS-34): parent channels keep their indices (no positional remap
+    (c + j) mod C), so parts inherited from different lineages address the same memory
+    slots; every RNG draw is unchanged."""
     k = len(parents)
     rng = np.random.default_rng(_seed("collide", cid, [p["id"] for p in parents], extra_seed))
     genomes = []
@@ -150,12 +154,18 @@ def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
             idx = [(start + i) % len(rules) for i in range(n)]  # contiguous (cyclic) run: keeps local order
         else:
             idx = list(range(len(rules)))
-        blk = [_remap(rules[i], C, j) for i in idx]
+        blk = [_remap(rules[i], C, 0 if aligned else j) for i in idx]
         blocks.append(blk)
         primaries.append((blk[0]["dst"] if blk else j) % C)
 
     # generated k-ary interaction law(s): concept-tensor entry in CP form
     gains = tensor.gains(parents)
+    if random_law_gains:
+        # THESEUS-51: same law placement/sources/dst/amp/bias, but per-source gains drawn from an
+        # independent RNG instead of the concept tensor (no tensor content). The main rng is
+        # untouched, so every other draw is identical to the default.
+        grng = np.random.default_rng(_seed("randgain", cid, [p["id"] for p in parents], extra_seed))
+        gains = [float(x) for x in grng.uniform(-2.0, 2.0, size=len(gains))]
     amp = float(rng.uniform(-1.0, 1.0))
     bias = float(rng.uniform(-1.0, 1.0))
     laws = []
@@ -166,6 +176,8 @@ def collide(parents, tensor, cid, extra_seed=0, operators=None, law=True):
         laws.append({"op": "react", "src": [int(s) for s in srcs], "dst": dst % C,
                      "p": [amp, bias] + [float(np.clip(g, -2, 2)) for g in gs], "prov": f"law:{cid}"})
     law_record = {"gains": gains, "amp": amp, "bias": bias, "n_law_rules": len(laws)}
+    if random_law_gains:
+        law_record["gains_source"] = "random"
 
     flat = [r for b in blocks for r in b]
     if "param_inherit" in operators:

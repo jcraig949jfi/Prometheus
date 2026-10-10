@@ -1,0 +1,63 @@
+{
+ "POSITIVE": {
+  "feeds": 35,
+  "ok": 35,
+  "failing": [],
+  "dated_by_kind": {
+   "blog": {
+    "items": 2484,
+    "dated": 2483
+   },
+   "newsletter": {
+    "items": 135,
+    "dated": 135
+   },
+   "releases": {
+    "items": 141,
+    "dated": 141
+   },
+   "society": {
+    "items": 10,
+    "dated": 10
+   }
+  },
+  "passed": true
+ },
+ "NEGATIVE": {
+  "rows": [
+   [
+    "NEG:ai.meta.com",
+    404,
+    "HTTP 404"
+   ],
+   [
+    "NEG:deeplearning.ai",
+    404,
+    "HTTP 404"
+   ]
+  ],
+  "items_inserted": 0,
+  "items_in_table": 0,
+  "passed": true
+ },
+ "CHEAT": {
+  "polled": 35,
+  "not_modified_304": 26,
+  "refetched_200": 9,
+  "new_items": 0,
+  "failed": [],
+  "passed": true
+ },
+ "RATE": {
+  "min_gap_s": 0.571,
+  "pairs": 71,
+  "interval_s": 2.0,
+  "passed": false
+ },
+ "verdict": {
+  "POSITIVE": true,
+  "NEGATIVE": true,
+  "CHEAT": true,
+  "RATE": false
+ }
+}

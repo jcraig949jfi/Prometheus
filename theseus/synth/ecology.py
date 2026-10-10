@@ -75,7 +75,8 @@ class Field:
             self.P[i] = np.clip(self.P[i] + 0.02 * self.rng.standard_normal(FIELD_DIM), -1.5, 1.5)
 
 
-def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_lens=False, tries=25):
+def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_lens=False, tries=25,
+                     seed_quality=None, seed_strength=0.0):
     pool = sorted(i for i in active if en.eligible(reg, i, lane))  # sorted: RNG draws must not depend on set order
     if need_lens:
         lens_pool = sorted(i for i in lenses if i in active)
@@ -86,6 +87,13 @@ def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_l
         return None, None
     for _ in range(tries):
         w = np.array([1.0 / (1 + tensor.uses.get(i, 0)) for i in pool])
+        if seed_quality is not None and seed_strength:
+            # THESEUS-27b: selection at parent choice -- seed weight x exp(strength * z(quality))
+            q = np.array([seed_quality.get(i, np.nan) for i in pool], float)
+            med = np.nanmedian(q) if np.isfinite(q).any() else 0.0
+            q = np.where(np.isfinite(q), q, med)
+            z = (q - q.mean()) / (q.std() + 1e-9)
+            w = w * np.exp(seed_strength * z)
         seed = pool[int(rng.choice(len(pool), p=w / w.sum()))]
         chosen, modes = [seed], ["seed"]
         slots = k - 1 - (1 if need_lens else 0)
@@ -119,12 +127,13 @@ def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_l
     return None, None
 
 
-def fossilize(reg, active, vitality, protected, gen, born_gen):
-    if len(active) <= POP_CAP:
+def fossilize(reg, active, vitality, protected, gen, born_gen, cap=None):
+    cap = POP_CAP if cap is None else cap
+    if len(active) <= cap:
         return []
     cand = [i for i in active if i not in protected and gen - born_gen.get(i, 0) >= 2]
     cand.sort(key=lambda i: (vitality.get(i, 0.0), i))
-    out = cand[: len(active) - POP_CAP]
+    out = cand[: len(active) - cap]
     for i in out:
         active.discard(i)
         reg[i]["state"] = "FOSSIL"

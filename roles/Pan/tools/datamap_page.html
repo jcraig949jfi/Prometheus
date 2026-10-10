@@ -1,0 +1,286 @@
+<style>
+  .dm { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .dm-head { display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+  .dm-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .dm-take { margin: 0; max-width: 70ch; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.5; }
+  .dm-take b, .dm .dm-num { font-variant-numeric: tabular-nums; color: var(--color-fg); font-weight: 500; }
+  .dm-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
+  .dm-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+  .dm-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .dm-tile-value { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+  .dm-tile-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .dm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+  .dm-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+  .dm-card h2 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+  .dm-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+  .dm-bars { display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-height: 14rem; }
+  .dm-bar-row { display: flex; flex-direction: column; gap: 2px; }
+  .dm-bar-label { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); }
+  .dm-bar-label span:first-child { color: var(--color-fg); overflow-wrap: anywhere; }
+  .dm-bar-label span:last-child { color: var(--color-fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .dm-bar-track { height: 10px; background: var(--cds-chart-grid); border-radius: 5px; overflow: hidden; }
+  .dm-bar-fill { height: 100%; border-radius: 5px; }
+  .dm-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .dm-legend i { display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: -1px; }
+  .dm-chart { position: relative; min-height: 13rem; }
+  .dm-chart svg { display: block; }
+  .dm-dots { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-height: 12rem; }
+  .dm-dot-row { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: var(--cds-gap-sm); align-items: center; }
+  .dm-dot-name { font-size: var(--cds-font-size-caption); line-height: 1.3; }
+  .dm-dot-name small { display: block; color: var(--color-fg-muted); }
+  .dm-dot-track { position: relative; height: 1.5rem; border-bottom: 1px solid var(--cds-chart-axis); }
+  .dm-dot-ref { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--cds-chart-reference); }
+  .dm-dot { position: absolute; top: 50%; width: 0.75rem; height: 0.75rem; margin: -0.375rem 0 0 -0.375rem; border-radius: 50%; }
+  .dm-dot-val { position: absolute; top: -0.1rem; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; transform: translateX(0.6rem); color: var(--color-fg); }
+  .dm-scroll { overflow-x: auto; }
+  .dm table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .dm th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .dm td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .dm td.num, .dm th.num { text-align: right; }
+  .dm .dm-inbar { display: inline-block; height: 0.5rem; border-radius: 3px; background: var(--cds-chart-muted); vertical-align: middle; margin-right: 0.4rem; }
+  .dm .dm-inbar.full { background: var(--color-ok); }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="dm">
+  <header class="dm-head">
+    <h1 class="dm-title" id="top">Prometheus Data Map</h1>
+    <p class="dm-take">
+      Pan inventoried <b data-source="totals" data-field="total_gb" data-row="0">&mdash;</b> GB across
+      <b data-source="totals" data-field="stores" data-row="0">&mdash;</b> stores. The program&rsquo;s live record (repository and its
+      databases) is <b data-source="totals" data-field="hot_gb" data-row="0">&mdash;</b> GB; <b data-source="totals" data-field="cold_gb" data-row="0">&mdash;</b> GB is untracked or backup data on M2,
+      most of it last modified in April 2026, and the rest is the LMFDB reference database.
+    </p>
+  </header>
+
+  <section class="dm-tiles" aria-label="Headline figures">
+    <div class="dm-tile"><span class="dm-tile-label">Inventoried, all stores</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="total_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">M2 files, repository, M1 databases</span></div>
+    <div class="dm-tile"><span class="dm-tile-label">Live record</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="hot_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">repository + program databases</span></div>
+    <div class="dm-tile"><span class="dm-tile-label">Untracked or backup on M2</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="cold_share" data-row="0">&mdash;</span></span><span class="dm-tile-note">share of everything inventoried</span></div>
+    <div class="dm-tile"><span class="dm-tile-label">Search finds a right file in top 10</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="retrieval" data-field="r10" data-where="run=v1&amp;set=CB-200 (other seats)">&mdash;</span></span><span class="dm-tile-note">200 queries written by other seats</span></div>
+  </section>
+
+  <section class="dm-grid">
+    <article class="dm-card" id="stores">
+      <h2>Where the bytes are</h2>
+      <p class="dm-note">Size of each store, on a log scale so the small live stores stay visible beside the large cold ones.</p>
+      <div class="dm-legend" id="dm-legend"></div>
+      <div class="dm-bars" id="dm-stores" data-source="stores"></div>
+    </article>
+
+    <article class="dm-card" id="months">
+      <h2>When the untracked data was last touched</h2>
+      <p class="dm-note">Gigabytes of untracked and backup files on M2 by the month they were last modified.</p>
+      <div class="dm-chart" id="dm-months" data-source="untracked_by_month"></div>
+    </article>
+
+    <article class="dm-card" id="types">
+      <h2>What kind of files they are</h2>
+      <p class="dm-note">Untracked files in the M2 checkout by extension. Row data stored as JSON Lines text dominates.</p>
+      <div class="dm-scroll"><table id="dm-types" data-source="untracked_by_type" data-row-key="type">
+        <thead><tr><th data-field="type">Type</th><th class="num" data-field="gb">GB</th><th class="num" data-field="files">Files</th></tr></thead><tbody></tbody>
+      </table></div>
+    </article>
+
+    <article class="dm-card" id="cold">
+      <h2>If the four largest cold files became Parquet</h2>
+      <p class="dm-note">Measured on one full conversion and random 16 MiB blocks of the others. The verbatim-text form wins where typed columns would bloat nested records.</p>
+      <div class="dm-scroll"><table id="dm-cold" data-source="cold_conversion" data-row-key="family">
+        <thead><tr><th data-field="family">File</th><th class="num" data-field="source_gb">Now, GB</th><th data-field="form">Best form</th><th class="num" data-field="ratio">Ratio</th><th class="num" data-field="projected_gb">Projected, GB</th></tr></thead><tbody></tbody>
+      </table></div>
+    </article>
+
+    <article class="dm-card" id="search">
+      <h2>Search quality by run</h2>
+      <p class="dm-note">Share of test questions whose right file appears in the top 10. Dashed line: the 0.80 bar set before any run. Sets of 20 cannot tell 0.75 from 0.80; the 200-query set can.</p>
+      <div class="dm-dots" id="dm-search" data-source="retrieval"></div>
+    </article>
+
+    <article class="dm-card" id="models">
+      <h2>Local models on the 16 GB card</h2>
+      <p class="dm-note">15 probes each: code checked by hidden tests, exact math, JSON shape. A smoke test, not a benchmark.</p>
+      <div class="dm-scroll"><table id="dm-models" data-source="models" data-row-key="model,config">
+        <thead><tr><th data-field="model">Model</th><th data-field="config">Setting</th><th class="num" data-field="passed">Passed</th><th class="num" data-field="tok_s">Tokens/s</th></tr></thead><tbody></tbody>
+      </table></div>
+    </article>
+
+    <article class="dm-card" id="built">
+      <h2>What Pan built</h2>
+      <p class="dm-note">Tables in the program database (row estimates) and Iceberg tables in the lake (exact record counts).</p>
+      <div class="dm-scroll"><table id="dm-built" data-source="pan_tables" data-row-key="table">
+        <thead><tr><th data-field="table">Table</th><th data-field="layer">Where</th><th class="num" data-field="rows">Rows</th><th class="num" data-field="mb">MB</th></tr></thead><tbody></tbody>
+      </table></div>
+    </article>
+  </section>
+</div>
+
+<script>
+(function () {
+  const fmt1 = d3.format(',.1f');
+  const fmtInt = d3.format(',');
+  const fmtPct = d3.format('.0%');
+  const fmtR = d3.format('.3f');
+  const classColor = { hot: 'var(--color-ok)', warm: 'var(--cds-chart-status-critical)', cold: 'var(--cds-chart-muted)', reference: 'var(--color-warn)' };
+  const classLabel = { hot: 'Live record', warm: 'Recent evidence', cold: 'Untracked or backup', reference: 'Reference data' };
+
+  dash.calc('totals', {
+    title: 'Inventory totals',
+    description: 'Sums of store sizes by class from the store inventory.',
+    inputs: ['stores'],
+    fn: (stores) => {
+      const gb = (c) => stores.filter(s => s.class === c).reduce((a, s) => a + Number(s.gb), 0);
+      const total = stores.reduce((a, s) => a + Number(s.gb), 0);
+      return [{ total_gb: Math.round(total), stores: stores.length, hot_gb: Math.round(gb('hot') * 10) / 10,
+                cold_gb: Math.round(gb('cold')), cold_share: total ? gb('cold') / total : 0 }];
+    }
+  });
+
+  function fill(sel, text) { document.querySelectorAll(sel).forEach(el => { el.textContent = text; el.classList.remove('dash-skeleton'); }); }
+
+  function drawTotals() {
+    const t = dash.data('totals');
+    if (t.status !== 'ok' || !t.data.length) return;
+    const r = t.data[0];
+    fill('[data-source="totals"][data-field="total_gb"]', fmtInt(r.total_gb));
+    fill('[data-source="totals"][data-field="stores"]', fmtInt(r.stores));
+    fill('[data-source="totals"][data-field="hot_gb"]', fmt1(r.hot_gb));
+    fill('[data-source="totals"][data-field="cold_gb"]', fmtInt(r.cold_gb));
+    fill('[data-source="totals"][data-field="cold_share"]', fmtPct(r.cold_share));
+  }
+
+  function drawStores() {
+    const box = document.getElementById('dm-stores');
+    const legend = document.getElementById('dm-legend');
+    const d = dash.data('stores');
+    box.textContent = '';
+    legend.textContent = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.map(s => ({ ...s, gb: Number(s.gb) })).sort((a, b) => b.gb - a.gb);
+    const x = d3.scaleLog().domain([0.1, 1000]).range([0, 100]).clamp(true);
+    Object.keys(classLabel).forEach(k => {
+      if (!rows.some(r => r.class === k)) return;
+      const item = document.createElement('span');
+      const sw = document.createElement('i');
+      sw.style.background = classColor[k];
+      item.append(sw, document.createTextNode(classLabel[k]));
+      legend.append(item);
+    });
+    rows.forEach(r => {
+      const row = document.createElement('div'); row.className = 'dm-bar-row';
+      const lab = document.createElement('div'); lab.className = 'dm-bar-label';
+      const name = document.createElement('span'); name.textContent = r.store;
+      const val = document.createElement('span'); val.textContent = fmt1(r.gb) + ' GB';
+      lab.append(name, val);
+      const track = document.createElement('div'); track.className = 'dm-bar-track';
+      const bar = document.createElement('div'); bar.className = 'dm-bar-fill';
+      bar.style.width = Math.max(1, x(r.gb)) + '%';
+      bar.style.background = classColor[r.class] || 'var(--cds-chart-muted)';
+      track.append(bar);
+      row.append(lab, track);
+      box.append(row);
+    });
+  }
+
+  function drawMonths() {
+    const box = document.getElementById('dm-months');
+    const d = dash.data('untracked_by_month');
+    box.textContent = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.map(r => ({ month: r.month, gb: Number(r.gb) }));
+    const W = Math.max(280, box.clientWidth || 360), H = 210, m = { t: 20, r: 6, b: 26, l: 8 };
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleBand(rows.map(r => r.month), [m.l, W - m.r]).padding(0.25);
+    const y = d3.scaleLinear([0, d3.max(rows, r => r.gb) || 1], [H - m.b, m.t]);
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', H - m.b).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-axis)');
+    const fmtM = d3.utcFormat('%b');
+    svg.selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.month)).attr('width', x.bandwidth())
+      .attr('y', r => y(r.gb)).attr('height', r => Math.max(1, (H - m.b) - y(r.gb)))
+      .attr('rx', 4).attr('fill', r => r.month === '2026-04' ? dash.colors[0] : 'var(--cds-chart-muted)');
+    svg.selectAll('text.v').data(rows).join('text').attr('class', 'v')
+      .attr('x', r => x(r.month) + x.bandwidth() / 2).attr('y', r => y(r.gb) - 5)
+      .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg)')
+      .text(r => r.gb >= 1 ? fmt1(r.gb) : (r.gb > 0 ? '<1' : '0'));
+    svg.selectAll('text.m').data(rows).join('text').attr('class', 'm')
+      .attr('x', r => x(r.month) + x.bandwidth() / 2).attr('y', H - 8)
+      .attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)')
+      .text(r => fmtM(new Date(r.month + '-01T00:00:00Z')));
+  }
+
+  function drawTable(id, dataset, cols, keyOf) {
+    const tbody = document.querySelector('#' + id + ' tbody');
+    const d = dash.data(dataset);
+    tbody.textContent = '';
+    if (d.status !== 'ok') return;
+    d.data.forEach(r => {
+      const tr = document.createElement('tr');
+      if (keyOf) tr.dataset.key = keyOf(r);
+      cols.forEach(c => {
+        const td = document.createElement('td');
+        if (c.num) td.className = 'num';
+        c.cell(td, r);
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+  }
+
+  function drawSearch() {
+    const box = document.getElementById('dm-search');
+    const d = dash.data('retrieval');
+    box.textContent = '';
+    if (d.status !== 'ok') return;
+    d.data.forEach((r, i) => {
+      const row = document.createElement('div'); row.className = 'dm-dot-row';
+      const name = document.createElement('div'); name.className = 'dm-dot-name';
+      name.textContent = r.run + ', n = ' + r.n;
+      const sub = document.createElement('small'); sub.textContent = r.set;
+      name.append(sub);
+      const track = document.createElement('div'); track.className = 'dm-dot-track';
+      const ref = document.createElement('div'); ref.className = 'dm-dot-ref'; ref.style.left = '80%';
+      const v = Number(r.r10);
+      const dot = document.createElement('div'); dot.className = 'dm-dot'; dot.style.left = (v * 100) + '%';
+      dot.style.background = r.n >= 100 ? dash.colors[0] : 'var(--cds-chart-muted)';
+      const val = document.createElement('span'); val.className = 'dm-dot-val'; val.style.left = (v * 100) + '%';
+      val.textContent = fmtR(v);
+      track.append(ref, dot, val);
+      row.append(name, track);
+      box.append(row);
+    });
+  }
+
+  dash.onData(() => {
+    drawTotals();
+    drawStores();
+    drawMonths();
+    drawSearch();
+    drawTable('dm-types', 'untracked_by_type', [
+      { cell: (td, r) => { td.textContent = r.type; } },
+      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.gb)); } },
+      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.files)); } }]);
+    drawTable('dm-cold', 'cold_conversion', [
+      { cell: (td, r) => { td.textContent = r.family; } },
+      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.source_gb)); } },
+      { cell: (td, r) => { td.textContent = r.form; } },
+      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.ratio)) + 'x'; } },
+      { num: true, cell: (td, r) => { td.textContent = Number(r.projected_gb) < 0.1 ? '<0.1' : fmt1(Number(r.projected_gb)); } }]);
+    const maxTok = d3.max((dash.data('models').data || []), r => Number(r.tok_s)) || 1;
+    drawTable('dm-models', 'models', [
+      { cell: (td, r) => { td.textContent = r.model; } },
+      { cell: (td, r) => { const n = (r.config.match(/\d+/) || [''])[0];
+          td.textContent = (r.config.startsWith('nothink') ? 'no thinking, ' : 'thinking, ') + n + ' tokens'; } },
+      { num: true, cell: (td, r) => { td.textContent = r.passed + ' / ' + r.probes; } },
+      { num: true, cell: (td, r) => {
+          const b = document.createElement('span'); b.className = 'dm-inbar' + (Number(r.passed) === Number(r.probes) ? ' full' : '');
+          b.style.width = Math.round(48 * Number(r.tok_s) / maxTok) + 'px';
+          td.append(b, document.createTextNode(fmt1(Number(r.tok_s)))); } }],
+      (r) => encodeURIComponent(r.model) + ',' + encodeURIComponent(r.config));
+    drawTable('dm-built', 'pan_tables', [
+      { cell: (td, r) => { td.textContent = r.table; } },
+      { cell: (td, r) => { td.textContent = r.layer; } },
+      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.rows)); } },
+      { num: true, cell: (td, r) => { td.textContent = r.mb == null ? '' : fmt1(Number(r.mb)); } }]);
+  });
+})();
+</script>

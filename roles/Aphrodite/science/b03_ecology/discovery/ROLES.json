@@ -1,0 +1,1238 @@
+{
+ "W9H:0": {
+  "a19_fillable": false,
+  "a19_observe_floor_pool": 3,
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "yiaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * v)",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "yibaaa",
+    "p_PRISTINE": 0.5,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs(math.gcd(abs(v), abs((1 - last)))), abs(v)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "ykaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc * last))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "ypbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - ((math.gcd(abs(v), abs(acc)) + v) * acc))))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "yxaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(v), abs(last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "ynbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc + first))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "ymaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - ((acc + v) * acc))))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "yqaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - math.gcd(abs(acc), abs(v)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "yvbaaa",
+    "p_PRISTINE": 0.25,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs(v), abs(last)))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "yfaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 24,
+    "body": "(acc - (v * last))",
+    "final": "math.gcd(abs(first), abs(acc))",
+    "init": "0",
+    "name": "ytbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs((v - ((first % v) * first))), abs(v)))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "yjaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - math.gcd(abs(acc), abs(first)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "yyaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + (1 // acc)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "ywaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - (acc * acc))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "yvaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc % last))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "ybaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - (acc + v))))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "yobaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (first * (acc + last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "ykbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc % first))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "yrbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs((v - ((acc + last) * first))), abs(v)))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "ygbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc * first))",
+    "final": "(last % acc)",
+    "init": "0",
+    "name": "ysaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs(math.gcd(abs(v), abs((1 - (first // acc))))), abs(v)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "ybbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs((v - (math.gcd(abs(acc), abs(0)) * first))), abs(v)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "yzaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs(v), abs((first * last))))",
+    "final": "acc",
+    "init": "1",
+    "name": "ydbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs((v - (acc * first))), abs(v)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "ytaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs(v), abs(first)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "ypaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - (((acc - 0) + v) * acc))))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "ygaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - ((math.gcd(abs(last), abs(acc)) + v) * acc))))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "yfbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + (last % first)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "yqbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (first * math.gcd(abs(acc), abs(0))))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "ynaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (acc - v)))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "yubaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (v + 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "yuaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (acc + v)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "ysbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + (v + first)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "ylbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs((v - (first * first))), abs(v)))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "ylaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - acc)",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "ymbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc % (1 - v)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "yabaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * math.gcd(abs(math.gcd(abs(v), abs((1 - acc)))), abs(v)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "yhbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - (((acc + v) + v) * acc))))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "yeaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v - last))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "yjbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (acc - (acc * v)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "yebaaa",
+    "p_PRISTINE": 0.5,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - (((acc % v) + v) * acc))))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "ycbaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc % math.gcd(abs(last), abs(0))))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "yoaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + first))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "yaaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * math.gcd(abs((v - ((acc + first) * first))), abs(v)))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "ycaaaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   }
+  ],
+  "pool": 45
+ },
+ "W9H:1": {
+  "a19_fillable": false,
+  "a19_observe_floor_pool": 6,
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((last - 1))))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "yxmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((first - last))))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "ynnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v - acc)",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "yynbaa",
+    "p_PRISTINE": 0.25,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((v - (first * (acc - first))) + v)",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "ytmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((v - (first * (acc + last))) + v)",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "ymnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + 1))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "ycobaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc * (v // math.gcd(abs(first), abs(v)))) + v)",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "ysnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "((acc * (v // math.gcd(abs(first), abs(0)))) + v)",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "yznbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (first * math.gcd(abs(acc), abs(0))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "yfnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + math.gcd(abs(acc), abs(last)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "yfobaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + first))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "yqnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs((acc * (v // (acc - first)))), abs(acc)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "yinbaa",
+    "p_PRISTINE": 0.25,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs((acc * (v // (acc + acc)))), abs(acc)))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "ypnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + last))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "yzmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((v - (first * (1 - acc))) + v)",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "yxnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v - (acc * first)))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "yqmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "((acc * (v // (first + 1))) + v)",
+    "final": "acc",
+    "init": "0",
+    "name": "yrnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc % (first + last)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "ylnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v // math.gcd(abs(v), abs(last))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "yvmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v // math.gcd(abs(v), abs(first))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "ygnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * (v // (0 - first)))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "yeobaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + first))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "yhnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc * first))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "ysmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((v - (first * (last - acc))) + v)",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "yvnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (acc % last)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "ywnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc % (v + v)))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "yhobaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs(first)))",
+    "final": "(last * acc)",
+    "init": "0",
+    "name": "ypmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc % first))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "ycnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((acc - v)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "yymbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs((acc * (v // acc))), abs(acc)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "ydnbaa",
+    "p_PRISTINE": 0.5,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + v))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "yaobaa",
+    "p_PRISTINE": 0.25,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + math.gcd(abs(acc), abs(last)))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "yenbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "((acc * (v // math.gcd(abs(first), abs(first)))) + v)",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "yjnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc * last))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "yumbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + (last // acc)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "ynmbaa",
+    "p_PRISTINE": 0.25,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (last + (acc - v)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "ytnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc - 1))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "ybnbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc % (1 - first)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "yombaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v % math.gcd(abs(acc), abs(last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "ywmbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (first * (acc + 1)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "yonbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc * (v // math.gcd(abs(v), abs(acc)))) + v)",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "yanbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((v - (first * (1 + acc))) + v)",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "yknbaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "math.gcd(abs(0), abs((acc - v)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "ydobaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * v)",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "ygobaa",
+    "p_PRISTINE": 0.25,
+    "role": "TRANSFER"
+   }
+  ],
+  "pool": 44
+ },
+ "W9H:2": {
+  "a19_fillable": false,
+  "a19_observe_floor_pool": 1,
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(last), abs(v))) + v))), abs(v))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "yladaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs((acc // v)), abs(v)))) + v)",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "yfadaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + first))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "yzycaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + v))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "yvzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs((last * v)), abs(v)))) + v)",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "yyycaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(v), abs(first))) + v))), abs(v))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "yjzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((v - 1))))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "yszcaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v % math.gcd(abs(last), abs((last - acc))))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "ytadaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc - last))",
+    "final": "(last % acc)",
+    "init": "1",
+    "name": "yzzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc // math.gcd(abs(acc), abs(last))))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "ytzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "OBSERVE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(v), abs(last))) + v))), abs(v))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "ynadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(v), abs((1 - (acc % first))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "ydadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v - last)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "ysadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last % math.gcd(abs(v), abs(math.gcd(abs(acc), abs(v)))))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "yxzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (acc % last)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "ycadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % math.gcd(abs(((acc // math.gcd(abs(first), abs(v))) + v)), abs(v)))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "ymzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs((last + last)), abs(v)))) + v)",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "yoadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs(first), abs(v)))) + v)",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "yaadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % math.gcd(abs(v), abs((acc % v))))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "ybzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs((1 * acc)), abs(v)))) + v)",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "ykadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v % math.gcd(abs(last), abs((acc % v))))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "yhadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs((1 - ((acc // pow(1, acc)) + v))), abs(v))",
+    "final": "pow(acc, 1)",
+    "init": "0",
+    "name": "yeadaa",
+    "p_PRISTINE": 0.0,
+    "role": "VALIDATE"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + last))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "ylzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - acc)))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "yczcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((v - acc)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "ywzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (acc // math.gcd(abs(acc), abs(v))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "ydzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v % math.gcd(abs(acc), abs(last)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "yfzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs(acc), abs(v)))) + v)",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "ynzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + (acc // math.gcd(abs(v), abs(first))))",
+    "final": "(last % acc)",
+    "init": "0",
+    "name": "yradaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc - first))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "ybadaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + math.gcd(abs(acc), abs(v))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "ygzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs(math.gcd(abs(0), abs(v))), abs(v)))) + v)",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "ymadaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % math.gcd(abs(acc), abs(v)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "ygadaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "((acc + (last % math.gcd(abs((acc % last)), abs(v)))) + v)",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "yizcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last % math.gcd(abs(((acc // math.gcd(abs(last), abs(acc))) + v)), abs(v)))",
+    "final": "(acc + acc)",
+    "init": "0",
+    "name": "yyzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(acc - math.gcd(abs(v), abs((acc * acc))))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "yuzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(first), abs(v))) + v))), abs(v))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "yqzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + 1))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "yozcaa",
+    "p_PRISTINE": 0.25,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(last), abs(acc))) + v))), abs(v))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "yazcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(v), abs((1 - (acc + v))))",
+    "final": "(first // acc)",
+    "init": "1",
+    "name": "ypzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(last)))))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "yezcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v % math.gcd(abs(last), abs((acc * acc))))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "yrzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs((1 - ((acc // math.gcd(abs(first), abs(acc))) + v))), abs(v))",
+    "final": "(last * acc)",
+    "init": "0",
+    "name": "yjadaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % math.gcd(abs(((acc // pow(1, acc)) + v)), abs(v)))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "0",
+    "name": "yhzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc * v))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "yiadaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + last))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "ykzcaa",
+    "p_PRISTINE": 0.0,
+    "role": "TRANSFER"
+   }
+  ],
+  "pool": 46
+ }
+}

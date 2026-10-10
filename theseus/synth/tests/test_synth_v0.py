@@ -137,3 +137,12 @@ def test_composition_detector_fires_on_synthetic_synergy(monkeypatch):
     assert r["composition"] and r["composition_splits"] == [1]
     g2 = dict(g, rules=g["rules"][::-1])
     assert not cp._job((g2, 1.0, 4.0))["composition"]
+
+
+def test_task_system_matches_substrate_without_input():
+    from theseus.synth import task_system as ts
+    for e in _g0()[:40]:
+        g = e["genome"]
+        a, _ = sb.run(g, seed=0, T=24, N=ts.N_CELLS)
+        b, _ = ts.run_with_input(g, [None] * 24, N=ts.N_CELLS, seed=0)
+        assert np.array_equal(a, b), e["id"]

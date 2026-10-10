@@ -925,3 +925,22 @@ THE SINGLE MOST INFORMATIVE NEXT RUN, if only one: the Ananke FLIP
   dossier's cited line does not say what is claimed.
 - Requested: an adversarial review of Parts 0, 2 and 5 by a different
   model family, and by Elenchus on commission.
+
+----------------------------------------------------------------------
+## AMENDMENTS 2026-10-08 (annotations; the body above is unchanged)
+
+After two external reviews relayed by the operator (verbatim at
+roles/Hestia/prompts/2026-10-08_external_reviews/) and Theseus's
+2026-10-08 composition results (theseus/runs/composition_v2_2026-10-08/),
+seven amendments M1-M7 are recorded in
+RESPONSE_TO_EXTERNAL_REVIEWS_2026-10-08.md s6. In brief: Part 2 W1
+"close to a theorem" is superseded by "strong prior for the tested
+representations"; a per-engine bottleneck diagnosis table is added
+(response s2) with Theseus 30b as an eighth row; the World-Demand Foundry
+starts in parallel with the ladder (Part 5 Step 1), and only coevolution
+waits for a seed; the Part 5 Step 3 pivot branch requires a named
+bottleneck first; the ruler package gains the cognitive accounting ledger
+and the archive-off / shuffled-history / random-library controls; the
+STOP list's custody line becomes "cheap exploration, expensive proof";
+Theseus's Part 1 row becomes "confirmed wall with a valid detector; 30c
+pending".

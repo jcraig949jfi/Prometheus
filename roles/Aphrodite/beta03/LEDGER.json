@@ -24,6 +24,192 @@
       "window": "W01",
       "kind": "FREEZE",
       "note": "E1 prereg + b03.py frozen; K1-K3 pass"
+    },
+    {
+      "utc": "2026-10-08T05:55Z",
+      "window": "W01",
+      "kind": "LEAD",
+      "note": "REPRESENTATION lead delivered W5P on branch aphrodite/b03-w5p @1e169a577: 11/11 tests PASS (semantics 15,360 cases 0 mismatch; conformance 18,600 + 48 walks; no-op continuity T12 seed17; transplant fresh-process). Donor ~2-5 CPU-min, ~1.3-1.5x search charges with inherited abstraction; expanded-billing overhead 1.076x. 5 open decisions deferred to W05/W09 freeze."
+    },
+    {
+      "utc": "2026-10-08T06:16Z",
+      "window": "W01",
+      "kind": "LEAD",
+      "note": "SELECTOR lead delivered g12 @6c03a218f (16/16); import-order defect class recorded"
+    },
+    {
+      "utc": "2026-10-08T06:16:40Z",
+      "window": "W01(early W03 work)",
+      "kind": "FREEZE",
+      "note": "E2 g12 prereg frozen; K4 pass; decisions D1 fallback off, D2 near-miss attractiveness descriptive, D4 tie-break confirmed"
+    },
+    {
+      "utc": "2026-10-08T06:51:38Z",
+      "window": "W01",
+      "kind": "AMEND",
+      "note": "A1 red-team amendment to E1/E2 (pre-data); K1,K1b,K2,K3(+R8 pairs 66/57),K4 PASS; freezes re-recorded"
+    },
+    {
+      "utc": "2026-10-08T07:17Z",
+      "window": "W01",
+      "kind": "LEAD",
+      "note": "ECOLOGY lead delivered W9-H on aphrodite/b03-eco @dbde4556f: generator config sha 2334bb74; pilot 3 seeds x48: admission 135/144; certified depth-two 44/47 (strict 30) at 1M cap only; at escrow 30k promoted-correct primitive reaches 4/188 cells; L1 pristine-observable 1/60 at 30k (OBSERVE pool problem); FP 1/727; shift from W8 non-additive 0.14->0.54. Decisions D1-D5 deferred to W07/W09 freeze."
+    },
+    {
+      "utc": "2026-10-08T09:07Z",
+      "window": "W01",
+      "kind": "CLOSE",
+      "note": "W01 closed; W02 EXP opened; supply B running"
+    },
+    {
+      "utc": "2026-10-08T09:23:00Z",
+      "window": "W02 (early W05/W09 DEV)",
+      "kind": "FREEZE",
+      "note": "E5-N (R8 under promotion, natural world) + W5P D1-D5 + E6 attack frozen before any E1/E5 outcome; K5a/b/c PASS"
+    },
+    {
+      "utc": "2026-10-08T09:43:57Z",
+      "window": "W02",
+      "kind": "AMEND",
+      "note": "E5-N A1 (red-team 1 BLOCKER renaming-copy attribution + 5 MAJOR) pre-data; K5a-d PASS; freeze re-recorded"
+    },
+    {
+      "utc": "2026-10-08T10:50Z",
+      "window": "W02 (early W06/W08 instrument qualification)",
+      "kind": "PILOT",
+      "note": "Ecology lead @64d51f5cb (exposed pilot W9H:0-2, 1.30 core-h): W5P re-cert agrees 31/47 (W5P certifies 28, all 8 compositions); gen-1 donors derive 0 schemas at 30k and 300k (CANDIDACY/SEARCH_BUDGET); KNOWN-POSITIVE oracle gen-2 control FAILS: depth-2 derived at 300k but no true composition is a candidate (level-2 bodies outside the W5 space observation searches). Per directive -> structured-world R8 is INSTRUMENT_UNVALIDATED under the frozen W5P observation rule; test ONE cheap repair (O1: observation also walks promoted applications) on exposed pilot before any E5-H freeze."
+    },
+    {
+      "utc": "2026-10-08T11:42Z",
+      "window": "W02 (W06/W08 instrument qualification)",
+      "kind": "QUALIFY",
+      "note": "O1 observation repair (aphrodite/b03-w5p @61d55a914; criterion frozen @78e6aad68 before runs; 1.12 core-h): O1_FAILS 0/3 (need 2/3). Oracle level-1 start at 300k: O1 makes L2 families observable (7/8/1 hits) but a TRUE composition becomes a candidate on 1/3 seeds and loses selection to a bare re-expression P({H}) (5,524 vs 7,862 mean saving). First broken links: CANDIDACY (derivation, 2 seeds), SELECTION (1 seed). Not a cheap repair -> structured-world R8 (E5-H) = INSTRUMENT_UNVALIDATED; E5-H not launched (directive Outcome C). O1 code NOT merged (E5-N freezes W5P donor.py). Alias-promotion bookkeeping defect noted (P_x({H}) recorded as depth-2; excluded by the non-trivial rule)."
+    },
+    {
+      "utc": "2026-10-08T11:49:07Z",
+      "window": "W02",
+      "kind": "DESIGN",
+      "note": "MIGRATION_DESIGN_DRAFT (TFS-1 typed functional substrate; transplant known-answers; M0-M3 first campaign; CONTINUE/MIGRATE/REPAIR decision table) written before any E1/E2/E5-N outcome; decision table frozen as close rule, sha fbeea7be46e18244"
+    },
+    {
+      "utc": "2026-10-08T13:04:41Z",
+      "window": "E1",
+      "kind": "HASH",
+      "note": "E1 pre-recipient hashes: libraries file 3b67048e21342474; common residual b90b960497069ed9 (red-team E1-8)"
+    },
+    {
+      "utc": "2026-10-08T13:08:14Z",
+      "window": "E1",
+      "kind": "HASH",
+      "note": "E1 pre-recipient hashes: libraries file 3b67048e21342474; common residual b90b960497069ed9 (red-team E1-8)"
+    },
+    {
+      "utc": "2026-10-08T13:08Z",
+      "window": "W02",
+      "kind": "HOLD",
+      "note": "E12 chain stopped (TaskStop) at E1 recip to respect 48 core-h/24h cap (est 38.5 used); relaunched E1-only (resume); E2 score/report deferred to >= 05:15Z Oct 9"
+    },
+    {
+      "utc": "2026-10-08T13:08Z",
+      "window": "W02",
+      "kind": "CLOSE",
+      "note": "W02 closed; W03 DEV opened"
+    },
+    {
+      "utc": "2026-10-08T13:19:59Z",
+      "window": "W03",
+      "kind": "AMEND",
+      "note": "Close rule A1 (red-team 3 BLOCKER/9 MAJOR): first-match exhaustive rule in beta03/CLOSE_RULE.md (sha 344d08d58af92c38); MIGRATE carries BASIS=OUTCOME_C_APPARATUS_LIMIT, S10_KILL_CRITERION=NOT_MET; E1/E2 qualifiers only. Frozen with E1_RECIP.jsonl at 9 lines (sha f518dd41c32352ed), not read."
+    },
+    {
+      "utc": "2026-10-08T13:35:28Z",
+      "window": "W03",
+      "kind": "FREEZE",
+      "note": "E5-N A2 (derived_schemas receipt) + E6 runner frozen; K5a-e, K6a-j PASS"
+    },
+    {
+      "utc": "2026-10-08T14:19Z",
+      "window": "W03",
+      "kind": "RESULT",
+      "note": "E1 MEASURED: SATURATION_SUPPORTED; INTERFERENCE not supported; CEILING_CONSISTENT not met. Report beta03/windows/E1_REPORT.md"
+    },
+    {
+      "utc": "2026-10-08T14:23Z",
+      "window": "W03",
+      "kind": "DESIGN",
+      "note": "Migration draft rev1 (sha 3eeeb8f48ce30eb0): red-team M4/M6-M9/m1-m3 addressed; E1 folded in as facts; s5 now points to CLOSE_RULE.md. The earlier draft sha fbeea7be (old decision table) is SUPERSEDED by CLOSE_RULE.md A1; this edit does not amend the close rule."
+    },
+    {
+      "utc": "2026-10-08T17:07Z",
+      "window": "W03",
+      "kind": "CLOSE",
+      "note": "W03 closed; W04 opened compute-held (D2 chain armed 05:15Z)"
+    },
+    {
+      "utc": "2026-10-08T21:07Z",
+      "window": "W04",
+      "kind": "CLOSE",
+      "note": "W04 closed compute-held; W05 opened (compute-held until 05:15Z)"
+    },
+    {
+      "utc": "2026-10-09T01:07Z",
+      "window": "W05",
+      "kind": "CLOSE",
+      "note": "W05 closed compute-held; W06 opened"
+    },
+    {
+      "utc": "2026-10-09T05:08Z",
+      "window": "W06",
+      "kind": "CLOSE",
+      "note": "W06 closed compute-held; W07 DEV opened"
+    },
+    {
+      "utc": "2026-10-09T06:06Z",
+      "window": "W07",
+      "kind": "RESULT",
+      "note": "E2 MEASURED: G12_GENERAL_RULE INCONCLUSIVE; G12_VS_G11 INFERIOR; memorisation rejected 18/18 without a ban (also at lambda 0)"
+    },
+    {
+      "utc": "2026-10-09T07:16:55Z",
+      "window": "W07",
+      "kind": "TECHNICAL",
+      "note": "E5-N recip TECHNICAL_FAILURE at 73/88 (repeated-hole selected schema in output-promotion bookkeeping); amendment A3 neutral repair; technical rerun 1/3; resume"
+    },
+    {
+      "utc": "2026-10-09T07:35Z",
+      "window": "W07",
+      "kind": "RESULT",
+      "note": "E5-N MEASURED NO (P1 -6 n.s.; channel OPEN; 1 attributed depth-2 pair; Hestia proxy FIRES); E6 negative diagnosis: SELECTION dominant (15/22). CLOSE_RULE row 4 -> MIGRATE_SUBSTRATE (BASIS Outcome C; S10 NOT_MET)"
+    },
+    {
+      "utc": "2026-10-09T07:37:30Z",
+      "window": "W07 (W12 attack prepared)",
+      "kind": "FREEZE",
+      "note": "W12 selection-override oracle bound pre-registered + libraries hashed before any walk"
+    },
+    {
+      "utc": "2026-10-09T07:53Z",
+      "window": "W07",
+      "kind": "REVIEW",
+      "note": "Independent adversarial review: all numbers + labels re-derived; 4 MAJOR interpretation corrections appended (Q6 -> NOT ESTABLISHED; promotion adds no new eligible candidates; SELECTION strict 6/22; sham degenerate -> non-solving inheritance interferes)"
+    },
+    {
+      "utc": "2026-10-09T08:18Z",
+      "window": "W07",
+      "kind": "RESULT",
+      "note": "W12 oracle selection bound: NO (9 vs 35 vs 29); limit upstream of selection"
+    },
+    {
+      "utc": "2026-10-09T08:18Z",
+      "window": "W07",
+      "kind": "CLOSE",
+      "note": "W07 closed (E2, E5-N, E6 diag, review, W12 delivered); W08 opened for close synthesis"
+    },
+    {
+      "utc": "2026-10-09T08:20Z",
+      "window": "CLOSE",
+      "kind": "CLOSE",
+      "note": "Beta-03 CLOSED early (all experiments complete). Recommendation MIGRATE_SUBSTRATE per CLOSE_RULE row 4 (basis Outcome C; s10 NOT_MET). Synthesis, manifest, compute report, defect ledger, independent review committed."
     }
   ]
 }

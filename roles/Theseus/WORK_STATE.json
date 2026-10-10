@@ -3,8 +3,8 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-08T06:30:00Z",
-  "state": "ACTIVE",
+  "updated_at_utc": "2026-10-09T14:30:00Z",
+  "state": "ACTIVE (compute paused at the MWO R2 day cap until 2026-10-10T00:00Z)",
   "branch": "theseus/loop48-2026-10-08",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
   "threads": [
@@ -52,14 +52,172 @@
     },
     {
       "id": "theseus23b_composition",
-      "status": "RUNNING",
-      "prereg": "roles/Theseus/prereg/2026-10-08_composition/PREREG.md"
+      "status": "DONE",
+      "prereg": "roles/Theseus/prereg/2026-10-08_composition/PREREG.md",
+      "verdict": "INDETERMINATE (detector later shown blind; reading withdrawn)"
+    },
+    {
+      "id": "theseus24_h1_large_A",
+      "status": "DONE",
+      "verdict": "H1 FAIL n=175",
+      "report": "theseus/runs/h1_large_A_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus28_law_ablation",
+      "status": "DONE",
+      "verdict": "NO-EROSION-TO-EXPLAIN",
+      "report": "theseus/runs/v0_1_nolaw_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus27_structure_selection",
+      "status": "DONE",
+      "verdict": "VOID",
+      "report": "theseus/runs/v0_1_selr5_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus27b_structure_selection",
+      "status": "DONE",
+      "verdict": "NO-HELP",
+      "report": "theseus/runs/v0_1_selbr5_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus30a_comp_control",
+      "status": "DONE",
+      "verdict": "DETECTOR BLIND (23b detector)",
+      "report": "theseus/runs/comp_control_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus30b_composition_v2",
+      "status": "DONE",
+      "verdict": "gate passes; WALL-AT-v0_1 (whole-genome)",
+      "report": "theseus/runs/composition_v2_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus30c_composition_v3",
+      "status": "DONE",
+      "verdict": "gate passes; WALL-IN-CONTEXT-AT-v0_1 (v0 op set)",
+      "report": "theseus/runs/composition_v3_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus31a_task_census",
+      "status": "DONE",
+      "verdict": "H-TASK SUPPORTED (D>one-shot p 6e-10, D>R p .004)",
+      "report": "theseus/runs/task_census_2026-10-08/VERDICT.md"
+    },
+    {
+      "id": "theseus31b_task_hard",
+      "status": "DONE",
+      "verdict": "H-TASK-HARD SUPPORTED; H-CARRIER not supported"
+    },
+    {
+      "id": "theseus33_degeneracy",
+      "status": "DONE",
+      "verdict": "INDETERMINATE"
+    },
+    {
+      "id": "theseus35_replicate",
+      "status": "DONE",
+      "verdict": "task advantage REPLICATED; distributed carriers not replicated"
+    },
+    {
+      "id": "theseus30d",
+      "status": "DONE",
+      "verdict": "RANDOM-BEATS-RECURSION (availability confound)"
+    },
+    {
+      "id": "theseus30e",
+      "status": "DONE",
+      "verdict": "INDETERMINATE (misalignment)"
+    },
+    {
+      "id": "theseus34_aligned",
+      "status": "DONE",
+      "verdict": "INDETERMINATE"
+    },
+    {
+      "id": "theseus31c_tasksel",
+      "status": "DONE",
+      "verdict": "INDETERMINATE (relays suffice)"
+    },
+    {
+      "id": "theseus36b_census",
+      "status": "DONE",
+      "verdict": "SUPPORTED (D 60% vs 33%/23%)"
+    },
+    {
+      "id": "theseus36_comp_task",
+      "status": "DONE",
+      "verdict": "SUPPORTED (91 vs 59)"
+    },
+    {
+      "id": "theseus37_law_needed",
+      "status": "DONE",
+      "verdict": "SUPPORTED (91 vs 52)"
+    },
+    {
+      "id": "theseus13_syn_concepts",
+      "status": "DONE",
+      "verdict": "20 admitted"
+    },
+    {
+      "id": "theseus38_replicate_36_37",
+      "prereg": "roles/Theseus/prereg/2026-10-08_replicate_36_37/PREREG.md",
+      "status": "DONE",
+      "verdict": "REPLICATED (sel 78 vs 63 p .015; law 78 vs 66 p .041; sizes ~1/2 and ~1/3 of seed 1)"
+    },
+    {
+      "id": "theseus39_syn_reinject",
+      "prereg": "roles/Theseus/prereg/2026-10-09_syn_reinject/PREREG.md",
+      "status": "DONE",
+      "verdict": "SUPPORTED single seed (INJ-S 85 vs INJ-M 72, p .019); SYN concepts re-derive known store+release (R2 13/3/4)"
+    },
+    {
+      "id": "theseus40_third_seed",
+      "prereg": "roles/Theseus/prereg/2026-10-09_third_seed/PREREG.md",
+      "status": "DONE",
+      "verdict": "POOLED SUPPORTED: selection RD .197 [.119,.274], laws RD .213 [.134,.293]; seed 1 overestimated both"
+    },
+    {
+      "id": "theseus42_syn_reinject_s2",
+      "prereg": "roles/Theseus/prereg/2026-10-09_syn_reinject_s2/PREREG.md",
+      "status": "DONE",
+      "verdict": "seed 3 INDETERMINATE 79 vs 74; pooled 2 seeds SUPPORTED narrowly RD .09 [.007,.173]"
+    },
+    {
+      "id": "theseus41_syn_inject_rep",
+      "status": "DONE",
+      "verdict": "NOT SUPPORTED (79 vs 81)"
+    },
+    {
+      "id": "theseus43_transfer_hard",
+      "status": "DONE",
+      "verdict": "SUPPORTED both: selection RD .147, laws RD .263 on held-out V8 k16"
+    },
+    {
+      "id": "theseus44_inject_timing",
+      "prereg": "roles/Theseus/prereg/2026-10-09_inject_timing/PREREG.md",
+      "status": "DONE",
+      "verdict": "content SUPPORTED (M 81 vs random-with-head-start 45); timing INDETERMINATE (81 vs 74)"
+    },
+    {
+      "id": "theseus45_generalise",
+      "status": "DONE",
+      "verdict": "both axes SUPPORTED; alphabet RD .166 > delay .101; not carried by essential law"
+    },
+    {
+      "id": "theseus46_redundancy_generalise",
+      "status": "DONE",
+      "verdict": "INDETERMINATE pooled; law-on redundancy +.13/+.15, no-law negative (descriptive)"
+    },
+    {
+      "id": "theseus47_interaction",
+      "prereg": "roles/Theseus/prereg/2026-10-09_interaction/PREREG.md",
+      "status": "DONE",
+      "verdict": "NOT SUPPORTED (z -.17); law-built generalisation replicated V8k8 85% vs 27%"
     }
   ],
   "fabric_tasks": [],
-  "running": [
-    "THESEUS-23b composition wall (prereg 279db6bdc)"
-  ],
+  "running": [],
   "blocked_on": [
     {
       "item": "THESEUS-06",
@@ -68,11 +226,8 @@
     }
   ],
   "next_actions": [
-    "THESEUS-23b verdict",
-    "THESEUS-28 law-free ablation (READY)",
-    "THESEUS-27 R5-quality ecology (READY after 23b)",
-    "THESEUS-24 larger LLM arm",
-    "THESEUS-29 stronger structure ruler"
+    "from 00:00Z: THESEUS-48 implementation form of law-built solvers (prereg first)",
+    "review packet draft, final at loop end 2026-10-10T23:00Z"
   ],
   "operator_decisions_required": [],
   "latest_reports": [

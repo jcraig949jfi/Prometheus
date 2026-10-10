@@ -63,6 +63,11 @@ CONFIG = {
     "known_library_per_family": kn.LIB_PER_FAMILY,
     "compute_guard_wall_s_ecology": 4 * 3600,
     "law": True,
+    "quality": "rep",            # QD elite quality: "rep" (-replicate distance, v0) or "r5" (response mid-band)
+    "elite_grids": ["pca", "desc", "resp"],
+    "dark_protect_gens": None,   # None = untried dark objects protected forever (v0)
+    "elite_protect_k": None,     # None = every elite protected (v0); int = only the top-k by quality
+    "seed_select": 0.0,          # 0 = v0; > 0 = coalition seed weight x exp(s * z(quality))
 }
 
 _CAL = None
@@ -74,11 +79,18 @@ def _init_worker(cald):
 
 
 def _eval_job(args):
-    g, scales, tau, fp_scale, do_dark = args
+    g, scales, tau, fp_scale, do_dark = args[:5]
+    do_task = args[5] if len(args) > 5 else False
     t0 = time.process_time()
     r = bt.evaluate(g, np.asarray(scales), tau, fp_scale)
     if do_dark:
         r["dark"] = dk.assess(g, r["viable"])
+    if do_task:  # THESEUS-31c: cue-recall J as the selected quality (V 4, k 4, 200/200 episodes)
+        from . import task_system as ts
+        if do_task == "ch0":  # THESEUS-36: composition-necessary variant (sensor-only readout, k 8)
+            r["task_J"] = ts.task_J(g, V=4, k=8, n_train=200, n_test=200, seed=0, readout="ch0")["J"]
+        else:
+            r["task_J"] = ts.task_J(g, V=4, k=4, n_train=200, n_test=200, seed=0)["J"]
     r["cpu_s"] = time.process_time() - t0
     return r
 
@@ -187,12 +199,39 @@ def main(argv=None):
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-law", action="store_true", help="THESEUS-28: collisions without the generated k-ary law")
     ap.add_argument("--ecology-only", action="store_true", help="stop after phase 2; export ecology rows only")
+    ap.add_argument("--quality", choices=["rep", "r5", "task", "task0"], default="rep")
+    ap.add_argument("--elite-grids", default="pca,desc,resp")
+    ap.add_argument("--pop-cap", type=int, default=None)
+    ap.add_argument("--dark-protect-gens", type=int, default=None)
+    ap.add_argument("--elite-protect-k", type=int, default=None)
+    ap.add_argument("--seed-select", type=float, default=0.0)
+    ap.add_argument("--cond-ops", action="store_true", help="THESEUS-30d: random rules may draw conditional ops")
+    ap.add_argument("--g0-readers", action="store_true", help="THESEUS-30e: G0 compiled with split writer/reader concepts")
+    ap.add_argument("--aligned-binding", action="store_true", help="THESEUS-34: collisions keep parent channel indices")
+    ap.add_argument("--master-seed", type=int, default=None, help="THESEUS-35: replication seed")
+    ap.add_argument("--inject", default=None, help="THESEUS-39: jsonl of genomes injected at gen 0 as synthetic parents")
+    ap.add_argument("--random-law-gains", action="store_true", help="THESEUS-51: law gains from an independent RNG, not the tensor")
     a = ap.parse_args(argv)
     cfg = copy.deepcopy(CONFIG)
     cfg["gens"] = a.gens
     if a.no_law:
         cfg["law"] = False
     cfg["ecology_only"] = bool(a.ecology_only)
+    cfg["quality"] = a.quality
+    cfg["elite_grids"] = a.elite_grids.split(",")
+    if a.pop_cap is not None:
+        cfg["pop_cap"] = a.pop_cap
+    cfg["dark_protect_gens"] = a.dark_protect_gens
+    cfg["elite_protect_k"] = a.elite_protect_k
+    cfg["seed_select"] = a.seed_select
+    cfg["cond_ops"] = bool(a.cond_ops)
+    cfg["g0_readers"] = bool(a.g0_readers)
+    cfg["aligned_binding"] = bool(a.aligned_binding)
+    if a.master_seed is not None:
+        cfg["master_seed"] = a.master_seed
+    cfg["inject"] = a.inject
+    cfg["random_law_gains"] = bool(a.random_law_gains)
+    sb.COND_ENABLED = cfg["cond_ops"]
     if a.smoke:
         cfg.update(gens=min(a.gens, 7), per_cell=1, n_oneshot_per_arity=12, n_random=12, n_weird=6, n_neutral=6,
                    n_hidden_known=4, reproduce_top={k: 2 for k in cfg["reproduce_top"]}, lens_marginal_sample=6)
@@ -213,13 +252,13 @@ def main(argv=None):
     compute = {}
 
     # ------------------------------------------------------------------ 0
-    corpus = cg.compile_corpus()
+    corpus = cg.compile_corpus(readers=cfg.get("g0_readers", False))
     os.makedirs(f"{root}/corpus/g0", exist_ok=True)
     jl(f"{root}/corpus/g0/{tag}.jsonl", corpus)
     g0_genomes = [c["genome"] for c in corpus]
     scales = bt.calibrate_scales(g0_genomes)
     with Pool(a.workers, initializer=_init_worker, initargs=(None,)) as pool:
-        g0_ev = pool.map(_eval_job, [(g, scales.tolist(), None, None, True) for g in g0_genomes])
+        g0_ev = pool.map(_eval_job, [(g, scales.tolist(), None, None, True, {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for g in g0_genomes])
     pre_viable = [i for i, r in enumerate(g0_ev) if r["viable"]]
     cal = ru.build_cal([g0_ev[i]["fp"] for i in pre_viable],
                        [(g0_ev[i]["fp_seed0"], g0_ev[i]["fp_seed1"]) for i in pre_viable], scales)
@@ -242,6 +281,7 @@ def main(argv=None):
     evals = {}
     assessments = {}
     active, vitality, born_gen = set(), {}, {}
+    qual = {}
     for c, r in zip(corpus, g0_ev):
         e = {"id": c["id"], "origin": "human", "kind": "concept", "executableRepresentation": c["genome"],
              "parentIds": [], "metadata": c["metadata"], "lane": "G0_SEED", "born_step": 0}
@@ -249,12 +289,39 @@ def main(argv=None):
         e["behavioralFingerprint"] = r["fp"]
         evals[e["id"]] = r
         if r["viable"]:
-            assessments[e["id"]] = archive.insert(e["id"], r["fp"], -r["viability"]["rep_dist"])
+            assessments[e["id"]] = archive.insert(e["id"], r["fp"], quality_of(r, cfg))
+            qual[e["id"]] = quality_of(r, cfg)
             active.add(e["id"])
             field.place(e["id"], r["fp"])
             born_gen[e["id"]] = 0
         e["state"] = state_of(r, assessments.get(e["id"]))
     n_g0 = sum(1 for e in reg.values() if e["origin"] == "human")
+    inject_rows = []
+    if cfg.get("inject"):
+        # THESEUS-39: injected genomes enter as parentless synthetic mechanisms with their recorded
+        # generation (lane INJECT: never sampled as D children; eligible as parents like any
+        # synthetic of that generation). Evaluated exactly as children are; non-viable ones dropped.
+        inj = [json.loads(l) for l in open(cfg["inject"], encoding="utf-8")]
+        with Pool(a.workers, initializer=_init_worker, initargs=(cald,)) as pool:
+            ires = pool.map(_eval_job, [(r["genome"], cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True,
+                                         {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for r in inj])
+        for row, r in zip(inj, ires):
+            e = {"id": row["id"], "origin": "synthetic", "kind": "mechanism", "executableRepresentation": row["genome"],
+                 "parentIds": [], "generation": row["generation"], "metadata": {"injected": row["meta"]},
+                 "lane": "INJECT", "born_step": 0}
+            reg.add(e)
+            e["behavioralFingerprint"] = r["fp"]
+            evals[e["id"]] = r
+            if r["viable"]:
+                assessments[e["id"]] = archive.insert(e["id"], r["fp"], quality_of(r, cfg))
+                qual[e["id"]] = quality_of(r, cfg)
+                active.add(e["id"])
+                field.place(e["id"], r["fp"])
+                born_gen[e["id"]] = 0
+            e["state"] = state_of(r, assessments.get(e["id"]))
+            inject_rows.append({"id": e["id"], "viable": r["viable"], "quality": quality_of(r, cfg) if r["viable"] else None})
+        jl(f"{rdir}/INJECTED.jsonl", inject_rows)
+        print(f"  injected {sum(x['viable'] for x in inject_rows)}/{len(inject_rows)} viable from {cfg['inject']}", flush=True)
 
     # ------------------------------------------------------------------ 1
     with Pool(a.workers) as pool:
@@ -282,15 +349,17 @@ def main(argv=None):
                 for k in cfg["arities"]:
                     for _ in range(cfg["per_cell"]):
                         pids, modes = ec.choose_coalition(reg, tensor, field, active, base_lane, k, rng,
-                                                          lenses=[l for l, _ in lenses], need_lens=(lane == "DEEP_LENS"))
+                                                          lenses=[l for l, _ in lenses], need_lens=(lane == "DEEP_LENS"),
+                                                          seed_quality=qual, seed_strength=cfg["seed_select"])
                         if pids is None:
                             continue
                         cidn += 1
                         cid = f"c{cidn:06d}"
-                        g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"])
+                        g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False),
+                                                random_law_gains=cfg.get("random_law_gains", False))
                         rec.update({"lane": lane, "gen": gen, "modes": modes})
                         jobs.append((cid, pids, g, rec))
-            res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True) for (_, _, g, _) in jobs])
+            res = pool.map(_eval_job, [(g, cal.desc_scales.tolist(), cal.tau_rep, fp_sd, True, {"task": True, "task0": "ch0"}.get(cfg.get("quality"), False)) for (_, _, g, _) in jobs])
             born = {"total": 0}
             for (cid, pids, g, rec), r in zip(jobs, res):
                 eco_cpu += r["cpu_s"]
@@ -308,7 +377,8 @@ def main(argv=None):
                 evals[eid] = r
                 asmt = None
                 if r["viable"]:
-                    asmt = archive.insert(eid, r["fp"], -r["viability"]["rep_dist"])
+                    asmt = archive.insert(eid, r["fp"], quality_of(r, cfg))
+                    qual[eid] = quality_of(r, cfg)
                     assessments[eid] = asmt
                     active.add(eid)
                     field.place(eid, r["fp"])
@@ -320,6 +390,9 @@ def main(argv=None):
                 e["state"] = state_of(r, asmt)
                 rec.update({"child": eid, "viable": r["viable"], "state": e["state"],
                             "n_rulers_novel": asmt["n_rulers_novel"] if asmt else None})
+                if cfg.get("inject"):  # THESEUS-39: solver-by-generation and injected-ancestry bookkeeping
+                    rec["task_J"] = r.get("task_J")
+                    rec["inject_ancestor"] = any(reg[x].get("lane") == "INJECT" for x in e["ancestry"])
                 tensor.record(pids, eid, rec["law"], {"viable": r["viable"], "state": e["state"]})
                 collisions.append(rec)
                 field.after_collision(pids)
@@ -349,9 +422,13 @@ def main(argv=None):
                             field.place(lid)
                             born_gen[lid] = gen
                         reg[d]["metadata"]["resolved_by_lens"] = lid  # measured: held-out drop > null p95
-            protected = archive.elite_ids() | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")} | \
+            dpg = cfg["dark_protect_gens"]
+            elites = (archive.elite_ids(cfg["elite_grids"]) if cfg["elite_protect_k"] is None
+                      else archive.top_elites(cfg["elite_grids"], cfg["elite_protect_k"]))
+            protected = elites | {d for d in dark_queue if not reg[d]["metadata"].get("lens_tried")
+                                                                 and (dpg is None or gen - born_gen.get(d, 0) < dpg)} | \
                 {l for l, _ in lenses}
-            fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen)
+            fos = ec.fossilize(reg, active, vitality, protected, gen, born_gen, cap=cfg["pop_cap"])
             for i in list(vitality):
                 vitality[i] *= 0.9
             field.tick(active)
@@ -388,7 +465,8 @@ def main(argv=None):
             seen.add(tuple(pids))
             cidn += 1
             cid = f"o{cidn:06d}"
-            g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"])
+            g, rec = co.collide([reg[p] for p in pids], tensor, cid, law=cfg["law"], aligned=cfg.get("aligned_binding", False),
+                                                random_law_gains=cfg.get("random_law_gains", False))
             rows.append((f"{arm}{cid[1:]}", g, {"parents": pids, "collision": rec}))
         arms[arm] = rows
     llm_path = f"{root}/controls/llm_arm_v0/GENOMES.jsonl"
@@ -603,6 +681,15 @@ def main(argv=None):
         f.write(an.render(out, tag))
     clock.mark("5_analysis_and_export", 0.0)
     print(json.dumps(out.get("verdicts", {}), indent=1))
+
+
+def quality_of(r, cfg):
+    """QD elite quality (never novelty): v0 = reproducibility; THESEUS-27 = R5."""
+    if cfg.get("quality") == "r5":
+        return r5_midband(r["fp"])
+    if cfg.get("quality") in ("task", "task0"):
+        return r.get("task_J", 0.0)
+    return -r["viability"]["rep_dist"]
 
 
 def r5_midband(fp):

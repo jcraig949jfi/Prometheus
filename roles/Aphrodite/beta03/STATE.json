@@ -27,7 +27,8 @@
       "title": "R8 FAILURE AUTOPSY",
       "start_utc": "2026-10-08T05:05Z",
       "end_utc": "2026-10-08T09:05Z",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "report": "beta03/windows/W01_DEV_REPORT.md"
     },
     {
       "id": "W02",
@@ -35,7 +36,8 @@
       "title": "SATURATION / INTERFERENCE DISCRIMINATOR (E1)",
       "start_utc": "2026-10-08T09:05Z",
       "end_utc": "2026-10-08T13:05Z",
-      "status": "PENDING"
+      "status": "CLOSED",
+      "report": "beta03/windows/W02_EXP_REPORT.md"
     },
     {
       "id": "W03",
@@ -43,7 +45,8 @@
       "title": "G12 ENDPOINT-ALIGNED SELECTOR",
       "start_utc": "2026-10-08T13:05Z",
       "end_utc": "2026-10-08T17:05Z",
-      "status": "PENDING"
+      "status": "CLOSED",
+      "report": "beta03/windows/W03_DEV_REPORT.md"
     },
     {
       "id": "W04",
@@ -51,7 +54,8 @@
       "title": "G12 FRESH-SEED CONFIRMATION (E2)",
       "start_utc": "2026-10-08T17:05Z",
       "end_utc": "2026-10-08T21:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (compute-held)",
+      "report": "beta03/windows/W04_EXP_REPORT.md"
     },
     {
       "id": "W05",
@@ -59,7 +63,8 @@
       "title": "W5P REPRESENTATION PROMOTION (E3)",
       "start_utc": "2026-10-08T21:05Z",
       "end_utc": "2026-10-09T01:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (compute-held)",
+      "report": "beta03/windows/W05_DEV_REPORT.md"
     },
     {
       "id": "W06",
@@ -67,7 +72,8 @@
       "title": "PROMOTION REACHABILITY AND CONFORMANCE",
       "start_utc": "2026-10-09T01:05Z",
       "end_utc": "2026-10-09T05:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (compute-held)",
+      "report": "beta03/windows/W06_EXP_REPORT.md"
     },
     {
       "id": "W07",
@@ -75,7 +81,8 @@
       "title": "SECOND-LEVEL WORLD / ECOLOGY DESIGN (E4)",
       "start_utc": "2026-10-09T05:05Z",
       "end_utc": "2026-10-09T09:05Z",
-      "status": "PENDING"
+      "status": "CLOSED",
+      "report": "beta03/windows/E2_REPORT.md; E5N_REPORT.md; W12_REPORT.md"
     },
     {
       "id": "W08",
@@ -83,7 +90,7 @@
       "title": "SECOND-LEVEL DISCOVERY PILOT",
       "start_utc": "2026-10-09T09:05Z",
       "end_utc": "2026-10-09T13:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W09",
@@ -91,7 +98,7 @@
       "title": "R8 REPRESENTATION-CONTROLLED RETEST (E5 design)",
       "start_utc": "2026-10-09T13:05Z",
       "end_utc": "2026-10-09T17:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W10",
@@ -99,7 +106,7 @@
       "title": "R8 PROMOTION ASSAY (E5)",
       "start_utc": "2026-10-09T17:05Z",
       "end_utc": "2026-10-09T21:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W11",
@@ -107,7 +114,7 @@
       "title": "FORENSIC REVIEW / REPAIR OR ABLATION",
       "start_utc": "2026-10-09T21:05Z",
       "end_utc": "2026-10-10T01:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     },
     {
       "id": "W12",
@@ -115,10 +122,10 @@
       "title": "INDEPENDENT CONFIRMATION OR DECISIVE NULL (E6)",
       "start_utc": "2026-10-10T01:05Z",
       "end_utc": "2026-10-10T05:05Z",
-      "status": "PENDING"
+      "status": "CLOSED (released early: campaign complete)"
     }
   ],
-  "active_window": "W01",
+  "active_window": "CLOSED",
   "supply": {
     "file": "science/arc3/w8_lin_generator/W8_SUPPLIES_B03.json",
     "blocks": {
@@ -128,36 +135,139 @@
   },
   "jobs": [
     {
-      "id": "SUPPLY_A_B",
-      "cmd": "b03.py supply A; supply B",
-      "log": "beta03/runs/SUPPLY_run.log",
-      "started_utc": "2026-10-08T05:10:34Z",
-      "status": "RUNNING",
-      "outcome_free": true
+      "id": "D2_CHAIN",
+      "task": "br3z3kp8l",
+      "starts_utc": "2026-10-09T05:15Z",
+      "stages": [
+        "b03_e2 score",
+        "b03_e2 report",
+        "b03_e5 sham",
+        "b03_e5 recip",
+        "b03_e5 score",
+        "b03_e5 report",
+        "b03_e6 diagnose"
+      ],
+      "log": "beta03/runs/D2_chain.log",
+      "status": "ARMED"
     }
   ],
-  "next_permissible_action": "W02: after supply A -> b03.py e1 donors; after supply B -> e1 freeze, starts, recip, score, report",
+  "next_permissible_action": "none: campaign closed; await operator",
   "compute": {
     "cap": "48 core-h / rolling 24h (M4)",
-    "ledger": []
+    "ledger": [
+      {
+        "utc": "2026-10-08T13:08Z",
+        "rolling_24h_est_core_h": 38.5,
+        "note": "foundry 26.3 + leads/pilots/known ~6.7 + chain 5.5; E2 score/report + E5-N deferred to >= 2026-10-09T05:15Z roll-off"
+      },
+      {
+        "utc": "2026-10-08T14:19Z",
+        "rolling_24h_est_core_h": 44.5,
+        "note": "E1 complete 14:18Z; nothing heavy until >= 05:15Z Oct 9"
+      },
+      {
+        "utc": "2026-10-09T07:53Z",
+        "rolling_24h_est_core_h": 40,
+        "note": "day-2: E2 score 05:15-05:48 (~2.2), E5-N sham/recip/score 05:48-07:34 (~6.5 incl. rerun), W12 walks from 07:38 (~3 est); Oct-8 foundry rolling off"
+      }
+    ]
   },
   "cloud_spend_usd": 0.0,
   "subagents": {
-    "REPRESENTATION": "branch aphrodite/b03-w5p (running)",
-    "SELECTOR": "branch aphrodite/b03-g12 (running)",
-    "ECOLOGY": "branch aphrodite/b03-eco (running)",
-    "RED_TEAM": "scheduled W11 + freeze reviews"
+    "REPRESENTATION": "E6 runner delivered @466b3457f (cherry-picked; K6a-j PASS)",
+    "SELECTOR": "DELIVERED aphrodite/b03-g12 @6c03a218f (16/16 PASS); merged; E2 frozen",
+    "ECOLOGY": "pilot done @64d51f5cb: oracle control FAILS under W5P D1 observation; E5-H not frozen; O1 repair under test",
+    "RED_TEAM": "pre-freeze review of E1/E2 done (2 BLOCKER + 7 MAJOR); all amended pre-data (A1); W11 review pending",
+    "INDEPENDENT_REVIEW": "done: 0 BLOCKER, 4 MAJOR (wording/interpretation), 11 MINOR; corrections appended to E1/E2/E5N reports; labels unchanged"
   },
   "known_defects": [
     "r7e._donor drops selection_table (B01)",
-    "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap"
+    "NULL junk gates never competitive (B02 E12 s6.3) -> E2 adds NEAR-MISS trap",
+    "import-order hazard: importing a17/gtc/a18 before b02/r7e changes a18.TAG (cell labels); all Beta-01/02/03 runners import b02 first; g12 asserts TAG",
+    "W9-H: depth-two attainable only at 1M transfer cap; 30k escrow/observation sees almost no L1 families (pristine 1/60) -> candidacy may fail by construction; decide in W07",
+    "W5P observation (D1) only searches W5 base space: level-2 bodies never observed -> true compositions never candidates even with oracle inheritance (exposed pilot)",
+    "W5P alias promotion: P_x({H}) registered as a new depth-2 primitive (bookkeeping only; non-trivial rule excludes it)"
   ],
   "expected_final_disposition": "open",
   "frozen_specs": {
     "E1": {
       "spec": "beta03/windows/E1_PREREG.md",
       "freeze": "beta03/FREEZE_E1.json",
-      "b03_sha": "4408324c2211c23a46ee308761ad28d5dafe6c36c40961362126f0a1a4884225"
+      "b03_sha": "1febd5d54a6d0b26c597202bf483e15e18b071b508c4ec6dbfa14abbc1b53d82",
+      "amendments": [
+        "A1"
+      ]
+    },
+    "E2": {
+      "spec": "beta03/windows/E2_PREREG.md",
+      "freeze": "beta03/FREEZE_E2.json",
+      "amendments": [
+        "A1"
+      ]
+    },
+    "E5N": {
+      "spec": "beta03/windows/E5N_PREREG.md",
+      "freeze": "beta03/FREEZE_E5N.json",
+      "amendments": [
+        "A1",
+        "A2"
+      ]
+    },
+    "E6": {
+      "runner": "engine/v2b/b03_e6.py",
+      "freeze": "beta03/FREEZE_E5N.json (A2)"
     }
-  }
+  },
+  "dispositions": {
+    "E5H_structured_world_R8": "INSTRUMENT_UNVALIDATED (known-positive oracle control fails under W5P and under the O1 repair; first broken links CANDIDACY/SELECTION; not cheaply repairable)",
+    "E1": "MEASURED: SATURATION_SUPPORTED (own-start -104, 1/20/1, p 2e-6, share 0.93, end-state L_g11 388 >= L_P 363); INTERFERENCE no (-7, 2/4/16, p .44, attainable); CEILING_CONSISTENT no (cond 4; unattributed)",
+    "E2": "MEASURED: G12_GENERAL_RULE INCONCLUSIVE (vs I_0 +48, 13/6/5, p .053; claim2 PASS 18/18 incl. lambda0; claim3 UNTESTED); G12_VS_G11 INFERIOR (142 vs 179, 3/11/10, p1 .048; Holm n.s.)",
+    "E5N": "MEASURED NO: P1 -6 (3/4/15, p .82, attainable); channel OPEN; SECOND-LEVEL 1 pair (99); depth-2 selected 4 pairs; KILL_CRITERION_HESTIA proxy FIRES; E6 negative: first link STATISTICAL, per-pair SELECTION 15/CANDIDACY 3/TRANSFER 3/NONE 1; technical rerun 1/3 (A3)",
+    "W12": "ORACLE_SELECTION_ENABLES NO: oracle-best promoted-dependent libraries 9 vs pristine 35 (3/11/8, p2 .02) vs D-selected 29; limit upstream of selection (candidacy/representation)"
+  },
+  "close_decision_rule": {
+    "frozen_utc": "2026-10-08T13:19:59Z",
+    "source": "beta03/CLOSE_RULE.md (A1; supersedes MIGRATION_DESIGN_DRAFT s5)",
+    "sha256": "344d08d58af92c38ceb856d05bc94b0841f34320184c84792ef9e4d8e39c29c1",
+    "E1_RECIP_at_freeze": {
+      "lines": 9,
+      "sha256": "f518dd41c32352edfc1b423f0b52794258625a8eef04c651f9b538c9809cd6de",
+      "read": false
+    },
+    "review": "beta03/reviews/REDTEAM_MIGRATION_DECISION.md"
+  },
+  "design_obligations_W11": [
+    "Migration draft revision per REDTEAM_MIGRATION_DECISION: M4 narrow 'substrate property' claim (selection broke under g11; g12 may reject alias; candidacy rests on 1 clean exposed seed)",
+    "M6 add outcome-free M0 probe: witness description length (nats) vs search budget before M1 freeze (gen-1 observation starvation)",
+    "M7 rebudget M0-M3 (~85-95 core-h incl. foundry); index-identity compat check on a sample; >=20 W9-H' seeds",
+    "M8 add frozen W5 comparator arm (W5P+O1+g12+alias-fix) to M1 Q2 for falsifiability",
+    "M9 restate MDL-vs-memorise claim (reach guard does the work)",
+    "m1 O1 CPU 1.13 core-h per its report",
+    "m2 conditional g12 arm in M2",
+    "m3 planted-corpus rewrite known-answer"
+  ],
+  "migration_draft": {
+    "rev": 1,
+    "sha256": "3eeeb8f48ce30eb0513009088d18b829b4b213594ae4d4ada51a79d6a552d146",
+    "note": "CLOSE_RULE.md governs recommendation"
+  },
+  "close_recommendation": {
+    "label": "MIGRATE_SUBSTRATE",
+    "rule_row": 4,
+    "BASIS": "OUTCOME_C_APPARATUS_LIMIT",
+    "S10_KILL_CRITERION": "NOT_MET",
+    "KILL_CRITERION_HESTIA_PROXY": "FIRES",
+    "qualifiers": {
+      "E5N_P1": "-6, p .82, attainable",
+      "channel": "OPEN",
+      "attributed_depth2_fraction": 0.045,
+      "E1": "SATURATION_SUPPORTED; interference not; ceiling-consistent not met",
+      "E2": "G12 INCONCLUSIVE; INFERIOR to g11; memorisation rejected 18/18 without ban",
+      "W12": "oracle selection does not enable; limit upstream of selection"
+    }
+  },
+  "status": "CLOSED",
+  "closed_utc": "2026-10-09T08:20Z",
+  "final_disposition": "MIGRATE_SUBSTRATE (CLOSE_RULE row 4; BASIS=OUTCOME_C_APPARATUS_LIMIT; S10_KILL_CRITERION=NOT_MET; KILL_CRITERION_HESTIA_PROXY=FIRES)",
+  "synthesis": "beta03/BETA03_48H_CLOSE_SYNTHESIS.md"
 }
