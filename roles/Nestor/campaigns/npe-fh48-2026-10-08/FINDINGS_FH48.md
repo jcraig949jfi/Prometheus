@@ -527,3 +527,26 @@ mutates opcodes; WELL_MIXED. Otherwise STATIC ADD37, CONST 0.15, 2000 epochs, as
   measured in this experiment.
 - The distributed architecture is an alternative stable state reached by drift, not a selected improvement.
 - **Killed:** "pair-distributed function spreads because it is advantaged" (together with the counter-copy kill).
+
+## F14. X-REPUTATION: SIGNAL. Reputation reset explains ONTAPE's shallow genealogies (24 runs, paired; corrected tape ruler)
+
+| arm | median causal depth | INHERIT deeper (paired seeds) | on-tape function maintained (TCS >= 0.10) | final TCS |
+|---|---|---|---|---|
+| RESET (default) | 42.5 | -- | 9/9 established | 0.73-0.83 |
+| INHERIT (a converted half takes its donor's score) | 116.5 | 9/9 established pairs (3 seeds established in neither arm) | 9/9 established | 0.82-0.89 |
+
+- **The age-structured-reputation hypothesis (F8) is supported.** Resetting the score on conversion lets long-scored
+  elders out-prioritize their own fresh copies. Copying concentrates in old donors, and genealogies stay short.
+- **Exchange advantage:** median 2.0 (RESET) against 1.7 (INHERIT).
+
+**Secondary (descriptive, not a declared classification):** heritable reputation strongly increases PAIR-DISTRIBUTED
+function.
+
+| arm | final tape-only share | maximum over the run | runs exceeding 0.5 |
+|---|---|---|---|
+| RESET | <= 0.12 | 0.26 | 0/9 |
+| INHERIT | up to 0.70 | 0.70 | 4/9 |
+
+- Offline CS therefore swings widely under INHERIT (0.17-0.89) while TCS stays high.
+- This is consistent with F13 (the distributed form is neutral): deeper genealogies mean larger neutral sweeps.
+- **Weak signal, not chased.** A confirm would need a frozen design with tape-only share as its endpoint.
