@@ -60,6 +60,23 @@ ba867114a061d7984a25faa709ebcb1308d30d934835e257ca26daf460648a1c. Stage 1b scan:
 per physics; one-step routes to FUNC under SUB / MOVE / INS / DEL (geometry.scan_operators, kernel c83a56063). Stage 2
 (the outcome test and the prediction) is frozen in s5 after stage 1 completes and BEFORE any replanting run.
 
+## 5. A3 stage 2 -- operator-aware PREDICTION of completion in unseen worlds (frozen 2026-10-10T12:58:15Z; stage-1 scan RUNNING, no scan value
+## seen; no stage-2 run made)
+
+Plan: tools/plan_a3.py test SCAN_RESULTS OUT -- a deterministic function of the stage-1 scan output (its sha256 will be logged
+at launch): each scanned tape (<= 600) replanted as a quarter of the initial slots (PAIRED init) into fresh worlds of its
+harvest physics, WELL_MIXED, MED mutation, v2 BASE (BEL-48H plan_w5), 100 ticks, 2 distinct seeds each; plus 60
+no-transplant BACKGROUND worlds per physics. Outcome y(tape) = a FUNC origin event within 100 ticks in >= 1 of its 2 worlds.
+Scores fixed now: S_op = sum over SUB/MOVE/INS/DEL of log1p(routes) (hypothesis); S_sub = log1p(SUB routes) (simpler
+substitution ruler); S_nz = non-zero byte count (content baseline, no geometry). Analysis tools/analyze_a3.py (synthetic
+tests in both directions, tools/tests/test_analyze_a3.py); paired bootstrap over tapes, 2,000 resamples, rng 7205.
+- A3-P1: AUC(S_op) - AUC(S_sub) pooled: 95% CI lower bound > 0.
+- A3-P2: AUC(S_op) - AUC(S_nz) pooled: 95% CI lower bound > 0.
+- A3-P3: AUC(S_op) > AUC(S_sub) in >= 2 of the 3 physics.
+All three NOT_TESTABLE if < 10 completing or < 10 non-completing tapes. Background origination is reported (an event in a
+replant world may be unrelated to the replanted tape; the background rate bounds that). DISCLOSURE: I will see stage-1
+predictor values (not outcomes) before launch; nothing above may change after this timestamp except by a visible amendment.
+
 ## 6. E1 -- long-horizon accumulation inside a composite task (DISCOVERY; registered 2026-10-10T12:53:46Z, before any E1 run)
 
 (s5 is reserved for A3 stage 2.) Status: DISCOVERY. Its tests are registered so that they cannot be chosen after the data, but
