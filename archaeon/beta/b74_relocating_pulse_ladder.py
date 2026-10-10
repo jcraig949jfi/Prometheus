@@ -40,7 +40,7 @@ def reset(i, P=4):
         (LDC, 5, 0), (LDC, 6, 0), (JMP, 0, (1 << 32) - 12)])                                         # p+18..p+20 unlatch, go move
 
 
-def group_reloc(ms, w, seed, E, P=4, Q=None, rng_seed=7, mode="half"):
+def group_reloc(ms, w, seed, E, P=4, Q=None, rng_seed=7, mode="half", log=None):
     players = [Player(m) for m in ms]; tot = [0.0] * len(ms); mx = [0.0] * len(ms); L = w.w.L
     for ep in range(E):
         shared = {}

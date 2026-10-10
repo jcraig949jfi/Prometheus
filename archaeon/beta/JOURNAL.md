@@ -877,7 +877,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   strategy.
 - B75 STAGED (b75_reset_evolution.py; prediction in docstring = memory law's defender: RESET-like in <= 2/12 pops,
   none beats hand RESET). Re-find metric discriminates: hand LATCH .051 vs RESET .56 (threshold midpoint .31).
-  Smoke test passed. 12 SOLO cells, G=300, ticks 48 -> est ~12-15 core-h. LAUNCH in window 5 (~2026-10-11 00:29Z).
+  CORRECTION (mine): the first smoke test FAILED (group_reloc lacked the log= kwarg used by B62's readout) although
+  this entry was written as 'passed'; fixed (log=None) and the re-run smoke test passed. 12 SOLO cells, G=300,
+  ticks 48 -> est ~12-15 core-h. LAUNCH in window 5 (~2026-10-11 00:29Z).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
