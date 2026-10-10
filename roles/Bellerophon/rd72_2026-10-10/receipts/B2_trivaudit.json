@@ -1,0 +1,328 @@
+{
+ "CONST": {
+  "witness_bytes": 3,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [
+   42
+  ],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "ECHO": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "INC": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_ONE": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_MULTI": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "SUM2": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   }
+  }
+ },
+ "ECHO": {
+  "witness_bytes": 2,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 88,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 13,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "CONST": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 1,
+    "DEL": 0
+   },
+   "INC": {
+    "SUB": 226,
+    "MOVE": 71,
+    "INS": 11,
+    "DEL": 1
+   },
+   "COND_ONE": {
+    "SUB": 231,
+    "MOVE": 260,
+    "INS": 4,
+    "DEL": 0
+   },
+   "COND_MULTI": {
+    "SUB": 5,
+    "MOVE": 332,
+    "INS": 2,
+    "DEL": 0
+   },
+   "SUM2": {
+    "SUB": 13627,
+    "MOVE": 39805,
+    "INS": 15423,
+    "DEL": 53
+   }
+  }
+ },
+ "INC": {
+  "witness_bytes": 3,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 4,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "CONST": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "ECHO": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 1,
+    "DEL": 0
+   },
+   "COND_ONE": {
+    "SUB": 468,
+    "MOVE": 701,
+    "INS": 2142,
+    "DEL": 3
+   },
+   "COND_MULTI": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "SUM2": {
+    "SUB": 1,
+    "MOVE": 0,
+    "INS": 3,
+    "DEL": 0
+   }
+  }
+ },
+ "COND_ONE": {
+  "witness_bytes": 7,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "CONST": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "ECHO": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "INC": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_MULTI": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "SUM2": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   }
+  }
+ },
+ "COND_MULTI": {
+  "witness_bytes": 11,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "CONST": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "ECHO": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "INC": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_ONE": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "SUM2": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   }
+  }
+ },
+ "SUM2": {
+  "witness_bytes": 5,
+  "density": {
+   "uniform": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   },
+   "sparse16": {
+    "n": 20000,
+    "competent": 0,
+    "competent_func": 0
+   }
+  },
+  "const_passes": [],
+  "ladder_from": {
+   "COPIER": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "CONST": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "ECHO": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "INC": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_ONE": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   },
+   "COND_MULTI": {
+    "SUB": 0,
+    "MOVE": 0,
+    "INS": 0,
+    "DEL": 0
+   }
+  }
+ }
+}
