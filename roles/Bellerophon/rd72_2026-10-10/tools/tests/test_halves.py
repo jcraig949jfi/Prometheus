@@ -1,0 +1,27 @@
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1].parent.parent / "bel48h_2026-10-08" / "tools"))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[5]))
+from halves import HalvesWorld
+from belinst import end_state_hash
+from prometheus.z80atlas import vm, coupling_campaign as CC
+from prometheus.z80atlas.world import World, Config
+
+
+def _cfg(task, ticks=60):
+    d = dict(CC.COMMON, **CC.V3, **CC.K["K40"]); d.update(coupling="ON", task=task, init="SEEDED_REPLICATOR", ticks=ticks, cells=64)
+    return Config(**d)
+
+
+def test_halves_classification_and_invariance():
+    w = HalvesWorld(_cfg("COND_MULTI"), 3)
+    pad = lambda b: bytes(b[:64]) + bytes(max(0, 64 - len(b)))
+    rep = vm.replicator(64)
+    assert w.halves(pad(vm.hybrid_relocated(rep, vm.witness_cond_multi()))) == "BOTH"
+    assert w.halves(pad(vm.hybrid_relocated(rep, vm.witness_echo()))) == "LO"
+    assert w.halves(pad(rep)) == "NONE"
+    w1 = HalvesWorld(_cfg("COND_ONE"), 3)
+    assert w1.halves(pad(vm.hybrid_relocated(rep, vm.witness_inc()))) == "HI"
+    a = World(_cfg("COND_ONE"), 11); a.run(); b = HalvesWorld(_cfg("COND_ONE"), 11, census_every=20); b.run()
+    assert end_state_hash(a) == end_state_hash(b)
+    assert len(b.census) >= 1
