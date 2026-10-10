@@ -33,7 +33,10 @@ autoinstall:
             password: @@WIFI_PASSWORD@@
 
   # Runs first. The installer re-reads /autoinstall.yaml after early-commands, so this edit takes effect.
-  # No Wi-Fi card: the placeholder becomes "wlan-none" (optional, so it's ignored).
+  # Wi-Fi (M6500 2026-10-10): the card can appear late (iwlwifi firmware load took ~35 s), and the old "wlan-none"
+  # placeholder made `netplan apply` fail (netplan-wpa-wlan-none.service not found), aborting the install. So wait up to
+  # 60 s for a wl* interface; if none appears, delete the wifis section from /autoinstall.yaml (subiquity rewrites that
+  # file as dumped YAML, so the edit goes through python3-yaml, which the live session has for cloud-init).
   early-commands:
     # SAFETY (P52s 2026-10-03): with no internal disk visible, "largest disk" chose the 32 GB CIDATA USB stick and
     # installed Ubuntu onto it. Never choose by size again: pick the largest NON-USB disk of at least 60 GB and pin
@@ -58,7 +61,15 @@ autoinstall:
       if [ -z "$D" ]; then echo 'AUTOINSTALL REFUSED: no internal (non-USB) disk >= 60 GB visible; check the drive / BIOS' > /dev/console; exit 1; fi
       sed -i "s#__TARGET_DISK__#/dev/$D#" /autoinstall.yaml
       echo "autoinstall target: /dev/$D" > /dev/console
-    - "IF=$(ls /sys/class/net | grep '^wl' | head -n1); sed -i \"s/__WIFI_IFACE__/${IF:-wlan-none}/\" /autoinstall.yaml"
+    - |
+      IF=""
+      for i in $(seq 1 60); do IF=$(ls /sys/class/net | grep '^wl' | head -n1); [ -n "$IF" ] && break; sleep 1; done
+      if [ -n "$IF" ]; then
+        sed -i "s/__WIFI_IFACE__/$IF/" /autoinstall.yaml; echo "autoinstall: Wi-Fi interface $IF" > /dev/console
+      else
+        python3 -c 'import yaml; p="/autoinstall.yaml"; d=yaml.safe_load(open(p)); a=d.get("autoinstall", d); n=a["network"]; n=n.get("network", n); n.pop("wifis", None); yaml.safe_dump(d, open(p, "w"), sort_keys=False)'
+        echo "autoinstall: no Wi-Fi interface after 60 s; Wi-Fi section removed (wired only)" > /dev/console
+      fi
 
   # Whole internal disk, LVM, root LV uses ALL the space (no 100 GB default; no lvextend needed later).
   # No passphrase. The target is pinned to the internal disk by early-commands, so USB drives are never chosen

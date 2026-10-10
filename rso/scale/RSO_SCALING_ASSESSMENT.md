@@ -55,10 +55,17 @@ Command: for every non-operator packet, first READY -> first CLAIMED (waiting fo
 | C-004 (n=36) | median 391 min, sum 19,539 | median 12, sum 2,610 | median 3, sum 1,982 | 82% |
 | C-009 (n=15) | median 11, sum 359 | median 12, sum 335 | median 39, sum 459 | 71% |
 | C-010 (n=10) | median 5, sum 213 | median 15, sum 183 | median 3, sum 186 | 69% |
+| C-013 (n=10) | median 5, sum 55 | median 32, sum 414 | median 31, sum 312 | 47% |
 
 Reading: C-004 waited hours per packet for operator pokes and seat wake-ups; under the completion directive (C-009,
 C-010) same-seat relaunch and hourly polls cut claim latency 35-80x, and the residual waiting is the polling interval
-(claims landed at :24-:29 past the hour) and the coordinator's integration queue (C-009 median 39 min). The work
+(claims landed at :24-:29 past the hour) and the coordinator's integration queue (C-009 median 39 min). C-013
+(measured 2026-10-10 16:30Z, same command; Palamedes-owned packets excluded) is the first campaign where every seat
+was launched headless the moment its packet went READY: claim latency is ~5 min everywhere, packets are larger
+(median work 32 min), and 85% of the remaining waiting (312 of 367 min) is the INTEGRATION queue, i.e. the
+coordinator's hourly poll. Caveat: that column includes the integrator's own checks (the D1 integration was ~30 min
+of re-analysis and re-certification), so it is an upper bound on pure waiting. The next B2 lever is therefore
+event-driven integration -- an INTEGRATION_READY notice that wakes the integrator -- not cross-host transport. The work
 itself is minutes. A 100x throughput increase therefore needs event-driven dispatch and parallel integration, not
 faster seats.
 

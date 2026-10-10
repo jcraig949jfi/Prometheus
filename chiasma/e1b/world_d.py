@@ -19,6 +19,7 @@ Sampler (latent causes, so cores are instantiated as blocks and also occur parti
     (as PW-H forces c -> f: "core alone suffices" predicts every A/B label); in C, with
     probability exc_permille/1000 one j drawn uniformly gets a whole core with f_j
     absent; in D-F, f_j is independent at 1/2 always.
+    With marker=True (PW-Dm), f_j occurs in A-C ONLY with a whole core_j.
     (A first draft set f_j ONLY with a whole core in A-C. Then f_j implies every core
     literal, consolidation prunes the whole core down to the marker f_j, and a second
     false foundation appears beside the first. That variant, PW-Dm, is kept for a later
@@ -50,6 +51,7 @@ class WorldSpecD:
     law_size: int = 5
     n_new_per: int = 2
     exc_permille: int = 20
+    marker: bool = False        # PW-Dm: in A-C, f_j occurs ONLY with a whole core_j
     phase_len: Tuple[Tuple[str, int], ...] = (("A", 1500), ("B", 1500), ("C", 1000),
                                               ("D", 500), ("E", 1500), ("F", 1500))
     n_probe_random: int = 300
@@ -153,7 +155,11 @@ def _draw_d(r: random.Random, w: WorldD, phase: str) -> int:
                     x |= 1 << p
             whole.append((x & core) == core)
     for j, f in enumerate(w.fs):
-        if r.randrange(2) or (phase in ("A", "B", "C") and whole[j]):
+        coin = r.randrange(2)
+        if phase in ("A", "B", "C") and s.marker:
+            if whole[j]:
+                x |= 1 << f
+        elif coin or (phase in ("A", "B", "C") and whole[j]):
             x |= 1 << f
     return x
 
