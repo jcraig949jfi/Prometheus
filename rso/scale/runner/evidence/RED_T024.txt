@@ -1,0 +1,4 @@
+RED observed 2026-10-10 (T024) before rso/scale/runner/retention.py existed:
+$ python -m unittest rso.scale.runner.tests.test_retention
+ImportError: cannot import name retention from rso.scale.runner  -> Ran 1 test, FAILED (errors=1)
+(the tests and the code were committed together; RED was observed in the working tree, not as a separate commit)

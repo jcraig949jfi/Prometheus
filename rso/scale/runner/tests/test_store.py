@@ -46,6 +46,24 @@ class TestObjectStore(unittest.TestCase):
         self.assertEqual([r["n"] for r in rows], [1, 2])
         self.assertEqual(torn, 1)
 
+    def test_filelock_contended_by_threads_does_not_raise(self):
+        """Windows: removing the lock file while a waiter has it open (or opening one mid-delete) is
+        PermissionError; contention must be waited out, not raised (found by the T025 concurrent-fire test)."""
+        import threading
+        p, errs = os.path.join(self.d, "l.lock"), []
+
+        def go():
+            try:
+                for _ in range(150):
+                    with S.FileLock(p):
+                        pass
+            except Exception as e:
+                errs.append(repr(e))
+        ths = [threading.Thread(target=go) for _ in range(4)]
+        [t.start() for t in ths]
+        [t.join(120) for t in ths]
+        self.assertEqual(errs, [])
+
 
 if __name__ == "__main__":
     unittest.main()

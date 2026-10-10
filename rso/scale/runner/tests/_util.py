@@ -27,13 +27,14 @@ def aether_params(**over):
 class TempRun:
     """A run directory that is removed afterwards."""
 
-    def __init__(self, runtime=TOY, params=None, partitions=2, epochs=4, replay_every=10, name="t"):
+    def __init__(self, runtime=TOY, params=None, partitions=2, epochs=4, replay_every=10, name="t", retention=None):
         self.tmp = tempfile.mkdtemp(prefix="rso_runner_")
         self.run_dir = os.path.join(self.tmp, "run")
         params = params if params is not None else toy_params()
         parts = [{"partition_id": "p{}".format(i), "params": {"seed": 100 + i}} for i in range(partitions)]
         self.manifest = RUN.create_run(self.run_dir, name=name, runtime=runtime, params=params,
-                                       partitions=parts, epochs=epochs, replay_every=replay_every)
+                                       partitions=parts, epochs=epochs, replay_every=replay_every,
+                                       **({"retention": retention} if retention else {}))
 
     def cleanup(self):
         shutil.rmtree(self.tmp, ignore_errors=True)

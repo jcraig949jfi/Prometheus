@@ -19,6 +19,7 @@ from moonshot.epoch import model as M
 from rso.scale.runner import engine as E
 from rso.scale.runner import lease as L
 from rso.scale.runner import resume as RS
+from rso.scale.runner import retention as RET
 from rso.scale.runner import run as RUN
 
 EXIT = {"COMPLETE": 0, "PARTIAL": 0, "LEASE_HELD": 3, "HALTED": 4, "CONTESTED": 4, "DISAGREEMENT": 4,
@@ -69,6 +70,15 @@ def cpu_charged(run_dir, manifest):
     their last PROGRESS row."""
     from rso.scale.runner import account as A
     return A.cpu_totals(run_dir, manifest)["total_cpu_s"]
+
+
+def _prune(run_dir, chain_id):
+    """Apply the manifest's checkpoint retention after a head advance. A failed pass (a file another process
+    holds open) loses nothing and is retried at the next advance, so it never fails the epoch."""
+    try:
+        RET.prune(run_dir)
+    except OSError as e:
+        RUN.event(run_dir, chain_id, {"kind": "PRUNE_FAILED", "error": repr(e), "at_utc": RUN.utc_now()})
 
 
 def work(run_dir, chain_id, *, max_epochs=None, crash_after_ticks=None, ttl_s=L.DEFAULT_TTL_S, force_replay=False):
@@ -125,6 +135,7 @@ def work(run_dir, chain_id, *, max_epochs=None, crash_after_ticks=None, ttl_s=L.
             if outcome not in ("PUBLISHED", "DUPLICATE"):
                 return {"status": outcome, "resume": verdict}
             published += 1
+            _prune(run_dir, chain_id)
             inp = res.checkpoint
             h = RUN.head(run_dir, chain_id)
         return {"status": "COMPLETE" if h["head_index"] == h["epochs"] else "PARTIAL", "resume": verdict,

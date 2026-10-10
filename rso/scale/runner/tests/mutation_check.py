@@ -14,6 +14,10 @@ MUTS = [
  ("rso/scale/runner/store.py", 'if hashlib.sha256(data).hexdigest() != sha:', 'if False:', "store: no verify on read"),
  ("rso/scale/runner/aether.py", 'tick += 1', 'tick += 0', "aether: tick not advanced"),
  ("rso/scale/runner/worker.py", 'expected_generation=h["generation"]', 'expected_generation=0', "worker: stale expected generation"),
+ ("rso/scale/runner/retention.py", 'keep.update(range(max(0, head - policy["keep_last"] + 1), head + 1))', 'pass', "retention: drop last-M window"),
+ ("rso/scale/runner/retention.py", 'keep.update(_contest_epochs(run_dir, chain_id))', 'pass', "retention: ignore contests"),
+ ("rso/scale/runner/retention.py", 'if sha in keep_shas or sha in seen', 'if sha in seen', "retention: delete shared/kept objects"),
+ ("rso/scale/runner/retention.py", 'if k % policy["keep_every"] == 0', 'if False', "retention: drop every-Kth"),
  ("rso/scale/runner/supervisor.py", 'if holder is not None:', 'if False:', "supervisor: ignores live orphan lease"),
 ]
 out=[]

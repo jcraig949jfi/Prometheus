@@ -1,0 +1,115 @@
+{
+ "criteria": {
+  "nothing_running_after_kill": true,
+  "first_fire_launches": true,
+  "later_fires_are_noops": true,
+  "one_supervisor_after_kill": true,
+  "completed_by_scheduler": true,
+  "fire_after_completion_noop": true,
+  "interrupted_accounted": true,
+  "digest_equals_control": true
+ },
+ "failed": [],
+ "killed_pids": [
+  8680,
+  14372
+ ],
+ "down_check": {
+  "supervisor_live": false,
+  "live_leases": {}
+ },
+ "heads_at_kill": {
+  "relaunch-fire-p0": {
+   "chain_id": "relaunch-fire-p0",
+   "epochs": 3,
+   "generation": 1,
+   "head_checkpoint_sha256": "078654952d0c7c187da8261c33b489000ce7a21fec625b22072134f25aca5bf6",
+   "head_epoch_digest": "b76d6f511b7c11da61aeb039bbc8975d3ace49ae171fbc39f1524dc1a5abdfe5",
+   "head_index": 1,
+   "head_manifest_sha256": "2a48e9356d5a245d1e1e63b01b5e0e4347645120084d0727ad40de3ddf3e859c",
+   "state": "OPEN"
+  },
+  "relaunch-fire-p1": {
+   "chain_id": "relaunch-fire-p1",
+   "epochs": 3,
+   "generation": 0,
+   "head_checkpoint_sha256": "9eae50e685e3314ef95a461990f90f191b6b8578b00aba0e0b6610027982a233",
+   "head_epoch_digest": null,
+   "head_index": 0,
+   "head_manifest_sha256": null,
+   "state": "OPEN"
+  }
+ },
+ "fires": [
+  {
+   "fire": 1,
+   "rc": 0,
+   "action": "LAUNCHED",
+   "wall_s": 3.291,
+   "at_utc": "2026-10-10T10:16:47.334721Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 2,
+   "rc": 0,
+   "action": "RUNNING",
+   "wall_s": 0.495,
+   "at_utc": "2026-10-10T10:16:48.103711Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 3,
+   "rc": 0,
+   "action": "RUNNING",
+   "wall_s": 0.491,
+   "at_utc": "2026-10-10T10:16:48.870145Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 4,
+   "rc": 0,
+   "action": "RUNNING",
+   "wall_s": 0.534,
+   "at_utc": "2026-10-10T10:16:50.688699Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 5,
+   "rc": 0,
+   "action": "RUNNING",
+   "wall_s": 0.876,
+   "at_utc": "2026-10-10T10:16:53.954254Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 6,
+   "rc": 0,
+   "action": "RUNNING",
+   "wall_s": 0.585,
+   "at_utc": "2026-10-10T10:16:54.820965Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 7,
+   "rc": 0,
+   "action": "COMPLETE",
+   "wall_s": 0.502,
+   "at_utc": "2026-10-10T10:16:56.639124Z",
+   "stderr_tail": ""
+  },
+  {
+   "fire": 8,
+   "rc": 0,
+   "action": "COMPLETE",
+   "wall_s": 0.445,
+   "at_utc": "2026-10-10T10:16:57.106111Z",
+   "stderr_tail": ""
+  }
+ ],
+ "peak_runner_processes_sampled": 2,
+ "supervisor_starts_after_kill": 1,
+ "run_digest": "42bd007cd7014e66d620ee3e21a9b9fa601b55f9494eb0c936f770afeac25220",
+ "control_digest": "42bd007cd7014e66d620ee3e21a9b9fa601b55f9494eb0c936f770afeac25220",
+ "interval_s": 2.0,
+ "interrupted": 1
+}
