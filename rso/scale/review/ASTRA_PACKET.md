@@ -49,9 +49,15 @@ intelligently.
   challenge    7 of 7 independent adversarial challenges found real
                defects; each costs ~1.5-2.2 reviewer-model hours, one
                repair round, 4-10 h wall.
-  fleet        Fabric (Postgres task queue): 0 live of 53 registered
-               workers; 12 tasks ever completed, 38 cancelled. Lease plane,
-               custody registry and blob store verified operational today.
+  fleet        Fabric (Postgres task queue): no standing workers (0 live
+               of 61 registered between windows). A sibling campaign
+               (C-012) ran bounded workers on two Ubuntu nodes through it
+               today: 1,504 benchmark epochs, 12/12 native-world epochs
+               validated; ~0.10 s coordination per epoch at 3-60 s epochs;
+               1.6% execution wasted under 3 induced worker kills. Its
+               owner leans to PARK it: the only native workload is 3-4
+               orders of magnitude below its envelope. Lease plane,
+               custody registry and blob store verified operational.
                Ubuntu nodes: one smoke-test receipt in their history. RunPod
                launcher: >40 historical receipts, every pod observed
                terminated; its budget check is a client-side estimate, not
@@ -110,7 +116,9 @@ intelligently.
   D1 Build no scheduler; build durable run-records and let any worker or
      seat resume. (Risk: we are re-inventing a scheduler badly.)
   D2 Reuse the sibling campaign's PostgreSQL + queue transport instead of
-     a new one. (Risk: coupling the Observatory to one engine's plumbing.)
+     a new one. (Risk: coupling the Observatory to one engine's plumbing;
+     and, as that campaign's owner argues for itself, building cross-host
+     transport ahead of any workload that exceeds one host.)
   D3 Keep Git for manifests, hashes, results and provenance only; raw
      evidence in a retained store. (Risk: a store we do not yet have.)
   D4 Reserve independent challenges for promoted claims. (Risk: defects in

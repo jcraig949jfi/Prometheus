@@ -200,3 +200,61 @@ about 54 cells depend on 3 abstractions. One shared vertex per abstraction would
 a vertex in each dependent cell, against literal pruning's 8-9% of P. It is the only
 remaining way for compression to pay without destroying knowledge. Next design item:
 HADES-28.
+
+## 9. dev-4: the factoring lever (HADES-28; 480 runs, 0.58 CPU core-hours; chiasma/runs/e1b-dev-4/)
+
+factor.py stores premises with shared abstraction vertices: Re-Pair over the multiset
+of premises; a rule costs 3 bytes and is kept only if 4 or more premises use it. It is
+LOSSLESS by construction. Predictions, welds and retractions use the flat masks; only
+the byte ruler changes. Arms O0F, O3WF, O4LWF are O0, O3W, O4LW with factored storage.
+
+Checks: uncapped endpoints identical to the flat twin (PW-H and PW-H3, all three pairs);
+every factored premise expands back to its flat mask (hand set and a full PW-H3 run);
+the factored byte ruler matches a hand count. Mutants 19/19 killed. First pass 16/19:
+E16 (rules cost nothing) and E19 (substitution into premises that lack one vertex)
+SURVIVED, and E17 did not apply. The expansion and hand-count tests were added after
+that pass. Six dev-4 receipts were re-run after the factor.py refactor; all six
+reproduce byte for byte.
+
+Ceiling before running (dev seed 910001, uncapped): factoring saves 26 bytes of P
+before the shock on PW-H (314 -> 288, 8%) and 43 on PW-H3 (548 -> 505), with 4-5 rules.
+Y = c & f is two literals, and per-cell overhead (length and support counter) plus the
+implication table make up most of P, so there is little shared structure to factor in
+PW worlds.
+
+Wins out of 10 on err_CDE under the binding budget (pevict), caps tightest to loosest:
+
+| world | O0F>O0 | O3WF>O3W | O4LWF>O4LW | O4LWF>O3WF |
+|---|---|---|---|---|
+| R21 240/270/300/330 | 10/10/7/5 | 9/10/8/5 | 10/10/10/6 | 2/0/7/6 |
+| R11 240/270/300/330 | 10/9/5/8 | 10/10/4/6 | 9/10/9/8 | 1/0/5/6 |
+| R12 240/270/300/330 | 10/10/3/2 | 10/10/2/3 | 10/10/5/6 | 2/0/5/6 |
+| H3 420/470/520/570 | 10/10/9/6 | 9/10/9/4 | 10/10/9/9 | 2/1/4/4 |
+
+Reading (dev, sizing):
+1. Lossless factoring pays wherever the budget binds hard: 9-10/10 over the flat twin
+   at the two tightest caps in every world, for every arm. It is the only compression
+   in CHIASMA so far that saves bytes without changing what the organism knows.
+2. Its saving is small, so it pays only in the same heavy-loss regime as dev-3.
+3. Provenance repair still loses to plain compression where the budget binds hard
+   (O4LWF beats O3WF at most 2/10 at the two tightest caps). Factoring does not rescue
+   the revision half of the dual mesh.
+
+## 10. Conclusion of the E1b dev series (DEV_NOTES s3-s9; AUTHOR_TESTED, dev seeds)
+
+- E1's "compression" was premature commitment. It enlarged P (s3).
+- On PW worlds, every real compression (literal pruning without freezing, lossless
+  factoring) saves at most about 8-9% of P. It buys accuracy only when the budget is so
+  tight that every organism has lost most of its knowledge.
+- Provenance repair, the revision half of the charter's O4, helps only when bytes are
+  free. Then the organism that never compresses (O0) is as good or better wherever
+  true dependents are common. Repair loses whenever bytes are scarce.
+- No discrete CHIASMA arm tested here is best in any regime. The charter's s7
+  condition for evolution is not met, and these worlds cannot meet it.
+
+What would have to change for CHIASMA's premise to be testable at all: worlds whose
+abstractions are deep and widely shared (Y over many literals, reused by many cells,
+nested), so that shared structure is a large fraction of the representation and a
+compressing organism can keep its knowledge under a budget that ruins a flat one. That
+is a new world family (PW-D, "deep abstractions"), not a new organism. It is the seat's
+REVISE default (HADES-29, dev design first), unless the operator rules KILL.

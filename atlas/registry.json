@@ -1,6 +1,6 @@
 {
   "schema": "atlas.registry.v1",
-  "currency": "2026-09-19",
+  "currency": "2026-10-10 (Atlas[m1-073da007] catch-up: fleet hosts, workgraph/theseus/aether/rso/chiasma engines)",
   "note": "Reference data the harvesters load into atlas.host and atlas.engine. Edit here, then run `python -m atlas harvest reference`. Sources: comms/environments.json, roles/Atlas/SOURCES.md.",
   "hosts": [
     {
@@ -35,7 +35,7 @@
     {
       "host_id": "M3",
       "hostname": "GANDALF",
-      "lan_ip": null,
+      "lan_ip": "192.168.1.161",
       "aliases": [
         "m3",
         "gandalf",
@@ -46,13 +46,108 @@
     },
     {
       "host_id": "M4",
-      "hostname": null,
-      "lan_ip": null,
+      "hostname": "HARRY1",
+      "lan_ip": "192.168.1.157",
       "aliases": [
+        "HARRY1",
+        "harry1",
         "m4"
       ],
-      "roles": "Aphrodite",
-      "evidence": "INHERITANCE.md Aphrodite row (created on M4)"
+      "roles": "Aphrodite seat + engine pools; RSO builder lanes (Argus, Pallas, Eupalamus, Palamedes)",
+      "evidence": "INHERITANCE.md Aphrodite row (created on M4); HARRY1 (M4) row of infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "BUCKKEEP",
+      "hostname": "BUCKKEEP",
+      "lan_ip": "192.168.1.162",
+      "aliases": [
+        "BUCKKEEP",
+        "buckkeep"
+      ],
+      "roles": "Aether seat (Nestor NPE-48h also ran here)",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "DESKTOP-RUAPVAI",
+      "hostname": "DESKTOP-RUAPVAI",
+      "lan_ip": "192.168.1.160",
+      "aliases": [
+        "DESKTOP-RUAPVAI",
+        "desktop-ruapvai"
+      ],
+      "roles": "Theseus seat",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ELSA",
+      "hostname": "ELSA",
+      "lan_ip": "192.168.1.163",
+      "aliases": [
+        "ELSA",
+        "elsa"
+      ],
+      "roles": "Achilles seat",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu001",
+      "hostname": "ubu001",
+      "lan_ip": null,
+      "aliases": [
+        "ubu001"
+      ],
+      "roles": "ubuntu worker",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu002",
+      "hostname": "ubu002",
+      "lan_ip": null,
+      "aliases": [
+        "ubu002"
+      ],
+      "roles": "ubuntu worker",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu003",
+      "hostname": "ubu003",
+      "lan_ip": null,
+      "aliases": [
+        "ubu003"
+      ],
+      "roles": "ubuntu worker",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu004",
+      "hostname": "ubu004",
+      "lan_ip": null,
+      "aliases": [
+        "ubu004"
+      ],
+      "roles": "ubuntu worker",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu005",
+      "hostname": "ubu005",
+      "lan_ip": "192.168.1.222",
+      "aliases": [
+        "ubu005"
+      ],
+      "roles": "ubuntu worker (Bellerophon BEL-48H)",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
+    },
+    {
+      "host_id": "ubu006",
+      "hostname": "ubu006",
+      "lan_ip": "192.168.1.225",
+      "aliases": [
+        "ubu006"
+      ],
+      "roles": "ubuntu worker",
+      "evidence": "infra/FLEET_HOSTS.md (2026-10-10), read by Atlas[m1-073da007]"
     }
   ],
   "engines": [
@@ -268,6 +363,83 @@
       "home_host": null,
       "status": "UNKNOWN",
       "notes": "observed 2026-09-24 on main (0e89f7104: charter + substrate design spec PTE-SUB-1/PTE-OPS-1); no runs indexed"
+    },
+    {
+      "engine_id": "workgraph",
+      "name": "Program workgraph (campaign / task / receipt)",
+      "kind": "RUNNER",
+      "code_paths": [
+        "workgraph",
+        "ops/campaigns"
+      ],
+      "owner_seats": [
+        "Palamedes"
+      ],
+      "home_host": null,
+      "status": "LIVE",
+      "notes": "registered 2026-10-10 by Atlas[m1-073da007]: schemas prometheus.workgraph.*; C-001..C-015 on main; tasks are units of work, statuses are process states"
+    },
+    {
+      "engine_id": "theseus",
+      "name": "Theseus concept tensor / synthetic ancestry ecology",
+      "kind": "ENGINE",
+      "code_paths": [
+        "theseus",
+        "roles/Theseus"
+      ],
+      "owner_seats": [
+        "Theseus"
+      ],
+      "home_host": "DESKTOP-RUAPVAI",
+      "status": "LIVE",
+      "notes": "registered 2026-10-10: charter 2026-09-30; runs theseus/runs, preregs roles/Theseus/prereg"
+    },
+    {
+      "engine_id": "aether",
+      "name": "Aether GPU-native artificial physics",
+      "kind": "ENGINE",
+      "code_paths": [
+        "Aether",
+        "roles/Aether"
+      ],
+      "owner_seats": [
+        "Aether"
+      ],
+      "home_host": "BUCKKEEP",
+      "status": "LIVE",
+      "notes": "registered 2026-10-10: first commit 2026-09-20; V2-B from 2026-10-04; production also on SPECTREX5 and RunPod"
+    },
+    {
+      "engine_id": "rso",
+      "name": "RSO evidence plane (receipts, binding, witness)",
+      "kind": "HARNESS",
+      "code_paths": [
+        "rso"
+      ],
+      "owner_seats": [
+        "Palamedes",
+        "Pallas",
+        "Argus",
+        "Cadmus",
+        "Eupalamus"
+      ],
+      "home_host": null,
+      "status": "LIVE",
+      "notes": "registered 2026-10-10: built through workgraph campaigns C-004/C-009/C-010/C-013; ledgers not yet harvested"
+    },
+    {
+      "engine_id": "chiasma",
+      "name": "Chiasma",
+      "kind": "ENGINE",
+      "code_paths": [
+        "chiasma"
+      ],
+      "owner_seats": [
+        "Hades"
+      ],
+      "home_host": null,
+      "status": "UNKNOWN",
+      "notes": "registered 2026-10-10: E1 840 runs, VERDICT.json primary FAIL; not yet harvested"
     }
   ],
   "local_roots": [
@@ -448,6 +620,15 @@
       "M1"
     ],
     "cosmos": [
+      "M1"
+    ],
+    "workgraph": [
+      "M1"
+    ],
+    "theseus": [
+      "M1"
+    ],
+    "aether": [
       "M1"
     ]
   }

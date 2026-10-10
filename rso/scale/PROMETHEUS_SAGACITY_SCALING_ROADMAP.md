@@ -169,7 +169,9 @@ architecture, development, the world, search infrastructure and the evaluator su
   checkpoint retention (T024) bounds storage; an idempotent relaunch entry (T025) removes the "someone must run launch"
   dependency once the operator chooses to install a host scheduler task (documented, deliberately not installed).
   Missing for seven days on the fleet: cross-host transport (P-4: port onto Themis's C-012 NF transport; depends on its
-  large-object fetch path), a live worker plane (Fabric 0 live workers), and an engine save/load pair -- only Aether's
+  large-object fetch path), a standing worker plane (Fabric
+  carries work only inside its owner's windows -- C-012 published 1,504 benchmark and 12 native-world epochs through it
+  on 2026-10-10 -- and is otherwise idle, 0 live of 61 at 12:40Z), and an engine save/load pair -- only Aether's
   kernel, z80atlas (pickle) and Proteus checkpoint today without engine edits (CHECKPOINT_REPLAY_SURVEY.md).
 
 ## 12. Open disagreements (preserved, not synthesised away)
@@ -187,6 +189,17 @@ architecture, development, the world, search infrastructure and the evaluator su
 
   next engineering investment (provisional): port the now-demonstrated session-independent runner onto Themis's C-012
     NF transport (cross-host, P-4) TOGETHER WITH a qualified-component registry -- relieves assessment B2 across hosts
-    and B1, is small relative to the alternatives, and every later horizon depends on it.
+    and B1, is small relative to the alternatives, and every later horizon depends on it. Evidence since v1: C-012's
+    owner reports N2 and N5 exist, N4 measured (~0.10 s coordination per epoch; 1.6% wasted work under induced kills),
+    N1 (out-of-database checkpoint refs) and N3 (run_tag) not built but small (comms #2043/#2044). Themis's C-012
+    review packet (moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md s7) lists option D -- offer that path to the
+    Observatory -- but LEANS A (park: "the only native workload sits three to four orders of magnitude below the
+    envelope; building more now would be engineering ahead of demand"). The same argument bears on P-4 here and is
+    NOT answered yet: this program's measured workloads are tens of CPU-minutes per campaign (s5 of the assessment),
+    D1 is ~3 core-hours on one host, and B2's waiting is between SEATS, not between hosts. If nothing in Horizon I
+    needs a second host, the cheaper investment that attacks B2 directly is the qualified-component registry plus
+    event-driven dispatch of READY packets, with P-4 deferred until a registered workload exceeds one host. To be
+    decided in RECOMMENDATION.md with D1's measured cost in hand; recorded here as an open disagreement with my own
+    v1 provisional choice.
   next scientific experiment (provisional): D1, then the same frozen cartography on one audited desert (Ananke FLIP),
     routed to its owner.

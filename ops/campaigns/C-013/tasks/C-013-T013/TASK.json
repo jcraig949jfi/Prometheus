@@ -38,7 +38,7 @@
     "rso/reach/FROZEN_D1.json"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -81,6 +81,18 @@
       "by": "Argus[harry1-91546d7d]",
       "at_utc": "2026-10-10T11:56:06Z",
       "note": "branch argus/c013-t013 48b6a425b; receipt A-001; FREEZE_D1 v1.0.1 8ddaa4f19; 80 tests green"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T12:31:39Z",
+      "note": "merged argus/c013-t013 (ad4493ce4); FROZEN_D1 v1.0.1 re-verified 48/48 (LF-normalised sha256), PREREGISTRATION v1.0.1 sha256 4e3c10a0, A1 wording-only (no executed file changed; only tests/test_repair_v101.py + repair_v101/ added); no rso/reach/runs/ exists; red_rows.jsonl E1/E3/E4/M80 RED, baseline GREEN; 80 passed in the venv (217 s); integrator mutation (certify.py:60 oracle_agrees drops the sealed-block comparison) killed by test_certify::test_oracle_disagreement_voids_the_certificate"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T12:31:39Z",
+      "note": "repair round complete; D1 v1.0.1 is the confirmatory freeze for C-013-T012"
     }
   ],
   "authority": "operator ruling 2026-10-10 s4 (one bounded repair round)",

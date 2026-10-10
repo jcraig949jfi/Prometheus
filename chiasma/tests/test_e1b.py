@@ -80,6 +80,11 @@ class TestWorldH3(unittest.TestCase):
         self.assertEqual(n, 4 * (24 + 24 + 6))
 
 
+def Organism_flat_P(org):
+    from chiasma.organisms import Organism
+    return Organism.nbytes(org)["P"]
+
+
 def _consolidated_cell(arm: str):
     """A cell over {0,1,2} with literal 0 implying 1 and 2 in every object seen."""
     org = arms.make(arm, 8, None, 0)
@@ -160,6 +165,49 @@ class TestE1bArms(unittest.TestCase):
             self.assertLessEqual(bound["endpoints"]["bytes_peak"], 240, arm)
             self.assertGreater(bound["summary"]["events"]["p_evicted"], 0, arm)
             self.assertTrue(bound["pevict"])
+
+    def test_factoring_hand_example(self):
+        from chiasma.e1b.factor import repair
+        a, b, c, d, e, f = [1 << i for i in range(6)]
+        self.assertEqual(repair([a | b | c, a | b | d, a | b | e, a | b | f])[:2], (8, 1))   # 12 ids -> 8 + one rule
+        self.assertEqual(repair([a | b | c, a | b | d, a | b | e])[:2], (9, 0))            # 3 uses do not pay
+        self.assertEqual(repair([a | b | c | d] * 4)[:2], (4, 3))                          # nested rules
+
+    def test_factoring_expands_back_to_every_premise(self):
+        from chiasma.e1b.factor import expand, factorize
+        a, b, c, d, e, f, g = [1 << i for i in range(7)]
+        prem = [a | b | c, a | b | d, a | b | e, a | b | f, a | g, b | g, a | b | c | d] * 2
+        seqs, rules, _ops = factorize(prem)
+        self.assertTrue(rules)
+        self.assertEqual([expand(s, rules) for s in seqs], prem)
+        w = make_world_h3(SMALL, 9)
+        r = run_e1b(w, "O0", None)
+        org = arms.make("O0F", w.spec.m, None)
+        for _t, ph, x in stream_h3(w):
+            org.observe(x, w.observe(x, ph))
+        prem = [c_.premise for cs in org.cells.values() for c_ in cs]
+        seqs, rules, _ops = factorize(prem)
+        self.assertEqual([expand(s, rules) for s in seqs], prem)
+
+    def test_factored_byte_ruler_by_hand(self):
+        org = arms.make("O0F", 8, None)
+        for i, name in enumerate(("T0", "T1", "T2", "T3")):
+            org.tid[name] = i
+            org.cells[name] = [Cell(0b11 | (1 << (2 + i)), 0)]   # {0,1,2+i}
+        imp = 8 * 1
+        flat_cells = 4 * (1 + 3 + 2)                             # length + 3 ids + support
+        fac_cells = 4 * (1 + 2 + 2) + 3                          # (0,1) -> one rule
+        self.assertEqual(org.nbytes()["P"], imp + 4 + fac_cells)
+        self.assertEqual(Organism_flat_P(org), imp + 4 + flat_cells)
+
+    def test_factoring_is_lossless_and_smaller(self):
+        for w in (make_world(WorldSpec(n_ydep=12, n_decoy=12), 900003), make_world_h3(SMALL, 7)):
+            for flat, fac in (("O0", "O0F"), ("O3W", "O3WF"), ("O4LW", "O4LWF")):
+                a, b = run_e1b(w, flat, None), run_e1b(w, fac, None)
+                for k in ("err_CDE", "collateral_CDE", "recovery_obs", "insert_F", "bet_B"):
+                    self.assertEqual(a["endpoints"][k], b["endpoints"][k], (flat, k))
+                self.assertLess(b["endpoints"]["bytes_end"]["B"]["P"], a["endpoints"]["bytes_end"]["B"]["P"], flat)
+                self.assertGreater(b["summary"]["events"]["rules"], 0, fac)
 
     def test_receipts_refuse_floats_and_reproduce(self):
         w = make_world_h3(SMALL, 3)

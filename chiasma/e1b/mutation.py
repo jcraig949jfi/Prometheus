@@ -52,6 +52,12 @@ MUTANTS = [
      "            anchor = c.premise if c.consolidated else c.anchor", "            anchor = c.anchor if c.anchor is not None else 0"),
     ("E15 binding budget evicts nothing", "e1b/arms.py",
      "            self.cells[vname].remove(victim)\n", "            break\n"),
+    ("E16 factoring rules cost nothing", "e1b/factor.py", "RULE_BYTES = 3", "RULE_BYTES = 0"),
+    ("E17 factoring accepts rules that do not pay", "e1b/factor.py", "MIN_USES = 4\nRULE_BYTES", "MIN_USES = 2\nRULE_BYTES"),
+    ("E18 factored arm ignores the factor flag", "e1b/arms.py",
+     "        self.factor = bool(self.ARMS[arm].get(\"factor\"))", "        self.factor = False"),
+    ("E19 factoring substitutes premises lacking one vertex", "e1b/factor.py",
+     "            if a in s and b in s:", "            if a in s or b in s:"),
 ]
 
 

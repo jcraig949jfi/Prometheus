@@ -89,8 +89,11 @@ wall time. At that rate, Q3 review alone caps the Observatory near one qualified
 ## 5. Resource utilisation (MEASURED)
 
 CPU: < 1.6 CPU-hours across all three campaigns; the fleet (six ubu nodes, M1/M2 GPUs) was unused by them. Every
-headless seat ran on harry1 (thermally limited). Fabric: 0 live workers of 53 registered (read-only check 2026-10-10;
-roles/Palamedes/comms/2026-10-10_fabric_defect_packet.md). GPU: not used; no workload in these campaigns would have
+headless seat ran on harry1 (thermally limited). Fabric: 0 live workers of 53 registered at 06:50Z (read-only check 2026-10-10;
+roles/Palamedes/comms/2026-10-10_fabric_defect_packet.md). Correction 12:40Z: Fabric is IDLE BETWEEN ITS OWNER'S
+WINDOWS, not dead -- Themis's C-012 ran bounded ubu workers on the canonical queue today (T004 R1: 1,504 published
+epochs; T007: 12/12 native-world epochs validated; comms #2039-#2042); at 12:40Z 61 agents are registered, 0 live,
+last seen 11:24Z. No standing worker plane exists for the Observatory; workers exist when a campaign launches them. GPU: not used; no workload in these campaigns would have
 benefited (single-organism Ares rollouts at 0.08 CPU-s per 64x16 episodes).
 
 ## 6. Operator dependency (MEASURED)
@@ -114,7 +117,11 @@ operator dependency that remains is the right kind: authorising spend, scope and
      launching session killed mid-epoch, resumed by a DIFFERENT session from one command line, final digest equal to
      the uninterrupted control (rso/scale/runner/FIRE_TEST.md); retention (T024) and an idempotent relaunch entry
      tested with a simulated scheduler (T025) followed. Remaining: cross-host transport (port onto Themis's C-012
-     NF transport, P-4) and a live worker plane (Fabric: 0 live workers; Themis's bounded workers ran C-012-T003).
+     NF transport, P-4) and a standing worker plane (Fabric has workers only inside its owner's windows; Themis's bounded workers ran
+     C-012-T003/T004/T007). Themis has answered the architecture's N1-N5 (comms #2043/#2044): N2 charging semantics and
+     N5 replay-validated resume-equivalence EXIST; N4 MEASURED (~0.10 s coordination per epoch at 3-60 s epochs; 1.6%
+     wasted execution under 3 induced worker kills); N1 out-of-database checkpoint refs and N3 run_tag NOT BUILT
+     (small, proposed). That makes P-4 a port onto measured plumbing, not a new transport.
   B3 scarce discriminating experiments -> MAKE TARGETS, NOT RUNS: reachability cartography on existing deserts with
      known constructions (C-013 D1), and the World-Demand Foundry admission ladder (reference solver succeeds, specified
      simpler alternatives fail). Smallest step: D1 itself, then one Foundry world with a qualified admission ladder.
