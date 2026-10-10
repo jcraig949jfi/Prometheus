@@ -165,8 +165,36 @@ does not suffice for competence to bias the RATE of encounters.
 ## 11. Atlas-ready cross-pollination packet
 
 Packets A1 (persistence needs direction) and A2 (endogenous priority; pair-distributed function) are in
-FINDINGS_FH48.md. A3 is below. [filled at close]
+FINDINGS_FH48.md. A3 consolidates the window.
+
+### ATLAS PACKET A3 (window consolidation)
+
+| field | value |
+|---|---|
+| barrier before | function is transmitted but not persistent: a neutral passenger in a first-mover copy race, drained by a one-way mutational leak |
+| intervention | competence-coupled copy DIRECTION, three forms: offense (DIR), defense (VETO), and endogenous earned priority (ONTAPE) |
+| barrier after | persistence and selection on function: PRESENT (two confirms, two worlds). Integration: partial (tape-live rewiring; pair-distributed neutral forms; a modest robustness gain at high mutation). Re-discovery: 1 step. De novo: blocked at the copier |
+| primitive | heredity-asymmetry coupling, not encounter-rate coupling. Any engine whose replication is a pairwise race should transfer it. |
+| warning for other engines | a ruler must match where selection acts. Offline and in-context function DIVERGE once selection reads in-context behavior (F8, DEF-FH-4). |
+| generalizes | across the ffa6 and 7ae3 pair-tape worlds; untested beyond pair tapes or this task |
+| neighbors | multi-founder architecture confirm; function causally coupled INTO copying (the integration rung); copier emergence de novo |
 
 ## 12. Highest-value next NPE direction
 
-[filled at close]
+**1. Make function causally necessary for copying: the INTEGRATION rung.**
+- Everything this window shows is that the task stays a separable module held by an external or earned priority
+  rule. Nothing gives a selective reason to fuse it with the copier.
+- The smallest next world couples a task output INTO the copy machinery. For example, the copy length or destination
+  is read from the register the task answer leaves.
+- Then ask whether lineages integrate the two: shared bytes, robustness of the joint unit, ablation of the planted
+  routine.
+
+**2. A multi-founder architecture CONFIRM.**
+- k founders of each architecture, which removes C3's establishment lottery.
+- It would promote or kill "selection on function selects robust implementations".
+
+**3. Copier emergence de novo, the first rung.** Combine the ONTAPE world with the regime where runaways previously
+arose (QD pressure, C-A3), so that re-discovery can be tested from scratch rather than from a planted copier.
+
+**Recommendation:** item 1 first. It is the only route seen this window that could move "architectural integration"
+from partial to present.
