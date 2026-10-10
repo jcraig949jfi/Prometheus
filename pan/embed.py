@@ -37,7 +37,8 @@ def _model(name):
     if name not in _LOADED:
         from sentence_transformers import SentenceTransformer
         import torch
-        dev = "cuda" if torch.cuda.is_available() else "cpu"
+        # PAN_EMBED_DEVICE=cpu keeps routine refreshes off a GPU someone else is using (operator, 2026-10-10)
+        dev = os.environ.get("PAN_EMBED_DEVICE") or ("cuda" if torch.cuda.is_available() else "cpu")
         kw = {}
         if dev == "cuda":
             kw["model_kwargs"] = {"torch_dtype": torch.float16}
