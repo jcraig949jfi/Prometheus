@@ -1,11 +1,11 @@
 # Pan TODO
 
-Currency: 2026-10-09T22:42Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-10T04:03Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),
       then report + review packet
-- [ ] Status report 4 by ~2026-10-10T03:57Z
+- [ ] Status report 5 by ~2026-10-10T10:03Z
 - [ ] Daily intake + digest (next ~2026-10-10T14:30Z)
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
 - [ ] Act on operator answers (QUESTIONS.md Q-001..Q-010) when they arrive
