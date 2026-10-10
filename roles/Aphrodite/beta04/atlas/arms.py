@@ -5,8 +5,8 @@ Unified driver (every arm). The run is a sequence of BURSTS. A burst starts with
 TFS-1 programs this is a genotype copy, never an environment-state restore) and then makes L = `burst` mutation steps as
 a neutral chain: child = mutate(current); the child is evaluated on ALL dev examples (1 search charge); the chain
 moves to the child iff it is not all-FAIL and its credit (channel `credit`, default exact dev credit) >= the current
-one. Restore frequency is therefore
-exactly ceil(charges / L) for every arm with the same L (A-CHAIN: a single restore).
+one. Restore frequency is therefore exactly ceil((charges - starts) / L) for every arm with the same L (A-CHAIN: a single
+restore); the start programs are evaluated (and charged) once at the beginning of every arm.
 
 Arms (factor changed relative to the row above it in brackets):
   A-ENUM        ordinary TFS-1 keyed enumeration (measure.hitting_cost), no archive
@@ -279,9 +279,8 @@ class Search:
         if self.burst_left <= 0:
             self._restore()
         child = self.mut.mutate(self.cur[0], self.T, self.rng)
-        if child is None:
+        if child is None:                      # not evaluated, not charged, does not consume a burst slot
             self.rejected += 1
-            self.burst_left -= 1
             if self.rejected > 100 * (self.budget + 1):
                 self.done = True
             return
