@@ -8,6 +8,7 @@
     verify <run_dir> <chain_id>             the s3.8 resume checks, replay forced (records a RESUME_CHECK row)
     account <run_dir> [--write]             the final account (JSON); --write stores FINAL_ACCOUNT.json once
     control <run_dir>                       the uninterrupted control digest (JSON)
+    relaunch <run_dir>                      idempotent host-relaunch entry for a scheduler timer (relaunch.py)
     prune <run_dir> [--dry-run]             apply the manifest's checkpoint_retention policy (retention.py)
 """
 import argparse
@@ -20,6 +21,7 @@ from rso.scale.runner import control as CTL
 from rso.scale.runner import engine as E
 from rso.scale.runner import lease as L
 from rso.scale.runner import resume as RS
+from rso.scale.runner import relaunch as RL
 from rso.scale.runner import retention as RET
 from rso.scale.runner import run as RUN
 from rso.scale.runner import store as S
@@ -45,7 +47,7 @@ def main(argv=None):
     c = sub.add_parser("create")
     c.add_argument("run_dir")
     c.add_argument("--spec", required=True)
-    for name in ("launch", "supervise", "status", "control", "_spawn"):
+    for name in ("launch", "supervise", "status", "control", "_spawn", "relaunch"):
         sub.add_parser(name).add_argument("run_dir")
     for name in ("work", "verify"):
         s = sub.add_parser(name)
@@ -67,6 +69,10 @@ def main(argv=None):
     if args.cmd == "launch":
         print(json.dumps(SUP.launch_detached(rd)))
         return 0
+    if args.cmd == "relaunch":
+        out = RL.relaunch(rd)
+        print(json.dumps(out), flush=True)
+        return RL.EXIT[out["action"]]
     if args.cmd == "_spawn":
         SUP.spawn_supervisor(rd)
         return 0

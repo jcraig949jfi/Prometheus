@@ -175,7 +175,7 @@ class FileLock:
                 finally:
                     os.close(fd)
                 return self
-            except FileExistsError:
+            except (FileExistsError, PermissionError):          # PermissionError: Windows, file mid-delete
                 try:
                     with open(self.path, "rb") as f:
                         holder = json.loads(f.read().decode("utf-8") or "{}")
@@ -192,8 +192,15 @@ class FileLock:
                 time.sleep(0.005)
 
     def __exit__(self, *exc):
-        try:
-            os.remove(self.path)
-        except FileNotFoundError:
-            pass
+        for i in range(200):
+            try:
+                os.remove(self.path)
+            except FileNotFoundError:
+                break
+            except PermissionError:                             # Windows: a waiter has it open to read the holder
+                if i == 199:
+                    raise
+                time.sleep(0.01)
+            else:
+                break
         return False
