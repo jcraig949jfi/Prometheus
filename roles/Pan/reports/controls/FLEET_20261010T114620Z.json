@@ -1,0 +1,37 @@
+{
+ "kind": "fleet-controls",
+ "at": "2026-10-10T11:46:20Z",
+ "head": "527aa3cb8",
+ "passed": true,
+ "results": {
+  "POSITIVE_local_agrees": true,
+  "POSITIVE_ssh_probe_ok": true,
+  "NEGATIVE_unroutable_fails": true,
+  "NEGATIVE_unprobed_register_only": {
+   "hosts": [
+    "BUCKKEEP",
+    "DESKTOP-RUAPVAI",
+    "ELSA",
+    "LIZZIE-42",
+    "UBU004",
+    "UBU005",
+    "UBU006"
+   ],
+   "all_labelled": true
+  },
+  "CHEAT_register_lie_flagged": true,
+  "POSITIVE_pan_active_here": true,
+  "CHEAT_status_column_ignored": {
+   "comms_rows_saying_active_but_idle_24h": 42,
+   "reported_active_among_them": 0
+  },
+  "NEGATIVE_never_on_comms": [
+   "Alethelia",
+   "Diomedes",
+   "Elenchus",
+   "Koios",
+   "Lexis"
+  ]
+ },
+ "mismatches": {}
+}

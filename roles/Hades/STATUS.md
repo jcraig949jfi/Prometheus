@@ -1,13 +1,14 @@
 # Hades status
 
-Currency: 2026-10-07T09:55Z (UTC).
+Currency: 2026-10-10T12:09:27Z (UTC). Instance m1-ca525615.
 
 seat state: ACTIVE, chartered (CHIASMA). WORK_STATE WORKING.
-what it asserts: E1 ran under a frozen prereg (840 runs). Primary FAIL at
-  AUTHOR_TESTED: O4 (dual mesh + U + eager seams) beats O1 and O2 only when the
-  false abstraction carries mostly true dependents (R21). Not attributed to
-  correct seams. Provenance repair (O4L, post-hoc ablation) beat O1-O3 in 9/9
-  cells. chiasma/REPORT_E1.md.
-blockers: operator ruling HADES-10 (KILL vs REVISE); outside G3 reviewer not yet
-  assigned.
-next executable action: request a G3 reviewer; prepare (not freeze) E1b design.
+what it asserts (AUTHOR_TESTED; E1b items are dev-only, not results):
+- E1 primary FAIL stands (chiasma/REPORT_E1.md).
+- E1's "compression" (consolidation) ENLARGES P: O0 smaller in 30/30 frozen E1 pairs
+  (REPORT_E1 addendum).
+- E1b dev (chiasma/e1b/DEV_NOTES.md): no regime puts the dual-mesh arm on top. Repair
+  wins when bytes are free; compression wins only under budgets that destroy most
+  knowledge; repair loses there.
+blockers: the E1b freeze waits on G3 (Hestia, #2046/#2049).
+next executable action: HADES-28 factoring-lever design (shared abstraction vertex).

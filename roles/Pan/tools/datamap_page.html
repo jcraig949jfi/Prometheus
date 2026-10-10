@@ -4,6 +4,13 @@
   .dm-title { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
   .dm-take { margin: 0; max-width: 70ch; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.5; }
   .dm-take b, .dm .dm-num { font-variant-numeric: tabular-nums; color: var(--color-fg); font-weight: 500; }
+  .dm-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); overflow-x: auto; scrollbar-width: none; }
+  .dm-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: var(--cds-pad-sm) var(--cds-pad-md); font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); cursor: pointer; white-space: nowrap; }
+  .dm-tab:hover { color: var(--color-fg); }
+  .dm-tab[aria-selected=true] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .dm-tab:focus-visible { outline: 2px solid var(--color-fg); outline-offset: -2px; border-radius: 4px; }
+  .dm-panel { display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+  .dm-panel[hidden] { display: none; }
   .dm-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
   .dm-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
   .dm-tile-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
@@ -17,8 +24,8 @@
   .dm-bar-row { display: flex; flex-direction: column; gap: 2px; }
   .dm-bar-label { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); }
   .dm-bar-label span:first-child { color: var(--color-fg); overflow-wrap: anywhere; }
-  .dm-bar-label span:last-child { color: var(--color-fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .dm-bar-track { height: 10px; background: var(--cds-chart-grid); border-radius: 5px; overflow: hidden; }
+  .dm-bar-label span:last-child { color: var(--color-fg-muted); font-variant-numeric: tabular-nums; text-align: right; }
+  .dm-bar-track { height: 10px; background: var(--cds-chart-grid); border-radius: 5px; overflow: hidden; position: relative; }
   .dm-bar-fill { height: 100%; border-radius: 5px; }
   .dm-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
   .dm-legend i { display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: -1px; }
@@ -33,12 +40,28 @@
   .dm-dot { position: absolute; top: 50%; width: 0.75rem; height: 0.75rem; margin: -0.375rem 0 0 -0.375rem; border-radius: 50%; }
   .dm-dot-val { position: absolute; top: -0.1rem; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; transform: translateX(0.6rem); color: var(--color-fg); }
   .dm-scroll { overflow-x: auto; }
+  .dm-tall { max-height: 40rem; overflow: auto; }
   .dm table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
   .dm th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .dm-tall th { position: sticky; top: 0; z-index: 1; background: var(--color-panel); }
+  .dm th button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+  .dm th button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; border-radius: 2px; }
+  .dm th[aria-sort=ascending] button::after { content: ' \2191'; }
+  .dm th[aria-sort=descending] button::after { content: ' \2193'; }
   .dm td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
   .dm td.num, .dm th.num { text-align: right; }
+  .dm td.wide { min-width: 14rem; }
+  .dm-sub { display: block; color: var(--color-fg-muted); margin-top: 1px; }
+  .dm-warn { display: block; color: var(--color-warn); margin-top: 1px; }
+  .dm-state { display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 50%; margin-right: 0.4rem; vertical-align: 0; border: 1px solid var(--cds-chart-axis); box-sizing: border-box; }
   .dm .dm-inbar { display: inline-block; height: 0.5rem; border-radius: 3px; background: var(--cds-chart-muted); vertical-align: middle; margin-right: 0.4rem; }
   .dm .dm-inbar.full { background: var(--color-ok); }
+  .dm-controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+  .dm-controls input { flex: 1 1 14rem; min-width: 0; font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); }
+  .dm-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .dm-chip { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); padding: 2px 10px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg-muted); cursor: pointer; }
+  .dm-chip[aria-pressed=true] { color: var(--color-fg); border-color: var(--color-fg); }
+  .dm-chip:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
   .dm-wide { grid-column: 1 / -1; }
   .dm-arch { position: relative; min-height: 22rem; }
   .dm-arch svg { display: block; overflow: visible; }
@@ -61,91 +84,179 @@
 <div class="dm">
   <header class="dm-head">
     <h1 class="dm-title" id="top">Prometheus Data Map</h1>
+  </header>
+
+  <nav class="dm-tabs" role="tablist" aria-label="Sections" id="dm-tabs">
+    <button class="dm-tab" role="tab" id="tab-overview" data-panel="overview" aria-controls="overview" aria-selected="true">Overview</button>
+    <button class="dm-tab" role="tab" id="tab-machines" data-panel="machines" aria-controls="machines" aria-selected="false" tabindex="-1">Machines</button>
+    <button class="dm-tab" role="tab" id="tab-pantheon" data-panel="pantheon" aria-controls="pantheon" aria-selected="false" tabindex="-1">Pantheon</button>
+    <button class="dm-tab" role="tab" id="tab-storage" data-panel="storage" aria-controls="storage" aria-selected="false" tabindex="-1">Storage</button>
+    <button class="dm-tab" role="tab" id="tab-quality" data-panel="quality" aria-controls="quality" aria-selected="false" tabindex="-1">Search and models</button>
+    <button class="dm-tab" role="tab" id="tab-codereview" data-panel="codereview" aria-controls="codereview" aria-selected="false" tabindex="-1">Code review</button>
+  </nav>
+
+  <section class="dm-panel" id="overview" role="tabpanel" aria-labelledby="tab-overview"><template>
     <p class="dm-take">
       Pan inventoried <b data-source="totals" data-field="total_gb" data-row="0">&mdash;</b> GB across
       <b data-source="totals" data-field="stores" data-row="0">&mdash;</b> stores. The program&rsquo;s live record (repository and its
       databases) is <b data-source="totals" data-field="hot_gb" data-row="0">&mdash;</b> GB; <b data-source="totals" data-field="cold_gb" data-row="0">&mdash;</b> GB is untracked or backup data on M2,
       most of it last modified in April 2026, and the rest is the LMFDB reference database.
     </p>
-  </header>
+    <section class="dm-tiles" aria-label="Headline figures">
+      <div class="dm-tile"><span class="dm-tile-label">Inventoried, all stores</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="total_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">M2 files, repository, M1 databases</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Live record</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="hot_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">repository + program databases</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Untracked or backup on M2</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="cold_share" data-row="0">&mdash;</span></span><span class="dm-tile-note">share of everything inventoried</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Search finds a right file in top 10</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="retrieval" data-field="r10" data-where="run=v1&amp;set=CB-200 (other seats)">&mdash;</span></span><span class="dm-tile-note">200 queries written by other seats</span></div>
+    </section>
+    <section class="dm-grid">
+      <article class="dm-card dm-wide" id="architecture">
+        <h2>How Pan&rsquo;s data system fits together</h2>
+        <p class="dm-note">Where the data comes from, what Pan runs over it, where it lands, and how seats and the operator get at it. Colour shows the machine each part lives on. Hover or tab to a box to trace what feeds it and what it feeds.</p>
+        <div class="dm-legend" id="dm-arch-legend" data-source="architecture"></div>
+        <div class="dm-arch" id="dm-arch" data-source="architecture"></div>
+      </article>
+      <article class="dm-card dm-wide" id="built">
+        <h2>What Pan built</h2>
+        <p class="dm-note">Tables in the program database (row estimates) and Iceberg tables in the lake (exact record counts).</p>
+        <div class="dm-scroll"><table id="dm-built" data-source="pan_tables" data-row-key="table">
+          <thead><tr><th data-field="table">Table</th><th data-field="layer">Where</th><th class="num" data-field="rows">Rows</th><th class="num" data-field="mb">MB</th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+    </section>
+  </template></section>
 
-  <section class="dm-tiles" aria-label="Headline figures">
-    <div class="dm-tile"><span class="dm-tile-label">Inventoried, all stores</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="total_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">M2 files, repository, M1 databases</span></div>
-    <div class="dm-tile"><span class="dm-tile-label">Live record</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="hot_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">repository + program databases</span></div>
-    <div class="dm-tile"><span class="dm-tile-label">Untracked or backup on M2</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="totals" data-field="cold_share" data-row="0">&mdash;</span></span><span class="dm-tile-note">share of everything inventoried</span></div>
-    <div class="dm-tile"><span class="dm-tile-label">Search finds a right file in top 10</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="retrieval" data-field="r10" data-where="run=v1&amp;set=CB-200 (other seats)">&mdash;</span></span><span class="dm-tile-note">200 queries written by other seats</span></div>
-  </section>
+  <section class="dm-panel" id="machines" role="tabpanel" aria-labelledby="tab-machines" hidden><template>
+    <p class="dm-take">
+      <b data-source="fleet_totals" data-field="machines" data-row="0">&mdash;</b> machines are in the fleet register, and
+      <b data-source="fleet_totals" data-field="seen_24h" data-row="0">&mdash;</b> of them showed activity in the last 24 hours.
+      <b data-source="fleet_totals" data-field="top2_names" data-row="0">&mdash;</b> hold
+      <b data-source="fleet_totals" data-field="top2_share" data-row="0">&mdash;</b> of the fleet&rsquo;s CPU threads; the rest are laptops,
+      mini PCs and older desktops for light, wide work.
+    </p>
+    <section class="dm-tiles" aria-label="Fleet totals">
+      <div class="dm-tile"><span class="dm-tile-label">Seen in the last 24 hours</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="fleet_totals" data-field="seen_24h" data-row="0">&mdash;</span> of <span class="dash-skeleton" data-source="fleet_totals" data-field="machines" data-row="0">&mdash;</span></span><span class="dm-tile-note">a seat session, worker or probe</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">CPU threads</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="fleet_totals" data-field="threads" data-row="0">&mdash;</span></span><span class="dm-tile-note"><span data-source="fleet_totals" data-field="cores" data-row="0">&mdash;</span> physical cores</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Memory</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="fleet_totals" data-field="ram_gb" data-row="0">&mdash;</span> GB</span><span class="dm-tile-note">measured where probed, else the register</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">NVIDIA (CUDA) GPUs</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="fleet_totals" data-field="cuda" data-row="0">&mdash;</span></span><span class="dm-tile-note"><span data-source="fleet_totals" data-field="vram_gb" data-row="0">&mdash;</span> GB of GPU memory between them</span></div>
+    </section>
+    <section class="dm-grid">
+      <article class="dm-card dm-wide" id="compute">
+        <h2>Where the compute is</h2>
+        <p class="dm-note">CPU threads per machine. Coloured bars have an NVIDIA GPU that can run CUDA work.</p>
+        <div class="dm-legend" id="dm-compute-legend" data-source="machines"></div>
+        <div class="dm-bars" id="dm-compute" data-source="machines"></div>
+      </article>
+      <article class="dm-card dm-wide" id="machine-list">
+        <h2>Every machine</h2>
+        <p class="dm-note">Specs come from the fleet register (infra/FLEET_HOSTS.md, kept by Achilles and filled in by the operator, last changed <span data-source="fleet_meta" data-field="register_changed" data-row="0">&mdash;</span>). Where a probe measured a value, the measured value is shown, and any disagreement with the register is printed in the Specs column. Pan&rsquo;s probes are read-only: ssh from M2 to the Linux nodes and a local check on M2, newest <span data-source="fleet_meta" data-field="last_probe_at" data-row="0">&mdash;</span>. Not probed yet: <span data-source="fleet_meta" data-field="machines_unprobed_no_hostkey" data-row="0">&mdash;</span>, because M2 has no ssh host key for them.</p>
+        <div class="dm-scroll"><table id="dm-machines" data-source="machines" data-row-key="name">
+          <thead><tr><th data-field="name">Machine</th><th data-field="last_seen">Last seen</th><th data-field="os">Operating system</th><th data-field="cpu">CPU</th><th class="num" data-field="ram_gb">RAM, GB</th><th data-field="gpu">GPU</th><th data-field="disk">Storage</th><th data-field="seats_7d">Seats this week</th><th data-field="specs">Specs</th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+    </section>
+  </template></section>
 
-  <section class="dm-grid">
-    <article class="dm-card dm-wide" id="architecture">
-      <h2>How Pan&rsquo;s data system fits together</h2>
-      <p class="dm-note">Where the data comes from, what Pan runs over it, where it lands, and how seats and the operator get at it. Colour shows the machine each part lives on. Hover or tab to a box to trace what feeds it and what it feeds.</p>
-      <div class="dm-legend" id="dm-arch-legend" data-source="architecture"></div>
-      <div class="dm-arch" id="dm-arch" data-source="architecture"></div>
-    </article>
+  <section class="dm-panel" id="pantheon" role="tabpanel" aria-labelledby="tab-pantheon" hidden><template>
+    <p class="dm-take">
+      <b data-source="seat_counts" data-field="seats" data-row="0">&mdash;</b> seats.
+      <b data-source="seat_counts" data-field="active" data-row="0">&mdash;</b> were active in the last 24 hours and
+      <b data-source="seat_counts" data-field="week" data-row="0">&mdash;</b> more in the last week;
+      <b data-source="seat_counts" data-field="quiet" data-row="0">&mdash;</b> have done nothing for over 30 days or never booted.
+      As of <span data-source="fleet_meta" data-field="built_at" data-row="0">&mdash;</span>.
+    </p>
+    <section class="dm-tiles" aria-label="Seat activity">
+      <div class="dm-tile"><span class="dm-tile-label">Active, last 24 hours</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="seat_counts" data-field="active" data-row="0">&mdash;</span></span><span class="dm-tile-note">a comms call, commit or message</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Active this week</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="seat_counts" data-field="week" data-row="0">&mdash;</span></span><span class="dm-tile-note">1 to 7 days ago</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Active this month</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="seat_counts" data-field="month" data-row="0">&mdash;</span></span><span class="dm-tile-note">8 to 30 days ago</span></div>
+      <div class="dm-tile"><span class="dm-tile-label">Inactive</span><span class="dm-tile-value"><span class="dash-skeleton" data-source="seat_counts" data-field="quiet" data-row="0">&mdash;</span></span><span class="dm-tile-note">over 30 days, or never booted</span></div>
+    </section>
+    <section class="dm-grid">
+      <article class="dm-card dm-wide" id="seat-machines">
+        <h2>Where seats last ran</h2>
+        <p class="dm-note">Seats by the machine of their newest session. The coloured part of each bar is seats active in the last 24 hours.</p>
+        <div class="dm-bars" id="dm-seat-machines" data-source="seats_by_machine"></div>
+      </article>
+      <article class="dm-card dm-wide" id="seat-list">
+        <h2>Every seat</h2>
+        <p class="dm-note">Status comes from each seat&rsquo;s newest activity: a comms call, a commit on main or a message sent. The status column in comms is not used, because it still says &ldquo;active&rdquo; for <span data-source="fleet_meta" data-field="comms_active_but_idle_24h" data-row="0">&mdash;</span> seats with nothing in the last 24 hours. Check-in is the newest comms sync. Last work is the newest commit on main (indexed to <span data-source="fleet_meta" data-field="commits_indexed_to" data-row="0">&mdash;</span>). Declared is the seat&rsquo;s own WORK_STATE file; role lines are from Achilles&rsquo; census of <span data-source="fleet_meta" data-field="census_generated_at" data-row="0">&mdash;</span>. Times are UTC.</p>
+        <div class="dm-controls">
+          <input type="search" id="dm-seat-q" placeholder="Search seats, machines, work" aria-label="Search seats">
+          <div class="dm-chips" role="group" aria-label="Filter by status" id="dm-seat-chips">
+            <button class="dm-chip" data-status="" aria-pressed="true">All</button>
+            <button class="dm-chip" data-status="active" aria-pressed="false">Active</button>
+            <button class="dm-chip" data-status="week" aria-pressed="false">This week</button>
+            <button class="dm-chip" data-status="month" aria-pressed="false">This month</button>
+            <button class="dm-chip" data-status="quiet" aria-pressed="false">Inactive</button>
+          </div>
+        </div>
+        <div class="dm-tall"><table id="dm-seats" data-source="seats" data-row-key="seat">
+          <thead><tr><th data-field="seat" data-sort="seat"><button>Seat</button></th><th data-field="last_active" data-sort="last_active" aria-sort="descending"><button>Last active</button></th><th data-field="last_checkin" data-sort="last_checkin"><button>Last check-in</button></th><th data-field="last_commit" data-sort="last_commit_at"><button>Last work</button></th><th data-field="last_machine" data-sort="last_machine"><button>Last machine</button></th><th data-field="model" data-sort="model"><button>Model</button></th><th data-field="declared" data-sort="declared"><button>Declared</button></th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+    </section>
+  </template></section>
 
-    <article class="dm-card dm-wide" id="review">
-      <h2>Where a code review would pay</h2>
-      <p class="dm-note">Python modules ranked by recent change, whether any test imports them, and static smells. Signals, not verdicts: the score only orders the list, and nothing here has been sent to any seat. Rebuild with <code>python -m pan review build</code>.</p>
-      <div class="dm-scroll"><table id="dm-review" data-source="review_queue" data-row-key="path">
-        <thead><tr><th data-field="path">Module</th><th data-field="seat">Seat</th><th class="num" data-field="commits_7d">Commits, 7 days</th><th class="num" data-field="tested_by">Tests importing it</th><th data-field="smells">Smells</th></tr></thead><tbody></tbody>
-      </table></div>
-      <h2 id="smells">How common each smell is</h2>
-      <p class="dm-note">Modules carrying each smell anywhere in the repository, and how many of those changed in the last 30 days.</p>
-      <div class="dm-bars" id="dm-smells" data-source="review_smells"></div>
-    </article>
+  <section class="dm-panel" id="storage" role="tabpanel" aria-labelledby="tab-storage" hidden><template>
+    <section class="dm-grid">
+      <article class="dm-card" id="stores">
+        <h2>Where the bytes are</h2>
+        <p class="dm-note">Size of each store, on a log scale so the small live stores stay visible beside the large cold ones.</p>
+        <div class="dm-legend" id="dm-legend" data-source="stores"></div>
+        <div class="dm-bars" id="dm-stores" data-source="stores"></div>
+      </article>
+      <article class="dm-card" id="months">
+        <h2>When the untracked data was last touched</h2>
+        <p class="dm-note">Gigabytes of untracked and backup files on M2 by the month they were last modified.</p>
+        <div class="dm-chart" id="dm-months" data-source="untracked_by_month"></div>
+      </article>
+      <article class="dm-card" id="types">
+        <h2>What kind of files they are</h2>
+        <p class="dm-note">Untracked files in the M2 checkout by extension. Row data stored as JSON Lines text dominates.</p>
+        <div class="dm-scroll"><table id="dm-types" data-source="untracked_by_type" data-row-key="type">
+          <thead><tr><th data-field="type">Type</th><th class="num" data-field="gb">GB</th><th class="num" data-field="files">Files</th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+      <article class="dm-card" id="cold">
+        <h2>If the four largest cold files became Parquet</h2>
+        <p class="dm-note">Measured on one full conversion and random 16 MiB blocks of the others. The verbatim-text form wins where typed columns would bloat nested records.</p>
+        <div class="dm-scroll"><table id="dm-cold" data-source="cold_conversion" data-row-key="family">
+          <thead><tr><th data-field="family">File</th><th class="num" data-field="source_gb">Now, GB</th><th data-field="form">Best form</th><th class="num" data-field="ratio">Ratio</th><th class="num" data-field="projected_gb">Projected, GB</th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+    </section>
+  </template></section>
 
-    <article class="dm-card" id="stores">
-      <h2>Where the bytes are</h2>
-      <p class="dm-note">Size of each store, on a log scale so the small live stores stay visible beside the large cold ones.</p>
-      <div class="dm-legend" id="dm-legend"></div>
-      <div class="dm-bars" id="dm-stores" data-source="stores"></div>
-    </article>
+  <section class="dm-panel" id="quality" role="tabpanel" aria-labelledby="tab-quality" hidden><template>
+    <section class="dm-grid">
+      <article class="dm-card" id="search">
+        <h2>Search quality by run</h2>
+        <p class="dm-note">Share of test questions whose right file appears in the top 10. Dashed line: the 0.80 bar set before any run. Sets of 20 cannot tell 0.75 from 0.80; the 200-query set can.</p>
+        <div class="dm-dots" id="dm-search" data-source="retrieval"></div>
+      </article>
+      <article class="dm-card" id="models">
+        <h2>Local models on the 16 GB card</h2>
+        <p class="dm-note">15 probes each: code checked by hidden tests, exact math, JSON shape. A smoke test, not a benchmark.</p>
+        <div class="dm-scroll"><table id="dm-models" data-source="models" data-row-key="model,config">
+          <thead><tr><th data-field="model">Model</th><th data-field="config">Setting</th><th class="num" data-field="passed">Passed</th><th class="num" data-field="tok_s">Tokens/s</th></tr></thead><tbody></tbody>
+        </table></div>
+      </article>
+    </section>
+  </template></section>
 
-    <article class="dm-card" id="months">
-      <h2>When the untracked data was last touched</h2>
-      <p class="dm-note">Gigabytes of untracked and backup files on M2 by the month they were last modified.</p>
-      <div class="dm-chart" id="dm-months" data-source="untracked_by_month"></div>
-    </article>
-
-    <article class="dm-card" id="types">
-      <h2>What kind of files they are</h2>
-      <p class="dm-note">Untracked files in the M2 checkout by extension. Row data stored as JSON Lines text dominates.</p>
-      <div class="dm-scroll"><table id="dm-types" data-source="untracked_by_type" data-row-key="type">
-        <thead><tr><th data-field="type">Type</th><th class="num" data-field="gb">GB</th><th class="num" data-field="files">Files</th></tr></thead><tbody></tbody>
-      </table></div>
-    </article>
-
-    <article class="dm-card" id="cold">
-      <h2>If the four largest cold files became Parquet</h2>
-      <p class="dm-note">Measured on one full conversion and random 16 MiB blocks of the others. The verbatim-text form wins where typed columns would bloat nested records.</p>
-      <div class="dm-scroll"><table id="dm-cold" data-source="cold_conversion" data-row-key="family">
-        <thead><tr><th data-field="family">File</th><th class="num" data-field="source_gb">Now, GB</th><th data-field="form">Best form</th><th class="num" data-field="ratio">Ratio</th><th class="num" data-field="projected_gb">Projected, GB</th></tr></thead><tbody></tbody>
-      </table></div>
-    </article>
-
-    <article class="dm-card" id="search">
-      <h2>Search quality by run</h2>
-      <p class="dm-note">Share of test questions whose right file appears in the top 10. Dashed line: the 0.80 bar set before any run. Sets of 20 cannot tell 0.75 from 0.80; the 200-query set can.</p>
-      <div class="dm-dots" id="dm-search" data-source="retrieval"></div>
-    </article>
-
-    <article class="dm-card" id="models">
-      <h2>Local models on the 16 GB card</h2>
-      <p class="dm-note">15 probes each: code checked by hidden tests, exact math, JSON shape. A smoke test, not a benchmark.</p>
-      <div class="dm-scroll"><table id="dm-models" data-source="models" data-row-key="model,config">
-        <thead><tr><th data-field="model">Model</th><th data-field="config">Setting</th><th class="num" data-field="passed">Passed</th><th class="num" data-field="tok_s">Tokens/s</th></tr></thead><tbody></tbody>
-      </table></div>
-    </article>
-
-    <article class="dm-card" id="built">
-      <h2>What Pan built</h2>
-      <p class="dm-note">Tables in the program database (row estimates) and Iceberg tables in the lake (exact record counts).</p>
-      <div class="dm-scroll"><table id="dm-built" data-source="pan_tables" data-row-key="table">
-        <thead><tr><th data-field="table">Table</th><th data-field="layer">Where</th><th class="num" data-field="rows">Rows</th><th class="num" data-field="mb">MB</th></tr></thead><tbody></tbody>
-      </table></div>
-    </article>
-  </section>
+  <section class="dm-panel" id="codereview" role="tabpanel" aria-labelledby="tab-codereview" hidden><template>
+    <section class="dm-grid">
+      <article class="dm-card dm-wide" id="review">
+        <h2>Where a code review would pay</h2>
+        <p class="dm-note">Python modules ranked by recent change, whether any test imports them, and static smells. Signals, not verdicts: the score only orders the list, and nothing here has been sent to any seat. Rebuild with <code>python -m pan review build</code>.</p>
+        <div class="dm-scroll"><table id="dm-review" data-source="review_queue" data-row-key="path">
+          <thead><tr><th data-field="path">Module</th><th data-field="seat">Seat</th><th class="num" data-field="commits_7d">Commits, 7 days</th><th class="num" data-field="tested_by">Tests importing it</th><th data-field="smells">Smells</th></tr></thead><tbody></tbody>
+        </table></div>
+        <h2 id="smells">How common each smell is</h2>
+        <p class="dm-note">Modules carrying each smell anywhere in the repository, and how many of those changed in the last 30 days.</p>
+        <div class="dm-bars" id="dm-smells" data-source="review_smells"></div>
+      </article>
+    </section>
+  </template></section>
 </div>
 
 <script>
@@ -154,8 +265,11 @@
   const fmtInt = d3.format(',');
   const fmtPct = d3.format('.0%');
   const fmtR = d3.format('.3f');
+  const fmtG = d3.format(',.3~f');
   const classColor = { hot: 'var(--color-ok)', warm: 'var(--cds-chart-status-critical)', cold: 'var(--cds-chart-muted)', reference: 'var(--color-warn)' };
   const classLabel = { hot: 'Live record', warm: 'Recent evidence', cold: 'Untracked or backup', reference: 'Reference data' };
+  const num = (v) => (v === null || v === undefined || v === '' ? NaN : Number(v));
+  const isTrue = (v) => v === true || v === 'true' || v === 'True';
 
   dash.calc('totals', {
     title: 'Inventory totals',
@@ -169,6 +283,72 @@
     }
   });
 
+  dash.calc('fleet_totals', {
+    title: 'Fleet totals',
+    description: 'Machines, machines seen in 24 hours, threads, cores, RAM and NVIDIA GPUs summed over the machine list; share of threads on the two largest machines.',
+    inputs: ['machines'],
+    fn: (machines) => {
+      const n = (v) => Number(v) || 0;
+      const sum = (f) => machines.reduce((a, m) => a + n(m[f]), 0);
+      const nv = machines.filter(m => m.cuda === true || m.cuda === 'true');
+      const top = machines.slice().sort((a, b) => n(b.threads) - n(a.threads)).slice(0, 2);
+      const threads = sum('threads');
+      return [{ machines: machines.length, seen_24h: machines.filter(m => m.status === 'active').length,
+                threads, cores: sum('cores'), ram_gb: Math.round(sum('ram_gb')), cuda: nv.length,
+                vram_gb: Math.round(nv.reduce((a, m) => a + n(m.vram_gb), 0)),
+                top2_names: top.map(m => m.label || m.host).join(' and '),
+                top2_share: threads ? top.reduce((a, m) => a + n(m.threads), 0) / threads : 0 }];
+    }
+  });
+
+  dash.calc('seat_counts', {
+    title: 'Seats by activity',
+    description: 'Seats counted by status: active in 24 hours, 1 to 7 days, 8 to 30 days, and inactive (over 30 days or never booted).',
+    inputs: ['seats'],
+    fn: (seats) => {
+      const c = (s) => seats.filter(r => r.status === s).length;
+      return [{ seats: seats.length, active: c('active'), week: c('week'), month: c('month'),
+                quiet: seats.length - c('active') - c('week') - c('month') }];
+    }
+  });
+
+  dash.calc('seats_by_machine', {
+    title: 'Seats by last machine',
+    description: 'Seats grouped by the machine of their newest session, with how many were active in the last 24 hours.',
+    inputs: ['seats'],
+    fn: (seats) => {
+      const by = {};
+      seats.forEach(r => {
+        const m = r.last_machine || 'No machine recorded';
+        by[m] = by[m] || { machine: m, seats: 0, active_24h: 0 };
+        by[m].seats += 1;
+        if (r.status === 'active') by[m].active_24h += 1;
+      });
+      return Object.values(by).sort((a, b) => b.seats - a.seats || a.machine.localeCompare(b.machine));
+    }
+  });
+
+  const statusLabel = { active: 'Active', week: 'This week', month: 'This month', inactive: 'Inactive', never: 'Never booted', none: 'No activity recorded' };
+  const statusFill = (s) => ({ active: 'var(--color-ok)', week: dash.colors[0], month: 'var(--cds-chart-muted)' }[s] || 'transparent');
+  const fmtTime = d3.utcFormat('%b %-d, %H:%M');
+  const fmtDay = d3.utcFormat('%b %-d');
+  function when(iso) {
+    if (!iso) return '—';
+    const t = new Date(iso);
+    return isNaN(t) ? String(iso) : fmtTime(t);
+  }
+  function stateDot(status) {
+    const s = document.createElement('span');
+    s.className = 'dm-state';
+    s.style.background = statusFill(status);
+    return s;
+  }
+  function sub(text, cls) {
+    const s = document.createElement('span');
+    s.className = cls || 'dm-sub';
+    s.textContent = text;
+    return s;
+  }
   function fill(sel, text) { document.querySelectorAll(sel).forEach(el => { el.textContent = text; el.classList.remove('dash-skeleton'); }); }
 
   function drawTotals() {
@@ -180,11 +360,17 @@
     fill('[data-source="totals"][data-field="hot_gb"]', fmt1(r.hot_gb));
     fill('[data-source="totals"][data-field="cold_gb"]', fmtInt(r.cold_gb));
     fill('[data-source="totals"][data-field="cold_share"]', fmtPct(r.cold_share));
+    const rt = dash.data('retrieval');
+    if (rt.status === 'ok') {
+      const row = rt.data.find(x => x.run === 'v1' && x.set === 'CB-200 (other seats)');
+      if (row) fill('[data-source="retrieval"][data-field="r10"]', fmtR(Number(row.r10)));
+    }
   }
 
   function drawStores() {
     const box = document.getElementById('dm-stores');
     const legend = document.getElementById('dm-legend');
+    if (!box) return;
     const d = dash.data('stores');
     box.textContent = '';
     legend.textContent = '';
@@ -217,6 +403,7 @@
 
   function drawMonths() {
     const box = document.getElementById('dm-months');
+    if (!box) return;
     const d = dash.data('untracked_by_month');
     box.textContent = '';
     if (d.status !== 'ok') return;
@@ -241,17 +428,19 @@
       .text(r => fmtM(new Date(r.month + '-01T00:00:00Z')));
   }
 
-  function drawTable(id, dataset, cols, keyOf) {
+  function drawTable(id, dataset, cols, keyOf, rowsOf) {
     const tbody = document.querySelector('#' + id + ' tbody');
+    if (!tbody) return;
     const d = dash.data(dataset);
     tbody.textContent = '';
     if (d.status !== 'ok') return;
-    d.data.forEach(r => {
+    (rowsOf ? rowsOf(d.data) : d.data).forEach(r => {
       const tr = document.createElement('tr');
       if (keyOf) tr.dataset.key = keyOf(r);
       cols.forEach(c => {
         const td = document.createElement('td');
         if (c.num) td.className = 'num';
+        if (c.wide) td.className = 'wide';
         c.cell(td, r);
         tr.append(td);
       });
@@ -261,15 +450,16 @@
 
   function drawSearch() {
     const box = document.getElementById('dm-search');
+    if (!box) return;
     const d = dash.data('retrieval');
     box.textContent = '';
     if (d.status !== 'ok') return;
-    d.data.forEach((r, i) => {
+    d.data.forEach((r) => {
       const row = document.createElement('div'); row.className = 'dm-dot-row';
       const name = document.createElement('div'); name.className = 'dm-dot-name';
       name.textContent = r.run + ', n = ' + r.n;
-      const sub = document.createElement('small'); sub.textContent = r.set;
-      name.append(sub);
+      const small = document.createElement('small'); small.textContent = r.set;
+      name.append(small);
       const track = document.createElement('div'); track.className = 'dm-dot-track';
       const ref = document.createElement('div'); ref.className = 'dm-dot-ref'; ref.style.left = '80%';
       const v = Number(r.r10);
@@ -301,6 +491,7 @@
   function drawArch() {
     const box = document.getElementById('dm-arch');
     const legend = document.getElementById('dm-arch-legend');
+    if (!box) return;
     box.textContent = '';
     legend.textContent = '';
     box.classList.remove('hot');
@@ -436,27 +627,21 @@
     nSel.on('mouseenter focus', (ev, n) => focus(n)).on('mouseleave blur', blur);
   }
 
-  function drawSmells() {
-    const box = document.getElementById('dm-smells');
-    const d = dash.data('review_smells');
-    box.textContent = '';
-    if (d.status !== 'ok') return;
-    const rows = d.data.map(r => ({ kind: r.kind, modules: Number(r.modules), changed: Number(r.changed_30d) }));
-    const max = d3.max(rows, r => r.modules) || 1;
+  function twoToneBars(box, rows, label, total, part, value) {
+    const max = d3.max(rows, total) || 1;
     rows.forEach(r => {
       const row = document.createElement('div'); row.className = 'dm-bar-row';
       const lab = document.createElement('div'); lab.className = 'dm-bar-label';
-      const name = document.createElement('span'); name.textContent = r.kind;
-      const val = document.createElement('span');
-      val.textContent = fmtInt(r.modules) + ' modules, ' + fmtInt(r.changed) + ' changed in 30 days';
+      const name = document.createElement('span'); name.textContent = label(r);
+      const val = document.createElement('span'); val.textContent = value(r);
       lab.append(name, val);
       const track = document.createElement('div'); track.className = 'dm-bar-track';
-      track.style.position = 'relative';
       const all = document.createElement('div'); all.className = 'dm-bar-fill';
-      all.style.width = Math.max(1, 100 * r.modules / max) + '%';
+      all.style.width = Math.max(1, 100 * total(r) / max) + '%';
       all.style.background = 'var(--cds-chart-muted)';
+      const p = part(r);
       const recent = document.createElement('div'); recent.className = 'dm-bar-fill';
-      recent.style.width = (r.changed ? Math.max(1, 100 * r.changed / max) : 0) + '%';
+      recent.style.width = (p ? Math.max(1, 100 * p / max) : 0) + '%';
       recent.style.background = dash.colors[0];
       recent.style.position = 'absolute'; recent.style.left = '0'; recent.style.top = '0';
       track.append(all, recent);
@@ -465,45 +650,305 @@
     });
   }
 
-  dash.onData(() => {
-    drawArch();
-    drawSmells();
-    drawTable('dm-review', 'review_queue', [
-      { cell: (td, r) => { td.textContent = r.path; td.style.overflowWrap = 'anywhere'; } },
-      { cell: (td, r) => { td.textContent = r.seat; } },
-      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.commits_7d)); } },
-      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.tested_by)); } },
-      { cell: (td, r) => { td.textContent = r.smells || '—'; } }]);
-    drawTotals();
-    drawStores();
-    drawMonths();
-    drawSearch();
-    drawTable('dm-types', 'untracked_by_type', [
-      { cell: (td, r) => { td.textContent = r.type; } },
-      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.gb)); } },
-      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.files)); } }]);
-    drawTable('dm-cold', 'cold_conversion', [
-      { cell: (td, r) => { td.textContent = r.family; } },
-      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.source_gb)); } },
-      { cell: (td, r) => { td.textContent = r.form; } },
-      { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.ratio)) + 'x'; } },
-      { num: true, cell: (td, r) => { td.textContent = Number(r.projected_gb) < 0.1 ? '<0.1' : fmt1(Number(r.projected_gb)); } }]);
-    const maxTok = d3.max((dash.data('models').data || []), r => Number(r.tok_s)) || 1;
-    drawTable('dm-models', 'models', [
-      { cell: (td, r) => { td.textContent = r.model; } },
-      { cell: (td, r) => { const n = (r.config.match(/\d+/) || [''])[0];
-          td.textContent = (r.config.startsWith('nothink') ? 'no thinking, ' : 'thinking, ') + n + ' tokens'; } },
-      { num: true, cell: (td, r) => { td.textContent = r.passed + ' / ' + r.probes; } },
-      { num: true, cell: (td, r) => {
-          const b = document.createElement('span'); b.className = 'dm-inbar' + (Number(r.passed) === Number(r.probes) ? ' full' : '');
-          b.style.width = Math.round(48 * Number(r.tok_s) / maxTok) + 'px';
-          td.append(b, document.createTextNode(fmt1(Number(r.tok_s)))); } }],
-      (r) => encodeURIComponent(r.model) + ',' + encodeURIComponent(r.config));
-    drawTable('dm-built', 'pan_tables', [
-      { cell: (td, r) => { td.textContent = r.table; } },
-      { cell: (td, r) => { td.textContent = r.layer; } },
-      { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.rows)); } },
-      { num: true, cell: (td, r) => { td.textContent = r.mb == null ? '' : fmt1(Number(r.mb)); } }]);
+  function drawSmells() {
+    const box = document.getElementById('dm-smells');
+    if (!box) return;
+    const d = dash.data('review_smells');
+    box.textContent = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.map(r => ({ kind: r.kind, modules: Number(r.modules), changed: Number(r.changed_30d) }));
+    twoToneBars(box, rows, r => r.kind, r => r.modules, r => r.changed,
+                r => fmtInt(r.modules) + ' modules, ' + fmtInt(r.changed) + ' changed in 30 days');
+  }
+
+  // ---- Machines
+
+  function drawFleetTotals() {
+    const t = dash.data('fleet_totals');
+    if (t.status !== 'ok' || !t.data.length) return;
+    const r = t.data[0];
+    fill('[data-source="fleet_totals"][data-field="machines"]', fmtInt(r.machines));
+    fill('[data-source="fleet_totals"][data-field="seen_24h"]', fmtInt(r.seen_24h));
+    fill('[data-source="fleet_totals"][data-field="threads"]', fmtInt(r.threads));
+    fill('[data-source="fleet_totals"][data-field="cores"]', fmtInt(r.cores));
+    fill('[data-source="fleet_totals"][data-field="ram_gb"]', fmtInt(r.ram_gb));
+    fill('[data-source="fleet_totals"][data-field="cuda"]', fmtInt(r.cuda));
+    fill('[data-source="fleet_totals"][data-field="vram_gb"]', fmtInt(r.vram_gb));
+    fill('[data-source="fleet_totals"][data-field="top2_names"]', r.top2_names);
+    fill('[data-source="fleet_totals"][data-field="top2_share"]', fmtPct(r.top2_share));
+  }
+
+  function drawMeta() {
+    const m = dash.data('fleet_meta');
+    if (m.status !== 'ok' || !m.data.length) return;
+    const r = m.data[0];
+    const at = (iso) => { const t = new Date(iso); return iso && !isNaN(t) ? fmtTime(t) + ' UTC' : (iso || '—'); };
+    fill('[data-source="fleet_meta"][data-field="register_changed"]', r.register_changed ? fmtDay(new Date(r.register_changed + 'T12:00:00Z')) : '—');
+    fill('[data-source="fleet_meta"][data-field="last_probe_at"]', at(r.last_probe_at));
+    fill('[data-source="fleet_meta"][data-field="machines_unprobed_no_hostkey"]', r.machines_unprobed_no_hostkey || 'none');
+    fill('[data-source="fleet_meta"][data-field="built_at"]', at(r.built_at));
+    fill('[data-source="fleet_meta"][data-field="comms_active_but_idle_24h"]', fmtInt(Number(r.comms_active_but_idle_24h)));
+    fill('[data-source="fleet_meta"][data-field="commits_indexed_to"]', at(r.commits_indexed_to));
+    fill('[data-source="fleet_meta"][data-field="census_generated_at"]', at(r.census_generated_at));
+  }
+
+  function drawCompute() {
+    const box = document.getElementById('dm-compute');
+    const legend = document.getElementById('dm-compute-legend');
+    if (!box) return;
+    box.textContent = '';
+    legend.textContent = '';
+    const d = dash.data('machines');
+    if (d.status !== 'ok') return;
+    [['NVIDIA GPU (CUDA)', dash.colors[0]], ['No CUDA GPU', 'var(--cds-chart-muted)']].forEach(([t, c]) => {
+      const item = document.createElement('span');
+      const sw = document.createElement('i'); sw.style.background = c;
+      item.append(sw, document.createTextNode(t));
+      legend.append(item);
+    });
+    const rows = d.data.slice().sort((a, b) => (num(b.threads) || 0) - (num(a.threads) || 0) || a.name.localeCompare(b.name));
+    const max = d3.max(rows, r => num(r.threads) || 0) || 1;
+    rows.forEach(r => {
+      const row = document.createElement('div'); row.className = 'dm-bar-row';
+      const lab = document.createElement('div'); lab.className = 'dm-bar-label';
+      const name = document.createElement('span'); name.textContent = r.name;
+      const parts = [];
+      parts.push(isNaN(num(r.threads)) ? 'threads not recorded' : fmtInt(num(r.threads)) + ' threads');
+      if (!isNaN(num(r.ram_gb))) parts.push(fmtG(num(r.ram_gb)) + ' GB RAM');
+      if (isTrue(r.cuda)) parts.push(r.gpu + (isNaN(num(r.vram_gb)) ? '' : ' ' + fmtG(num(r.vram_gb)) + ' GB'));
+      const val = document.createElement('span'); val.textContent = parts.join(' · ');
+      lab.append(name, val);
+      const track = document.createElement('div'); track.className = 'dm-bar-track';
+      const bar = document.createElement('div'); bar.className = 'dm-bar-fill';
+      bar.style.width = (isNaN(num(r.threads)) ? 0 : Math.max(1, 100 * num(r.threads) / max)) + '%';
+      bar.style.background = isTrue(r.cuda) ? dash.colors[0] : 'var(--cds-chart-muted)';
+      track.append(bar);
+      row.append(lab, track);
+      box.append(row);
+    });
+  }
+
+  function drawMachines() {
+    drawFleetTotals();
+    drawMeta();
+    drawCompute();
+    drawTable('dm-machines', 'machines', [
+      { wide: true, cell: (td, r) => { td.textContent = r.name; td.append(sub(r.hardware)); if (r.ip) td.append(sub(r.ip + (r.tags ? ' · ' + r.tags : ''))); } },
+      { cell: (td, r) => {
+          td.append(stateDot(r.status), document.createTextNode(r.last_seen ? when(r.last_seen) : 'No signal recorded'));
+          if (r.seen_by) td.append(sub('by ' + r.seen_by)); } },
+      { cell: (td, r) => { td.textContent = r.os; } },
+      { cell: (td, r) => {
+          td.textContent = r.cpu;
+          const c = num(r.cores), t = num(r.threads);
+          if (!isNaN(c) || !isNaN(t)) td.append(sub((isNaN(c) ? '?' : c) + ' cores, ' + (isNaN(t) ? '?' : t) + ' threads')); } },
+      { num: true, cell: (td, r) => { td.textContent = isNaN(num(r.ram_gb)) ? '—' : fmtG(num(r.ram_gb)); } },
+      { cell: (td, r) => { td.textContent = r.gpu + (isNaN(num(r.vram_gb)) ? '' : ', ' + fmtG(num(r.vram_gb)) + ' GB'); } },
+      { wide: true, cell: (td, r) => { td.textContent = r.disk || '—'; if (r.free_where) td.append(sub(r.free_where)); } },
+      { cell: (td, r) => { td.textContent = r.seats_7d || '—'; } },
+      { wide: true, cell: (td, r) => { td.textContent = r.specs; if (r.mismatch) td.append(sub('Register disagrees: ' + r.mismatch, 'dm-warn')); } }],
+      (r) => r.name);
+  }
+
+  // ---- Pantheon
+
+  const seatView = { q: '', status: '', sort: 'last_active', dir: -1 };
+
+  function drawSeatCounts() {
+    const t = dash.data('seat_counts');
+    if (t.status !== 'ok' || !t.data.length) return;
+    const r = t.data[0];
+    ['seats', 'active', 'week', 'month', 'quiet'].forEach(k => fill('[data-source="seat_counts"][data-field="' + k + '"]', fmtInt(r[k])));
+  }
+
+  function drawSeatMachines() {
+    const box = document.getElementById('dm-seat-machines');
+    if (!box) return;
+    box.textContent = '';
+    const d = dash.data('seats_by_machine');
+    if (d.status !== 'ok') return;
+    twoToneBars(box, d.data, r => r.machine, r => Number(r.seats), r => Number(r.active_24h),
+                r => fmtInt(Number(r.seats)) + ' seats, ' + fmtInt(Number(r.active_24h)) + ' active in 24 hours');
+  }
+
+  function seatRows(rows) {
+    const q = seatView.q.trim().toLowerCase();
+    const quiet = new Set(['inactive', 'never', 'none']);
+    const out = rows.filter(r => {
+      if (seatView.status === 'quiet' ? !quiet.has(r.status) : seatView.status && r.status !== seatView.status) return false;
+      if (!q) return true;
+      return [r.seat, r.role, r.last_machine, r.machines, r.last_commit, r.focus, r.model, r.declared]
+        .some(v => String(v || '').toLowerCase().includes(q));
+    });
+    const k = seatView.sort, dir = seatView.dir;
+    return out.sort((a, b) => {
+      const x = a[k] || '', y = b[k] || '';
+      if (!x && y) return 1;
+      if (x && !y) return -1;
+      return (x < y ? -1 : x > y ? 1 : 0) * dir || a.seat.localeCompare(b.seat);
+    });
+  }
+
+  const modelName = (m) => {
+    const g = /^claude-([a-z]+)-(\d+)-(\d+)/.exec(m || '');
+    return g ? g[1][0].toUpperCase() + g[1].slice(1) + ' ' + g[2] + '.' + g[3] : (m || '—');
+  };
+
+  function drawSeats() {
+    drawSeatCounts();
+    drawMeta();
+    drawSeatMachines();
+    const table = document.getElementById('dm-seats');
+    if (!table) return;
+    table.querySelectorAll('th[data-sort]').forEach(th => {
+      if (th.dataset.sort === seatView.sort) th.setAttribute('aria-sort', seatView.dir > 0 ? 'ascending' : 'descending');
+      else th.removeAttribute('aria-sort');
+    });
+    document.querySelectorAll('#dm-seat-chips .dm-chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.status === seatView.status)));
+    drawTable('dm-seats', 'seats', [
+      { cell: (td, r) => { td.textContent = r.seat; if (r.role) td.append(sub(r.role)); } },
+      { cell: (td, r) => {
+          td.append(stateDot(r.status), document.createTextNode(r.last_active ? when(r.last_active) : statusLabel[r.status] || '—'));
+          td.append(sub(statusLabel[r.status] + (r.last_active_via ? ', via ' + r.last_active_via : ''))); } },
+      { cell: (td, r) => { td.textContent = when(r.last_checkin); } },
+      { wide: true, cell: (td, r) => {
+          td.textContent = r.last_commit || (r.last_message ? 'Message: ' + r.last_message : '—');
+          if (r.last_commit_at) td.append(sub(when(r.last_commit_at) + (Number(r.commits_7d) ? ' · ' + fmtInt(Number(r.commits_7d)) + ' commits this week' : '')));
+          else if (r.last_message_at) td.append(sub(when(r.last_message_at))); } },
+      { cell: (td, r) => { td.textContent = r.last_machine || '—'; } },
+      { cell: (td, r) => { td.textContent = modelName(r.model); if (r.tier && r.tier !== 'unknown') td.append(sub(r.tier)); } },
+      { wide: true, cell: (td, r) => {
+          td.textContent = r.declared || '—';
+          if (r.declared_at) td.append(sub('as of ' + fmtDay(new Date(r.declared_at + 'T12:00:00Z'))));
+          if (r.focus) td.append(sub(r.focus)); } }],
+      (r) => r.seat, seatRows);
+  }
+
+  function wirePantheon(panel) {
+    const q = panel.querySelector('#dm-seat-q');
+    q.addEventListener('input', () => { seatView.q = q.value; drawSeats(); });
+    panel.querySelectorAll('#dm-seat-chips .dm-chip').forEach(b => b.addEventListener('click', () => {
+      seatView.status = b.dataset.status; drawSeats();
+    }));
+    panel.querySelectorAll('#dm-seats th[data-sort] button').forEach(btn => btn.addEventListener('click', () => {
+      const k = btn.parentElement.dataset.sort;
+      if (seatView.sort === k) seatView.dir = -seatView.dir;
+      else { seatView.sort = k; seatView.dir = /_at$|^last_active$|^last_checkin$/.test(k) ? -1 : 1; }
+      drawSeats();
+    }));
+  }
+
+  // ---- tabs
+
+  const drawers = {
+    overview: () => {
+      drawTotals();
+      drawArch();
+      drawTable('dm-built', 'pan_tables', [
+        { cell: (td, r) => { td.textContent = r.table; } },
+        { cell: (td, r) => { td.textContent = r.layer; } },
+        { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.rows)); } },
+        { num: true, cell: (td, r) => { td.textContent = r.mb == null ? '' : fmt1(Number(r.mb)); } }]);
+    },
+    machines: drawMachines,
+    pantheon: drawSeats,
+    storage: () => {
+      drawStores();
+      drawMonths();
+      drawTable('dm-types', 'untracked_by_type', [
+        { cell: (td, r) => { td.textContent = r.type; } },
+        { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.gb)); } },
+        { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.files)); } }]);
+      drawTable('dm-cold', 'cold_conversion', [
+        { cell: (td, r) => { td.textContent = r.family; } },
+        { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.source_gb)); } },
+        { cell: (td, r) => { td.textContent = r.form; } },
+        { num: true, cell: (td, r) => { td.textContent = fmt1(Number(r.ratio)) + 'x'; } },
+        { num: true, cell: (td, r) => { td.textContent = Number(r.projected_gb) < 0.1 ? '<0.1' : fmt1(Number(r.projected_gb)); } }]);
+    },
+    quality: () => {
+      drawSearch();
+      const md = dash.data('models');
+      const maxTok = d3.max((md.status === 'ok' ? md.data : []), r => Number(r.tok_s)) || 1;
+      drawTable('dm-models', 'models', [
+        { cell: (td, r) => { td.textContent = r.model; } },
+        { cell: (td, r) => { const n = (r.config.match(/\d+/) || [''])[0];
+            td.textContent = (r.config.startsWith('nothink') ? 'no thinking, ' : 'thinking, ') + n + ' tokens'; } },
+        { num: true, cell: (td, r) => { td.textContent = r.passed + ' / ' + r.probes; } },
+        { num: true, cell: (td, r) => {
+            const b = document.createElement('span'); b.className = 'dm-inbar' + (Number(r.passed) === Number(r.probes) ? ' full' : '');
+            b.style.width = Math.round(48 * Number(r.tok_s) / maxTok) + 'px';
+            td.append(b, document.createTextNode(fmt1(Number(r.tok_s)))); } }],
+        (r) => encodeURIComponent(r.model) + ',' + encodeURIComponent(r.config));
+    },
+    codereview: () => {
+      drawSmells();
+      drawTable('dm-review', 'review_queue', [
+        { cell: (td, r) => { td.textContent = r.path; td.style.overflowWrap = 'anywhere'; } },
+        { cell: (td, r) => { td.textContent = r.seat; } },
+        { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.commits_7d)); } },
+        { num: true, cell: (td, r) => { td.textContent = fmtInt(Number(r.tested_by)); } },
+        { cell: (td, r) => { td.textContent = r.smells || '—'; } }]);
+    },
+  };
+  const wire = { pantheon: wirePantheon };
+  const tabs = Array.from(document.querySelectorAll('#dm-tabs .dm-tab'));
+  let current = 'overview';
+
+  function mount(id) {
+    const panel = document.getElementById(id);
+    const tpl = panel && panel.querySelector(':scope > template');
+    if (tpl) {
+      panel.append(tpl.content.cloneNode(true));
+      tpl.remove();
+      if (wire[id]) wire[id](panel);
+    }
+    return panel;
+  }
+
+  function show(id, link) {
+    if (!drawers[id]) return;
+    current = id;
+    tabs.forEach(t => {
+      const on = t.dataset.panel === id;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.dataset.panel).hidden = !on;
+    });
+    mount(id);
+    drawers[id]();
+    if (link) dash.setLink(id);
+  }
+
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t.dataset.panel, true));
+    t.addEventListener('keydown', (ev) => {
+      const k = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
+      if (!k) return;
+      ev.preventDefault();
+      const nx = tabs[(i + k + tabs.length) % tabs.length];
+      nx.focus();
+      show(nx.dataset.panel, true);
+    });
   });
+
+  function panelOf(name) {
+    if (drawers[name]) return name;
+    const p = Array.from(document.querySelectorAll('.dm-panel')).find(s => {
+      const tpl = s.querySelector(':scope > template');
+      return tpl ? tpl.content.querySelector('[id="' + name + '"]') : s.querySelector('[id="' + name + '"]');
+    });
+    return p ? p.id : null;
+  }
+
+  const named = decodeURIComponent(location.hash.slice(1));
+  const start = named && panelOf(named);
+  show(start || 'overview', false);
+  if (start && start !== named) {
+    const el = document.getElementById(named);
+    if (el) el.scrollIntoView();
+  }
+
+  dash.onData(() => drawers[current]());
 })();
 </script>

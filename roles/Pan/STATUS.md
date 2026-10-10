@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-10T10:00Z (date -u).
+Currency: 2026-10-10T11:54Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
@@ -17,4 +17,6 @@ monitors: PanWorkLoop row in roles/base-role/MONITORS.md (bound 6).
 running: nothing; no lease held (CPU lease released 22:42:08Z). PAN-34: 3 of 5
   configurations measured; qwen3:8b and gpt-oss@4096 wait for the GPU budget.
 blockers: PAN-26 (PEW down, reported #1969); Q-001 hard gate (pgvector).
-questions for the operator: QUESTIONS.md (11 open).
+dashboard: Data Map v4 has tabs; Machines (14) and Pantheon (74 seats) tabs added (PAN-38,
+  controls/FLEET_20261010T114620Z.json 7/7); rebuild: python -m pan fleet probe + mk_datamap.py --only fleet.
+questions for the operator: QUESTIONS.md (12 open; Q-012 NEW: host keys for ubu004-006).

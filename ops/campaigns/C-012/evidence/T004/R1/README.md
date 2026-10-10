@@ -39,7 +39,10 @@ byte-verified, 146 replayed on M2, 0 replay mismatches, 0 DISAGREEMENT.
 
 - P1 operating point ADEQUATE: HELD.
 - P2 T* = 3 s, RECONSIDER at D = 1 s failing B1: HELD (it also failed B3).
-- P3 M1 about proportional to 1/D: HELD (M1 x D = 0.039, 0.046, 0.042, 0.045, 0.056 s per epoch).
+- P3 M1 about proportional to 1/D (coordination per epoch about constant): HELD. Per-epoch coordination, the
+  median claim gap + transfer + finish, is 0.105 / 0.098 / 0.104 / 0.100 / 0.127 s at D = 60 / 30 / 10 / 3 / 1;
+  M1 x D = 0.039 / 0.046 / 0.042 / 0.045 / 0.056 is roughly constant too, but it is NOT seconds of coordination
+  per epoch, because execution runs longer than D on shared cores (a 30 s epoch takes ~80 s at W = 8).
 - P4 correctness gate everywhere: HELD.
 - P5 Arm S >= 10 epochs/s at K = 16, publication the first saturating stage: NOT TESTED (Arm S deferred, below).
 - P6 B7 for all three kills (recovered within TTL + 2D = 150 s): LOST -- recovered after 189.6, 131.7 and 124.6 s.

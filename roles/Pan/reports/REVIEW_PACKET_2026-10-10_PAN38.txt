@@ -1,0 +1,230 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-38: MACHINES AND PANTHEON TABS (FLEET + SEAT VIEW)     |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-10 (built 11:30Z-11:54Z; packet 12:00Z)                     |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  BUILT, LIVE on the Data Map dashboard (page v4), controls 7/7       |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+The operator asked for tabs on the crowded Data Map dashboard, plus two new
+views: every computer in the fleet ("e-waste network") with specs, OS, RAM,
+disk and GPUs, and every seat with last active, last check-in, last work,
+active/inactive status and last machine.
+
+Delivered: six tabs (Overview, Machines, Pantheon, Storage, Search and
+models, Code review); a module pan/fleet.py that joins existing sources and
+measures what it can; a probe table pan.host_probe; live controls 7/7.
+
+Verdict: the views are a faithful JOIN of sources that already existed, with
+measured values laid over the hand-kept register where Pan could measure.
+Coverage of the measurement is partial (4 of 14 machines measured today);
+the rest is labelled as register-only or as an older probe, never presented
+as measured. Three findings came out of the join (s4.3).
+
+-----
+1. WHAT WAS BUILT (and what existed before)
+-----
+Existed before (found, not invented):
+  - infra/FLEET_HOSTS.md: the machine register, kept by the seat Achilles and
+    filled in by the operator; last changed 2026-10-06.
+  - agora.machine_probes (M1 Postgres): an older per-machine probe, 133,566
+    rows since 2026-05-24; only one machine (harry1) still reports. M1, M2
+    and M3 stopped on 2026-05-30.
+  - comms.agents / comms.agent_instances: one row per seat / per session,
+    with last activity, last sync, machine, model.
+  - pan.commit: Pan's index of every commit on main, with the seat parsed
+    from the "Seat[instance]:" subject prefix.
+  - roles/<Seat>/WORK_STATE.json (34 seats have one) and Achilles' census
+    docs/fleet/fleet_state.json (last generated 2026-10-06T22:30:02Z).
+
+Built (commit 2fa7fe6a4 on main):
+  - pan/fleet.py: register parser; read-only probes (ssh from M2 to the
+    Linux nodes; Windows CIM on the local host); merge of measured over
+    register values with every disagreement listed; seat roster; controls.
+  - pan/migrations/011_fleet.sql: pan.host_probe (append-only; failures are
+    rows too).
+  - CLI: python -m pan fleet probe | machines | seats | controls.
+  - pan/tests/test_fleet.py: 6 unit tests (register parse incl. a table that
+    must be skipped, probe parse, merge agreement, merge disagreement, the
+    unprobed case, status buckets). Pan suite: 69 passed.
+  - roles/Pan/tools/mk_datamap.py --only fleet: datasets machines (14 rows),
+    seats (74 rows), fleet_meta (freshness). Dashboard page v4 with tabs.
+
+Committed before measurement: nothing formal (this is an instrument build,
+not an experiment). The control definitions were written into
+pan.fleet.controls before the first control run; one control was found
+vacuous on that run and strengthened (s5.3) -- recorded, not hidden.
+
+-----
+2. THE CLAIM AND WHY IT MATTERS
+-----
+Claim: each row on the two tabs states where every value came from, and a
+value shown as "measured" was measured on the date shown.
+Why: the operator plans work placement (heavy CPU, GPU, light wide work)
+from this view; a register value silently presented as measured, or a seat
+shown "active" from a stale status flag, would mislead placement and
+staffing decisions. The program's own doctrine: status columns are fossils;
+presence is derived from activity.
+
+-----
+3. DESIGN AS EXECUTED
+-----
+3.1 Machines. Start from the register's two host tables (8 Windows, 6
+Linux). For each machine take the newest ok probe: Pan's (ssh or local CIM)
+if any, else agora's. Measured threads, cores, RAM, OS, CPU model, GPU,
+disks and free space replace the register's values. Disagreement rules:
+probe hostname != register host; threads differ; RAM measured < 0.85 x
+register or > register + 1 GB (MemTotal reads below nominal). Last seen =
+newest of seat session, Fabric worker heartbeat, agora probe, Pan probe.
+Status buckets: active <= 24 h, week <= 7 d, month <= 30 d, else inactive;
+none if nothing recorded.
+
+3.2 Seats. Universe = comms registrations (69) union role directories,
+minus role templates and Achilles' "historical role document" entries = 74.
+Last active = newest of comms activity, commit on main, message sent. Last
+check-in = newest comms sync. Last work = newest commit subject on main.
+Last machine = machine of the newest session. Declared = the seat's own
+WORK_STATE.json. Role line = Achilles' census (dated). The comms status
+column is NOT used.
+
+3.3 Probes are read-only: hostname, DMI vendor/product, os-release, kernel,
+uptime, /proc/cpuinfo, nproc, lscpu cores, /proc/meminfo, lsblk, df /,
+lspci display devices, loadavg. No package lists, no credential checks, no
+git fetch (an existing node_inventory.sh does those; it was not reused for
+that reason). ssh runs with BatchMode=yes and StrictHostKeyChecking=yes.
+
+-----
+4. RESULTS (snapshot 2026-10-10T11:47Z; probes 11:44Z)
+-----
+4.1 Machines: 14 in the register; 8 active in the last 24 h; 116 CPU
+threads, 70 physical cores, 258 GB RAM; 4 NVIDIA GPUs with 42 GB between
+them (M1 and M2 RTX 5060 Ti 16 GB each, M3 GTX 1070 8 GB, M4 Quadro P500
+2 GB). The two largest machines (M2 28 threads, M1 16) hold 38% of the
+threads.
+
+Measurement coverage:
+  measured today, Pan:    4  (M2 local CIM; ubu001, ubu002, ubu003 ssh)
+  measured today, agora:  1  (harry1)
+  measured 2026-05-30:    2  (M1, M3 via agora; dated in the row)
+  register only:          7  (BUCKKEEP, DESKTOP-RUAPVAI, ELSA, LIZZIE-42,
+                              ubu004, ubu005, ubu006)
+Register vs measured disagreements: 0 (threads, RAM, hostname all agree on
+the 7 measured machines).
+
+4.2 Seats: 74; active 24 h 18; 1-7 d 11; 8-30 d 44; never booted 1
+(Koios). 5 role directories have never registered on comms (Alethelia,
+Diomedes, Elenchus, Koios, Lexis); 4 of them have commits and so show a
+last-active date.
+
+4.3 Findings from the join (each is a fact about the sources, not a
+judgement of a seat):
+  F1. comms.agents.status says "active" for 42 seats with no comms activity
+      in 24 h. The column cannot be read as presence.
+  F2. Achilles' fleet census last ran 2026-10-06T22:30Z (scheduled every
+      6 h on ELSA); ELSA itself was last seen 2026-10-05T22:57Z. The census
+      role lines on the Pantheon tab are therefore 3.5 days old, and seats
+      created since (Pan, Hades) have none.
+  F3. The agora probe stopped on M1, M2 and M3 on 2026-05-30; only harry1
+      reports. Free-disk figures for M1/M3 are from that date.
+  F4. 44 seats sit in the 8-30 day bucket; most were last active
+      2026-09-11, so they cross to inactive on 2026-10-11. The headline
+      "inactive" count will jump overnight without anything changing.
+
+-----
+5. INCIDENTS (and what they validated)
+-----
+5.1 OS misread. agora reported "Windows 10" for M1, whose register says
+Windows 11 Home. Cause: Python < 3.12's platform.release() returns "10" on
+Windows 11 (M1's probe ran Python 3.11.9). Fix: agora's OS is used only
+when the register has none, and an ambiguous "10" is shown as "Windows 10
+or 11 (probe cannot tell)". Caught before publishing.
+5.2 Time zone slip. The freshness field last_probe_at was printed from a
+local-time (-04:00) timestamp as if it were UTC (07:44 instead of 11:44).
+Caught on inspection before publishing; now converted with the module's own
+UTC formatter.
+5.3 Vacuous control. The first CHEAT control checked seats whose comms
+status says active but who were idle 30 days; there were 0 such rows, so it
+tested nothing while passing. Strengthened to 24 h (42 rows) and made to
+FAIL if no such rows exist.
+5.4 Host keys. ssh to ubu004-006 was refused: M2's known_hosts has no entry
+for them (Achilles provisioned them from ELSA). Not a changed key. Pan did
+not add keys (a trust decision on the operator's admin machine) -> Q-012.
+
+-----
+6. CONTROLS (controls/FLEET_20261010T114620Z.json, PASS 7/7)
+-----
+  POSITIVE  local host measured = register (M2: 28 threads; 31.8 GiB vs
+            32 GB)                                                    PASS
+  POSITIVE  at least one ssh probe succeeds (3 of 6)                   PASS
+  POSITIVE  Pan itself shows active, last machine SPECTREX5            PASS
+  NEGATIVE  probe of unroutable 192.0.2.1 fails and is recorded failed  PASS
+  NEGATIVE  every never-probed machine is labelled "register only" (7) PASS
+  CHEAT     a register row claiming 999 threads for a measured host is
+            flagged as a disagreement, not silently replaced           PASS
+  CHEAT     of 42 seats whose status column says active with comms idle
+            > 24 h, none is reported active on comms evidence          PASS
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does: the tabs show the register faithfully, measured values where measured,
+and activity-derived seat status; the merge flags lies it is fed (CHEAT).
+Does NOT:
+  - verify the 7 register-only machines (their specs are the operator's and
+    Achilles' records, unverified by Pan);
+  - verify M1/M3 since 2026-05-30;
+  - say a seat is productive: "active" means it made a comms call, commit
+    or message, not that it produced anything of value;
+  - see work on branches: last work is the newest commit on main only;
+  - stay current by itself: the datasets are snapshots, rebuilt by Pan on
+    its loop until 2026-10-12, then marked stale (12 h threshold).
+
+-----
+8. DECISION / RECOMMENDATION (operator's call; Pan's lean)
+-----
+  a) Q-012: allow accept-new for the three ubu host keys? Pan's lean: yes
+     (LAN, first contact only, a changed key still refused) -- but it is
+     the operator's trust store, so the default stays no.
+  b) Long-term owner of machine measurement: Achilles (the register's
+     keeper) or a scheduled job; Pan's probe is a stopgap. Pan's lean: fold
+     Pan's read-only probe into Achilles' census once the census runs again
+     (F2), rather than Pan running fleet monitoring past its window.
+  c) F2 (census stopped) is worth a look by whoever owns ELSA.
+  d) "Not worth continuing" is a valid answer: the register plus comms
+     already answer most placement questions by hand.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  1. Is "last commit on main" a misleading proxy for "last work/project"
+     for seats that work on branches for days? Should branch tips count?
+  2. Are the 24 h / 7 d / 30 d buckets the right cut, or does F4 (a jump of
+     ~40 seats into "inactive" overnight) show the buckets mislead?
+  3. Is the RAM disagreement rule (< 0.85 x or > +1 GB) loose enough to hide
+     a real wrong register entry (e.g. 8 GB recorded, 7 GB fitted)?
+  4. Should the Machines tab show a register-only row at all, or grey it
+     until measured?
+  5. Is anything on the tabs a status column in disguise (a value nobody
+     re-derives)?
+
+-----
+10. ARTIFACTS
+-----
+  commit 2fa7fe6a4 (main): pan/fleet.py, pan/migrations/011_fleet.sql,
+    pan/tests/test_fleet.py, pan/__main__.py, roles/Pan/tools/mk_datamap.py,
+    roles/Pan/tools/datamap_page.html (page v4, identical to the stored page)
+  controls: roles/Pan/reports/controls/FLEET_20261010T114620Z.json
+  probe rows: pan.host_probe, run fleet-probe-20261010T114435Z-spectrex5
+    (7 rows: 4 ok, 3 failed with "Host key verification failed.")
+  dashboard: https://claude.ai/artifact/WygNq5aG2tp4xFiDJxYZCE
+    (datasets machines, seats, fleet_meta; store batch 11:53:39Z)
+  question: roles/Pan/QUESTIONS.md Q-012
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "the register is good enough; drop the probe".                              |
++==============================================================================+

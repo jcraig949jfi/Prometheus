@@ -1,0 +1,50 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T006",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T114804Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q3",
+ "start_sha": "5a53c6885f0ef3fcecab2e573a32976feea825b7",
+ "end_sha": "f50d01e430580defcf5ffe9b09bcffb55807c68d",
+ "files_changed": [
+  "moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md",
+  "ops/campaigns/C-012/evidence/T006/"
+ ],
+ "evidence_added": [
+  "moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md: the OP-NF2 engineering review packet (deliverable 7), pure ASCII, self-contained: three findings kept separate (correctness / cost / native worlds), the T004 preregistered results with failure shapes, T007's run, defects and process holes, residual risks (credentials, isolation), options A-D for the operator with Themis's lean (A: adopt and park) and its dissent, nine reviewer questions; 'not worth continuing' is option C",
+  "evidence/T006/time_native_reference.py + NATIVE_REFERENCE_TIMING.json: in-process reference replay of N20261010A's three chains, 0.0016-0.0021 s per 4-epoch chain (49.5-64.7 us per tick) on M2, against 1.3-2.5 s of Fabric attempt run time per epoch (17-19 s for each node's first)"
+ ],
+ "evidence_executed": [
+  "ASCII check over the packet bytes: none >= 0x80 (and LANG=C.UTF-8 grep -nP for non-ASCII: no line); every banner line 80 columns",
+  "every number re-read from its artifact while writing: T004 R1 REPORT.json, README.md and RUN_LOG.jsonl, the T004 prereg, the T002/T004/T007 receipts, NATIVE N20261010A RUN.json + README, TWO_NODE Q20261010A DB_SUMMARY.json + README, contract s5; comms synced 11:38Z (nothing newer than #2044)",
+  "timing: 5 repetitions at 2026-10-10T11:44:02Z on SPECTREX5; each genesis re-derived and hash-equal to the run's"
+ ],
+ "red_observed": {
+  "observed": false,
+  "sha": null,
+  "detail": "review task (red_required false)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "the author reviewing the author's own work: the packet is written FOR external review and is not one",
+  "T001 stays open: Odysseus has not reviewed the contract (#1987); a contract v0.3 recording what T004-T007 added is owed",
+  "the in-process timing ran while the operator's experiments loaded M2: upper bounds for that host; the nodes are slower per tick",
+  "the packet was drafted in the session scratchpad before this claim; the task was worked while READY, without a lease (single owner, no contention)",
+  "found while writing: CAMPAIGN.json created_at_utc and the PROPOSED entries of T001-T006 carry an ESTIMATED 07:40:00Z, after their own READY entries (07:24:45Z) and after the creating commit 5fad1b1ee (07:25:05Z); the append-only records are left as they are and the error is recorded in packet s5"
+ ],
+ "unresolved": [
+  "the operator's decision (packet s7): A adopt and park / B harden now / C stop / D offer to the RSO Observatory",
+  "T001 review (Odysseus); contract v0.3",
+  "T004 Arm S (P5), only if the operator wants it"
+ ],
+ "unblocks": [
+  "the operator's decision on the native fabric's future"
+ ],
+ "created_at_utc": "2026-10-10T11:48:04Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Delivered three ways (review-packet house style): the file at moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md, pushed to main with this receipt, and posted in full as one ASCII block in the operator session's chat on the same turn."
+}

@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-10T09:35Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-10T11:54Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] PAN-34: finish the model runs within budget (gpt-oss@4096 needs ~1.5-2 GPU-h: tomorrow),
@@ -11,8 +11,10 @@ date, purged after 24 h (base role s7).
 - [ ] PAN-37: first calibrated reviewer = a local model on the 60-item set (GPU, after PAN-34 runs); portal view
       of the review queue; dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-10T14:30Z)
+- [ ] Machines/Pantheon tabs: re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
+      upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
-- [ ] Act on operator answers (QUESTIONS.md Q-001..Q-010) when they arrive
+- [ ] Act on operator answers (QUESTIONS.md Q-001..Q-012) when they arrive
 - [ ] Closing report at the window end (2026-10-12T10:40Z)
 
 Closed 2026-10-09: charter, inventory, catalog, commits, chunks, vectors,

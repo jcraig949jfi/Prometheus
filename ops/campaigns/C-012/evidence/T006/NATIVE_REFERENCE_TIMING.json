@@ -1,0 +1,74 @@
+{
+ "what": "in-process reference replay of N20261010A's chains (model.replay_chain), the work a native epoch carries, vs the Fabric attempt run time the run recorded",
+ "host": "SPECTREX5",
+ "python": "3.14.4",
+ "cpu_count": 28,
+ "measured_at_utc": "2026-10-10T11:44:02Z",
+ "reps": 5,
+ "note": "M2 was carrying the operator's experiments; the times are upper bounds for this host",
+ "chains": [
+  {
+   "chain_id": "NW1-E0",
+   "world_id": "Wbeea140cff34638d",
+   "horizon": 128,
+   "ticks": 32,
+   "replay_s": [
+    0.002237,
+    0.002104,
+    0.002085,
+    0.002037,
+    0.002055
+   ],
+   "min_s": 0.002037,
+   "us_per_tick_min": 63.7,
+   "fabric_run_s": [
+    18.871,
+    17.005,
+    2.417,
+    2.462
+   ]
+  },
+  {
+   "chain_id": "NW5-E0",
+   "world_id": "W20d3ef324b27eedd",
+   "horizon": 256,
+   "ticks": 32,
+   "replay_s": [
+    0.001628,
+    0.001583,
+    0.001605,
+    0.001583,
+    0.00164
+   ],
+   "min_s": 0.001583,
+   "us_per_tick_min": 49.5,
+   "fabric_run_s": [
+    1.403,
+    2.348,
+    1.573,
+    2.364
+   ]
+  },
+  {
+   "chain_id": "NW8-E0",
+   "world_id": "W125c2d03b50da697",
+   "horizon": 128,
+   "ticks": 32,
+   "replay_s": [
+    0.002211,
+    0.002077,
+    0.002071,
+    0.002076,
+    0.002085
+   ],
+   "min_s": 0.002071,
+   "us_per_tick_min": 64.7,
+   "fabric_run_s": [
+    1.342,
+    2.357,
+    2.369,
+    2.348
+   ]
+  }
+ ]
+}

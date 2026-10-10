@@ -3,19 +3,19 @@
   "seat": "Hades",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-07T09:49:53Z",
+  "updated_at_utc": "2026-10-10T12:09:27Z",
   "state": "WORKING",
-  "instance": "skullport-c8fad9a0 (SKULLPORT)",
-  "branch": "hades/base-role-adopt-2026-10-07",
-  "base_sha": "21a75bc65998f5b5747beb6ba22bc9a782bd5172",
+  "instance": "m1-ca525615 (SKULLPORT)",
+  "branch": "hades/wake-2026-10-10",
+  "base_sha": "3e7001e139021338c28c0678e89e79616221ca68",
   "head_sha": "(this commit; see git log -1 -- roles/Hades/WORK_STATE.json)",
   "model": "claude-opus-5-5",
   "host": "SKULLPORT",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-07): CHIASMA, roles/Hades/prompts/2026-10-07_charter/.",
   "current_objective": "CHIASMA E1: four handcrafted organisms (O1-O4) on one Paradigm World under matched resources (charter s7), gated by WT-0",
-  "current_step": "E1 DONE at AUTHOR_TESTED: primary FAIL (O4 beats O1+O2 in 3/9 cells, only R21), NOT_ATTRIBUTED; awaiting operator ruling (HADES-10) and an outside G3 challenge",
+  "current_step": "E1b dev sizing done (dev seeds 910001-010, 2240 runs, 1.19 core-h): E1 consolidation is not compression (O0 smaller P 30/30 in frozen E1 rows); freeze x repair 2x2; binding budget. No regime has the O4-family arm best. Proposed E1b C1/C2 confirmatory pair held for G3 (Hestia #2046/#2049). Next: HADES-28 factoring-lever design.",
   "in_flight": [],
-  "progress": "charter 5c0b3812a; engine+WT-0 7be84fe6c; prereg 591ad0591; freeze 02b5f57a1; E1 eval 840/840 + REPORT_E1.md",
+  "progress": "E1 840/840 (ec65243fd); wake d8bff7b45; e1b dev-1 64d67730b; dev-2 f29c2e882; dev-3 (see git log -- chiasma/e1b)",
   "finish_condition": "E1 receipts on evaluation seeds under a frozen prereg + REPORT_E1.md at AUTHOR_TESTED + outside challenge requested (HADES-08, HADES-09)",
   "next_expected_milestone": "operator ruling on E1; G3 outside challenge",
   "expected_next_artifact": "roles/Hades/prompts/<date>_e1_ruling/ or chiasma/PREREG_E1b.md (only after the ruling)",
@@ -26,23 +26,24 @@
   "running": [],
   "blocked": [],
   "blocked_on": [],
-  "resource_status": "none held; E1 used 1.04 CPU core-hours locally",
+  "resource_status": "none held; E1b dev total 1.19 CPU core-hours local (R2 envelope)",
   "last_receipt": "roles/Hades/journal/2026-10-07.md",
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
-  "session_started_utc": "UNKNOWN (not inferred)",
-  "next": "wait for the operator's E1 ruling; meanwhile request a G3 reviewer through Aporia; no evolution, no E1b freeze before the ruling",
+  "session_started_utc": "2026-10-10T11:33:55Z",
+  "next": "HADES-28 factoring-lever design (shared abstraction vertex); E1b C1/C2 freeze after G3",
   "next_actions": [
-    "HADES-02 DESIGN_E1.md",
-    "HADES-03 world generator + tests",
-    "HADES-04 WT-0",
-    "HADES-05 organisms + controls",
-    "HADES-06 dev-seed sizing, then HADES-07 freeze prereg"
+    "HADES-28 chiasma/e1c/DESIGN.md factoring lever",
+    "HADES-27 freeze PREREG_E1b (C1/C2) after G3",
+    "HADES-09 G3 challenge pending (Hestia)"
   ],
   "operator_decisions_required": [
-    "HADES-10: E1 primary FAIL -> KILL or REVISE O4; seat recommends REVISE (E1b on O4L provenance repair with counterfeit + fixed ceiling; multi-abstraction world), no evolution"
+    "G4: evolution -- not requested; no tested regime meets charter s7",
+    "KILL vs REVISE-toward-factoring of the discrete O4 design: dev evidence (chiasma/e1b/DEV_NOTES.md s8) leans KILL for O4 as designed; the seat continues REVISE (factoring lever) as the R1 default unless the operator kills"
   ],
   "latest_reports": [
-    "roles/Hades/journal/2026-10-07.md (creation pass)"
+    "chiasma/e1b/DEV_NOTES.md",
+    "chiasma/REPORT_E1.md (addendum 2026-10-10)",
+    "roles/Hades/journal/2026-10-10.md"
   ]
 }
