@@ -1,0 +1,418 @@
+{
+ "schema": "moonshot.nf.mutation_table.v1",
+ "head": "798f58456d8dc28cd764c3c1b2f6cd8ad8f832b4",
+ "moonshot_dirty": false,
+ "seconds": 29.2,
+ "results": [
+  {
+   "id": "PM01",
+   "what": "publish guard ignores the chain generation",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_stale_worker_cannot_advance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_stale_worker_cannot_advance (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_stale_worker_cannot_advance)"
+  },
+  {
+   "id": "PM02",
+   "what": "publish guard ignores the claimed parent digest",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication",
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests"
+   ],
+   "verdict": "KILLED",
+   "seconds": 7.6,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_the_claimed_parent_must_be_the_head (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_the_claimed_parent_must_be_the_head)"
+  },
+  {
+   "id": "PM03",
+   "what": "no idempotency per attempt",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_same_attempt_twice_returns_the_recorded_outcome",
+    "moonshot.nf.tests.test_pg_publication.TestCrashAndRollback"
+   ],
+   "verdict": "KILLED",
+   "seconds": 11.6,
+   "tail": [
+    "FAILED (errors=3)"
+   ],
+   "first_failure": "ERROR: test_same_attempt_twice_returns_the_recorded_outcome (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_same_attempt_twice_returns_the_recorded_outcome)"
+  },
+  {
+   "id": "PM04",
+   "what": "no chain row lock in publish",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestConcurrency"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.8,
+   "tail": [
+    "FAILED (failures=2)"
+   ],
+   "first_failure": "FAIL: test_eight_identical_racers_one_publication (moonshot.nf.tests.test_pg_publication.TestConcurrency.test_eight_identical_racers_one_publication)"
+  },
+  {
+   "id": "PM05",
+   "what": "a disagreement does not halt the chain",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_conflicting_result_is_preserved_and_fails_closed"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_conflicting_result_is_preserved_and_fails_closed (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_conflicting_result_is_preserved_and_fails_closed)"
+  },
+  {
+   "id": "PM06",
+   "what": "objects are not content-addressed",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_objects_are_content_addressed_by_the_database"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_objects_are_content_addressed_by_the_database (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_objects_are_content_addressed_by_the_database)"
+  },
+  {
+   "id": "PM07",
+   "what": "results are not append-only",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_immutable_tables_refuse_rewrites_even_by_superuser"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (failures=2)"
+   ],
+   "first_failure": "FAIL: test_immutable_tables_refuse_rewrites_even_by_superuser (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_immutable_tables_refuse_rewrites_even_by_superuser) (sql='UPDATE {s}.results SET first_seen_at = now()')"
+  },
+  {
+   "id": "PM08",
+   "what": "an overturn of epoch 1 does not raise the generation",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_resolution_overturned_rewinds_and_stale_follows"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (errors=1)"
+   ],
+   "first_failure": "ERROR: test_resolution_overturned_rewinds_and_stale_follows (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_resolution_overturned_rewinds_and_stale_follows)"
+  },
+  {
+   "id": "PM09",
+   "what": "every resolution upholds",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests"
+   ],
+   "verdict": "KILLED",
+   "seconds": 3.5,
+   "tail": [
+    "FAILED (failures=3)"
+   ],
+   "first_failure": "FAIL: test_bytes_that_fail_validation_open_a_contest_and_can_be_overturned (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_bytes_that_fail_validation_open_a_contest_and_can_be_overturned)"
+  },
+  {
+   "id": "PM10",
+   "what": "a validation mismatch does not halt",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_validation_mismatch_with_descendants_taints_and_halts"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_validation_mismatch_with_descendants_taints_and_halts (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_validation_mismatch_with_descendants_taints_and_halts)"
+  },
+  {
+   "id": "PM11",
+   "what": "the publisher is also granted record_validation",
+   "file": "nf/pg.py",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_publication_starts_unvalidated_and_only_a_validator_validates"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_publication_starts_unvalidated_and_only_a_validator_validates (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_publication_starts_unvalidated_and_only_a_validator_validates)"
+  },
+  {
+   "id": "PM12",
+   "what": "the publisher skips its semantic checks",
+   "file": "nf/pg.py",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication"
+   ],
+   "verdict": "KILLED",
+   "seconds": 3.7,
+   "tail": [
+    "FAILED (failures=2)"
+   ],
+   "first_failure": "FAIL: test_the_publisher_refuses_a_forged_identity (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_the_publisher_refuses_a_forged_identity)"
+  },
+  {
+   "id": "PM13",
+   "what": "publish does not retry when the connection dies",
+   "file": "nf/pg.py",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestCrashAndRollback"
+   ],
+   "verdict": "KILLED",
+   "seconds": 9.7,
+   "tail": [
+    "FAILED (failures=1, errors=2)"
+   ],
+   "first_failure": "ERROR: test_a_dead_connection_is_replaced_before_publishing (moonshot.nf.tests.test_pg_publication.TestCrashAndRollback.test_a_dead_connection_is_replaced_before_publishing)"
+  },
+  {
+   "id": "PM14",
+   "what": "PUBLIC keeps EXECUTE on the functions",
+   "file": "nf/pg.py",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestAuthority.test_public_has_nothing"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_public_has_nothing (moonshot.nf.tests.test_pg_publication.TestAuthority.test_public_has_nothing)"
+  },
+  {
+   "id": "PM15",
+   "what": "publish guard ignores the input checkpoint",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication"
+   ],
+   "verdict": "KILLED",
+   "seconds": 3.8,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_an_epoch_from_another_input_never_extends_the_lineage (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_an_epoch_from_another_input_never_extends_the_lineage)"
+  },
+  {
+   "id": "PM16",
+   "what": "the database skips the trace_bytes claim",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_the_database_checks_every_manifest_claim"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=2)"
+   ],
+   "first_failure": "FAIL: test_the_database_checks_every_manifest_claim (moonshot.nf.tests.test_pg_publication.TestGuardedPublication.test_the_database_checks_every_manifest_claim) (error='trace_bytes', change=['manifest'])"
+  },
+  {
+   "id": "PM17",
+   "what": "an overturn at k>1 keeps the rejected head's checkpoint",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_overturn_at_a_later_epoch_rewinds_to_its_parent"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_overturn_at_a_later_epoch_rewinds_to_its_parent (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_overturn_at_a_later_epoch_rewinds_to_its_parent)"
+  },
+  {
+   "id": "PM18",
+   "what": "a pending adverse validation is dropped at resolution",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_an_adverse_validation_during_an_open_contest_is_not_dropped"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_an_adverse_validation_during_an_open_contest_is_not_dropped (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_an_adverse_validation_during_an_open_contest_is_not_dropped)"
+  },
+  {
+   "id": "PM19",
+   "what": "a stale validation is attributed to the live epoch",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_a_validation_names_the_bytes_it_validated"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_validation_names_the_bytes_it_validated (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_a_validation_names_the_bytes_it_validated)"
+  },
+  {
+   "id": "PM20",
+   "what": "contests are unguarded",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_contest_grounds_are_immutable_and_a_resolution_is_final"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=3)"
+   ],
+   "first_failure": "FAIL: test_contest_grounds_are_immutable_and_a_resolution_is_final (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_contest_grounds_are_immutable_and_a_resolution_is_final) (sql=\"UPDATE {s}.contests SET challenger_epoch_digest = 'x'\")"
+  },
+  {
+   "id": "PM21",
+   "what": "a chain's generation may decrease",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_chain_identity_is_immutable_and_its_generation_only_grows"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_chain_identity_is_immutable_and_its_generation_only_grows (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_chain_identity_is_immutable_and_its_generation_only_grows) (sql='UPDATE {s}.chains SET generation = generation - 1')"
+  },
+  {
+   "id": "PM22",
+   "what": "a dead connection is never replaced",
+   "file": "nf/pg.py",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestCrashAndRollback"
+   ],
+   "verdict": "KILLED",
+   "seconds": 18.9,
+   "tail": [
+    "FAILED (failures=1, errors=2)"
+   ],
+   "first_failure": "ERROR: test_a_dead_connection_is_replaced_before_publishing (moonshot.nf.tests.test_pg_publication.TestCrashAndRollback.test_a_dead_connection_is_replaced_before_publishing)"
+  },
+  {
+   "id": "PM23",
+   "what": "attempts may be truncated",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_immutable_tables_refuse_rewrites_even_by_superuser"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.4,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_immutable_tables_refuse_rewrites_even_by_superuser (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_immutable_tables_refuse_rewrites_even_by_superuser) (sql='TRUNCATE {s}.attempts CASCADE')"
+  },
+  {
+   "id": "PM24",
+   "what": "an INVALID validation opens no contest",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_bytes_that_fail_validation_open_a_contest_and_can_be_overturned"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (errors=1)"
+   ],
+   "first_failure": "ERROR: test_bytes_that_fail_validation_open_a_contest_and_can_be_overturned (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_bytes_that_fail_validation_open_a_contest_and_can_be_overturned)"
+  },
+  {
+   "id": "PM25",
+   "what": "a resolved contest can be reopened",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_contest_grounds_are_immutable_and_a_resolution_is_final"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.6,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_contest_grounds_are_immutable_and_a_resolution_is_final (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_contest_grounds_are_immutable_and_a_resolution_is_final) (sql=\"UPDATE {s}.contests SET state = 'CONTESTED'\")"
+  },
+  {
+   "id": "PM26",
+   "what": "VALIDATED is accepted with a disagreeing replay",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_a_validation_names_the_bytes_it_validated"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_validation_names_the_bytes_it_validated (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_a_validation_names_the_bytes_it_validated)"
+  },
+  {
+   "id": "PM27",
+   "what": "no one-live-publication index",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_the_database_admits_one_live_publication_per_position"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_the_database_admits_one_live_publication_per_position (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_the_database_admits_one_live_publication_per_position) (sql=\"INSERT INTO {s}.publications (chain_id, epoch_index, work_id, epoch_digest, generation, attempt_id, published_by) VALUES ('C1', 1, '6b3765e7084a277edbd09154e24c84308ed051206b29cba88b0d30aaeac73b61', 'f7273f5ee4332cb77ca05cec275c6396acf16fe2e1476cc22bff8725788930f4', 99, 'att-x', 'x')\")"
+  },
+  {
+   "id": "PM28",
+   "what": "no one-open-contest index",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestValidationAndContests"
+   ],
+   "verdict": "KILLED",
+   "seconds": 3.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_an_adverse_validation_during_an_open_contest_is_not_dropped (moonshot.nf.tests.test_pg_publication.TestValidationAndContests.test_an_adverse_validation_during_an_open_contest_is_not_dropped)"
+  },
+  {
+   "id": "PM29",
+   "what": "a head move need not raise the generation",
+   "file": "nf/schema.sql",
+   "targets": [
+    "moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_chain_identity_is_immutable_and_its_generation_only_grows"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.3,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_chain_identity_is_immutable_and_its_generation_only_grows (moonshot.nf.tests.test_pg_publication.TestSchemaAndIdentity.test_chain_identity_is_immutable_and_its_generation_only_grows) (sql=\"UPDATE {s}.chains SET head_index = 1, head_epoch_digest = 'x'\")"
+  }
+ ],
+ "killed": 29,
+ "total": 29
+}

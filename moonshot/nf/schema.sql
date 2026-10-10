@@ -396,6 +396,25 @@ BEGIN
     RETURN QUERY SELECT v_out, v_pub, v_contest, v_gen, FALSE;
 END $$;
 
+-- A durable receipt (C-012-T003): canonical bytes stored content-addressed, and an append-only event naming them
+-- with the head they describe.
+CREATE OR REPLACE FUNCTION {schema}.record_receipt(p_chain_id TEXT, p_receipt BYTEA, p_actor TEXT) RETURNS TEXT
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = {schema}, pg_temp AS $$
+DECLARE
+    c chains%ROWTYPE;
+    h TEXT;
+BEGIN
+    SELECT * INTO c FROM chains WHERE chains.chain_id = p_chain_id;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'moonshot: no chain %', p_chain_id;
+    END IF;
+    h := put_object(p_receipt);
+    INSERT INTO events (actor, kind, chain_id, detail)
+    VALUES (p_actor, 'receipt', p_chain_id, jsonb_build_object('sha256', h, 'head_index', c.head_index,
+                                                               'generation', c.generation, 'state', c.state));
+    RETURN h;
+END $$;
+
 -- INVALID (failed the publisher's semantic checks) or REFUSED_UNAPPROVED (code not approved): recorded, never
 -- published. Idempotent per attempt.
 CREATE OR REPLACE FUNCTION {schema}.record_attempt_outcome(
