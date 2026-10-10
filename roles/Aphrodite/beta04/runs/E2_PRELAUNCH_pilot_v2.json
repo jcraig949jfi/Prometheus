@@ -1,0 +1,1801 @@
+{
+ "checks": {
+  "certifier_recheck": {
+   "pass": true,
+   "pass_routes": true,
+   "pass_witnesses": true,
+   "route_disagreements": [],
+   "route_failures": [
+    {
+     "FINAL": {
+      "qualified": false,
+      "task_tribunal_ok": false,
+      "test_ok": true,
+      "tribunal_ok": false
+     },
+     "T0": {
+      "qualified": false,
+      "task_tribunal_ok": false,
+      "test_ok": true,
+      "tribunal_ok": false
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F018-R2",
+     "foundry_qualified": false,
+     "program": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))",
+     "qualified": false,
+     "route": "kp (SEALED mechanisms)"
+    }
+   ],
+   "route_rule": "PASS iff the E2 certifier's verdict (test + T0 + FINAL generated tribunals + task tribunal) EQUALS the foundry's recorded verdict for every route solution (kp: SOLVED and tribunal_ok; chain_d: SOLVED; chain_c: ACQUIRED, test_ok and tribunal_ok). E2 stricter on a foundry-accepted route (headroom loss) or looser on a rejected one both FAIL. Routes the foundry itself rejected are listed in route_failures for information.",
+   "route_solutions": [
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F019-R2",
+     "foundry_qualified": true,
+     "program": "(sum (map (lam x (f1 (f1 x))) xs))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F027-R2",
+     "foundry_qualified": true,
+     "program": "(f1 (f1 (head xs)))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F033-R2",
+     "foundry_qualified": true,
+     "program": "(sum (scanl (lam a (lam b (s0 a b))) 1 xs))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F061-R3",
+     "foundry_qualified": true,
+     "program": "(sum (map (lam x (f1 x)) (filter (lam x (p0 x)) xs)))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F061-R3",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "p0"
+     ],
+     "program": "(sum (map (lam x (q0 x)) (filter (lam x (q1 x)) xs)))",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F081-R3",
+     "foundry_qualified": true,
+     "program": "(sum (filter (lam x (p0 x)) (map (lam x (f1 x)) xs)))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F081-R3",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "p0"
+     ],
+     "program": "(sum (filter (lam x (q1 x)) (map (lam x (q0 x)) xs)))",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F085-R3",
+     "foundry_qualified": true,
+     "program": "(map (lam x (if (p0 x) (f1 x) x)) xs)",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W0467897d-F085-R3",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "p0"
+     ],
+     "program": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F015-R2",
+     "foundry_qualified": true,
+     "program": "(pow (sum (map (lam x (f1 x)) xs)) 2)",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": false,
+      "task_tribunal_ok": false,
+      "test_ok": true,
+      "tribunal_ok": false
+     },
+     "T0": {
+      "qualified": false,
+      "task_tribunal_ok": false,
+      "test_ok": true,
+      "tribunal_ok": false
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F018-R2",
+     "foundry_qualified": false,
+     "program": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))",
+     "qualified": false,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F023-R2",
+     "foundry_qualified": true,
+     "program": "(sum (map (lam x (f1 (f1 x))) xs))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F027-R3",
+     "foundry_qualified": true,
+     "program": "(foldl (lam a (lam b (s0 a (f1 b)))) 0 xs)",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F027-R3",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "s0"
+     ],
+     "program": "(foldl (lam a (lam b (q2 a (q0 b)))) 0 xs)",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F035-R3",
+     "foundry_qualified": true,
+     "program": "(f1 (foldl (lam a (lam b (s0 a b))) 0 xs))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F035-R3",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "s0"
+     ],
+     "program": "(q0 (foldl (lam a (lam b (q2 a b))) 0 xs))",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F071-R4",
+     "foundry_qualified": true,
+     "program": "(filter (lam x (p0 x)) (map (lam x (f1 x)) xs))",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F071-R4",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "p0"
+     ],
+     "program": "(filter (lam x (q1 x)) (map (lam x (q0 x)) xs))",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F077-R4",
+     "foundry_qualified": true,
+     "program": "(map (lam x (if (p0 x) (f1 x) x)) xs)",
+     "qualified": true,
+     "route": "kp (SEALED mechanisms)"
+    },
+    {
+     "FINAL": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "T0": {
+      "qualified": true,
+      "task_tribunal_ok": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     },
+     "agrees_with_foundry": true,
+     "family_id": "W1d5301d0-F077-R4",
+     "foundry_qualified": true,
+     "mechanisms": [
+      "f1",
+      "p0"
+     ],
+     "program": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+     "qualified": true,
+     "route": "chain_d (ACQUIRED primitives)"
+    },
+    {
+     "agrees_with_foundry": true,
+     "by_salt": {
+      "FINAL": true,
+      "T0": true
+     },
+     "family_id": "W0467897d-F006-R1",
+     "foundry_qualified": true,
+     "program": "(min (map (lam x (gcd 0 (pow x 3))) xs))",
+     "qualified": true,
+     "route": "chain_c R1 acquisition of W0467897d/f1"
+    },
+    {
+     "agrees_with_foundry": true,
+     "by_salt": {
+      "FINAL": true,
+      "T0": true
+     },
+     "family_id": "W0467897d-F008-R1",
+     "foundry_qualified": true,
+     "program": "(len (filter (lam x (lt 1 (sub x 3))) xs))",
+     "qualified": true,
+     "route": "chain_c R1 acquisition of W0467897d/p0"
+    },
+    {
+     "agrees_with_foundry": true,
+     "by_salt": {
+      "FINAL": true,
+      "T0": true
+     },
+     "family_id": "W1d5301d0-F006-R1",
+     "foundry_qualified": true,
+     "program": "(div (add 1 (last xs)) 3)",
+     "qualified": true,
+     "route": "chain_c R1 acquisition of W1d5301d0/f1"
+    },
+    {
+     "agrees_with_foundry": true,
+     "by_salt": {
+      "FINAL": true,
+      "T0": true
+     },
+     "family_id": "W1d5301d0-F008-R1",
+     "foundry_qualified": true,
+     "program": "(filter (lam x (lt x (add 2 3))) xs)",
+     "qualified": true,
+     "route": "chain_c R1 acquisition of W1d5301d0/p0"
+    },
+    {
+     "agrees_with_foundry": true,
+     "by_salt": {
+      "FINAL": true,
+      "T0": true
+     },
+     "family_id": "W1d5301d0-F012-R1",
+     "foundry_qualified": true,
+     "program": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+     "qualified": true,
+     "route": "chain_c R1 acquisition of W1d5301d0/s0"
+    }
+   ],
+   "witnesses": [
+    {
+     "exists": true,
+     "family_id": "W0467897d-F019-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 16
+    },
+    {
+     "checks": [
+      {
+       "program": "(sum (map (lam x (L_1060e619863f (L_1060e619863f x))) xs))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W0467897d-F019-R2",
+     "kind": "library_witness",
+     "program": "(sum (map (lam x (L_1060e619863f (L_1060e619863f x))) xs))",
+     "qualified": true,
+     "required": false,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W0467897d-F027-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 10
+    },
+    {
+     "checks": [
+      {
+       "program": "(pow (head (map (lam x (L_1060e619863f x)) xs)) 3)",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W0467897d-F027-R2",
+     "kind": "library_witness",
+     "program": "(pow (head (map (lam x (L_1060e619863f x)) xs)) 3)",
+     "qualified": true,
+     "required": false,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W0467897d-F033-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 15
+    },
+    {
+     "exists": true,
+     "family_id": "W0467897d-F061-R3",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 14
+    },
+    {
+     "checks": [
+      {
+       "program": "(sum (map (lam x (L_1060e619863f x)) (filter (lam x (L_5abaefe6aefe x)) xs)))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "kind": "library_witness",
+     "program": "(sum (map (lam x (L_1060e619863f x)) (filter (lam x (L_5abaefe6aefe x)) xs)))",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W0467897d-F081-R3",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 14
+    },
+    {
+     "checks": [
+      {
+       "program": "(sum (filter (lam x (L_5abaefe6aefe x)) (map (lam x (L_1060e619863f x)) xs)))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "kind": "library_witness",
+     "program": "(sum (filter (lam x (L_5abaefe6aefe x)) (map (lam x (L_1060e619863f x)) xs)))",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W0467897d-F085-R3",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 14
+    },
+    {
+     "checks": [
+      {
+       "program": "(map (lam x (if (L_5abaefe6aefe x) (L_1060e619863f x) x)) xs)",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "List"
+      }
+     ],
+     "family_id": "W0467897d-F085-R3",
+     "kind": "library_witness",
+     "program": "(map (lam x (if (L_5abaefe6aefe x) (L_1060e619863f x) x)) xs)",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F015-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 17
+    },
+    {
+     "checks": [
+      {
+       "program": "(mul (sum (map (lam x (L_a7616ca2cd22 x)) xs)) (sum (map (lam x (L_a7616ca2cd22 x)) xs)))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W1d5301d0-F015-R2",
+     "kind": "library_witness",
+     "program": "(mul (sum (map (lam x (L_a7616ca2cd22 x)) xs)) (sum (map (lam x (L_a7616ca2cd22 x)) xs)))",
+     "qualified": true,
+     "required": false,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F018-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 11
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F023-R2",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 12
+    },
+    {
+     "checks": [
+      {
+       "program": "(sum (map (lam x (L_a7616ca2cd22 (L_a7616ca2cd22 x))) xs))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W1d5301d0-F023-R2",
+     "kind": "library_witness",
+     "program": "(sum (map (lam x (L_a7616ca2cd22 (L_a7616ca2cd22 x))) xs))",
+     "qualified": true,
+     "required": false,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F027-R3",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 12
+    },
+    {
+     "checks": [
+      {
+       "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W1d5301d0-F027-R3",
+     "kind": "library_witness",
+     "program": "(foldl (lam a (lam b (L_bb32638da314 a (L_a7616ca2cd22 b)))) 0 xs)",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F035-R3",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 12
+    },
+    {
+     "checks": [
+      {
+       "program": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "Int"
+      }
+     ],
+     "family_id": "W1d5301d0-F035-R3",
+     "kind": "library_witness",
+     "program": "(L_a7616ca2cd22 (foldl (lam a (lam b (L_bb32638da314 a b))) 0 xs))",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F071-R4",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 13
+    },
+    {
+     "checks": [
+      {
+       "program": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "List"
+      }
+     ],
+     "family_id": "W1d5301d0-F071-R4",
+     "kind": "library_witness",
+     "program": "(filter (lam x (L_91245740aedc x)) (map (lam x (L_a7616ca2cd22 x)) xs))",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    },
+    {
+     "exists": true,
+     "family_id": "W1d5301d0-F077-R4",
+     "kind": "sealed_witness_expanded",
+     "qualified": true,
+     "size_expanded": 14
+    },
+    {
+     "checks": [
+      {
+       "program": "(map (lam x (if (L_91245740aedc x) (L_a7616ca2cd22 x) x)) xs)",
+       "qualified": true,
+       "source": "sealed_witness_promoted->acquired",
+       "type": "List"
+      }
+     ],
+     "family_id": "W1d5301d0-F077-R4",
+     "kind": "library_witness",
+     "program": "(map (lam x (if (L_91245740aedc x) (L_a7616ca2cd22 x) x)) xs)",
+     "qualified": true,
+     "required": true,
+     "source": "sealed_witness_promoted->acquired"
+    }
+   ]
+  },
+  "constant_lookup_control": {
+   "control_families": [
+    {
+     "family": "CONTROL-CONSTANT",
+     "pass": true,
+     "program_control": {
+      "kind": "constant(dev modal)",
+      "program": "3"
+     },
+     "qualified": false
+    },
+    {
+     "arm": "credit_blind",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 87,
+     "pass": true
+    },
+    {
+     "arm": "chain_strict",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 260,
+     "pass": true
+    },
+    {
+     "arm": "chain_neutral",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 604,
+     "pass": true
+    },
+    {
+     "arm": "D1-X3",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 39,
+     "pass": true
+    },
+    {
+     "arm": "X3G",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 413,
+     "pass": true
+    },
+    {
+     "arm": "desert_ref",
+     "budget": 2000,
+     "family": "CONTROL-CONSTANT",
+     "hit": false,
+     "n_consultations": 87,
+     "pass": true
+    },
+    {
+     "family": "CONTROL-LOOKUP",
+     "pass": true,
+     "program_control": {
+      "kind": "constant(dev modal)",
+      "program": "(add (mul 3 1) 1)"
+     },
+     "qualified": false
+    },
+    {
+     "arm": "credit_blind",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    },
+    {
+     "arm": "chain_strict",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    },
+    {
+     "arm": "chain_neutral",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    },
+    {
+     "arm": "D1-X3",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    },
+    {
+     "arm": "X3G",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    },
+    {
+     "arm": "desert_ref",
+     "budget": 2000,
+     "family": "CONTROL-LOOKUP",
+     "hit": false,
+     "n_consultations": 0,
+     "pass": true
+    }
+   ],
+   "note": "a qualified constant/lookup program or any control-family hit -> VOID_CONTROLS",
+   "pass": true,
+   "programs_on_E2_families": [
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F019-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(add (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 2))) 2)) 2)) 2)))))))))) 1)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F027-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 1)) 1)) 2)) 2))) 1)) 2)) 2)) 2)) 1)) 1)) 1)) 1)) 1))) 2))))) 1)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": true,
+     "family_id": "W0467897d-F027-R2",
+     "kind": "lookup(sum-keyed dev table)",
+     "pass": true,
+     "program": "(if (eq (sum xs) (neg (add (mul 3 (mul 3 (add (mul 3 1) 1))) 2))) (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 2))) 2)) 2)) 2))))))))))))))))))) (if (eq (sum xs) (mul 3 2)) (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 1)) 1)) 2)) 2))) 1)) 2)) 2)) 2)) 1)) 1)) 1)) 1)) 1))) 2))))) 1) (if (eq (sum xs) (add (mul 3 3) 2)) (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 2))) 2)) 2)) 2))))))))))))))))))) (if (eq (sum xs) (mul 3 (add (mul 3 (add (mul 3 2) 2)) 2))) (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 1)) 1)) 2)) 2))) 1)) 2)) 2)) 2)) 1)) 1)) 1)) 1)) 1))) 2))))) 1) (if (eq (sum xs) (add (mul 3 (mul 3 3)) 2)) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 2)) 2)) 2))) 2)) 2)) 2)) 2))) 1))) 1)) 2)) 2))) 2)) 2)) 1)) 2)) 2)) 2) (if (eq (sum xs) (add (mul 3 1) 2)) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1))) 2)) 2)) 1)) 2)) 1)))) 1) (if (eq (sum xs) (mul 3 (mul 3 (add (mul 3 2) 1)))) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 2)) 1)) 2))) 1))) 1))) 1)) 1)) 2)) 1)) 1))) 1)))) 1)) 2)))) 1) (if (eq (sum xs) (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1)) 1)) (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 2)))) 2))) 2)) 2)) 2)) 2)))) 1)) 1))) 1))) 2)) 2)) 2) (if (eq (sum xs) (add (mul 3 (add (mul 3 2) 1)) 2)) (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 1)) 1)) 2)) 2))) 1)) 2)) 2)) 2)) 1)) 1)) 1)) 1)) 1))) 2))))) 1) (if (eq (sum xs) (neg 3)) (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 1)) 1)) 2)) 2))) 1)) 2)) 2)) 2)) 1)) 1)) 1)) 1)) 1))) 2))))) 1) (if (eq (sum xs) (add (mul 3 (add (mul 3 3) 2)) 1)) (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 3)))))))) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 3) 2)) 1)))))) 2)) 1)) 2)) 1)))))) 2)) 2))) 1)) 2)) 2)) 2)) 2))))))))))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F033-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(neg (add (mul 3 (add (mul 3 (mul 3 2)) 1)) 1))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": true,
+     "family_id": "W0467897d-F033-R2",
+     "kind": "lookup(sum-keyed dev table)",
+     "pass": true,
+     "program": "(if (eq (sum xs) (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1))) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 1) 2)) 1))) 2)))) 1) (if (eq (sum xs) 0) (neg (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 3)) 1)) 2)) 1)) 2)) (if (eq (sum xs) (neg (add (mul 3 3) 1))) (neg (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 1) 1)))) 1)) 1))) 2)) 2)) 1)) 1)) (if (eq (sum xs) (neg (add (mul 3 (add (mul 3 1) 1)) 2))) (neg (add (mul 3 (add (mul 3 (mul 3 2)) 1)) 1)) (if (eq (sum xs) (neg (add (mul 3 (add (mul 3 1) 1)) 1))) (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 2))) 2)) 1))) 1) (if (eq (sum xs) (neg (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 2)) 1))) (neg (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 2) 2))) 2)) 2)) 1)) 2)))) (if (eq (sum xs) (neg (mul 3 (add (mul 3 1) 2)))) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 2) 1)) 1))) 2)) 1)) 1)) 1)) 2)) 1))) 2)) 2)))) 1) (if (eq (sum xs) (neg (add (mul 3 (add (mul 3 2) 2)) 2))) (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 1) 1)))) 2))) 1))) 1))) 2))) 2)) 2)) 1))) 1)) 1) (if (eq (sum xs) 1) (neg (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 2) 2)) 2))) 2)))) 1)) 1)) 2)) 2))) 2))) (if (eq (sum xs) (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 2)) 1)) (neg (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 2)) 2)) 1))) 1)) 2))) 2)) 2))) 2)) 1))) (if (eq (sum xs) (add (mul 3 (add (mul 3 1) 2)) 1)) (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 2)) 1)) 1)) (neg (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 2) 2))) 1)) 1)) 2)) 2)) 1)))))))))))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F061-R3",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 2)) 1)) 1))) 2)) 2)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F081-R3",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 1) 2)))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": true,
+     "family_id": "W0467897d-F081-R3",
+     "kind": "lookup(sum-keyed dev table)",
+     "pass": true,
+     "program": "(if (eq (sum xs) (add (mul 3 (add (mul 3 2) 1)) 2)) (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 1) 2))) 2)) 1)) 2)) 1)) 2)) 2)) (if (eq (sum xs) (neg (mul 3 (add (mul 3 1) 1)))) (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 2) 2)) 1)))) 2)) 1) (if (eq (sum xs) (neg 2)) (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 2)) 2))))) 1) (if (eq (sum xs) 1) (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 2) 1)) 2)) 1)) 1)) 2))) 2)) 2) (if (eq (sum xs) (mul 3 (add (mul 3 (add (mul 3 1) 1)) 2))) (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 2))) 2)) 1)))) 2)) 1) (if (eq (sum xs) (mul 3 (add (mul 3 3) 1))) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 1) 2))) 1)) 2)) 1)) 2)) 1) (if (eq (sum xs) (neg (mul 3 (add (mul 3 1) 2)))) (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 1) 2))))) (if (eq (sum xs) (neg 3)) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 2) 2)) 1)) 2)) 2)))) 2) (if (eq (sum xs) (neg (mul 3 (mul 3 (add (mul 3 1) 1))))) (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 2))) 1)) 2)))) (if (eq (sum xs) (add (mul 3 (add (mul 3 2) 1)) 1)) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 2))) 1))) 2)) 1)) 2)) 2) (if (eq (sum xs) (add (mul 3 (mul 3 2)) 1)) (add (mul 3 (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 3)) 1))) 2)))) 1) (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 2) 2))) 2))) 1)) 2)) 2))))))))))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F085-R3",
+     "kind": "constant(identity xs)",
+     "pass": true,
+     "program": "xs",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W0467897d-F085-R3",
+     "kind": "constant(empty)",
+     "pass": true,
+     "program": "(filter (lam x (lt 1 0)) xs)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F015-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(add (mul 3 (add (mul 3 1) 2)) 1)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F018-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1)) 1)) 1)) 1)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": true,
+     "family_id": "W1d5301d0-F018-R2",
+     "kind": "lookup(sum-keyed dev table)",
+     "pass": true,
+     "program": "(if (eq (sum xs) (neg (add (mul 3 2) 2))) (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 2)) 2))) 2))) 2))) 2))) 2))) 2))) 2))) 2)) 1)) (if (eq (sum xs) 3) (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1)) 1)) 1)) 2)) 1))))) 2)) 1)) 1)) 2)) 1)) (if (eq (sum xs) (neg (add (mul 3 (mul 3 2)) 1))) (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 2)) 1))) 1))) 1))) 1))) 1))) 1) (if (eq (sum xs) (add (mul 3 (add (mul 3 1) 2)) 1)) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 1) 2)))) 1)) 2))) 1)) 2)) 1))) 2)) 2)) 1)) 1) (if (eq (sum xs) (neg (add (mul 3 (mul 3 (add (mul 3 1) 1))) 1))) (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 2)) 2))) 2))) 2))) 2))) 2)) 1)) 2) (if (eq (sum xs) 1) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (add (mul 3 3) 1))) 1))) 1)) 1)) 2)) 1)) 1)) 2)) 2)) 2)) 2)) 1)) 1)) 2) (if (eq (sum xs) (mul 3 (add (mul 3 3) 2))) (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 2) 1)) 1)) 2)) 1)) 1)) 2)) 1))))) 2)) 2)) 1)) 2))) 1) (if (eq (sum xs) (neg (add (mul 3 1) 1))) (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 1) 1)) 1)) 1)) 1)) 1) (if (eq (sum xs) (add (mul 3 (mul 3 2)) 2)) (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 (mul 3 3)))))))))))))) 1)) 1)) 1) (if (eq (sum xs) (add (mul 3 (mul 3 (add (mul 3 1) 2))) 1)) (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (mul 3 (mul 3 3))) 2))) 2)) 1)) 2)) 2)))) 1)) 2)))) 1)) 2)) (if (eq (sum xs) (add (mul 3 (add (mul 3 3) 2)) 2)) (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (mul 3 (add (mul 3 (add (mul 3 3) 2)) 2))) 1)) 1)) 1)) 2)) 2)) 2)) 1)) 2))) 1)) 2) (add (mul 3 (add (mul 3 (mul 3 (mul 3 (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 (add (mul 3 3) 1)) 1)) 1)) 1)) 1)) 1)) 1)) 1)) 2))))) 1)) 2))))))))))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F023-R2",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "0",
+     "qualified": false
+    },
+    {
+     "dev_consistent": true,
+     "family_id": "W1d5301d0-F023-R2",
+     "kind": "lookup(sum-keyed dev table)",
+     "pass": true,
+     "program": "(if (eq (sum xs) (neg (add (mul 3 (add (mul 3 1) 2)) 1))) 0 (if (eq (sum xs) (neg (add (mul 3 2) 2))) 0 (if (eq (sum xs) (add (mul 3 2) 1)) 1 (if (eq (sum xs) (add (mul 3 (add (mul 3 1) 2)) 2)) 3 (if (eq (sum xs) (neg (add (mul 3 1) 2))) 0 (if (eq (sum xs) (add (mul 3 (mul 3 2)) 2)) 1 (if (eq (sum xs) (neg (add (mul 3 (add (mul 3 1) 1)) 2))) (neg 2) (if (eq (sum xs) (add (mul 3 (add (mul 3 (add (mul 3 1) 2)) 2)) 1)) (add (mul 3 1) 2) (if (eq (sum xs) (neg (add (mul 3 (mul 3 2)) 2))) (neg 2) (if (eq (sum xs) (neg (mul 3 (add (mul 3 3) 1)))) (neg 3) (if (eq (sum xs) (neg 3)) 1 (add (mul 3 1) 2))))))))))))",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "(neg 2)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "kind": "constant(dev modal)",
+     "pass": true,
+     "program": "0",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "kind": "constant(identity xs)",
+     "pass": true,
+     "program": "xs",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "kind": "constant(empty)",
+     "pass": true,
+     "program": "(filter (lam x (lt 1 0)) xs)",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "kind": "constant(identity xs)",
+     "pass": true,
+     "program": "xs",
+     "qualified": false
+    },
+    {
+     "dev_consistent": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "kind": "constant(empty)",
+     "pass": true,
+     "program": "(filter (lam x (lt 1 0)) xs)",
+     "qualified": false
+    }
+   ]
+  },
+  "restoration_receipt": {
+   "pass": true,
+   "rows": [
+    {
+     "arm": "D1-X3",
+     "family_id": "W0467897d-F061-R3",
+     "genotype_restore_exact_first500": true,
+     "pass": true,
+     "state_restore_identical": true
+    },
+    {
+     "arm": "chain_neutral",
+     "family_id": "W0467897d-F061-R3",
+     "genotype_restore_exact_first500": true,
+     "pass": true,
+     "state_restore_identical": true
+    }
+   ]
+  },
+  "start_at_target": {
+   "pass": true,
+   "rows": [
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F061-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F081-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W0467897d-F085-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F027-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F035-R3",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F071-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "credit_blind",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_strict",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "chain_neutral",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "D1-X3",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "X3G",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    },
+    {
+     "arm": "desert_ref",
+     "counts_as_discovery": false,
+     "family_id": "W1d5301d0-F077-R4",
+     "hit_charge": 1,
+     "pass": true,
+     "search_steps_charged": 0,
+     "start_hit": true
+    }
+   ]
+  },
+  "target_blindness": {
+   "certifier_channel_exercised_by_arm": {
+    "D1-X3": true,
+    "X3G": true,
+    "chain_neutral": true,
+    "chain_strict": true,
+    "credit_blind": true,
+    "desert_ref": true
+   },
+   "pass": true,
+   "rows": [
+    {
+     "arm_view_dev_equals_evaluator_dev": true,
+     "check": "arm-view loading",
+     "family_id": "W0467897d-F061-R3",
+     "files_outside_arm_view": [],
+     "pass": true
+    },
+    {
+     "arm": "credit_blind",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_strict",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_neutral",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "D1-X3",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "X3G",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "desert_ref",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F061-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm_view_dev_equals_evaluator_dev": true,
+     "check": "arm-view loading",
+     "family_id": "W0467897d-F081-R3",
+     "files_outside_arm_view": [],
+     "pass": true
+    },
+    {
+     "arm": "credit_blind",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_strict",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_neutral",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "D1-X3",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "X3G",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "desert_ref",
+     "budget": 3000,
+     "certifier_exercised": false,
+     "consultations": [
+      0,
+      0,
+      0
+     ],
+     "family_id": "W0467897d-F081-R3",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "credit_blind",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      139,
+      139,
+      139
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_strict",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      412,
+      412,
+      412
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "chain_neutral",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      1024,
+      1024,
+      1024
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "D1-X3",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      52,
+      52,
+      52
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "X3G",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      1041,
+      1041,
+      1041
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    },
+    {
+     "arm": "desert_ref",
+     "budget": 3000,
+     "certifier_exercised": true,
+     "consultations": [
+      139,
+      139,
+      139
+     ],
+     "family_id": "CONTROL-CONSTANT",
+     "pass": true,
+     "same_archive": true,
+     "same_decision_log": true
+    }
+   ]
+  }
+ },
+ "code_sha256": {
+  "atlas/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "atlas/arms.py": "5e211abc9619ede6e2ae29e0ad37be33e049fa6d7235431c7def8dbff53fc0d8",
+  "atlas/calibration.py": "ff9419a10cba7b4a46ff6effb91b03f6f0fbc7efe774d77a0797c88daa89b7cf",
+  "atlas/common.py": "7a7b46eb93231b1952b3bdaecf6c9235766d76fd6609d3108d124d5bd09ff8b4",
+  "atlas/costs.py": "08d6268c0c1d332377f21ddd7127f262d6f12beb2d40bea531c511e38d6d9c08",
+  "atlas/descriptors.py": "47d24a2d3eeefef6d09d8f3df6d011f7a636b8625bd2bb12aa81729f4c9ad05b",
+  "atlas/e2_analyze.py": "b15c93beb56a7f773e05386a145b737a7e96970e988611ad9d245e8b2193ae61",
+  "atlas/e2_driver.py": "e2106bc1fca941640a0e90914f8db60343216e61d50a86a15565e9db5a837061",
+  "atlas/e2_project.py": "c8a00a4e48cdc228ae2c6e533d361763d8194765a23b9d4a5c9b0c47947dff16",
+  "atlas/measure.py": "ad66c664d8df62eda64be31c8af92649b2483b6f7f2ae194a9812a1fce427f44",
+  "atlas/pilot.py": "7f3ce3735cc7a454163efe8c517a3abb75c5e28bc5d335221bd4689edf6c1321",
+  "atlas/route.py": "4f9588b686d424719fa9ee331f44617b9a7d685cab72f469924676d7eb00f557",
+  "atlas/sample.py": "a32beab32fdfd7f571147c615b8b74d82d3b34741af7fd4bfdb68823c110f33f",
+  "atlas/toys.py": "1026b1ef10970a526d1db1208b855ae42c3a961da5d26f6ca993f4cd97c8597e",
+  "e3/worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444",
+  "tfs1/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "tfs1/bench.py": "2a04a9f39ee1c00490586301ac1f22cab1cfef04b7c91cded776bee9b2111faa",
+  "tfs1/compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
+  "tfs1/core.py": "530a907185c11142acc9ace3296d372c3f7cb5a55285795f762763d17eb09f43",
+  "tfs1/enum.py": "cad62d6f290a51b2652eacab0b8389b1519866912d9de029fdb8c309fdd12a12",
+  "tfs1/library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "tfs1/membrane.py": "2e38d818de69ade2e47d59213c2d4e14a9a3668ec6fdc877c72561f6fe3eed47",
+  "tfs1/mutate.py": "575d4537d9f0ca93f15c7338c9c068d20c3410284a61d93b1c0e1762cdebb88a",
+  "tfs1/toy_calibration.py": "06e9d62edf67f7f84ddd5dd3710964533ba3747b9c72fe83edf24bc357eb746c"
+ },
+ "cpu_s": 55.6,
+ "driver": "e2-driver-v1",
+ "pass": true,
+ "root": "foundry\\pilot_v2",
+ "root_label": "EXPOSED DEV DATA (pilot_v2)",
+ "summary": {
+  "certifier_recheck": true,
+  "constant_lookup_control": true,
+  "restoration_receipt": true,
+  "start_at_target": true,
+  "target_blindness": true
+ }
+}

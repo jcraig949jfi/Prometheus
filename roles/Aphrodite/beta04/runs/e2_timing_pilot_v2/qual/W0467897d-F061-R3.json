@@ -1,0 +1,199 @@
+{
+ "R1": 0.9558823529411765,
+ "R1c": 1.0,
+ "R2": 1.0,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "controls_ok": true,
+ "cpu_s": 8.3,
+ "driver": "e2-driver-v1",
+ "family_id": "W0467897d-F061-R3",
+ "ledger": "INFRA",
+ "lib_witness": "(sum (map (lam x (L_1060e619863f x)) (filter (lam x (L_5abaefe6aefe x)) xs)))",
+ "lib_witness_checks": [
+  {
+   "program": "(sum (map (lam x (L_1060e619863f x)) (filter (lam x (L_5abaefe6aefe x)) xs)))",
+   "qualified": true,
+   "source": "sealed_witness_promoted->acquired",
+   "type": "Int"
+  }
+ ],
+ "lib_witness_source": "sealed_witness_promoted->acquired",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "pid": 5812,
+ "qualification": {
+  "controls_ok": true,
+  "descriptors": {
+   "C-FIT": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.0,
+     "2": 0.0,
+     "3": 0.0
+    },
+    "R1_separation": 0.0,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.0038314176245210726,
+    "granularity_cells_per_genotype": 0.0006620011348590884,
+    "pairs_R1c": 325,
+    "pool_cells": 7
+   },
+   "D-BEH": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 0.9559
+    },
+    "R1_by_prune_depth": {
+     "1": 0.9786,
+     "2": 0.975,
+     "3": 0.8875
+    },
+    "R1_separation": 0.9558823529411765,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.6819923371647509,
+    "granularity_cells_per_genotype": 0.11783620200491772,
+    "pairs_R1c": 325,
+    "pool_cells": 1246,
+    "verdict": "QUALIFIED"
+   },
+   "GENO": {
+    "G": "FAIL",
+    "OVERSPLIT_WARNING": true,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 1.0
+    },
+    "R1_by_prune_depth": {
+     "1": 1.0,
+     "2": 1.0,
+     "3": 1.0
+    },
+    "R1_separation": 1.0,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "FAIL",
+    "R2_invariance": 0.0,
+    "cells_per_distinct_trace": 5.787629994526546,
+    "granularity_cells_per_genotype": 1.0,
+    "pairs_R1c": 325,
+    "pool_cells": 10574
+   },
+   "TRACE": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 0.9559
+    },
+    "R1_by_prune_depth": {
+     "1": 0.9786,
+     "2": 0.975,
+     "3": 0.8875
+    },
+    "R1_separation": 0.9558823529411765,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 1.0,
+    "granularity_cells_per_genotype": 0.17278229619822205,
+    "pairs_R1c": 325,
+    "pool_cells": 1827
+   }
+  },
+  "family_id": "A2998a74232/9a416061f0e3af6e",
+  "intermediate_scores": [
+   0
+  ],
+  "intermediates": 17,
+  "intermediates_with_no_equal_score_other": 0,
+  "lattice_size": 18,
+  "lattice_truncated": false,
+  "pairs_R1": 340,
+  "pairs_R2": 98,
+  "pool_score_hist": {
+   "0": 10481,
+   "1": 55,
+   "12": 7,
+   "2": 7,
+   "3": 1,
+   "5": 1,
+   "6": 22
+  },
+  "pool_size": 10574,
+  "qualified": [
+   "D-BEH"
+  ],
+  "synonym_semantic_mismatches": 0,
+  "thresholds": {
+   "G_PASS_max": 0.5,
+   "MIN_PAIRS": 20,
+   "R1_PASS": 0.9,
+   "R2_PASS": 0.9
+  },
+  "witness": "(sum (map (lam x (L_1060e619863f x)) (filter (lam x (L_5abaefe6aefe x)) xs)))"
+ },
+ "qualified": true,
+ "root": "foundry\\pilot_v2",
+ "root_label": "EXPOSED DEV DATA (pilot_v2)",
+ "shard": "qual/W0467897d-F061-R3",
+ "shard_cpu_s": 8.3,
+ "verdict": "QUALIFIED"
+}
