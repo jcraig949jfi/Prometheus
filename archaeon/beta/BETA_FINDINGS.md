@@ -80,7 +80,8 @@ clock.
    - Two CONC populations beat the hand latch (.121, .139 vs .119).
    - The memory law's reachable class therefore includes a latch that gates control, not only a stored value -- when
      the world makes it decisive.
-   - Whether competition raises the rate is under test (B69d).
+   - Competition raising the rate: NOT SUPPORTED (B69d: count CONC 6/12 vs SOLO 3/12, but reward p = .22).
+   - Some elites beat the hand latch with no latch-like genomes (another strategy class, uncharacterised).
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (2/2 worlds)
 

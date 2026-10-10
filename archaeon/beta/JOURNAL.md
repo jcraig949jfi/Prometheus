@@ -825,6 +825,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   may raise the latch rate and quality because tournament selection sees RANKS, and B68 showed the latch's RATIO
   advantage is larger in groups (3.6x -> 4.2x) even though its absolute advantage is smaller. 9/12 vs 6/12 is n.s.
   (Fisher p ~ .4). Test: more seeds, or rank-free (proportional) selection.
+- B69c/B69d launched + lease renewed twice (to ~06:00Z).
+- B69d RESULT (04:17Z; preregistered, 12 new seeds per arm): latch-like populations SOLO 3/12, CONC 6/12 (count diff 3 =
+  criterion MET); mean best reward CONC .063 vs SOLO .051, one-sided permutation p = .22 (criterion FAILED).
+  VERDICT: 'competition raises the latch rate' NOT SUPPORTED. Preregistered pool B69c+B69d: SOLO 6/18 vs CONC 11/18
+  (a weak hint in the predicted direction only). INSTRUMENT NOTE: SOLO 6930 (.147) and CONC 6922 (.135) beat the hand
+  latch with ZERO latch-like genomes -- the census misses another high-reward strategy class (not yet characterised;
+  candidates: a different wait/return rule, timing to the refill period). The census is a lower bound on state-based
+  foraging, not a census of it. Next: characterise those two elites (state dependence + per-tick trace).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
