@@ -1,0 +1,26 @@
+{
+  "schema": "aether.reach01.campaign_state.v1",
+  "campaign": "AETH-V2B-REACH01",
+  "order": "roles/Aether/prompts/2026-10-10_reach01/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "host": "SPECTREX5 (M2), RTX 5060 Ti",
+  "seat_instance": "Aether[m2-95eba442]",
+  "branch": "aether/reach01-2026-10-10",
+  "base_main": "5956b542e",
+  "started_utc": "2026-10-10T09:23:11Z",
+  "deadline_utc": "2026-10-13T09:23:11Z",
+  "current_phase": "R1 DEVELOPMENT",
+  "current_experiment": "R1 TEST-4",
+  "attempt": 1,
+  "frozen_sha": null,
+  "active_workloads": [],
+  "completed_units": {},
+  "artifact_root": "Aether/V2B/REACH01/ (tracked, small); C:/Prometheus-data/aether_reach01/ (large, untracked)",
+  "dispositions": {
+    "R1": null,
+    "R2": null,
+    "R3": null,
+    "R4": null
+  },
+  "next_action": "build TEST-4 ruler (K=8 plants, held-out decoder, fixtures), add recoil-only law, qualify",
+  "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units)."
+}
