@@ -268,6 +268,46 @@ class TestRefusals(CoordCase):
         self.assertIn("namespace", self.reader().attempt(out[0]["attempt_id"])["detail"]["refused"])
 
 
+class TestPublisherFaults(CoordCase):
+    def test_a_publisher_process_killed_mid_transaction_leaves_the_attempt_unclassified(self):
+        import time
+        self.co.dispatch("Q1")
+        aid = self.worker("hostA").run_one()["attempt_id"]
+        env = dict(os.environ, PYTHONPATH=os.pathsep.join(p for p in (str(REPO), os.environ.get("PYTHONPATH")) if p))
+        child = subprocess.Popen([sys.executable, "-m", "moonshot.nf.coordinator", "publish", "--schema", self.schema,
+                                  "--principal", "Themis-test", "--campaign", "C-012-test",
+                                  "--hold-before-commit-s", "8"], cwd=str(REPO), env=env,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        deadline = time.time() + 60
+        while time.time() < deadline and not self.reader().publisher_waiting(self.schema):
+            time.sleep(0.2)
+        self.assertTrue(self.reader().publisher_waiting(self.schema), child.stderr.read1(2000) if child.poll() else "")
+        child.kill()
+        child.wait(30)
+        time.sleep(1.0)
+        self.assertIsNone(self.reader().attempt(aid))                      # the server rolled it back
+        out = self.co.publish_ready()
+        self.assertEqual([(o["attempt_id"], o["outcome"], o["replayed"]) for o in out], [(aid, "PUBLISHED", False)])
+
+    def test_a_lost_acknowledgement_gets_the_recorded_answer(self):
+        self.co.dispatch("Q1")
+        self.worker("hostA").run_one()
+        out = self.co.publish_ready(_lose_acks=1)
+        self.assertEqual([(o["outcome"], o["replayed"]) for o in out], [("PUBLISHED", True)])
+        self.assertEqual(self.reader().attempt_count("Q1"), 1)
+
+    def test_the_publisher_cli_classifies_ready_attempts(self):
+        self.co.dispatch("Q1")
+        aid = self.worker("hostA").run_one()["attempt_id"]
+        env = dict(os.environ, PYTHONPATH=os.pathsep.join(p for p in (str(REPO), os.environ.get("PYTHONPATH")) if p))
+        r = subprocess.run([sys.executable, "-m", "moonshot.nf.coordinator", "publish", "--schema", self.schema,
+                            "--principal", "Themis-test", "--campaign", "C-012-test"], cwd=str(REPO), env=env,
+                           capture_output=True, timeout=120)
+        self.assertEqual(r.returncode, 0, r.stderr.decode()[-800:])
+        lines = [json.loads(x) for x in r.stdout.decode().splitlines() if x.strip()]
+        self.assertEqual([(x["attempt_id"], x["outcome"]) for x in lines], [(aid, "PUBLISHED")])
+
+
 class TestDefenceInDepth(CoordCase):
     def test_a_publication_that_slipped_past_verification_is_caught_and_overturned(self):
         # A publisher bug (verification skipped) lets a self-consistent forged identity in -- the database alone

@@ -108,7 +108,7 @@ class Coordinator:
         return out
 
     # ------------------------------------------------------------------------------------------- publish
-    def _candidates(self):
+    def _candidates(self, only_attempts=None):
         """(task, attempt) pairs: a succeeded Fabric attempt of a Moonshot task of THIS schema, not yet classified."""
         done = self.reader.classified_attempt_ids()
         found = []
@@ -120,7 +120,7 @@ class Coordinator:
             if m.get("schema") != self.schema:
                 continue
             for a in t["attempts"]:
-                if a["status"] == "succeeded" and a["attempt_id"] not in done:
+                if a["status"] == "succeeded" and a["attempt_id"] not in done and                         (only_attempts is None or a["attempt_id"] in only_attempts):
                     found.append((t, a))
         found.sort(key=lambda ta: (ta[0]["metadata"]["moonshot"]["chain_id"], ta[0]["metadata"]["moonshot"]["epoch_index"],
                                    str(ta[1].get("ended_at"))))
@@ -166,7 +166,7 @@ class Coordinator:
         return {"task": t, "attempt": a, "meta": m, "chain": chain, "files": files, "acct": acct,
                 "refused": self._refusals(t, a, chain)}
 
-    def _publish_one(self, p, handle):
+    def _publish_one(self, p, handle, hooks=None):
         m, acct = p["meta"], p["acct"]
         args = (acct["attempt_id"], acct["task_id"], m["chain_id"], m["epoch_index"], m["expected_parent"],
                 m["expected_generation"])
@@ -175,18 +175,20 @@ class Coordinator:
                 "fabric": acct, "errors": ["missing artifacts: {}".format(sorted(set(FILES) - set(p["files"])))]})
         else:
             res = handle.publish(*args, p["files"], detail={"fabric": acct, "refused": p["refused"]},
-                                 approved=not p["refused"])
+                                 approved=not p["refused"], **(hooks or {}))
         return dict(res, task_id=acct["task_id"], attempt_id=acct["attempt_id"], chain_id=m["chain_id"],
                     epoch_index=m["epoch_index"], host=acct["host"])
 
-    def publish_ready(self, *, parallel=1):
-        """Classify every succeeded, unclassified attempt. With parallel > 1 the publications start together on
-        separate connections, so racing results meet in the database, not in this process."""
-        prepared = [self._prepare(t, a) for t, a in self._candidates()]
+    def publish_ready(self, *, parallel=1, only_attempts=None, _hold_before_commit_s=0.0, _lose_acks=0):
+        """Classify every succeeded, unclassified attempt (or only `only_attempts`). With parallel > 1 the
+        publications start together on separate connections, so racing results meet in the database, not in this
+        process. The underscored hooks pass to Moonshot.publish (crash and lost-acknowledgement demonstrations)."""
+        hooks = {k: v for k, v in (("_hold_before_commit_s", _hold_before_commit_s), ("_lose_acks", _lose_acks)) if v}
+        prepared = [self._prepare(t, a) for t, a in self._candidates(only_attempts)]
         if not prepared:
             return []
         if parallel <= 1 or len(prepared) == 1:
-            return [self._publish_one(p, self._h("publisher")) for p in prepared]
+            return [self._publish_one(p, self._h("publisher"), hooks) for p in prepared]
         barrier = threading.Barrier(min(parallel, len(prepared)))
 
         def go(p):
@@ -196,7 +198,7 @@ class Coordinator:
                     barrier.wait(timeout=60)
                 except threading.BrokenBarrierError:
                     pass
-                return self._publish_one(p, h)
+                return self._publish_one(p, h, hooks)
             finally:
                 h.close()
 
@@ -262,3 +264,35 @@ class Coordinator:
                 "issued_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
         sha = self._h("coordinator").record_receipt(chain_id, C.canonical_bytes(body))
         return {"sha256": sha, "receipt": body}
+
+
+def main(argv=None):
+    """`python -m moonshot.nf.coordinator publish --schema S [--only-attempt A] [--hold-before-commit-s N]`: one
+    publisher pass in its own process (the two-node demonstration kills it mid-transaction). Prints JSON lines."""
+    import argparse
+    import json
+    import sys
+    ap = argparse.ArgumentParser(prog="moonshot.nf.coordinator")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("publish")
+    p.add_argument("--schema", required=True)
+    p.add_argument("--principal", default="Themis")
+    p.add_argument("--campaign", default="C-012")
+    p.add_argument("--actor", default="Themis")
+    p.add_argument("--only-attempt", action="append")
+    p.add_argument("--hold-before-commit-s", type=float, default=0.0)
+    p.add_argument("--parallel", type=int, default=1)
+    a = ap.parse_args(argv)
+    co = Coordinator(a.schema, principal=a.principal, campaign=a.campaign, actor=a.actor)
+    try:
+        for r in co.publish_ready(parallel=a.parallel, only_attempts=set(a.only_attempt) if a.only_attempt else None,
+                                  _hold_before_commit_s=a.hold_before_commit_s):
+            print(json.dumps(r, default=str, sort_keys=True), flush=True)
+    finally:
+        co.close()
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
