@@ -3,17 +3,17 @@
   "seat": "Hades",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-07T09:49:53Z",
+  "updated_at_utc": "2026-10-10T11:41:20Z",
   "state": "WORKING",
-  "instance": "skullport-c8fad9a0 (SKULLPORT)",
-  "branch": "hades/base-role-adopt-2026-10-07",
-  "base_sha": "21a75bc65998f5b5747beb6ba22bc9a782bd5172",
+  "instance": "m1-ca525615 (SKULLPORT)",
+  "branch": "hades/wake-2026-10-10",
+  "base_sha": "3e7001e139021338c28c0678e89e79616221ca68",
   "head_sha": "(this commit; see git log -1 -- roles/Hades/WORK_STATE.json)",
   "model": "claude-opus-5-5",
   "host": "SKULLPORT",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-07): CHIASMA, roles/Hades/prompts/2026-10-07_charter/.",
   "current_objective": "CHIASMA E1: four handcrafted organisms (O1-O4) on one Paradigm World under matched resources (charter s7), gated by WT-0",
-  "current_step": "E1 DONE at AUTHOR_TESTED: primary FAIL (O4 beats O1+O2 in 3/9 cells, only R21), NOT_ATTRIBUTED; awaiting operator ruling (HADES-10) and an outside G3 challenge",
+  "current_step": "Wake 2026-10-10: no operator ruling on HADES-10 since 10-07. Under MWO-0004 R1 the seat takes REVISE (E1b, handcrafted, no evolution) as the reversible default; KILL and evolution stay operator gates. G3 requested directly from Hestia (Aporia #1817 recommendation; operator confirmation never arrived).",
   "in_flight": [],
   "progress": "charter 5c0b3812a; engine+WT-0 7be84fe6c; prereg 591ad0591; freeze 02b5f57a1; E1 eval 840/840 + REPORT_E1.md",
   "finish_condition": "E1 receipts on evaluation seeds under a frozen prereg + REPORT_E1.md at AUTHOR_TESTED + outside challenge requested (HADES-08, HADES-09)",
@@ -30,19 +30,21 @@
   "last_receipt": "roles/Hades/journal/2026-10-07.md",
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
-  "session_started_utc": "UNKNOWN (not inferred)",
-  "next": "wait for the operator's E1 ruling; meanwhile request a G3 reviewer through Aporia; no evolution, no E1b freeze before the ruling",
+  "session_started_utc": "2026-10-10T11:33:55Z",
+  "next": "E1b design draft + dev-seed sizing; freeze held until the G3 challenge lands or Hestia declines",
   "next_actions": [
-    "HADES-02 DESIGN_E1.md",
-    "HADES-03 world generator + tests",
-    "HADES-04 WT-0",
-    "HADES-05 organisms + controls",
-    "HADES-06 dev-seed sizing, then HADES-07 freeze prereg"
+    "HADES-09 G3 request to Hestia (cc Aporia)",
+    "HADES-24 chiasma/DESIGN_E1b.md",
+    "HADES-25 E1b arms: O4L, O4L-lazy counterfeit, O3U ceiling, multi-abstraction world",
+    "HADES-26 dev sizing >= 10 dev seeds",
+    "HADES-27 freeze PREREG_E1b after G3"
   ],
   "operator_decisions_required": [
-    "HADES-10: E1 primary FAIL -> KILL or REVISE O4; seat recommends REVISE (E1b on O4L provenance repair with counterfeit + fixed ceiling; multi-abstraction world), no evolution"
+    "G4: evolution (WT-6/WT-7) -- charter s7 condition not met; not requested",
+    "KILL of CHIASMA -- seat does not take it by default; operator may overrule REVISE at any time"
   ],
   "latest_reports": [
-    "roles/Hades/journal/2026-10-07.md (creation pass)"
+    "roles/Hades/journal/2026-10-10.md (wake)",
+    "chiasma/REPORT_E1.md"
   ]
 }

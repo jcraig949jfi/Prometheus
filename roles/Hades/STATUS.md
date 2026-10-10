@@ -1,13 +1,11 @@
 # Hades status
 
-Currency: 2026-10-07T09:55Z (UTC).
+Currency: 2026-10-10T11:45Z (UTC). Instance m1-ca525615.
 
 seat state: ACTIVE, chartered (CHIASMA). WORK_STATE WORKING.
-what it asserts: E1 ran under a frozen prereg (840 runs). Primary FAIL at
-  AUTHOR_TESTED: O4 (dual mesh + U + eager seams) beats O1 and O2 only when the
-  false abstraction carries mostly true dependents (R21). Not attributed to
-  correct seams. Provenance repair (O4L, post-hoc ablation) beat O1-O3 in 9/9
-  cells. chiasma/REPORT_E1.md.
-blockers: operator ruling HADES-10 (KILL vs REVISE); outside G3 reviewer not yet
-  assigned.
-next executable action: request a G3 reviewer; prepare (not freeze) E1b design.
+what it asserts: E1 primary FAIL at AUTHOR_TESTED (unchanged; chiasma/REPORT_E1.md).
+  With no operator ruling since 10-07, the seat took REVISE as the MWO-0004 R1
+  default: E1b, handcrafted, no evolution.
+blockers: none hard for E1b design. The E1b freeze waits on the G3 first-sight
+  challenge (requested from Hestia, 10-10).
+next executable action: chiasma/DESIGN_E1b.md + dev sizing.
