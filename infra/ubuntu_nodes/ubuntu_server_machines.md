@@ -14,6 +14,22 @@ Don't record passwords here.
 | 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **Provisioned** (shared token, Claude token); worker NOT enabled until memtester pass 2 |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
 
+## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
+
+| Host | Machine | CPU | C/T | AVX2 | RAM | IP (wired / Wi-Fi) | Serial / tag |
+|---|---|---|---|---|---|---|---|
+| ubu001 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .218 (Wi-Fi) | PF0V02XZ |
+| ubu002 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .219 (Wi-Fi) | PF0V0JL6 |
+| ubu003 | Dell Latitude E7240 | i7-4600U | 2C/4T | yes | 8 GB | .220 | D5VYTZ1 |
+| ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U | 2C/4T | yes | 8 GB | .221 (USB eth) / .178 | 8CG80912V3 |
+| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/8T | yes | 24 GB (8+16) | .222 / .227 | R90T9A2G |
+| ubu006 | Dell Inspiron 3647 (desktop) | i3-4130 | 2C/4T | yes | 16 GB | .225 / .226 | J3B1K02 |
+| ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
+| ubu008 | ThinkPad T490s (20NX0020US) | i7-8565U | 4C/8T | yes | 16 GB | .231 / .232 | PC1AHQQD |
+
+Corrections: ubu006 is an i3-4130 (was "Haswell, 4 threads"); ubu005 has 24 GB installed (22 GiB usable).
+Screens: all nodes blank after 5 min idle (consoleblank=300, also set live); a key or Ctrl+Alt+F2, F1 wakes them.
+
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
 ## ubu001
