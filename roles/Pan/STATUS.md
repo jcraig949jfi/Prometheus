@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-10T14:38Z (date -u).
+Currency: 2026-10-10T16:01Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
@@ -9,7 +9,8 @@ what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
   release entries from 35 feeds + 598 repositories of 29 GitHub owners,
   + 1,524 models; HumanEval+ on 4 local models), VALID: PARTIAL -- retrieval R@10 0.765 on 200 independent
   queries (bar 0.80 inside its interval); tuning stopped by Pan's own rule.
-latest reports: reports/STATUS_20261010T1000Z.md (status report 5),
+latest reports: reports/STATUS_20261010T1601Z.md (status report 6), REVIEW_PACKET_2026-10-10_PAN27_28.txt,
+  REVIEW_PACKET_2026-10-10_PAN38.txt,
   REVIEW_PACKET_2026-10-09_unit3.txt, CODEBENCH_2026-10-09.md,
   frontier/DIGEST_2026-10-09.md (feeds + new repos), controls/FEEDS_*.json,
   controls/GITHUB_*.json.
