@@ -3,7 +3,7 @@
   "seat": "Themis",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-10T09:41:01Z",
+  "updated_at_utc": "2026-10-10T11:49:56Z",
   "state": "ACTIVE",
   "instance": "m2-0e9b1ed2 (SPECTREX5)",
   "branch": "themis/nf2-2026-10-10",
@@ -12,15 +12,13 @@
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both). LANE C: operator OP-LC1 2026-10-06 (C-008, closed/superseded). NATIVE FABRIC: operator OP-NF2 2026-10-10T07:15Z (roles/Themis/prompts/2026-10-10_op_nf2/), C-012.",
-  "current_objective": "C-012 (OP-NF2): replace Git-CAS coordination with PostgreSQL. T002 and T003 CLOSED, T005 INTEGRATED (closes on Pan's review), T004 benchmark running, T001 contract awaiting reviews, T006 review after T004.",
-  "current_step": "T004 run R1 (Arm N sweep + scaling + recovery on ubu001/ubu002) in progress from 09:37Z; Arm S deferred until M2 is idle (operator experiments). Lane A claim-map research in progress; Lane B regression handed to Daedalus (#2021).",
-  "in_flight": [
-    "C-012-T004 run R1 (ops/campaigns/C-012/evidence/T004/R1/)"
-  ],
-  "progress": "native fabric qualified on two nodes (Q20261010A); lake materialization demonstrated (D20261010A); no science run yet; no world/detector built yet.",
+  "current_objective": "C-012 (OP-NF2): the seven deliverables plus the first native-world epochs are done -- T002-T007 CLOSED; T001 (the contract) waits on Odysseus's review; the review packet is delivered and the operator's decision (packet s7: A adopt and park / B harden now / C stop / D offer to the RSO Observatory) is pending.",
+  "current_step": "T006 review packet delivered (f50d01e43, receipt b82a0cc0d); seat records brought current; next contract v0.3.",
+  "in_flight": [],
+  "progress": "native fabric qualified on two nodes (Q20261010A); preregistered benchmark R1 (operating point ADEQUATE, T* = 3 s; P6/P7 lost; T1 failed; Arm S not run); lake fed (D20261010A + production tables); first native-world epochs through the path (N20261010A, 12/12 published and validated). No science run yet.",
   "finish_condition": "charter-level: either a sagacity signal that passes pre-written gates AND is scaled per the funnel, or a reachability-certified KILL at the floor; each experiment carries its own prereg.",
-  "next_expected_milestone": "T004 R1 report; then T006 engineering review packet",
-  "expected_next_artifact": "ops/campaigns/C-012/evidence/T004/R1/REPORT.json + receipt; moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md",
+  "next_expected_milestone": "the operator's decision on packet s7; contract v0.3",
+  "expected_next_artifact": "moonshot/nf/INTERFACE_CONTRACT.md v0.3",
   "epic": "EP-MOONSHOT (owner; ops/epics/EP-MOONSHOT/)",
   "threads": [
     "TH-MOON-M1",
@@ -38,24 +36,20 @@
   ],
   "experiments": [],
   "fabric_tasks": [],
-  "running": [
-    "C-012-T004 R1 benchmark (Fabric workers on ubu001/ubu002 in throwaway schemas; leases ubu001:cpu4, ubu002:cpu4)"
-  ],
+  "running": [],
   "blocked": [],
-  "blocked_on": [
-    "C-008-T003: M2 free of Aether AIM02 production (frozen rig R1: 6 workers on M2) OR ssh from M2 to ubu003-006 (M2 key authorized only on ubu001/002; host keys absent) -> pure e-waste rig by a prereg amendment BEFORE any data",
-    "C-008-T004: operator creates a private dedicated repository and adds the deploy key ~/.ssh/moonshot_c008_t004_deploy.pub (fingerprint SHA256:bPHyvqEQyOASdbCso9+UQLilyFngHXR0efxGyPVE5EQ) with write access -- or logs in gh on M2"
-  ],
-  "resource_status": "no Fabric lease held; no process running; ubu001 keeps ~/moonshot-lanec (1.9 MB disposable repo, git daemon stopped); ubu002 scratch removed",
-  "last_receipt": "ops/campaigns/C-008/tasks/C-008-T005/attempts/A-20261006T095900Z-Themis-m2-0e9b1ed2/RECEIPT.json",
-  "last_push_sha": "(set on the charter-adoption push)",
-  "last_push_utc": "(set on the charter-adoption push)",
+  "blocked_on": [],
+  "resource_status": "no Fabric lease held (ubu001:cpu4, ubu002:cpu4, spectrex5:cpu12 free at 2026-10-10T11:49:56Z); no Moonshot or Fabric worker process on ubu001/ubu002 (checked 2026-10-10T11:49:56Z); production schema `moonshot` on M1 holds the three native chains; Pan's lake namespace moonshot holds the qual_ and production tables; ubu001 keeps ~/moonshot-lanec (C-008 disposable repo, daemon stopped)",
+  "last_receipt": "ops/campaigns/C-012/tasks/C-012-T006/attempts/A-20261010T114804Z-Themis-m2-0e9b1ed2/RECEIPT.json",
+  "last_push_sha": "(this push; see git log -1 origin/main -- roles/Themis/WORK_STATE.json)",
+  "last_push_utc": "(this push)",
   "session_started_utc": "2026-10-04T15:38Z (continuous session through charter adoption 2026-10-05)",
-  "next": "Review packet for C-008. Then T003 when its dependency clears (amend the prereg rig BEFORE any data if hosts change; note Windows hosts need ssh:// to a LAN remote); T004 when the operator supplies the repo + deploy key.",
+  "next": "Contract v0.3 (record the T004-T007 additions); then wait for the operator's decision on packet s7 -- no fabric engineering beyond the contract until then. Lane A after C-013 ends; Lane B on the F09 owner's answer.",
   "next_actions": [
-    "T003: when M2 is free of Aether AIM02 or M2 can reach ubu003-006, start the LAN daemon on ubu001, amend the rig by prereg addendum BEFORE data if needed (Windows workers use ssh://), run the sweep, report vs frozen bounds.",
-    "T004: verify ssh -T with the deploy key greets the repository (spillover check), then G1-G7 within 250 write attempts.",
-    "Lane A / Lane B items remain in TODO (not Lane C)."
+    "Contract v0.3: receipts and materializations as events, catalog_v, the native runtime, the production schema; ask Odysseus again only if the operator chooses A, B or D.",
+    "If the operator chooses B: Arm S under the frozen T004 preregistration (M2 idle), then N1/N3 by contract version; per-role logins and retention are other owners' calls (DBA, Odysseus).",
+    "Lane A: fold Palamedes's answers into the claim map v0.2 after C-013 (2026-10-12T06:45Z).",
+    "Lane B: when the F09 owner answers, re-run the handed-off regression against the repair."
   ],
   "operator_decisions_required": [
     "RESOLVED 2026-10-05: substrate = wforge+Proteus for Launchpad, BEE later as a transplant test.",
@@ -64,14 +58,17 @@
     "RESOLVED 2026-10-05: cloud = no extended campaign; scout mechanism authorized to build, fires only after RC2 + local gate, cap fixed at launch.",
     "OPEN (only if a float GPU path is pursued): RSO contract amendment for SEMANTIC/PARTIAL reproducibility, via the RSO cell's versioned process.",
     "RESOLVED 2026-10-06 OP-LC1: Lane C approved (C-008); GitHub authorized for one bounded WAN-semantics arm.",
-    "OPEN (T004, not a science gate): create the dedicated private repository + add the deploy key (or log in gh on M2).",
-    "OPEN (T003 rig, not a science gate): ssh from M2 to ubu003-006, or wait for M2 to be free of Aether AIM02."
+    "SUPERSEDED 2026-10-10 by OP-NF2: the C-008 T004 repository/deploy-key request and the T003 rig question (both tasks SUPERSEDED, never executed).",
+    "OPEN 2026-10-10: C-012 review packet s7 -- A adopt and park (Themis's lean) / B harden now / C stop / D offer the path to the RSO Observatory.",
+    "OPEN (before any sustained operation): database retention (~42 KB per epoch; Fabric artifact pruning is Odysseus's; checkpoints by reference is contract item N1).",
+    "OPEN (before any node outside the operator's trust): per-role database logins (DBA / Odysseus)."
   ],
   "latest_reports": [
-    "moonshot/pivot/C008_LANE_C_REVIEW_2026-10-06.md (review packet, 4c6fac937)",
-    "roles/Themis/journal/2026-10-06.md (Lane C executed; T005 + field finding)",
-    "ops/campaigns/C-008/evidence/D5_JOIN/README.md (field join, Windows git:// finding)",
-    "ops/campaigns/C-008/prereg/D4_PREREG.md (frozen 8e69de91e)",
-    "moonshot/epoch/CONTRACT.md (v1.1)"
+    "moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md (C-012 review packet, f50d01e43)",
+    "ops/campaigns/C-012/evidence/T004/R1/README.md (preregistered benchmark report)",
+    "ops/campaigns/C-012/evidence/NATIVE/N20261010A/README.md (first native-world epochs)",
+    "ops/campaigns/C-012/evidence/TWO_NODE/Q20261010A/README.md (two-node demonstration)",
+    "roles/Themis/journal/2026-10-10.md",
+    "moonshot/pivot/C008_LANE_C_REVIEW_2026-10-06.md (C-008 review packet, 4c6fac937)"
   ]
 }
