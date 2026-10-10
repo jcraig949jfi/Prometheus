@@ -65,7 +65,18 @@ class HalvesWorld(CompWorld):
                 if self.func(t):
                     cf[h] += 1
             self.census.append({"tick": self.tick, "alive": sum(c.values()), "halves": dict(c), "halves_func": dict(cf)})
+            if self.first_both is None and cf.get("BOTH"):                 # arose in place (no birth): take a living carrier
+                o = next(o for o in self.cells if o is not None and self.halves(bytes(o.tape)) == "BOTH" and self.func(bytes(o.tape)))
+                t = bytes(o.tape); self._record_both(t, self._synced(o.id, t), via="census")
         return rec
+
+    def _record_both(self, t, tags, via):
+        a = self.comp_anatomy(t, tags)
+        ticks = sorted({o[2] if o[0] != "F" else 0 for o in a["ccrit_origins"]})
+        epochs = 1 + sum(1 for x, y in zip(ticks, ticks[1:]) if y - x > self.epoch_gap) if ticks else 0
+        self.first_both = {"tick": self.tick, "via": via, "anatomy": a, "origin_ticks": ticks,
+                           "temporal_depth": (ticks[-1] - ticks[0]) if ticks else None, "epochs": epochs,
+                           "census_before": self.census[-3:]}
 
     def _register_offspring(self, j, child, parent, mechanism, fidelity, tr, replaced):
         super()._register_offspring(j, child, parent, mechanism, fidelity, tr, replaced)
@@ -73,12 +84,7 @@ class HalvesWorld(CompWorld):
             t = bytes(child)
             if self.halves(t) == "BOTH" and self.func(t):
                 c = self.cells[j]
-                a = self.comp_anatomy(t, self.tags[c.id])
-                ticks = sorted({o[2] if o[0] != "F" else 0 for o in a["ccrit_origins"]})
-                epochs = 1 + sum(1 for x, y in zip(ticks, ticks[1:]) if y - x > self.epoch_gap) if ticks else 0
-                self.first_both = {"tick": self.tick, "anatomy": a, "origin_ticks": ticks,
-                                   "temporal_depth": (ticks[-1] - ticks[0]) if ticks else None, "epochs": epochs,
-                                   "census_before": self.census[-3:]}
+                self._record_both(t, self.tags[c.id], via="birth")
 
     def halves_summary(self) -> dict:
         return {"census": self.census, "first_both": self.first_both}

@@ -31,3 +31,12 @@ def test_light_halves_is_invariant_and_censuses():
     from light_halves import LightHalvesWorld
     a = World(_cfg("COND_ONE", ticks=60), 21); a.run(); b = LightHalvesWorld(_cfg("COND_ONE", ticks=60), 21, census_every=20); b.run()
     assert end_state_hash(a) == end_state_hash(b) and len(b.census) >= 1
+
+
+def test_first_both_recorded_from_seeded_composite():
+    d = dict(CC.COMMON, **CC.V3, **CC.K["K40"])
+    h = (vm.hybrid_relocated(vm.replicator(64), vm.witness_cond_one()) + bytes(64))[:64].hex()
+    d.update(coupling="ON", task="COND_ONE", init_tapes=[h], init_draws="PAIRED", ticks=40, cells=64)
+    w = HalvesWorld(Config(**d), 4, census_every=20); w.run()
+    fb = w.first_both
+    assert fb is not None and fb["via"] in ("birth", "census") and fb["anatomy"]["ccrit"] and 0 in fb["origin_ticks"]
