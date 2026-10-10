@@ -27,13 +27,14 @@
    "id": "W02",
    "kind": "EXP",
    "start_utc": "2026-10-10T13:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W02_EXP_REPORT.md"
   },
   {
    "id": "W03",
    "kind": "DEV",
    "start_utc": "2026-10-10T17:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W04",
@@ -126,7 +127,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W02",
+ "active_window": "W03",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -141,7 +142,7 @@
   "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
   "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending",
   "SUBSTRATE_KP_ALIGN": "LAUNCHED 2026-10-10 W02: align e3_known_positive to A1-A (pooled verdict, link classes, secondaries, OE repair pre-built off), timing on pilot_v2; <=2 core-h",
-  "ATLAS_E2_DRIVER": "LAUNCHED 2026-10-10 W02: e2_driver/e2_analyze per A1-B, prelaunch checks, sharded runner, timing on pilot_v2; <=2.5 core-h"
+  "ATLAS_E2_DRIVER": "DELIVERED 2bfeeda16 (13/13 E2 + 14/14 atlas); merged; FREEZE_E2 written"
  },
  "attempts": {
   "E1": {
@@ -160,6 +161,10 @@
     "utc": "2026-10-10T15:45Z",
     "est_core_h_since_activation": 17.0,
     "note": "incl. foundry production, E3 smoke, two red teams; estimate"
+   },
+   {
+    "utc": "2026-10-10T17:25Z",
+    "est_core_h_since_activation": 19.0
    }
   ]
  },
