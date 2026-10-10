@@ -7,18 +7,30 @@
         the cell). Repair then runs O4L's rule on the wrong literal. Same entry count,
         so the same U bytes; tests whether O4L's gain needs the TRUE pruned literal.
 
+  O3W   O3 whose consolidated cells stay weldable: consolidation prunes the implied
+        literals and keeps the pruned premise as the weld anchor (no extra bytes),
+        instead of freezing the cell. One variable away from O3 (DEV_NOTES s3-s4).
+  O4LW  O4L with the same change (provenance repair kept).
+  The 2x2 is {O3, O4L, O3W, O4LW}: freeze {yes, no} x provenance repair {off, on}.
+
 Every E1 arm is chiasma.organisms.Organism unchanged.
 """
 from typing import Optional
 
-from ..organisms import Organism, make as make_e1
+from ..organisms import Cell, Organism, make as make_e1
 from ..world import bits
 
 
 class E1bOrganism(Organism):
     ARMS = dict(Organism.ARMS,
                 O3U=dict(neg="proj", consolidate=True, seams="none", uncapped=True),
-                O4LR=dict(neg="proj", consolidate=True, seams="lazyrand"))
+                O4LR=dict(neg="proj", consolidate=True, seams="lazyrand"),
+                O3W=dict(neg="proj", consolidate=True, seams="none", weldable=True),
+                O4LW=dict(neg="proj", consolidate=True, seams="lazy", weldable=True))
+
+    def __init__(self, arm, m, cap, seed=0):
+        super().__init__(arm, m, cap, seed)
+        self.weldable = bool(self.ARMS[arm].get("weldable"))
 
     def _maybe_consolidate(self, c) -> None:
         anchor = c.anchor
@@ -30,12 +42,34 @@ class E1bOrganism(Organism):
         if outside:
             c.prov = [(1 << self.rng.choice(outside), j) for _l, j in c.prov]
 
+    def _on_fn(self, name, x):
+        if not self.weldable:
+            return super()._on_fn(name, x)
+        # As Organism._on_fn (no eager seams in the weldable arms), except that a
+        # consolidated cell is welded too, using its pruned premise as the anchor.
+        cells = self.cells[name]
+        for c in sorted(cells, key=lambda c: (-c.support, c.born)):
+            self.ops += 1
+            anchor = c.premise if c.consolidated else c.anchor
+            inter = anchor & x
+            if inter and self._weld_ok(name, inter):
+                c.premise = inter
+                if not c.consolidated:
+                    c.anchor = inter
+                c.support += 1
+                self.events["weld"] += 1
+                self._maybe_consolidate(c)
+                return
+            self.events["weld_refused"] += 1
+        cells.append(Cell(x, self.t))
+        self.events["new_cell"] += 1
 
-E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U"]
+
+E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U", "O3W", "O4LW"]
 UNCAPPED = {"O3U", "CEIL"}
 
 
 def make(arm: str, m: int, cap: Optional[int], seed: int = 0):
-    if arm in ("O3U", "O4LR"):
+    if arm in ("O3U", "O4LR", "O3W", "O4LW"):
         return E1bOrganism(arm, m, cap, seed)
     return make_e1(arm, m, cap, seed)

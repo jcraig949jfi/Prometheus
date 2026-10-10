@@ -87,8 +87,10 @@ def _consolidated_cell(arm: str):
     cell = Cell(0b00000111, 0)
     cell.support = 6
     org.cells["T"] = [cell]
-    org.imp[0] = 0b00000111
+    org.imp[0], org.imp[1], org.imp[2] = 0b00000111, 0b00000010, 0b00000100
+    org.seen[0] = org.seen[1] = org.seen[2] = True
     org._maybe_consolidate(cell)
+    assert cell.premise == 0b00000001, bin(cell.premise)
     return org, cell
 
 
@@ -128,6 +130,26 @@ class TestE1bArms(unittest.TestCase):
         org._on_fp("T", x, [cell])
         self.assertTrue(cell.premise & lit)
         self.assertIn(cell, org.cells["T"])
+
+    def test_weldable_arms_weld_a_consolidated_cell(self):
+        for arm, frozen in (("O3", True), ("O3W", False), ("O4L", True), ("O4LW", False)):
+            org, cell = _consolidated_cell(arm)
+            premise = cell.premise                        # {0} after pruning 1 and 2
+            org.observe(0b10000001, {"T": 1})             # covered: support only
+            self.assertEqual(len(org.cells["T"]), 1)
+            org.cells["T"][0].premise = 0b00010001        # widen by hand: {0, 4}
+            org.observe(0b00000001, {"T": 1})             # fn: weld {0,4} & {0} -> {0}
+            n = len(org.cells["T"])
+            if frozen:
+                self.assertEqual(n, 2, arm)               # frozen cell: a new cell opens
+            else:
+                self.assertEqual(n, 1, arm)               # weldable: the cell generalizes
+                self.assertEqual(org.cells["T"][0].premise, premise, arm)
+
+    def test_weldable_arms_keep_provenance_policy(self):
+        self.assertEqual(arms.make("O4LW", 8, None).seams, "lazy")
+        self.assertEqual(arms.make("O3W", 8, None).seams, "none")
+        self.assertFalse(arms.make("O4L", 8, None).__dict__.get("weldable", False))
 
     def test_receipts_refuse_floats_and_reproduce(self):
         w = make_world_h3(SMALL, 3)

@@ -46,6 +46,10 @@ MUTANTS = [
     ("E12 O4LR counterfeit drops entries (fewer U bytes)", "e1b/arms.py",
      "            c.prov = [(1 << self.rng.choice(outside), j) for _l, j in c.prov]",
      "            c.prov = [(1 << self.rng.choice(outside), j) for _l, j in c.prov][:0]"),
+    ("E13 weldable flag ignored", "e1b/arms.py",
+     "        self.weldable = bool(self.ARMS[arm].get(\"weldable\"))", "        self.weldable = False"),
+    ("E14 weldable arm welds with the stale anchor", "e1b/arms.py",
+     "            anchor = c.premise if c.consolidated else c.anchor", "            anchor = c.anchor if c.anchor is not None else 0"),
 ]
 
 

@@ -90,3 +90,52 @@ Consequences:
    a separate variable, tested after (2).
 5. The freeze still waits on the G3 first-sight challenge of E1 (requested from Hestia,
    comms #2046).
+
+## 5. dev-2: the 2x2, freeze x repair (240 runs, 0.13 CPU core-hours; chiasma/runs/e1b-dev-2/)
+
+New arms (arms.py): O3W and O4LW. Consolidation prunes the implied literals but the
+cell stays weldable, with its pruned premise as the anchor. Tests: 13. Mutants: 14/14
+killed (chiasma/runs/e1b-dev-2/MUTATION.txt). Same dev seeds 910001-010; the other
+arms' rows are dev-1's.
+
+Wins out of 10 on err_CDE (identical across the caps of a world unless shown):
+
+| world | O3W>O3 | O4L>O3 | O4LW>O3W | O4LW>O4L | O4LW>O0 | O3W>O0 | O4LW>O1 | O4LW>O2 |
+|---|---|---|---|---|---|---|---|---|
+| H:R21 | 7 | 10 | 10 | 3-4 | 0 | 0 | 10 | 10 |
+| H:R11 | 7 | 9 | 9 | 3-4 | 5 | 3 | 10 | 9 |
+| H:R12 | 4-5 | 9 | 9 | 2 | 9 | 8 | 10 | 9 |
+| H3 | 10 | 10 | 10 | 10 | 1 | 1 | 10 | 10 |
+
+Median err_CDE, PW-H3 cap 1800: O0 2464, O3 3690, O3W 3050, O4L 3376, O4LW 2834.
+P bytes, median: end of B, O3W 289 vs O0 313 (PW-H) and 498 vs 546 (PW-H3). End of E:
+equal (O3W = O0 in every world). Cell count at end of E: O3W = O0.
+
+Reading (dev, sizing):
+1. Freezing is the cause of the extra bytes. Removing it gives O0's geometry exactly.
+   On PW-H3 it also costs about 640 errors (O3 vs O3W); on PW-H it costs little.
+2. Provenance repair helps independently of freezing (O4LW beats O3W 9-10/10 in every
+   world).
+3. Neither change beats never compressing where true dependents are common (R21,
+   PW-H3). The pre-shock bet survives repair. On mixed loads (PW-H3), O0 beats O4LW
+   9/10.
+4. Compression's byte saving is about 8-9% of P before the shock and zero after it. No
+   cap in E1 or dev forces P out (P is never evicted; over_budget = 0 everywhere), so
+   the saving buys nothing. In these worlds, at these caps, the charter's premise ("equal
+   knowledge with lower storage cost") is never put under pressure.
+
+## 6. Next variable: a binding budget (draft)
+
+E1b is redrawn around the one condition under which compression can pay: a budget that
+the no-compression organism cannot meet without losing knowledge.
+- A cap below O0's natural P (sized on dev as fractions of O0's median P at the end of
+  B), with ONE P-eviction rule shared by every arm (evict the cell with the lowest
+  support, then the oldest).
+- Arms: O0, O3W, O4LW, O1, O2 (and O4LR-W, a counterfeit for O4LW, if O4LW wins on dev).
+- Primary bar: O0. Charter co-condition: O1 and O2.
+- World: PW-H3 primary (mixed loads, no single global bet); PW-H ratios reported.
+- Prediction before sizing: compressed arms gain only when the cap is below O0's P and
+  above the compressed P (a window of about 8-9% of P). If dev shows that window is
+  empty or noise-sized, that is itself the answer: in PW worlds, literal pruning cannot
+  pay, and the charter's compression claim needs the factoring lever (DEV_NOTES s4
+  item 4).
