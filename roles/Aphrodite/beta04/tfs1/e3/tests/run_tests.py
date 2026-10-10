@@ -581,6 +581,112 @@ def test_kp_rows_separate_cache_keys_and_reuse():
     return {"search_cache_sizes": n_search, "row_keys": [c.key() for c in rows.values()]}
 
 
+# ================================================================ E3-ID (windows/E3ID_PREREG.md)
+from tfs1.e3 import e3_identifiability as IDM          # noqa: E402
+
+
+@test
+def test_id_behaviour_classes_and_identifiability_labels():
+    """Classes on probe INPUTS (FAIL is a value), first-appearance ranks, NO_STONE programs counted, post-hoc
+    sealed-equivalent rank and R1 verdict, AMBIGUOUS / UNIQUE / NO_STONE labels."""
+    xs_dev = [[1, 5, 4, 9], [4, 6, 2], [0, 7, 3, 5]]
+    task = {"test": [[i, [v for v in i if v > 4]] for i in xs_dev],
+            "tribunal": [[[5, 4, 10], [5, 10]]]}
+    hits = [[10, "(filter (lam x (lt 3 x)) xs)"],          # x > 3            class 1
+            [20, "(rev (rev xs))"],                         # no stone
+            [30, "(filter (lam x (gt x 3)) xs)"],           # x > 3 again      class 1
+            [40, "(filter (lam x (gt x (add 2 2))) xs)"],   # x > 4 (sealed)   class 2
+            [50, "(filter (lam x (lt 4 x)) xs)"]]           # x > 4 again      class 2
+    r = IDM.classify(hits, "p", "(lam x (gt x (add 2 2)))", task)
+    check(r["n_classes"] == 2 and r["n_no_stone_programs"] == 1 and r["n_dev_consistent_programs"] == 5, "counts")
+    check(r["slot_order"][1] == IDM.NO_STONE and len(r["slot_order"]) == 3, "slot order")
+    check(r["classes"][0]["n_programs"] == 2 and r["classes"][1]["n_programs"] == 2, "class sizes")
+    check(r["ID_IDENTIFIABILITY"] == "AMBIGUOUS" and not r["first_class_sealed_equivalent"], "AMBIGUOUS")
+    check(r["sealed_equivalent_class_rank"] == 2 and r["sealed_equivalent_first_charge"] == 40
+          and r["sealed_equivalent_first_ordinal"] == 4, "sealed rank")
+    check(r["sealed_equivalent_first_program_r1_qualified"] is True and r["classes"][0]["r1_qualified"] is False,
+          "post-hoc R1 verdicts")
+    r2 = IDM.classify(hits[3:], "p", "(lam x (gt x (add 2 2)))", task)
+    check(r2["ID_IDENTIFIABILITY"] == "UNIQUE" and r2["n_classes"] == 1, "UNIQUE")
+    r3 = IDM.classify(hits[2:], "p", "(lam x (gt x (add 2 2)))", task)
+    check(r3["ID_IDENTIFIABILITY"] == "AMBIGUOUS", "first class wrong, 2 classes")
+    check(IDM.classify([[5, "(rev xs)"]], "p", "(lam x (gt x 4))", task)["ID_IDENTIFIABILITY"] == "NO_STONE", "")
+    # FAIL is a value: (div x x) and the constant 1 differ only at 0 (FAIL vs 1)
+    b1, b2 = IDM.behaviour(C.parse("(lam x (div x x))")), IDM.behaviour(C.parse("(lam x (div 3 3))"))
+    check(b1 != b2 and sum(u != v for u, v in zip(b1, b2)) == 1 and C.FAIL in b1, "FAIL as a value")
+    # binary stones on the [-12, 12]^2 grid
+    bs = IDM.behaviour(C.parse("(lam a (lam b (sub b (div a 3))))"))
+    check(len(bs) == 625, "pair grid")
+    return {"classes": r["n_classes"], "labels": [r["ID_IDENTIFIABILITY"], r2["ID_IDENTIFIABILITY"]]}
+
+
+def _id_case(td, world, B):
+    KP.run_stages(str(ROOT), world, KP.Config(budget=B), "chain", td, log=lambda s: None)
+    return IDM.run_stages(str(ROOT), world, td, td, "all", B, ks=(1, 2), cert=True, log=lambda s: None)
+
+
+@test
+def test_id_retain1_reproduces_e3kp_primary():
+    """RETAIN-1 (designated, uncertified) reproduces the E3-KP primary chain outcome EXACTLY (byte-identical library
+    sha, status, program, charge, charges) on every family whose constituents the primary acquired; RETAIN-1-CERT
+    reproduces it on EVERY family (CHAIN_C_FAIL included). Also: ID-1's first hit equals the primary attempt's.
+    Development budgets on EXPOSED pilot_v2: W1d5301d0 at 3e5 (all units acquired; one chain solved) and W0467897d
+    at 6e4 (no unit acquired; p0's first dev-consistent stone rejected by the R1 certifier)."""
+    out = {}
+    with tempfile.TemporaryDirectory() as td:
+        for world, B in (("W1d5301d0", 300000), ("W0467897d", 60000)):
+            d = _id_case(td, world, B)
+            I = IDM.ID(str(ROOT), world, td, B)
+            n_cmp = 0
+            for fid in I.kp.admitted():
+                acq = all(I.prim["units"][m]["status"] == "ACQUIRED" for m in I.kp.constituents(fid))
+                r1, rc = d["retain"]["RETAIN-1"][fid], d["retain"]["RETAIN-1-CERT"][fid]
+                check(rc["reproduces_primary"], "RETAIN-1-CERT differs from the primary on %s" % fid)
+                if acq:
+                    check(r1["reproduces_primary"], "RETAIN-1 differs from the primary on %s: %r vs %r" % (
+                        fid, (r1["status"], r1.get("found"), r1.get("charge")), r1["primary_chain"]))
+                    n_cmp += 1
+                else:
+                    check(r1["reproduces_primary"] or r1["retain1_differs_by_design"], "unflagged difference")
+            check(all(rec["primary_first_hit_matches"] for rec in d["id1"].values()), "ID-1 first hit")
+            out[world] = {"B": B, "families_exact": n_cmp,
+                          "statuses": {f: r["status"] for f, r in d["retain"]["RETAIN-1"].items()},
+                          "id1": {k: (v["n_classes"], v["ID_IDENTIFIABILITY"]) for k, v in d["id1"].items()}}
+        check(out["W1d5301d0"]["families_exact"] == 4, "exact comparison not exercised on all-acquired families")
+        check("W0467897d" in out and any(v[0] >= 1 for v in out["W0467897d"]["id1"].values()), "non-acquired path")
+    return out
+
+
+@test
+def test_id_pooled_outcome_rules():
+    def U(lab, und=True, used=True):
+        return {"world": "W", "mechanism": "m%d" % id(lab), "ID_IDENTIFIABILITY": lab, "underdetermined_stone_unit": und,
+                "used_by_failed_family": used}
+
+    def Fm(q4, link="UNDERDETERMINED_STONE"):
+        r = {"qualified": q4, "link": None if q4 else link, "reproduces_primary": True,
+             "retain1_differs_by_design": False}
+        return {"family_id": "F", "RETAIN-1": r, "RETAIN-2": r, "RETAIN-4": r}
+    f12 = [Fm(True) for _ in range(12)] + [Fm(False) for _ in range(3)]
+    f11 = [Fm(True) for _ in range(11)] + [Fm(False, "COMPOSITION_HORIZON") for _ in range(4)]
+    amb = [U("AMBIGUOUS") for _ in range(5)] + [U("UNIQUE") for _ in range(2)]
+    o = IDM.outcomes(amb, f12)
+    check(o["ID_RETENTION_REPAIR"] == "YES" and o["interpretation"] == "DEVELOPMENTAL_MACHINERY", "map 1")
+    check(o["ID_IDENTIFIABILITY"]["fraction_ambiguous"] == round(5 / 7, 4), "fraction")
+    o = IDM.outcomes(amb, f11)
+    check(o["ID_RETENTION_REPAIR"] == "NO" and o["interpretation"] == "WORLD_RULER_IDENTIFIABILITY", "map 2")
+    check(o["retain_rows"]["RETAIN-4"]["first_failing_link_counts"] == {"COMPOSITION_HORIZON": 4}, "link counts")
+    o = IDM.outcomes([U("UNIQUE") for _ in range(4)] + [U("AMBIGUOUS")], f12)
+    check(o["interpretation"] == "INSTRUMENT", "map 3")
+    o = IDM.outcomes([U("UNIQUE"), U("AMBIGUOUS"), U("NO_STONE")], f12)
+    check(o["interpretation"] == "MIXED" and o["ID_IDENTIFIABILITY"]["labelled"] == 2, "tie -> MIXED, NO_STONE excl.")
+    check(IDM.outcomes([U("AMBIGUOUS", und=False)], f12)["interpretation"] == "NOT_APPLICABLE", "no UND units")
+    inc = [dict(f) for f in f12]
+    inc[0] = {"family_id": "F"}
+    check(IDM.outcomes(amb, inc)["ID_RETENTION_REPAIR"] == "INCOMPLETE", "incomplete")
+    return {"cases": 7}
+
+
 def _run(fn):
     t0 = time.perf_counter()
     try:

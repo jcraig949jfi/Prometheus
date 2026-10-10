@@ -19,6 +19,7 @@ All commands run from `roles/Aphrodite/beta04/` with `OMP_NUM_THREADS=1`, one pr
 | `worlds.py` | Arm-view loader (`ArmWorld`: sha-verified, reads only `arm_view/`); coordinator-side `presentation_order`, `Evaluator`, `sealed`; `judge` (test + tribunal, value-or-FAIL); `AccessLog` (records every open during a lifetime) |
 | `e3_known_positive.py` | s1 E3-KP, **amended (prereg A1-A / A1-C)**: rows, pooled verdict, first-failing-link labels. Stage-cached in `runs/KPA1_<world>.json` (the old `runs/KP_<world>.json` are pre-amendment, kept as history) |
 | `kp_timing.py` | E3-KP core-seconds per family per stage + production projection (`runs/KPA1_TIMING.json`) |
+| `e3_identifiability.py` | E3-ID stepping-stone identifiability diagnostic (`windows/E3ID_PREREG.md`): ID-1/ID-2 classes, RETAIN-k; cache `runs/ID_<world>.json`, pooled `runs/ID_POOLED_B<b>.json` |
 | `organism.py` | s2 lifetime organism: arms P0A0 / P1A0 / P0A1 / P1A1 / RANDOM-LIBRARY / SHUFFLED-HISTORY / RANDOM-ARCHIVE |
 | `resumable.py` | Checkpointed lifetimes. A production lifetime exceeds the 15 CPU-min single-run cap. Resuming is identical to an uninterrupted run (tested) |
 | `final_eval.py` | s3 autonomous evaluation + cognitive ledger + endpoint |
@@ -32,6 +33,8 @@ python -m tfs1.e3.e3_known_positive --root foundry/<set> --world W --verdict [RO
 python -m tfs1.e3.e3_known_positive --root foundry/<set> --pooled [--worlds W1,..] [ROW]    (the verdict; KPA1_POOLED_<row>.json)
     ROW = (none: primary) | --fallback off | --given-foundry-primitives | --seeds 1,2 | --all-acquired-library | --oe
 python -m tfs1.e3.kp_timing --root foundry/<set> --worlds W1,W2
+python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --world W --stage id1|retain|all [--out D] [--no-cert]
+python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --pooled [--worlds ..] [--out D]
 python -m tfs1.e3.resumable --root foundry/<set> --world W --arm ARM --seed S --B 200000 --ckpt runs/L_<W>_<ARM>_s<S>.json --max-cpu 780
     (repeat until it prints DONE; then)  final_eval.evaluate_lifetime(rec, root, W);  dependency.dependency_tests(rec, fe, root, W)
 python -m tfs1.e3.smoke --world W --arm ARM --seed 0 --B 20000      (non-resumable; small B only)
@@ -166,7 +169,7 @@ For each qualified admitted R3/R4 solution that calls an entry e, three re-runs:
 SUPPORTED iff REPLAY qualifies and both REMOVED and SHAM fail. Supported depth = the max depth over the supported
 entries.
 
-## 3. Tests (`E3_TEST_RESULTS.json`): 16 PASS / 0 FAIL
+## 3. Tests (`E3_TEST_RESULTS.json`): 19 PASS / 0 FAIL
 
 The base TFS-1 suite (`tfs1/tests`) gives 15/15 after the OE change.
 
@@ -187,6 +190,9 @@ The base TFS-1 suite (`tfs1/tests`) gives 15/15 after the OE change.
 | **oe_charges_exact_and_deterministic** | With OE: charges == evaluated root candidates (1 each, consecutive), no root evaluated twice, every completed size walked in full (== count()), deterministic; the pilot stone is still found (same program, 11,626 vs 49,862 charges); OE infra ledger present |
 | kp_pooled_verdict_and_oe_trigger_rules | 12/15 YES, 11/15 NO (FAIL label), scratch 11/15 NO, 6/7 YES, 5/7 NO, INCOMPLETE; OE trigger needs a strict horizon majority (4/8 does not; plurality reading reported) |
 | kp_first_failing_link_rules | All family-link rules incl. order of missing units, stone disagreement (flag when solved, link when not), IN_CLASS / CLASS_NOT_ENTERED |
+| id_behaviour_classes_and_identifiability_labels | E3-ID classes on probe inputs (FAIL as a value, pair grid), NO_STONE programs counted, sealed-equivalent rank / ordinal / charge and R1 verdict post hoc, AMBIGUOUS / UNIQUE / NO_STONE |
+| **id_retain1_reproduces_e3kp_primary** | RETAIN-1 reproduces the E3-KP primary chain EXACTLY (library sha, status, program, charge, charges) on every all-acquired family (W1d5301d0 at 3e5: 4/4); RETAIN-1-CERT reproduces it on every family incl. CHAIN_C_FAIL (W0467897d at 6e4); ID-1's first hit equals the primary's |
+| id_pooled_outcome_rules | ID_RETENTION_REPAIR 12/15 YES, 11/15 NO + link counts, INCOMPLETE; interpretation map 1 / 2 / 3, tie -> MIXED, NO_STONE excluded, NOT_APPLICABLE |
 | kp_rows_separate_cache_keys_and_reuse | 6 rows have distinct keys; at B = 2e4 fallback-off adds 0 searches, foundry adds exactly one chain search per family and no R1, seed 1 re-keys; FINAL.jsonl cross-check true; describe / pooled run |
 
 ## 4. Known-positive results (EXPOSED pilot_v2; `runs/KP_<world>.json`)
@@ -313,6 +319,49 @@ the frozen-trace test). core.py itself is unchanged, so the organism / mutation 
 10. **seeds rows** re-key (i), (iii) AND (iv).
 11. Not implemented (red-team optional, descriptive): "number of dev-consistent programs seen" and "first qualified
     within budget" after a spurious first hit (it needs searches past the first hit).
+
+## 4C. E3-ID identifiability diagnostic (`e3_identifiability.py`; prereg `windows/E3ID_PREREG.md`)
+
+The module docstring is normative. In brief:
+- **ID family** of a unit = the E3-KP primary's acquisition family, else its first attempted family with a dev-consistent
+  program.
+- **ID-1 / ID-2.** That family is enumerated to the FULL 1e6 in the primary's exact order (the first hit is asserted
+  equal to the primary's). Every dev-consistent program's stone is extracted (fallback on). Stones are grouped by
+  value-or-FAIL on probe inputs ([-40, 40]; [-12, 12]^2 for s). Sealed-equivalence, ranks and R1 test + tribunal are
+  scored post hoc.
+- **RETAIN-k (k = 1, 2, 4; designated).** Library = the first k classes per constituent, with no certifier and no
+  sealed information. The chain search follows E3-KP rules.
+- **RETAIN-k-CERT** (secondary, certifier-assisted) is the primary's certifier-guided walk with k slots. At k = 1 it is
+  the primary.
+
+**Pilot readout (EXPOSED pilot_v2, 1e6; development only).**
+
+| Unit | ID family | Dev-consistent programs | Classes | Sealed-equivalent class rank | Label |
+|---|---|---|---|---|---|
+| W1d5301d0 f1 / p0 / s0 | F006 / F008 / F012 | 9 / 37 / 1 | 1 / 1 / 1 | 1 / 1 / 1 | UNIQUE |
+| W0467897d f1 | F007 | 1 | 1 | 1 | UNIQUE |
+| W0467897d p0 | F010 | 342 | 5 | 2 (x > 4; class 1 is x > 3) | AMBIGUOUS |
+
+| Row | W1d5301d0 (4) | W0467897d (3) | Pooled |
+|---|---|---|---|
+| RETAIN-1 | 3 (= primary, exact) | 0 (differs by design: chain runs on the rejected x > 3 stone) | 3/7 |
+| RETAIN-2 | 3 | 1 (F085) | 4/7 |
+| RETAIN-4 | 3 | 0 (F085: a distractor stone gives a spurious first dev-consistent program) | 3/7 -> NO |
+| RETAIN-1-CERT | 3 | 0 (CHAIN_C_FAIL = primary, exact) | 3/7 |
+| RETAIN-2-CERT / RETAIN-4-CERT | 3 | 1 (F085) | 4/7 |
+
+- The pilot has no UNDERDETERMINED_STONE unit: W0467897d p0's first attempt is a horizon, so the E3-KP primary labels
+  it HORIZON_R1. The pooled fraction is therefore NOT_APPLICABLE on the pilot.
+- Pilot CPU: 586 core-s. That is 5 enumerations of 33-56 s each, plus 16 distinct chain searches of 2-39 s each.
+  Classification is negligible.
+
+**Production projection.**
+- About 17-25 enumerations: the ID families, plus attempted families with hits for CERT. At 35-60 s each that is
+  0.2-0.4 core-h.
+- Up to 5 distinct libraries per family x 15 families (RETAIN-1/2/4, CERT-2/4; CERT-1 shares RETAIN-1's key where the
+  primary acquired every constituent). At 30-50 s each (larger libraries are slower) that is 0.6-1.0 core-h.
+- **Total: about 0.9-1.45 core-h with CERT; about 0.6-1.0 core-h with `--no-cert`.** That is below the prereg's 2-4
+  core-h. Run one world per process, sequentially.
 
 ## 5. Development smoke (EXPOSED pilot_v2; `runs/SMOKE_*.json`, `runs/SMOKE_SUMMARY.json`)
 

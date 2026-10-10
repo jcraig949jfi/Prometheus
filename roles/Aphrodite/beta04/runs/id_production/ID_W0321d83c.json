@@ -1,0 +1,731 @@
+{
+ "budget": 1000000,
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "52922444200c66b133e430dcd1f51943fef997d3162bd6b18796707e836aa7c9",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "72084f13698788a277ed2522cd657e3bb9f57e0baac4d064a000a0c8f01c4ddb",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "e3_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dependency.py": "d61122aed0801ba8d41d2911c3d7bf144c2fb7c53dfbf5a80011e86cbdc8ec01",
+  "e3_identifiability.py": "e525e356f0385a0913a7efbed42042b8021dd93a6573fd3c7a232399f53892b1",
+  "e3_known_positive.py": "1efd24d1fe0620179388b2ac7f4cdb73b13752ca521674a37167407b3d385d15",
+  "final_eval.py": "39f51af061c9ddc358d52dff81b20a730cc081b656adc33a75082e9e85c2df3e",
+  "kp_timing.py": "0d5030970cc3c04369fa41311f56a8db97a26277b42f96dcc3517926074bda33",
+  "organism.py": "93f0e2c0a9a99f3666b419909b771aa2373a787f17e5d75402f0d0fee7a17daa",
+  "resumable.py": "d87e55f3a18ed7e6e14cc4be39e5b5d0ee6199d1ff83a476d0e8467998910238",
+  "smoke.py": "cf8271284fd2dae5a8810a2f2a2fe92134fc094e193ec708b40ec2c179ffe4f4",
+  "summarize_smoke.py": "e0e65b34d6ba6538371e004796af0c6a5be5ce481ddd17c50a2fc124e23b049a",
+  "worlds.py": "50706bbf7b541a59f7b3d27e04f666d96ded73013d784bd3958500c101d76444"
+ },
+ "enumerations": {
+  "W0321d83c-F006-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 50.31,
+   "hits": [
+    [
+     31622,
+     "(mod (last xs) (add 3 3))"
+    ],
+    [
+     47148,
+     "(mod (last xs) (mul 2 3))"
+    ],
+    [
+     365327,
+     "(mod (head (rev xs)) (mul 2 3))"
+    ],
+    [
+     493028,
+     "(mod (last xs) (sub 3 (neg 3)))"
+    ],
+    [
+     528247,
+     "(mod (head (rev xs)) (add 3 3))"
+    ],
+    [
+     706306,
+     "(mod (pow (last xs) 1) (add 3 3))"
+    ],
+    [
+     726738,
+     "(mod (last (rev (rev xs))) (add 3 3))"
+    ],
+    [
+     866397,
+     "(mod (last xs) (add 3 (gcd 3 3)))"
+    ],
+    [
+     868823,
+     "(mod (last (drop 1 xs)) (mul 2 3))"
+    ],
+    [
+     904635,
+     "(mod (last xs) (gcd 0 (add 3 3)))"
+    ],
+    [
+     913315,
+     "(mod (last (map (lam x x) xs)) (mul 2 3))"
+    ],
+    [
+     983357,
+     "(mod (last xs) (div (add 3 3) 1))"
+    ]
+   ]
+  },
+  "W0321d83c-F012-R1|seed=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 43.56,
+   "hits": [
+    [
+     694281,
+     "(len (filter (lam x (lt 3 (sub x 2))) xs))"
+    ],
+    [
+     884644,
+     "(len (filter (lam x (gt (div x 3) 1)) xs))"
+    ]
+   ]
+  }
+ },
+ "id1": {
+  "f0|W0321d83c-F006-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "readout_fallback",
+     "first_charge": 31622,
+     "first_ordinal": 1,
+     "first_program": "(mod (last xs) (add 3 3))",
+     "key": "26b73cd3ba8fcc1b507ce184",
+     "n_programs": 7,
+     "r1_qualified": true,
+     "sealed_equivalent": true,
+     "stone": "(lam x (mod x (add 3 3)))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 7,
+   "enum_cpu_s": 50.31,
+   "family_id": "W0321d83c-F006-R1",
+   "first_class_sealed_equivalent": true,
+   "first_hit": [
+    31622,
+    "(mod (last xs) (add 3 3))"
+   ],
+   "mechanism": "f0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 12,
+   "n_no_stone_programs": 5,
+   "no_stone_first": {
+    "charge": 365327,
+    "ordinal": 3,
+    "program": "(mod (head (rev xs)) (mul 2 3))"
+   },
+   "primary_first_hit": [
+    31622,
+    "(mod (last xs) (add 3 3))"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 31622,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "sealed_equivalent_found": true,
+   "sealed_key": "26b73cd3ba8fcc1b507ce184",
+   "slot_order": [
+    "26b73cd3ba8fcc1b507ce184",
+    "NO_STONE"
+   ]
+  },
+  "p0|W0321d83c-F012-R1": {
+   "ID_IDENTIFIABILITY": "UNIQUE",
+   "charges": 1000000,
+   "classes": [
+    {
+     "class_rank": 1,
+     "extraction": "closed_lambda",
+     "first_charge": 694281,
+     "first_ordinal": 1,
+     "first_program": "(len (filter (lam x (lt 3 (sub x 2))) xs))",
+     "key": "d307c8cf3bba6a833f3498a9",
+     "n_programs": 2,
+     "r1_qualified": true,
+     "sealed_equivalent": true,
+     "stone": "(lam x (lt 3 (sub x 2)))"
+    }
+   ],
+   "classify_cpu_s": 0.0,
+   "complete_through_size": 7,
+   "enum_cpu_s": 43.56,
+   "family_id": "W0321d83c-F012-R1",
+   "first_class_sealed_equivalent": true,
+   "first_hit": [
+    694281,
+    "(len (filter (lam x (lt 3 (sub x 2))) xs))"
+   ],
+   "mechanism": "p0",
+   "n_classes": 1,
+   "n_dev_consistent_programs": 2,
+   "n_no_stone_programs": 0,
+   "no_stone_first": null,
+   "primary_first_hit": [
+    694281,
+    "(len (filter (lam x (lt 3 (sub x 2))) xs))"
+   ],
+   "primary_first_hit_matches": true,
+   "sealed_equivalent_class_rank": 1,
+   "sealed_equivalent_first_charge": 694281,
+   "sealed_equivalent_first_ordinal": 1,
+   "sealed_equivalent_first_program_r1_qualified": true,
+   "sealed_equivalent_found": true,
+   "sealed_key": "d307c8cf3bba6a833f3498a9",
+   "slot_order": [
+    "d307c8cf3bba6a833f3498a9"
+   ]
+  }
+ },
+ "kp_row": "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000",
+ "label": "PRODUCTION",
+ "retain": {
+  "RETAIN-1": {
+   "W0321d83c-F040-R3": {
+    "certified": false,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "primary_chain": {
+     "charge": 91507,
+     "charges": 91507,
+     "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+     "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+     "status": "SOLVED"
+    },
+    "primary_family_link": null,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-1-CERT": {
+   "W0321d83c-F040-R3": {
+    "certified": true,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 1,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "primary_chain": {
+     "charge": 91507,
+     "charges": 91507,
+     "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+     "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+     "status": "SOLVED"
+    },
+    "primary_family_link": null,
+    "reproduces_primary": true,
+    "retain1_differs_by_design": false,
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-2": {
+   "W0321d83c-F040-R3": {
+    "certified": false,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-2-CERT": {
+   "W0321d83c-F040-R3": {
+    "certified": true,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 2,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-4": {
+   "W0321d83c-F040-R3": {
+    "certified": false,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  },
+  "RETAIN-4-CERT": {
+   "W0321d83c-F040-R3": {
+    "certified": true,
+    "charge": 91507,
+    "charges": 91507,
+    "complete_through_size": 6,
+    "cpu_s": 2.86,
+    "family_id": "W0321d83c-F040-R3",
+    "found": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+    "hypotheses": {
+     "f0": {
+      "family": "W0321d83c-F006-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (mod x (add 3 3)))"
+      ]
+     },
+     "p0": {
+      "family": "W0321d83c-F012-R1",
+      "sealed_equivalent": [
+       true
+      ],
+      "stones": [
+       "(lam x (lt 3 (sub x 2)))"
+      ]
+     }
+    },
+    "k": 4,
+    "library_entries": 2,
+    "library_sha256": "b871f3dcd559350a123da889a5af8b602d5a2dfe73ec20fa5b4cf9c7dfb0c832",
+    "link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "rung": "R3",
+    "search_key": "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12",
+    "static": {
+     "hitting_cost_bracket": [
+      11835,
+      124978
+     ],
+     "promoted_form_how": "witness_promoted_by_slot",
+     "size_promoted_form": 7,
+     "uses_entries": [
+      "L_ca0f48095023",
+      "L_f5d92db5b570"
+     ],
+     "witness": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))",
+     "witness_promoted_form": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))"
+    },
+    "status": "SOLVED",
+    "verdict": {
+     "n_test": 40,
+     "n_tribunal": 17,
+     "qualified": true,
+     "test_ok": true,
+     "tribunal_ok": true
+    }
+   }
+  }
+ },
+ "searches": {
+  "W0321d83c-F040-R3|seed=0|lib=b871f3dcd559350a|oe=0|B=1000000|max=12": {
+   "budget": 1000000,
+   "censored": false,
+   "charges": 91507,
+   "class_sizes": {
+    "1": 1,
+    "2": 1,
+    "3": 14,
+    "4": 106,
+    "5": 1072,
+    "6": 10640,
+    "7": 113144,
+    "8": 1240282
+   },
+   "complete_through_size": 6,
+   "cpu_s": 2.86,
+   "false_hits": 0,
+   "hit": true,
+   "hit_charge": 91507,
+   "library_entries": 2,
+   "program": "(map (lam x (L_ca0f48095023 x)) (filter (lam x (L_f5d92db5b570 x)) xs))",
+   "units_expanded": 704326,
+   "units_promoted": 616089,
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   },
+   "verify_evals": 0
+  }
+ },
+ "summary": {
+  "families": [
+   {
+    "RETAIN-1": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "SOLVED"
+    },
+    "RETAIN-1-CERT": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": true,
+     "retain1_differs_by_design": false,
+     "status": "SOLVED"
+    },
+    "RETAIN-2": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "RETAIN-2-CERT": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "RETAIN-4": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "RETAIN-4-CERT": {
+     "charge": 91507,
+     "cpu_s": 2.86,
+     "detail": "CHAIN_QUALIFIED",
+     "link": null,
+     "qualified": true,
+     "reproduces_primary": null,
+     "retain1_differs_by_design": null,
+     "status": "SOLVED"
+    },
+    "family_id": "W0321d83c-F040-R3",
+    "primary_chain_qualified": true,
+    "primary_link": null,
+    "rung": "R3",
+    "skeleton": "R3:fp:map_of_filter",
+    "world": "W0321d83c"
+   }
+  ],
+  "units": [
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 50.31,
+    "first_class_sealed_equivalent": true,
+    "id_family": "W0321d83c-F006-R1",
+    "mechanism": "f0",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 12,
+    "n_no_stone_programs": 5,
+    "primary_link": null,
+    "primary_status": "ACQUIRED",
+    "sealed_equivalent_class_rank": 1,
+    "sealed_equivalent_first_charge": 31622,
+    "sealed_equivalent_first_ordinal": 1,
+    "sealed_equivalent_first_program_r1_qualified": true,
+    "underdetermined_stone_unit": false,
+    "used_by_failed_family": false,
+    "world": "W0321d83c"
+   },
+   {
+    "ID_IDENTIFIABILITY": "UNIQUE",
+    "enum_cpu_s": 43.56,
+    "first_class_sealed_equivalent": true,
+    "id_family": "W0321d83c-F012-R1",
+    "mechanism": "p0",
+    "n_classes": 1,
+    "n_dev_consistent_programs": 2,
+    "n_no_stone_programs": 0,
+    "primary_link": null,
+    "primary_status": "ACQUIRED",
+    "sealed_equivalent_class_rank": 1,
+    "sealed_equivalent_first_charge": 694281,
+    "sealed_equivalent_first_ordinal": 1,
+    "sealed_equivalent_first_program_r1_qualified": true,
+    "underdetermined_stone_unit": false,
+    "used_by_failed_family": false,
+    "world": "W0321d83c"
+   }
+  ]
+ },
+ "world": "W0321d83c"
+}

@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-10T13:32Z. The operator reviews this file about every 6
+Currency: 2026-10-10T20:24Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with
@@ -128,6 +128,13 @@ Q-012 | PREF (trust store on M2) | 2026-10-10
   still be refused)?
   DEFAULT meanwhile: no; those three rows show the register's values,
   labelled "register only".
+  UPDATE 2026-10-10T20:21Z: Achilles added ubu007 (.3) and ubu008 (.231) to
+  the fleet (#2099). ubu007 is refused the same way (no stored host key), so
+  the question now covers ubu004-ubu007. ubu008 is different: ssh to
+  192.168.1.231 port 22 timed out (not a key question; the node may only
+  answer on its other address .232, or block port 22). All five rows now show
+  Achilles' live hardware read of 2026-10-10, labelled "register + Achilles
+  read", never "measured".
   ANSWER:
 
 ## ANSWERED

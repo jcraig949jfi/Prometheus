@@ -26,6 +26,7 @@ import sys
 from . import REPO, host
 
 DOC = "infra/FLEET_HOSTS.md"
+HW_DOC = "infra/ubuntu_nodes/ubuntu_server_machines.md"     # Achilles' "Fleet hardware" table, read live on its date
 CENSUS = "docs/fleet/fleet_state.json"
 LINUX_USER = "jcraig"                 # FLEET_HOSTS.md, "Linux nodes": user `jcraig` on every node
 NOT_SEATS = {"base-role", "generic-worker-role", "rso-builder-role", "template"}
@@ -158,6 +159,76 @@ def register(text):
     return out
 
 
+def parse_hw(text):
+    """Achilles' "## Fleet hardware (read live <date> ...)" table -> ({HOST: values}, date). Serial numbers are
+    not kept."""
+    part = text.split("## Fleet hardware", 1)
+    if len(part) < 2:
+        return {}, None
+    lines = part[1].splitlines()
+    date = _num(r"(\d{4}-\d{2}-\d{2})", lines[0] if lines else "", str)
+    out = {}
+    for ln in lines[1:]:
+        if ln.startswith("## "):
+            break
+        if not ln.startswith("|") or re.fullmatch(r"\|[-| :]+\|", ln.strip()):
+            continue
+        c = [x.strip() for x in ln.strip().strip("|").split("|")]
+        if len(c) < 7 or c[0].lower() == "host":
+            continue
+        out[c[0].upper()] = dict(hardware=_plain(c[1]), cpu=_plain(c[2]), cores=_num(r"(\d+)C/", c[3], int),
+                                 threads=_num(r"/(\d+)T", c[3], int), avx2=_plain(c[4]),
+                                 ram_gb=_num(r"(\d+(?:\.\d+)?)\s*GB", c[5]), ram_note=_plain(c[5]),
+                                 ip=("192.168.1." + _num(r"\.(\d{1,3})\b", c[6], str)) if _num(r"\.(\d{1,3})\b", c[6], str) else "")
+    return out, date
+
+
+def overlay(rows, hw, date):
+    """Register rows + Achilles' hardware table: hosts the register lacks are added (marked so); for hosts it has,
+    CPU, cores, threads and RAM take the table's dated values and every change is noted. Pan's own probes are laid
+    over this later (merge), so a wrong table row still shows up as a measured disagreement."""
+    src = "Achilles hardware read {}".format(date or "(undated)")
+    by = {r["host"]: r for r in rows}
+    linux_os = next((r["os"] for r in rows if r["family"] == "Linux" and r["os"]), "")
+    for h, x in sorted(hw.items()):
+        r = by.get(h)
+        avx = "; no AVX" if x["avx2"].lower().startswith("no") else ""
+        if r is None:
+            r = dict(host=h, label="", name=h, family="Linux", hardware=x["hardware"], cpu=x["cpu"], cores=x["cores"],
+                     threads=x["threads"], ram_gb=x["ram_gb"], ram_note=x["ram_note"], gpu="", vram_gb=None, disk="",
+                     ip=x["ip"], tags="", os=linux_os, hw_read=date or "(undated)",
+                     notes="not in {} yet; values from {}{}".format(DOC, src, avx))
+            rows.append(r)
+            by[h] = r
+            continue
+        changed = []
+        for k in ("cores", "threads", "ram_gb"):
+            if x[k] is not None and x[k] != r.get(k):
+                changed.append("{} {} -> {}".format(k.replace("_gb", " GB"), r.get(k), x[k]))
+                r[k] = x[k]
+        if x["cpu"] and x["cpu"] != r.get("cpu"):
+            changed.append("CPU {} -> {}".format(r.get("cpu"), x["cpu"]))
+            r["cpu"] = x["cpu"]
+        if x["ram_note"]:
+            r["ram_note"] = x["ram_note"]
+        if not r.get("ip") and x["ip"]:
+            r["ip"] = x["ip"]
+        r["hw_read"] = date or "(undated)"
+        if changed or avx:
+            r["notes"] = ((r.get("notes") or "") + " | {}: {}{}".format(src, ", ".join(changed) or "no change", avx))[:300]
+    return rows
+
+
+def full_register():
+    """The register the Machines tab shows: FLEET_HOSTS.md + Achilles' dated hardware table."""
+    rows = register(git_show(DOC))
+    try:
+        hw, date = parse_hw(git_show(HW_DOC))
+    except RuntimeError:
+        return rows
+    return overlay(rows, hw, date)
+
+
 # ---------------------------------------------------------------- probes
 
 def _ssh_probe(address, timeout=40):
@@ -198,6 +269,68 @@ def parse_kv(text):
     return f
 
 
+def _engine_label(p):
+    """An engine label for a process: 'python <script under the repo or -m module>' for Python, else the image
+    name; plus the repo/worktree directory it runs in. Command-line ARGUMENTS are never kept."""
+    name = (p.name() or "").lower()
+    cmd = p.cmdline()
+    eng = name
+    if name.startswith("python") or name in ("py.exe", "pythonw.exe"):
+        mod = None
+        for i, a in enumerate(cmd[1:], 1):
+            if a == "-m" and i + 1 < len(cmd):
+                mod = "-m " + cmd[i + 1]
+                break
+            if a.endswith(".py"):
+                a = a.replace(chr(92), "/")
+                m = re.search(r"(?:Prometheus-worktrees/[^/]+/|Prometheus/)(.+[.]py)$", a, re.I)
+                mod = m.group(1) if m else a.split("/")[-1]
+                break
+        eng = "python " + (mod or "?")
+    where = None
+    try:
+        cwd = p.cwd().replace(chr(92), "/")
+        m = re.search(r"(Prometheus-worktrees/[^/]+|Prometheus(?:-data)?/[^/]+)", cwd, re.I)
+        where = m.group(1) if m else None
+    except Exception:
+        pass
+    return eng, where
+
+
+def engine_sample(seconds=10.0, top=10):
+    """Read-only CPU sample of the local host: [{engine, where, procs, cores}] for the busiest engines over
+    `seconds` (cores = share of one logical CPU; the idle process is left out). None without psutil."""
+    try:
+        import psutil
+    except ImportError:
+        return None
+    import time
+    procs = []
+    for pr in psutil.process_iter():
+        try:
+            pr.cpu_percent(None)
+            procs.append(pr)
+        except Exception:
+            pass
+    time.sleep(seconds)
+    agg = {}
+    for pr in procs:
+        try:
+            if pr.pid == 0:
+                continue
+            c = pr.cpu_percent(None) / 100
+            k = _engine_label(pr)
+        except Exception:
+            continue
+        a = agg.setdefault(k, dict(engine=k[0], where=k[1], procs=0, cores=0.0))
+        a["procs"] += 1
+        a["cores"] += c
+    rows = sorted(agg.values(), key=lambda a: -a["cores"])[:top]
+    for a in rows:
+        a["cores"] = round(a["cores"], 2)
+    return rows
+
+
 def _local_probe():
     if sys.platform != "win32":
         return None, "local probe is written for Windows hosts"
@@ -216,6 +349,7 @@ def _local_probe():
         f["nvidia"] = [dict(name=x.split(",")[0].strip(), vram_mb=int(x.split(",")[1])) for x in out if "," in x]
     except (OSError, subprocess.TimeoutExpired, ValueError):
         f["nvidia"] = []
+    f["engines"] = engine_sample()
     return f, None
 
 
@@ -223,7 +357,7 @@ def probe(out=print, addresses=None):
     """Probe every Linux node in the register (ssh, read-only) and the local host if it is in the register; one
     pan.host_probe row per attempt, failures included. `addresses` ({host: address}) overrides the targets."""
     from . import db
-    machines = register(git_show(DOC))
+    machines = full_register()
     targets = addresses or {m["host"]: m["ip"] for m in machines if m["family"] == "Linux" and m["ip"]}
     run_id = "fleet-probe-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     results = {}
@@ -273,7 +407,8 @@ def merge(m, facts, measured_at, method):
     m = dict(m)
     miss = []
     if not facts:
-        m.update(specs="register only", checked_at=None, mismatch="")
+        m.update(specs="register + Achilles read {}".format(m["hw_read"]) if m.get("hw_read") else "register only",
+                 checked_at=None, mismatch="")
         return m
     hn = (facts.get("hostname") or "").upper()
     if hn and hn != m["host"]:
@@ -336,7 +471,7 @@ def machines(now=None):
     """One row per register machine: register values, measured values over them, last seen, seats seen in 7 days."""
     from . import db
     now = now or dt.datetime.now(dt.timezone.utc)
-    rows = register(git_show(DOC))
+    rows = full_register()
     with db.cursor() as cur:
         cur.execute("""select distinct on (host) host, probed_at, method, facts from pan.host_probe where ok
                        order by host, probed_at desc""")
@@ -470,7 +605,7 @@ def seats(now=None):
 def controls(write=True):
     """POSITIVE: the local host's measured threads and RAM agree with the register (M2: 28 threads, 32 GB) and at
     least one ssh probe succeeds. NEGATIVE: a probe of an unroutable TEST-NET address fails and is recorded as a
-    failure; a register machine nobody probes is labelled 'register only'. CHEAT: a register row claiming 999
+    failure; a register machine nobody probes is labelled 'register...' (never 'measured'). CHEAT: a register row claiming 999
     threads for a measured host is flagged, not silently replaced; seats whose comms status column says 'active'
     but whose comms activity is over 24 h old must exist and none may be reported active on comms evidence."""
     from . import db
@@ -491,7 +626,7 @@ def controls(write=True):
         probed |= {r[0] for r in cur.fetchall()}
         unprobed = sorted(h for h in byh if h not in probed)
         res["NEGATIVE_unprobed_register_only"] = dict(
-            hosts=unprobed, all_labelled=bool(unprobed) and all(byh[h]["specs"] == "register only" for h in unprobed))
+            hosts=unprobed, all_labelled=bool(unprobed) and all(byh[h]["specs"].startswith("register") for h in unprobed))
         cur.execute("""select distinct on (host) host, probed_at, facts from pan.host_probe where ok and method = 'ssh'
                        order by host, probed_at desc limit 1""")
         one = cur.fetchone()

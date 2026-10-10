@@ -11,8 +11,24 @@ Don't record passwords here.
 | 4 | ubu004   | jcraig   | 2026-10-02 | Ubuntu Server 26.04.1 LTS | WD5000LPCX 500 GB 5400 rpm HDD | 192.168.1.178 (Wi-Fi, wlp2s0) | **Provisioned** (first autoinstall + provision_node.sh); GitHub token pending; Claude logged in 2026-10-06 |
 | 5 | ubu005   | jcraig   | 2026-10-04 | Ubuntu Server 26.04.1 LTS | Team MP33 1 TB NVMe in a USB-C enclosure (external) | 192.168.1.222 (wired, enp0s31f6); Wi-Fi .227 (wlp4s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
-| 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **ON HOLD**: data corruption x2, memory test running; no repo/worker yet |
+| 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **Provisioned** (shared token, Claude token); worker NOT enabled until memtester pass 2 |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
+
+## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
+
+| Host | Machine | CPU | C/T | AVX2 | RAM | IP (wired / Wi-Fi) | Serial / tag |
+|---|---|---|---|---|---|---|---|
+| ubu001 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .218 (Wi-Fi) | PF0V02XZ |
+| ubu002 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U | 2C/4T | yes | 8 GB | .219 (Wi-Fi) | PF0V0JL6 |
+| ubu003 | Dell Latitude E7240 | i7-4600U | 2C/4T | yes | 8 GB | .220 | D5VYTZ1 |
+| ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U | 2C/4T | yes | 8 GB | .221 (USB eth) / .178 | 8CG80912V3 |
+| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/8T | yes | 24 GB (8+16) | .222 / .227 | R90T9A2G |
+| ubu006 | Dell Inspiron 3647 (desktop) | i3-4130 | 2C/4T | yes | 16 GB | .225 / .226 | J3B1K02 |
+| ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
+| ubu008 | ThinkPad T490s (20NX0020US) | i7-8565U | 4C/8T | yes | 16 GB | .231 / .232 | PC1AHQQD |
+
+Corrections: ubu006 is an i3-4130 (was "Haswell, 4 threads"); ubu005 has 24 GB installed (22 GiB usable).
+Screens: all nodes blank after 5 min idle (consoleblank=300, also set live); a key or Ctrl+Alt+F2, F1 wakes them.
 
 Fill in the IP after first login (`ip -br a`). SSH: `ssh jcraig@<ip>`.
 
@@ -198,7 +214,9 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
 - **provision_node.sh 192.168.1.3 ubu007:** setup OK, but the repo clone failed `inflate: data stream error (incorrect
   data check)` -- a second in-memory corruption, now from the network. Suspect RAM: 2x 8 GB DDR3-1333
   (V01D3SF8GB52852813) in DIMM_B + DIMM_D; DIMM_A/C (under the keyboard) empty. `memtester 12G 2` started 17:42Z in
-  tmux `memtest` (log ~/memtester_*.log). Worker, Claude token and repo wait for the result.
+  tmux `memtest` (log ~/memtester_*.log). Pass 1 (12 GB) clean ~19:20Z. Re-clone 19:3xZ during pass 2: 2m10s,
+  `git fsck` clean. provision_node.sh re-run: push dry-run OK; Claude token copied from ubu006, claude -p OK.
+  Battery and HDD 2 bay left empty; fan blown out (operator). Screen blanked (backlight off + consoleblank=300).
 - Wi-Fi: the Intel 6300 enumerated during installer boot 1 (iwlwifi 0000:0c:00.0) but is absent from lspci now: likely
   unseated at reassembly, or Internal WLAN disabled in BIOS. Not needed while wired.
 

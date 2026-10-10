@@ -130,6 +130,21 @@
    "utc": "2026-10-10T18:55Z",
    "kind": "RESULT",
    "note": "E3-KP SECONDARY ROWS (descriptive, FREEZE_E3KP): fallback_off 0/15 (R1_ACQ 6, UNDERDET 5, HORIZON_R1 4); given_foundry_primitives 14/15 (COMPOSITION_HORIZON 1) -- composition step reachable given correct stones; all_acquired 7/15; seed1 9/15 (UNDERDET 2, H_R1 2, COMP_H 2); seed2 8/15 (UNDERDET 3, H_R1 4). Scratch fails 15/15 all rows. A1-C agreement: fallback-off NO = primary NO. Reading: the break is TFS-1 stone ACQUISITION (identifiability/order-dependence), not composition."
+  },
+  {
+   "utc": "2026-10-10T19:03Z",
+   "kind": "FREEZE",
+   "note": "FREEZE_E3ID (E3ID_PREREG + ID-A1; build 767ee7adf); designated uncertified RETAIN-4"
+  },
+  {
+   "utc": "2026-10-10T19:04Z",
+   "kind": "LAUNCH",
+   "note": "E3-ID production, 7 worlds sequential, 1 worker (runs/id_production). Workers: E2 2 + E3-ID 1 + ALIEN lead 1 = 4. Note: some earlier ledger utc stamps (18:40Z, 18:55Z) were estimates a few minutes ahead of wall clock; commit times are authoritative."
+  },
+  {
+   "utc": "2026-10-10T19:35Z",
+   "kind": "RESULT",
+   "note": "E3-ID PRODUCTION: UD units 4/4 UNIQUE_WRONG (W483b8c31 f0, W6eb945cc f0, Wb49b6a5f f1, Wc025415a p0; n_dev_consistent=1 each, sealed class not found at 1e6); RETAIN-1/2/4 7/15, RETAIN-2/4-CERT 9/15 -> ID_RETENTION_REPAIR NO. Code-level interpretation string 'INSTRUMENT' is superseded by frozen ID-A1.4 (UNIQUE not sealed-equivalent = UNIQUE_WRONG -> WORLD/RULER-or-HORIZON). INSTRUMENT applies only to sealed-equivalent UNIQUE units labelled UD in KP: count 0."
   }
  ]
 }
