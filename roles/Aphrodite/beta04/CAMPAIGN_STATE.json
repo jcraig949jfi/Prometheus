@@ -1,179 +1,186 @@
 {
-  "schema": "aphrodite.beta04.state.v1",
-  "campaign": "C-015",
-  "label": "C-P2B-APH-BETA-04",
-  "thread": "TH-P2B-APHRODITE-V2B",
-  "authority": "prompts/2026-10-10_beta04/01_OPERATOR_DIRECTIVE_verbatim.md",
-  "activation_utc": "2026-10-10T09:27Z",
-  "hard_stop_utc": "2026-10-13T09:27Z",
-  "starting_sha": "origin/main 5956b542ef11e588c6d82e8049c5ac65b0875063",
-  "inherited": {
-    "BETA03": "MIGRATE_SUBSTRATE",
-    "R8_UNDER_PROMOTION": "NO",
-    "SECOND_ORDER_SAGACITY": "NOT ESTABLISHED",
-    "TFS1": "DESIGN_ONLY",
-    "GLOBAL_BEHAVIOR_IDENTITY": "FAIL"
+ "schema": "aphrodite.beta04.state.v1",
+ "campaign": "C-015",
+ "label": "C-P2B-APH-BETA-04",
+ "thread": "TH-P2B-APHRODITE-V2B",
+ "authority": "prompts/2026-10-10_beta04/01_OPERATOR_DIRECTIVE_verbatim.md",
+ "activation_utc": "2026-10-10T09:27Z",
+ "hard_stop_utc": "2026-10-13T09:27Z",
+ "starting_sha": "origin/main 5956b542ef11e588c6d82e8049c5ac65b0875063",
+ "inherited": {
+  "BETA03": "MIGRATE_SUBSTRATE",
+  "R8_UNDER_PROMOTION": "NO",
+  "SECOND_ORDER_SAGACITY": "NOT ESTABLISHED",
+  "TFS1": "DESIGN_ONLY",
+  "GLOBAL_BEHAVIOR_IDENTITY": "FAIL"
+ },
+ "phase": "BOOTSTRAP",
+ "windows": [
+  {
+   "id": "W01",
+   "kind": "DEV",
+   "start_utc": "2026-10-10T09:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W01_DEV_REPORT.md"
   },
-  "phase": "BOOTSTRAP",
-  "windows": [
-    {
-      "id": "W01",
-      "kind": "DEV",
-      "start_utc": "2026-10-10T09:27Z",
-      "status": "CLOSED",
-      "report": "beta04/windows/W01_DEV_REPORT.md"
-    },
-    {
-      "id": "W02",
-      "kind": "EXP",
-      "start_utc": "2026-10-10T13:27Z",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "W03",
-      "kind": "DEV",
-      "start_utc": "2026-10-10T17:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W04",
-      "kind": "EXP",
-      "start_utc": "2026-10-10T21:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W05",
-      "kind": "DEV",
-      "start_utc": "2026-10-11T01:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W06",
-      "kind": "EXP",
-      "start_utc": "2026-10-11T05:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W07",
-      "kind": "DEV",
-      "start_utc": "2026-10-11T09:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W08",
-      "kind": "EXP",
-      "start_utc": "2026-10-11T13:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W09",
-      "kind": "DEV",
-      "start_utc": "2026-10-11T17:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W10",
-      "kind": "EXP",
-      "start_utc": "2026-10-11T21:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W11",
-      "kind": "DEV",
-      "start_utc": "2026-10-12T01:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W12",
-      "kind": "EXP",
-      "start_utc": "2026-10-12T05:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W13",
-      "kind": "DEV",
-      "start_utc": "2026-10-12T09:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W14",
-      "kind": "EXP",
-      "start_utc": "2026-10-12T13:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W15",
-      "kind": "DEV",
-      "start_utc": "2026-10-12T17:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W16",
-      "kind": "EXP",
-      "start_utc": "2026-10-12T21:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W17",
-      "kind": "DEV",
-      "start_utc": "2026-10-13T01:27Z",
-      "status": "PENDING"
-    },
-    {
-      "id": "W18",
-      "kind": "EXP",
-      "start_utc": "2026-10-13T05:27Z",
-      "status": "PENDING"
-    }
-  ],
-  "active_window": "W02",
-  "experiments": {
-    "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
-    "E2": "PENDING",
-    "E3": "PENDING",
-    "E4": "NOT BEGUN: instruments not passed (E1 not qualified; R5=0 so depth-2 inheritance cannot be demanded)",
-    "E5": "GATED",
-    "ALIEN": "PENDING"
+  {
+   "id": "W02",
+   "kind": "EXP",
+   "start_utc": "2026-10-10T13:27Z",
+   "status": "ACTIVE"
   },
-  "jobs": [],
-  "subagents": {
-    "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
-    "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
-    "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending"
+  {
+   "id": "W03",
+   "kind": "DEV",
+   "start_utc": "2026-10-10T17:27Z",
+   "status": "PENDING"
   },
-  "attempts": {
-    "E1": {
-      "v1": "pilot -> NOT_QUALIFIED (red-team)",
-      "v2": "one repair round (pre-registered rules in beta04/windows/E1_V2_RULES.md)"
-    }
+  {
+   "id": "W04",
+   "kind": "EXP",
+   "start_utc": "2026-10-10T21:27Z",
+   "status": "PENDING"
   },
-  "compute": {
-    "cap": "48 core-h / rolling 24h",
-    "ledger": [
-      {
-        "utc": "2026-10-10T13:02Z",
-        "est_core_h_since_activation": 8.0
-      }
-    ]
+  {
+   "id": "W05",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T01:27Z",
+   "status": "PENDING"
   },
-  "cloud_spend_usd": 0,
-  "next_action": "pre-register E3-KP (TFS-1 known-positive on 15 admitted R3/R4) + E2 screening atlas on admitted R3/R4 (8 seeds); red-team; run",
-  "outcomes_frozen_labels": {
-    "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)"
+  {
+   "id": "W06",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T05:27Z",
+   "status": "PENDING"
   },
-  "contract_decisions_pending": [
-    "scanl includes init (n+1)? (match foundry)",
-    "curried 2-arg lambdas (lam a (lam b BODY))",
-    "exec units on FAIL counted to failure -> compare units only on non-FAIL",
-    "and/or strict",
-    "hit definition for search vs endpoint",
-    "E3 budget/max size (8; 7 with libraries)",
-    "commutative canonicalisation on; CRN slot=family_id"
-  ],
-  "contract_decisions_frozen": {
-    "v0.1-1": "promoted/learned primitives must be CLOSED over their own arguments: no free reference to the task input xs (prevents whole-program memorisation posing as a mechanism)"
+  {
+   "id": "W07",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T09:27Z",
+   "status": "PENDING"
   },
-  "known_answers": {
-    "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
+  {
+   "id": "W08",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T13:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W09",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T17:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W10",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T21:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W11",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T01:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W12",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T05:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W13",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T09:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W14",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T13:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W15",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T17:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W16",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T21:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W17",
+   "kind": "DEV",
+   "start_utc": "2026-10-13T01:27Z",
+   "status": "PENDING"
+  },
+  {
+   "id": "W18",
+   "kind": "EXP",
+   "start_utc": "2026-10-13T05:27Z",
+   "status": "PENDING"
   }
+ ],
+ "active_window": "W02",
+ "experiments": {
+  "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
+  "E2": "PENDING",
+  "E3": "PENDING",
+  "E4": "NOT BEGUN: instruments not passed (E1 not qualified; R5=0 so depth-2 inheritance cannot be demanded)",
+  "E5": "GATED",
+  "ALIEN": "PENDING"
+ },
+ "jobs": [],
+ "subagents": {
+  "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
+  "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
+  "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending",
+  "SUBSTRATE_KP_ALIGN": "LAUNCHED 2026-10-10 W02: align e3_known_positive to A1-A (pooled verdict, link classes, secondaries, OE repair pre-built off), timing on pilot_v2; <=2 core-h",
+  "ATLAS_E2_DRIVER": "LAUNCHED 2026-10-10 W02: e2_driver/e2_analyze per A1-B, prelaunch checks, sharded runner, timing on pilot_v2; <=2.5 core-h"
+ },
+ "attempts": {
+  "E1": {
+   "v1": "pilot -> NOT_QUALIFIED (red-team)",
+   "v2": "one repair round (pre-registered rules in beta04/windows/E1_V2_RULES.md)"
+  }
+ },
+ "compute": {
+  "cap": "48 core-h / rolling 24h",
+  "ledger": [
+   {
+    "utc": "2026-10-10T13:02Z",
+    "est_core_h_since_activation": 8.0
+   },
+   {
+    "utc": "2026-10-10T15:45Z",
+    "est_core_h_since_activation": 17.0,
+    "note": "incl. foundry production, E3 smoke, two red teams; estimate"
+   }
+  ]
+ },
+ "cloud_spend_usd": 0,
+ "next_action": "On lead returns: review code vs A1, write FREEZE_E2_E3KP.json (hashes + family IDs), run E3-KP prelaunch then primary on production; E2 prelaunch + atlas + 1x screen within cap",
+ "outcomes_frozen_labels": {
+  "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)"
+ },
+ "contract_decisions_pending": [
+  "scanl includes init (n+1)? (match foundry)",
+  "curried 2-arg lambdas (lam a (lam b BODY))",
+  "exec units on FAIL counted to failure -> compare units only on non-FAIL",
+  "and/or strict",
+  "hit definition for search vs endpoint",
+  "E3 budget/max size (8; 7 with libraries)",
+  "commutative canonicalisation on; CRN slot=family_id"
+ ],
+ "contract_decisions_frozen": {
+  "v0.1-1": "promoted/learned primitives must be CLOSED over their own arguments: no free reference to the task input xs (prevents whole-program memorisation posing as a mechanism)"
+ },
+ "known_answers": {
+  "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
+ }
 }
