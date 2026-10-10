@@ -33,6 +33,8 @@ from Postgres (slow) until pgvector exists on M1 (roles/Pan/QUESTIONS.md Q-001).
 
     python -m pan search "QUESTION" [-k 10] [--mode hybrid|fts|vector]
                          [--seat Archaeon,Nestor] [--kind prereg,result,journal,charter,doc,code,prompt]
+                         (comms messages: --kind comms_report,comms_question,...; Moonshot's published
+                          epochs: --kind moonshot.epoch -- short items rank below long files unfiltered)
                          [--path substring] [--since 2026-09-01] [--json]
     python -m pan pivot PATH             ONE SCREEN around an experiment artifact: what it is, who cites
                                          it / what it cites, what changed with it, nearest artifacts

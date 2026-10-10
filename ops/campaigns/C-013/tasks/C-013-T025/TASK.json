@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T025",
+  "campaign_id": "C-013",
+  "title": "P-3: idempotent host-relaunch entry + fire test with a SIMULATED scheduler (no real OS task installed)",
+  "objective": "A job killed with no session acting resumes by itself when the relaunch entry fires.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-013-T022"
+  ],
+  "owns": [
+    "rso/scale/runner/"
+  ],
+  "reads": [
+    "ops/campaigns/C-013/escalations/NEW_Eupalamus_2026-10-10_2_RESPONSE.md",
+    "rso/scale/runner/"
+  ],
+  "problem": "Test harness invokes the entry on a timer; one supervisor per run (idempotent). Write the install command for Task Scheduler/systemd in a doc; do NOT run it.",
+  "non_goals": [
+    "No real OS scheduler task installed on any host",
+    "No paid compute",
+    "No Fabric restart"
+  ],
+  "evidence_required": [
+    "RED first",
+    "fire test: kill everything, no session acts, simulated scheduler fires, job resumes, digest == control",
+    "install command documented, not executed"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; runner suite green"
+  },
+  "deliverables": [
+    "rso/scale/runner/"
+  ],
+  "kind": "software",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:47:48Z",
+      "note": "from escalation 2"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:47:48Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:59:23Z",
+      "note": "claimed; branch eupalamus/c013-t024 (shared with T024), runtime claude-sonnet-5-5 (Q1)"
+    }
+  ],
+  "authority": "escalation NEW_Eupalamus_2026-10-10_2 RESPONSE",
+  "preferred_model": "claude-sonnet-5-5"
+}

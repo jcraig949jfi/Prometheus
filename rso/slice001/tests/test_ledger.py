@@ -161,6 +161,103 @@ class TestResourceCaps(Base):
         led.begin("b", "n").finish("COMPLETED", cpu_s=0.0)
 
 
+class TestPaidResourceCaps(Base):
+    """C-013-T023 (P-2): optional gpu_hours / cloud_usd caps. Absent = today's behaviour; present and exceeded
+    (or would be exceeded by the declared estimate) = typed refusal before any START row."""
+
+    def starts(self):
+        return [r for r in self.lines() if r["kind"] == "START"]
+
+    def test_absent_caps_are_not_enforced_and_change_nothing(self):
+        led = self.ledger()
+        self.assertIsNone(led.caps.gpu_hours)
+        self.assertIsNone(led.caps.cloud_usd)
+        led.begin("a", "n", est_gpu_hours=1e9, est_cloud_usd=1e9).finish(
+            "COMPLETED", gpu_hours=1e9, cloud_usd=1e9)
+        led.begin("b", "n").finish("COMPLETED")
+        self.assertIsNone(led.exhausted())
+        rows = led.inventory()
+        self.assertIn("gpu_micro_hours", rows[0])                # recorded, so reported
+        self.assertNotIn("gpu_micro_hours", rows[1])             # never recorded: row unchanged
+
+    def test_gpu_hours_cap_fires_when_used(self):
+        led = self.ledger(gpu_hours=2)
+        led.begin("a", "n").finish("COMPLETED", gpu_hours=2)
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("b", "n")
+        self.assertEqual((cm.exception.cap, cm.exception.used, cm.exception.limit), ("gpu_hours", 2, 2))
+        self.assertEqual([r["run_id"] for r in self.starts()], ["a"])        # no START for b
+        self.assertEqual(self.lines()[-1]["kind"], "REFUSED")
+        self.assertEqual(self.lines()[-1]["cap"], "gpu_hours")
+
+    def test_cloud_usd_cap_fires_when_used(self):
+        led = self.ledger(cloud_usd=5.0)
+        led.begin("a", "n").finish("FAILED", cloud_usd=5.0)      # failures are charged too
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("b", "n", launch_kind="MUTATION_CHILD")
+        self.assertEqual(cm.exception.cap, "cloud_usd")
+        self.assertEqual([r["run_id"] for r in self.starts()], ["a"])
+
+    def test_run_that_would_exceed_the_cap_is_refused_before_it_starts(self):
+        led = self.ledger(gpu_hours=10, cloud_usd=3.0)
+        led.begin("a", "n").finish("COMPLETED", gpu_hours=6, cloud_usd=1.0)
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("b", "n", est_gpu_hours=4.5)
+        self.assertEqual(cm.exception.cap, "gpu_hours")
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("c", "n", est_cloud_usd=2.5)
+        self.assertEqual(cm.exception.cap, "cloud_usd")
+        self.assertEqual([r["run_id"] for r in self.starts()], ["a"])
+        led.begin("d", "n", est_gpu_hours=4, est_cloud_usd=2).finish("COMPLETED", gpu_hours=4, cloud_usd=2)
+        with self.assertRaises(L.CapExhausted):                  # exactly at the limit: used >= limit
+            led.begin("e", "n")
+
+    def test_refusals_are_inventoried_and_canonical_safe(self):
+        led = self.ledger(gpu_hours=1)
+        led.begin("a", "n").finish("COMPLETED", gpu_hours=1.25, cloud_usd=0.5)
+        with self.assertRaises(L.CapExhausted):
+            led.begin("b", "n")
+        rows = led.inventory()
+        self.assertEqual([r.get("status") for r in rows[:-1]], ["COMPLETED", "REFUSED"])
+        self.assertEqual(rows[0]["gpu_micro_hours"], 1250000)
+        self.assertEqual(rows[0]["cloud_micro_usd"], 500000)
+        R.canonical_bytes({"rows": rows})
+        self.assertEqual(led.usage()["launches"], 1)
+
+    def test_zero_cap_is_no_paid_compute_not_no_runs(self):
+        # the real contract.json carries gpu_hours 0 and cloud_usd 0
+        led = L.Ledger.from_contract(self.path)
+        self.assertEqual((led.caps.gpu_hours, led.caps.cloud_usd), (0, 0))
+        led.begin("a", "n").finish("COMPLETED", cpu_s=1)         # CPU-only, nothing declared: runs
+        for kw, cap in ((dict(est_gpu_hours=0.01), "gpu_hours"), (dict(est_cloud_usd=0.01), "cloud_usd")):
+            with self.assertRaises(L.CapExhausted) as cm:
+                led.begin("b-" + cap, "n", **kw)
+            self.assertEqual(cm.exception.cap, cap)
+        led.begin("c", "n").finish("COMPLETED", gpu_hours=0.5)   # spend slipped through unmetered: now stops
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("d", "n")
+        self.assertEqual(cm.exception.cap, "gpu_hours")
+
+    def test_malformed_values_fail_closed(self):
+        for bad in (-1, True, "3", float("nan")):
+            with self.assertRaises(L.LedgerError):
+                caps(gpu_hours=bad)
+            with self.assertRaises(L.LedgerError):
+                caps(cloud_usd=bad)
+        led = self.ledger(gpu_hours=1)
+        with self.assertRaises(L.LedgerError):
+            led.begin("a", "n", est_gpu_hours=-1)
+        with self.assertRaises(L.LedgerError):
+            led.begin("a", "n").finish("COMPLETED", cloud_usd=-0.1)
+
+    def test_existing_order_and_ledgers_unchanged(self):
+        led = self.ledger(top_level_validation_launches=1, gpu_hours=1)
+        led.begin("a", "n").finish("COMPLETED", gpu_hours=5)
+        with self.assertRaises(L.CapExhausted) as cm:
+            led.begin("b", "n")
+        self.assertEqual(cm.exception.cap, "top_level_validation_launches")   # launches are checked first
+
+
 def _floats(obj, path="$"):
     """Paths of every float anywhere in a JSON-like value."""
     if isinstance(obj, float):

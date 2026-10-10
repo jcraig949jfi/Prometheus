@@ -1,0 +1,77 @@
+{
+ "chains": {
+  "fire-p0": {
+   "epochs": 16,
+   "final_state_digest": "4237ae766263c21706fe1009d30c7c358de014d676f5132a1a85bf80028c6400",
+   "generation": 16,
+   "head_epoch_digest": "32454406c0748532169916ae623fca2e9de63469f8311b28a609855608b6f0c7",
+   "head_index": 16,
+   "state": "COMPLETE"
+  },
+  "fire-p1": {
+   "epochs": 16,
+   "final_state_digest": "c38a3107e34636a92b39320cccf704d29427af034a3637da1f1268afe0ff43c8",
+   "generation": 16,
+   "head_epoch_digest": "4c06cae429f94db82b030848daed346225468e4ec6efd4dbe2bdc37b33849938",
+   "head_index": 16,
+   "state": "COMPLETE"
+  }
+ },
+ "interrupted": [
+  {
+   "chain_id": "fire-p0",
+   "epoch_index": 5,
+   "metered_cpu_s": 1.03125,
+   "metered_ticks": 40,
+   "pid": 14616,
+   "run_id": "fire-p0-e5-7cdd8fed",
+   "unmetered_remainder": true
+  },
+  {
+   "chain_id": "fire-p0",
+   "epoch_index": 5,
+   "metered_cpu_s": 0.421875,
+   "metered_ticks": 20,
+   "pid": 12864,
+   "run_id": "fire-p0-e5-9a677f54",
+   "unmetered_remainder": true
+  }
+ ],
+ "manifest_id": "b472c5f4031c9571937bdc10750c16c62f25ee4761ca7933270f28b2fbe65dbb",
+ "outcomes": {
+  "DISAGREEMENT": 0,
+  "DUPLICATE": 0,
+  "HALTED": 0,
+  "INTERRUPTED": 2,
+  "INVALID": 0,
+  "PUBLISHED": 32,
+  "STALE": 0
+ },
+ "refused_by_cap": 0,
+ "resources": {
+  "artifact_bytes_retained": 2851692,
+  "cloud_usd_billed_reconciled": 0,
+  "cloud_usd_estimated": 0,
+  "cpu_cap_s": 3600,
+  "gpu_s": 0,
+  "interrupted_cpu_s_lower_bound": 1.453125,
+  "productive_cpu_s": 167.34375,
+  "rejected_cpu_s": 0,
+  "total_cpu_s": 174.296875,
+  "verification_cpu_s": 5.5,
+  "within_cpu_cap": true
+ },
+ "run_digest": "1ab5132a36686f6e56591763f2b64c863ff22df0f29079e22746daff2fa4c846",
+ "schema": "rso.runner.final_account.v1",
+ "state": "COMPLETE",
+ "torn_event_rows": 0,
+ "wasted": {
+  "cpu_s_lower_bound": 1.453125,
+  "interrupted_attempts": 2,
+  "note": "interrupted attempts are metered to their last PROGRESS row only; ticks and CPU after it are unmetered (a lower bound, never zero)",
+  "rejected_attempts": 0,
+  "rejected_cpu_s": 0.0,
+  "ticks_lower_bound": 60
+ },
+ "written_utc": "2026-10-10T09:12:35.406094Z"
+}

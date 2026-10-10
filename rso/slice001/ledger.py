@@ -29,6 +29,16 @@ rows, MUTATION_CHILD rows and RECEIPT rows do not count), CPU seconds and new ar
 attempt including failures, retries and mutation children. begin() refuses once any cap is used up
 (used >= limit), checking launches (TOP_LEVEL only), then CPU, then artifact bytes.
 
+Optional paid-resource caps (C-013-T023, operator ruling 2026-10-10 s11): contract `caps` may also carry
+`gpu_hours` and `cloud_usd`. Absent, they are not enforced and every ledger, row and inventory is byte-for-byte
+what it was. Present, finish() may record gpu_hours and cloud_usd (END), usage() sums them, and begin() refuses
+(REFUSED row, typed CapExhausted.cap "gpu_hours" / "cloud_usd", before any START row) when spend is
+non-zero and used >= limit, or when the caller's declared est_gpu_hours / est_cloud_usd for the run would take
+used past the limit. A cap of 0 (the real contract's "no paid compute") therefore refuses any run that declares
+paid use, or follows recorded paid use, and lets an unmetered CPU-only run through. The check
+order is launches, cpu, artifact bytes, gpu_hours, cloud_usd. inventory() carries gpu_micro_hours /
+cloud_micro_usd (integers; canonical bytes refuse floats) only on rows that recorded them.
+
 Field decisions (rso-builder-role s2.7):
   - "MB" in new_artifact_mb is 10**6 bytes (smaller, so the stricter reading; revisit if the keeper
     names MiB).
@@ -78,8 +88,9 @@ def _number(v, name, integer=False):
 
 
 class Caps(object):
-    def __init__(self, launches, cpu_s, artifact_bytes):
+    def __init__(self, launches, cpu_s, artifact_bytes, gpu_hours=None, cloud_usd=None):
         self.launches, self.cpu_s, self.artifact_bytes = launches, cpu_s, artifact_bytes
+        self.gpu_hours, self.cloud_usd = gpu_hours, cloud_usd      # None = no cap
 
     @classmethod
     def from_dict(cls, d):
@@ -90,24 +101,33 @@ class Caps(object):
                 raise LedgerError("caps missing %s" % k)
         return cls(int(_number(d["top_level_validation_launches"], "top_level_validation_launches", True)),
                    _number(d["cpu_minutes"], "cpu_minutes") * 60,
-                   _number(d["new_artifact_mb"], "new_artifact_mb") * MB)
+                   _number(d["new_artifact_mb"], "new_artifact_mb") * MB,
+                   gpu_hours=_number(d["gpu_hours"], "gpu_hours") if "gpu_hours" in d else None,
+                   cloud_usd=_number(d["cloud_usd"], "cloud_usd") if "cloud_usd" in d else None)
 
 
 class Attempt(object):
     def __init__(self, ledger, run_id):
         self._ledger, self.run_id, self._done = ledger, run_id, False
 
-    def finish(self, status, cpu_s=0.0, artifact_bytes=0, receipt_sha256=None):
+    def finish(self, status, cpu_s=0.0, artifact_bytes=0, receipt_sha256=None, gpu_hours=None, cloud_usd=None):
         if self._done:
             raise LedgerError("attempt %s already finished" % self.run_id)
         if status not in END_STATUSES:
             raise LedgerError("status must be one of %s, got %r" % (END_STATUSES, status))
         if receipt_sha256 is not None and not (isinstance(receipt_sha256, str) and _SHA256.match(receipt_sha256)):
             raise LedgerError("receipt_sha256 must be 64 lowercase hex digits, got %r" % (receipt_sha256,))
+        for name, v in (("gpu_hours", gpu_hours), ("cloud_usd", cloud_usd)):
+            if v is not None:
+                _number(v, name)
         rec = {"kind": "END", "run_id": self.run_id, "status": status,
                "cpu_s": float(cpu_s), "artifact_bytes": int(artifact_bytes), "end_utc": _utc_now()}
         if receipt_sha256 is not None:
             rec["receipt_sha256"] = receipt_sha256
+        if gpu_hours is not None:
+            rec["gpu_hours"] = float(gpu_hours)
+        if cloud_usd is not None:
+            rec["cloud_usd"] = float(cloud_usd)
         self._ledger._append(rec)
         self._done = True
 
@@ -134,6 +154,9 @@ def _canonical_row(row):
     out = dict(row)
     s = out.pop("cpu_s")
     out["cpu_us"] = None if s is None else int(round(s * 1000000))
+    for k, name in (("gpu_hours", "gpu_micro_hours"), ("cloud_usd", "cloud_micro_usd")):
+        if k in out:                                   # only rows that recorded it: old ledgers read unchanged
+            out[name] = int(round(out.pop(k) * 1000000))
     return out
 
 
@@ -213,6 +236,9 @@ class Ledger(object):
                                   "artifact_bytes": r["artifact_bytes"], "end_utc": r.get("end_utc")})
                 if r.get("receipt_sha256") is not None:
                     runs[rid]["receipt_sha256"] = r["receipt_sha256"]
+                for k in ("gpu_hours", "cloud_usd"):
+                    if r.get(k) is not None:
+                        runs[rid][k] = r[k]
             else:
                 raise LedgerError("unknown record kind %r" % k)
         return runs
@@ -221,10 +247,14 @@ class Ledger(object):
         rows = list(self._runs(self._read()).values())
         return {"launches": sum(1 for r in rows if r["launch_kind"] == TOP_LEVEL and r["status"] != "REFUSED"),
                 "cpu_s": sum(r["cpu_s"] or 0.0 for r in rows),
-                "artifact_bytes": sum(r["artifact_bytes"] or 0 for r in rows)}
+                "artifact_bytes": sum(r["artifact_bytes"] or 0 for r in rows),
+                "gpu_hours": sum(r.get("gpu_hours") or 0.0 for r in rows),
+                "cloud_usd": sum(r.get("cloud_usd") or 0.0 for r in rows)}
 
-    def exhausted(self, launch_kind=TOP_LEVEL):
-        """First exhausted cap as (name, used, limit), else None."""
+    def exhausted(self, launch_kind=TOP_LEVEL, est_gpu_hours=0.0, est_cloud_usd=0.0):
+        """First exhausted cap as (name, used, limit), else None. gpu_hours / cloud_usd are checked only when
+        capped; exhausted when spend is non-zero and used >= limit, or when used + the declared estimate would pass
+        the limit (so a cap of 0 refuses declared or recorded paid use, never a CPU-only run)."""
         u = self.usage()
         if launch_kind == TOP_LEVEL and u["launches"] >= self.caps.launches:
             return ("top_level_validation_launches", u["launches"], self.caps.launches)
@@ -232,10 +262,15 @@ class Ledger(object):
             return ("cpu_minutes", u["cpu_s"] / 60.0, self.caps.cpu_s / 60.0)
         if u["artifact_bytes"] >= self.caps.artifact_bytes:
             return ("new_artifact_mb", u["artifact_bytes"] / float(MB), self.caps.artifact_bytes / float(MB))
+        for name, limit, est in (("gpu_hours", self.caps.gpu_hours, est_gpu_hours),
+                                 ("cloud_usd", self.caps.cloud_usd, est_cloud_usd)):
+            if limit is not None and (u[name] + est > limit or (u[name] > 0 and u[name] >= limit)):
+                return (name, u[name], limit)
         return None
 
     # ---- attempts ----------------------------------------------------------------------------------
-    def begin(self, run_id, node_id, launch_kind=TOP_LEVEL, supplied_by=None, parent_run_id=None):
+    def begin(self, run_id, node_id, launch_kind=TOP_LEVEL, supplied_by=None, parent_run_id=None,
+              est_gpu_hours=0.0, est_cloud_usd=0.0):
         if launch_kind not in LAUNCH_KINDS:
             raise LedgerError("launch_kind must be one of %s" % (LAUNCH_KINDS,))
         if not isinstance(run_id, str) or not run_id or not isinstance(node_id, str) or not node_id:
@@ -245,7 +280,9 @@ class Ledger(object):
         if parent_run_id is not None and (not isinstance(parent_run_id, str) or not parent_run_id):
             raise LedgerError("parent_run_id must be a non-empty string when given")
         parent = {} if parent_run_id is None else {"parent_run_id": parent_run_id}
-        hit = self.exhausted(launch_kind)
+        _number(est_gpu_hours, "est_gpu_hours")
+        _number(est_cloud_usd, "est_cloud_usd")
+        hit = self.exhausted(launch_kind, est_gpu_hours, est_cloud_usd)
         if hit:
             self._append(dict({"kind": "REFUSED", "run_id": run_id, "node_id": node_id,
                                "launch_kind": launch_kind, "cap": hit[0], "used": hit[1], "limit": hit[2],

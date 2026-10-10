@@ -1,0 +1,87 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T024",
+  "campaign_id": "C-013",
+  "title": "P-5: checkpoint retention policy in the runner manifest (keep every Kth + last M + contest-referenced) with fire test",
+  "objective": "Bound checkpoint storage without losing resume or s3.8 replay.",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q1",
+  "can_downgrade": false,
+  "escalate_to": "Q2",
+  "depends_on": [
+    "C-013-T022"
+  ],
+  "owns": [
+    "rso/scale/runner/"
+  ],
+  "reads": [
+    "ops/campaigns/C-013/escalations/NEW_Eupalamus_2026-10-10_2_RESPONSE.md",
+    "rso/scale/runner/"
+  ],
+  "problem": "Policy declared in the manifest; pruning never removes the head, the last M, every Kth, or anything an open contest references.",
+  "non_goals": [
+    "No real OS scheduler task installed on any host",
+    "No paid compute",
+    "No Fabric restart"
+  ],
+  "evidence_required": [
+    "RED first",
+    "fire test: prune then resume + replay still VALID; digest == control",
+    "runner suite green"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; runner suite green"
+  },
+  "deliverables": [
+    "rso/scale/runner/"
+  ],
+  "kind": "software",
+  "status": "INTEGRATION_READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:47:48Z",
+      "note": "from escalation 2"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T09:47:48Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:50:41Z",
+      "note": "claimed; branch eupalamus/c013-t024 base d0eba60f5; runtime claude-sonnet-5-5 (Q1); T025 follows"
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:58:45Z",
+      "note": "T024 RED; code on branch eupalamus/c013-t024 at c2b39fa8d"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:58:45Z",
+      "note": "T024 IMPLEMENTING; code on branch eupalamus/c013-t024 at c2b39fa8d"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:58:46Z",
+      "note": "T024 GREEN; code on branch eupalamus/c013-t024 at c2b39fa8d"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-13757eac]",
+      "at_utc": "2026-10-10T09:58:46Z",
+      "note": "T024 INTEGRATION_READY; code on branch eupalamus/c013-t024 at c2b39fa8d"
+    }
+  ],
+  "authority": "escalation NEW_Eupalamus_2026-10-10_2 RESPONSE",
+  "preferred_model": "claude-sonnet-5-5"
+}

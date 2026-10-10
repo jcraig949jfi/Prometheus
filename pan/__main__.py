@@ -81,6 +81,7 @@ def main(argv=None):
     sub.add_parser("stats")
     sub.add_parser("status")
     sub.add_parser("comms-index")
+    sub.add_parser("moonshot-index")
     sub.add_parser("lexdf")
     sub.add_parser("dictionary")
     sub.add_parser("links")
@@ -90,7 +91,9 @@ def main(argv=None):
     p.add_argument("-k", type=int, default=8)
     p = sub.add_parser("refs")
     p.add_argument("path")
-    sub.add_parser("refresh")
+    p = sub.add_parser("refresh")
+    p.add_argument("--no-doc-vectors", action="store_true",
+                   help="skip document vectors (slow on CPU); chunk vectors, lexdf, links still rebuilt")
     p = sub.add_parser("codebench")
     p.add_argument("what", choices=["controls", "run"])
     p.add_argument("model", nargs="?")
@@ -190,9 +193,15 @@ def main(argv=None):
         from . import comms_index
         comms_index.run()
     elif a.cmd == "refresh":
-        from . import comms_index, refresh
-        refresh.run()
+        from . import comms_index, moonshot_index, refresh
+        # comms and Moonshot first: refresh rebuilds pan.lexeme_df, and full-text search drops query terms the
+        # table does not know -- indexed after it, new messages/epochs were findable only one refresh later
         comms_index.run()
+        moonshot_index.run()
+        refresh.run(embed_docs=not a.no_doc_vectors)
+    elif a.cmd == "moonshot-index":
+        from . import moonshot_index
+        moonshot_index.run()
     elif a.cmd == "status":
         import subprocess
         from . import REPO, db
