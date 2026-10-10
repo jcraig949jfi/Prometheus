@@ -2,8 +2,7 @@
 
 Directive: roles/Bellerophon/prompts/2026-10-08_bel48h/ (verbatim + MANIFEST). Clock 2026-10-08T05:14Z -> 2026-10-10T05:14Z.
 Host ubu005 (8 cores, 22 GB). Starting commit 22793858f; repaired kernel merged to main 2c6072c9d; campaign branch
-bellerophon/def-bel-008-010-2026-10-06. Status: written 2026-10-09 ~18:30Z with every block complete except U3 and P2
-(running); s5 is updated at close.
+bellerophon/def-bel-008-010-2026-10-06. Status: FINAL (closed 2026-10-10 ~01:40Z, before the 05:14Z deadline; every block complete).
 
 Artifacts: BEL_48H_PREREG.md (20 sections, 2 amendments, errata, 2 disclosures) | BEL_48H_EXECUTION_LEDGER.jsonl |
 BEL_48H_CAUSAL_LEDGER.jsonl (20 claims) | BEL_48H_CORRECTED_BASELINE.md | BEL_48H_HEREDITY.md | BEL_48H_REACHABILITY.md |
@@ -73,8 +72,8 @@ payment effect at MED -> 18 specimen pairings. Did NOT survive: the HIGH-mutatio
 the uptake-suppression effect across world models and budgets.
 
 **10. Which hypotheses were falsified?** W1-P7 (from a withdrawn figure), W1-P9, W2-P1..P4, W2-P6, W3-P2, W4-P5 (as
-written), W5-P1, W5-P4, W5-P7, C1-P6 (as written), X-P6, S1-P1; and my own W4 mechanism claim ('answer produced through
-the child copy', retracted: 0/20, then 1/41).
+written), W5-P1, W5-P4, W5-P7, C1-P6 (as written), X-P6, S1-P1, U3-P2, U3-P3, UF2-P1; and my own W4 mechanism claim ('answer produced through
+the child copy', retracted: 0/20, then 1/41); and my post-hoc staging-copier reading of CL-20 (retracted by U3).
 
 **11. Which mechanisms deserve another multi-day campaign?** (1) Uptake as creator and suppressor of replicators -- the
 route economics and its substrate boundary. (2) Operator-matched completion as a theory of reachability under copy
@@ -99,7 +98,7 @@ Runs (complete blocks; excluding 56 pilot runs, 128 superseded W1 runs and all s
 Per block (runs / lane-active h; lanes overlapped, so these are not CPU hours): W1v2 3,240/4.05; W2 1,050/2.10; W3a
 27/0.65; W3b 75/1.01; W4 1,050/2.25; W5b1 240/5.62; W5b2 400/3.03; W5b3 192/2.79; W6b1 1,300/3.90; W6b2 720/2.00; W6b3
 600/1.46; W6b4 U 1,600/4.95, R 202/1.28, X 192/2.72; N1 440/2.30; B1 600/2.22; U2 1,600/4.22; UF 300/2.67; P1 512/2.37;
-S1 1,760/6.71. Running at writing: U3 1,800; P2 512.
+S1 1,760/6.71; U3 1,800/4.17; P2 512/1.31; UF2 450/1.63.
 Independent origins (distinct initial populations): 21 (W3a discovery), 85 (W6 C1 confirmation), 288 in the uptake
 contrasts (121 + 167 over 1,600 pairs).
 Reproducibility: deterministic replay 202/202 sampled runs from W1v2, W2, W4, W5, W6 with the final code; 27/27 (W3a) and
@@ -112,7 +111,21 @@ Seven records in the directive's 10-field format: BEL_48H_MECHANISM_DISCOVERY.md
 precursor activation, M3 uptake, M4 distributed persistence, M5 rearrangement accessibility, M6 budget coupling, M7
 payment-driven conflict repair). Packets: packets/PACKET_HARMONIA.md, PACKET_ATLAS.md, PACKET_TECHNE_NYX.md.
 
-## 5. Results of the last blocks (filled at close)
+## 5. Results of the last blocks
 
-U3 (split CL-20: block all imports vs block only imports during a self-copy): PENDING.
-P2 (architecture-payment panel at HIGH mutation): PENDING.
+U3 (split CL-20; 1,800 runs, 0 voids): blocking all imports raised origination a third time (63 vs 46; 43 vs 26, p 0.027).
+Blocking only imports made during a self-copy did nothing (45 vs 46): before the first replicator nobody self-copies, so
+the origin gain comes entirely from imports by non-replicating organisms (the UF mechanism). My post-hoc 'staging-copier
+self-damage' reading was logically unable to explain an origin effect and is retracted (calibration ledger).
+P2 (architecture-payment panel at HIGH mutation; 512 runs, 0 voids): no consistent direction (ON < OFF in 3, > in 2, 5
+ties of 10 decided pairings; two-sided p 1.0): the payment effect on architecture is general at MED, indeterminate at
+HIGH.
+UF2 (450 runs, 0 voids): why CL-20 vanishes in SOUP and at budget 384. The frozen precursor-proxy prediction failed
+(SOUP breaks precursors more). Post-hoc: imports destroy more FUNCTIONAL replicators than they create only in the
+reference substrate (1.63) -- not at budget 384 (0.77) or in SOUP (0.24) -- matching exactly where the block mattered.
+
+## 6. Closing totals
+
+Runs (excluding 56 pilot, 128 superseded and all smoke runs): 18,862 in 23 blocks, 0 voids, 0 NOT_RUN. Campaign ended on
+schedule; no experiment was cut short. Final commits are listed in the execution ledger; branch
+bellerophon/def-bel-008-010-2026-10-06 (campaign artifacts), main 2c6072c9d (kernel repairs).

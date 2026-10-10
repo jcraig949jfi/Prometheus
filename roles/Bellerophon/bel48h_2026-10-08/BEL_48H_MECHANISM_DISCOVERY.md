@@ -105,6 +105,16 @@ E = w6b3_00001 (BUDGET_COUPLED), S = w6b3_00020 (SEPARATED), fresh seeds. MED: E
 FALSIFIED (W5-P6's 'E dominates at HIGH' was pair-specific). Generalisable part: paying for the computation favours the
 compute-first architecture (at least at MED mutation) across two independently evolved pairs.
 
+## UF2 -- why CL-20 vanishes in SOUP and at budget 384 (prereg s21; 450 runs, 0 voids, 1.63 h)
+
+UF accounting in three substrates, 150 fresh worlds each. Precursor proxy BREAK/MAKE: reference (GRID WM budget 256)
+1.46 (runs 74 vs 45, p 0.005); GRID budget 384 0.36 (MAKE dominates); SOUP 2.08. UF2-P1 (both perturbed substrates
+below the reference) FALSIFIED as frozen -- SOUP breaks precursors MORE. POST-HOC (labelled): at the FUNCTIONAL level
+imports destroy more working replicators than they create ONLY in the reference substrate (loss/gain 1.63), not at
+budget 384 (0.77) nor in SOUP (0.24) -- the substrates where blocking uptake had no effect (S1). Candidate mechanism for
+the CL-20 boundary: the sign of imports' net effect on FUNCTIONAL machines, not on raw precursors. Untested as a
+prediction (NEXT_EXPERIMENTS #11 now asks for it).
+
 ## U3 -- splitting CL-20 (prereg s20; 1,800 runs, 0 voids, 4.17 h)
 
 600 seed-triples (PARTIAL 300, PAIR 300): origins normal 46, block_all 63, block_selfcopy 45. U3-P1 HOLDS (block_all vs
