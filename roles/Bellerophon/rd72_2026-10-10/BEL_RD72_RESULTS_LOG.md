@@ -96,3 +96,25 @@ is it a donor splice away from the coexisting partner. COND_ONE needs a compare-
 contains, and payment for each half does not build it. This is a reachability desert in the directive's sense, located
 by geometry: the obstacle is the missing control-flow element, not the distance between the two halves.
 Limit: geometric only (no selection, no rates); 3-step paths are sampled, not exhaustive.
+
+## RU-E1b -- the anti-triviality ruler applied to the evolved E1b solvers (EXPLORATORY, static; tools/apply_ruler_e1b.py)
+Receipt receipts/RULER_E1b.json. For each world, I profiled the most common FUNC LO tape and HI tape at the last census
+that held one (47 tapes from 34 worlds). Each was checked against the composite task's halves and against the whole-panel
+single task it might really be solving.
+| tapes | solves the whole single task | competence-critical bytes (min / median / max) | crit. bytes shared with replication | hidden redundant pairs | FUNC + competent 3 generations |
+|---|---|---|---|---|---|
+| 34 LO solvers (C1_ON, C1_OFF, CM_ON) | ECHO on all 16 inputs: 34/34 | 1 / 3 / 7 | 24/34 | 2/34 | 33/34 |
+| 13 HI solvers (C1_ON) | INC on all 16 inputs: 13/13 | 3 / 5 / 6 | 12/13 | 0/13 | 13/13 |
+Reading (triviality, Workstream B):
+- None of the "half-composite" solvers is partial progress toward COND_ONE. Each is the simplest single-task machine, ECHO
+  or INC, and coincides with the target on one half of the inputs.
+- "Acquiring LO" in E1b is the acquisition of ECHO, which BEL-48H already showed is payable and reachable. "Acquiring HI"
+  is the acquisition of INC.
+- The composite needs a compare-and-branch that neither machine contains. This matches the desert probe (DP) and E1b's 0
+  composites.
+- The positive content is narrower than the E1-a/E1-b framing: payment raises ECHO and INC acquisition in established
+  worlds (descriptive). Both are heritable through 3 copy generations (multi-generation ruler, the reviewer's request;
+  33/34 and 13/13). In most of them the computation and the replication share critical bytes, which is coupled
+  architecture.
+- One CM_ON tape (e1b_00116) loses FUNC at generation 2, a delayed failure of heredity that a one-generation test would
+  not see.
