@@ -1,0 +1,229 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 0,
+  "live_entries": 0,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": null,
+  "replacements": 0
+ },
+ "archive_assisted_tag": null,
+ "arm": "credit_blind",
+ "arm_code": "D1-chain_neutral",
+ "arm_view_file_sha256": "4e8adc48cc0e678912aca30f31e4504f68eef02b1ff2658aadc0ca34b49761c3",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 200001,
+ "censored": false,
+ "certifier_assisted": true,
+ "components": {
+  "budget": 200000,
+  "charges": 57113,
+  "consultations_stored": [
+   {
+    "FINAL": false,
+    "T0": false,
+    "charge": 57111,
+    "dev_consistent": true,
+    "index": 0,
+    "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (max xs) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+    "qualified": false,
+    "task_tribunal_ok": false,
+    "test_ok": true,
+    "tribunal_FINAL_ok": false,
+    "tribunal_T0_ok": false
+   },
+   {
+    "FINAL": true,
+    "T0": true,
+    "charge": 57113,
+    "dev_consistent": true,
+    "index": 1,
+    "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+    "qualified": true,
+    "task_tribunal_ok": true,
+    "test_ok": true,
+    "tribunal_FINAL_ok": true,
+    "tribunal_T0_ok": true
+   }
+  ],
+  "hit": {
+   "charge": 57113,
+   "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))"
+  },
+  "library_sha256": "0cdc7e53c97c32f9c38f5bc88de182f4f8a247e58a8ae3675eb42a7cbf03d809",
+  "n_consultations": 2,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (div (div (add x x) 3) 3)) (filter (lam x (lt x (pow 2 3))) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [
+  {
+   "FINAL": false,
+   "T0": false,
+   "charge": 57111,
+   "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (max xs) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+   "qualified": false,
+   "task_tribunal_ok": false,
+   "test_ok": true,
+   "tribunal_FINAL_ok": false,
+   "tribunal_T0_ok": false
+  },
+  {
+   "FINAL": true,
+   "T0": true,
+   "charge": 57113,
+   "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+   "qualified": true,
+   "task_tribunal_ok": true,
+   "test_ok": true,
+   "tribunal_FINAL_ok": true,
+   "tribunal_T0_ok": true
+  }
+ ],
+ "cpu_s": 19.797,
+ "credit": "none",
+ "decision_log_sha256": "4dc15617b113c2a98352e111b86584579b88d41aaa9cdbdff9d2136b13936b8f",
+ "descriptor": null,
+ "driver": "e2-driver-v1",
+ "e2_arm": "credit_blind",
+ "family_id": "W483b8c31-F046-R3",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": false,
+  "T0": false,
+  "charge": 57111,
+  "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (max xs) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+  "qualified": false,
+  "task_tribunal_ok": false,
+  "test_ok": true,
+  "tribunal_FINAL_ok": false,
+  "tribunal_T0_ok": false
+ },
+ "first_false_hits": [
+  {
+   "charge": 57111,
+   "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (max xs) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))"
+  }
+ ],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 57113,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 2
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "0cdc7e53c97c32f9"
+  },
+  "organism": {
+   "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))"
+  },
+  "search": {
+   "archive_admissions": 0,
+   "charges": 57113,
+   "genotype_restores": 1,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 11274773,
+   "units_dev_promoted": 8396757,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "0cdc7e53c97c32f9c38f5bc88de182f4f8a247e58a8ae3675eb42a7cbf03d809",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000010000": 44174,
+   "000001000000": 1193,
+   "000100000000": 171,
+   "000100010000": 172,
+   "010000000000": 8,
+   "010000010000": 48789,
+   "010001000000": 49136,
+   "010010000011": 43047,
+   "010100000000": 6348,
+   "010100010000": 1570,
+   "010101000000": 14882,
+   "010111011111": 11378,
+   "111111111111": 57111
+  },
+  "cert_patterns_seen": 13,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "and2,div1,filter1,if1,lt5,mul2,or1,pow6,sub1,zipw1": 57113
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 2,
+ "n_false_hits": 1,
+ "n_starts": 1,
+ "pid": 13392,
+ "primary_hit": false,
+ "program": "(zipw (lam a (lam b (L_66e6ba9f1ca8 b))) xs (filter (lam x (and (L_9c52892ad8ff (sub 0 (if (L_9c52892ad8ff 2) (pow 0 2) 1))) (and (L_9c52892ad8ff 0) (or (L_9c52892ad8ff x) (L_9c52892ad8ff x))))) xs))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 7,
+ "shard": "run/W483b8c31-F046-R3/credit_blind/s7",
+ "shard_cpu_s": 19.83,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

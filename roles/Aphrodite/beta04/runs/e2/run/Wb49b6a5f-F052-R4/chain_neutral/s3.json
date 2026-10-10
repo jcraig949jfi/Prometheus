@@ -1,0 +1,195 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 0,
+  "live_entries": 0,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": null,
+  "replacements": 0
+ },
+ "archive_assisted_tag": null,
+ "arm": "chain_neutral",
+ "arm_code": "D1-chain_neutral",
+ "arm_view_file_sha256": "4e97652290ce261aa46e8629b78209c8ed1fb4b7d7392ba788dcfbe1e4201dab",
+ "autonomous_competence": true,
+ "budget": 200000,
+ "burst_L": 200001,
+ "censored": false,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 37786,
+  "consultations_stored": [
+   {
+    "FINAL": true,
+    "T0": true,
+    "charge": 37786,
+    "dev_consistent": true,
+    "index": 0,
+    "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))",
+    "qualified": true,
+    "task_tribunal_ok": true,
+    "test_ok": true,
+    "tribunal_FINAL_ok": true,
+    "tribunal_T0_ok": true
+   }
+  ],
+  "hit": {
+   "charge": 37786,
+   "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))"
+  },
+  "library_sha256": "66e0888c093457542f008ec5a2a4e3fdf742f98f9f8ab473618d6a96785aad16",
+  "n_consultations": 1,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (if (lt (sub (neg x) 3) 2) (mul (mul x x) 3) x)) xs)"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [
+  {
+   "FINAL": true,
+   "T0": true,
+   "charge": 37786,
+   "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))",
+   "qualified": true,
+   "task_tribunal_ok": true,
+   "test_ok": true,
+   "tribunal_FINAL_ok": true,
+   "tribunal_T0_ok": true
+  }
+ ],
+ "cpu_s": 10.953,
+ "credit": "exact",
+ "decision_log_sha256": "dc99461f4000fe86091cd57d8cd8049c78ffbecb7433a7fc61d4a5a6e36f2aa5",
+ "descriptor": null,
+ "driver": "e2-driver-v1",
+ "e2_arm": "chain_neutral",
+ "family_id": "Wb49b6a5f-F052-R4",
+ "final_evaluation": {
+  "archive": "OFF (not an argument)",
+  "autonomous_pass": true,
+  "fresh_tribunal_ok": true,
+  "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))",
+  "test_ok": true,
+  "tribunal_salt": "FINAL"
+ },
+ "first_dev_consistent": {
+  "FINAL": true,
+  "T0": true,
+  "charge": 37786,
+  "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))",
+  "qualified": true,
+  "task_tribunal_ok": true,
+  "test_ok": true,
+  "tribunal_FINAL_ok": true,
+  "tribunal_T0_ok": true
+ },
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": true,
+ "hit_charge": 37786,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 1
+  },
+  "developmental": {
+   "library_entries": 2,
+   "library_max_depth": 1,
+   "library_sha256": "66e0888c09345754"
+  },
+  "organism": {
+   "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))"
+  },
+  "search": {
+   "archive_admissions": 0,
+   "charges": 37786,
+   "genotype_restores": 1,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 5767399,
+   "units_dev_promoted": 3756107,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": "66e0888c093457542f008ec5a2a4e3fdf742f98f9f8ab473618d6a96785aad16",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000001000": 1,
+   "010000000000": 31728,
+   "010000001000": 37618,
+   "010100001000": 37727,
+   "100000000000": 37745,
+   "100000011000": 37741,
+   "110000011000": 37779,
+   "111111111111": 37786
+  },
+  "cert_patterns_seen": 8,
+  "qualified_genotypes": 1,
+  "qualified_skeletons": {
+   "add3,drop1,filter2,foldl2,if1,lt3,map3,mul4,neg5,not1,zipw1": 37786
+  }
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 1,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 10368,
+ "primary_hit": true,
+ "program": "(drop 0 (map (lam x x) (zipw (lam a (lam b (if (not (L_9bc9c358d90d b)) b (L_0baff3dd7c47 (foldl (lam a1 (lam b1 a1)) a (map (lam x a) (filter (lam x (L_9bc9c358d90d (mul 1 (neg 0)))) xs))))))) xs xs)))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": true,
+ "seed": 3,
+ "shard": "run/Wb49b6a5f-F052-R4/chain_neutral/s3",
+ "shard_cpu_s": 10.98,
+ "start_hit": false,
+ "status": "COMPLETE"
+}
