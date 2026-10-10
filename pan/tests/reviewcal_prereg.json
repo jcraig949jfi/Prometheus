@@ -1,0 +1,27 @@
+{
+  "_prereg": [
+    "PAN-37 part 2: seeded-bug calibration set for agent-run code reviews, frozen 2026-10-10 BEFORE generation.",
+    "Purpose: measure how often a reviewer (an agent or a model) finds a real bug and how often it raises a false",
+    "alarm, so review findings can be weighted by measured reliability instead of trusted. The set is built from the",
+    "PAN-34 primary tasks (functions of the program whose own test file sees them), so every seeded bug is one the",
+    "program's tests detect: a 'known bug' with ground truth."
+  ],
+  "source": "the 142 PAN-34 primary tasks (manifest 46e2343aa, amendment A2), their sandbox and worker copies",
+  "operators": {
+    "cmp_flip": "one comparison operator swapped: < <-> <=, > <-> >=, == <-> !=, in <-> not in, is <-> is not",
+    "bool_flip": "one `and` <-> `or`",
+    "arith_flip": "one binary + <-> -",
+    "off_by_one": "one integer literal n -> n + 1",
+    "negate_if": "one `if` / `while` test T -> `not (T)`",
+    "return_none": "one `return X` -> `return None`"
+  },
+  "mutation_rule": "the mutated expression's source segment is replaced by the unparsed mutated expression; every other character of the module is unchanged (no reformatting tells)",
+  "selection": "tasks shuffled with random.Random(37); per task one site drawn with the same generator from all applicable sites; a mutant is KEPT only if its task's test file FAILS with it (killed); stop at 40 kept mutants; then 20 CLEAN items (unmutated functions) from tasks not used for mutants, same generator",
+  "secrecy": "items (the code a reviewer sees) and the answer key (mutated line, operator, original and mutated segment) are written to the M2 lake only (C:/Prometheus-data/pan/lake/reviewcal/), never to the repository or the database; their sha256 are committed so the key can be checked when revealed",
+  "scoring": {
+    "hit": "on a mutant item, a finding that cites a line within +-2 of the mutated line",
+    "miss": "a mutant item with no hit",
+    "false_alarm": "a clean item with any finding claiming a bug",
+    "metrics": "recall = hits / 40 and false-alarm rate = false alarms / 20, each with a Wilson 95 percent interval; a reviewer whose recall interval lies below 0.5 is reported as unreliable for unsupervised review"
+  }
+}
