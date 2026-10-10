@@ -3,22 +3,24 @@
   "seat": "Themis",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-06T10:40:00Z",
+  "updated_at_utc": "2026-10-10T09:41:01Z",
   "state": "ACTIVE",
   "instance": "m2-0e9b1ed2 (SPECTREX5)",
-  "branch": "themis/lanec-m4-2026-10-06",
-  "base_sha": "3bc5e74fe0eeb7e3f170d917e6d92419c535029e",
+  "branch": "themis/nf2-2026-10-10",
+  "base_sha": "4b08d40e7",
   "head_sha": "(this commit; see git log -1 -- roles/Themis/WORK_STATE.json)",
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
-  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both). LANE C: operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/).",
-  "current_objective": "Lane C / TH-MOON-M4 / C-008 (OP-LC1): T001 (D1+D2 under D3), T002 (D4 prereg) and T005 (D5 auto-join) CLOSED; T003 (D4 LAN baseline) and T004 (GitHub arm) BLOCKED on concrete dependencies.",
-  "current_step": "Review packet delivered (moonshot/pivot/C008_LANE_C_REVIEW_2026-10-06.md, main 4c6fac937). Waiting on the operator for T004 (repo + deploy key) and the T003 rig decision (ubu003-006 ssh vs wait for M2).",
-  "in_flight": [],
-  "progress": "charter adoption complete; no science run yet; no world/detector built yet.",
+  "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. CHARTER: Project Moonshot, prong 3, adopted 2026-10-05 (roles/Themis/prompts/2026-10-05_charter/; operator chat, soup-to-nuts, independent of Phase 2-B and Phase 3 but borrowing from and overlapping with both). LANE C: operator OP-LC1 2026-10-06 (C-008, closed/superseded). NATIVE FABRIC: operator OP-NF2 2026-10-10T07:15Z (roles/Themis/prompts/2026-10-10_op_nf2/), C-012.",
+  "current_objective": "C-012 (OP-NF2): replace Git-CAS coordination with PostgreSQL. T002 and T003 CLOSED, T005 INTEGRATED (closes on Pan's review), T004 benchmark running, T001 contract awaiting reviews, T006 review after T004.",
+  "current_step": "T004 run R1 (Arm N sweep + scaling + recovery on ubu001/ubu002) in progress from 09:37Z; Arm S deferred until M2 is idle (operator experiments). Lane A claim-map research in progress; Lane B regression handed to Daedalus (#2021).",
+  "in_flight": [
+    "C-012-T004 run R1 (ops/campaigns/C-012/evidence/T004/R1/)"
+  ],
+  "progress": "native fabric qualified on two nodes (Q20261010A); lake materialization demonstrated (D20261010A); no science run yet; no world/detector built yet.",
   "finish_condition": "charter-level: either a sagacity signal that passes pre-written gates AND is scaled per the funnel, or a reachability-certified KILL at the floor; each experiment carries its own prereg.",
-  "next_expected_milestone": "C-008 review packet; then D4 LAN report when T003 unblocks",
-  "expected_next_artifact": "review packet; ops/campaigns/C-008/evidence/D4_LOCAL/ + D4_REPORT.md",
+  "next_expected_milestone": "T004 R1 report; then T006 engineering review packet",
+  "expected_next_artifact": "ops/campaigns/C-012/evidence/T004/R1/REPORT.json + receipt; moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md",
   "epic": "EP-MOONSHOT (owner; ops/epics/EP-MOONSHOT/)",
   "threads": [
     "TH-MOON-M1",
@@ -31,15 +33,15 @@
     "TH-MOON-M6"
   ],
   "campaigns": [
-    "C-008"
+    "C-008",
+    "C-012"
   ],
   "experiments": [],
   "fabric_tasks": [],
-  "running": [],
-  "blocked": [
-    "C-008-T003",
-    "C-008-T004"
+  "running": [
+    "C-012-T004 R1 benchmark (Fabric workers on ubu001/ubu002 in throwaway schemas; leases ubu001:cpu4, ubu002:cpu4)"
   ],
+  "blocked": [],
   "blocked_on": [
     "C-008-T003: M2 free of Aether AIM02 production (frozen rig R1: 6 workers on M2) OR ssh from M2 to ubu003-006 (M2 key authorized only on ubu001/002; host keys absent) -> pure e-waste rig by a prereg amendment BEFORE any data",
     "C-008-T004: operator creates a private dedicated repository and adds the deploy key ~/.ssh/moonshot_c008_t004_deploy.pub (fingerprint SHA256:bPHyvqEQyOASdbCso9+UQLilyFngHXR0efxGyPVE5EQ) with write access -- or logs in gh on M2"

@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T013",
+  "campaign_id": "C-013",
+  "title": "D1 repair round (the only one): PREREGISTRATION v1.0.1 wording narrowing + behavioural pins; re-freeze",
+  "objective": "Apply Pallas's D1 report (rso/reach/challenge/D1/REPORT.md s3-s4) before any confirmatory lineage: a versioned wording-only amendment and behavioural tests for the lines pinned only by the hash manifest; regenerate the freeze.",
+  "parent_objective": "C-013 D1 demonstration",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-013-T011"
+  ],
+  "owns": [
+    "rso/reach/"
+  ],
+  "reads": [
+    "rso/reach/challenge/D1/ (REPORT.md, cases, edits)",
+    "rso/reach/PREREGISTRATION.md"
+  ],
+  "problem": "(1) PREREGISTRATION v1.0.1 (s9 amendment, before the first confirmatory lineage), wording only: s7 verdict rows read as pooled over d with a per-stratum direction caveat (report s4.1 B1/P4); the off-path / stepping-stone row restated or withdrawn given B2a/B2b/P3 (exact-row restoration ~6x the budget; consider a FUNCTIONAL-equivalence instrument only as a reported secondary, not a new claim); C5 'matched size' qualified to the end of the budget (B3); C4's 'route crosses downhill steps' gloss removed or narrowed; s5: the sealed ruler is the reporting block, not a second discriminator, and name the selection-life band 2000..2063; s4: 'outcome-symmetric' instead of 'outcome-independent' for the cap. (2) Behavioural tests that fail on Pallas's E1 (selection reads training lives), E3 (raw p instead of Holm in SEPARATES), E4 (resume CPU accounting zeroed), applied verbatim, and on the integrator's selection threshold 90%->80% (use builder(7) at 449/500 = 89.8% as the boundary witness). (3) Regenerate FROZEN_D1.json / FREEZE_D1.md as v1.0.1; s2-s6 numbers unchanged. One round only (operator ruling s4).",
+  "non_goals": [
+    "No change to arms, seeds, budgets, B_d, the test, alpha, the power table or the cap",
+    "No confirmatory lineage"
+  ],
+  "evidence_required": [
+    "RED: each new test fails on its mutant",
+    "v1.0.1 amendment committed BEFORE any confirmatory lineage",
+    "refreeze; 76+ tests green in the venv"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items"
+  },
+  "deliverables": [
+    "rso/reach/PREREGISTRATION.md (v1.0.1 section)",
+    "rso/reach/tests/",
+    "rso/reach/FROZEN_D1.json"
+  ],
+  "kind": "software",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T11:27:31Z",
+      "note": "repair round"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T11:27:31Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-91546d7d]",
+      "at_utc": "2026-10-10T11:32:00Z",
+      "note": ""
+    }
+  ],
+  "authority": "operator ruling 2026-10-10 s4 (one bounded repair round)",
+  "preferred_model": "claude-opus-5-5"
+}

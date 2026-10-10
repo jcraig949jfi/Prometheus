@@ -1,0 +1,54 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T007",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T094255Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "start_sha": "01936df0a862f778db513ed3507b9ea703f1fa7f",
+ "end_sha": "8f6312662018c09f6bb10a215251acb870123a12",
+ "files_changed": [
+  "moonshot/epoch/native_wforge.py",
+  "moonshot/epoch/runtime.py",
+  "moonshot/epoch/tests/test_native_wforge.py",
+  "moonshot/nf/tests/test_fabric_exec.py",
+  "ops/campaigns/C-012/evidence/NATIVE/",
+  "ops/campaigns/C-012/evidence/T002/mutate_pg.py"
+ ],
+ "evidence_added": [
+  "moonshot/epoch/tests/test_native_wforge.py (12): chained == monolithic (6 worlds; epoch cuts 1/3/8/24), canonical checkpoints, policy affordability, finished worlds, verified R-EP epochs, refusals (other wforge, other world, same shape other episode), cross-process determinism",
+  "evidence/NATIVE/mutate_native.py + MUTATION_TABLE.json (10/10)",
+  "evidence/NATIVE/N20261010A/: RUN.json, three canonical receipts, lake materialization reports, reap record"
+ ],
+ "evidence_executed": [
+  "RED at 8507ee3fb: Ran 11, errors=16 (NotImplementedError: C-012-T007)",
+  "GREEN at 4792fedc8: 12 OK; the mutation table first 9/10 (NM09: a different world was refused by its shape, not its identity) -> a same-shape test -> 10/10; the trace gained observations after a falsification check",
+  "frugal policy before first use at f54c3cf82 (the first policy drained every surveyed world in 7-12 ticks)",
+  "integrated at 3f6c23ee4 (main) after 179 epoch-layer tests OK (C-008 167 + native 12; 4 skips), nf 85 OK, lake 12 OK",
+  "run N20261010A (11:23Z-11:25Z, canonical queue, production schema moonshot, ubu001 + ubu002): 3 worlds x 4 epochs: 12/12 PUBLISHED, 12/12 VALIDATED by replay on M2, each chain == an in-process reference replay; FETCH_HEAD unchanged; 0 foreign claims",
+  "lake: production tables in Pan's Iceberg via two materializer passes; oracle OK on all six"
+ ],
+ "red_observed": {
+  "observed": true,
+  "sha": "8507ee3fbf28e5f34e18b31096b51278035ff4ac",
+  "detail": "11 conformance tests against a stub before the runtime"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "plumbing, not science: a fixed frugal policy, no organism (Proteus), no survival search",
+  "F09 is avoided by construction (the policy never takes an unaffordable action), not repaired; the defect stays open with its owner (Lane B, #2021)",
+  "8-tick epochs and sub-KB checkpoints; large checkpoints need contract item N1 (checkpoints by reference)",
+  "the policy was changed (frugal) after GREEN and before any publication; tests do not pin its spending rate",
+  "two signal-stopped worker instances stayed 'online' until a reap after 360 s (Fabric v0.2 behaviour, #2026)"
+ ],
+ "unresolved": [],
+ "unblocks": [
+  "native organisms through the same path once F09 is repaired and the claim map (Lane A) is agreed"
+ ],
+ "created_at_utc": "2026-10-10T11:31:33Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Windows: #2041 (opened), #2042 (closed). The production Moonshot schema was created by this run."
+}

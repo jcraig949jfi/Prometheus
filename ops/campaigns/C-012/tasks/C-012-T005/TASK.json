@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
-  "status": "INTEGRATED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -55,6 +55,12 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T09:17:05Z",
       "note": "T005 INTEGRATED: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables. NOT CLOSED: acceptance also requires Pan's review of the design (contract s6; sent #2010)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T10:28:36Z",
+      "note": "T005 CLOSED: Pan reviewed the design (#2031: no change requested to s6); demonstration D20261010A passed oracle + crash-replay; receipt attempts/A-20261010T090507Z-Themis-m2-0e9b1ed2"
     }
   ],
   "task_id": "C-012-T005",

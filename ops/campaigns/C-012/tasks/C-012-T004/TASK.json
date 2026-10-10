@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
-  "status": "CLAIMED",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,36 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T09:34:45Z",
       "note": "T003 CLOSED; preregistration ops/campaigns/C-012/prereg/T004_PREREG.md frozen in this commit (harness smoke tests before it, disclosed in the prereg)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:14:44Z",
+      "note": "T004 IMPLEMENTING: prereg FROZEN 2f4b38ef0 -> R1 (8 points, 1,504 epochs, gate PASS) -> report: operating point ADEQUATE, T* = 3 s, B7 failed once, T1 failed (attributed); Arm S not run"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:14:44Z",
+      "note": "T004 GREEN: prereg FROZEN 2f4b38ef0 -> R1 (8 points, 1,504 epochs, gate PASS) -> report: operating point ADEQUATE, T* = 3 s, B7 failed once, T1 failed (attributed); Arm S not run"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:14:44Z",
+      "note": "T004 INTEGRATION_READY: prereg FROZEN 2f4b38ef0 -> R1 (8 points, 1,504 epochs, gate PASS) -> report: operating point ADEQUATE, T* = 3 s, B7 failed once, T1 failed (attributed); Arm S not run"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:14:44Z",
+      "note": "T004 INTEGRATED: prereg FROZEN 2f4b38ef0 -> R1 (8 points, 1,504 epochs, gate PASS) -> report: operating point ADEQUATE, T* = 3 s, B7 failed once, T1 failed (attributed); Arm S not run"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T11:14:44Z",
+      "note": "T004 CLOSED: prereg FROZEN 2f4b38ef0 -> R1 (8 points, 1,504 epochs, gate PASS) -> report: operating point ADEQUATE, T* = 3 s, B7 failed once, T1 failed (attributed); Arm S not run; receipt attempts/A-20261010T093445Z-Themis-m2-0e9b1ed2"
     }
   ],
   "task_id": "C-012-T004",
