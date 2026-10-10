@@ -228,6 +228,42 @@ class TestShadowArms(unittest.TestCase):
         self.assertGreater(b.events["evicted"], 0)
 
 
+class TestVerdictD(unittest.TestCase):
+    """Every verdict of PREREG_D is reachable, and the instrument checks can fail."""
+
+    def _rows(self, c650, c700, lossy=False, drop=False):
+        good, bad = [1] * 10, [9] * 10
+        spec = {1000000: {"O0": [5] * 10, "O0F": [5] * 10}}
+        for cap, (d1, d2) in ((650, c650), (700, c700), (800, (True, True))):
+            spec[cap] = {"O0F": good, "O0": bad if d1 else good, "SRF": bad if d2 else good,
+                         "SXF": bad, "S0F": bad, "SPFF": bad}
+        out = []
+        for cap, arms_ in spec.items():
+            for arm, vals in arms_.items():
+                for s, v in enumerate(vals):
+                    if drop and cap == 1000000 and arm == "O0F" and s == 3:
+                        continue
+                    if lossy and cap == 1000000 and arm == "O0F" and s == 3:
+                        v = 6
+                    out.append({"world": "D", "cap": cap, "arm": arm, "seed": s,
+                                "endpoints": {"err_CDE": v, "bytes_peak": min(cap, 500)}})
+        return out
+
+    def test_all_verdicts_reachable(self):
+        from chiasma.e1b.verdict_d import verdict
+        T, F = (True, True), (False, False)
+        self.assertEqual(verdict(self._rows(T, T))["claims"], {"D1": "PASS", "D2": "PASS"})
+        self.assertEqual(verdict(self._rows(F, F))["claims"], {"D1": "FAIL", "D2": "FAIL"})
+        self.assertEqual(verdict(self._rows(T, F))["claims"], {"D1": "MIXED", "D2": "MIXED"})
+        self.assertEqual(verdict(self._rows(T, T, drop=True))["claims"]["D1"], "NOT_VERIFIED")
+        self.assertEqual(verdict(self._rows(T, T, lossy=True))["claims"]["D2"], "NOT_VERIFIED")
+        r = self._rows(T, T)
+        r[-1]["endpoints"]["bytes_peak"] = r[-1]["cap"] + 1 if r[-1]["cap"] != 1000000 else 0
+        r.append({"world": "D", "cap": 650, "arm": "O0", "seed": 99,
+                  "endpoints": {"err_CDE": 9, "bytes_peak": 651}})
+        self.assertEqual(verdict(r)["claims"]["D1"], "NOT_VERIFIED")
+
+
 def _consolidated_cell(arm: str):
     """A cell over {0,1,2} with literal 0 implying 1 and 2 in every object seen."""
     org = arms.make(arm, 8, None, 0)

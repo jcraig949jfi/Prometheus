@@ -3,7 +3,7 @@
   "seat": "Hades",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-10T16:05:33Z",
+  "updated_at_utc": "2026-10-10T16:24:16Z",
   "state": "WORKING",
   "instance": "m1-ca525615 (SKULLPORT)",
   "branch": "hades/wake-2026-10-10",
@@ -13,7 +13,7 @@
   "host": "SKULLPORT",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-07): CHIASMA, roles/Hades/prompts/2026-10-07_charter/.",
   "current_objective": "CHIASMA E1: four handcrafted organisms (O1-O4) on one Paradigm World under matched resources (charter s7), gated by WT-0",
-  "current_step": "E1b dev series CLOSED (DEV_NOTES s3-s16; 3670 dev runs, ~8.5 core-h). HADES-31 PW-Dm: provenance repair is real and attributed (10/10 vs counterfeit) but repairs only lossy compression, which lossless factoring makes unnecessary (O0F beats every pruning arm 10/10). Recommendation s16: KILL O4 as designed; keep and confirm factored geometry (D1) + compressed shadow (D2) on PW-D after G3.",
+  "current_step": "HADES-32: chiasma/e1b/PREREG_D.md DRAFT + verdict_d.py committed, NOT frozen (dev reading D1 PASS, D2 PASS; all verdicts reachable). Waiting on G3 (Hestia) to freeze, and on the operator for the s16 recommendation (KILL O4 as designed). Seat idle for new science until one of those arrives; hourly comms continues.",
   "in_flight": [],
   "progress": "E1 840/840 (ec65243fd); wake d8bff7b45; e1b dev-1 64d67730b; dev-2 f29c2e882; dev-3 (see git log -- chiasma/e1b)",
   "finish_condition": "E1 receipts on evaluation seeds under a frozen prereg + REPORT_E1.md at AUTHOR_TESTED + outside challenge requested (HADES-08, HADES-09)",
@@ -31,11 +31,11 @@
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
   "session_started_utc": "2026-10-10T11:33:55Z",
-  "next": "Draft PREREG_E1c (D1/D2 on PW-D, fresh seeds) -- NOT frozen before G3; wait for operator on s16",
+  "next": "Freeze PREREG_D (FREEZE_D.json) once G3 lands; then run d-eval (240 runs, ~5 core-h)",
   "next_actions": [
-    "HADES-32 draft chiasma/e1b/PREREG_D.md (D1, D2; D3 secondary) -- freeze after G3",
-    "HADES-09 G3 challenge pending (Hestia #2046/#2049)",
-    "operator: KILL/REVISE on DEV_NOTES s16"
+    "HADES-09 G3 challenge (Hestia #2046/#2049/#2081)",
+    "HADES-27 freeze PREREG_D + E1b C1/C2 after G3",
+    "operator: s16 recommendation"
   ],
   "operator_decisions_required": [
     "G4: evolution -- not requested",
