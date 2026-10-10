@@ -36,3 +36,14 @@ def test_the_runner_refuses_to_overwrite(tmp_path):
         assert "REFUSED" in str(e)
     else:
         raise AssertionError("did not refuse")
+
+
+def test_check_frozen_refuses_a_changed_file(monkeypatch):
+    import pathlib
+    import pytest
+    if not (pathlib.Path(run_d1.__file__).parent / "FROZEN_D1.json").exists():
+        pytest.skip("not frozen yet")
+    run_d1.check_frozen()                                    # the committed tree matches its manifest
+    monkeypatch.setattr(run_d1, "_sha", lambda p: "0" * 64)
+    with pytest.raises(SystemExit, match="REFUSED"):
+        run_d1.check_frozen()
