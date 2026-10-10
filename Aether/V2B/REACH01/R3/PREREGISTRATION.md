@@ -55,3 +55,24 @@ Hashes:
   d0203f041378bfe302f13bddc3917bca7c4f91fa318e740a5b4f6305dd61b7b9 r3_planted.py
   b6c5a38a9bcdbaef87bb1d357cd3683713cc9b58050e78f4491447ca7f65dbb7 ../R2/express01.py
   2b594c81418d1fa1f845dd09216dc12c805c209b834b711edbd46c82919e8b54 ../reach_flight.py
+
+## ATTEMPT 2 (the campaign's one bounded technical repair for R3), frozen before any attempt-2 data
+Instrument defect in attempt 1:
+- frontier_descriptor v1 bucketed reach into 4-column bins.
+- In 6 completed units (XOR A/B/C, seeds 0-1; 30,720 evaluations each) every archive's best elite had progress 4
+  (reach bucket 2). Arm C's parent weights (progress^2) were therefore uniform, so C reduced to B by construction.
+- The experiment could not discriminate the arms. That is a ruler failure, not a scientific result.
+- Attempt-1 evidence is preserved in C:/Prometheus-data/aether_reach01/R3/attempt1/: 6 unit JSONs, ledger,
+  stderr.
+
+Repair (one): per-column reach (0..16) for a, b and joint cells in the descriptor (runner r3_frontier.v2).
+Everything else is identical: search operators, budgets, arms, seeds, rules, certifier. All arms are rerun, so every
+unit comes from the same code version. A second technical failure marks R3 UNRESOLVED (campaign rule).
+
+Attempt-2 hashes:
+  157cf784bd6e0c8b6b6c6552ce9fc37b4a9561aadb50ffba26d4d51aac5a0b3f RULES.json
+  1e8c4a0031b910d1486ddcb783f821017ce810f46d1547b421acb87e2ea00896 plan_search.json
+  bd772e78c3874b8ea32e1102b6dbb86ead4fc75737e75280f08f64e8bc1bf61d plan_certify.json
+  72cd5c3f2e7e74af71546403aeb8da02d6c5783167a91ffcaf9bf5783154a3d6 r3_frontier.py
+  851208e771ba2fc9e90dae7ded5bc2aeb77abf3a40a56525a5984e06f3ed86f7 r3_certify.py
+  e9b530759dedd05882c8ee63cb4de7f7c93ec16b66164f106fede51e8a4f02a5 r3_certify_run.py

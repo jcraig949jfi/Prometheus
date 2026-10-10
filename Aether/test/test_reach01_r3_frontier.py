@@ -49,7 +49,7 @@ def test_relay_row_extends_reach_of_a_only():
     ev = F.Evaluator("XOR", side=2, backend="cpu")
     o = ev.run_batch(np.stack([p]))
     d = F.frontier_descriptor(o[0], ev.last_fin[0])
-    assert d[0] >= 2 and d[1] == 1                                   # a reaches further; b only its deposit
+    assert d[0] >= 5 and d[1] == 1                                   # a reaches further (per-column, v2); b only its deposit
 
 
 def test_isolation_between_tiles():

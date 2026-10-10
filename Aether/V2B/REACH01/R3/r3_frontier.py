@@ -51,7 +51,7 @@ P_WRITE = 0.5
 K_MUT = 3
 P_RESTORE = 0.9
 ENERGY = X.EXEC_ONLY
-RUNNER_VERSION = "r3_frontier.v1"
+RUNNER_VERSION = "r3_frontier.v2"  # v2 (R3 attempt 2): per-column frontier descriptor (repair of v1 bucket defect)
 
 
 def random_patches(rng, m):
@@ -139,9 +139,9 @@ def depmap(fin16):
 
 
 def frontier_descriptor(out16, fin16):
-    """CAUSAL descriptor for arm C: (reach_a bucket, reach_b bucket, joint-cell reach bucket, joint-cell count
-    bucket, output rung). reach = 1 + rightmost patch column holding input-dependent state (0 = none); buckets of 4
-    columns. Joint cells depend on BOTH inputs (partial combination sites)."""
+    """CAUSAL descriptor for arm C: (reach_a, reach_b, joint-cell reach, joint-cell count bucket, output rung).
+    reach = 1 + rightmost patch column holding input-dependent state (0 = none), per column (v2). Joint cells depend
+    on BOTH inputs (partial combination sites)."""
     da, db = depmap(fin16)
     joint = da & db
     def reach(m):
@@ -150,7 +150,9 @@ def frontier_descriptor(out16, fin16):
     ra, rb, rj = reach(da), reach(db), reach(joint)
     nj = int(joint.sum())
     _d, rung = descriptor(out16)
-    return (ra // 4 + (ra > 0), rb // 4 + (rb > 0), rj // 4 + (rj > 0), min(3, (nj + 3) // 4), rung)
+    # v2: PER-COLUMN reach (0..16). v1 bucketed reach into 4-column bins, so every elite had progress <= 4 and arm C's
+    # parent weights were uniform: C reduced to B by construction (R3 attempt-1 instrument defect).
+    return (ra, rb, rj, min(3, (nj + 3) // 4), rung)
 
 
 def progress(k):
