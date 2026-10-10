@@ -112,3 +112,35 @@ def test_engine_label_keeps_the_script_and_drops_arguments():
     assert eng == "python aether/r4_reduce.py" and where == "Prometheus-worktrees/aether-m2" and "SECRET" not in eng
     assert fleet._engine_label(P("python.exe", ["python", "-m", "pan", "refresh"], "C:/x"))[0] == "python -m pan"
     assert fleet._engine_label(P("chrome.exe", ["chrome.exe", "--flag"], "C:/x")) == ("chrome.exe", None)
+
+
+HW = """## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
+
+| Host | Machine | CPU | C/T | AVX2 | RAM | IP (wired / Wi-Fi) | Serial / tag |
+|---|---|---|---|---|---|---|---|
+| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/8T | yes | 24 GB (8+16) | .222 / .227 | R90T9A2G |
+| ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
+
+## ubu001
+"""
+
+
+def test_hardware_table_adds_new_hosts_and_corrects_old_ones():
+    hw, date = fleet.parse_hw(HW)
+    assert date == "2026-10-10" and set(hw) == {"UBU005", "UBU007"} and "serial" not in str(hw).lower()
+    assert hw["UBU007"]["ip"] == "192.168.1.3" and hw["UBU007"]["avx2"] == "no AVX"
+    rows = fleet.overlay(fleet.register(DOC), hw, date)
+    by = {r["host"]: r for r in rows}
+    assert by["UBU005"]["ram_gb"] == 24.0 and "ram GB 22.0 -> 24.0" in by["UBU005"]["notes"]
+    new = by["UBU007"]
+    assert new["threads"] == 8 and new["family"] == "Linux" and "not in infra/FLEET_HOSTS.md" in new["notes"]
+    assert "no AVX" in new["notes"] and new["os"].startswith("Ubuntu Server")
+    assert by["SKULLPORT"]["ram_gb"] == 32.0 and "Achilles" not in by["SKULLPORT"]["notes"]
+
+
+def test_a_wrong_hardware_row_still_shows_as_a_measured_disagreement():
+    hw, date = fleet.parse_hw(HW.replace("| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/8T",
+                                         "| ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U | 4C/99T"))
+    reg = {r["host"]: r for r in fleet.overlay(fleet.register(DOC), hw, date)}["UBU005"]
+    miss = fleet.merge(reg, fleet.parse_kv(KV), dt.datetime.now(dt.timezone.utc), "ssh")["mismatch"]
+    assert "99 threads, measured 8" in miss
