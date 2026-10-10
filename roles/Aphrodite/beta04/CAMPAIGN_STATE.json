@@ -34,13 +34,14 @@
    "id": "W03",
    "kind": "DEV",
    "start_utc": "2026-10-10T17:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W03_DEV_REPORT.md"
   },
   {
    "id": "W04",
    "kind": "EXP",
    "start_utc": "2026-10-10T21:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W05",
@@ -127,7 +128,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W03",
+ "active_window": "W04",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -137,11 +138,12 @@
   "ALIEN": "PENDING"
  },
  "jobs": {
-  "E2_SCREEN": "RUNNING from worktree aphrodite-beta01 (atlas mode then 720-shard screen, 2 workers; started ~17:30Z; do NOT merge main into that worktree until done)",
+  "E2_SCREEN": "RUNNING 445/720 at 21:29Z (worktree aphrodite-beta01)",
   "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
   "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
   "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
-  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production"
+  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
+  "ALIEN_AR1": "FROZEN (FREEZE_ALIEN_AR1, 6c92d3b08); production primary RUNNING from worktree aph-b04-alien, 1 worker"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -171,6 +173,10 @@
    {
     "utc": "2026-10-10T17:25Z",
     "est_core_h_since_activation": 19.0
+   },
+   {
+    "utc": "2026-10-10T21:29Z",
+    "est_core_h_since_activation": 33.0
    }
   ]
  },
