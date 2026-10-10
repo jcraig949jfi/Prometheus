@@ -136,12 +136,15 @@
   "E5": "GATED",
   "ALIEN": "PENDING"
  },
- "jobs": [],
+ "jobs": {
+  "E2_SCREEN": "RUNNING from worktree aphrodite-beta01 (atlas mode then 720-shard screen, 2 workers; started ~17:30Z; do NOT merge main into that worktree until done)",
+  "E3KP_PRIMARY": "RUNNING from worktree aph-b04-tfs1 (7 worlds, 2 workers; out runs/kp_production; started ~18:08Z)"
+ },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
   "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
   "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending",
-  "SUBSTRATE_KP_ALIGN": "LAUNCHED 2026-10-10 W02: align e3_known_positive to A1-A (pooled verdict, link classes, secondaries, OE repair pre-built off), timing on pilot_v2; <=2 core-h",
+  "SUBSTRATE_KP_ALIGN": "DELIVERED 8d0383ca0 (E3 16/16, TFS1 15/15; ~1.7 core-h); merged to main 19a374fbf; A3 rulings; FREEZE_E3KP",
   "ATLAS_E2_DRIVER": "DELIVERED 2bfeeda16 (13/13 E2 + 14/14 atlas); merged; FREEZE_E2 written"
  },
  "attempts": {
@@ -169,7 +172,7 @@
   ]
  },
  "cloud_spend_usd": 0,
- "next_action": "On lead returns: review code vs A1, write FREEZE_E2_E3KP.json (hashes + family IDs), run E3-KP prelaunch then primary on production; E2 prelaunch + atlas + 1x screen within cap",
+ "next_action": "KP primary -> pooled verdict -> secondary rows -> OE repair iff triggered; E2 -> e2_analyze; close W03 21:27Z (coordinator commits from aph-b04-tfs1 worktree while E2 runs)",
  "outcomes_frozen_labels": {
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
   "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z)"
