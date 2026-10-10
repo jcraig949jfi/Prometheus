@@ -21,7 +21,8 @@ from moonshot.epoch import model
 SCHEMA_VERSION = 1
 ROLES = ("reader", "coordinator", "publisher", "validator", "resolver")
 GRANTS = {
-    "coordinator": ["create_chain(text, text, bytea, bytea, jsonb, text, integer, text)", "put_object(bytea)"],
+    "coordinator": ["create_chain(text, text, bytea, bytea, jsonb, text, integer, text)", "put_object(bytea)",
+                    "record_receipt(text, bytea, text)"],
     "publisher": ["publish(text, text, text, integer, text, bigint, bytea, bytea, bytea, bytea, jsonb, text)",
                   "record_attempt_outcome(text, text, text, integer, text, bigint, text, text, text, jsonb, text)",
                   "put_object(bytea)"],
@@ -246,6 +247,24 @@ class Moonshot:
                     "ORDER BY v.validation_id DESC LIMIT 1", (chain_id, epoch_index), one=True)
         return "UNVALIDATED" if r is None else r[0]
 
+    def classified_attempt_ids(self):
+        """Every attempt this schema has classified (the publisher's idempotency set)."""
+        return {r[0] for r in self._q("SELECT attempt_id FROM {s}.attempts")}
+
+    def attempt_outcomes(self, chain_id):
+        return dict(self._q("SELECT outcome, count(*) FROM {s}.attempts WHERE chain_id = %s GROUP BY outcome",
+                            (chain_id,)))
+
+    def contests(self, chain_id):
+        keys = ("contest_id", "epoch_index", "reason", "state", "published_epoch_digest", "challenger_epoch_digest")
+        return [dict(zip(keys, r)) for r in self._q(
+            "SELECT contest_id, epoch_index, reason, state, published_epoch_digest, challenger_epoch_digest "
+            "FROM {s}.contests WHERE chain_id = %s ORDER BY contest_id", (chain_id,))]
+
+    def receipts(self, chain_id):
+        return [r[0] for r in self._q("SELECT detail->>'sha256' FROM {s}.events WHERE chain_id = %s AND kind = 'receipt' "
+                                      "ORDER BY event_id", (chain_id,))]
+
     def rejected_epochs(self, chain_id):
         return [tuple(r) for r in self._q("SELECT epoch_index, epoch_digest FROM {s}.publications WHERE chain_id = %s "
                                           "AND rejected_at IS NOT NULL ORDER BY epoch_index", (chain_id,))]
@@ -280,6 +299,11 @@ class Moonshot:
                        (genesis.chain_id, namespace, genesis.bytes, genesis.initial_checkpoint,
                         psycopg2.extras.Json(genesis.obj["runtime"]), approved_code_sha, genesis.obj["epochs"],
                         self.actor), one=True, commit=True)[0]
+
+    def record_receipt(self, chain_id, receipt_bytes):
+        """Store a receipt's canonical bytes content-addressed and log it; returns its sha256."""
+        return self._q("SELECT {s}.record_receipt(%s, %s, %s)", (chain_id, receipt_bytes, self.actor), one=True,
+                       commit=True)[0]
 
     def verify(self, chain_id, epoch_index, files):
         """The publisher's semantic checks; [] means the bytes are a well-formed epoch at this position."""

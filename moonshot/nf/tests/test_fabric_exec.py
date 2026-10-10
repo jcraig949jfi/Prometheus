@@ -100,6 +100,7 @@ class TestExecutor(ExecCase):
         (self.out / "TRACE").write_bytes(b"already here")
         self.assertEqual(self.run_exec(args_for(g, 1, g.initial_checkpoint)).returncode, 2)
         self.assertEqual((self.out / "TRACE").read_bytes(), b"already here")
+        self.assertEqual(sorted(p.name for p in self.out.iterdir()), ["TRACE"])     # no partial output
 
 
 class TestNodeLocalFaults(ExecCase):

@@ -268,6 +268,23 @@ class TestRefusals(CoordCase):
         self.assertIn("namespace", self.reader().attempt(out[0]["attempt_id"])["detail"]["refused"])
 
 
+class TestDefenceInDepth(CoordCase):
+    def test_a_publication_that_slipped_past_verification_is_caught_and_overturned(self):
+        # A publisher bug (verification skipped) lets a self-consistent forged identity in -- the database alone
+        # cannot recompute canonical identities. Replay validation catches it (INVALID -> CORRUPT_BYTES), and the
+        # resolver overturns it because the published bytes do not verify (mutation TM15 survived without this).
+        r = model.execute(self.g.obj, 1, self.g.initial_checkpoint)
+        forged = dict(r.files(), manifest=C.canonical_bytes(dict(r.manifest, epoch_digest="b" * 64)))
+        res = self.co._h("publisher").publish("att-forged", "tsk-forged", "Q1", 1, None, 0, forged, verify=False)
+        self.assertEqual(res["outcome"], "PUBLISHED")
+        self.assertEqual(self.co.validate("Q1"), [(1, "INVALID")])
+        c = self.reader().open_contest("Q1")
+        self.assertEqual((c["reason"], c["state"]), ("CORRUPT_BYTES", "CONTESTED"))
+        self.assertEqual(self.co.resolve("Q1"), "OVERTURNED")
+        self.assertEqual(self.step()["outcome"], "PUBLISHED")              # the honest epoch, on the rewound chain
+        self.assertEqual(self.reader().lineage("Q1")[0]["epoch_digest"], r.epoch_digest)
+
+
 class TestStraggler(CoordCase):
     def test_work_from_an_overturned_lineage_is_stale(self):
         # a faulty host publishes epoch 1; epoch 2 is computed on it; replay validation catches epoch 1;

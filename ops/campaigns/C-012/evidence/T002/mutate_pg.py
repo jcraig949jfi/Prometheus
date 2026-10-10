@@ -163,8 +163,11 @@ def run(m, out_dir):
     t = time.time()
     r = subprocess.run([sys.executable, "-m", "unittest"] + targets, cwd=d, capture_output=True, timeout=1500, env=env)
     lines = [ln for ln in r.stderr.decode(errors="replace").splitlines() if ln.strip()]
+    # a target that does not load is an instrument error, never a kill
+    broken = any("unittest.loader._FailedTest" in ln or "Failed to import test module" in ln for ln in lines)
+    verdict = "TARGET_ERROR" if broken else ("KILLED" if r.returncode != 0 else "SURVIVED")
     return {"id": mid, "what": what, "file": rel, "targets": targets,
-            "verdict": "KILLED" if r.returncode != 0 else "SURVIVED", "seconds": round(time.time() - t, 1),
+            "verdict": verdict, "seconds": round(time.time() - t, 1),
             "tail": lines[-1:], "first_failure": next((ln for ln in lines if ln.startswith(("FAIL:", "ERROR:"))), None)}
 
 
