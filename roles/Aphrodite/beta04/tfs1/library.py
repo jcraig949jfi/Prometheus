@@ -110,6 +110,12 @@ def lambda_to_body(lam) -> Tuple[tuple, int]:
     return go(lam[2], 0), k
 
 
+def references_xs(t) -> bool:
+    if t[0] == "xs":
+        return True
+    return any(references_xs(c) for c in C.children(t))
+
+
 def _is_atom(t) -> bool:
     return t[0] in ("hole", "int", "xs")
 
@@ -138,7 +144,10 @@ class Entry:
 class Library:
     """A registry of entries. Iteration order everywhere is by id (content), never by insertion."""
 
-    def __init__(self):
+    def __init__(self, closed_args: bool = False):
+        """closed_args=True enforces contract v0.1-1 (frozen): a promoted body may not reference the task input xs
+        (primitives are closed over their own arguments; prevents whole-program memorisation)."""
+        self.closed_args = bool(closed_args)
         self.entries: Dict[str, Entry] = {}
         self._by_expansion: Dict[Tuple, str] = {}
         self._compiled: Dict[str, object] = {}
@@ -186,6 +195,8 @@ class Library:
             raise ValueError("A0: trivial body (bare hole/literal/xs) is not promotable")
         if body[0] == "lam":
             raise ValueError("body must be value-typed (promote a lambda with promote_lambda)")
+        if self.closed_args and references_xs(body):
+            raise ValueError("v0.1-1: body references the task input xs")
         hs = C.holes_in(body)
         if params is None:
             ht = infer_hole_types(body, self, None)
@@ -252,7 +263,10 @@ class Library:
         return [self.entries[i].to_json() for i in sorted(need, key=lambda i: (self.entries[i].depth, i))]
 
     def to_json(self, ids=None) -> Dict:
-        return {"format": VERSION, "contract": C.CONTRACT, "entries": self.records(ids)}
+        out = {"format": VERSION, "contract": C.CONTRACT, "entries": self.records(ids)}
+        if self.closed_args:
+            out["closed_args"] = True          # v0.1-1 (key absent for v0 libraries: their bytes are unchanged)
+        return out
 
     def dumps(self, ids=None) -> str:
         return canon(self.to_json(ids)).decode()
@@ -266,7 +280,7 @@ class Library:
         (deps first)."""
         if obj.get("format") != VERSION:
             raise ValueError("library format %r" % obj.get("format"))
-        lib = cls()
+        lib = cls(closed_args=bool(obj.get("closed_args", False)))
         pending = list(obj["entries"])
         for r in pending:
             body = {k: r[k] for k in Entry.FIELDS}

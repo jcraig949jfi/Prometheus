@@ -6,7 +6,7 @@
    "compress.py": "8d4215fe778bf18a32d64f42d3957547abf4ce9d1aed6f4ffb50f91978cd4196",
    "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
    "enum.py": "7f67bd11f9a1dc3fde1b339699ff7e3f3e8379fbdf4bd3e927a5fd73fe0220c3",
-   "library.py": "cd51247e11a0d8043f8518a5101195c736689a54b65071c14c48ecada8686f5f",
+   "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
    "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
    "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
    "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
@@ -34,7 +34,7 @@
    "class_size": 55995,
    "fallback_equal": true,
    "gen_trees_equal": true,
-   "seconds": 4.52,
+   "seconds": 3.68,
    "status": "PASS"
   },
   "test_compressor_function_hole": {
@@ -61,7 +61,7 @@
    "exhaustive_through_4_charges": 4972,
    "hit_charge": 66,
    "hit_program": "(L_d5571637b7c3 (L_ae173035a9db 0))",
-   "seconds": 0.27,
+   "seconds": 0.26,
    "static_rank": 66,
    "status": "PASS",
    "units_expanded": 1199,
@@ -92,7 +92,7 @@
     8697789
    ],
    "classes_checked": 72,
-   "seconds": 14.2,
+   "seconds": 11.38,
    "status": "PASS"
   },
   "test_enumerator_determinism_and_crn": {
@@ -101,7 +101,7 @@
    "fresh_process_equal": true,
    "library_walk_len": 66576,
    "permutation_invariant": true,
-   "seconds": 21.35,
+   "seconds": 16.13,
    "shared_order_preserved": true,
    "status": "PASS",
    "walk_sha256": "f5f25aa288bfcb784f00be4dcaf1cc7f25805acfda441fdcbfdd1a7458d4f68f"
@@ -119,7 +119,7 @@
     "hits_treatment": 4,
     "p_one_sided": 0.5
    },
-   "seconds": 0.7,
+   "seconds": 0.84,
    "status": "PASS"
   },
   "test_interpreter_guards": {
@@ -131,7 +131,7 @@
   "test_mutator_typed_and_deterministic": {
    "children_checked": 3000,
    "ill_typed": 0,
-   "seconds": 7.79,
+   "seconds": 6.74,
    "status": "PASS",
    "walk_charges": 1046,
    "walk_hit": true,
@@ -140,7 +140,7 @@
   "test_parse_print_roundtrip_and_types": {
    "ill_typed_rejected": 12,
    "roundtrips": 3312,
-   "seconds": 0.33,
+   "seconds": 0.15,
    "status": "PASS"
   },
   "test_promotion_semantics_random": {
@@ -152,20 +152,20 @@
    "mismatches_value_or_FAIL": 0,
    "programs": 3000,
    "programs_with_calls": 2683,
-   "seconds": 6.16,
+   "seconds": 3.79,
    "status": "PASS"
   },
   "test_serialization_roundtrip_and_tamper": {
    "entries": 10,
    "fresh_process_sha_equal": true,
    "library_sha256": "b2db912a45aa9082d294fccd2baee3d85e3819fc1525b53c1d5553ebe1081346",
-   "seconds": 0.21,
+   "seconds": 0.16,
    "status": "PASS",
    "tamper_cases_detected": 3
   },
   "test_transplant_no_donor_state": {
    "library_sha256": "b2db912a45aa9082d294fccd2baee3d85e3819fc1525b53c1d5553ebe1081346",
-   "recipient_pid": 2304,
+   "recipient_pid": 16768,
    "results": [
     [
      "sumsq1",
@@ -188,7 +188,7 @@
      2
     ]
    ],
-   "seconds": 1.44,
+   "seconds": 1.21,
    "status": "PASS",
    "tasks_sha256": "62c8ceb407e7f3ecb81ff67a9f6db7a5cea8389614645b47a630d6cb43c2c765",
    "verification": {

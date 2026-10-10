@@ -1,0 +1,149 @@
+{
+ "admitted": [
+  "W0467897d-F085-R3",
+  "W0467897d-F081-R3",
+  "W0467897d-F061-R3"
+ ],
+ "chain": {
+  "W0467897d-F061-R3": {
+   "family_id": "W0467897d-F061-R3",
+   "missing": [
+    "p0"
+   ],
+   "status": "CHAIN_C_FAIL"
+  },
+  "W0467897d-F081-R3": {
+   "family_id": "W0467897d-F081-R3",
+   "missing": [
+    "p0"
+   ],
+   "status": "CHAIN_C_FAIL"
+  },
+  "W0467897d-F085-R3": {
+   "family_id": "W0467897d-F085-R3",
+   "missing": [
+    "p0"
+   ],
+   "status": "CHAIN_C_FAIL"
+  }
+ },
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "bench.py": "d43f90b69b9e7661e6b4d0c6e770433da6813b688b25719829aaa623695b1bd0",
+  "compress.py": "8d4215fe778bf18a32d64f42d3957547abf4ce9d1aed6f4ffb50f91978cd4196",
+  "core.py": "38f8e391b5352d3e2e398d7ec4d31fd3be80fc6173c1089279624b8964effac3",
+  "enum.py": "7f67bd11f9a1dc3fde1b339699ff7e3f3e8379fbdf4bd3e927a5fd73fe0220c3",
+  "library.py": "9237fd3a8cb66694e5f1c30c614839239c256420ea38ee711e24cb63198e0765",
+  "membrane.py": "625f67e8406714eec3f83f719c9656ecb183091651fb8426a04267de9b65108e",
+  "mutate.py": "0232dcf0628825921a66abe07a6f8e80a1983eedc547ca703eebb8f33e4b28bc",
+  "toy_calibration.py": "0ec09fb414cf0dcb4eafdb6433917556a3297b07906ca8000315f56bed2ff6d4"
+ },
+ "label": "EXPOSED DEV DATA (pilot_v2)",
+ "r1": {
+  "f1": {
+   "agrees_with_sealed_on_probe": 1.0,
+   "attempts": [
+    {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 67.69,
+     "family_id": "W0467897d-F006-R1",
+     "found": null
+    },
+    {
+     "charge": 763421,
+     "charges": 763421,
+     "complete_through_size": 7,
+     "cpu_s": 56.14,
+     "extraction": "closed_lambda",
+     "family_id": "W0467897d-F007-R1",
+     "found": "(max (map (lam x (pow (gcd x x) 3)) xs))",
+     "mechanism_lambda": "(lam x (pow (gcd x x) 3))",
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": true,
+      "test_ok": true,
+      "tribunal_ok": true
+     }
+    }
+   ],
+   "extraction": "closed_lambda",
+   "from": "W0467897d-F007-R1",
+   "kind": "f",
+   "lambda": "(lam x (pow (gcd x x) 3))",
+   "mechanism": "f1",
+   "status": "ACQUIRED"
+  },
+  "p0": {
+   "attempts": [
+    {
+     "charge": null,
+     "charges": 1000000,
+     "complete_through_size": 7,
+     "cpu_s": 57.77,
+     "family_id": "W0467897d-F008-R1",
+     "found": null
+    },
+    {
+     "charge": 346,
+     "charges": 346,
+     "complete_through_size": 4,
+     "cpu_s": 0.02,
+     "family_id": "W0467897d-F010-R1",
+     "found": "(filter (lam x (lt 3 x)) xs)",
+     "verdict": {
+      "n_test": 40,
+      "n_tribunal": 17,
+      "qualified": false,
+      "test_ok": false,
+      "tribunal_ok": false
+     }
+    }
+   ],
+   "kind": "p",
+   "mechanism": "p0",
+   "status": "NOT_ACQUIRED"
+  }
+ },
+ "scratch": {
+  "W0467897d-F061-R3": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 48.41,
+   "family_id": "W0467897d-F061-R3",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  },
+  "W0467897d-F081-R3": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 7,
+   "cpu_s": 52.11,
+   "family_id": "W0467897d-F081-R3",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  },
+  "W0467897d-F085-R3": {
+   "charge": null,
+   "charges": 1000000,
+   "complete_through_size": 8,
+   "cpu_s": 76.67,
+   "family_id": "W0467897d-F085-R3",
+   "found": null,
+   "status": "NOT_FOUND_AT_BUDGET"
+  }
+ },
+ "verdict": {
+  "TFS1_INSTRUMENT_QUALIFIED_world": "NO",
+  "admitted_R3_R4": 3,
+  "chain_fraction": 0.0,
+  "chain_solved": 0,
+  "complete": true,
+  "rule": ">= 80% chain success AND from-scratch fails every admitted R3/R4 family (1e6 each)",
+  "scratch_solved": 0
+ },
+ "world": "W0467897d"
+}
