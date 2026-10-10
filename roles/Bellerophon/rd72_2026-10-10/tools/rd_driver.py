@@ -145,6 +145,14 @@ def _run_one(spec):
         w = LightHalvesWorld(cfg, spec["seed"], census_every=spec.get("census_every", 250)); s = w.run()
         out["summary"] = _keep(s); out["census"] = w.census; out["first_both"] = w.first_both
         out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log); out["end_hash"] = end_state_hash(w)
+    elif kind == "intervene":
+        from intervene import InterveneWorld
+        cfg = _cfg(spec)
+        w = InterveneWorld(cfg, spec["seed"], at=spec["at"], action=spec["action"], classes=tuple(spec.get("classes", ("LO", "BOTH"))),
+                           tapes=tuple(spec.get("tapes", ())), n_implant=spec.get("n_implant", 16),
+                           census_every=spec.get("census_every", 100), irng=spec.get("irng", 0)); s = w.run()
+        out["summary"] = _keep(s); out["census"] = w.census; out["first_both"] = w.first_both; out["intervention"] = w.intervention
+        out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log); out["end_hash"] = end_state_hash(w)
     elif kind == "halves":
         from halves import HalvesWorld
         cfg = _cfg(spec)
