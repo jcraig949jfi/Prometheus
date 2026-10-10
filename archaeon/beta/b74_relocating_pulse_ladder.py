@@ -13,6 +13,9 @@ PREDICTION (committed before running):
 - Q = None: |RESET - LATCH| < .01 solo;
 - Q = 8 and Q = 12: RESET - LATCH >= .02 solo, and LATCH no better than REACT + .01 at Q = 8.
 If it holds, the relocating pulse world is a test bed where the memory law's unreached class is decisive.
+v1 (mode "half", +L/2 shift) FAILED BY DESIGN FLAW (mine): two half-ring shifts per episode at Q=8 return every pool
+home, so a stuck LATCH recovers. v2 (mode "random"): each pool jumps to a random other node. SAME prediction,
+committed before the v2 run.
 """
 import json
 import sys
@@ -37,7 +40,7 @@ def reset(i, P=4):
         (LDC, 5, 0), (LDC, 6, 0), (JMP, 0, (1 << 32) - 12)])                                         # p+18..p+20 unlatch, go move
 
 
-def group_reloc(ms, w, seed, E, P=4, Q=None, rng_seed=7):
+def group_reloc(ms, w, seed, E, P=4, Q=None, rng_seed=7, mode="half"):
     players = [Player(m) for m in ms]; tot = [0.0] * len(ms); mx = [0.0] * len(ms); L = w.w.L
     for ep in range(E):
         shared = {}
@@ -60,15 +63,21 @@ def group_reloc(ms, w, seed, E, P=4, Q=None, rng_seed=7):
             if (t + 1) % P == 0:
                 sts[0]["pools"][:] = start
             if Q and (t + 1) % Q == 0:
+                if mode == "half":
+                    new = [(n + L // 2) % L for n in sts[0]["pool_node"]]
+                else:                                   # v2: each pool jumps to a random OTHER node (never returns by construction)
+                    rr = SplitMix64(seed_from("b74.reloc", seed, ep, t))
+                    new = [(n + 1 + rr.randbelow(L - 1)) % L for n in sts[0]["pool_node"]]
                 for st in sts:
-                    st["pool_node"] = [(n + L // 2) % L for n in st["pool_node"]]
+                    st["pool_node"] = list(new)
             t += 1
         for i, st in enumerate(sts):
             tot[i] += max(0.0, st["reward"]); mx[i] += st["max_reward"]
     return [min(1.0, a / max(1e-9, b)) for a, b in zip(tot, mx)]
 
 
-def main():
+def main(argv=()):
+    mode = argv[0] if argv else "half"
     world, s, _ = load(); w = NoClock(world)
     progs = {"REACT": lambda i: man(react(i), "none"), "LATCH": lambda i: man(latch(i), "regs"), "RESET": lambda i: man(reset(i), "regs")}
     avg = lambda f: round(sum(f(s + 1000 + k) for k in range(4)) / 4, 4)
@@ -76,17 +85,17 @@ def main():
     for Q in (None, 8, 12):
         row = {"Q": Q}
         for name, mk in progs.items():
-            row["solo_" + name] = avg(lambda ss: sum(group_reloc([mk(i)], w, ss, 16, Q=Q)[0] for i in (1, 2)) / 2)
-            row["group_" + name] = avg(lambda ss: sum(group_reloc([mk(1), mk(2), mk(1), mk(2)], w, ss, 16, Q=Q)) / 4)
+            row["solo_" + name] = avg(lambda ss: sum(group_reloc([mk(i)], w, ss, 16, Q=Q, mode=mode)[0] for i in (1, 2)) / 2)
+            row["group_" + name] = avg(lambda ss: sum(group_reloc([mk(1), mk(2), mk(1), mk(2)], w, ss, 16, Q=Q, mode=mode)) / 4)
         row["RESET_minus_LATCH_solo"] = round(row["solo_RESET"] - row["solo_LATCH"], 4)
         rows.append(row); print(json.dumps(row), flush=True)
     p0 = abs(rows[0]["RESET_minus_LATCH_solo"]) < .01
     p1 = all(r["RESET_minus_LATCH_solo"] >= .02 for r in rows[1:])
     p2 = rows[1]["solo_LATCH"] <= rows[1]["solo_REACT"] + .01
     print(json.dumps({"pred_noreloc_equal": p0, "pred_reloc_reset_wins": p1, "pred_latch_useless_Q8": p2}))
-    (OUT / "B74_result.json").write_text(json.dumps({"probe": "B74", "rows": rows, "pred": [p0, p1, p2]}, indent=1), encoding="utf-8")
+    (OUT / ("B74_result%s.json" % ("" if mode == "half" else "_" + mode))).write_text(json.dumps({"probe": "B74", "rows": rows, "pred": [p0, p1, p2]}, indent=1), encoding="utf-8")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))
