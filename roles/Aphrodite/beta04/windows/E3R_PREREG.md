@@ -73,3 +73,45 @@ Most likely REPAIR_CLASS = BOTH_REQUIRED or NONE.
 - Projection: 3.3-7 core-h for the OE cells (E3-KP A3 projection) + about 0.5 core-h for X-ABS x OE off.
 - Run ONLY when the rolling 24 h window has room: not before about 2026-10-11 11:30Z.
 - <= 2 workers.
+
+## AMENDMENT E3R-A1 (pre-data; red team reviews/REDTEAM_E3R_PREFREEZE.md, 5717ba313: 2 BLOCKER / 7 MAJOR)
+
+**ADOPTED IN FULL:**
+- red-team s3 amendments A1-A12 (required A1-A4; recommended A5-A12);
+- the rulings in s4 on decisions 1-9;
+- the s5 claim limits.
+
+They supersede this draft wherever they conflict. In particular:
+1. **Censoring (A1).**
+   - OE scratch is capped at 3,600 CPU-s.
+   - CENSORED is a third state. Each cell gets LO / HI bounds; a cell whose bounds disagree is COUNTS_CONDITIONAL.
+   - OE scratch runs lazily, only when an OE chain reaches 12.
+   - One extension to 14,400 CPU-s is allowed for searches that decide the label.
+   - OE scratch envelope: 16 core-h.
+   - The frozen non-OE scratch is a secondary control only.
+2. **X-ABS text = the implemented rule (A2):**
+   - the dual reducer is allowed (an antitone context swaps max / min), disclosed as added after seeing W6eb945cc;
+   - probes = lists of length 0..max dev length plus all singletons over the dev element range;
+   - only top-level `(map L xs)` nodes;
+   - the highest valid ancestor wins.
+3. **Seeds 0, 1, 2 for both OE cells and off_xabs are REQUIRED (A3).**
+   - The trivialisation check reuses the seed-0 OE scratch; this is a declared deviation.
+   - The label is STABLE / MAJORITY / SEED_UNSTABLE.
+   - The PRIMARY output is the per-family attribution table: OE-only / X-ABS-only / both / either / neither.
+4. **Interpretation map rewritten (A4).**
+   - E3-R discriminates repair class WITHIN TFS-1. It does NOT discriminate CHANGE vs MIGRATE.
+   - UNDERDETERMINED_STONE is split into UD-R1 (dev gap; WORLD) and UD-EXTRACT (with a global-equivalence check).
+   - NONE + horizon-dominated: "no repair class identified at 1e6; horizon binding". This is NOT a CHANGE_SEARCH finding.
+   - The MIXED reading lists the residual links.
+5. **Fixed reading cell for NONE:** on_xabs (A5).
+6. **off_xabs = 9 / 15 is KNOWN** (reviewer s3.2; red-team check), so DEVELOPMENTAL and EITHER are unattainable at seed 0. off_xabs runs first as a reproduction check. Its "8-10" prediction is withdrawn.
+7. **X-ABS is a post-hoc single-motif patch.**
+   - BOTH_REQUIRED reads "OE + post-hoc patch".
+   - SEARCH must report whether X-ABS changed any stone in the OE cells (masking).
+8. **Every label is conditional on the readout fallback.** on_xabs with fallback OFF is priority 2; if it disagrees, A1-C applies.
+9. **Compute (A9).**
+   - Envelope about 14 core-h, debited with concurrent load; <= 2 workers.
+   - The run order is A9 order.
+   - Start not before 2026-10-11 11:30Z.
+   - At the hard stop, report what is complete. Otherwise REPAIR_CLASS = INCOMPLETE with bounds.
+10. **Custody:** UTC start / end in every result file; FREEZE_E3R.json with git-blob hashes; an assert that the reused off_frozen cell = 7 / 15.
