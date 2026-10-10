@@ -800,6 +800,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   k=1 entropy .99 / rare 0/5; k=2 1.19 / 0/6; k=4 1.23 / 4/6; k=8 1.32 / 4/6. Prediction part 1 (entropy rises with k)
   MET, small; part 2 (CONC2 - SOLO < .2 in >= 3/6) MET (4/6). SHAPE: NFD switches ON between k=2 and k=4 and holds at
   k=8 -- a crowding THRESHOLD, not a graded dose; entropy rises gently throughout and does not mark the threshold.
+- B69 RESULT (01:37Z, 12/12; pulse P=4; refs REACT .033 / LATCH .119): PREREGISTERED readout (top-30 mean state
+  dependence >= .02): SOLO 3/6 (.025/.044/.013/.014/.025/-.004; mean .019), CONC 0/6 (mean .009). PREDICTION FAILED on
+  all three parts (SOLO >= 4/6; CONC >= 4/6; |diff| <= 1). Top-30 rewards .014-.044: near the stateless reference.
+- B69b EXPLORATORY CENSUS (readout defined AFTER a trace -- NOT preregistered): trace of SOLO 6902 elites showed
+  STAY-when-own-pool-empty .97 (LATCH 1.0, REACT 0.0) with ~half LATCH's harvests (65 vs 128). Census of top-10
+  genomes per population, LATCH-LIKE = stay >= .9 on >= 20 empty-own-pool ticks AND state dependence >= .02:
+  SOLO 3/6 populations (6/9/3 of 10 genomes), CONC 4/6 (4/5/9/3); best rewards .023-.069 (mean .039 / .044) vs
+  LATCH .119. READING (tentative): the waiting LATCH (set-on-condition + gate-on-latch) IS reached in about half of the
+  populations in BOTH arms (competition does not change the rate: 3 vs 4) but delivers ~half its hand payoff -- the
+  remaining deficit is in FINDING the pool (harvests), not in waiting. The preregistered mean-dependence readout
+  diluted it (latch-like genomes are a minority of the top 30 in some pops). Consistent with Finding 3 (write-once
+  latches are reachable). To confirm, preregister the census readout and replicate on new seeds.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
