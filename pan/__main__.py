@@ -95,7 +95,7 @@ def main(argv=None):
     p.add_argument("--think", action="store_true")
     p.add_argument("--budget", type=int, default=1024)
     p = sub.add_parser("repobench")
-    p.add_argument("what", choices=["mine", "controls", "cheat2", "run", "analyze", "diagnose"])
+    p.add_argument("what", choices=["mine", "controls", "cheat2", "run", "analyze", "diagnose", "report"])
     p.add_argument("model", nargs="?")
     p.add_argument("--think", action="store_true")
     p.add_argument("--budget", type=int, default=1024)
@@ -217,6 +217,8 @@ def main(argv=None):
             repobench.analyze()
         elif a.what == "diagnose":
             repobench.diagnose(workers=a.workers)
+        elif a.what == "report":
+            repobench.report()
         else:
             repobench.run(a.model, think=a.think, budget=a.budget, workers=a.workers)
     elif a.cmd == "modelbench":

@@ -609,7 +609,7 @@ def mcnemar_p(b, c):
     return min(1.0, 2 * sum(comb(n, i) for i in range(k + 1)) / 2 ** n)
 
 
-def analyze(out=print):
+def analyze(out=print, write=True):
     """Latest run per configuration -> failure shapes, the A2 primary Wilson table, the preregistered
     secondary (exact McNemar, Holm over all pairs measured so far) and agreement across configurations.
     Reads stored rows only; never changes a verdict."""
@@ -656,7 +656,8 @@ def analyze(out=print):
                             solved_by_all=sum(1 for v in solved.values() if v == len(ms)), configs=len(ms))
     p = REPO / "roles" / "Pan" / "reports" / "repobench" / "ANALYSIS_{}.json".format(
         dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
-    p.write_text(json.dumps(res, indent=1), encoding="utf-8", newline="\n")
+    if write:
+        p.write_text(json.dumps(res, indent=1), encoding="utf-8", newline="\n")
     for m in ms:
         c = res["configs"][m]
         out("{:<34} {:>3}/{} {:.3f} [{:.3f}, {:.3f}]  {}".format(m, c["passed"], c["of"], c["pass_at_1"], *c["wilson95"],
@@ -756,3 +757,76 @@ def diagnose(workers=4, out=print):
     out(json.dumps({k: out_[k] for k in ("rows", "flaky_now_pass", "truncated_prompt_tasks", "seconds")}))
     out("wrote {}".format(p))
     return out_
+
+
+def precommitments(an, he):
+    """P1-P3 of the prereg scored from an analyze() result and HumanEval+ pass@1 by config key.
+    Keys: 'ollama:<model>@nothink<budget>'. Status HOLDS / LOST / PENDING."""
+    c = {k: v["pass_at_1"] for k, v in an["configs"].items()}
+    keys = ["ollama:gpt-oss:20b@nothink1024", "ollama:qwen2.5-coder:14b@nothink1024", "ollama:gemma3:12b@nothink1024",
+            "ollama:qwen3:8b@nothink1024", "ollama:gpt-oss:20b@nothink4096"]
+    out = {}
+    have = [k for k in keys if k in c and k in he]
+    lost = [k for k in have if not c[k] <= he[k] - 0.15]
+    out["P1"] = dict(status="LOST" if lost else ("HOLDS" if len(have) == len(keys) else "PENDING"),
+                     measured=len(have), of=len(keys), lost_on=lost,
+                     gaps={k: round(he[k] - c[k], 3) for k in have})
+    up, low = keys[:2], keys[2:4]
+    pairs = [(u, l) for u in up for l in low if u in c and l in c]
+    bad = [[l, u] for u, l in pairs if c[l] > c[u]]
+    out["P2"] = dict(status="LOST" if bad else ("HOLDS" if len(pairs) == 4 else "PENDING"), beaten=bad)
+    a, b = keys[4], keys[0]
+    out["P3"] = dict(status=("PENDING" if a not in c or b not in c else ("HOLDS" if c[a] >= c[b] else "LOST")),
+                     values={k: c.get(k) for k in (b, a)})
+    return out
+
+
+def report(out=print):
+    """Pure-ASCII report from stored rows only: roles/Pan/reports/REPOBENCH_<date>.md."""
+    from . import db
+    an = analyze(out=lambda *_: None, write=False)
+    n_ex = len(excluded())
+    with db.cursor() as cur:
+        cur.execute("""select distinct on (params->>'model', params->>'budget') params->>'model', params->>'budget',
+                              (counts->>'pass_at_1')::float from pan.run where kind = 'codebench' and status = 'OK'
+                       order by params->>'model', params->>'budget', started_at desc""")
+        he = {"ollama:{}@nothink{}".format(m, b): p for m, b, p in cur.fetchall()}
+    pc = precommitments(an, he)
+    man = json.loads(sorted((REPO / "roles" / "Pan" / "reports" / "repobench").glob("TASKS_*.json"))[-1]
+                     .read_text(encoding="utf-8"))
+    f = man["funnel"]
+    now = dt.datetime.now(dt.timezone.utc)
+    L = ["# In-house code benchmark on M2 -- the program's own functions (PAN-34)", "",
+         "Generated {} by `python -m pan repobench report` from pan.code_bench rows; numbers are not".format(
+             now.strftime("%Y-%m-%dT%H:%MZ")),
+         "typed. Protocol: pan/tests/repobench_prereg.json (1e5276818; A1 5bea01bb9; A2 d17d33d52).", "",
+         "## Task set", "",
+         "    tree {}; {} test files -> {} pass the static filter -> {} pass in the sandbox".format(
+             f["tree_sha"][:9], f["test_files"], f["static_kept"], f["baseline_pass"]),
+         "    -> {} candidates examined (seed 34): {} flaky, {} unseen by their tests, {} capped".format(
+             f["candidates_examined"], f["gate_a_flaky"], f["gate_b_blind"], f["capped"]),
+         "    -> {} tasks; A2 primary set {} (the {} tasks a `pass` body satisfies are secondary only)".format(
+             f["tasks"], f["tasks"] - n_ex, n_ex), "",
+         "## Result (primary set, greedy pass@1, Wilson 95 percent)", "",
+         "    {:<34} {:>8} {:>7}  {:<15} {}".format("configuration", "passed", "pass@1", "Wilson", "failure shapes")]
+    for k, v in sorted(an["configs"].items(), key=lambda kv: -kv[1]["pass_at_1"]):
+        sh = ", ".join("{} {}".format(a, b) for a, b in sorted(v["shapes"].items(), key=lambda kv: -kv[1]) if a != "pass")
+        L.append("    {:<34} {:>8} {:>7.3f}  [{:.3f}, {:.3f}]  {}".format(
+            k.replace("ollama:", "").replace("@nothink", " @"), "{}/{}".format(v["passed"], v["of"]), v["pass_at_1"],
+            v["wilson95"][0], v["wilson95"][1], sh))
+    L += ["", "## Comparisons (primary: Wilson intervals apart; secondary: exact McNemar, Holm over 10 pairs)", ""]
+    for p in an["pairs"]:
+        L.append("    {} vs {}: discordant {} / {}, p = {:.4f}, Holm {}; Wilson {}".format(
+            p["a"].replace("ollama:", "").replace("@nothink", "@"), p["b"].replace("ollama:", "").replace("@nothink", "@"),
+            p["only_a"], p["only_b"], p["p"], "rejects" if p["holm_reject"] else "keeps", "apart" if p["wilson_separable"]
+            else "overlap"))
+    L += ["", "Tasks no configuration solved: {} of {}; solved by all {}: {}.".format(
+        an["agreement"]["solved_by_none"], f["tasks"] - n_ex, an["agreement"]["configs"], an["agreement"]["solved_by_all"]), "",
+          "## Precommitments (written before any model ran)", ""]
+    for k in ("P1", "P2", "P3"):
+        L.append("    {}: {}  {}".format(k, pc[k]["status"], json.dumps({a: b for a, b in pc[k].items() if a != "status"})))
+    L.append("")
+    p = REPO / "roles" / "Pan" / "reports" / "REPOBENCH_{}.md".format(now.strftime("%Y-%m-%d"))
+    p.write_text("\n".join(L), encoding="ascii", errors="replace", newline="\n")
+    out("wrote {}".format(p))
+    return p, pc

@@ -122,3 +122,18 @@ def test_shapes_and_mcnemar():
     assert rb.mcnemar_p(0, 0) == 1.0
     assert abs(rb.mcnemar_p(0, 6) - 2 / 64) < 1e-12        # all six discordant one way: p = 2 * 0.5**6
     assert rb.mcnemar_p(5, 5) == 1.0
+
+
+def test_precommitment_scoring():
+    he = {"ollama:gpt-oss:20b@nothink1024": 0.853, "ollama:qwen2.5-coder:14b@nothink1024": 0.853,
+          "ollama:gemma3:12b@nothink1024": 0.773, "ollama:qwen3:8b@nothink1024": 0.779,
+          "ollama:gpt-oss:20b@nothink4096": 0.908}
+    an = {"configs": {"ollama:gpt-oss:20b@nothink1024": {"pass_at_1": 0.148},
+                      "ollama:qwen2.5-coder:14b@nothink1024": {"pass_at_1": 0.415},
+                      "ollama:gemma3:12b@nothink1024": {"pass_at_1": 0.246}}}
+    pc = rb.precommitments(an, he)
+    assert pc["P1"]["status"] == "PENDING" and not pc["P1"]["lost_on"]
+    assert pc["P2"]["status"] == "LOST"                    # gemma3 > gpt-oss@1024
+    assert pc["P3"]["status"] == "PENDING"
+    an["configs"]["ollama:gemma3:12b@nothink1024"]["pass_at_1"] = 0.70    # within 0.15 of 0.773
+    assert rb.precommitments(an, he)["P1"]["status"] == "LOST"
