@@ -59,11 +59,11 @@ MUTANTS = [
     ("E19 factoring substitutes premises lacking one vertex", "e1b/factor.py",
      "            if a in s and b in s:", "            if a in s or b in s:"),
     ("E20 PW-D never forces f on whole cores", "e1b/world_d.py",
-     "        if r.randrange(2) or (phase in (\"A\", \"B\", \"C\") and whole[j]):",
-     "        if r.randrange(2):"),
+     "        elif coin or (phase in (\"A\", \"B\", \"C\") and whole[j]):",
+     "        elif coin:"),
     ("E21 PW-D becomes the marker variant (f only with whole cores)", "e1b/world_d.py",
-     "        if r.randrange(2) or (phase in (\"A\", \"B\", \"C\") and whole[j]):",
-     "        if (phase in (\"A\", \"B\", \"C\") and whole[j]) or (phase not in (\"A\", \"B\", \"C\") and r.randrange(2)):"),
+     "        if phase in (\"A\", \"B\", \"C\") and s.marker:",
+     "        if phase in (\"A\", \"B\", \"C\"):"),
     ("E22 PW-D exceptions keep f", "e1b/world_d.py",
      "                x = (x | w.cores[j]) & ~(1 << w.fs[j])", "                x = (x | w.cores[j])"),
     ("E23 PW-D crit probes keep f", "e1b/world_d.py",
@@ -80,6 +80,10 @@ MUTANTS = [
      "S0F=dict(neg=\"none\"", "S0F=dict(neg=\"raw\""),
     ("E29 factored-shadow cap loop evicts nothing", "e1b/arms.py",
      "            while total > self.cap and self.proj_order:", "            while False:"),
+    ("E30 PW-Dm marker flag ignored", "e1b/world_d.py",
+     "        if phase in (\"A\", \"B\", \"C\") and s.marker:", "        if False:"),
+    ("E31 counterfeit repair arm uses true provenance", "e1b/arms.py",
+     "O4LRWF=dict(neg=\"proj\", consolidate=True, seams=\"lazyrand\"", "O4LRWF=dict(neg=\"proj\", consolidate=True, seams=\"lazy\""),
 ]
 
 

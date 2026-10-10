@@ -120,6 +120,27 @@ class TestWorldD(unittest.TestCase):
         self.assertGreater(broken["D"], 50)
         self.assertGreater(f_without_core, 1000)     # in A-C f is not a marker of the core (not PW-Dm)
 
+    def test_marker_variant_makes_f_a_marker_until_D(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d, stream_d
+        w = make_world_d(WorldSpecD(marker=True), 21)
+        self.assertEqual(w.describe(), make_world_d(WorldSpecD(marker=True), 21).describe())
+        f_alone = {ph: 0 for ph in "ABCDEF"}
+        for _t, ph, x in stream_d(w):
+            for core, f in zip(w.cores, w.fs):
+                if (x >> f) & 1 and (x & core) != core:
+                    f_alone[ph] += 1
+        self.assertEqual(f_alone["A"] + f_alone["B"] + f_alone["C"], 0)
+        self.assertGreater(f_alone["D"], 300)
+
+    def test_counterfeit_repair_arm_on_the_weldable_factored_geometry(self):
+        o = arms.make("O4LRWF", 8, None)
+        self.assertEqual((o.seams, o.weldable, o.factor), ("lazyrand", True, True))
+        _o, true = _consolidated_cell("O4LWF")
+        _o, fake = _consolidated_cell("O4LRWF")
+        self.assertEqual(len(true.prov), len(fake.prov))
+        self.assertTrue(all(l & 0b111 for l, _j in true.prov))
+        self.assertFalse(any(l & 0b111 for l, _j in fake.prov))
+
     def test_every_exception_breaks_a_whole_core(self):
         from chiasma.e1b.world_d import WorldSpecD, make_world_d, stream_d
         w = make_world_d(WorldSpecD(exc_permille=1000), 21)

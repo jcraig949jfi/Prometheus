@@ -27,6 +27,8 @@ WORLDS = ["H:R21", "H:R11", "H:R12", "H3"]
 def build(world: str, seed: int):
     if world == "D":
         return make_world_d(WorldSpecD(), seed)
+    if world == "Dm":
+        return make_world_d(WorldSpecD(marker=True), seed)
     if world == "H3":
         return make_world_h3(WorldSpecH3(), seed)
     fam, ratio = world.split(":")
@@ -71,7 +73,7 @@ def main(argv=None) -> int:
     caps_d = [int(c) for c in a.caps_d.split(",")] if a.caps_d else []
     jobs = []
     for world in a.worlds.split(","):
-        caps = caps_h3 if world == "H3" else caps_d if world == "D" else caps_h
+        caps = caps_h3 if world == "H3" else caps_d if world in ("D", "Dm") else caps_h
         for seed in a.seeds:
             for arm in a.arms.split(","):
                 for cap in ([None] if arm in UNCAPPED else caps):

@@ -29,6 +29,7 @@ Shadow variants (HADES-30), all on O0's geometry with factored P, never consolid
   SPFF  projected shadow whose stored negatives are ALSO factored (lossless; the cap is
         enforced by exact recomputation, oldest negative first)
   SXF   counterfeit shadow: random masks of the same size (proj_rand)
+  O4LRWF  counterfeit provenance (as O4LR) on the weldable, factored repair arm O4LWF
 
 Every E1 arm is chiasma.organisms.Organism unchanged.
 """
@@ -51,7 +52,8 @@ class E1bOrganism(Organism):
                 S0F=dict(neg="none", consolidate=False, seams="none", factor=True),
                 SRF=dict(neg="raw", consolidate=False, seams="none", factor=True),
                 SPFF=dict(neg="proj", consolidate=False, seams="none", factor=True, neg_factor=True),
-                SXF=dict(neg="proj_rand", consolidate=False, seams="none", factor=True))
+                SXF=dict(neg="proj_rand", consolidate=False, seams="none", factor=True),
+                O4LRWF=dict(neg="proj", consolidate=True, seams="lazyrand", weldable=True, factor=True))
 
     def __init__(self, arm, m, cap, seed=0, pevict=False):
         super().__init__(arm, m, cap, seed)
@@ -150,7 +152,7 @@ class E1bOrganism(Organism):
 
 
 E1B_ARMS = ["O1", "O2", "O3", "O0", "O4", "O4L", "O4LR", "O3U", "O3W", "O4LW"]
-FACTOR_ARMS = ["O0F", "O3WF", "O4LWF", "S0F", "SRF", "SPFF", "SXF"]
+FACTOR_ARMS = ["O0F", "O3WF", "O4LWF", "S0F", "SRF", "SPFF", "SXF", "O4LRWF"]
 UNCAPPED = {"O3U", "CEIL"}
 
 

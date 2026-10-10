@@ -376,3 +376,68 @@ Plus the E1b C1/C2 pair (s8) on PW-H/H3. Predictions: D1, D2, C1, C2 confirm; D3
 The revision question needs a world where compression pays AND is wrong somewhere:
 PW-Dm (the marker variant, s11) is that world, where pruning the core down to its
 marker is cheap and false. HADES-31 sizes the revision arms there.
+
+## 15. dev-7: revision where compression is false (HADES-31, PW-Dm; 350 runs, 0.78 CPU core-hours; chiasma/runs/e1b-dev-7/)
+
+PW-Dm = PW-D with marker=True: in A-C, f_j occurs ONLY with a whole core_j. So f_j
+implies its whole core, and consolidation prunes the core down to the marker f_j. That
+is cheap, it is right on every A-C observation, and it is false from D on. Nothing in
+A-C can refute it, not even C's exceptions (core & not f_j; the pruned cell f&u&v simply
+does not fire). New arm O4LRWF is O4LWF with counterfeit provenance (as O4LR). Two new
+tests (the marker holds through C and breaks in D; the counterfeit's provenance lies
+outside the anchor at equal length). Mutants 31/31; first pass 29/31 (E20, E21 NOT_APPLIED after the sampler edit; retargeted; MUTATION_first_pass.txt).
+
+Endpoints. err_CDE is dominated by phase C, when the bet cannot yet be refuted (every
+pruning arm has bet_B 1470 against O0F's 335). The revision endpoint is revise_DE
+(errors in D and E, after the first refutations). Both are reported.
+
+Wins out of 10 (cap 10^6 = unbounded):
+
+| cap | revise_DE: O4LWF>O3WF | O4LWF>O4LRWF | O3WF>O0F | err_CDE: O4LWF>O3WF | O0F>O3WF | median revise_DE O0F / O3WF / O4LWF / O4LRWF |
+|---|---|---|---|---|---|---|
+| 10^6 | 10 | 10 | 0 | 10 | 10 | 0 / 329 / 126 / 565 |
+| 800 | 3 | 10 | 6 | 9 | 10 | 828 / 382 / 601 / 1162 |
+| 700 | 0 | 10 | 6 | 3 | 10 | 1450 / 560 / 2563 / 2787 |
+| 650 | 1 | 7 | 6 | 2 | 10 | 1640 / 812 / 3459 / 3436 |
+| 600 | 0 | 7 | 9 | 1 | 10 | 3054 / 1370 / 3675 / 3673 |
+
+Median err_CDE, unbounded: O0F 1747, O3WF 14856, O4LWF 14708. P at the end of B: O0 743,
+O0F 581, O3W 551, O3WF 545. Collateral 0 in every arm.
+
+Reading (dev, sizing):
+1. Provenance repair is a real mechanism, and it is attributed. With bytes free it
+   cuts revise_DE by about 60% against no repair, and beats its counterfeit 10/10. The
+   counterfeit loses to it at every cap (7-10/10). This is the first time the revision
+   half of CHIASMA's O4 has shown a gain that depends on the true content of its
+   provenance.
+2. What it repairs is avoidable. Lossless factoring (O0F) stores the same world in 581
+   bytes against the lossy marker's 545 (7% more), never bets, and beats every pruning
+   arm on err_CDE 10/10 at every cap. Factoring makes lossy pruning nearly pointless
+   in bytes, and lossy pruning is the only source of the false abstraction that repair
+   fixes.
+3. Under binding budgets repair loses again (O4LWF beats O3WF on revise_DE at most 3/10
+   at caps <= 800). Its provenance bytes compete with the geometry.
+4. With the bet already made, plain pruning revises fastest under tight caps (revise_DE:
+   O3WF beats O0F 6-9/10). Its smaller post-revision representation fits better. That
+   is a narrow advantage in the tail. It does not offset the C-phase cost.
+
+## 16. Where the E1b dev series leaves CHIASMA (DEV_NOTES s3-s15; AUTHOR_TESTED, dev seeds)
+
+| charter component | status on dev seeds |
+|---|---|
+| positive mesh compression | lossless factoring keeps knowledge under binding caps on deep worlds (PW-D, 10/10) |
+| negative mesh (compressed shadow) | beats raw / counterfeit / no failure memory under binding caps on PW-D (8-10/10) |
+| revision (provenance repair) | real and attributed (PW-Dm, 10/10 vs counterfeit), but repairs only lossy compression, which factoring makes unnecessary; loses whenever bytes bind |
+| eager seams (charter O4 proper) | NOT attributed (E1); not revisited |
+| the four-organism s7 bar | not met in any regime by an O4-family arm |
+
+Recommendation (for the operator's KILL/REVISE decision; the seat does not take it):
+- KILL the charter's O4 as designed (eager seams + lossy consolidation). E1 and every
+  dev regime since agree.
+- KEEP and confirm the two compression halves that worked: factored geometry (D1) and
+  compressed shadow (D2) on PW-D. Each is its own preregistration on fresh seeds after
+  G3. Together they are the "dual mesh" with the revision machinery removed. On the
+  evidence so far, that is the part of CHIASMA worth keeping.
+- Provenance repair is a real mechanism with no niche yet. It should be kept as a
+  documented negative, not as a component.
+- Evolution (G4) stays off. Nothing here is a reason to evolve until D1/D2 confirm.
