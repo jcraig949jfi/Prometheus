@@ -58,6 +58,20 @@ MUTANTS = [
      "        self.factor = bool(self.ARMS[arm].get(\"factor\"))", "        self.factor = False"),
     ("E19 factoring substitutes premises lacking one vertex", "e1b/factor.py",
      "            if a in s and b in s:", "            if a in s or b in s:"),
+    ("E20 PW-D never forces f on whole cores", "e1b/world_d.py",
+     "        if r.randrange(2) or (phase in (\"A\", \"B\", \"C\") and whole[j]):",
+     "        if r.randrange(2):"),
+    ("E21 PW-D becomes the marker variant (f only with whole cores)", "e1b/world_d.py",
+     "        if r.randrange(2) or (phase in (\"A\", \"B\", \"C\") and whole[j]):",
+     "        if (phase in (\"A\", \"B\", \"C\") and whole[j]) or (phase not in (\"A\", \"B\", \"C\") and r.randrange(2)):"),
+    ("E22 PW-D exceptions keep f", "e1b/world_d.py",
+     "                x = (x | w.cores[j]) & ~(1 << w.fs[j])", "                x = (x | w.cores[j])"),
+    ("E23 PW-D crit probes keep f", "e1b/world_d.py",
+     "                x = (_draw_d(r, w, \"D\") | core) & ~F", "                x = (_draw_d(r, w, \"D\") | core)"),
+    ("E24 PW-D cores are three literals", "e1b/world_d.py", "    l_core: int = 4", "    l_core: int = 3"),
+    ("E25 run.py treats PW-D as PW-H3", "e1b/run.py",
+     "    if isinstance(w, WorldD):\n        return stream_d, probes_d, \"PW-D\"\n",
+     "    if False:\n        return stream_d, probes_d, \"PW-D\"\n"),
 ]
 
 

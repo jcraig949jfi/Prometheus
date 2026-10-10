@@ -85,6 +85,75 @@ def Organism_flat_P(org):
     return Organism.nbytes(org)["P"]
 
 
+class TestWorldD(unittest.TestCase):
+    def setUp(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d
+        self.w = make_world_d(WorldSpecD(), 21)
+
+    def test_deterministic(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d, probes_d, stream_d
+        a, b = make_world_d(WorldSpecD(), 21), make_world_d(WorldSpecD(), 21)
+        self.assertEqual(a.describe(), b.describe())
+        self.assertEqual(list(stream_d(a))[:300], list(stream_d(b))[:300])
+        self.assertEqual(probes_d(a), probes_d(b))
+
+    def test_cores_deep_and_disjoint(self):
+        from chiasma.world import popcount
+        self.assertTrue(all(popcount(c) == 4 for c in self.w.cores))
+        allbits = [b for c in self.w.cores for b in bits(c)] + list(self.w.fs)
+        self.assertEqual(len(set(allbits)), 15)
+        self.assertFalse(set(allbits) & set(self.w.rest))
+
+    def test_sampler_forces_f_on_whole_cores_until_C_only(self):
+        from chiasma.e1b.world_d import stream_d
+        broken = {ph: 0 for ph in "ABCDEF"}
+        whole_no_f_D, f_without_core = 0, 0
+        for _t, ph, x in stream_d(self.w):
+            for core, f in zip(self.w.cores, self.w.fs):
+                whole = (x & core) == core
+                if whole and not (x >> f) & 1:
+                    broken[ph] += 1
+                if not whole and (x >> f) & 1 and ph in "ABC":
+                    f_without_core += 1
+        self.assertEqual(broken["A"] + broken["B"], 0)
+        self.assertTrue(1 <= broken["C"] <= 40, broken)
+        self.assertGreater(broken["D"], 50)
+        self.assertGreater(f_without_core, 1000)     # in A-C f is not a marker of the core (not PW-Dm)
+
+    def test_every_exception_breaks_a_whole_core(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d, stream_d
+        w = make_world_d(WorldSpecD(exc_permille=1000), 21)
+        for _t, ph, x in stream_d(w):
+            if ph == "C":
+                k = sum(1 for core, f in zip(w.cores, w.fs) if (x & core) == core and not (x >> f) & 1)
+                self.assertEqual(k, 1)
+
+    def test_crit_probes_separate_ydep_from_decoy(self):
+        from chiasma.e1b.world_d import probes_d
+        by = {t.name: t for t in self.w.targets}
+        n = 0
+        for fam, x in probes_d(self.w):
+            if fam.startswith("crit:"):
+                t = by[fam[5:]]
+                j = self.w.abs_of[t.name]
+                self.assertEqual(x & self.w.cores[j], self.w.cores[j])
+                self.assertFalse((x >> self.w.fs[j]) & 1)
+                self.assertEqual(t.holds(x), t.group == "decoy")
+                n += 1
+        self.assertEqual(n, 4 * (24 + 24 + 6))
+
+    def test_flat_organism_finds_the_true_term_count_and_factoring_shrinks_it(self):
+        from chiasma.e1b.world_d import WorldSpecD, make_world_d
+        short = WorldSpecD(phase_len=(("A", 1500), ("B", 1500), ("C", 300), ("D", 300), ("E", 600), ("F", 1500)))
+        w = make_world_d(short, 21)
+        terms = sum(len(t.terms) for t in w.targets)
+        a, b = run_e1b(w, "O0", None), run_e1b(w, "O0F", None)
+        self.assertEqual(a["summary"]["cells"], terms)
+        self.assertEqual(a["endpoints"]["err_CDE"], b["endpoints"]["err_CDE"])
+        pa, pb = a["endpoints"]["bytes_end"]["B"]["P"], b["endpoints"]["bytes_end"]["B"]["P"]
+        self.assertLess(5 * pb, 4 * pa)              # factoring saves > 20% of P on PW-D
+
+
 def _consolidated_cell(arm: str):
     """A cell over {0,1,2} with literal 0 implying 1 and 2 in every object seen."""
     org = arms.make(arm, 8, None, 0)

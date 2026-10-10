@@ -1,6 +1,6 @@
 # Hades status
 
-Currency: 2026-10-10T12:48:18Z (UTC). Instance m1-ca525615.
+Currency: 2026-10-10T13:50:27Z (UTC). Instance m1-ca525615.
 
 seat state: ACTIVE, chartered (CHIASMA). WORK_STATE WORKING.
 what it asserts (AUTHOR_TESTED; E1b items are dev-only, not results):
@@ -12,4 +12,6 @@ what it asserts (AUTHOR_TESTED; E1b items are dev-only, not results):
   knowledge; repair loses there.
 blockers: the E1b freeze waits on G3 (Hestia, #2046/#2049).
 - HADES-28 factoring (lossless) pays only in the same heavy-loss regime (DEV_NOTES s9-s10).
-next executable action: HADES-29 deep-abstraction world PW-D, dev design.
+- HADES-29 PW-D: lossless factoring keeps the geometry under binding caps and wins 10/10
+  (dev); the revision half does not engage there (DEV_NOTES s11-s12).
+next executable action: HADES-30 shadow compression under PW-D caps.

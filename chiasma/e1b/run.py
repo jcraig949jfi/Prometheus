@@ -10,10 +10,13 @@ from typing import Dict, Optional
 from ..runner import CK, _score, canonical
 from ..world import PHASES, probes, stream
 from . import arms
+from .world_d import WorldD, probes_d, stream_d
 from .world_h3 import WorldH3, probes_h3, stream_h3
 
 
 def world_fns(w):
+    if isinstance(w, WorldD):
+        return stream_d, probes_d, "PW-D"
     if isinstance(w, WorldH3):
         return stream_h3, probes_h3, "PW-H3"
     return stream, probes, "PW-H"

@@ -18,12 +18,15 @@ from ..sweep import RATIOS
 from ..world import WorldSpec, make_world
 from .arms import E1B_ARMS, UNCAPPED
 from .run import run
+from .world_d import WorldSpecD, make_world_d
 from .world_h3 import WorldSpecH3, make_world_h3
 
 WORLDS = ["H:R21", "H:R11", "H:R12", "H3"]
 
 
 def build(world: str, seed: int):
+    if world == "D":
+        return make_world_d(WorldSpecD(), seed)
     if world == "H3":
         return make_world_h3(WorldSpecH3(), seed)
     fam, ratio = world.split(":")
@@ -52,6 +55,7 @@ def main(argv=None) -> int:
     ap.add_argument("--worlds", default=",".join(WORLDS))
     ap.add_argument("--caps", default="600,1000,3000")
     ap.add_argument("--caps-h3", default="1800,3000,9000")
+    ap.add_argument("--caps-d", default="")
     ap.add_argument("--arms", default=",".join(E1B_ARMS))
     ap.add_argument("--pevict", action="store_true")
     ap.add_argument("--full", action="store_true")
@@ -64,9 +68,10 @@ def main(argv=None) -> int:
         os.makedirs(full_dir, exist_ok=True)
     caps_h = [int(c) for c in a.caps.split(",")]
     caps_h3 = [int(c) for c in a.caps_h3.split(",")]
+    caps_d = [int(c) for c in a.caps_d.split(",")] if a.caps_d else []
     jobs = []
     for world in a.worlds.split(","):
-        caps = caps_h3 if world == "H3" else caps_h
+        caps = caps_h3 if world == "H3" else caps_d if world == "D" else caps_h
         for seed in a.seeds:
             for arm in a.arms.split(","):
                 for cap in ([None] if arm in UNCAPPED else caps):
