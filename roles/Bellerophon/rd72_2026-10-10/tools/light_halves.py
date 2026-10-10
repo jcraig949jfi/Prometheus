@@ -53,7 +53,7 @@ class LightHalvesWorld(World):
                 if h in tapes and fn:
                     tapes[h][t] += 1
             top = {h: (tapes[h].most_common(1)[0][0].hex() if tapes[h] else None) for h in tapes}
-            self.census.append({"tick": self.tick, "alive": sum(c.values()), "halves": dict(c), "halves_func": dict(cf), "top_func": top})
+            self.census.append({"tick": self.tick, "alive": sum(c.values()), "distinct": len({bytes(o.tape) for o in self.cells if o is not None}), "halves": dict(c), "halves_func": dict(cf), "top_func": top})
             if self.first_both is None and cf.get("BOTH"):
                 self.first_both = {"tick": self.tick, "tape": top["BOTH"]}
         return rec

@@ -59,3 +59,19 @@ Stage 1a tools/plan_a3.py harvest: 180 fresh worlds (60 x PARTIAL / PAIR / COPY,
 ba867114a061d7984a25faa709ebcb1308d30d934835e257ca26daf460648a1c. Stage 1b scan: a seeded sample (rng 7203) of <= 200 tapes
 per physics; one-step routes to FUNC under SUB / MOVE / INS / DEL (geometry.scan_operators, kernel c83a56063). Stage 2
 (the outcome test and the prediction) is frozen in s5 after stage 1 completes and BEFORE any replanting run.
+
+## 6. E1 -- long-horizon accumulation inside a composite task (DISCOVERY; registered 2026-10-10T12:53:46Z, before any E1 run)
+
+(s5 is reserved for A3 stage 2.) Status: DISCOVERY. Its tests are registered so that they cannot be chosen after the data, but
+nothing in E1 is confirmatory; specimens and hypotheses from E1 go to fresh-seed confirmation blocks (C3).
+Plan tools/plan_e1.py (80 runs, distinct seeds 72.1e12+), plan sha256 6f95f48756324402edc48a0f97c5177745abc4de8d3e9822705b9e9bf859c789:
+seeded self-copiers, v3 K40, WELL_MIXED, lifespan 80, income 40 (pilot log: 4/4 survival, small n), 2,000 ticks, light
+census every 100 ticks. Cells C1_ON (COND_ONE, payment ON, 40), C1_OFF (COND_ONE, OFF, 20), CM_ON (COND_MULTI, ON, 20).
+Analysis tools/analyze_e1.py (branch-tested on synthetic rows): per run t_LO / t_HI / t_BOTH (first census with a FUNC
+LO-or-BOTH / HI-or-BOTH / BOTH tape), LO retention, and the ordering of any BOTH event (LO_FIRST / HI_FIRST / BOTH_PRIOR /
+NONE_PRIOR). Survival and exposure are reported per cell; no run is excluded for extinction.
+- E1-a: C1_ON runs with LO > C1_OFF (Fisher one-sided, alpha 0.05).
+- E1-b: C1_ON runs with BOTH > C1_OFF (same test). No prediction of the direction is made for CM_ON.
+- E1-c (descriptive): the ordering distribution of BOTH events. "Cumulative" requires LO_FIRST or HI_FIRST or BOTH_PRIOR AND,
+  on replay under HalvesWorld, critical bytes from >= 2 epochs; a NONE_PRIOR event or a single-epoch composite is "assembled at once".
+- Every run with a BOTH event is replayed deterministically under HalvesWorld (end-hash must match) for temporal depth.
