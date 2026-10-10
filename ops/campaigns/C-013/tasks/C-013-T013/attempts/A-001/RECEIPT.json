@@ -11,13 +11,14 @@
  "branch": "argus/c013-t013",
  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t013",
  "start_sha": "187ebe4475d3dcf1c85a9f42d87d235008e57987",
- "end_sha": "48b6a425b0112486e76698c4e66a25f2815a47a2",
+ "end_sha": "ad4493ce45bf0567169dce5adbc69475ea3c4805",
  "dirty": false,
  "commits": {
   "claim_main": "3e7001e13",
   "amendment_tests_red": "b85d690bf",
   "freeze_v1_0_1": "8ddaa4f19acaca33371351e82a9c0e9f6bb9ec3e",
-  "journal_state_comms": "48b6a425b"
+  "journal_state_comms": "48b6a425b",
+  "journal_erratum_close": "ad4493ce4"
  },
  "files_changed": [
   "rso/reach/PREREGISTRATION.md (v1.0.1: title/version line + s9 amendment A1)",
@@ -34,13 +35,31 @@
   "FROZEN_D1.json sha256 cdd5de75f7799a5f43855bccb1fd5d3f1b1a1ed97799b2f731ef7e7e2c4023a5 (48 files); of the 34 v1.0.0 entries only rso/reach/PREREGISTRATION.md changed"
  ],
  "evidence_executed": [
-  {"command": "<venv>/python -B -m pytest -q -p no:cacheprovider rso/reach/tests/{test_analysis,test_arms,test_certify,test_descriptor,test_stats,test_repair_v101}.py (venv C:/Prometheus-worktrees/argus-reach-venv: numba 0.65.1, pytest 8.3.3)", "result": "77 passed in 163.93s (11:49:04Z-11:51:49Z, on the v1.0.1 manifest)"},
-  {"command": "<venv>/python -B -m pytest -q -p no:cacheprovider -rs rso/reach/tests/test_runner.py", "result": "3 passed in 41.00s (incl. test_check_frozen_refuses_a_changed_file against the v1.0.1 manifest; no skips)"},
-  {"command": "<venv>/python -B rso/reach/repair_v101/run_red.py (twice; second pass records assertion reasons)", "result": "BASELINE GREEN; E1 RED ([126,126] != [500,500]); E3 RED (SEPARATES under raw p); E4 RED ('COMPLETE' != 'STOPPED_AT_CPU_CAP'); M80 RED (selection_ok True)"},
-  {"command": "<venv>/python -B -m rso.reach.freeze_manifest; run_d1.check_frozen()", "result": "48 files; 48 verify"},
-  {"command": "probe: certify(builder_min), certify(builder(7)) + oracle counts on lives 2000..2063", "result": "builder_min [500,500] CERTIFIED; builder(7) [500,449] sealed PASS NOT_CERTIFIED (matches Pallas P1)"}
+  {
+   "command": "<venv>/python -B -m pytest -q -p no:cacheprovider rso/reach/tests/{test_analysis,test_arms,test_certify,test_descriptor,test_stats,test_repair_v101}.py (venv C:/Prometheus-worktrees/argus-reach-venv: numba 0.65.1, pytest 8.3.3)",
+   "result": "77 passed in 163.93s (11:49:04Z-11:51:49Z, on the v1.0.1 manifest)"
+  },
+  {
+   "command": "<venv>/python -B -m pytest -q -p no:cacheprovider -rs rso/reach/tests/test_runner.py",
+   "result": "3 passed in 41.00s (incl. test_check_frozen_refuses_a_changed_file against the v1.0.1 manifest; no skips)"
+  },
+  {
+   "command": "<venv>/python -B rso/reach/repair_v101/run_red.py (twice; second pass records assertion reasons)",
+   "result": "BASELINE GREEN; E1 RED ([126,126] != [500,500]); E3 RED (SEPARATES under raw p); E4 RED ('COMPLETE' != 'STOPPED_AT_CPU_CAP'); M80 RED (selection_ok True)"
+  },
+  {
+   "command": "<venv>/python -B -m rso.reach.freeze_manifest; run_d1.check_frozen()",
+   "result": "48 files; 48 verify"
+  },
+  {
+   "command": "probe: certify(builder_min), certify(builder(7)) + oracle counts on lives 2000..2063",
+   "result": "builder_min [500,500] CERTIFIED; builder(7) [500,449] sealed PASS NOT_CERTIFIED (matches Pallas P1)"
+  }
  ],
- "red_observed": {"observed": true, "detail": "each of the four new tests failed on its mutant applied verbatim (rso/reach/repair_v101/red_rows.jsonl, 11:44-11:46Z); the same tests passed on the unmodified frozen code"},
+ "red_observed": {
+  "observed": true,
+  "detail": "each of the four new tests failed on its mutant applied verbatim (rso/reach/repair_v101/red_rows.jsonl, 11:44-11:46Z); the same tests passed on the unmodified frozen code"
+ },
  "result": "DONE_CLEAN",
  "known_escapes": [
   "ANOMALY 1 (preserved): the first-ever run of test_repair_v101.py failed the E4 test with numba 'Cannot set NUMBA_NUM_THREADS to a different value once the threads have been launched' (numba/core/config.py:512); not reproduced in 3 warm reruns, 1 cold-cache run, 2 full-suite slices. Suspected: run_d1 sets NUMBA_NUM_THREADS=1 by setdefault at import after numba was imported. Mitigated by importing run_d1 first in the new test module; the frozen test_runner has the same latent order under full-suite collection. The run (python -m rso.reach.run_d1, setdefault before numba) is not exposed.",
@@ -54,9 +73,15 @@
   "Integration of argus/c013-t013 by Palamedes",
   "C-013-T012 (the D1 run) on FREEZE_D1 v1.0.1"
  ],
- "unblocks": ["C-013-T012"],
- "resources": {"cpu_core_hours_estimate": 0.1, "processes_max": 2, "paid_resources": "none"},
+ "unblocks": [
+  "C-013-T012"
+ ],
+ "resources": {
+  "cpu_core_hours_estimate": 0.1,
+  "processes_max": 2,
+  "paid_resources": "none"
+ },
  "cleanup": "no scratch in the repo; mutation runs restored every file (verified); session scratch under C:/Prometheus-worktrees/argus-scratch/t013_*",
- "notes": "Wording-only amendment; nothing the run executes changed; s2-s6 numbers unchanged. One repair round per operator ruling s4; no confirmatory or development lineage run.",
- "created_at_utc": "2026-10-10T12:02:00Z"
+ "notes": "Wording-only amendment; nothing the run executes changed; s2-s6 numbers unchanged. One repair round per operator ruling s4; no confirmatory or development lineage run. Erratum: created_at_utc first written as 12:02Z (an estimate ahead of the clock), corrected to 11:56Z; end_sha moved to the erratum commit.",
+ "created_at_utc": "2026-10-10T11:56:00Z"
 }
