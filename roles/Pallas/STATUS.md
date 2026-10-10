@@ -1,27 +1,34 @@
 # Pallas status
 
-Currency: 2026-10-07T14:50Z (Pallas[m2-1500b878]). Earlier statuses are superseded by this one.
+Currency: 2026-10-10T00:25Z (Pallas[m2-1500b878]). SESSION CLOSED. Earlier statuses are superseded by this one.
 
-seat state: READY (idle; no READY packet exists for this seat). Hourly poll continues while this session lives.
+seat state: READY (idle). No READY packet, no expected milestone, nothing claimed, no loop running.
 role: Adversarial Hardening Engineer. RSO Builder Cell (roles/rso-builder-role/).
-runtime model: claude-opus-5; class Q2 (THIS session fell from Fable 5.1 / Q3 at about 00:47Z on 10-07).
+runtime model at close: claude-opus-5 (Q2). This session booted 2026-10-06T21:52Z on claude-fable-5-1 (Q3) and
+  the harness changed it to Opus 5 at about 2026-10-07T00:47Z; the boot was re-recorded with rso-builder,Q2.
 host: SPECTREX5 (M2); instance m2-1500b878; worktree Prometheus-worktrees/pallas-boot-2026-10-03,
-  branch pallas/boot-2026-10-06, base 8b46e44a5.
+  branch pallas/boot-2026-10-06, base 3e4859324.
 
-The operator's 72-hour completion push ENDED at about 14.3 h of 72 (Palamedes #1845, 2026-10-07T14:43Z):
-  C-004  CLOSED, INCOMPLETE CLOSURE.
+The operator's 72-hour hourly-loop window ran 2026-10-06T21:52Z to 2026-10-10T00:23Z and is CLOSED; both
+recurring jobs are cancelled. About 70 polls, 8 commits, no empty idle heartbeats (OP-7).
+
+Campaigns, all closed:
+  C-004  INCOMPLETE CLOSURE. T048 (the R2 re-check) was delivered by THIS session on Fable 5.1: C1 CLOSED,
+         C2 and B3.3 NOT CLOSED.
   C-009  CLOSED, scoped to flat inventories (P-FLAT gate carries the scope).
-  C-010  EXECUTED: the first native retained-information witness (Ares W15). As reported by the coordinator --
-         instrument QUALIFIED (P-CAL PASS: NULL 867, SHUF 987 of 2048; POS 2048/2048; P-OBS/P-PRES/P-ERASE PASS
-         with the leak member firing); S4 NEGATIVE (1027/2048); S15 NEGATIVE (1018/2048). Record
-         rso/witness/RESULT.md. These are the coordinator's figures; this seat has not opened the record.
-Pallas delivered four challenge packets across the push, all on Fable instances of this seat: C-004-T048 (this
-  session), C-009-T030, C-009-T034, C-010-T014. This Opus 5 instance claimed none of the Q3 packets and refused
-  three of them on policy.
-Open item that could wake this seat: C-010-T040 (positive-candidate replication) is PROPOSED FOR THE OPERATOR,
-  not READY. Any Pallas challenge under it would be Q3 and need a Fable instance.
+  C-010  NATIVE-RET-WITNESS-001 (Ares W15) EXECUTED. Coordinator's figures: instrument QUALIFIED; S4 NEGATIVE
+         (1027/2048), S15 NEGATIVE (1018/2048). rso/witness/RESULT.md. T034's R1/R2 stayed NOT CLOSED and were
+         recorded as known escapes rather than a second repair round.
+Pallas delivered four challenge packets across the window (T048 here; C-009-T030, C-009-T034, C-010-T014,
+  C-010-T034 on fresh Fable instances of this seat). This Q2 instance refused three Q3 packets on policy.
 
---- superseded 2026-10-07T14:50Z: previous status below ---
+Open item that would wake this seat: C-010-T040 (positive-candidate replication), PROPOSED FOR THE OPERATOR.
+Standing caution: `workgraph ready <Seat>` does NOT filter on capability (core.ready_for, line 443); the
+  printed class is advice, so the Q3 invariant is enforced by the agent. See
+  roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md.
+
+--- superseded 2026-10-10T00:25Z: previous status below ---
+
 
 
 
