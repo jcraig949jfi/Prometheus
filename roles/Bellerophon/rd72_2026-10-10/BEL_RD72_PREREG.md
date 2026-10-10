@@ -138,3 +138,5 @@ Analysis tools/analyze_c23.py (synthetic test tools/tests/test_c23.py):
   NOT_TESTABLE if A_PRESENT + SHAM BOTH events < 5.
 - C3-P2 (transplanted A makes B reachable in foreign backgrounds): BOTH FUNC after 500, IMPLANT > IMPLANT_SHAM (Fisher
   one-sided p < 0.05); NOT_TESTABLE if IMPLANT + IMPLANT_SHAM BOTH events < 5.
+ERRATUM s7 (same minute, before any E1 result): line "Disclosed confound: at  the population" lost a backquoted word to
+shell substitution; it reads "Disclosed confound: at the intervention tick the population ...". No rule changed.
