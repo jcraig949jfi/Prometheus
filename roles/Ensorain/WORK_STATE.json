@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-10-07T14:20:00Z",
+  "updated_at_utc": "2026-10-10T00:00:00Z",
   "state": "ACTIVE",
-  "state_reason": "WTP-04 map stage CLOSED: ISLANDS_MAPPED (ensorain/RESULTS_WTP04_MAP.md). Habitability is a family property; the carrier class is a family constant along single axes. Next per results s5 (operator choice of 2D revival probe vs narrow THEN with N6). LM01 HOLD.",
+  "state_reason": "WTP-05 DESERT CROSSING adopted (operator directive 2026-10-10; Phase 2-B restart campaign C-014). BUILD stage. WTP-04 preserved as recorded (ISLANDS_MAPPED). LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
   "head_sha": "63b8e4b8f",
   "base_sha": "9c1ba77bd",
@@ -17,6 +17,7 @@
     "thr-ens-sufficiency-ladder"
   ],
   "campaigns": [
+    "C-014 (P2B re-entry: WTP-05 DESERT CROSSING)",
     "C-ENS-ARC3"
   ],
   "experiments": [
@@ -73,6 +74,13 @@
       "dev": "dev_axes (F08/F09 all axes, 9900002), dev_axes2 (4 fams x 3 axes, 9900003); instrument fixes in prereg s7a",
       "report": "ensorain/RESULTS_WTP04_MAP.md",
       "note": "1296 units, 10.3 h. 6/12 families pay at native and pay in 55-72% of perturbed cells; 4 dead families stay dead (0-1/53). Universal kills: noise sd>=1, drift p12, info x100, compute x1000, band .003, paid sensing. Robust: credit delay, forgetting. Carrier class change replicated in 2/132 family-axis pairs. P1 refuted (lifetime non-monotone), P5 refuted (struct wins 66% of paying cells, concentrated in completion families), P2/P3/P6 hit, P4 letter-hit/mechanism refuted."
+    },
+    {
+      "id": "E-ENS-WTP05",
+      "status": "BUILD",
+      "campaign": "C-014",
+      "prereg": "ensorain/PREREG_WTP05.md (pending)",
+      "deliverable": "ensorain/ENSORAIN_WTP05_DESERT_REPORT.md"
     }
   ],
   "fabric_tasks": [
@@ -147,7 +155,7 @@
       "owner": "operator"
     }
   ],
-  "next_actions": "WTP-04 Habitable Islands (promoted from NEXT; instrument line frozen bf90a73bb): identify the genuinely independent WTP-03 founding families; perturb each family's physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first. Preregister before any campaign.",
+  "next_actions": "WTP-05 DESERT CROSSING (C-014-E1): build TAPE organism + world families A/B/C (+ non-tensor-native) with planted solvers, null ladder, R0-R5 certifier; prereg; PROBE -> SCREEN -> DEEP. Sub-assay C-014-E2: WTP-04 two-axis revival on F01/F06/F11.",
   "operator_decisions_required": [],
   "latest_reports": [
     "ensorain/RESULTS_WTP04_MAP.md",
@@ -179,10 +187,12 @@
     "queue": "ops/fleet/QUEUE.json@6a7a84569",
     "delegation": "comms #1030",
     "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)",
-    "operator_ruling_hier": "roles/Ensorain/prompts/2026-09-30_pkgf_pop_lm02_ruling/"
+    "operator_ruling_hier": "roles/Ensorain/prompts/2026-09-30_pkgf_pop_lm02_ruling/",
+    "operator_direction_wtp05": "roles/Ensorain/prompts/2026-10-10_wtp05_directive/ (verbatim + MANIFEST)",
+    "p2b_campaign": "ops/campaigns/C-014/"
   },
-  "current": "WTP-04 follow-up (results s5): (a) 2-axis revival probe on dead families F01/F06/F11; (b) narrow substrate collision with N6 at the replicated edges of structured islands F03/F04/F08/F09. Preregister first.",
-  "next": "Substrate collision inside habitable regions (TT, CP, low-rank, DCT/spectral, sparse, graph memory, dense, symbolic/programmatic, cheap nulls): where does the preferred carrier of competence change? Lanes: paid substrate transformation; non-tensor-native worlds.",
+  "current": "WTP-05 DESERT CROSSING (C-014-E1): build TAPE organism + world families A/B/C (+ non-tensor-native) with planted solvers, null ladder, R0-R5 certifier; prereg; PROBE -> SCREEN -> DEEP. Sub-assay C-014-E2: WTP-04 two-axis revival on F01/F06/F11.",
+  "next": "EXTENDED desert run (<= 72 h) for one best-justified arm, only if DEEP shows frontier growth.",
   "reserve": [
     "Radically new world grammars not naturally TT/CP/matrix (dynamic graph laws, causal hidden state, programs, rewriting, temporal rules, recursive, topology-dependent)"
   ],

@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-014-E2",
+  "campaign_id": "C-014",
+  "epic_id": "EP-PHASE2B",
+  "title": "WTP-04 two-axis revival sub-assay (F01/F06/F11)",
+  "objective": "Test whether the dead WTP-04 families can be revived by a coupled two-axis physical change (memory x change timescale, memory x information price, memory x observation noise), reusing the frozen WTP-04 harness unchanged.",
+  "owner_role": "Ensorain",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-014-B"
+  ],
+  "owns": [
+    "ensorain/wtp5/",
+    "ensorain/PREREG_WTP05.md",
+    "ensorain/ENSORAIN_WTP05_DESERT_REPORT.md",
+    "ensorain/runs/wtp05/"
+  ],
+  "problem": "Directive s25; triage row F-W4a. A null is preserved as a null.",
+  "non_goals": [
+    "Do not reinterpret WTP-04 (ISLANDS_MAPPED stands)",
+    "Do not use the ladder rung as fitness",
+    "Never supply a constructed solution to the experimental search",
+    "No LM01 launch"
+  ],
+  "evidence_required": [
+    "prereg committed before any eval row (hash cited)",
+    "rows tracked under ensorain/runs/wtp05/",
+    "planted-solver validation and null ladder before any long run"
+  ],
+  "acceptance": {
+    "condition": "per family x grid cell labels under the WTP-04 classify/cell rules, prereg'd in PREREG_WTP05"
+  },
+  "deliverables": [
+    "ensorain/runs/wtp05/revival/",
+    "section of ENSORAIN_WTP05_DESERT_REPORT.md"
+  ],
+  "kind": "science",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:37Z",
+      "note": "created from triage (CAMPAIGN.md)"
+    },
+    {
+      "status": "READY",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:56Z",
+      "note": "WTP-05 build starts"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:56Z",
+      "note": "WTP-05 build starts"
+    }
+  ],
+  "reads": [
+    "roles/Ensorain/prompts/2026-10-10_wtp05_directive/01_OPERATOR_DIRECTIVE_verbatim.md",
+    "ops/campaigns/C-014/CAMPAIGN.md"
+  ],
+  "experiment_id": "E-ENS-WTP05",
+  "red_required": false
+}
