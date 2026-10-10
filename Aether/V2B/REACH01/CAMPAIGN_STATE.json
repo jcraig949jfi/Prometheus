@@ -8,17 +8,25 @@
   "base_main": "5956b542e",
   "started_utc": "2026-10-10T09:23:11Z",
   "deadline_utc": "2026-10-13T09:23:11Z",
-  "current_phase": "R3 EXPERIMENT (attempt 2 search)",
+  "current_phase": "LADDER01 + R4b EXPERIMENT",
   "current_experiment": "R1 TEST-4",
   "attempt": 1,
   "frozen_sha": {
     "R1": "a2ce3c471",
-    "R3": "e5bbeedcd (attempt 2; attempt 1 99d6e38bd stopped for instrument defect)"
+    "R3": "e5bbeedcd (attempt 2; attempt 1 99d6e38bd stopped for instrument defect)",
+    "R4": "082f2f27b",
+    "R4b": "4b2093ad2",
+    "LADDER01": "f372e412c"
   },
   "active_workloads": [
     {
-      "id": "R4b geometry control",
+      "id": "R4b",
       "ledger": "C:/Prometheus-data/aether_reach01/R4b/ledger_plan_R4b.jsonl"
+    },
+    {
+      "id": "LADDER01 search+certify",
+      "ledger": "C:/Prometheus-data/aether_reach01/LADDER01/ledger_plan_ladder_search.jsonl, ledger_plan_ladder_certify.jsonl",
+      "launched_utc": "2026-10-10T15:10Z"
     }
   ],
   "completed_units": {},
@@ -29,7 +37,7 @@
     "R3": "FRONTIER_NO_GAIN (attempt 2; C beats A&B on progress+bins in 5/8 seeds, bar 6/8; zero joint-dependent cells in any arm; no COMBINE)",
     "R4": "CUMULATIVE_ACQUISITION_ADVANTAGE (ASSISTED CONTROL; planted component; P 8/8 vs N/S/U 0/8; fragile ~2% positions; geometry caveat)"
   },
-  "next_action": "R4b reduce when done; then decide next experiment(s) in remaining window (deadline 2026-10-13T09:23Z); final 72H_SYNTHESIS.md",
+  "next_action": "Reduce R4b when done (dispositions per PREREGISTRATION_R4b.md). Reduce LADDER01 when certify ends; if an AUTONOMOUS COMPOSE is discovered, preregister R4c (genuine reuse). Final 72H_SYNTHESIS.md before 2026-10-13T09:23Z.",
   "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units).",
   "attempts": {
     "R1": 1,
