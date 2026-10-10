@@ -562,3 +562,25 @@ function.
   (F12).
 - Pair-distributed forms are near-absent here: <= 2%, against up to 8% in ffa6 confirm runs at RESET. This is
   plausibly because the Z8_64 genome layout makes the partner-OUT jump less available; it is untested.
+
+## F16. X-DIR-LONG: WEAK_SIGNAL. Over 8000 epochs, modest robustness gain under high mutation; no task-copier fusion (12 runs, horizon honoured after the DEF-FH-3 fix)
+
+**Setup:** DIR, CONST 0.15, about 1200 interactions per organism.
+
+| | k = 1 | k = 4 |
+|---|---|---|
+| maintained to epoch 8000 | 6/6 (final CS 0.90-0.94) | 5/6 (0.64-0.71) |
+| dominant-genome routine robustness at the end (CT_UA 0.382) | 0.37-0.44; gain >= 0.05 in 2/6; no trend (drift) | 0.435-0.466; gain +0.05 to +0.08 in 5/5 maintained |
+
+- **k = 4 time course:** the rise happens within about the first 2000 epochs and then holds.
+- **Classification:** the declared bar of +0.10 in >= 4 runs is not met; the >= 0.05 tier is met at k = 4. So:
+  WEAK_SIGNAL.
+- **Detector region:** bytes 16-19 differ from CT_UA at the end in 6/6 (k = 1) and 5/5 (k = 4) maintained runs. The
+  input-less tape path (F4 correction) is universally rewritten.
+- **Drift:** the dominant genome drifts 34-44 bytes from CT_UA, mostly in padding and neutral sites. The essential
+  conditional is conserved.
+
+**Reading:**
+- Under directional selection the function persists for 8000 epochs.
+- Mutational robustness rises modestly ("flatness") only when mutation is high.
+- **No integration of task and copier** (shared or overlapping bytes) was observed at this horizon.

@@ -60,7 +60,7 @@ does not suffice for competence to bias the RATE of encounters.
 | X-DISTRIB-GAME | EXPLORE | CLEAN_NULL: the distributed form is neutral (F13) |
 | X-REPUTATION | EXPLORE | SIGNAL: reputation reset causes ONTAPE's shallow genealogies (F14) |
 | X-ONTAPE-7AE3 | EXPLORE | SIGNAL: the endogenous mechanism generalizes (F15) |
-| X-DIR-LONG | EXPLORE | [PENDING] |
+| X-DIR-LONG | EXPLORE | WEAK_SIGNAL: 8000-epoch persistence; modest robustness gain only at k = 4; no fusion (F16) |
 
 ## 2. Promoted mechanisms (CONFIRM lane)
 
@@ -113,7 +113,7 @@ does not suffice for competence to bias the RATE of encounters.
 | functional transmission | PRESENT (0.90-0.92 per causal generation) |
 | functional persistence | PRESENT iff competence biases copy DIRECTION. External ruler: C1. Endogenous: C2. Two worlds (F12, F15) |
 | selection on function | PRESENT under direction coupling. Also selects robust implementations (F10, EXPLORE) |
-| architectural integration | PARTIAL: neutral rewiring of tape-live code (F4 corrected); pair-distributed function as a neutral alternative state (F8, F13, F14); no task-copier fusion seen. [X-DIR-LONG pending] |
+| architectural integration | PARTIAL: neutral rewiring of tape-live code (F4 corrected); pair-distributed function as a neutral alternative state (F8, F13, F14); modest robustness gain under high mutation (F16, weak); no task-copier fusion seen over 8000 epochs |
 | endogenous re-discovery | 1-step only, supply-limited (F7). [SUPPLY pending] |
 
 ## 7. Why the function was transient, and how persistence was achieved
@@ -144,7 +144,8 @@ does not suffice for competence to bias the RATE of encounters.
   - Neutral. It recurs in 8/12 confirm runs. It sweeps to majority more often when reputation is heritable (deeper
     genealogies).
 - **F10:** substitution toward the more robust implementation (EXPLORE).
-- **[X-DIR-LONG pending]:** robustness or compression over longer horizons.
+- **F16:** over 8000 epochs, the input-less tape path is rewritten in every run, and routine robustness rises +0.05 to
+  +0.08 at k = 4 (drift only at k = 1). There is no compression into, or fusion with, the copier.
 
 ## 9. Scope and generalization tests
 
