@@ -135,6 +135,18 @@ Q-011 | PREF (fleet work, outward-facing) | 2026-10-10
   is dispatched to any seat until you answer.
   ANSWER:
 
+Q-012 | PREF (trust store on M2) | 2026-10-10
+  The new Machines tab measures the Linux nodes over read-only ssh from M2.
+  ubu001-003 answered; ubu004, ubu005 and ubu006 were refused because M2 has
+  never stored their ssh host keys (Achilles provisioned them from ELSA; no
+  entry, not a changed key). Adding a host key is a trust decision on your
+  admin machine, so Pan did not do it. May Pan accept those three keys on
+  first contact (ssh StrictHostKeyChecking=accept-new; a changed key would
+  still be refused)?
+  DEFAULT meanwhile: no; those three rows show the register's values,
+  labelled "register only".
+  ANSWER:
+
 ## ANSWERED
 
 (none yet)

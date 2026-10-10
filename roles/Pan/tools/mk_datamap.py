@@ -1,7 +1,7 @@
 """Datasets behind the Prometheus Data Map dashboard (https://claude.ai/artifact/WygNq5aG2tp4xFiDJxYZCE):
 JSON files built from the live catalog, the newest inventory run and the committed control results.
 
-Usage (Pan venv, EW_DB_HOST set):  python roles/Pan/tools/mk_datamap.py OUT_DIR [--only architecture]
+Usage (Pan venv, EW_DB_HOST set):  python roles/Pan/tools/mk_datamap.py OUT_DIR [--only architecture|review|fleet]
 then upload each OUT_DIR/*.json as a dashboard asset and point its dataset at the new url.
 """
 import collections
@@ -222,12 +222,45 @@ def review():
                                for k, n, c in cur.fetchall()])
 
 
+def fleet_tabs():
+    """PAN-38 Machines and Pantheon tabs: the register merged with probes (pan.fleet.machines) and seat activity
+    (pan.fleet.seats). Run `python -m pan fleet probe` first for fresh measurements."""
+    import subprocess
+    from pan import fleet
+    ms = fleet.machines()
+    names = {m["host"]: m["name"] for m in ms}
+    keep = ("name", "host", "label", "family", "status", "last_seen", "seen_by", "os", "hardware", "model_measured",
+            "cpu", "cores", "threads", "ram_gb", "gpu", "vram_gb", "cuda", "disk", "disk_total_gb", "free_gb",
+            "free_where", "ip", "tags", "seats_7d", "n_seats_7d", "fabric_workers", "specs", "checked_at", "mismatch",
+            "notes")
+    dump("machines", [{k: m.get(k) for k in keep} for m in ms])
+    rows, meta = fleet.seats()
+    for r in rows:
+        r["last_machine"] = names.get(r["last_machine"], r["last_machine"])
+    dump("seats", rows)
+    with db.cursor() as cur:
+        cur.execute("""select count(*) from comms.agents where status = 'active'
+                       and coalesce(last_active_at, 'epoch') < now() - interval '24 hours'""")
+        meta["comms_active_but_idle_24h"] = cur.fetchone()[0]
+        cur.execute("select max(probed_at) from pan.host_probe where ok")
+        t = cur.fetchone()[0]
+        meta["last_probe_at"] = fleet._iso(t)
+    meta["register_changed"] = subprocess.run(
+        ["git", "-C", W, "log", "-1", "--format=%cs", "HEAD", "--", fleet.DOC], capture_output=True, text=True).stdout.strip()
+    meta["machines_unprobed_no_hostkey"] = ", ".join(
+        m["host"].lower() for m in ms if m["family"] == "Linux" and m["specs"] == "register only")
+    dump("fleet_meta", [meta])
+
+
 if __name__ == "__main__":
     if ONLY == "architecture":
         architecture()
     elif ONLY == "review":
         review()
+    elif ONLY == "fleet":
+        fleet_tabs()
     else:
         main()
         architecture()
         review()
+        fleet_tabs()

@@ -23,6 +23,7 @@
   repobench mine|controls|run M  PAN-34: the program's own functions under its own tests (frozen in tests/)
   review build | review queue [--seat S] [-k N]   PAN-37: ranked review units (signals, never dispatched)
   reviewcal build             PAN-37: seeded-bug calibration set (items + answer key in the lake only)
+  fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -103,6 +104,8 @@ def main(argv=None):
     p.add_argument("what", choices=["build", "queue"])
     p.add_argument("--seat")
     p.add_argument("-k", type=int, default=25)
+    p = sub.add_parser("fleet")
+    p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build"])
     p.add_argument("--workers", type=int, default=4)
@@ -229,6 +232,23 @@ def main(argv=None):
             review.build()
         else:
             review.queue(seat=a.seat, k=a.k)
+    elif a.cmd == "fleet":
+        from . import fleet
+        if a.what == "probe":
+            fleet.probe()
+        elif a.what == "controls":
+            fleet.controls()
+        elif a.what == "machines":
+            for r in fleet.machines():
+                print("{:<22} {:<8} {:>3}T {:>6} GB  {:<28} {:<34} {}".format(
+                    r["name"], r["status"], r["threads"] or "?", r["ram_gb"] or "?", (r["gpu"] or "")[:28],
+                    (r["os"] or "")[:34], r["specs"] + (" | " + r["mismatch"] if r["mismatch"] else "")))
+        else:
+            rows, meta = fleet.seats()
+            for r in rows:
+                print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
+                                                         r["last_machine"], r["last_commit"][:70]))
+            print(meta)
     elif a.cmd == "reviewcal":
         from . import reviewcal
         reviewcal.build(workers=a.workers)
