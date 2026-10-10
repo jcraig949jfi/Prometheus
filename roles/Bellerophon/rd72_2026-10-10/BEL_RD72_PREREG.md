@@ -51,3 +51,11 @@ founder bytes of both X (transplant0) and Y (transplant1).
 - K-P3 (two-source composition): >= 80% of XY_AL PARTIAL_BYTE runs with COMP_SR are TWO_SOURCE.
 - K-P4 (selection): XY_AL PARTIAL_BYTE COMP_ANY ON > OFF (Fisher one-sided p < 0.05).
 XY_SH / XY_NS cells are descriptive (operator-distance gradient: 1 donor step vs >= 2).
+
+## 4. A3 stage 1 -- harvest + operator scans (registered 2026-10-10T10:21:40Z; MEASUREMENT ONLY, no outcome observed)
+
+Stage 1a tools/plan_a3.py harvest: 180 fresh worlds (60 x PARTIAL / PAIR / COPY, WELL_MIXED, 500-tick config run to tick
+100, distinct seeds 72e12+), <= 20 non-FUNC living tapes each; plan sha256
+ba867114a061d7984a25faa709ebcb1308d30d934835e257ca26daf460648a1c. Stage 1b scan: a seeded sample (rng 7203) of <= 200 tapes
+per physics; one-step routes to FUNC under SUB / MOVE / INS / DEL (geometry.scan_operators, kernel c83a56063). Stage 2
+(the outcome test and the prediction) is frozen in s5 after stage 1 completes and BEFORE any replanting run.

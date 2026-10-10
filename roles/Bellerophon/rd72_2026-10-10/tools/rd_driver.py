@@ -148,6 +148,16 @@ def _run_one(spec):
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
         out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log)          # organism-ticks lived (search budget)
         out["end_hash"] = end_state_hash(w)
+    elif kind == "scan":
+        from prometheus.z80atlas import geometry
+        from belinst import Func
+        cfg = _cfg(spec); f = Func(cfg)
+        rows = []
+        for th in spec["tapes"]:
+            t = bytes.fromhex(th)
+            r = geometry.scan_operators(t, cfg.L, f, ops=("SUB", "MOVE", "INS", "DEL"))
+            rows.append({"tape": th, **{op: r[op]["routes"] for op in r}})
+        out["scan"] = rows
     elif kind == "harvest":
         from harvest import harvest
         cfg = _cfg(spec)
