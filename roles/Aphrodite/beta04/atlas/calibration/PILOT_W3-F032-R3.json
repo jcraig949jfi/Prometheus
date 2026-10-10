@@ -1,0 +1,3386 @@
+{
+ "atlas": {
+  "atlas_version": "atlas-v0",
+  "cpu_s": 9.0,
+  "density": [
+   {
+    "all_fail_share": 0.0,
+    "class_size": 1,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 1,
+    "exact_credit_hist": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 1,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 1,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 1,
+    "exact_credit_hist": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 2,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 14,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 14,
+    "exact_credit_hist": [
+     14,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 3,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 88,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 88,
+    "exact_credit_hist": [
+     86,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 4,
+    "viable_share": 0.022727
+   },
+   {
+    "all_fail_share": 0.028761,
+    "class_size": 904,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 904,
+    "exact_credit_hist": [
+     896,
+     8,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 5,
+    "viable_share": 0.00885
+   },
+   {
+    "all_fail_share": 0.039447,
+    "class_size": 8036,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 8036,
+    "exact_credit_hist": [
+     7856,
+     180,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 6,
+    "viable_share": 0.022399
+   }
+  ],
+  "dev_n": 12,
+  "dev_test_overlap": 0,
+  "existence": {
+   "dev_ok": true,
+   "exists": true,
+   "size_expanded": 14,
+   "size_promoted": 14,
+   "test_ok": true,
+   "type": "List",
+   "witness": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))"
+  },
+  "family_id": "W3-F032-R3",
+  "hitting_cost_enumeration": [
+   {
+    "censored": true,
+    "charges": 80000,
+    "complete_through_size": 6,
+    "cpu_s": 1.36,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0,
+    "units_expanded": 379799,
+    "units_promoted": 379799,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 80000,
+    "complete_through_size": 6,
+    "cpu_s": 1.09,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1,
+    "units_expanded": 379733,
+    "units_promoted": 379733,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 80000,
+    "complete_through_size": 6,
+    "cpu_s": 1.14,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2,
+    "units_expanded": 379721,
+    "units_promoted": 379721,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 80000,
+    "complete_through_size": 6,
+    "cpu_s": 1.22,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3,
+    "units_expanded": 379656,
+    "units_promoted": 379656,
+    "verify_evals": 0
+   }
+  ],
+  "lattice": {
+   "any_intermediate_with_exact_credit": true,
+   "any_intermediate_with_partial_credit": true,
+   "credit_by_prune_depth": {
+    "0": {
+     "max_exact": 1.0,
+     "max_partial": 1.0,
+     "mean_exact": 1.0,
+     "mean_partial": 1.0,
+     "n": 1
+    },
+    "1": {
+     "max_exact": 0.16666666666666666,
+     "max_partial": 0.537698,
+     "mean_exact": 0.0385,
+     "mean_partial": 0.3001,
+     "n": 13
+    },
+    "2": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.397817,
+     "mean_exact": 0.0252,
+     "mean_partial": 0.2595,
+     "n": 53
+    },
+    "3": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.349206,
+     "mean_exact": 0.0308,
+     "mean_partial": 0.2604,
+     "n": 73
+    },
+    "4": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.349206,
+     "mean_exact": 0.0252,
+     "mean_partial": 0.2235,
+     "n": 43
+    },
+    "5": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.349206,
+     "mean_exact": 0.0152,
+     "mean_partial": 0.1695,
+     "n": 11
+    },
+    "6": {
+     "max_exact": 0.0,
+     "max_partial": 0.0,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0,
+     "n": 1
+    }
+   },
+   "n_paths": 25200,
+   "paths_truncated": false,
+   "size": 195,
+   "truncated": false
+  },
+  "library_entries": 0,
+  "output_type": "List",
+  "params": {
+   "density_max_n": 6,
+   "enum_budget": 80000,
+   "enum_max_size": 7,
+   "max_fill": 3,
+   "mutator_max_size": 16,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "revisitability": {
+   "enumeration_rank_seed0": {
+    "(map (lam x (add x x)) xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 295,
+     "size": 5
+    },
+    "(map (lam x x) xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 3,
+     "size": 3
+    },
+    "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x (gcd 0 x))) xs))": {
+     "bracket": [
+      1125886997,
+      12547726078
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 12
+    },
+    "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x x)) xs))": {
+     "bracket": [
+      9614228,
+      103237044
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x x) xs))": {
+     "bracket": [
+      90619,
+      916438
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(scanl (lam a (lam b (mul a 2))) 0 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 2899,
+     "size": 6
+    },
+    "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))": {
+     "bracket": [
+      141218376635,
+      1617345585007
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 14
+    },
+    "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x x)) xs))": {
+     "bracket": [
+      1125886997,
+      12547726078
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 12
+    },
+    "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x 0) xs))": {
+     "bracket": [
+      9614228,
+      103237044
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "(scanl (lam a (lam b (sub (mul a 2) b))) 0 xs)": {
+     "bracket": [
+      90619,
+      916438
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(scanl (lam a (lam b (sub a b))) 0 (map (lam x (add x x)) xs))": {
+     "bracket": [
+      9614228,
+      103237044
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 10
+    },
+    "(scanl (lam a (lam b (sub a b))) 0 (map (lam x 2) xs))": {
+     "bracket": [
+      90619,
+      916438
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(scanl (lam a (lam b 2)) 0 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 35,
+     "size": 4
+    },
+    "(scanl (lam a (lam b a)) 0 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 103,
+     "size": 4
+    },
+    "(scanl (lam a (lam b b)) 0 (map (lam x (add x x)) xs))": {
+     "bracket": [
+      90619,
+      916438
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 8
+    },
+    "(scanl (lam a (lam b b)) 0 (map (lam x 2) xs))": {
+     "exact": true,
+     "in_space": true,
+     "rank": 6296,
+     "size": 6
+    },
+    "(scanl (lam a (lam b b)) 0 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 59,
+     "size": 4
+    },
+    "xs": {
+     "exact": true,
+     "in_space": true,
+     "rank": 1,
+     "size": 1
+    }
+   },
+   "genotype_restore_exact": true,
+   "witness_rank_by_seed": {
+    "0": {
+     "bracket": [
+      141218376635,
+      1617345585007
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 14
+    },
+    "1": {
+     "bracket": [
+      141218376635,
+      1617345585007
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 14
+    },
+    "2": {
+     "bracket": [
+      141218376635,
+      1617345585007
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 14
+    },
+    "3": {
+     "bracket": [
+      141218376635,
+      1617345585007
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 14
+    }
+   }
+  },
+  "robustness": [
+   {
+    "all_fail_share": 0.022,
+    "children": 500,
+    "exact_credit": 12,
+    "keep_credit_share": 0.096,
+    "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.096,
+    "stay_qualified_share": 0.096
+   },
+   {
+    "all_fail_share": 0.0,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "xs",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.254,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.04,
+    "children": 500,
+    "exact_credit": 1,
+    "keep_credit_share": 0.338,
+    "program": "(scanl (lam a (lam b a)) 0 xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.324,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.042,
+    "children": 500,
+    "exact_credit": 1,
+    "keep_credit_share": 0.436,
+    "program": "(scanl (lam a (lam b (mul a 2))) 0 xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.432,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.032,
+    "children": 500,
+    "exact_credit": 1,
+    "keep_credit_share": 0.548,
+    "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x x) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.542,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.024,
+    "children": 500,
+    "exact_credit": 1,
+    "keep_credit_share": 0.662,
+    "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x x)) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.658,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.036,
+    "children": 500,
+    "exact_credit": 1,
+    "keep_credit_share": 0.692,
+    "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.676,
+    "stay_qualified_share": null
+   }
+  ],
+  "route": {
+   "best_for_exact": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 2914320.384,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       2914320.384,
+       1618247.0304000003,
+       6228.576,
+       3850.696216216216
+      ],
+      "strict_increases": 4,
+      "values": [
+       0.0,
+       0.0,
+       0.08333333333333333,
+       0.0,
+       0.08333333333333333,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "guided_route_cost_estimate": 17105.56690474081,
+     "magnitude": {
+      "crossing_cost_estimate": 1618247.0304000003,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       1474.56,
+       1976.4,
+       1618247.0304000003,
+       6228.576,
+       3850.696216216216
+      ],
+      "strict_increases": 5,
+      "values": [
+       0.160067,
+       0.362552,
+       0.450641,
+       0.343666,
+       0.450641,
+       0.510956,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 1618247.0304000003,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       1474.56,
+       1976.4,
+       1618247.0304000003,
+       6228.576,
+       3850.696216216216
+      ],
+      "strict_increases": 5,
+      "values": [
+       0.0,
+       0.209325,
+       0.349206,
+       0.209325,
+       0.349206,
+       0.425595,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.160067,
+      "partial": 0.0,
+      "program": "xs",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.362552,
+      "p_eff": 0.0006781684027777778,
+      "p_none": 0.36,
+      "p_single": 0.00043402777777777775,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b 2)) 0 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 2,
+      "magnitude": 0.450641,
+      "p_eff": 0.0005059704513256426,
+      "p_none": 0.39,
+      "p_single": 0.00030864197530864197,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (mul a 2))) 0 xs)",
+      "share_same_size_with_exact_credit_ge": 0.022399,
+      "size": 6
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.343666,
+      "p_eff": 0.0003285522411205471,
+      "p_none": 0.329,
+      "p_single": 0.0002204585537918871,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 xs)",
+      "size": 8
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 4,
+      "magnitude": 0.450641,
+      "p_eff": 0.0018808352141685472,
+      "p_none": 0.285,
+      "p_single": 0.0013447971781305114,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x 0) xs))",
+      "size": 10
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 5,
+      "magnitude": 0.510956,
+      "p_eff": 0.00016055034088048375,
+      "p_none": 0.288,
+      "p_single": 0.00011431184270690442,
+      "partial": 0.425595,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x x)) xs))",
+      "size": 12
+     },
+     {
+      "exact": 1.0,
+      "i": 6,
+      "magnitude": 1.0,
+      "p_eff": 0.00025969329800381484,
+      "p_none": 0.302,
+      "p_single": 0.00018126592200666276,
+      "partial": 1.0,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+      "size": 14
+     }
+    ]
+   },
+   "best_for_magnitude": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 2.1637385845476252e+16,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       2.1637385845476252e+16,
+       3850.696216216216
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     },
+     "guided_route_cost_estimate": 17901.63535815944,
+     "magnitude": {
+      "crossing_cost_estimate": 5435.424000000001,
+      "decreases": 0,
+      "flat_steps": 0,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1474.56,
+       278.8524590163935,
+       1985.0926829268294,
+       4877.010000000001,
+       5435.424000000001,
+       3850.696216216216
+      ],
+      "strict_increases": 6,
+      "values": [
+       0.160067,
+       0.357019,
+       0.362552,
+       0.363333,
+       0.441897,
+       0.510956,
+       1.0
+      ],
+      "widest_unrewarded_segment": 1
+     },
+     "partial": {
+      "crossing_cost_estimate": 2699659014.478562,
+      "decreases": 0,
+      "flat_steps": 2,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1474.56,
+       2699659014.478562,
+       5435.424000000001,
+       3850.696216216216
+      ],
+      "strict_increases": 4,
+      "values": [
+       0.0,
+       0.209325,
+       0.209325,
+       0.209325,
+       0.344246,
+       0.425595,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.160067,
+      "partial": 0.0,
+      "program": "xs",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.357019,
+      "p_eff": 0.0006781684027777778,
+      "p_none": 0.36,
+      "p_single": 0.00043402777777777775,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b b)) 0 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.362552,
+      "p_eff": 0.00358612580834803,
+      "p_none": 0.325,
+      "p_single": 0.0024206349206349204,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b b)) 0 (map (lam x 2) xs))",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.363333,
+      "p_eff": 0.0005037548163875127,
+      "p_none": 0.372,
+      "p_single": 0.000316358024691358,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b (sub a b))) 0 (map (lam x 2) xs))",
+      "size": 8
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.441897,
+      "p_eff": 0.00020504366404825903,
+      "p_none": 0.331,
+      "p_single": 0.0001371742112482853,
+      "partial": 0.344246,
+      "program": "(scanl (lam a (lam b (sub a b))) 0 (map (lam x (add x x)) xs))",
+      "size": 10
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 5,
+      "magnitude": 0.510956,
+      "p_eff": 0.0001839782876184084,
+      "p_none": 0.301,
+      "p_single": 0.00012860082304526747,
+      "partial": 0.425595,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x x)) xs))",
+      "size": 12
+     },
+     {
+      "exact": 1.0,
+      "i": 6,
+      "magnitude": 1.0,
+      "p_eff": 0.00025969329800381484,
+      "p_none": 0.302,
+      "p_single": 0.00018126592200666276,
+      "partial": 1.0,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+      "size": 14
+     }
+    ]
+   },
+   "best_for_partial": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 3579412386177968.5,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       3579412386177968.5,
+       3850.696216216216
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     },
+     "guided_route_cost_estimate": 21896.957407047994,
+     "magnitude": {
+      "crossing_cost_estimate": 249127134.85259828,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       249127134.85259828,
+       2643.3658536585367,
+       5435.424000000001,
+       3850.696216216216
+      ],
+      "strict_increases": 4,
+      "values": [
+       0.160067,
+       0.160067,
+       0.147708,
+       0.335392,
+       0.441897,
+       0.510956,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "partial": {
+      "crossing_cost_estimate": 26463.068214443956,
+      "decreases": 0,
+      "flat_steps": 1,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       26463.068214443956,
+       9414.144,
+       2643.3658536585367,
+       5435.424000000001,
+       3850.696216216216
+      ],
+      "strict_increases": 5,
+      "values": [
+       0.0,
+       0.0,
+       0.011905,
+       0.209325,
+       0.344246,
+       0.425595,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.160067,
+      "partial": 0.0,
+      "program": "xs",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.160067,
+      "p_eff": 0.018911210317460316,
+      "p_none": 0.36,
+      "p_single": 0.012103174603174602,
+      "partial": 0.0,
+      "program": "(map (lam x x) xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 3
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.147708,
+      "p_eff": 0.001998207014246676,
+      "p_none": 0.365,
+      "p_single": 0.0012688614540466393,
+      "partial": 0.011905,
+      "program": "(map (lam x (add x x)) xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 5
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.335392,
+      "p_eff": 0.00010622314678849186,
+      "p_none": 0.319,
+      "p_single": 7.233796296296296e-05,
+      "partial": 0.209325,
+      "program": "(scanl (lam a (lam b b)) 0 (map (lam x (add x x)) xs))",
+      "size": 8
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.441897,
+      "p_eff": 0.000378305560169038,
+      "p_none": 0.331,
+      "p_single": 0.0002530864197530864,
+      "partial": 0.344246,
+      "program": "(scanl (lam a (lam b (sub a b))) 0 (map (lam x (add x x)) xs))",
+      "size": 10
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 5,
+      "magnitude": 0.510956,
+      "p_eff": 0.0001839782876184084,
+      "p_none": 0.301,
+      "p_single": 0.00012860082304526747,
+      "partial": 0.425595,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x x)) xs))",
+      "size": 12
+     },
+     {
+      "exact": 1.0,
+      "i": 6,
+      "magnitude": 1.0,
+      "p_eff": 0.00025969329800381484,
+      "p_none": 0.302,
+      "p_single": 0.00018126592200666276,
+      "partial": 1.0,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+      "size": 14
+     }
+    ]
+   },
+   "canonical": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 2.027385535361658e+16,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1474.56,
+       2.027385535361658e+16
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.08333333333333333,
+       0.08333333333333333,
+       0.08333333333333333,
+       0.08333333333333333,
+       0.08333333333333333,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     },
+     "guided_route_cost_estimate": 14549.315351351353,
+     "magnitude": {
+      "crossing_cost_estimate": 2.027385535361658e+16,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1474.56,
+       2.027385535361658e+16
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.160067,
+       0.450641,
+       0.450641,
+       0.450641,
+       0.450641,
+       0.450641,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     },
+     "partial": {
+      "crossing_cost_estimate": 2.027385535361658e+16,
+      "decreases": 0,
+      "flat_steps": 4,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1474.56,
+       2.027385535361658e+16
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.349206,
+       0.349206,
+       0.349206,
+       0.349206,
+       0.349206,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.160067,
+      "partial": 0.0,
+      "program": "xs",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 1,
+      "magnitude": 0.450641,
+      "p_eff": 0.0006781684027777778,
+      "p_none": 0.36,
+      "p_single": 0.00043402777777777775,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b a)) 0 xs)",
+      "share_same_size_with_exact_credit_ge": 0.022727,
+      "size": 4
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 2,
+      "magnitude": 0.450641,
+      "p_eff": 0.0004755654473168597,
+      "p_none": 0.351,
+      "p_single": 0.00030864197530864197,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (mul a 2))) 0 xs)",
+      "share_same_size_with_exact_credit_ge": 0.022399,
+      "size": 6
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 3,
+      "magnitude": 0.450641,
+      "p_eff": 0.002576788291074005,
+      "p_none": 0.329,
+      "p_single": 0.0017290249433106575,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x x) xs))",
+      "size": 8
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 4,
+      "magnitude": 0.450641,
+      "p_eff": 0.0007820409578099473,
+      "p_none": 0.351,
+      "p_single": 0.0005075445816186558,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x x)) xs))",
+      "size": 10
+     },
+     {
+      "exact": 0.08333333333333333,
+      "i": 5,
+      "magnitude": 0.450641,
+      "p_eff": 0.00031610898207439934,
+      "p_none": 0.331,
+      "p_single": 0.00021147690900777318,
+      "partial": 0.349206,
+      "program": "(scanl (lam a (lam b (mul a 2))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+      "size": 12
+     },
+     {
+      "exact": 1.0,
+      "i": 6,
+      "magnitude": 1.0,
+      "p_eff": 0.0001628202022096655,
+      "p_none": 0.323,
+      "p_single": 0.00011022927689594356,
+      "partial": 1.0,
+      "program": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))",
+      "size": 14
+     }
+    ]
+   }
+  },
+  "test_n": 40
+ },
+ "atlas_cpu_s": 9.0,
+ "classification_route": {
+  "budget": 5000,
+  "crossing_cost_estimate": {
+   "exact": 2914320.384,
+   "magnitude": 5435.424000000001,
+   "partial": 26463.068214443956
+  },
+  "enumeration": "RARITY_LIMIT_BEYOND_16x",
+  "enumeration_crossing_by_seed": [
+   141218376635,
+   141218376635,
+   141218376635,
+   141218376635
+  ],
+  "local_search": "CREDIT_LIMIT",
+  "notes": [
+   "search channel 'exact' cannot cross within 16x; alternative channel(s) ['partial'] can"
+  ],
+  "scale": 16,
+  "widest_unrewarded_segment_search_channel": 2
+ },
+ "cpu_s": 159.6,
+ "label": "FOUNDRY PILOT task (world qualification NOT final: foundry v1 NOT_QUALIFIED per 7cd8fc3f4); atlas pipeline calibration only",
+ "ladder": {
+  "X3G_calibration": {
+   "K": 1914,
+   "budget": 5000,
+   "calibration_seeds": [
+    1000,
+    1001,
+    1002
+   ],
+   "descriptor": "D-BEH",
+   "iterations": [
+    {
+     "K": 1701,
+     "realised_mean": 1511.6666666666667
+    },
+    {
+     "K": 1914,
+     "realised_mean": 1637.0
+    }
+   ],
+   "matched_within_5pct": true,
+   "outcome_blind": "stop_on_hit=False and no certifier: only cell counts are read",
+   "ref_arm": "D1-X3",
+   "ref_realised_cells": [
+    1712,
+    1852,
+    1538
+   ],
+   "target_mean": 1700.6666666666667
+  },
+  "attribution": "ladder derived from Nyx's design (3318a2098) via C-013 D1 (Palamedes); mapped to TFS-1",
+  "autonomous_by_arm": {
+   "A-CHAIN[none]": 0,
+   "A-CHAIN[partial]": 0,
+   "D1-X1": 0,
+   "D1-X2": 0,
+   "D1-X3": 0,
+   "D1-X3G": 0,
+   "D1-chain_neutral": 0,
+   "D1-chain_strict": 0
+  },
+  "budget": 5000,
+  "censored_cost": {
+   "A-CHAIN": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "A-CHAIN[none]": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "A-CHAIN[partial]": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-X1": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-X2": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-X3": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-X3G": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-chain_neutral": [
+    5000,
+    5000,
+    5000,
+    5000
+   ],
+   "D1-chain_strict": [
+    5000,
+    5000,
+    5000,
+    5000
+   ]
+  },
+  "contrasts_C1_C5": {
+   "C1": {
+    "better": 0,
+    "contrast": "D1-chain_neutral vs D1-chain_strict",
+    "hits": [
+     0,
+     0
+    ],
+    "isolates": "NEUTRAL ACCEPTANCE",
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "C2": {
+    "better": 0,
+    "contrast": "D1-X1 vs D1-chain_neutral",
+    "hits": [
+     0,
+     0
+    ],
+    "isolates": "RETENTION",
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "C3": {
+    "better": 0,
+    "contrast": "D1-X2 vs D1-X1",
+    "hits": [
+     0,
+     0
+    ],
+    "isolates": "RARELY-VISITED (count) SELECTION",
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "C4": {
+    "better": 0,
+    "contrast": "D1-X3 vs D1-X2",
+    "hits": [
+     0,
+     0
+    ],
+    "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "C5": {
+    "better": 0,
+    "contrast": "D1-X3 vs D1-X3G",
+    "hits": [
+     0,
+     0
+    ],
+    "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+    "p_one_sided": 1.0,
+    "p_two_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   }
+  },
+  "descriptor_arm_status": "INSTRUMENT_UNVALIDATED",
+  "empirical_flags": {
+   "ALT_CREDIT_HELPS": false,
+   "DRIFT_CROSSES": false,
+   "FEEDBACK_USED": false,
+   "alpha": 0.05,
+   "blind_chain_hits": 0,
+   "exact_chain_hits": 0,
+   "guided_vs_blind": {
+    "better": 0,
+    "p_one_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "partial_vs_exact": {
+    "better": 0,
+    "p_one_sided": 1.0,
+    "tied": 4,
+    "worse": 0
+   },
+   "reached_at_B": false,
+   "reading": "REACHABILITY_DESERT"
+  },
+  "hits_by_arm": {
+   "A-CHAIN[none]": 0,
+   "A-CHAIN[partial]": 0,
+   "D1-X1": 0,
+   "D1-X2": 0,
+   "D1-X3": 0,
+   "D1-X3G": 0,
+   "D1-chain_neutral": 0,
+   "D1-chain_strict": 0
+  },
+  "rows": {
+   "A-CHAIN[none]": [
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.625,
+     "credit": "none",
+     "decision_log_sha256": "ad079508bdbfcdea48dbe1f6687473d493153110f78b60ff2b241d4f56bf831a",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 365756,
+       "units_dev_promoted": 365756,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.641,
+     "credit": "none",
+     "decision_log_sha256": "904d0a7e5747034fc88068f8252b9200a5cd0f2e9959e056677830d348d804f3",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 391089,
+       "units_dev_promoted": 391089,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.672,
+     "credit": "none",
+     "decision_log_sha256": "089e598f83734df6fac2b59de51dcb49394856640faa7f93c7392ebfe2cd1d7f",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 369673,
+       "units_dev_promoted": 369673,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.688,
+     "credit": "none",
+     "decision_log_sha256": "1f57087dc89c14f5c32929ed9c827d46514ab802d27b00e7febb65b88e3fdf4e",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 362242,
+       "units_dev_promoted": 362242,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "A-CHAIN[partial]": [
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.156,
+     "credit": "partial",
+     "decision_log_sha256": "264056f3245937cbf2595477e014df1c8d1be681e596fde39afc87ba78992de0",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 659929,
+       "units_dev_promoted": 659929,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.469,
+     "credit": "partial",
+     "decision_log_sha256": "74a313e570c7c4a9f960c81de76046d36fb823927553b34123028093b4f3f484",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 651035,
+       "units_dev_promoted": 651035,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.156,
+     "credit": "partial",
+     "decision_log_sha256": "6a9c3da3c85e33133acdbcfaf3ef59905f6f53596f598959955d9ad80b5624b0",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 670205,
+       "units_dev_promoted": 670205,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "A-CHAIN",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.359,
+     "credit": "partial",
+     "decision_log_sha256": "f961cf5e2ee0b9b682d4cd0b5d468019cc9f1220793f291e2cc1dfcd0acc69ca",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 656606,
+       "units_dev_promoted": 656606,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-X1": [
+    {
+     "archive": {
+      "entries": 2937,
+      "live_entries": 136,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 136,
+      "replacements": 2801
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X1",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 2.406,
+     "credit": "exact",
+     "decision_log_sha256": "dac7c454dff5c2249d1cd5e4cab6cbc3f6467e02d98075ceb83681838a63f9df",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 2937,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 669088,
+       "units_dev_promoted": 669088,
+       "units_probe_expanded": 370373
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 3202,
+      "live_entries": 306,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 306,
+      "replacements": 2896
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X1",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 2.828,
+     "credit": "exact",
+     "decision_log_sha256": "3d4c5b4d6eecbf85e9c7636462e01e420f354826f0b3812bb412320bb2bb5bf3",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3202,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 1,
+       "state_restores": 0,
+       "units_dev_expanded": 578076,
+       "units_dev_promoted": 578076,
+       "units_probe_expanded": 332768
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 2323,
+      "live_entries": 283,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 283,
+      "replacements": 2040
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X1",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 6.031,
+     "credit": "exact",
+     "decision_log_sha256": "c2ade7111a5fd9b92e7362bf499ddaa785fb05b0c112441ed4d61252bc06c3c9",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 2323,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 2,
+       "state_restores": 0,
+       "units_dev_expanded": 668415,
+       "units_dev_promoted": 668415,
+       "units_probe_expanded": 391963
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 3101,
+      "live_entries": 1146,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1146,
+      "replacements": 1955
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X1",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 3.922,
+     "credit": "exact",
+     "decision_log_sha256": "ea55fa3f25c3077a53e6bddbebeabb12d937ba6fd8f7d6f39004bc5dc5f15ff1",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3101,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 513761,
+       "units_dev_promoted": 513761,
+       "units_probe_expanded": 309386
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-X2": [
+    {
+     "archive": {
+      "entries": 4276,
+      "live_entries": 1701,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1701,
+      "replacements": 2575
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X2",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 7.969,
+     "credit": "exact",
+     "decision_log_sha256": "967d59277d633225b6813b94ca9ac5e66c72338d3aa8bdd8054d27f0f5092a27",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4276,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 596691,
+       "units_dev_promoted": 596691,
+       "units_probe_expanded": 339969
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 4314,
+      "live_entries": 1744,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1744,
+      "replacements": 2570
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X2",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 6.609,
+     "credit": "exact",
+     "decision_log_sha256": "48dd11810b774bbd134e23b56a339bb0ff4a7c178bb364334868dd29c83b4d32",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4314,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 514786,
+       "units_dev_promoted": 514786,
+       "units_probe_expanded": 307641
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 4286,
+      "live_entries": 1531,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1531,
+      "replacements": 2755
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X2",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 5.25,
+     "credit": "exact",
+     "decision_log_sha256": "ca792456f0eb8f0cce75e67c22312210eaf9b3ff3c0ab700e05a5160efe88658",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4286,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 522864,
+       "units_dev_promoted": 522864,
+       "units_probe_expanded": 310087
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 4250,
+      "live_entries": 1699,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1699,
+      "replacements": 2551
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X2",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 6.094,
+     "credit": "exact",
+     "decision_log_sha256": "e4128593fa3f77f3b7396b43d28e71bbe34f9eff6bcaccfa046795b43f008f73",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4250,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 614623,
+       "units_dev_promoted": 614623,
+       "units_probe_expanded": 351146
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-X3": [
+    {
+     "archive": {
+      "entries": 4276,
+      "live_entries": 1701,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1701,
+      "replacements": 2575
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 5.703,
+     "credit": "exact",
+     "decision_log_sha256": "967d59277d633225b6813b94ca9ac5e66c72338d3aa8bdd8054d27f0f5092a27",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4276,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 596691,
+       "units_dev_promoted": 596691,
+       "units_probe_expanded": 339969
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 4314,
+      "live_entries": 1744,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1744,
+      "replacements": 2570
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 6.859,
+     "credit": "exact",
+     "decision_log_sha256": "48dd11810b774bbd134e23b56a339bb0ff4a7c178bb364334868dd29c83b4d32",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4314,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 514786,
+       "units_dev_promoted": 514786,
+       "units_probe_expanded": 307641
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 4286,
+      "live_entries": 1595,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1595,
+      "replacements": 2691
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 5.719,
+     "credit": "exact",
+     "decision_log_sha256": "f3a63d329527b0376ffbc72d48ac9399db49b96b42422904e897183527fcd1eb",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4286,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 574721,
+       "units_dev_promoted": 574721,
+       "units_probe_expanded": 335051
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 4206,
+      "live_entries": 1871,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1871,
+      "replacements": 2335
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 6.391,
+     "credit": "exact",
+     "decision_log_sha256": "15e0c03edabe37621b18c9b03b75c80a9acd90b4a66093943d2702f941679491",
+     "descriptor": "D-BEH",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 4206,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 40000,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 768945,
+       "units_dev_promoted": 768945,
+       "units_probe_expanded": 421563
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-X3G": [
+    {
+     "archive": {
+      "entries": 3728,
+      "live_entries": 1642,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1642,
+      "replacements": 2086
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3G",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 5.281,
+     "credit": "exact",
+     "decision_log_sha256": "e072a42712743f1e656de291fd8599453eb93363c2f09c35df034541d82b27a8",
+     "descriptor": "RAND:1914",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3728,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 488671,
+       "units_dev_promoted": 488671,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 3953,
+      "live_entries": 1669,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1669,
+      "replacements": 2284
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3G",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 4.391,
+     "credit": "exact",
+     "decision_log_sha256": "35cd91636d9869fd955086c43c12a7eb534a70f20f0930aa69da821c2700cbdb",
+     "descriptor": "RAND:1914",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3953,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 476535,
+       "units_dev_promoted": 476535,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 3765,
+      "live_entries": 1645,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1645,
+      "replacements": 2120
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3G",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 4.359,
+     "credit": "exact",
+     "decision_log_sha256": "c5438798a00c7399cf5e90f8a87c0ae53e0a83a8a9623e06db198e991bb64641",
+     "descriptor": "RAND:1914",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3765,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 454943,
+       "units_dev_promoted": 454943,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 3845,
+      "live_entries": 1680,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": 1680,
+      "replacements": 2165
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-X3G",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 5.172,
+     "credit": "exact",
+     "decision_log_sha256": "d09336bd6b5632fdd504ace2ee7d5c090c6ca84042353c9657e4b0191d7ee58d",
+     "descriptor": "RAND:1914",
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 3845,
+       "charges": 5000,
+       "genotype_restores": 4999,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 573094,
+       "units_dev_promoted": 573094,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-chain_neutral": [
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_neutral",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.0,
+     "credit": "exact",
+     "decision_log_sha256": "09b3a6fc735bd3bb0d9f25ed3e3785ac0bf9555bc3dbb1e5bd195304535f180e",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 638225,
+       "units_dev_promoted": 638225,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_neutral",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.922,
+     "credit": "exact",
+     "decision_log_sha256": "d961e3b86f19b3e1f210290c0e14427a29a3855acc6b93891102ca2265958859",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 2,
+       "state_restores": 0,
+       "units_dev_expanded": 560866,
+       "units_dev_promoted": 560866,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_neutral",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.031,
+     "credit": "exact",
+     "decision_log_sha256": "e8e09b945ca4ec031d0c3a8d943ec14c5c44a7b0fc7e4b244d51d2e42fe7cdf6",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 631856,
+       "units_dev_promoted": 631856,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_neutral",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 1.094,
+     "credit": "exact",
+     "decision_log_sha256": "9300a2f6143a4aab4753089bb278e3bfda39512d5c3b293cc5dc09e1d7b39ee1",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 680605,
+       "units_dev_promoted": 680605,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ],
+   "D1-chain_strict": [
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_strict",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.469,
+     "credit": "exact",
+     "decision_log_sha256": "be428e44b9dded075e4b1c0392c18e1f158c2fb29d74c5331fbf360f34ae071e",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 158868,
+       "units_dev_promoted": 158868,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 0
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_strict",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.516,
+     "credit": "exact",
+     "decision_log_sha256": "912ba1a58a1ec9aa7f9a2af6778b0d388395c2ab69fa954aa7e656c9842927c0",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 162225,
+       "units_dev_promoted": 162225,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 1
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_strict",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.531,
+     "credit": "exact",
+     "decision_log_sha256": "6b3876e5d6d519f393ed6f6b97a017af0007a23124a93f11de15cef24147ac4f",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 169451,
+       "units_dev_promoted": 169451,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 2
+    },
+    {
+     "archive": {
+      "entries": 0,
+      "live_entries": 0,
+      "logged_descriptor_cells_visited": null,
+      "realised_cells": null,
+      "replacements": 0
+     },
+     "archive_assisted_discovery": false,
+     "arm": "D1-chain_strict",
+     "autonomous_competence": null,
+     "budget": 5000,
+     "cpu_s": 0.703,
+     "credit": "exact",
+     "decision_log_sha256": "5ed2d3c524c139b9a7bb3cdaa5a897e5faff846301369d26e5060f54c214a851",
+     "descriptor": null,
+     "final_evaluation": null,
+     "first_false_hits": [],
+     "first_visit_route": null,
+     "hit": false,
+     "hit_charge": null,
+     "ledger": {
+      "certifier": {
+       "final_eval_runs": 0,
+       "verify_evals": 0
+      },
+      "developmental": {
+       "library_entries": 0,
+       "library_max_depth": 0,
+       "library_sha256": null
+      },
+      "organism": {
+       "program": null
+      },
+      "search": {
+       "archive_admissions": 0,
+       "charges": 5000,
+       "genotype_restores": 1,
+       "probe_runs": 0,
+       "rejected_mutations": 0,
+       "state_restores": 0,
+       "units_dev_expanded": 164655,
+       "units_dev_promoted": 164655,
+       "units_probe_expanded": 0
+      }
+     },
+     "mechanisms": {
+      "cert_patterns_seen": 1,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": {}
+     },
+     "n_false_hits": 0,
+     "program": null,
+     "seed": 3
+    }
+   ]
+  },
+  "seeds": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ "ladder_cpu_s": 142.1,
+ "qual_cpu_s": 8.5,
+ "qualification": {
+  "controls_ok": true,
+  "descriptors": {
+   "C-FIT": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.0,
+     "1": 0.0,
+     "2": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.0,
+     "2": 0.0,
+     "3": 0.0,
+     "4": 0.0,
+     "5": 0.0,
+     "6": 0.0
+    },
+    "R1_separation": 0.0,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.0013042060645582002,
+    "granularity_cells_per_genotype": 0.0003214400514304082,
+    "pairs_R1c": 2746,
+    "pool_cells": 4
+   },
+   "D-BEH": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.9844,
+     "1": 0.129,
+     "2": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.8423,
+     "2": 0.7349,
+     "3": 0.6514,
+     "4": 0.7035,
+     "5": 0.8227,
+     "6": 1.0
+    },
+    "R1_separation": 0.7094017094017094,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 0.9974508375819373,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.7750244538637104,
+    "granularity_cells_per_genotype": 0.1910157505625201,
+    "pairs_R1c": 2746,
+    "pool_cells": 2377,
+    "verdict": "FAIL"
+   },
+   "D-CERT": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.6836,
+     "1": 0.079,
+     "2": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.6556,
+     "2": 0.5179,
+     "3": 0.4514,
+     "4": 0.4802,
+     "5": 0.4545,
+     "6": 0.5
+    },
+    "R1_separation": 0.48925148925148926,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.6879096868171887,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.06423214867949135,
+    "granularity_cells_per_genotype": 0.015830922532947607,
+    "pairs_R1c": 2746,
+    "pool_cells": 197,
+    "verdict": "FAIL"
+   },
+   "D-RES": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.6809,
+     "1": 0.046,
+     "2": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.4896,
+     "2": 0.5,
+     "3": 0.4555,
+     "4": 0.486,
+     "5": 0.4591,
+     "6": 0.45
+    },
+    "R1_separation": 0.47681947681947684,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.6704297159504734,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.05999347896967721,
+    "granularity_cells_per_genotype": 0.014786242365798778,
+    "pairs_R1c": 2746,
+    "pool_cells": 184,
+    "verdict": "FAIL"
+   },
+   "GENO": {
+    "G": "FAIL",
+    "OVERSPLIT_WARNING": true,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 1.0,
+     "1": 1.0,
+     "2": 1.0
+    },
+    "R1_by_prune_depth": {
+     "1": 1.0,
+     "2": 1.0,
+     "3": 1.0,
+     "4": 1.0,
+     "5": 1.0,
+     "6": 1.0
+    },
+    "R1_separation": 1.0,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "FAIL",
+    "R2_invariance": 0.004310344827586207,
+    "cells_per_distinct_trace": 4.057385066840561,
+    "granularity_cells_per_genotype": 1.0,
+    "pairs_R1c": 2746,
+    "pool_cells": 12444
+   },
+   "TRACE": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.9866,
+     "1": 0.1298,
+     "2": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.8423,
+     "2": 0.7377,
+     "3": 0.6534,
+     "4": 0.7047,
+     "5": 0.8227,
+     "6": 1.0
+    },
+    "R1_separation": 0.7112147112147112,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 1.0,
+    "granularity_cells_per_genotype": 0.2464641594342655,
+    "pairs_R1c": 2746,
+    "pool_cells": 3067
+   }
+  },
+  "family_id": "W3-F032-R3",
+  "intermediate_scores": [
+   0,
+   1,
+   2
+  ],
+  "intermediates": 194,
+  "intermediates_with_no_equal_score_other": 0,
+  "lattice_size": 195,
+  "lattice_truncated": false,
+  "pairs_R1": 3861,
+  "pairs_R2": 1160,
+  "pool_score_hist": {
+   "0": 10961,
+   "1": 1479,
+   "12": 3,
+   "2": 1
+  },
+  "pool_size": 12444,
+  "qualified": [],
+  "synonym_semantic_mismatches": 0,
+  "thresholds": {
+   "G_PASS_max": 0.5,
+   "MIN_PAIRS": 20,
+   "R1_PASS": 0.9,
+   "R2_PASS": 0.9
+  },
+  "witness": "(scanl (lam a (lam b (sub (mul a 2) b))) 0 (map (lam x (add x (gcd 0 x))) xs))"
+ },
+ "source": "W3-F032-R3.json",
+ "source_commit": "origin/main 3491cfd49 roles/Aphrodite/beta04/foundry/pilot/",
+ "task_sha256": "fb0a57a10293cbcc7ff9e83e30873745f702e5547a89cacea40e7a2dffd7fcc1"
+}

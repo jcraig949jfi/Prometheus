@@ -1,0 +1,799 @@
+{
+ "arms": {
+  "A-CHAIN": {
+   "1": {
+    "budget": 5000,
+    "mean_cert_patterns": 52.2,
+    "mean_novel_mechanisms": 3.5,
+    "new_certified_mechanisms_per_1k_charges": 0.7,
+    "raw_qualified_skeletons_per_1k_charges": 68.05,
+    "rows": [
+     {
+      "cert_patterns_seen": 57,
+      "first_qualified_charge": 2115,
+      "novel_mechanisms": 5,
+      "qualified_genotypes": 488,
+      "qualified_skeletons": 340,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {
+       "add1,div1,drop1,mul1,neg1,pow1,zipw1": 2115,
+       "add1,div1,drop1,mul1,pow1,zipw1": 2118,
+       "add1,div1,gcd1,last1,mul1,neg1,pow1,zipw1": 2207,
+       "add1,div1,gcd1,mod1,pow1,sub1,zipw1": 2157,
+       "add1,div1,gcd1,mod1,pow1,zipw1": 2131,
+       "add1,div1,gcd1,mod2,pow1,zipw1": 2142,
+       "add1,div1,gcd1,neg1,pow1,sub1,zipw1": 2202,
+       "add1,div1,gcd1,neg1,pow1,zipw1": 2206,
+       "add1,div1,gcd1,neg2,pow1,sub1,zipw1": 2204,
+       "add1,div1,gcd1,pow1,rev1,zipw2": 2237,
+       "add1,div1,gcd1,pow1,sub1,zipw1": 2162,
+       "add1,div1,gcd1,pow1,zipw2": 2240,
+       "add1,div1,min1,pow1,rev1,zipw2": 2234,
+       "add1,div1,mod1,pow1,zipw1": 2124,
+       "add1,div1,mul1,pow1,rev1,zipw1": 2252,
+       "add1,div1,mul1,pow1,zipw1": 2244,
+       "add1,div1,pow1,zipw1": 2119,
+       "add1,div2,gcd1,pow1,sub1,zipw1": 2165,
+       "add2,div1,gcd1,neg1,pow1,zipw1": 2214,
+       "add2,div1,gcd1,neg2,pow1,zipw1": 2224
+      }
+     },
+     {
+      "cert_patterns_seen": 34,
+      "first_qualified_charge": 714,
+      "novel_mechanisms": 2,
+      "qualified_genotypes": 664,
+      "qualified_skeletons": 430,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {
+       "div1,gcd1,mul1,pow1,rev1,zipw2": 716,
+       "div1,gcd1,mul1,pow1,zipw2": 714,
+       "drop1,head1,map1,mul1,neg1,pow1,rev1,zipw1": 752,
+       "drop1,head1,map1,mul1,neg1,pow1,zipw1": 753,
+       "drop1,mul1,pow1,rev1,zipw2": 744,
+       "drop1,mul1,pow1,rev3,zipw2": 742,
+       "head1,map1,mul1,pow1,rev1,zipw1": 748,
+       "len1,map1,mul1,neg2,pow1,take1,zipw1": 798,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw1": 790,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw2": 791,
+       "len1,mul1,neg1,pow1,take1,zipw1": 796,
+       "len1,mul1,pow1,rev1,take1,zipw1": 786,
+       "map1,mul1,pow1,zipw1": 764,
+       "mul1,pow1,rev1,zipw1": 746,
+       "mul1,pow1,rev1,zipw2": 733,
+       "mul1,pow1,rev2,zipw2": 739,
+       "mul1,pow1,rev4,zipw2": 741,
+       "mul1,pow1,zipw1": 730,
+       "mul2,neg1,pow1,rev1,zipw2": 734,
+       "mul2,neg1,pow1,rev2,zipw2": 735
+      }
+     },
+     {
+      "cert_patterns_seen": 63,
+      "first_qualified_charge": 1129,
+      "novel_mechanisms": 4,
+      "qualified_genotypes": 367,
+      "qualified_skeletons": 267,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {
+       "add1,div1,gcd1,map1,mul1,pow2": 1214,
+       "add1,div1,map1,mul1,neg1,pow2": 1190,
+       "add1,div1,map1,mul1,pow2": 1191,
+       "add1,drop1,last1,map1,mul2,neg1,pow1": 1279,
+       "add1,foldl1,map1,mul1,pow2": 1221,
+       "add1,foldl1,map1,mul1,pow2,rev1": 1231,
+       "add1,last1,map1,mul2,neg1,pow1": 1277,
+       "add1,last1,map1,mul2,pow1": 1286,
+       "add1,map1,mul1,neg1,pow1": 1275,
+       "add1,map1,mul1,pow2": 1176,
+       "add1,map1,mul2,pow2": 1180,
+       "add2,map1,mul1,neg1,pow1": 1270,
+       "add2,map1,mul1,neg1,pow2": 1266,
+       "add2,map1,mul1,pow2": 1238,
+       "add2,map2,mul1,neg1,pow2": 1261,
+       "add2,map2,mul1,pow2": 1250,
+       "map1,mod1,mul1,pow1": 1146,
+       "map1,mod1,mul2,pow1": 1129,
+       "map1,mul1,pow1": 1160,
+       "map1,mul1,pow2": 1165
+      }
+     },
+     {
+      "cert_patterns_seen": 55,
+      "first_qualified_charge": 680,
+      "novel_mechanisms": 3,
+      "qualified_genotypes": 441,
+      "qualified_skeletons": 324,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "add1,gcd1,map1,pow2": 705,
+       "div1,map1,mul1,pow2": 682,
+       "div1,map1,pow2": 680,
+       "drop1,gcd1,map3,pow2": 911,
+       "drop1,map1,neg1,pow3": 814,
+       "drop1,map2,pow2": 912,
+       "drop1,map3,pow2": 907,
+       "gcd1,map1,neg1,pow2": 836,
+       "gcd1,map1,neg1,pow3": 835,
+       "gcd1,map1,pow2": 704,
+       "map1,mul1,pow2": 683,
+       "map1,neg1,pow2": 720,
+       "map1,neg1,pow2,zipw1": 738,
+       "map1,neg2,pow2": 762,
+       "map1,pow2": 703,
+       "map1,pow3": 809,
+       "map2,pow2": 856,
+       "map3,pow2": 871,
+       "map3,pow2,rev1,zipw1": 878,
+       "map3,pow2,zipw1": 875
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 4
+   },
+   "16": {
+    "budget": 80000,
+    "mean_cert_patterns": 133.2,
+    "mean_novel_mechanisms": 7.75,
+    "new_certified_mechanisms_per_1k_charges": 0.0969,
+    "raw_qualified_skeletons_per_1k_charges": 41.4469,
+    "rows": [
+     {
+      "cert_patterns_seen": 144,
+      "first_qualified_charge": 2115,
+      "novel_mechanisms": 13,
+      "qualified_genotypes": 10891,
+      "qualified_skeletons": 4130,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {
+       "add1,div1,drop1,mul1,neg1,pow1,zipw1": 2115,
+       "add1,div1,drop1,mul1,pow1,zipw1": 2118,
+       "add1,div1,gcd1,last1,mul1,neg1,pow1,zipw1": 2207,
+       "add1,div1,gcd1,mod1,pow1,sub1,zipw1": 2157,
+       "add1,div1,gcd1,mod1,pow1,zipw1": 2131,
+       "add1,div1,gcd1,mod2,pow1,zipw1": 2142,
+       "add1,div1,gcd1,neg1,pow1,sub1,zipw1": 2202,
+       "add1,div1,gcd1,neg1,pow1,zipw1": 2206,
+       "add1,div1,gcd1,neg2,pow1,sub1,zipw1": 2204,
+       "add1,div1,gcd1,pow1,rev1,zipw2": 2237,
+       "add1,div1,gcd1,pow1,sub1,zipw1": 2162,
+       "add1,div1,gcd1,pow1,zipw2": 2240,
+       "add1,div1,min1,pow1,rev1,zipw2": 2234,
+       "add1,div1,mod1,pow1,zipw1": 2124,
+       "add1,div1,mul1,pow1,rev1,zipw1": 2252,
+       "add1,div1,mul1,pow1,zipw1": 2244,
+       "add1,div1,pow1,zipw1": 2119,
+       "add1,div2,gcd1,pow1,sub1,zipw1": 2165,
+       "add2,div1,gcd1,neg1,pow1,zipw1": 2214,
+       "add2,div1,gcd1,neg2,pow1,zipw1": 2224
+      }
+     },
+     {
+      "cert_patterns_seen": 106,
+      "first_qualified_charge": 714,
+      "novel_mechanisms": 4,
+      "qualified_genotypes": 9670,
+      "qualified_skeletons": 2895,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {
+       "div1,gcd1,mul1,pow1,rev1,zipw2": 716,
+       "div1,gcd1,mul1,pow1,zipw2": 714,
+       "drop1,head1,map1,mul1,neg1,pow1,rev1,zipw1": 752,
+       "drop1,head1,map1,mul1,neg1,pow1,zipw1": 753,
+       "drop1,mul1,pow1,rev1,zipw2": 744,
+       "drop1,mul1,pow1,rev3,zipw2": 742,
+       "head1,map1,mul1,pow1,rev1,zipw1": 748,
+       "len1,map1,mul1,neg2,pow1,take1,zipw1": 798,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw1": 790,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw2": 791,
+       "len1,mul1,neg1,pow1,take1,zipw1": 796,
+       "len1,mul1,pow1,rev1,take1,zipw1": 786,
+       "map1,mul1,pow1,zipw1": 764,
+       "mul1,pow1,rev1,zipw1": 746,
+       "mul1,pow1,rev1,zipw2": 733,
+       "mul1,pow1,rev2,zipw2": 739,
+       "mul1,pow1,rev4,zipw2": 741,
+       "mul1,pow1,zipw1": 730,
+       "mul2,neg1,pow1,rev1,zipw2": 734,
+       "mul2,neg1,pow1,rev2,zipw2": 735
+      }
+     },
+     {
+      "cert_patterns_seen": 155,
+      "first_qualified_charge": 1129,
+      "novel_mechanisms": 11,
+      "qualified_genotypes": 7839,
+      "qualified_skeletons": 3278,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {
+       "add1,div1,gcd1,map1,mul1,pow2": 1214,
+       "add1,div1,map1,mul1,neg1,pow2": 1190,
+       "add1,div1,map1,mul1,pow2": 1191,
+       "add1,drop1,last1,map1,mul2,neg1,pow1": 1279,
+       "add1,foldl1,map1,mul1,pow2": 1221,
+       "add1,foldl1,map1,mul1,pow2,rev1": 1231,
+       "add1,last1,map1,mul2,neg1,pow1": 1277,
+       "add1,last1,map1,mul2,pow1": 1286,
+       "add1,map1,mul1,neg1,pow1": 1275,
+       "add1,map1,mul1,pow2": 1176,
+       "add1,map1,mul2,pow2": 1180,
+       "add2,map1,mul1,neg1,pow1": 1270,
+       "add2,map1,mul1,neg1,pow2": 1266,
+       "add2,map1,mul1,pow2": 1238,
+       "add2,map2,mul1,neg1,pow2": 1261,
+       "add2,map2,mul1,pow2": 1250,
+       "map1,mod1,mul1,pow1": 1146,
+       "map1,mod1,mul2,pow1": 1129,
+       "map1,mul1,pow1": 1160,
+       "map1,mul1,pow2": 1165
+      }
+     },
+     {
+      "cert_patterns_seen": 128,
+      "first_qualified_charge": 680,
+      "novel_mechanisms": 3,
+      "qualified_genotypes": 7324,
+      "qualified_skeletons": 2960,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "add1,gcd1,map1,pow2": 705,
+       "div1,map1,mul1,pow2": 682,
+       "div1,map1,pow2": 680,
+       "drop1,gcd1,map3,pow2": 911,
+       "drop1,map1,neg1,pow3": 814,
+       "drop1,map2,pow2": 912,
+       "drop1,map3,pow2": 907,
+       "gcd1,map1,neg1,pow2": 836,
+       "gcd1,map1,neg1,pow3": 835,
+       "gcd1,map1,pow2": 704,
+       "map1,mul1,pow2": 683,
+       "map1,neg1,pow2": 720,
+       "map1,neg1,pow2,zipw1": 738,
+       "map1,neg2,pow2": 762,
+       "map1,pow2": 703,
+       "map1,pow3": 809,
+       "map2,pow2": 856,
+       "map3,pow2": 871,
+       "map3,pow2,rev1,zipw1": 878,
+       "map3,pow2,zipw1": 875
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 4
+   },
+   "4": {
+    "budget": 20000,
+    "mean_cert_patterns": 92.8,
+    "mean_novel_mechanisms": 7.75,
+    "new_certified_mechanisms_per_1k_charges": 0.3875,
+    "raw_qualified_skeletons_per_1k_charges": 63.7,
+    "rows": [
+     {
+      "cert_patterns_seen": 101,
+      "first_qualified_charge": 2115,
+      "novel_mechanisms": 13,
+      "qualified_genotypes": 2960,
+      "qualified_skeletons": 1674,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {
+       "add1,div1,drop1,mul1,neg1,pow1,zipw1": 2115,
+       "add1,div1,drop1,mul1,pow1,zipw1": 2118,
+       "add1,div1,gcd1,last1,mul1,neg1,pow1,zipw1": 2207,
+       "add1,div1,gcd1,mod1,pow1,sub1,zipw1": 2157,
+       "add1,div1,gcd1,mod1,pow1,zipw1": 2131,
+       "add1,div1,gcd1,mod2,pow1,zipw1": 2142,
+       "add1,div1,gcd1,neg1,pow1,sub1,zipw1": 2202,
+       "add1,div1,gcd1,neg1,pow1,zipw1": 2206,
+       "add1,div1,gcd1,neg2,pow1,sub1,zipw1": 2204,
+       "add1,div1,gcd1,pow1,rev1,zipw2": 2237,
+       "add1,div1,gcd1,pow1,sub1,zipw1": 2162,
+       "add1,div1,gcd1,pow1,zipw2": 2240,
+       "add1,div1,min1,pow1,rev1,zipw2": 2234,
+       "add1,div1,mod1,pow1,zipw1": 2124,
+       "add1,div1,mul1,pow1,rev1,zipw1": 2252,
+       "add1,div1,mul1,pow1,zipw1": 2244,
+       "add1,div1,pow1,zipw1": 2119,
+       "add1,div2,gcd1,pow1,sub1,zipw1": 2165,
+       "add2,div1,gcd1,neg1,pow1,zipw1": 2214,
+       "add2,div1,gcd1,neg2,pow1,zipw1": 2224
+      }
+     },
+     {
+      "cert_patterns_seen": 71,
+      "first_qualified_charge": 714,
+      "novel_mechanisms": 4,
+      "qualified_genotypes": 2568,
+      "qualified_skeletons": 1241,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {
+       "div1,gcd1,mul1,pow1,rev1,zipw2": 716,
+       "div1,gcd1,mul1,pow1,zipw2": 714,
+       "drop1,head1,map1,mul1,neg1,pow1,rev1,zipw1": 752,
+       "drop1,head1,map1,mul1,neg1,pow1,zipw1": 753,
+       "drop1,mul1,pow1,rev1,zipw2": 744,
+       "drop1,mul1,pow1,rev3,zipw2": 742,
+       "head1,map1,mul1,pow1,rev1,zipw1": 748,
+       "len1,map1,mul1,neg2,pow1,take1,zipw1": 798,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw1": 790,
+       "len1,mul1,neg1,pow1,rev1,take1,zipw2": 791,
+       "len1,mul1,neg1,pow1,take1,zipw1": 796,
+       "len1,mul1,pow1,rev1,take1,zipw1": 786,
+       "map1,mul1,pow1,zipw1": 764,
+       "mul1,pow1,rev1,zipw1": 746,
+       "mul1,pow1,rev1,zipw2": 733,
+       "mul1,pow1,rev2,zipw2": 739,
+       "mul1,pow1,rev4,zipw2": 741,
+       "mul1,pow1,zipw1": 730,
+       "mul2,neg1,pow1,rev1,zipw2": 734,
+       "mul2,neg1,pow1,rev2,zipw2": 735
+      }
+     },
+     {
+      "cert_patterns_seen": 114,
+      "first_qualified_charge": 1129,
+      "novel_mechanisms": 11,
+      "qualified_genotypes": 1853,
+      "qualified_skeletons": 1110,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {
+       "add1,div1,gcd1,map1,mul1,pow2": 1214,
+       "add1,div1,map1,mul1,neg1,pow2": 1190,
+       "add1,div1,map1,mul1,pow2": 1191,
+       "add1,drop1,last1,map1,mul2,neg1,pow1": 1279,
+       "add1,foldl1,map1,mul1,pow2": 1221,
+       "add1,foldl1,map1,mul1,pow2,rev1": 1231,
+       "add1,last1,map1,mul2,neg1,pow1": 1277,
+       "add1,last1,map1,mul2,pow1": 1286,
+       "add1,map1,mul1,neg1,pow1": 1275,
+       "add1,map1,mul1,pow2": 1176,
+       "add1,map1,mul2,pow2": 1180,
+       "add2,map1,mul1,neg1,pow1": 1270,
+       "add2,map1,mul1,neg1,pow2": 1266,
+       "add2,map1,mul1,pow2": 1238,
+       "add2,map2,mul1,neg1,pow2": 1261,
+       "add2,map2,mul1,pow2": 1250,
+       "map1,mod1,mul1,pow1": 1146,
+       "map1,mod1,mul2,pow1": 1129,
+       "map1,mul1,pow1": 1160,
+       "map1,mul1,pow2": 1165
+      }
+     },
+     {
+      "cert_patterns_seen": 85,
+      "first_qualified_charge": 680,
+      "novel_mechanisms": 3,
+      "qualified_genotypes": 1920,
+      "qualified_skeletons": 1071,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "add1,gcd1,map1,pow2": 705,
+       "div1,map1,mul1,pow2": 682,
+       "div1,map1,pow2": 680,
+       "drop1,gcd1,map3,pow2": 911,
+       "drop1,map1,neg1,pow3": 814,
+       "drop1,map2,pow2": 912,
+       "drop1,map3,pow2": 907,
+       "gcd1,map1,neg1,pow2": 836,
+       "gcd1,map1,neg1,pow3": 835,
+       "gcd1,map1,pow2": 704,
+       "map1,mul1,pow2": 683,
+       "map1,neg1,pow2": 720,
+       "map1,neg1,pow2,zipw1": 738,
+       "map1,neg2,pow2": 762,
+       "map1,pow2": 703,
+       "map1,pow3": 809,
+       "map2,pow2": 856,
+       "map3,pow2": 871,
+       "map3,pow2,rev1,zipw1": 878,
+       "map3,pow2,zipw1": 875
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 4
+   }
+  },
+  "A-FRESH": {
+   "1": {
+    "budget": 5000,
+    "mean_cert_patterns": 7.8,
+    "mean_novel_mechanisms": 0.0,
+    "new_certified_mechanisms_per_1k_charges": 0.0,
+    "raw_qualified_skeletons_per_1k_charges": 0.0,
+    "rows": [
+     {
+      "cert_patterns_seen": 8,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 7,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 9,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 7,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {}
+     }
+    ],
+    "seeds": 4,
+    "success": 0
+   },
+   "16": {
+    "budget": 80000,
+    "mean_cert_patterns": 18.2,
+    "mean_novel_mechanisms": 0.5,
+    "new_certified_mechanisms_per_1k_charges": 0.0063,
+    "raw_qualified_skeletons_per_1k_charges": 0.0094,
+    "rows": [
+     {
+      "cert_patterns_seen": 17,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 14,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 19,
+      "first_qualified_charge": 20751,
+      "novel_mechanisms": 1,
+      "qualified_genotypes": 1,
+      "qualified_skeletons": 1,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {
+       "pow2,zipw1": 20751
+      }
+     },
+     {
+      "cert_patterns_seen": 23,
+      "first_qualified_charge": 13799,
+      "novel_mechanisms": 1,
+      "qualified_genotypes": 2,
+      "qualified_skeletons": 2,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "map1,mul1,pow1": 67260,
+       "map1,pow2": 13799
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 2
+   },
+   "4": {
+    "budget": 20000,
+    "mean_cert_patterns": 12.2,
+    "mean_novel_mechanisms": 0.25,
+    "new_certified_mechanisms_per_1k_charges": 0.0125,
+    "raw_qualified_skeletons_per_1k_charges": 0.0125,
+    "rows": [
+     {
+      "cert_patterns_seen": 10,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 13,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 12,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 14,
+      "first_qualified_charge": 13799,
+      "novel_mechanisms": 1,
+      "qualified_genotypes": 1,
+      "qualified_skeletons": 1,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "map1,pow2": 13799
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 1
+   }
+  },
+  "B1-RETAIN": {
+   "1": {
+    "budget": 5000,
+    "mean_cert_patterns": 17.8,
+    "mean_novel_mechanisms": 0.0,
+    "new_certified_mechanisms_per_1k_charges": 0.0,
+    "raw_qualified_skeletons_per_1k_charges": 0.0,
+    "rows": [
+     {
+      "cert_patterns_seen": 11,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 9,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 29,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 22,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {}
+     }
+    ],
+    "seeds": 4,
+    "success": 0
+   },
+   "16": {
+    "budget": 80000,
+    "mean_cert_patterns": 44.0,
+    "mean_novel_mechanisms": 5.25,
+    "new_certified_mechanisms_per_1k_charges": 0.0656,
+    "raw_qualified_skeletons_per_1k_charges": 0.1344,
+    "rows": [
+     {
+      "cert_patterns_seen": 41,
+      "first_qualified_charge": 9740,
+      "novel_mechanisms": 5,
+      "qualified_genotypes": 22,
+      "qualified_skeletons": 16,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {
+       "add1,div1,drop1,pow1,zipw1": 38689,
+       "add1,div1,pow1,zipw1": 38690,
+       "add1,gcd1,neg1,pow2,zipw1": 43011,
+       "add1,gcd1,neg1,pow3,zipw1": 43007,
+       "add2,gcd1,neg1,pow2,sum1,zipw1": 58031,
+       "add2,gcd1,neg1,pow2,zipw1": 58025,
+       "gcd1,head1,mul1,pow1,zipw2": 25349,
+       "gcd1,mod1,mul1,neg2,pow2,zipw1": 71128,
+       "len1,mul1,pow1,rev1,take1,zipw2": 40130,
+       "len1,mul1,pow1,rev1,zipw2": 40128,
+       "len1,mul1,pow1,rev3,zipw2": 40131,
+       "map1,neg1,pow2,zipw1": 23155,
+       "mul1,pow1,zipw1": 9740,
+       "mul2,pow1,rev1,zipw1": 35371,
+       "mul2,pow1,rev2,zipw1": 35367,
+       "mul2,pow1,rev3,zipw1": 35368
+      }
+     },
+     {
+      "cert_patterns_seen": 31,
+      "first_qualified_charge": 9631,
+      "novel_mechanisms": 3,
+      "qualified_genotypes": 6,
+      "qualified_skeletons": 6,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {
+       "add1,gcd2,mul1,pow1,zipw1": 24906,
+       "add1,mul1,neg2,pow1,rev1,zipw2": 64076,
+       "map1,mul1,pow1,zipw2": 9631,
+       "mul1,neg1,pow1,rev1,zipw2": 64078,
+       "mul1,pow1,rev1,zipw1": 11813,
+       "mul1,pow1,zipw1": 13305
+      }
+     },
+     {
+      "cert_patterns_seen": 63,
+      "first_qualified_charge": 32651,
+      "novel_mechanisms": 5,
+      "qualified_genotypes": 9,
+      "qualified_skeletons": 9,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {
+       "add1,map1,pow1": 32651,
+       "drop1,map1,mul1,pow1,rev1,zipw2": 48467,
+       "drop1,map1,mul1,pow1,zipw2": 48468,
+       "drop1,mul1,pow1,zipw2": 48469,
+       "gcd1,mul1,neg2,pow1,rev1,zipw2": 74226,
+       "gcd1,mul1,pow1,rev1,zipw2": 74231,
+       "mul1,neg1,pow1,zipw1": 60660,
+       "mul1,pow1,rev1,zipw2": 48471,
+       "mul1,pow1,zipw2": 48470
+      }
+     },
+     {
+      "cert_patterns_seen": 41,
+      "first_qualified_charge": 16976,
+      "novel_mechanisms": 8,
+      "qualified_genotypes": 13,
+      "qualified_skeletons": 12,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "add1,gcd1,mul1,neg1,pow1,sub1,zipw1": 46583,
+       "add1,map1,pow1": 16976,
+       "drop1,map1,mul1,neg1,pow2,rev1,zipw1": 68708,
+       "drop1,map1,mul1,pow2,rev1,zipw1": 68707,
+       "drop1,mul1,neg1,pow1,rev1,scanl1,zipw1": 37535,
+       "drop1,mul1,neg1,pow1,rev1,zipw1": 37538,
+       "drop1,mul1,neg1,pow1,rev2,zipw1": 37539,
+       "gcd1,mul1,neg1,pow1,sub1,zipw1": 46585,
+       "gcd1,mul1,neg1,pow1,zipw1": 76299,
+       "gcd1,mul1,pow1,zipw1": 76301,
+       "mul1,neg2,pow1,zipw1": 71957,
+       "mul2,neg2,pow1,zipw1": 71960
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 4
+   },
+   "4": {
+    "budget": 20000,
+    "mean_cert_patterns": 28.2,
+    "mean_novel_mechanisms": 1.25,
+    "new_certified_mechanisms_per_1k_charges": 0.0625,
+    "raw_qualified_skeletons_per_1k_charges": 0.0625,
+    "rows": [
+     {
+      "cert_patterns_seen": 19,
+      "first_qualified_charge": 9740,
+      "novel_mechanisms": 1,
+      "qualified_genotypes": 1,
+      "qualified_skeletons": 1,
+      "realised_cells": null,
+      "seed": 0,
+      "skeleton_first_charges": {
+       "mul1,pow1,zipw1": 9740
+      }
+     },
+     {
+      "cert_patterns_seen": 18,
+      "first_qualified_charge": 9631,
+      "novel_mechanisms": 3,
+      "qualified_genotypes": 3,
+      "qualified_skeletons": 3,
+      "realised_cells": null,
+      "seed": 1,
+      "skeleton_first_charges": {
+       "map1,mul1,pow1,zipw2": 9631,
+       "mul1,pow1,rev1,zipw1": 11813,
+       "mul1,pow1,zipw1": 13305
+      }
+     },
+     {
+      "cert_patterns_seen": 49,
+      "first_qualified_charge": null,
+      "novel_mechanisms": 0,
+      "qualified_genotypes": 0,
+      "qualified_skeletons": 0,
+      "realised_cells": null,
+      "seed": 2,
+      "skeleton_first_charges": {}
+     },
+     {
+      "cert_patterns_seen": 27,
+      "first_qualified_charge": 16976,
+      "novel_mechanisms": 1,
+      "qualified_genotypes": 1,
+      "qualified_skeletons": 1,
+      "realised_cells": null,
+      "seed": 3,
+      "skeleton_first_charges": {
+       "add1,map1,pow1": 16976
+      }
+     }
+    ],
+    "seeds": 4,
+    "success": 3
+   }
+  }
+ },
+ "base_budget": 5000,
+ "cpu_s": 416.3,
+ "label": "PLANTED INSTRUMENT CALIBRATION (hand-made witness and dev design); NOT DISCOVERY",
+ "note": "stop_on_hit=False: runs continue after the first qualified program to count distinct certified mechanisms (skeleton = multiset of base primitives of the expanded program).",
+ "scales": [
+  1,
+  4,
+  16
+ ],
+ "seeds": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "toy": "GRADED"
+}
