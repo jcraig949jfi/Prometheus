@@ -18,17 +18,22 @@ Must-fail controls and references (never guide an archive):
   TRACE   exact dev outputs + exact probe outputs   -> the finest behaviour descriptor; reported beside.
   RAND:K  blake2b(salt, genotype) mod K             -> the random-archive control cell function (not qualified).
 
-Qualification test (pre-stated rulers, C-013 D1 convention, thresholds fixed here before any measurement):
+Qualification test = the committed C-013 D1 procedure (rso/reach/descriptor.py + PREREGISTRATION s0: R1 / R1c / R2
+with planted must-fail controls C-FIT and GENO, TRACE beside), PORTED to TFS-1 (their world is not imported); the
+D1 numbers (C-BEH R1 0.006 on p1_slice) are world-specific and are not a comparator here:
   intermediates  = the witness's pruning lattice under the search's own mutation operator (route.lattice) minus W.
-  others (pool)  = uniform samples of every size class 1..min(8, size(W)+1) + programs from short random mutation walks
-                   from the generic starts; lattice members excluded. "Score" = exact dev credit (the search's fitness).
+  others (pool)  = (as D1) uniform random programs -- every size class 1..min(8, size(W)+1) -- plus OFF-PATH one- and
+                   two-step mutants of the target and of every intermediate; plus short random mutation walks from the
+                   generic starts; lattice members excluded. "Score" = exact dev credit (the search's fitness).
+                   20 equal-score others per intermediate (D1 `per`).
   R1  separation = share of (intermediate, equal-score other) pairs put in DIFFERENT cells.          PASS >= 0.90
   R1c            = R1 restricted to pairs whose TRACE differs (behaviourally distinguishable pairs).
   R2  invariance = share of (intermediate, semantics-preserving synonym) pairs put in the SAME cell.  PASS >= 0.90
-  G   granularity= distinct cells / distinct genotypes over the pool (over-splitting guard, Nyx A4). PASS <= 0.50
+  G   granularity= distinct cells / distinct genotypes over the pool (Beta-04 addition, Nyx A4 over-splitting guard;
+                   REPORTED as OVERSPLIT_WARNING if > 0.50, NOT part of the D1 verdict)
   Minimum evidence: >= 20 R1 pairs and >= 20 R2 pairs, else INSUFFICIENT.
   controls_ok    = C-FIT fails R1 AND GENO fails R2 (else the test itself is broken -> every verdict VOID).
-A candidate is QUALIFIED iff R1, R2 and G pass, evidence is sufficient and controls_ok. A failed descriptor makes any
+A candidate is QUALIFIED iff R1 and R2 pass (the D1 rule), evidence is sufficient and controls_ok. A failed descriptor makes any
 archive arm guided by it INSTRUMENT_UNVALIDATED.
 """
 import math
@@ -212,8 +217,8 @@ def build_pool(E: Enumerator, mut: Mutator, view: K.LearnerView, T: str, max_n: 
 
 
 def qualify(task: Dict, witness: str, lib=None, names: Sequence[str] = ("D-BEH", "D-CERT", "D-RES"),
-            per_size: int = 1500, walk_n: int = 6000, max_pairs: int = 40, n_syn: int = 6, seed=0,
-            max_fill: int = 3) -> Dict:
+            per_size: int = 1500, walk_n: int = 6000, max_pairs: int = 20, n_syn: int = 6, seed=0,
+            max_fill: int = 3, mutants_per_node: int = 60) -> Dict:
     """Outcome-free descriptor qualification on a task with a known witness. No search outcome is used."""
     view = K.LearnerView(task)
     T = task["output_type"]
@@ -225,10 +230,28 @@ def qualify(task: Dict, witness: str, lib=None, names: Sequence[str] = ("D-BEH",
     inter_terms = [nd["term"] for k, nd in sorted(lat["nodes"].items()) if k != wkey]
     exclude = set(lat["nodes"]) | {R.canon_text(nd["term"]) for nd in lat["nodes"].values()}
     inter = [_record(t, view, lib) for t in inter_terms]
+    depth_of = {C.to_str(nd["term"]): nd["depth"] for nd in lat["nodes"].values()}
     for rec, t in zip(inter, inter_terms):
         rec["term"] = t
+        rec["depth"] = depth_of[C.to_str(t)]
     max_n = min(8, C.size(W) + 1)
     pool_t = build_pool(E, mut, view, T, max_n, per_size, walk_n, seed, exclude)
+    # D1: off-path one- and two-step mutants of the target and of the intermediates (lattice members excluded)
+    rm = K.rng("POOL-MUT", view.family_id, seed)
+    seen = exclude | {C.to_str(canon_comm(t)) for t in pool_t}
+    for nd in lat["nodes"].values():
+        for j in range(mutants_per_node):
+            c = mut.mutate(nd["term"], T, rm)
+            if c is not None and j % 2 == 1:
+                c2 = mut.mutate(c, T, rm)
+                c = c2 if c2 is not None else c
+            if c is None:
+                continue
+            k = C.to_str(canon_comm(c))
+            if k in seen or C.to_str(c) in exclude:
+                continue
+            seen.add(k)
+            pool_t.append(c)
     pool = [_record(t, view, lib) for t in pool_t]
     by_score: Dict[int, List[int]] = {}
     for j, p in enumerate(pool):
@@ -273,9 +296,10 @@ def qualify(task: Dict, witness: str, lib=None, names: Sequence[str] = ("D-BEH",
         diff = [ic[i] != pc[j] for i, j in pairs]
         bdist = [(ic[i] != pc[j]) for i, j in pairs if cell(trace, inter[i]) != cell(trace, pool[j])]
         same = [ic[i] == cell(d, s) for i, s in syn]
-        by_lvl = {}
+        by_lvl, by_depth = {}, {}
         for (i, j), dd in zip(pairs, diff):
             by_lvl.setdefault(inter[i]["score"], []).append(dd)
+            by_depth.setdefault(inter[i]["depth"], []).append(dd)
         cells = len(set(pc))
         r1 = sum(diff) / len(diff) if diff else None
         r2 = sum(same) / len(same) if same else None
@@ -284,9 +308,12 @@ def qualify(task: Dict, witness: str, lib=None, names: Sequence[str] = ("D-BEH",
                "pairs_R1c": len(bdist), "R2_invariance": r2, "granularity_cells_per_genotype": g,
                "cells_per_distinct_trace": cells / pool_traces if pool_traces else None, "pool_cells": cells,
                "R1_by_intermediate_score": {str(k): round(sum(v) / len(v), 4) for k, v in sorted(by_lvl.items())},
+               "R1_by_prune_depth": {str(k): round(sum(v) / len(v), 4) for k, v in sorted(by_depth.items())},
+               "R1c": "PASS" if bdist and sum(bdist) / len(bdist) >= R1_PASS else "FAIL",
                "R1": "PASS" if r1 is not None and r1 >= R1_PASS else "FAIL",
                "R2": "PASS" if r2 is not None and r2 >= R2_PASS else "FAIL",
-               "G": "PASS" if g is not None and g <= G_PASS else "FAIL"}
+               "G": "PASS" if g is not None and g <= G_PASS else "FAIL",
+               "OVERSPLIT_WARNING": bool(g is not None and g > G_PASS)}
         out["descriptors"][d.name] = rec
     ds = out["descriptors"]
     out["controls_ok"] = ds["C-FIT"]["R1"] == "FAIL" and ds["GENO"]["R2"] == "FAIL"
@@ -298,7 +325,7 @@ def qualify(task: Dict, witness: str, lib=None, names: Sequence[str] = ("D-BEH",
         elif not enough:
             v = "INSUFFICIENT"
         else:
-            v = "QUALIFIED" if (x["R1"] == x["R2"] == x["G"] == "PASS") else "FAIL"
+            v = "QUALIFIED" if (x["R1"] == x["R2"] == "PASS") else "FAIL"      # the C-013 D1 rule
         x["verdict"] = v
     out["qualified"] = [n for n in names if ds[n]["verdict"] == "QUALIFIED"]
     return out

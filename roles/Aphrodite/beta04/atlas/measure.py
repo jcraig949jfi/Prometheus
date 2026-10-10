@@ -302,7 +302,9 @@ def atlas(task: Dict, lib=None, witness: Optional[str] = None, seeds: Sequence =
 def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict] = None,
              search_channel: str = "exact", alt_channels=("partial",), diag_channels=("magnitude",)) -> Dict:
     """CANDIDATE labels (thresholds are frozen-parameter candidates, not frozen). Separate verdicts for
-    enumeration (no credit use) and for credit-guided local search (the mutator arms)."""
+    enumeration (no credit use; crossing = observed qualified hit, else witness rank) and for credit-guided local
+    search (the mutator arms; crossing = the lattice route estimate, a PREDICTION). Empirical ordinary-arm hits are
+    attached beside the prediction (arm_results), never substituted for it."""
     ex = rec.get("existence", {})
     out = {"budget": budget, "scale": scale, "notes": []}
     if ex.get("exists") is False:
@@ -316,14 +318,21 @@ def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict
         out["notes"].append("witness larger than the mutator's max_size")
         return out
     hc = rec["hitting_cost_enumeration"]
-    hits = [r["hit_charge"] for r in hc if r["hit"] and r["hit_charge"] <= budget]
     wr = rec.get("revisitability", {}).get("witness_rank_by_seed", {})
-    rank_lo = [v["rank"] if v.get("rank") else (v.get("bracket") or [None])[0] for v in wr.values()]
-    if len(hits) == len(hc):
+    lim = scale * budget
+    # per seed: the enumeration crossing point = first QUALIFIED hit if observed, else the witness rank (or the lower
+    # end of its bracket) -- an upper bound on the hitting cost
+    crossing = []
+    for r in hc:
+        v = wr.get(str(r["seed"]), {})
+        rank = v.get("rank") or (v.get("bracket") or [None])[0]
+        crossing.append(r["hit_charge"] if r["hit"] else rank)
+    out["enumeration_crossing_by_seed"] = crossing
+    if all(c is not None and c <= budget for c in crossing):
         out["enumeration"] = "REACHED"
-    elif rank_lo and all(r is not None and r <= scale * budget for r in rank_lo):
+    elif all(c is not None and c <= lim for c in crossing):
         out["enumeration"] = "RARITY_LIMIT"
-    elif rank_lo and any(r is not None for r in rank_lo):
+    elif any(c is not None for c in crossing):
         out["enumeration"] = "RARITY_LIMIT_BEYOND_%dx" % scale
     else:
         out["enumeration"] = "UNRESOLVED"
@@ -336,9 +345,10 @@ def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict
     out["crossing_cost_estimate"] = cross
     out["widest_unrewarded_segment_search_channel"] = \
         rt["best_for_" + search_channel]["gradient"][search_channel]["widest_unrewarded_segment"]
-    lim = scale * budget
-    if arm_results and any(arm_results.get(a, 0) > 0 for a in ("A-FRESH", "A-CHAIN")):
-        out["local_search"] = "REACHED"
+    if arm_results is not None:
+        out["local_search_empirical_hits_at_B"] = {a: arm_results.get(a) for a in ("A-FRESH", "A-CHAIN")}
+    if cross[search_channel] <= budget:
+        out["local_search"] = "REACHED_PREDICTED"
     elif cross[search_channel] <= lim:
         out["local_search"] = "RARITY_LIMIT"
     elif any(cross[ch] <= lim for ch in alt_channels):
@@ -353,23 +363,39 @@ def classify(rec: Dict, budget: int, scale: int = 16, arm_results: Optional[Dict
                                     "credit; used by no search here) WOULD see a gradient (crossing estimate %.3g)"
                                     % (ch, cross[ch]))
     return out
-    g_cf = rt["credit_favourable"]["gradient"]
-    sc = {ch: g_cf[ch] for ch in search_channels}
-    best = min(sc.values(), key=lambda g: g["crossing_cost_estimate"])
-    cross = best["crossing_cost_estimate"]
-    out["crossing_cost_estimate_best_search_channel"] = cross
-    out["widest_unrewarded_segment_exact"] = g_cf["exact"]["widest_unrewarded_segment"]
-    if arm_results and any(arm_results.get(a, 0) > 0 for a in ("A-FRESH", "A-CHAIN")):
-        out["local_search"] = "REACHED"
-    elif cross <= scale * budget:
-        out["local_search"] = "RARITY_LIMIT"
+
+
+def classify_empirical(cost: Dict, budget: int, alpha: float = 0.05) -> Dict:
+    """EMPIRICAL flags from paired CRN censored costs of the chain arms at matched compute (exact sign-flip,
+    one-sided). cost: arm key -> per-seed censored hitting cost (budget when censored).
+      FEEDBACK_USED     credit-guided chain (exact) cheaper than the credit-BLIND chain (A-CHAIN[none])
+      ALT_CREDIT_HELPS  partial-credit chain cheaper than the exact-credit chain
+      DRIFT_CROSSES     the credit-blind chain hits on >= 1 seed (a neutral plateau is crossed without feedback)
+    Candidate reading (independent of whether the target is reached at B, reported as reached_at_B): RARITY_LIMIT-type
+    if FEEDBACK_USED (the search's credit carries it; compute is the remaining limit); else CREDIT_LIMIT if
+    ALT_CREDIT_HELPS; else REACHABILITY_DESERT (no usable feedback in any correctness channel; DRIFT_CROSSES says
+    whether neutral drift still crosses it at this budget)."""
+    from tfs1.membrane import flip_test
+    ex, pa, no = cost.get("A-CHAIN"), cost.get("A-CHAIN[partial]"), cost.get("A-CHAIN[none]")
+    out = {"alpha": alpha}
+    if ex is None or no is None:
+        return out
+    f = flip_test([b - a for a, b in zip(ex, no)])
+    out["guided_vs_blind"] = {k: f[k] for k in ("better", "worse", "tied", "p_one_sided")}
+    out["FEEDBACK_USED"] = f["p_one_sided"] < alpha
+    if pa is not None:
+        g = flip_test([b - a for a, b in zip(pa, ex)])
+        out["partial_vs_exact"] = {k: g[k] for k in ("better", "worse", "tied", "p_one_sided")}
+        out["ALT_CREDIT_HELPS"] = g["p_one_sided"] < alpha
+    out["DRIFT_CROSSES"] = any(c < budget for c in no)
+    hits = sum(c < budget for c in ex)
+    out["exact_chain_hits"] = hits
+    out["blind_chain_hits"] = sum(c < budget for c in no)
+    out["reached_at_B"] = hits * 2 >= len(ex)
+    if out["FEEDBACK_USED"]:
+        out["reading"] = "RARITY_LIMIT"
+    elif out.get("ALT_CREDIT_HELPS"):
+        out["reading"] = "CREDIT_LIMIT"
     else:
-        ex_c = g_cf["exact"]["crossing_cost_estimate"]
-        other = [ch for ch in search_channels if ch != "exact" and g_cf[ch]["crossing_cost_estimate"] < ex_c]
-        out["local_search"] = "CREDIT_LIMIT" if (other and g_cf[other[0]]["crossing_cost_estimate"]
-                                                   <= scale * budget) else "REACHABILITY_DESERT"
-    mg = g_cf["magnitude"]
-    if out["local_search"] == "REACHABILITY_DESERT" and mg["crossing_cost_estimate"] <= scale * budget:
-        out["notes"].append("diagnostic: the magnitude (numeric-closeness) channel, not used by any search here, "
-                            "WOULD see a gradient (crossing estimate %.3g)" % mg["crossing_cost_estimate"])
+        out["reading"] = "REACHABILITY_DESERT"
     return out

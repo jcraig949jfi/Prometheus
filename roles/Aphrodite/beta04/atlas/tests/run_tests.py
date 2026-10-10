@@ -343,13 +343,32 @@ def planted_label_calibration():
     return got
 
 
+@test
+def empirical_flags_and_blind_control():
+    B = 5000
+    g = M.classify_empirical({"A-CHAIN": [100] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [100] * 8}, B)
+    assert g["FEEDBACK_USED"] and not g["ALT_CREDIT_HELPS"] and g["reading"] == "RARITY_LIMIT", g
+    c = M.classify_empirical({"A-CHAIN": [B] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [300] * 8}, B)
+    assert c["reading"] == "CREDIT_LIMIT" and not c["DRIFT_CROSSES"], c
+    d = M.classify_empirical({"A-CHAIN": [B] * 8, "A-CHAIN[none]": [B] * 8, "A-CHAIN[partial]": [B] * 8}, B)
+    assert d["reading"] == "REACHABILITY_DESERT", d
+    # the credit-blind chain (accepts every non-all-FAIL child) keeps exact accounting: one restore, budget charges
+    T, lib = TOYS["GRADED"]
+    view = K.LearnerView(T)
+    E = Enumerator(lib)
+    s = A.Search(view, None, E, "A-CHAIN", 0, 1500, 10, None, stop_on_hit=False, credit="none", keep_log=True)
+    s.run()
+    assert s.charges == 1500 and s.restores == 1
+    return {"graded": g["reading"], "credit": c["reading"], "desert": d["reading"]}
+
+
 def main():
     t0 = time.time()
     tests = [sampler_uniform_over_class, ranks_of_equals_rank_of, route_edges_are_legal_mutations_and_step_prob_exact,
              synonyms_are_semantically_identical, determinism_in_process_and_fresh_process,
              matched_compute_accounting_exact, archive_target_blindness_perturbation, genotype_and_state_restoration,
              random_control_matching, final_evaluation_is_archive_free, descriptor_qualification_controls_behave,
-             crosscheck_tfs1_toy_hitting_cost, planted_label_calibration]
+             crosscheck_tfs1_toy_hitting_cost, planted_label_calibration, empirical_flags_and_blind_control]
     for t in tests:
         t()
     code = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(HERE.glob("*.py"))}

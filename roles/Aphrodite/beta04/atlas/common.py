@@ -12,7 +12,8 @@ A task is split into two views:
 Definitions
 -----------
   QUALIFIED(p)  := p correct on ALL test examples AND (if a witness exists) p agrees with the witness, value-or-FAIL,
-                   on every tribunal input (OPEN DECISION O3: FAIL agreement required).
+                   on every generated tribunal input (OPEN DECISION O3: FAIL agreement required) AND, if the task JSON
+                   carries its own "tribunal" examples, p is correct on all of them.
   exact credit  := number of dev examples on which p's output equals the target (type-exact; FAIL = wrong).
   partial credit:= mean over dev examples of a per-example score in [0,1]: Int/Bool -> 1 if exact else 0;
                    List -> (#positions i < min(len) with out[i] == t[i]) / max(len(out), len(t)) (1 if both empty);
@@ -177,6 +178,8 @@ class Certifier:
         self.witness = C.parse(w) if isinstance(w, str) else w
         self.tribunal = tribunal_inputs(task, salt) if self.witness is not None else []
         self.tribunal_ref = outs_of(self.witness, self.tribunal, lib) if self.witness is not None else []
+        tt = task.get("tribunal")
+        self.task_tribunal = [(list(i), o) for i, o in tt] if isinstance(tt, list) and tt else None
         self.calls = 0
 
     def qualify(self, t) -> Dict:
@@ -188,9 +191,10 @@ class Certifier:
         if self.witness is not None:
             got = [C.run(fn, list(i)) for i in self.tribunal]
             trib_ok = all(C.same_value(a, b) for a, b in zip(got, self.tribunal_ref))
+        task_trib_ok = C.check_dev(fn, self.task_tribunal) if self.task_tribunal is not None else None
         C.U[0], C.U[1] = u
-        return {"test_ok": test_ok, "tribunal_ok": trib_ok,
-                "qualified": bool(test_ok and (trib_ok is None or trib_ok))}
+        return {"test_ok": test_ok, "tribunal_ok": trib_ok, "task_tribunal_ok": task_trib_ok,
+                "qualified": bool(test_ok and trib_ok is not False and task_trib_ok is not False)}
 
     def verify(self, t) -> bool:
         return self.qualify(t)["qualified"]

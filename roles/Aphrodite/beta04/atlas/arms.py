@@ -22,6 +22,15 @@ Arms (factor changed relative to the row above it in brackets):
                 count matches B3's; same L                                               [random-archive control]
   C2-RAND       B2 with RAND:K, K matched to B2's realised cell count                  [random-selection control]
 
+C-013 D1 ladder (rso/reach PREREGISTRATION s3, mapped onto TFS-1; derived from Nyx's design 3318a2098 via C-013 D1,
+Palamedes). One child per parent selection; every archive arm keeps one elite per cell, replaced iff f >= f(elite):
+  D1-chain_strict   chain, child accepted iff f(child) > f(parent)                         C1 = neutral vs strict
+  D1-chain_neutral  chain, f(child) >= f(parent)  (== A-CHAIN)                             C2 = X1 vs chain_neutral
+  D1-X1             descriptor cells; parent = elite of a best-scoring cell; admit iff f >= f(parent)   (retention)
+  D1-X2             as X1, parent cell weight 1/sqrt(1 + times chosen)                    C3 = X2 vs X1 (selection)
+  D1-X3             as X2, OR the child's cell is empty (worse genomes into new cells)    C4 = X3 vs X2
+  D1-X3G            X3 with RAND:K genotype-hash cells, K matched outcome-blind to X3      C5 = X3 vs X3G
+
 Archive entries record: program (genotype text + term), descriptor cell, exact and partial dev credit, acquisition
 cost (charge), lineage (anchor parent entry id; full trajectory via lineage()), the burst index and step at
 acquisition, the RNG state (sha256 of random.getstate(), full state if store_rng=True), and descendant outcomes
@@ -35,6 +44,7 @@ independent of the certifier (tested by perturbing test outputs and the witness)
 import copy
 import hashlib
 import math
+import time
 from collections import Counter
 from typing import Dict, List, Optional, Sequence
 
@@ -53,6 +63,15 @@ SPECS = {
     "B3-CELLADMIT": {"admission": "cell", "selection": "uniform", "descriptor": True},
     "C3-RAND": {"admission": "cell", "selection": "uniform", "descriptor": True, "random": True},
     "C2-RAND": {"admission": "nondecreasing", "selection": "cell_count", "descriptor": True, "random": True},
+    # C-013 D1 one-factor ladder (rso/reach/arms.py + PREREGISTRATION s3), mapped onto TFS-1 search. Attribution:
+    # derived from Nyx's design (3318a2098) via C-013 D1 (Palamedes). One child per parent selection (burst 1).
+    "D1-chain_strict": {"admission": "none", "selection": "start", "descriptor": False, "single_burst": True,
+                        "strict": True},
+    "D1-chain_neutral": {"admission": "none", "selection": "start", "descriptor": False, "single_burst": True},
+    "D1-X1": {"admission": "d1", "selection": "best_cell", "descriptor": True, "burst": 1},
+    "D1-X2": {"admission": "d1", "selection": "cell_count", "descriptor": True, "burst": 1},
+    "D1-X3": {"admission": "d1_new", "selection": "cell_count", "descriptor": True, "burst": 1},
+    "D1-X3G": {"admission": "d1_new", "selection": "cell_count", "descriptor": True, "burst": 1, "random": True},
 }
 DEFAULT_BURST = 10
 
@@ -84,14 +103,14 @@ class Search:
         self.arm, self.spec = arm, SPECS[arm]
         self.T = view.output_type
         self.seed, self.budget = seed, budget
-        self.L = budget + 1 if self.spec.get("single_burst") else burst
+        self.L = budget + 1 if self.spec.get("single_burst") else self.spec.get("burst", burst)
         self.desc = DS.get(descriptor) if (self.spec["descriptor"] and descriptor) else None
         if self.spec["descriptor"] and self.desc is None:
             raise ValueError("arm %s needs a descriptor" % arm)
         self.logdesc = DS.get(log_descriptor) if log_descriptor else None
         self.stop_on_hit, self.watch, self.store_rng, self.keep_log = stop_on_hit, watch, store_rng, keep_log
         self.mut = Mutator(E, max_fill=max_fill, max_size=max_size)
-        if credit not in K.CREDITS:
+        if credit not in K.CREDITS and credit != "none":
             raise ValueError("credit channel %r" % credit)
         self.credit = credit
         self.rng = rng_for(seed, view.family_id)                 # CRN: identical stream start in every arm
@@ -154,7 +173,12 @@ class Search:
         rec = {"text": text, "outs": outs, "probes": probes, "score": K.exact_credit(outs, self.view.targets),
                "partial": round(K.partial_credit(outs, self.view.targets), 6),
                "allfail": all(v == C.FAIL for v in outs)}
-        rec["key"] = rec["score"] if self.credit == "exact" else K.CREDITS[self.credit](outs, self.view.targets)
+        if self.credit == "exact":
+            rec["key"] = rec["score"]
+        elif self.credit == "none":                 # credit-BLIND control: every non-all-FAIL child is accepted
+            rec["key"] = 0
+        else:
+            rec["key"] = K.CREDITS[self.credit](outs, self.view.targets)
         rec["cell"] = self.desc.cell(text, outs, probes, self.view) if self.desc is not None else None
         return rec
 
@@ -207,9 +231,28 @@ class Search:
         self.genos.add(rec["text"])
         return e
 
-    def _admit_entry(self, t, rec, parent_id, force=False) -> Optional[Dict]:
+    def _admit_entry(self, t, rec, parent_id, force=False, parent_key=None) -> Optional[Dict]:
         adm = self.spec["admission"]
         if adm == "none":
+            return None
+        if adm in ("d1", "d1_new"):
+            # D1: admitted iff f(child) >= f(parent) [X3: OR the child's cell is empty]; an admitted child replaces
+            # its cell's elite iff f(child) >= f(elite) or the cell is empty (Nyx archive_arms.py:42-49)
+            c = rec["cell"]
+            empty = c not in self.by_cell
+            if not force and not (rec["key"] >= parent_key or (adm == "d1_new" and empty)):
+                return None
+            if empty:
+                e = self._new_entry(t, rec, parent_id)
+                self.by_cell[c] = len(self.entries) - 1
+                self.cell_order.append(c)
+                return e
+            inc = self.entries[self.by_cell[c]]
+            if rec["key"] >= inc["key"] and rec["text"] != inc["text"]:
+                e = self._new_entry(t, rec, parent_id)
+                self.by_cell[c] = len(self.entries) - 1
+                self.replacements += 1
+                return e
             return None
         if adm == "nondecreasing":
             if rec["text"] in self.genos:
@@ -237,7 +280,7 @@ class Search:
         return None
 
     def live_entries(self) -> List[int]:
-        if self.spec["admission"] == "cell":
+        if self.spec["admission"] in ("cell", "d1", "d1_new"):
             return [self.by_cell[c] for c in self.cell_order]
         return list(range(len(self.entries)))
 
@@ -263,12 +306,20 @@ class Search:
         live = self.live_entries()
         if sel == "uniform":
             e = self.entries[live[self.rng.randrange(len(live))]]
+        elif sel == "best_cell":
+            # D1 X1: the elite of a best-scoring cell; ties broken by cell INSERTION order (TFS-1 cell keys are not
+            # mutually orderable; D1 uses ascending cell key), index = floor(u * #ties)
+            best = max(self.entries[i]["key"] for i in live)
+            ties = [i for i in live if self.entries[i]["key"] == best]
+            e = self.entries[ties[int(self.rng.random() * len(ties))]]
         else:                                                     # cell_count
             cells = self.cell_order
             w = [1.0 / math.sqrt(1 + self.chosen[c]) for c in cells]
             c = self.rng.choices(cells, weights=w)[0]
             self.chosen[c] += 1
             members = self.by_cell[c]
+            if isinstance(members, int):
+                members = [members]
             e = self.entries[members[self.rng.randrange(len(members))]]
         e["times_restored"] += 1
         self.cur = (e["term"], e["key"])
@@ -291,13 +342,18 @@ class Search:
             anchor["children"] += 1
         self._post_eval(child, rec, anchor)
         admitted = None
-        ok_move = (not rec["allfail"]) and rec["key"] >= self.cur[1]
+        if self.spec.get("strict"):
+            ok_move = (not rec["allfail"]) and rec["key"] > self.cur[1]
+        else:
+            ok_move = (not rec["allfail"]) and rec["key"] >= self.cur[1]
         if not rec["allfail"]:
             if self.spec["admission"] == "nondecreasing":
                 if ok_move:
                     admitted = self._admit_entry(child, rec, anchor["id"] if anchor else None)
             elif self.spec["admission"] == "cell":
                 admitted = self._admit_entry(child, rec, anchor["id"] if anchor else None)
+            elif self.spec["admission"] in ("d1", "d1_new"):
+                admitted = self._admit_entry(child, rec, anchor["id"] if anchor else None, parent_key=self.cur[1])
         if admitted is not None and anchor is not None:
             anchor["admitted_children"] += 1
         if anchor is not None:
@@ -381,11 +437,13 @@ class Search:
 def run_arm(task: Dict, lib, arm: str, seed, budget: int, descriptor: Optional[str] = None, burst: int = DEFAULT_BURST,
             stop_on_hit: bool = True, witness: Optional[str] = None, watch=None, E: Optional[Enumerator] = None,
             log_descriptor: Optional[str] = None, final_eval: bool = True, **kw) -> Dict:
+    t0 = time.process_time()
     view = K.LearnerView(task)
     cert = K.Certifier(task, lib, witness)
     E = E or Enumerator(lib)
     s = Search(view, cert, E, arm, seed, budget, burst, descriptor, stop_on_hit, watch, log_descriptor, **kw)
     r = s.run()
+    r["cpu_s"] = round(time.process_time() - t0, 3)
     if final_eval and r["program"]:
         fe = K.final_evaluation(r["program"], task, lib, witness)
         r["final_evaluation"] = fe
@@ -411,7 +469,7 @@ def calibrate_random_k(task: Dict, lib, ref_arm: str, descriptor: str, budget: i
         s.run()
         ref.append(s.realised_cells())
     target = sum(ref) / len(ref)
-    rand_arm = {"B3-CELLADMIT": "C3-RAND", "B2-DESCSEL": "C2-RAND"}[ref_arm]
+    rand_arm = {"B3-CELLADMIT": "C3-RAND", "B2-DESCSEL": "C2-RAND", "D1-X3": "D1-X3G"}[ref_arm]
     k = max(1, round(target))
     hist = []
     for _it in range(3):
