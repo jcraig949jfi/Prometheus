@@ -572,3 +572,51 @@ agrees with its sealed mechanism on 100% of the probe grid.
 * **W4. Production seeds:** with about 1-3 admitted R3 per passing world and 1 in 3 worlds failing, a meaningful E2/E3
   target set needs >= 8-12 production worlds (about 0.3 core-h each).
 * **W5.** Whether R5 = 0 (all HORIZON / chain failures) blocks the E4 depth-2 design.
+
+The coordinator resolved W1-W5 in `windows/E1_V2_RULES.md` ADDENDUM D, which was frozen before production.
+
+## 20. v2 PRODUCTION (12 committed secret worlds; Addendum D)
+
+**Code and config were unchanged.**
+* Generator `c199f0ae`, qualification `22d2c387`, regression `439e168c`.
+* The foundry code is byte-identical to the v2 pilot commit `aa2c1a7b1`.
+* All 12 seed sha256 values match `WORLD_SEED_COMMITMENTS.json`; no secret is in the repo (audited).
+* No technical failure occurred.
+* The only new code is `production_analysis.py`, which is post-hoc and read-only.
+
+**E1 under Addendum D: WORLD_DEMAND_NOT_QUALIFIED.**
+* The per-world gate passes in 5 of 12 worlds.
+* There are **2** mechanism-kind pairings among the admitted R3/R4 families (fp, fs); Addendum D requires >= 3.
+* Full tables: `production/E1_ADDENDUM_D.md` and `.json`; per-rung histograms in `production/QUALIFICATION_REPORT.md`.
+
+| measure | value |
+|---|---|
+| admitted (pooled) | R2 38, R3 8, R4 7, **R5 0** |
+| worlds passing the gate | W2bdef02f, W483b8c31, W0321d83c, W480ffd54, W6eb945cc |
+| main rejections, R3 | CHAIN_C_FAIL 112 (every mechanism type fails as a stepping stone somewhere; s0/s1/f1 most often), CHAIN_D_FAIL 10 (HORIZON 7, NOT_FOUND 2, TRIBUNAL 1), TRIVIAL_BY_REGRESSION 6, NEAR_TRIVIAL 4 |
+| main rejections, R2 | KNOWN_POSITIVE_FAIL:HORIZON 42, TRIVIAL_BY_REGRESSION 11, NEAR_TRIVIAL 8, MOTIF_CAP 4, SYNTHETIC_DEPTH 4, TRIVIAL_BY_BASE_1E6 4, DEV_UNDERDETERMINED 3 |
+| R3/R4 fused motifs (after cap) | MAP(f) o FILTER(p) 6, MAP(if p f) 3, FILTER(p) o MAP(f) 2, ACC(s) o MAP(f) 2, f o ACC(s) 2 |
+| headroom, R3/R4 (acquired-library chain) | CRN rank 22k-362k; order-free rank 31k-387k (estimated N(k)); 10 of 15 within B_small |
+| headroom, R2 (sealed oracle) | 17 of 38 within B_small; 2 admitted families have an order-free rank > 1e6 |
+| base 1e6 dev-consistent count | 0 for every admitted family |
+| hindsight-regression diagnostic (descriptive) | solves **0 of 53** admitted (0 timeouts). It is a lower bound on full hindsight (s21). It does solve all 3 planted regression controls and 6 of 6 sampled TRIVIAL_BY_REGRESSION families |
+
+**Cost:** 4.30 core-h of pipeline (per-family process time; process start-up not included), plus about 0.1 core-h for
+export, analysis and checks, for about 4.4 core-h against the 4.5 cap. Two lanes, every run under 15 CPU-min,
+1,026-1,365 CPU-s per world.
+
+## 21. Production notes
+
+* **The NOT_QUALIFIED verdict is driven by motif coverage, not by triviality.**
+  * Every admitted R3/R4 family is a filter/guard combination of an f with a p, or an s over an f.
+  * No pp, ss, ff or ps pairing survives the chain.
+  * ps and ss compositions need fold steps as stepping stones, and those are beyond the base-search horizon.
+  * ff compositions fail (c) for one of the two f's.
+* **R5 = 0 in production.** By Addendum D, E4 cannot demand depth-2 inheritance from these worlds. This is a stated
+  limitation, not a reason to retune.
+* **Scope of the hindsight-regression diagnostic.** It searches over model structure: class key, keep rule,
+  statistic and recurrence constant. Inside each structure it uses the rung's own fewest-parameter fit, so it is a
+  lower bound. "0 of 53" means no admitted family falls to any single structure in the frozen bank, not to every
+  possible regression.
+* **Arm view.** 1,240 files across 24 opaque arm worlds (12 + 12 YOKED), each exactly `{id, dev}`.
+* **Evaluator view.** In `production/evaluator/`, committed (Addendum D note).
