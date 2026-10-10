@@ -22,6 +22,7 @@
   codebench controls|run M    PAN-33: HumanEval+ pass@1 for a local model (protocol frozen in tests/)
   repobench mine|controls|run M  PAN-34: the program's own functions under its own tests (frozen in tests/)
   review build | review queue [--seat S] [-k N]   PAN-37: ranked review units (signals, never dispatched)
+  reviewcal build             PAN-37: seeded-bug calibration set (items + answer key in the lake only)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -99,6 +100,9 @@ def main(argv=None):
     p.add_argument("what", choices=["build", "queue"])
     p.add_argument("--seat")
     p.add_argument("-k", type=int, default=25)
+    p = sub.add_parser("reviewcal")
+    p.add_argument("what", choices=["build"])
+    p.add_argument("--workers", type=int, default=4)
     p = sub.add_parser("repobench")
     p.add_argument("what", choices=["mine", "controls", "cheat2", "run", "analyze", "diagnose", "report"])
     p.add_argument("model", nargs="?")
@@ -216,6 +220,9 @@ def main(argv=None):
             review.build()
         else:
             review.queue(seat=a.seat, k=a.k)
+    elif a.cmd == "reviewcal":
+        from . import reviewcal
+        reviewcal.build(workers=a.workers)
     elif a.cmd == "repobench":
         from . import repobench
         if a.what == "mine":

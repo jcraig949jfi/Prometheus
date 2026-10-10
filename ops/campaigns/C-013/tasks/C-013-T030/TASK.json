@@ -1,0 +1,59 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T030",
+  "campaign_id": "C-013",
+  "title": "Workstream A: RSO_SCALING_ASSESSMENT.md (three bottlenecks to a 100x throughput increase)",
+  "objective": "Workstream A: RSO_SCALING_ASSESSMENT.md (three bottlenecks to a 100x throughput increase)",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/scale/RSO_SCALING_ASSESSMENT.md"
+  ],
+  "reads": [
+    "roles/Palamedes/prompts/2026-10-10_strategic_expansion/",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/"
+  ],
+  "problem": "Directive s13/s14/s17; ruling s6, s8, s9, s11.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "committed with sources"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/scale/RSO_SCALING_ASSESSMENT.md"
+  ],
+  "kind": "document",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "Palamedes"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false
+}
