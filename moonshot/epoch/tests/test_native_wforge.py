@@ -130,13 +130,27 @@ class TestIdentityAndRefusals(unittest.TestCase):
         self.assertEqual(len(p["wforge_world_sha256"]), 64)
 
     def test_a_different_wforge_is_refused(self):
-        p = dict(params(), wforge_world_sha256="0" * 64)
-        g = genesis(p, 1)
+        # refused twice: a chain cannot even be created for another implementation, and an epoch of such a chain
+        # (genesis built around a checkpoint of this one) is refused at execution
+        good = params()
+        bad = dict(good, wforge_world_sha256="0" * 64)
+        with self.assertRaises(ValueError):
+            NW.initial_checkpoint(bad)
+        g = model.make_genesis("N1", epochs=1, params=bad, approved_code_sha=APPROVED,
+                               initial_checkpoint=NW.initial_checkpoint(good), runtime=NW.NATIVE_WFORGE_V1)
         with self.assertRaises(ValueError):
             model.execute(g.obj, 1, g.initial_checkpoint)
 
     def test_a_checkpoint_for_another_world_is_refused(self):
         a, b = params(seed=1), params(seed=2)
+        g = genesis(a, 1)
+        with self.assertRaises(ValueError):
+            model.execute(g.obj, 1, NW.initial_checkpoint(b))
+
+    def test_a_checkpoint_of_the_same_world_shape_but_another_episode_is_refused(self):
+        # identical mechanics (same genome), so every shape check passes; only the identity check can refuse it
+        # (mutation NM09 survived without this: a different world was refused by its SHAPE, not its identity)
+        a, b = params(episode_seed=3), params(episode_seed=4)
         g = genesis(a, 1)
         with self.assertRaises(ValueError):
             model.execute(g.obj, 1, NW.initial_checkpoint(b))

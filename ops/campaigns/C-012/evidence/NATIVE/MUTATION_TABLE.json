@@ -1,0 +1,150 @@
+{
+ "schema": "moonshot.nf.mutation_table.v1",
+ "head": "8507ee3fbf28e5f34e18b31096b51278035ff4ac",
+ "moonshot_dirty": true,
+ "seconds": 0.7,
+ "results": [
+  {
+   "id": "NM01",
+   "what": "the stochastic stream is not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_several_worlds_conform (moonshot.epoch.tests.test_native_wforge.TestConformance.test_several_worlds_conform) (world_seed=3)"
+  },
+  {
+   "id": "NM02",
+   "what": "pending writes are not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=3)"
+   ],
+   "first_failure": "FAIL: test_several_worlds_conform (moonshot.epoch.tests.test_native_wforge.TestConformance.test_several_worlds_conform) (world_seed=5)"
+  },
+  {
+   "id": "NM03",
+   "what": "the observation history is not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=5)"
+   ],
+   "first_failure": "FAIL: test_chained_epochs_equal_one_monolithic_run (moonshot.epoch.tests.test_native_wforge.TestConformance.test_chained_epochs_equal_one_monolithic_run)"
+  },
+  {
+   "id": "NM04",
+   "what": "the corruption streams are not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=7)"
+   ],
+   "first_failure": "FAIL: test_chained_epochs_equal_one_monolithic_run (moonshot.epoch.tests.test_native_wforge.TestConformance.test_chained_epochs_equal_one_monolithic_run)"
+  },
+  {
+   "id": "NM05",
+   "what": "charge is not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=10)"
+   ],
+   "first_failure": "FAIL: test_a_finished_world_stays_finished (moonshot.epoch.tests.test_native_wforge.TestConformance.test_a_finished_world_stays_finished)"
+  },
+  {
+   "id": "NM06",
+   "what": "the tick is not restored",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=9)"
+   ],
+   "first_failure": "FAIL: test_chained_epochs_equal_one_monolithic_run (moonshot.epoch.tests.test_native_wforge.TestConformance.test_chained_epochs_equal_one_monolithic_run)"
+  },
+  {
+   "id": "NM07",
+   "what": "the policy may act beyond its charge",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance.test_the_policy_never_takes_an_unaffordable_action"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_the_policy_never_takes_an_unaffordable_action (moonshot.epoch.tests.test_native_wforge.TestConformance.test_the_policy_never_takes_an_unaffordable_action)"
+  },
+  {
+   "id": "NM08",
+   "what": "another wforge implementation is accepted",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestIdentityAndRefusals.test_a_different_wforge_is_refused"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_different_wforge_is_refused (moonshot.epoch.tests.test_native_wforge.TestIdentityAndRefusals.test_a_different_wforge_is_refused)"
+  },
+  {
+   "id": "NM09",
+   "what": "a checkpoint of another world is accepted",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestIdentityAndRefusals"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.2,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_checkpoint_of_the_same_world_shape_but_another_episode_is_refused (moonshot.epoch.tests.test_native_wforge.TestIdentityAndRefusals.test_a_checkpoint_of_the_same_world_shape_but_another_episode_is_refused)"
+  },
+  {
+   "id": "NM10",
+   "what": "a finished world keeps ticking",
+   "file": "epoch/native_wforge.py",
+   "targets": [
+    "moonshot.epoch.tests.test_native_wforge.TestConformance.test_a_finished_world_stays_finished"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_finished_world_stays_finished (moonshot.epoch.tests.test_native_wforge.TestConformance.test_a_finished_world_stays_finished)"
+  }
+ ],
+ "killed": 10,
+ "total": 10
+}
