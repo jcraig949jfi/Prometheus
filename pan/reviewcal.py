@@ -564,6 +564,11 @@ def review_run(model, version=2, gen=None, think=False, budget=512, record=True,
                         (run_id, host(), json.dumps(dict(model=model, version=version, think=think, budget=budget,
                                                          ollama=ollama_version())), json.dumps(summ)))
         summ["run_id"] = run_id
+    if not model.startswith("control:"):
+        # unload the model: Ollama keeps it in VRAM for minutes, and the GPU-idle gate counts memory (2026-10-10:
+        # the next PAN-34 run was refused for 10 GB left by this run)
+        import subprocess
+        subprocess.run(["ollama", "stop", model], capture_output=True, timeout=60)
     out(json.dumps(summ))
     return summ
 

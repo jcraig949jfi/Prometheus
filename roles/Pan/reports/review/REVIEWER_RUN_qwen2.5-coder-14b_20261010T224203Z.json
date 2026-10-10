@@ -1,0 +1,35 @@
+{
+ "model": "qwen2.5-coder:14b",
+ "run_id": "reviewcal-run-20261010T224203Z-spectrex5",
+ "set": "v2 (ITEMS_V2_20261010T164207Z)",
+ "protocol": "prereg v2 A1 (Ollama 0.35.0; temperature 0, seed 1, 512 tokens, thinking off)",
+ "lease": "lse-561205381584 spectrex5:gpu0 22:40:28Z-22:42:03Z",
+ "summary": {
+  "hits": 26,
+  "mutants": 40,
+  "recall": 0.65,
+  "recall_wilson95": [
+   0.495,
+   0.779
+  ],
+  "false_alarms": 6,
+  "clean": 20,
+  "false_alarm_rate": 0.3,
+  "false_alarm_wilson95": [
+   0.145,
+   0.519
+  ],
+  "parse_errors": 2,
+  "chance_bar": 0.21,
+  "recall_lower95": 0.495,
+  "better_than_chance": true,
+  "seconds": 95.3
+ },
+ "per_operator_hit_wrongline_nobug": {
+  "arith_flip": "4/0/1",
+  "cmp_flip": "5/0/2",
+  "negate_test": "9/0/4",
+  "off_by_one": "8/0/7"
+ },
+ "note": "every flagged mutant was flagged at the right line (0 wrong-line flags): its errors are all 'no bug' on a mutant (14) or 'bug' on a clean item (6); 2 parse errors, both on mutants (counted as misses). Weakest on off_by_one (8/15); false alarms skew to longer clean functions (6 of 20: lengths 5-26)."
+}
