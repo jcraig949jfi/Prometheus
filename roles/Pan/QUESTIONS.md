@@ -1,6 +1,6 @@
 # Pan -- questions for the operator
 
-Currency: 2026-10-09T14:37Z. The operator reviews this file about every 6
+Currency: 2026-10-10T13:32Z. The operator reviews this file about every 6
 hours (charter C8). No question here blocks the seat: each carries the
 DEFAULT the seat runs until answered (MWO-0004 R1). Answer inline under
 "ANSWER:" or in chat; the seat moves answered rows to the bottom with
@@ -11,27 +11,6 @@ that item without you); PREF = your preference changes the design, but a
 safe default exists; FYI = a fact you asked to be told.
 
 ## OPEN
-
-Q-001 | HARD (privileged host change on M1) | 2026-10-09
-  pgvector is NOT installed on the M1 cluster (PostgreSQL 17.9, Windows
-  build; measured 2026-10-09: `vector` absent from
-  pg_available_extensions). Installing it means placing vector.dll and
-  the extension's control/SQL files into the PostgreSQL 17 install
-  directory on SKULLPORT (administrator rights), then
-  `CREATE EXTENSION vector` in prometheus_fire. No server restart is
-  needed. May I prepare the install packet (pgvector source tag, build
-  or binary, sha256 of every file, exact copy commands, rollback) for
-  you or a seat on M1 to execute?
-  DEFAULT meanwhile: embeddings live in Postgres as real[] columns and in
-  Parquet; vector search runs in process (exact cosine over a cached
-  matrix). The schema is written so the switch to a `vector` column and
-  an HNSW index is one migration.
-  RECOMMENDATION: yes. Server-side HNSW is what makes vector search
-  usable from every host without each host downloading the matrix.
-  PACKET READY (2026-10-09): roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md --
-  pgvector v0.8.7 source build (VS C++ tools, admin x64 prompt), file
-  hashes, acceptance gates fixed in advance, rollback.
-  ANSWER:
 
 Q-002 | PREF (fleet integration) | 2026-10-09
   Should Pan heartbeat Aporia and be dispatchable by it (CWO-C s7-s9,
@@ -86,6 +65,10 @@ Q-007 | PREF (shared-cluster disk) | 2026-10-09
   shell commands on M1. What budget may Pan use on M1?
   DEFAULT meanwhile: Pan caps itself at 10 GB on M1 and keeps bulk data
   (Parquet/Iceberg files, vector shards) in the lake on M2's NVMe.
+  FACT 2026-10-10 (Atlas, #2056, measured on M1): the cluster's data directory
+  is on SKULLPORT C:, 90 GB free of 954 GB (91 percent used); F: has 2.1 TB
+  free. Schema pan is now 3.5 GB (3,497 MB incl. 0.6 GB of HNSW indexes from
+  PAN-28), so the 10 GB cap would be 11 percent of what C: has left.
   ANSWER:
 
 Q-008 | PREF (cold data) | 2026-10-09
@@ -148,5 +131,37 @@ Q-012 | PREF (trust store on M2) | 2026-10-10
   ANSWER:
 
 ## ANSWERED
+
+Q-001 | HARD (privileged host change on M1) | 2026-10-09
+  pgvector is NOT installed on the M1 cluster (PostgreSQL 17.9, Windows
+  build; measured 2026-10-09: `vector` absent from
+  pg_available_extensions). Installing it means placing vector.dll and
+  the extension's control/SQL files into the PostgreSQL 17 install
+  directory on SKULLPORT (administrator rights), then
+  `CREATE EXTENSION vector` in prometheus_fire. No server restart is
+  needed. May I prepare the install packet (pgvector source tag, build
+  or binary, sha256 of every file, exact copy commands, rollback) for
+  you or a seat on M1 to execute?
+  DEFAULT meanwhile: embeddings live in Postgres as real[] columns and in
+  Parquet; vector search runs in process (exact cosine over a cached
+  matrix). The schema is written so the switch to a `vector` column and
+  an HNSW index is one migration.
+  RECOMMENDATION: yes. Server-side HNSW is what makes vector search
+  usable from every host without each host downloading the matrix.
+  PACKET READY (2026-10-09): roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md --
+  pgvector v0.8.7 source build (VS C++ tools, admin x64 prompt), file
+  hashes, acceptance gates fixed in advance, rollback.
+  ANSWER:
+  EXECUTED 2026-10-10 (no ANSWER line was written here): Atlas built and
+  installed pgvector 0.8.7 on M1 under the operator's chat instruction
+  ("help get the pg_trgm installed, and anything else PAN might need"),
+  relayed in comms #2056 with sha256 receipts (vector.dll cda04ce6...,
+  vector.control 4c972b1a...). Pan verified `vector 0.8.7` in
+  pg_available_extensions and did step 4 itself: migration 012 (extension in
+  schema pan + HNSW expression indexes, no new columns) and 013 (denser
+  graph after real query vectors recalled only 0.659 at ef 40). Controls
+  roles/Pan/reports/controls/PGVECTOR_20261010T132524Z.json PASS 5/5.
+  Rollback stays DROP EXTENSION vector CASCADE.
+
 
 (none yet)

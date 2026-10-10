@@ -171,16 +171,20 @@ def load_matrix(model, refresh=False):
 def vector(query, k=10, model=None, kind=None, seat=None, path=None, since=None, pool=400):
     import numpy as np
     from . import db, embed
+    from . import pgvec
     model = model or embed.default_model()
-    ids, m = load_matrix(model)
-    if len(ids) == 0:
-        return []
-    q = embed.encode_query(query, model)
-    q = q[: m.shape[1]].astype(np.float16)
-    scores = (m @ q).astype(np.float32)
-    top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
-    top = top[np.argsort(-scores[top])]
-    cand = [(int(ids[i]), float(scores[i])) for i in top]
+    if pgvec.backend() == "pg":
+        cand = pgvec.knn("chunk", model, embed.encode_query(query, model), pool)
+    else:
+        ids, m = load_matrix(model)
+        if len(ids) == 0:
+            return []
+        q = embed.encode_query(query, model)
+        q = q[: m.shape[1]].astype(np.float16)
+        scores = (m @ q).astype(np.float32)
+        top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
+        top = top[np.argsort(-scores[top])]
+        cand = [(int(ids[i]), float(scores[i])) for i in top]
     fsql, fargs = _filters(kind, seat, path, since)
     with db.cursor(statement_timeout_ms=60000) as cur:
         cur.execute("""select c.chunk_id, c.artifact_id, a.path, a.kind, a.seat, a.last_commit_at, c.line_start,
@@ -250,14 +254,21 @@ def doc_vector(query, k=10, model=None, kind=None, seat=None, path=None, since=N
     carries its first chunk as the representative passage."""
     import numpy as np
     from . import db, embed
+    from . import pgvec
     model = model or embed.DOC_MODEL
-    ids, m = load_doc_matrix(model)
-    if len(ids) == 0:
-        return []
-    q = embed.encode_query(query, model)[: m.shape[1]].astype(np.float16)
-    scores = (m @ q).astype(np.float32)
-    top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
-    top = top[np.argsort(-scores[top])]
+    if pgvec.backend() == "pg":
+        got = pgvec.knn("doc", model, embed.encode_query(query, model), min(pool, 1000))
+        ids = np.asarray([g for g, _ in got], dtype=np.int64)
+        scores = np.asarray([s for _, s in got], dtype=np.float32)
+        top = np.arange(len(got))
+    else:
+        ids, m = load_doc_matrix(model)
+        if len(ids) == 0:
+            return []
+        q = embed.encode_query(query, model)[: m.shape[1]].astype(np.float16)
+        scores = (m @ q).astype(np.float32)
+        top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
+        top = top[np.argsort(-scores[top])]
     fsql, fargs = _filters(kind, seat, path, since)
     with db.cursor(statement_timeout_ms=60000) as cur:
         cur.execute("""select a.artifact_id, a.path, a.kind, a.seat, a.last_commit_at,
@@ -434,8 +445,8 @@ def similar_cli(path, k=10):
     """Artifacts nearest to PATH by mean chunk embedding."""
     import numpy as np
     from . import db, embed
+    from . import pgvec
     model = embed.default_model()
-    ids, m = load_matrix(model)
     with db.cursor() as cur:
         cur.execute("""select c.chunk_id from pan.chunk c join pan.artifact a on a.artifact_id=c.artifact_id
                        where a.path = %s""", (path,))
@@ -443,11 +454,23 @@ def similar_cli(path, k=10):
     if not mine:
         print("no chunks for", path)
         return
-    pos = np.isin(ids, list(mine))
-    centroid = m[pos].astype(np.float32).mean(axis=0)
-    centroid /= (np.linalg.norm(centroid) or 1.0)
-    scores = (m.astype(np.float32) @ centroid)
-    order = np.argsort(-scores)[:k * 40]
+    if pgvec.backend() == "pg":
+        with db.cursor() as cur:
+            cur.execute("select vec from pan.embedding where model = %s and chunk_id = any(%s)", (model, list(mine)))
+            mv = np.asarray([r[0] for r in cur.fetchall()], dtype=np.float32)
+        centroid = mv.mean(axis=0)
+        centroid /= (np.linalg.norm(centroid) or 1.0)
+        got = pgvec.knn("chunk", model, centroid, min(k * 40, 1000))
+        ids = np.asarray([g for g, _ in got], dtype=np.int64)
+        scores = np.asarray([s for _, s in got], dtype=np.float32)
+        order = np.arange(len(got))
+    else:
+        ids, m = load_matrix(model)
+        pos = np.isin(ids, list(mine))
+        centroid = m[pos].astype(np.float32).mean(axis=0)
+        centroid /= (np.linalg.norm(centroid) or 1.0)
+        scores = (m.astype(np.float32) @ centroid)
+        order = np.argsort(-scores)[:k * 40]
     with db.cursor() as cur:
         cur.execute("""select c.chunk_id, a.path, a.kind, a.seat, a.last_commit_at, c.line_start, c.line_end,
                               c.heading, left(c.body, 200)
@@ -491,8 +514,8 @@ def tables_cli(query):
     from . import db
     with db.cursor() as cur:
         cur.execute("""select dbname, schema_name, rel_name, relkind, est_rows, pg_size_pretty(total_bytes),
-                              similarity(rel_name, %s) as s
-                       from pan.pg_relation where rel_name %% %s or rel_name ilike %s or schema_name ilike %s
+                              pan.similarity(rel_name, %s) as s
+                       from pan.pg_relation where rel_name operator(pan.%%) %s or rel_name ilike %s or schema_name ilike %s
                        order by s desc, total_bytes desc nulls last limit 25""",
                     (query, query, "%" + query + "%", "%" + query + "%"))
         for r in cur.fetchall():

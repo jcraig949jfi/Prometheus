@@ -71,8 +71,10 @@ def embed_items(model=None, batch=32, out=print):
 def like_cli(path, k=10, model=None):
     """Outside papers nearest to a repository file (document vector vs paper vectors)."""
     import numpy as np
-    from .. import db, embed, search
+    from .. import db, embed, pgvec, search
     model = model or embed.DOC_MODEL
+    if pgvec.backend() == "pg":
+        return _like_pg(path, k, model)
     ids, m = search.load_doc_matrix(model)
     with db.cursor() as cur:
         cur.execute("select artifact_id from pan.artifact where source='git' and path=%s", (path,))
@@ -101,5 +103,34 @@ def like_cli(path, k=10, model=None):
             continue
         seen.add(it[2])
         print("{:.3f} {} {:<11} {} {}".format(sc[i], it[1][:6], it[2], it[3], (it[4] or "")[:90]))
+        if len(seen) >= k:
+            break
+
+
+def _like_pg(path, k, model):
+    """like_cli through the HNSW indexes (PAN-28): the file's stored document vector against paper vectors."""
+    from .. import db, pgvec
+    with db.cursor() as cur:
+        cur.execute("select artifact_id from pan.artifact where source='git' and path=%s", (path,))
+        r = cur.fetchone()
+        if not r:
+            print("not in the catalog:", path)
+            return
+        v = pgvec.stored_vector("doc", model, r[0], cur=cur)
+    if v is None:
+        print("no document vector for", path)
+        return
+    got = pgvec.knn("frontier", model, v, min(k * 4, 1000))
+    with db.cursor() as cur:
+        cur.execute("""select item_id, source, source_id, published_at::date, title from pan.frontier_item
+                       where item_id = any(%s)""", ([i for i, _ in got],))
+        meta = {x[0]: x for x in cur.fetchall()}
+    seen = set()
+    for i, sc in got:
+        it = meta.get(i)
+        if not it or it[2] in seen:          # same paper from arXiv and from HF daily
+            continue
+        seen.add(it[2])
+        print("{:.3f} {} {:<11} {} {}".format(sc, it[1][:6], it[2], it[3], (it[4] or "")[:90]))
         if len(seen) >= k:
             break

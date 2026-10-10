@@ -24,6 +24,7 @@
   review build | review queue [--seat S] [-k N]   PAN-37: ranked review units (signals, never dispatched)
   reviewcal build             PAN-37: seeded-bug calibration set (items + answer key in the lake only)
   fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
+  atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -106,6 +107,9 @@ def main(argv=None):
     p.add_argument("-k", type=int, default=25)
     p = sub.add_parser("fleet")
     p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
+    p = sub.add_parser("atlas")
+    p.add_argument("what", choices=["snapshot", "manifest", "controls"])
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build"])
     p.add_argument("--workers", type=int, default=4)
@@ -249,6 +253,14 @@ def main(argv=None):
                 print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
                                                          r["last_machine"], r["last_commit"][:70]))
             print(meta)
+    elif a.cmd == "atlas":
+        from . import atlas_snap
+        if a.what == "snapshot":
+            atlas_snap.snapshot(force=a.force)
+        elif a.what == "manifest":
+            atlas_snap.manifest_cli()
+        else:
+            atlas_snap.controls()
     elif a.cmd == "reviewcal":
         from . import reviewcal
         reviewcal.build(workers=a.workers)

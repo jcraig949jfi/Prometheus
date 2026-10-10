@@ -1,0 +1,188 @@
+{
+ "control": "PAN-27 atlas snapshot",
+ "run_id": "atlas-snapshot-20261010T130725Z-spectrex5",
+ "at": "2026-10-10T13:07:25Z",
+ "verdict": "PASS",
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "every table copied losslessly (rows = count(*), read-back fingerprint = source)",
+   "ok": true,
+   "detail": "35 tables, 143139 rows, mismatched []"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "manifest records the harvest_id range",
+   "ok": true,
+   "detail": "harvest_id 1..364, 164 runs, last finished 2026-10-10T12:30:46Z"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "the session that reads atlas.* cannot write it",
+   "ok": true,
+   "detail": "UPDATE ... WHERE false refused: True"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "an unchanged record is not copied again",
+   "ok": true,
+   "detail": "second pass skipped; fact snapshots 3 -> 3"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a copy with one row dropped fails verify",
+   "ok": true,
+   "detail": "table fact_evidence: 41785 -> 41784 rows"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a copy with one value altered (one trailing space) fails verify",
+   "ok": true,
+   "detail": "table fact_evidence, column locator, row 0"
+  }
+ ],
+ "harvest_id_min": 1,
+ "harvest_id_max": 364,
+ "tables": {
+  "attempt": {
+   "rows": 2377,
+   "fingerprint": "04a36517e89ec117"
+  },
+  "blind_spot": {
+   "rows": 7,
+   "fingerprint": "413be78fb2373467"
+  },
+  "campaign": {
+   "rows": 70,
+   "fingerprint": "83b47391f0f46f4e"
+  },
+  "combination": {
+   "rows": 190,
+   "fingerprint": "eaefc7afc8e8b52a"
+  },
+  "conclusion": {
+   "rows": 600,
+   "fingerprint": "f2a09181a5d022b4"
+  },
+  "defect": {
+   "rows": 221,
+   "fingerprint": "70a892ddfbbccdd6"
+  },
+  "ecosystem": {
+   "rows": 365,
+   "fingerprint": "7196c0d505f36d49"
+  },
+  "ecosystem_reference": {
+   "rows": 870,
+   "fingerprint": "14ab5c3ddc1631c7"
+  },
+  "edge": {
+   "rows": 5693,
+   "fingerprint": "0d5773981701f818"
+  },
+  "engine": {
+   "rows": 20,
+   "fingerprint": "22a4bb1817633897"
+  },
+  "engine_instance": {
+   "rows": 136,
+   "fingerprint": "61965a9856f78d44"
+  },
+  "entity_commit": {
+   "rows": 120,
+   "fingerprint": "edd3c00a44eca999"
+  },
+  "experiment": {
+   "rows": 2270,
+   "fingerprint": "431d72286c4dc611"
+  },
+  "experiment_score": {
+   "rows": 92,
+   "fingerprint": "7dc167a43fb59c47"
+  },
+  "fact": {
+   "rows": 41784,
+   "fingerprint": "470a4ba5a027ffc7"
+  },
+  "fact_evidence": {
+   "rows": 41785,
+   "fingerprint": "d7f67af1e48252e1"
+  },
+  "field_conflict": {
+   "rows": 0,
+   "fingerprint": "0000000000000000"
+  },
+  "git_commit": {
+   "rows": 9662,
+   "fingerprint": "9cfb68efb8884a18"
+  },
+  "harvest_run": {
+   "rows": 164,
+   "fingerprint": "9d8f28a33067d885"
+  },
+  "host": {
+   "rows": 13,
+   "fingerprint": "481576145d6e1c3e"
+  },
+  "idea": {
+   "rows": 54,
+   "fingerprint": "7a60b5baee9d6758"
+  },
+  "identity_collision": {
+   "rows": 30,
+   "fingerprint": "c20eb553d75471ca"
+  },
+  "policy_version": {
+   "rows": 2,
+   "fingerprint": "7a127ebfaa65ef07"
+  },
+  "portfolio_update": {
+   "rows": 10,
+   "fingerprint": "999352994fd2821d"
+  },
+  "primitive": {
+   "rows": 20,
+   "fingerprint": "a13f0ca64123d70a"
+  },
+  "primitive_use": {
+   "rows": 4249,
+   "fingerprint": "a38ec59b05557f7f"
+  },
+  "proposition": {
+   "rows": 10,
+   "fingerprint": "f490f004e9511963"
+  },
+  "proposition_evidence": {
+   "rows": 7,
+   "fingerprint": "a7584da86c0740b6"
+  },
+  "schema_migrations": {
+   "rows": 14,
+   "fingerprint": "2f075ba0e6ede9be"
+  },
+  "seat_instance": {
+   "rows": 146,
+   "fingerprint": "afafab6e28db408b"
+  },
+  "segment": {
+   "rows": 3582,
+   "fingerprint": "83efaadbab75dcec"
+  },
+  "signal": {
+   "rows": 195,
+   "fingerprint": "572d8434f4f376c8"
+  },
+  "source": {
+   "rows": 13995,
+   "fingerprint": "4e82676fea181d17"
+  },
+  "source_link": {
+   "rows": 14246,
+   "fingerprint": "f15f7a0900da055f"
+  },
+  "vocab": {
+   "rows": 140,
+   "fingerprint": "1df8a8f38b2a1031"
+  }
+ }
+}

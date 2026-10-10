@@ -1,0 +1,63 @@
+{
+ "control": "PAN-28 pgvector HNSW",
+ "at": "20261010T131152Z",
+ "verdict": "PASS",
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "'[1,2,3]' <-> '[1,2,4]' = 1",
+   "ok": true,
+   "detail": "1.0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "knn is answered by the HNSW index; the same query without the index expression is not",
+   "ok": true,
+   "detail": "halfvec expression -> index True; vector(384) expression -> index False"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "RECALL: mean top-10 overlap HNSW vs exact >= 0.95 on 1000 random chunk vectors (packet gate, default ef_search 40)",
+   "ok": true,
+   "detail": "recall@10 0.9657 (without the query itself 0.9637, tie-aware 0.9706)"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a vector written after the index build is its own nearest neighbour",
+   "ok": true,
+   "detail": "chunk 74443 -> top-1 74443 cosine 1.0000 (rolled back)"
+  }
+ ],
+ "recall_curve": {
+  "40": {
+   "recall10": 0.9657,
+   "recall10_without_self": 0.9637,
+   "recall10_tie_aware": 0.9706,
+   "p50_ms": 3.2,
+   "p95_ms": 4.8
+  },
+  "100": {
+   "recall10": 0.9793,
+   "recall10_without_self": 0.9778,
+   "recall10_tie_aware": 0.9835,
+   "p50_ms": 4.7,
+   "p95_ms": 7.2
+  },
+  "400": {
+   "recall10": 0.9925,
+   "recall10_without_self": 0.9919,
+   "recall10_tie_aware": 0.9946,
+   "p50_ms": 12.2,
+   "p95_ms": 20.6
+  }
+ },
+ "queries": 1000,
+ "seed": 20261010,
+ "rows": 402070,
+ "indexes": {
+  "pan.embedding_hnsw_bge_small": 469860352,
+  "pan.doc_embedding_hnsw_qwen3": 85475328,
+  "pan.frontier_embedding_hnsw_qwen3": 11984896
+ },
+ "pan_schema_bytes": 3667009536
+}
