@@ -67,7 +67,7 @@ Q-007 | PREF (shared-cluster disk) | 2026-10-09
   (Parquet/Iceberg files, vector shards) in the lake on M2's NVMe.
   FACT 2026-10-10 (Atlas, #2056, measured on M1): the cluster's data directory
   is on SKULLPORT C:, 90 GB free of 954 GB (91 percent used); F: has 2.1 TB
-  free. Schema pan is now 3.5 GB (3,497 MB incl. 0.6 GB of HNSW indexes from
+  free. Schema pan is now 3.6 GB (3,590 MB incl. 0.6 GB of HNSW indexes from
   PAN-28), so the 10 GB cap would be 11 percent of what C: has left.
   ANSWER:
 
