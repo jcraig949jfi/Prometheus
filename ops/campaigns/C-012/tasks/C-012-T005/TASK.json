@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
-  "status": "CLAIMED",
+  "status": "INTEGRATED",
   "history": [
     {
       "status": "PROPOSED",
@@ -25,6 +25,36 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-10T09:05:07Z",
       "note": "Pan answered the lake questions (#2004); design in contract s6; bounded demonstration next"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "RED observed at 425c2b261: Ran 10, errors=10 (NotImplementedError: C-012-T005; catalog_v absent)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 IMPLEMENTING: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 GREEN: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 INTEGRATION_READY: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 INTEGRATED: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables. NOT CLOSED: acceptance also requires Pan's review of the design (contract s6; sent #2010)"
     }
   ],
   "task_id": "C-012-T005",
