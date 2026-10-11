@@ -276,3 +276,22 @@ Interpretation (frozen):
 ## 11-E1. ERRATUM to s11 (2026-10-11T09:19:21Z, F2 complete, BEFORE any F2 outcome was read)
 tools/analyze_f2.py crashed at json.dump: the F2-P0 / F2-P1 "holds" values were numpy booleans (scipy p-values). Fix: cast
 to bool. No rule changed; the crash printed only a traceback.
+
+## 12. F3 -- is composite maintenance limited by mutation? (CONFIRMATORY; frozen 2026-10-11T09:20:56Z, before any F3 run)
+
+Motivation (disclosed, post-F2): the planted COND_ONE composite decays to half-solvers even when half-solvers earn
+nothing (F2), so the decay is a VARIATION effect. Arithmetic: at MED (0.008 per byte per tick) a tape with 10 competence-
+critical bytes takes a hit at ~8% per tick, against ~2% for ECHO -- an error-threshold reading.
+Plan tools/plan_f3.py F1_PLAN OUT (60 runs, a deterministic function of the frozen F1 plan): the 20 F1 W0 worlds (same
+seed, config and founder) at mutation LOW (0.002) and VLOW (0.0005) with payment ON, and VLOW with payment OFF.
+Comparator: the matched F1 W0 worlds at MED, payment ON.
+Analysis tools/analyze_f3.py (synthetic test tools/tests/test_f3.py); keep = a FUNC BOTH at the tick-2,000 census.
+- F3-P0: keep at VLOW-ON > MED-ON (F1: 1/20). Fisher one-sided, p < 0.05.
+- F3-P1: keep at LOW-ON > MED-ON. Same test.
+Interpretation (frozen):
+- P0 HOLDS: composite maintenance is limited by destructive variation (an error threshold), and the E1b / F1 composition
+  null is a mutation-load boundary.
+- P0 FAILS: neither payment structure (F2) nor mutation rate explains it; the cause is left open (competition for
+  space, execution cost), stated as such.
+Reported: VLOW OFF vs ON (does maintenance at low mutation need payment?). Lower mutation also means less search, so F3
+tests maintenance only, not crossing.
