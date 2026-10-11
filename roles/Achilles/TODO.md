@@ -16,3 +16,7 @@ with the closing commit and date, purged after 24 h (base role s7).
       Light load (1 thread) 60-75 C in the first minutes. Check under real worker load; act above ~90 C (lid open or
       cap worker threads). Re-check periodically; add to the node health watchdog when that exists.
 - [ ] ubu008: seat + engine to move off M2 (operator choosing; default proposal Aether REACH01); full /login for RC.
+- [ ] WATCH ubu009 STABILITY (operator 2026-10-11: "sensitive to being moved"): 2 hard hangs 2026-10-11 (installer
+      boot; provision clone while being moved). On each check: `journalctl --list-boots` for boots that end abruptly,
+      record circumstances. Theories in order: 2-in-1 hinge/tablet-mode/accelerometer events (try disabling the
+      tablet-mode switch handling), internal NVMe/cable seating, USB-C adapter port. Fixes list in the machines doc.
