@@ -31,7 +31,11 @@ is >= 4 / >= 5 substitutions away, with one two-source prefix-transfer route.
   - Unpaid: gone by tick 100.
   - 0 crossings from founders 1, 2 or 4 knockouts away. 1-knockout founders have 1-103 SUB routes each.
   - Frozen rule: the composition null is DESTRUCTIVE SELECTION / INSTABILITY, not inaccessibility.
-- F2 (frozen test of the post-hoc mechanism, paired-halves payment): see s6 when complete.
+- F2: paired-halves payment (half-solvers earn nothing) does NOT rescue maintenance (2/20 vs 1/20; F2-P0 fails). The
+  decay does not need paid half-solvers: it is variation, not selection for halves.
+- F3: mutation rate controls maintenance, with a monotone dose-response. Kept to tick 2,000 in 1/20 worlds at MED
+  (0.008), 13/20 at LOW (0.002) and 17/20 at VLOW (0.0005); p 2.0e-7. CAUSALLY_CONFIRMED: an error threshold.
+  At VLOW, payment still matters (17/20 vs 8/20 unpaid).
 
 ## 5. Transplantation
 - C3F (descriptive): a foreign ECHO solver implanted into ECHO-free worlds -> ECHO present at the end 6/10 vs 4/10 for
@@ -41,13 +45,18 @@ is >= 4 / >= 5 substitutions away, with one two-source prefix-transfer route.
 - BEL-48H's complementation mechanism survived transplantation to new operands and world models; nothing composite
   here did.
 
-## 6. F2 result
-(pending)
+## 6. The one crossing (F2 world f2_00022; RESULTS_LOG XR)
+- A KO1 founder (compare operand knocked out, INC-like) regained the composite by a single point change at a birth at
+  tick 652. The deterministic replay is valid at all 11 censuses.
+- 7 of the 8 critical bytes are founder material; 47 carriers were alive at tick 2,000.
+- This is the geometrically predicted distance-1 repair, not an innovation; it occurred in 1 of 40 KO1 worlds.
+- F4 (pending) tests crossing at LOW mutation, where maintenance works.
 
 ## 7. Disposition
 - No composite computational mechanism was BUILT by evolution in this campaign (K2: 0/1,320; E1b: 0/150; F1: 0 from any
   distance).
-- The obstacle is not only distance. In the coupled-v3 setting a composite is not MAINTAINED even when given, and it
-  decays to cheap half-solvers. Whether that is the payment rule's half-credit is tested by F2.
+- The obstacle is not only distance. At the mutation rate at which evolution finds minimal capabilities (MED), a
+  10-critical-byte composite is above the error threshold. It is not MAINTAINED even when planted, and it decays to
+  cheap 2-6-byte half-solvers. The cause is the mutation rate (F3), not payment structure (F2).
 - "Independently useful mechanisms combine without destroying one another": NOT observed. In F1 the composite was
   destroyed into its independently useful parts.

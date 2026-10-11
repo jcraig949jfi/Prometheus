@@ -66,9 +66,13 @@ Results:
 - 0 crossings from any founder, including those one substitution away.
 By the frozen rule, the E1b null is DESTRUCTIVE SELECTION / INSTABILITY, not inaccessibility. The composite is
 downhill-unstable in this setting.
-POST HOC mechanism hypothesis: single-input per-interaction payment gives each half-solver half the composite's income
-with a fraction of its mutational target, which makes the half-solvers an attractor. NEXT_CAMPAIGN #1 tests
-all-or-nothing payment.
+Cause, by two frozen manipulations:
+- F2: removing half-credit (paired-halves payment) does NOT rescue maintenance (2/20 vs 1/20). The half-credit
+  hypothesis is rejected.
+- F3: lowering the mutation rate DOES rescue it, 1/20 (MED) -> 13/20 (LOW) -> 17/20 (VLOW), p 2.0e-7. An error threshold.
+- So cumulative organization in this substrate is bounded by a variation-maintenance conflict. The mutation rate that
+  lets populations find cheap capabilities destroys a ~10-critical-byte composite.
+- The only evolved composite in the campaign (F2, f2_00022) is a distance-1 repair; F4 tests crossing at LOW mutation.
 
 ## 6. Disposition for Workstream C
 - Accumulation of two INDEPENDENT minimal capabilities in one population, kept by payment: observed.
@@ -76,7 +80,8 @@ all-or-nothing payment.
   (F1): in this setting the composite is unstable, so cumulative organization is limited by maintenance, not only by
   reachability.
 - Dependency of the second mechanism on the first: not testable in this substrate at this horizon. The reason is now
-  known: the substrate's payment structure does not maintain the composite (F1).
+  known: at the search mutation rate the composite is above the error threshold (F3); payment structure is not the cause
+  (F2).
 - Lineage-independent persistence: real, confirmed, and environmental (stored near-functional material) for a minimal
   capability.
 - No case was found in which an evolved mechanism changed the accessibility of a future computational mechanism (the

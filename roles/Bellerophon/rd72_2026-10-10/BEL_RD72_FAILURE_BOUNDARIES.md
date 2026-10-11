@@ -35,7 +35,14 @@ extinction.
 - E1b: ECHO + INC coexist and never compose (0/150). DP: 0 routes from evolved material.
 - F1: a planted composite is NOT maintained (1/14 surviving paid worlds; unpaid 0/20), and founders one step away never
   cross. Class (frozen rule): DESTRUCTIVE SELECTION / INSTABILITY.
-- F2 (payment-rule manipulation): pending.
+- F2: removing half-credit payment does not rescue maintenance (2/20 vs 1/20). Not a payment-structure boundary.
+- F3: THE boundary. Maintenance of a 10-critical-byte composite fails at MED mutation (1/20) and holds at LOW (13/20)
+  and VLOW (17/20); CAUSALLY_CONFIRMED (p 2.0e-7). Class: destructive variation, an error threshold.
+  - Below the threshold, payment is still needed (VLOW 17/20 paid vs 8/20 unpaid).
+  - Fault line: minimal capabilities (2-6 critical bytes) sit below the threshold at MED, composites above it. The
+    rate that finds the parts destroys the whole.
+- XR: one distance-1 crossing (point repair) under paired payment, inherited; n = 1.
+- F4 (crossing at LOW mutation; fresh-seed replication of F3): pending.
 
 ## FB5 -- lineage-independent persistence (BEL-48H M4; C2, C2R)
 - Holds: ECHO regenerates after removal of every carrier (C2-b), faster than its first origin. It needs world material:
