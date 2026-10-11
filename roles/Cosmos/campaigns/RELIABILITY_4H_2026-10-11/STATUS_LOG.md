@@ -17,3 +17,24 @@ next          EXP-09 H-SPREAD prereg + run on fresh DISCOVERY batch 4
 c4 head       58bef96c05      holdouts D2 SEALED/UNREAD/UNSPENT   $0
 ======================================================================
 ```
+```
+COSMOS RELIABILITY TEST -- hour 2/4   wake 2026-10-11T08:31:57Z (cron :03; P1 ref 08:13)
+======================================================================
+wake          29 min after cron time, 19 min after P1 reference (window
+              closes 08:33) -> committed at ~08:32: P1 h2 MET (narrowly).
+              Wake latency again ~20-30 min after the session went idle.
+jobs          EXP-09 DONE 60/60 (07:36-08:00). NS-01 jobs (operator order
+              07:44Z): engine qualification 82/82, A/B eval 16/16, Arm D
+              8/8, deep 40/40 -- all DONE under supervise, 0 restarts.
+              sweep ok; nothing running now.
+lease         renewed 08:32Z -> 10:01Z (had 33 min left)
+results       EXP-09 H-SPREAD REJECTED (8a6d96717). NS-01: atlas + protocol
+              frozen (eb0e1c14f), engine QUALIFIED (FR 1/66, FA 0/7),
+              32 proposals evaluated (8407a30bd).
+gap           no job 08:09:25 -> 08:31:57 (idle so the wake could fire;
+              logged); < 30 min.
+next          NS-01 failure-15 candidate (readout decodes the cue better
+              than the full-state decoder: B01, B05, B08) -> prereg test
+c4 head 8a6d96717 | ns01 head 8407a30bd | D2 SEALED/UNREAD/UNSPENT | $0
+======================================================================
+```
