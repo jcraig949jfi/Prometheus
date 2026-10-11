@@ -1,0 +1,166 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-37: THREE LOCAL MODELS SCORED AS CODE REVIEWERS         |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-11 (runs 2026-10-10 22:40Z .. 2026-10-11 01:29Z)            |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  3 reviewers scored on set v2; nothing dispatched (Q-011 open)       |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+The operator wants code reviews done by agents, with each reviewer's
+reliability measured (Q-011). Pan scored three local models on calibration
+set v2:
+  - 40 single-token bugs that the program's own tests catch, and 20 clean
+    functions;
+  - no text giveaways (tell gate passed);
+  - one finding per function; a hit is the right line within +-2.
+The verdict rule was fixed before any reviewer ran: a reviewer beats chance
+only if the low end of its recall interval exceeds 0.70 x its false-alarm
+rate. 0.70 is what "flag the line with the most mutation sites" scores when
+it flags everything.
+
+Verdict:
+  - The instrument separates the reviewers, and the top one by recall FAILS.
+  - qwen3:8b found 29/40 bugs (recall 0.725) but called all 20 clean
+    functions buggy. It never once said "no bug": a flag-everything
+    reviewer, correctly judged not better than chance.
+  - qwen2.5-coder:14b (0.65 recall at 0.30 false alarms) and gemma3:12b
+    (0.35 at 0.20) both beat chance.
+  - Only gemma3 is under Pan's suggested dispatch bar of false alarms
+    <= 0.25, and it misses two bugs in three.
+
+-----
+1. WHAT WAS BUILT (and what was committed before measurement)
+-----
+Before any reviewer was scored:
+  - set v2 rules: pan/tests/reviewcal_prereg_v2.json, pushed 03b9c37c1
+    before generation;
+  - reviewer protocol (amendment A1): Ollama, temperature 0, seed 1,
+    num_ctx 4096, 512 tokens, thinking off; the first JSON object with a
+    "bug" key counts, anything else is no finding;
+  - runner controls 4/4: an oracle passes; non-JSON replies count as 60
+    misses; the site-density non-reviewer fails with and without random
+    abstention.
+Runner: python -m pan reviewcal run MODEL (unloads the model afterwards).
+
+-----
+2. THE CLAIM AND WHY IT MATTERS
+-----
+Claim: on set v2, each reviewer's recall and false-alarm rate, and whether
+it beats the chance bar.
+Why: review findings will be weighted by measured reliability. A reviewer
+that flags everything looks excellent on recall alone. The bar exists to
+catch that, and here it did.
+
+-----
+3. DESIGN AS EXECUTED
+-----
+Each of the 60 functions goes to the model once, code only, lines numbered.
+No path, task id or repository access. Every run was on an idle GPU under
+the Fabric lease spectrex5:gpu0:
+  qwen2.5-coder:14b   2026-10-10 22:40-22:42Z
+  qwen3:8b, gemma3    2026-10-11 01:26-01:29Z
+Ollama 0.35.0 for all three.
+
+-----
+4. RESULTS (40 bugs, 20 clean)
+-----
+  reviewer            hits  recall [Wilson 95%]   false alarms   bar   beats
+  qwen3:8b             29   0.725 [0.572, 0.839]  20/20 = 1.00   0.70   NO
+  qwen2.5-coder:14b    26   0.65  [0.495, 0.779]   6/20 = 0.30   0.21   yes
+  gemma3:12b           14   0.35  [0.221, 0.505]   4/20 = 0.20   0.14   yes
+  parse errors: 0, 2, 0
+
+  Per bug type (hit / flagged a wrong line / said no bug):
+                 off_by_one  negate_test  cmp_flip  arith_flip
+  qwen3:8b       9/6/0       11/2/0       4/3/0     5/0/0
+  qwen2.5-coder  8/0/7       9/0/4        5/0/2     4/0/1
+  gemma3:12b     6/1/8       5/2/6        1/2/4     2/0/3
+
+  Shapes:
+  - qwen3 always says "bug" and often points at a wrong line (11 of 40).
+  - qwen2.5-coder is never wrong about WHERE when it flags (0 wrong-line),
+    but stays silent on 14 bugs.
+  - gemma3 is cautious and imprecise.
+
+-----
+5. INCIDENTS
+-----
+5.1 After the first run, Ollama kept the model loaded (10 GB), and Pan's own
+  GPU-idle gate refused the next PAN-34 run. The runner now unloads its
+  model.
+5.2 Set v1 was retired before any reviewer was scored: a regex that read no
+  code scored 0.45 recall at 0.05 false alarms (prereg A3). These results
+  are on v2 only.
+
+-----
+6. CONTROLS
+-----
+  REVIEWRUN_CONTROLS_20261010T171626Z.json  PASS 4/4 (runner)
+  REVIEWCAL_FLOORS_V2_20261010T164224Z.json PASS 3/3; tell gate USABLE
+    floors: random line 0.361, site density 0.70, regex 0.025
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does:
+  - Measured, prompt-only review skill for three local models on seeded
+    single-token bugs.
+  - The chance bar rejects a flag-everything reviewer that recall alone
+    would have ranked first.
+Does NOT:
+  - measure reviewers that run code or read the repository. Those are out
+    of scope; the bugs were chosen because the tests already catch them.
+  - represent real defects. Single-token mutations are the easy end.
+  - rank qwen2.5-coder against gemma3. They trade recall for false alarms,
+    and 40/20 items give wide intervals.
+  - say anything about frontier models or the seats' own agents. Q-011
+    proposes running them through the same harness before any dispatch.
+
+-----
+8. DECISION / RECOMMENDATION (operator's call; Pan's lean)
+-----
+  a) Q-011 (dispatch review units to seats): Pan's lean remains no dispatch
+     on these results. The one reviewer under the false-alarm bar (gemma3)
+     misses 65% of bugs. Instead, score the seats' own agents on set v2
+     first: the same harness, prompt-only.
+  b) If a local model is used now, use qwen2.5-coder:14b as a second opinion
+     only: when it flags, the line is right. Weight each flag by its
+     measured 0.30 false-alarm rate.
+  c) Do not use qwen3:8b as a reviewer in this protocol (it flags
+     everything).
+  d) "Not worth continuing" is valid: seeded bugs that tests already catch
+     may say little about reviews whose value is catching what tests miss.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  1. qwen3:8b answered "bug: true" every time. Is that the model, or the
+     prompt (it asks "decide whether it contains a bug" with two thirds of
+     items buggy)? Would a prompt stating a base rate change the ranking?
+  2. The bar scales the best floor linearly with the false-alarm rate. Is
+     gemma3's pass at 0.35 recall a real skill, or a cautious near-random
+     abstainer that happens to land above 0.14?
+  3. With 20 clean items, a false-alarm rate is +-0.2 wide. Should the
+     clean side be enlarged before any dispatch decision?
+  4. Thinking was off for all three. Would gpt-oss or qwen3 with thinking on
+     (more tokens) review better? It is not measured.
+
+-----
+10. ARTIFACTS
+-----
+  aggregates: roles/Pan/reports/review/REVIEWER_RUN_qwen2.5-coder-14b_
+    20261010T224203Z.json, REVIEWER_RUN_qwen3-8b_20261011T012720Z.json,
+    REVIEWER_RUN_gemma3-12b_20261011T012909Z.json
+  runs: pan.run kind 'reviewcal-run' (3); replies + answer key in the M2
+    lake only (reviewcal/RUN_*.json, ANSWERS_V2_*.json)
+  rules: pan/tests/reviewcal_prereg_v2.json (A1 = reviewer protocol)
+  leases: lse-561205381584, lse-34107754edd4 (spectrex5:gpu0)
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "test-caught seeded bugs cannot tell a useful reviewer from a lucky one".   |
++==============================================================================+

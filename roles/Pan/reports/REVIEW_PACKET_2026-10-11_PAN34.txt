@@ -1,0 +1,246 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-34: LOCAL MODELS ON THE PROGRAM'S OWN CODE (FINAL)      |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-11 (runs 2026-10-09 21:23Z .. 2026-10-11 01:20Z; packet     |
+|          01:25Z)                                                             |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  COMPLETE for the 5 frozen configurations; size arm NOT RUN (A4)     |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Question: can a model that runs on one 16 GB card rewrite a function of THIS
+program so that the program's own tests pass?
+  - This is an uncontaminated benchmark: functions mined from the repository
+    and scored by the repository's own tests.
+  - It sits beside the public HumanEval+ numbers measured in PAN-33.
+
+Answer:
+  - Sometimes. The best configuration, qwen2.5-coder:14b, passes 59 of 142
+    functions: pass@1 0.415, Wilson 95% [0.338, 0.498].
+  - Every model scores 0.43-0.71 LOWER here than on HumanEval+ (P1 holds).
+    The public benchmark overstates what these models do on this codebase
+    by about half or more.
+  - The top three configurations cannot be told apart:
+      qwen2.5-coder:14b    0.415
+      gpt-oss:20b@4096     0.373
+      qwen3:8b             0.352
+  - The HumanEval+ ranking did NOT transfer (P2 lost). gpt-oss:20b, tied
+    first on HumanEval+, is last here at a 1024-token budget.
+  - The budget is why. gpt-oss spends its tokens before writing code:
+    104 empty answers of 142 at 1024 tokens, still 54 at 4096 (P3 holds:
+    4096 > 1024 by 32 tasks to 0).
+  - The pre-added 32B size arm could not be run on M2 without endangering
+    the machine. It is reported as not run.
+
+-----
+1. WHAT WAS BUILT (and what was committed before measurement)
+-----
+Committed before any model ran (prereg pan/tests/repobench_prereg.json,
+1e5276818, 2026-10-09):
+  - task mining rules;
+  - protocol: greedy decoding, temperature 0, seed 1, num_ctx 8192, budget per
+    configuration, the function body replaced in a sandbox copy;
+  - the 5 configurations;
+  - controls;
+  - the comparison rule (primary: Wilson 95% intervals apart; secondary:
+    exact McNemar, Holm over the 10 pairs);
+  - precommitments P1-P3.
+Amendments, each dated in the file:
+  A1  matching semantics of the test-file exclusion list (before mining).
+  A2  primary set = 142 (the 18 tasks a `pass` body satisfies move to the
+      secondary set); new CHEAT2 control frozen before it ran.
+  A3  adds the size arm (qwen2.5-coder:32b) and P4, outside the Holm family.
+  A4  (2026-10-11, after measurement) records that the size arm was not run;
+      no verdict changed; inserted without editing any frozen line.
+Built: pan/repobench.py (mine, controls, cheat2, run, analyze, diagnose,
+report); tables pan.code_bench; the driver gates every run on a GPU idle for
+a minute, a trailing-24 h GPU budget (<= 3.9 h with the estimate) and two
+Fabric leases.
+
+-----
+2. THE CLAIM AND WHY IT MATTERS
+-----
+Claim: the in-house pass@1 of each configuration, on 142 of the program's own
+functions under their own tests.
+Why: the program plans to use local models for code work: reviews (PAN-37) and
+mutation of its own functions. Public benchmarks are contaminated and
+unrepresentative. This measures the thing directly, on code no model was
+trained to complete.
+
+-----
+3. DESIGN AS EXECUTED
+-----
+Task set (tree 8bda1de0f):
+  1,381 test files
+  -> 755 pass the static filter (A1)
+  -> 491 pass in the sandbox
+  -> 365 candidate functions examined (seed 34): 0 flaky, 103 not seen by
+     their tests, 102 over the cap
+  -> 160 tasks
+  -> primary 142 (A2).
+Each task: the model sees the module with the target body masked and returns
+the body; it is spliced in; the function's own test file decides pass/fail.
+Controls (all before any model):
+  POSITIVE   original bodies pass 160/160                              PASS
+  NEGATIVE   another function's body passes 1/160 (<= 20%)             PASS
+  CHEAT      a `pass` body passes 18/160 (bar <= 10%)        FAIL -> A2
+  CHEAT2     returning the first parameter passes 10/142 = 7.0%
+             (<= 10%, frozen in A2)                                    PASS
+Runs (Ollama 0.35.0, M2 RTX 5060 Ti 16 GB):
+  2026-10-09 21:23-22:41Z   gpt-oss@1024, qwen2.5-coder:14b, gemma3:12b
+  2026-10-10 22:45-22:59Z   qwen3:8b
+  2026-10-10 23:45 - 2026-10-11 01:20Z   gpt-oss@4096
+  The 10-10 runs waited ~13 h for the operator's experiments to free the GPU.
+
+-----
+4. RESULTS (primary set, n = 142)
+-----
+  configuration          passed  pass@1  Wilson 95%      HumanEval+  gap
+  qwen2.5-coder:14b@1024    59   0.415  [0.338, 0.498]     0.853    0.438
+  gpt-oss:20b@4096          53   0.373  [0.298, 0.455]     0.908    0.535
+  qwen3:8b@1024             50   0.352  [0.278, 0.434]     0.779    0.427
+  gemma3:12b@1024           35   0.246  [0.183, 0.323]     0.773    0.527
+  gpt-oss:20b@1024          21   0.148  [0.099, 0.216]     0.853    0.705
+
+Failure shapes:
+  qwen2.5-coder   test failed 83
+  gpt-oss@4096    empty response 54, test failed 29, syntax error 6
+  qwen3:8b        test failed 89, test timeout 2, syntax error 1
+  gemma3          test failed 99, syntax error 8
+  gpt-oss@1024    empty response 104, syntax error 15, test failed 2
+
+Pairs (discordant a-only / b-only; McNemar p; Holm; Wilson):
+  coder vs gemma3          28 / 4    p<0.0001  REJECT  apart
+  oss@4096 vs oss@1024     32 / 0    p<0.0001  REJECT  apart
+  coder vs oss@1024        46 / 8    p<0.0001  REJECT  apart
+  qwen3 vs oss@1024        38 / 9    p<0.0001  REJECT  apart
+  oss@4096 vs gemma3       33 / 15   p=0.0133  keep    overlap
+  qwen3 vs gemma3          24 / 9    p=0.0135  keep    overlap
+  gemma3 vs oss@1024       29 / 15   p=0.0488  keep    overlap
+  coder vs qwen3           20 / 11   p=0.1496  keep    overlap
+  coder vs oss@4096        24 / 18   p=0.4408  keep    overlap
+  oss@4096 vs qwen3        20 / 17   p=0.7428  keep    overlap
+
+Agreement: 61 of 142 tasks solved by no configuration; 6 by all five.
+
+Precommitments:
+  P1 HOLDS  every configuration >= 0.15 below its HumanEval+ score (gaps
+            0.427-0.705).
+  P2 LOST   gemma3 and qwen3 both beat gpt-oss@1024.
+  P3 HOLDS  gpt-oss@4096 0.373 >= gpt-oss@1024 0.148.
+  P4 NOT RUN (size arm; see s5.2, A4).
+
+-----
+5. INCIDENTS (and what they validated)
+-----
+5.1 CHEAT failed before any model ran. A `pass` body satisfied 18/160 tests
+  (tests that only check "does not raise"). Those 18 moved to the secondary
+  set (A2) and a stricter CHEAT2 was frozen before running (7.0%, passes).
+  The primary number therefore never counts a test a do-nothing body passes.
+5.2 Size arm killed.
+  - qwen2.5-coder:32b at num_ctx 8192 loaded at 22 GB on the 16 GB card and
+    ran 35% on the CPU.
+  - The model server took 14 GB of host RAM; M2 reached 89%, and the Claude
+    Code harness stopped the run at about 23:05Z.
+  - Pan stopped the leftover processes, unloaded the model, released both
+    leases and closed the run FAILED (no row used). RAM was back to 44% by
+    23:10Z.
+  - A first cleanup command also terminated its own shell, because its
+    command line matched the pattern it searched for. It was redone with a
+    script that skips its own process tree.
+  - Not rerun: the harness asked not to, and it is the operator's machine
+    (Q-013).
+5.3 Pan's own model blocked Pan's next run. After the reviewer run, Ollama
+  kept qwen2.5-coder:14b resident (10 GB), so the GPU-idle gate refused
+  qwen3:8b. The model was unloaded, and the reviewer runner now unloads its
+  model.
+5.4 Before running gpt-oss@4096, a load check showed 12 GB, 100% on the GPU.
+  Even so, its server held 9.8 GB of host RAM for the whole run (peak RAM 75%,
+  stable). This is worth knowing for anyone sharing M2.
+5.5 P2 was lost on 2026-10-09 by the first three runs. It stayed lost; it was
+  not reinterpreted.
+
+-----
+6. CONTROLS
+-----
+  roles/Pan/reports/repobench/CONTROLS_20261009T212039Z.json
+    POSITIVE 160/160, NEGATIVE 1/160, CHEAT 18/160 (failed -> A2)
+  roles/Pan/reports/repobench/CONTROLS_CHEAT2_20261009T212256Z.json
+    CHEAT2 10/142 (passes)
+  Every run: GPU idle >= 60 s, trailing GPU hours + estimate <= 3.9,
+  spectrex5:cpu12 and spectrex5:gpu0 leases.
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does:
+  - On this program's code, the best 16 GB-class local model rewrites about
+    2 in 5 functions to pass their tests.
+  - HumanEval+ overstates every model here by 0.43-0.71.
+  - Budget-hungry reasoning models need large budgets to compete.
+Does NOT:
+  - separate the top three. A larger task set or several samples per task
+    would be needed.
+  - test anything but greedy decoding at one temperature, one prompt and
+    one context size. gpt-oss with thinking enabled, or a bigger budget,
+    could rank differently.
+  - measure code quality beyond "the tests pass". 103 candidate functions
+    were never seen by their tests, so the task set favours functions with
+    tests.
+  - answer P4 (does size help?). That needs ~14 GB of M2's RAM for 1-2 h
+    (Q-013).
+  - say much about the 61 tasks no model solved; diagnose output exists
+    (DIAGNOSE_20261009T235239Z.json) but is exploratory.
+
+-----
+8. DECISION / RECOMMENDATION (operator's call; Pan's lean)
+-----
+  a) Default local code model for program work: qwen2.5-coder:14b (best point
+     estimate, no truncation, no syntax errors; tied with the next two).
+     Pan's lean: yes, with qwen3:8b as the smaller alternative.
+  b) Retire HumanEval+ as the program's yardstick for local models. Pan's
+     lean: yes; keep it only as a sanity check.
+  c) Q-013 (run the 32B arm at a quiet time vs drop it). Pan's lean: drop
+     unless model size becomes a real decision; it would hold ~14 GB of M2's
+     RAM.
+  d) "Not worth continuing" is valid: one more run will not move these
+     intervals much.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  1. The task set keeps only functions whose own tests see them and that
+     pass in a sandbox (160 functions mined from 1,381 test files). Does
+     that select for easy, well-tested code, making even 0.415 optimistic?
+  2. The masked-body prompt shows the whole module. Is that leakage (sibling
+     functions show the style) or exactly the realistic setting?
+  3. "empty response" for gpt-oss counts as a fail. Is that fair to a model
+     whose thinking cannot be switched off, or should its budget scale with
+     its overhead?
+  4. Holm over 10 pairs at n = 142 has little power for differences < 0.1.
+     Should the program fund more tasks before trusting any ranking among the
+     top three?
+  5. Is one sample per task (greedy) enough, when pass@k would show whether
+     a model "can" vs "does" write the body?
+
+-----
+10. ARTIFACTS
+-----
+  commits: 4bb73da9c (report, analysis, A4); earlier runs and code on main
+    since 2026-10-09
+  prereg: pan/tests/repobench_prereg.json (1e5276818; A1 5bea01bb9; A2
+    d17d33d52; A3; A4 2026-10-11)
+  report: roles/Pan/reports/REPOBENCH_2026-10-11.md
+  analysis: roles/Pan/reports/repobench/ANALYSIS_20261011T012113Z.json
+  manifest: roles/Pan/reports/repobench/TASKS_8bda1de0fdaf.json
+  rows: pan.code_bench; runs pan.run kind 'repobench'
+    (repobench-20261010T230040Z-spectrex5 = the killed size arm, FAILED)
+  question: roles/Pan/QUESTIONS.md Q-013
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "the tests these tasks were chosen by are too weak to rank models".         |
++==============================================================================+
