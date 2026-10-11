@@ -290,3 +290,30 @@ The directive's crossing questions:
 Triviality: this is the geometrically predicted distance-1 repair of a knockout (the founder had 1 SUB route). It shows
 that the dynamics CAN take a one-step route to the composite and keep it, at ~1/20 per 2,000 ticks under paired
 payment. It is NOT an evolved innovation.
+
+## F3 -- is composite maintenance limited by mutation? (prereg s12; CONFIRMATORY; completed 2026-10-11 ~12:10Z)
+60 runs, 0 voids, plan sha256 c9998d12..., pin e662f8944; analysis tools/analyze_f3.py; receipt receipts/F3_analysis.json.
+Same 20 W0 worlds (the planted COND_ONE composite) as F1; only the mutation rate (and, in one arm, payment) changes.
+| mutation (per byte per tick) | payment | composite kept to tick 2,000 | FUNC at end | median last census with a FUNC composite |
+|---|---|---|---|---|
+| MED 0.008 (F1, matched) | ON | 1/20 | 14 | 100 |
+| LOW 0.002 | ON | 13/20 | 15 | 2,000 |
+| VLOW 0.0005 | ON | 17/20 | 18 | 2,000 |
+| VLOW 0.0005 | OFF | 8/20 | 10 | 1,300 |
+- F3-P0 (VLOW > MED): 17/20 vs 1/20, Fisher one-sided p 2.0e-7. HOLDS.
+- F3-P1 (LOW > MED): 13/20 vs 1/20, p 6.8e-5. HOLDS.
+- Dose-response, monotone: 1 -> 13 -> 17 (VLOW > LOW p 0.14, not tested).
+FROZEN INTERPRETATION (s12): composite maintenance is limited by DESTRUCTIVE VARIATION, an error threshold. The E1b / F1
+composition null is a MUTATION-LOAD boundary: at the mutation rate where minimal capabilities (ECHO, INC: 2-6 critical
+bytes) are acquired and kept, a 10-critical-byte composite cannot be kept even when planted.
+Reported:
+- At VLOW, payment still matters: 17/20 paid vs 8/20 unpaid (Fisher p 0.004). Selection for the computation is
+  necessary but not sufficient.
+- With F2: payment structure is not the limiting factor (F2-P0 failed), mutation rate is.
+Consequence for the campaign's central question:
+- Search needs variation and maintenance needs its absence. In this substrate, the rate that lets populations FIND
+  ECHO / INC destroys anything with ~10 critical bytes. So "composition" fails here before reachability is even tested.
+- The next step is variable or self-regulated mutation (e.g. a high-mutation search phase then a low-mutation phase, or
+  heritable copy fidelity), or redundancy: NEXT_CAMPAIGN.
+Limit: the planted composite is the hand-built witness. Whether an evolved composite with redundant critical bytes would
+sit above the threshold is unknown.
