@@ -48,6 +48,8 @@ extinction.
   - Fault line: minimal capabilities (2-6 critical bytes) sit below the threshold at MED, composites above it. The
     rate that finds the parts destroys the whole.
 - XR: one distance-1 crossing (point repair) under paired payment, inherited; n = 1.
+- F5: a MED -> VLOW schedule does not help (0/20 vs 0/20). Distance-1 crossings are rare (2 / 100 KO1 worlds); class:
+  improbable + search volume, on top of the maintenance threshold.
 - F4: the threshold is REPRODUCED on fresh seeds (12/20 LOW vs 1/20 MED). At LOW, one-step precursors still do not
   cross (1/20 vs 0/20; FUNC at end 4/20). Class: search-maintenance conflict; no single fixed rate does both in 2,000
   ticks.

@@ -7,7 +7,9 @@ in 2,000 ticks (F4). Composition and cumulative organization are bounded by MAIN
 The next campaign should attack that bound directly, and keep reachability work tied to it.
 
 1. VARIATION-MAINTENANCE CONFLICT: schedules and heritable fidelity. (F3, F4, F5)
-   - F5 (two-phase MED -> VLOW) is this campaign's first probe; its result is in RESULTS_LOG.
+   - F5 (two-phase MED -> VLOW) FAILED: 0/20 vs 0/20. No composite arose in the MED phase to be kept, because
+     distance-1 crossings are rare (2 in 100 KO1 worlds). Schedules alone are not the remedy; search volume is also
+     short. Use larger populations (1,024+ cells) or many short search worlds feeding a maintenance world.
    - Next: copy fidelity as a HERITABLE trait (an opt-in per-organism mutation-rate gene within bounds). Test whether
      composite-carrying lineages evolve lower rates (second-order selection), against a fixed-rate yoked control.
    - First frozen test: in KO1-founded worlds with heritable fidelity, composite kept at 3,000 ticks > fixed MED.

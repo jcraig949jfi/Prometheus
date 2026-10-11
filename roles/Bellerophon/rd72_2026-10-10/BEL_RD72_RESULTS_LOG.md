@@ -366,3 +366,21 @@ Reading:
 - The BEL-48H "uptake suppresses origination" headline is replaced by a component account. Of the two components, the
   damaging one is the larger and more robust.
 - Limit: LDIR presence is a marker for "precursor", not a measured precursor state. The dose differs by arm.
+
+## F5 -- search at MED, then keep at VLOW (prereg s14; CONFIRMATORY; completed 2026-10-11T21:26Z)
+80 runs, 0 voids, plan sha256 c2ea3c65..., pin 85de14589; analysis tools/analyze_f5.py; receipt receipts/F5_analysis.json.
+| founder (payment ON, 3,000 ticks) | MED -> VLOW at 1,000: crossed / kept / FUNC end | MED throughout: crossed / kept / FUNC end |
+|---|---|---|
+| KO1 (one step away) | 0 / 0 / 11 | 0 / 0 / 9 |
+| ECHOH (E1b-like) | 0 / 0 / 6 | 0 / 0 / 7 |
+- F5-P1 (KO1 kept at 3,000, PHASED > MED): 0/20 vs 0/20. FAILS.
+- Frozen interpretation: a search-then-keep schedule does NOT resolve the conflict at this horizon. No composite was
+  detected in any of the 20 KO1 worlds during the 1,000-tick MED phase, so there was nothing for the VLOW phase to keep.
+  Distance-1 crossings in this setting are rare events: 2 in 100 KO1 worlds over F1, F2, F4 and F5.
+- Replay receipt (free, from the design):
+  - the F5 MED arm reproduces the matched F1 worlds census-for-census to tick 2,000 in 40/40 worlds;
+  - the PHASED arm equals MED to tick 1,000 in 40/40.
+  The z80atlas runs are deterministic across separate pins, launch times and worker counts.
+Consequence: the composite in this substrate is maintenance-limited at MED (F3, F4-R) AND rarely found even from one step
+away (about 1 per 50 worlds per 2,000 ticks). A mutation schedule alone does not fix the second problem. NEXT_CAMPAIGN #1
+shifts from schedules to heritable fidelity and redundancy, with larger populations or longer search phases.
