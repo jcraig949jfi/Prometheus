@@ -295,3 +295,20 @@ Interpretation (frozen):
   space, execution cost), stated as such.
 Reported: VLOW OFF vs ON (does maintenance at low mutation need payment?). Lower mutation also means less search, so F3
 tests maintenance only, not crossing.
+
+## 13. F4 -- crossing once maintenance is possible, and fresh-seed replication of F3 (CONFIRMATORY; frozen 2026-10-11T12:12:20Z, before any F4 run)
+
+Motivation (post-F3, disclosed): at MED mutation the composite cannot be maintained (F3), so F1's 0 crossings cannot
+separate "not reachable" from "reached but not kept". At LOW mutation maintenance works (13/20).
+Plan tools/plan_f4.py F1_PLAN OUT (100 runs; sha256 logged at launch):
+- X: the F1 KO1, KO2 and ECHOH worlds with payment ON (same seed / config / founder) at mutation LOW (0.002).
+- R: 20 FRESH seeds (base 72.5e12), W0 founder, payment ON, MED vs LOW on the same seed.
+Analysis tools/analyze_f4.py (synthetic test tools/tests/test_f4.py):
+- F4-X1: KO1 crossed at LOW > the matched F1 KO1 at MED (0/20). Fisher one-sided, p < 0.05.
+- F4-R: W0 kept at LOW > MED on fresh seeds. Fisher one-sided, p < 0.05; replicates F3-P1 on independent populations.
+Interpretation (frozen):
+- X1 HOLDS: with maintenance possible, distance-1 precursors cross, so the composition null at MED was maintenance, not
+  reachability, at distance 1.
+- X1 FAILS: at LOW, reduced variation also prevents the one-step repair within 2,000 ticks. Search and maintenance
+  cannot both be satisfied by one fixed rate at this horizon.
+- KO2 / ECHOH crossings are reported, not tested. ECHOH is the E1b-like starting point.
