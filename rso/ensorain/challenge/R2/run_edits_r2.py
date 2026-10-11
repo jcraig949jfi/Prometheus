@@ -37,6 +37,9 @@ def edits():
             src = dict(e, source="repair_v110/RED_EDITS.json")
         out[e["id"]] = src
     out["E5_FROZEN_IS_PLASTIC"] = dict(CHALLENGE["E5_FROZEN_IS_PLASTIC"], test=None, source="challenge/edits.json (control)")
+    out["E5_FROZEN_IS_PLASTIC_V110"] = dict(CHALLENGE["E5_FROZEN_IS_PLASTIC"], test=None, source="challenge/edits.json E5 with the v1.1.0 arm tuple (assay.py:146; the T040 find string no longer occurs)",
+        find='plastic, shuffle = arm in ("full", "shuffle", "newlife", "noise", "noswitch"), arm == "shuffle"',
+        replace='plastic, shuffle = arm in ("full", "frozen", "shuffle", "newlife", "noise", "noswitch"), arm == "shuffle"')
     return out
 
 
