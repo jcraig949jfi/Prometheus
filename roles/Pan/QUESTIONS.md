@@ -203,6 +203,20 @@ Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
   syncs: Apollo 2026-09-11, Charon 09-11, Mnemosyne 09-18, Harmonia 10-01,
   Aporia 10-06. #2129 has no live reader but you, so in practice rotation
   is yours (or whoever you wake).
+  URGENT FACT (2026-10-11T17:1xZ): origin is github.com/jcraig949jfi/Prometheus,
+  and an anonymous GitHub API read returns visibility PUBLIC. These values
+  have been publicly readable since they were committed:
+  - apollo/configs/config_v2d2*.yaml, config_v2d3.yaml: 2026-04-04
+    (6f042458b);
+  - apollo/scripts/evolution_monitor.py: 2026-04-06 (d3381beaf);
+  - apollo/scripts/launch_bakeoff_candidate.ps1: 2026-05-22 (e94ca44b1);
+  - evidence_wiki/config.json: 2026-09-01 (c711c5bf6);
+  - roles/Aphrodite/engine/accel/azure/azure.env: 2026-09-23 (96503f81a).
+    This is a committed .env file, which Pan never opens; it may be a
+    template.
+  Treat any real key in these files as compromised. Rotate first. Making the
+  repo private or rewriting history does not un-leak a value that was
+  already public. Pan has taken no outward action.
   ANSWER:
 
 ## ANSWERED

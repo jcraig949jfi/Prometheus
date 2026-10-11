@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-11T16:08Z (date -u).
+Currency: 2026-10-11T17:13Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
   2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
@@ -40,6 +40,8 @@ mcp (PAN-44): local stdio read-only server pan/mcpserve.py (pan_search, pan_pivo
   clearance fixed at launch (generator|evaluator), REFUSE-rule paths never served, read-only DB session;
   controls/MCP_20261011T104148Z.json 15/15; official SDK client (mcp 2.3.0) conformance PASS; registered nowhere
   (Q-015); contract docs/sagacity/MCP_INTERFACE_PROTOTYPE.md.
+SECURITY (17:1xZ): origin github.com/jcraig949jfi/Prometheus is PUBLIC -- PAN-47 credential-shaped files (apollo configs since 2026-04-04,
+  evidence_wiki/config.json since 2026-09-01, a committed azure.env since 2026-09-23) are public; rotate first (Q-017, #2129, #2161).
 continuity: docs/sagacity/CONTINUITY_HANDOFF.md (standing owner: Pan seat in maintenance mode + Mnemosyne DB
   co-owner + Aporia watcher; Q-016 unattended maintenance, default session-driven).
 questions for the operator: QUESTIONS.md (16 open, Q-002..Q-017; Q-017 credential rotation after PAN-47; Q-014 MCP least-privilege role, Q-015 MCP registration; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).
