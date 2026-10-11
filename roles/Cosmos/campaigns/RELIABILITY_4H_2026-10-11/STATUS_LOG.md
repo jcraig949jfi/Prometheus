@@ -38,3 +38,23 @@ next          NS-01 failure-15 candidate (readout decodes the cue better
 c4 head 8a6d96717 | ns01 head 8407a30bd | D2 SEALED/UNREAD/UNSPENT | $0
 ======================================================================
 ```
+```
+COSMOS RELIABILITY TEST -- hour 3/4   wake 2026-10-11T09:31:56Z (cron :03; P1 ref 09:13)
+======================================================================
+wake          29 min after cron, 19 min after P1 reference -> committed
+              ~09:32: P1 h3 MET (narrowly). Latency pattern stable: the
+              session-idle scheduler fires ~29 min after its cron minute.
+jobs          since h2: F15 test, F15 capacity, NS-02 engine requal, NS-01
+              re-measure, NS-02 D loop, NS-02 A/B eval, full suite (NS-01
+              branch 178/178) -- all DONE under supervise, 0 restarts.
+              sweep ok; nothing running now.
+lease         renewed 09:32Z -> 11:01Z (had 30 min left)
+results       NS-01: FAILURE_15 SUPPORTED rel. archive (b4b584bbc); NS-02
+              learning test: redirection NOT SUPPORTED (ff8b8b24a); review
+              packet (d805edc14); NS-01 tests 4/4 (71b2b3853).
+gap           no job 09:03:21 -> 09:31:56 (28.6 min; idle so the wake could
+              fire; logged). P3 limit 30 min: met narrowly.
+next          h4 at ~10:03 cron: final full suite, VERDICT.md vs P1-P6
+D2 SEALED/UNREAD/UNSPENT | confirmation data none | $0
+======================================================================
+```
