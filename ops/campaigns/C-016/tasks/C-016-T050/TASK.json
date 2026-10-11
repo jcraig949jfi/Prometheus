@@ -41,7 +41,7 @@
     "rso/ensorain/RESULT.md"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -78,6 +78,18 @@
       "by": "Argus[harry1-92a4e0d8]",
       "at_utc": "2026-10-11T14:05:37Z",
       "note": "RESULT.md + runs/CONFIRM.json; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:25:07Z",
+      "note": "merged argus/c016-t050 (93a25ff57): freeze OK; independent reproduction rows_sha256 dcdf8a42 identical (all keys equal); measured 266 s wall / ~265 CPU-s / 66 MB; re-analysis reproduces qualified + reference HISTORY_DEPENDENT; integrator mutations (memory_ok tamper -> INSTRUMENT_FAULT + unqualified; dropped row -> refused) caught; newlife prediction scored HELD (.507 < .924); RESULT s4 wording corrected in INTEGRATION.md"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:25:08Z",
+      "note": "result preserved: rso/ensorain/RESULT.md + INTEGRATION.md"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

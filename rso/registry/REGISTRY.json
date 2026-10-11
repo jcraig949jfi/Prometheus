@@ -30,7 +30,7 @@
    "owner": "Palamedes (coordinator); built by Argus under C-009",
    "qualified_scope": "FLAT inventories only: every RECEIPT row's parent is the anchored launch, every COMPLETED RECEIPT row carries receipt_sha256, no node has two RECEIPT rows (the P-FLAT predicate, C-010 PREREGISTRATION s5). Runtime-agnostic within that scope.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/binding/binding.py": "a5a7af0477253b4ff91b1f4ac639c9ba1229891c6633719f54dc0301e593923a",
      "rso/binding/contract.json": "b122aae4499f1d83abbcaac2166fb5514d55ceffd006ea2b28885c5e5707f6c7"
@@ -72,7 +72,7 @@
    "owner": "Palamedes (coordinator); keeper store shared",
    "qualified_scope": "detects bytes that changed after registration, a missing keeper row, and registration after the first check. Records BYTES, not their truth.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/slice001/evidence.py": "bd4e7bbf338bf30e1b4a2fa5bf68ed2b76db93a669a05d27a63584c6faeb2866"
     }
@@ -90,6 +90,7 @@
   },
   {
    "counterexamples": [
+    "C-016-T040: 5 of 6 decision-rule edits survived the frozen suite and were refused only by the freeze hash -- a hash guard protects a run, it pins no behaviour",
     "stale .pyc made a mutant look killed or alive (run with python -B)",
     "an equivalent first mutant on ledger_numbers (C-013-T020 integration)"
    ],
@@ -116,7 +117,7 @@
    "owner": "Palamedes (coordinator); challenge sets are owned by their reviewer",
    "qualified_scope": "single textual edits against committed Python sources, each run in a fresh -B subprocess; classifies KILLED / SURVIVED / ERROR. Used for 7 Q3 challenges and every integrator mutation in C-004..C-013.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/reach/repair_v101/run_red.py": "5e6bac7ae470d69e94d3788d05e3837fba06089ab234f0758a029cb6e6db0540",
      "rso/slice001/mutation.py": "ce90dd4b61f5d6ceca270961de4e91b44af708a698b6caf92f6dbd40563a215b"
@@ -131,7 +132,8 @@
     "C-004",
     "C-009",
     "C-010",
-    "C-013"
+    "C-013",
+    "C-016 (challenge/run_edits.py, repair_v110/run_red.py)"
    ],
    "version": "C-004 mutation.py + RED-edit pattern (C-013 repair_v101)"
   },
@@ -156,7 +158,7 @@
    "owner": "Palamedes (coordinator)",
    "qualified_scope": "canonical identity of JSON receipts built from ints, strings, lists, dicts.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/slice001/receipt.py": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
@@ -169,7 +171,8 @@
    "users": [
     "C-004",
     "C-009 (receipt bytes for binding)",
-    "C-010"
+    "C-010",
+    "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)"
    ],
    "version": "C-004 receipt.py"
   },
@@ -194,7 +197,7 @@
    "owner": "Eupalamus (T023 caps); Palamedes (coordinator)",
    "qualified_scope": "client-side accounting of declared launches; refuses a launch whose DECLARED estimate would exceed a cap. Cross-checked to the decimal by an independent tool (ledger_numbers).",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/slice001/ledger.py": "8f483e05910de587cd58d46ab38c8878679762403129d6816e3172b767b13e52"
     }
@@ -245,7 +248,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "Ares W15 retained-bit witness only. REUSABLE PATTERN (not code): per-launch inventory, P-FLAT gate (evaluate.py:179 p_flat), recompute-from-bytes evaluation, controls launched as their own bundle.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/witness/ares_client.py": "0028f21dcda032ff43876495d492ffe5e2f411afdf1723ac756626ef57adb1ec",
      "rso/witness/evaluate.py": "8bb426dee359ce14df61032a3fa647e689db9576b8f71d0606b9ef70707efdb1",
@@ -281,12 +284,12 @@
    "not_qualified_for": [
     "continuous prediction error",
     "endpoints without a known chance bound",
-    "dependent episodes"
+    "dependent episodes (C-016: episodes inside a plastic life share the parameter -- apply it per LIFETIME, never per episode)"
    ],
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "a BINARY per-episode correct/wrong endpoint with a known chance bound (W15: 1/2, delta 1/20, alpha 1/100, n = 2048).",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/witness/ruler.py": "6b972f9eef3127dc80f66bacfa26d61097304e74f486523ad1c65d7cd31caed8"
     }
@@ -296,7 +299,8 @@
     "rso/witness/challenge/W1/"
    ],
    "users": [
-    "C-010"
+    "C-010",
+    "C-016 Ensorain (thresholds / tail_ge as an exact sign test and gate thresholds at bounds 1/2 and 9/10, unit = lifetime)"
    ],
    "version": "C-010 P-RET"
   },
@@ -325,7 +329,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "binary success counts per stratum, two-sided stratified exact test, Holm over a fixed family; power by Monte Carlo at the Holm worst-case level. Null size measured <= 0.027.",
    "source": {
-    "commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
     "sha256": {
      "rso/reach/analyze.py": "8c9ff6fa4d9f60d437e12205fe7fd582a181712c7f932644d0fd16dad8627f0d",
      "rso/reach/stats.py": "1185ffc430ab54b77e28e47ce313d8b2e23303f3713a8be34c16b28f0666d396"
@@ -338,11 +342,146 @@
     "rso/reach/tests/test_repair_v101.py"
    ],
    "users": [
-    "C-013 D1"
+    "C-013 D1",
+    "C-016 Ensorain (holm only; analyze.py not reused)"
    ],
    "version": "C-013 D1 v1.0.1"
+  },
+  {
+   "counterexamples": [
+    "v1.0.0: a NaN plastic value passed the bound (np.abs(NaN) > b is False); fixed by isfinite (R3)"
+   ],
+   "dependencies": [
+    "receipt-canonical"
+   ],
+   "evidence": [
+    "rso/ensorain/challenge/REPORT.md",
+    "rso/ensorain/challenge/R2/REPORT.md",
+    "rso/ensorain/INTEGRATION.md"
+   ],
+   "files": [
+    "rso/ensorain/assay.py"
+   ],
+   "interface": "memory_check(g_in, g_out, plastic) (rso/ensorain/assay.py:64) + the recompute check: after a TAPE lifetime the genome differs only at declared plastic keys, finite and inside PLASTIC_BOUND; a non-plastic arm changes nothing; working state is zero at every block start.",
+   "invalidated_by": [
+    "any byte change to assay.py",
+    "a change under ensorain/wtp5/ (re-pin)"
+   ],
+   "name": "ensorain-declared-memory-check",
+   "not_qualified_for": [
+    "E0/E1 memory objects (their native check is ensorain/e0/memories.py:30 audit)",
+    "any channel outside the genome (TAPE observations carry no global address)",
+    "other engines"
+   ],
+   "owner": "Argus (built); Palamedes (coordinator); Ensorain owns the physics it checks",
+   "qualified_scope": "Ensorain WTP-05 TAPE genomes at ensorain/ 7b1d549c8 (Q3 C-016-T040 + re-check T042: INSTRUMENT CLOSED; held on 26,400 dev + 10,400 challenge + 38,400 confirmatory rows; NaN fixed).",
+   "source": {
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "sha256": {
+     "rso/ensorain/assay.py": "ce3dc25558a98617a6ab813bd7b51c3932e390827fb272b2e0303a518d9ea482"
+    }
+   },
+   "stage": "QUALIFIED_SCOPED",
+   "tests": [
+    "rso/ensorain/tests/test_assay.py",
+    "rso/ensorain/tests/test_repair_v110.py"
+   ],
+   "users": [
+    "C-016 Ensorain"
+   ],
+   "version": "C-016 FREEZE_ENSORAIN v1.1.0"
+  },
+  {
+   "counterexamples": [
+    "v1.0.0 self-relative contrast: verdict depended on the innate value (T040 s4.1)",
+    "walker (law-blind drift) reads REVISION_WITHOUT_RETAINED_COMPETENCE under v1.1.0 (T042 WK)",
+    "family S from declared keys admits dead plastic code (T042 FS; 2 of 3 searched subjects)"
+   ],
+   "dependencies": [
+    "ruler-binary-retention",
+    "stratified-holm-analysis",
+    "ensorain-declared-memory-check"
+   ],
+   "evidence": [
+    "rso/ensorain/repair_v110/red_rows.jsonl",
+    "rso/ensorain/challenge/R2/red_rows_r2.jsonl",
+    "rso/ensorain/RESULT.md"
+   ],
+   "files": [
+    "rso/ensorain/analysis.py"
+   ],
+   "interface": "revised(row) whole-life endpoint (analysis.py:41); subject_stats / verdict / verdicts / qualification (:76-146): G_PRE, G_R5, K1 = intersection-union of full-vs-frozen and full-vs-noise sign tests, K2 full-vs-shuffle, Holm per family, Q-a..Q-e.",
+   "invalidated_by": [
+    "any byte change to analysis.py",
+    "a non-binary endpoint",
+    "an engine without a frozen / noise-matched / shuffled arm triple"
+   ],
+   "name": "revision-assay-rule",
+   "not_qualified_for": [
+    "reading a K1-only label as 'revises' (REPORT R2 L1: law-blind drift and halt-on-success search pass K1)",
+    "telling an innate pre-switch value from a learned one",
+    "retention across a boundary",
+    "genomes with eta near the absolute 1e-9 noise floor (L3)"
+   ],
+   "owner": "Argus (built); Palamedes (coordinator)",
+   "qualified_scope": "within-life revision at a law switch, binary per-life endpoint, paired by seed, one host; REVISION_HISTORY_DEPENDENT excludes law-blind drift (C-016 RESULT, family P).",
+   "source": {
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "sha256": {
+     "rso/ensorain/analysis.py": "5f8215377a11afe4bdf18596d64c7515d58a7cc2251cb4ce78f19663cd5b5eea"
+    }
+   },
+   "stage": "CHALLENGED",
+   "tests": [
+    "rso/ensorain/tests/test_repair_v110.py"
+   ],
+   "users": [
+    "C-016 Ensorain"
+   ],
+   "version": "C-016 PREREGISTRATION v1.1.0"
+  },
+  {
+   "counterexamples": [
+    "the attempt key keeps prose that follows the sha in the INTEGRATION_READY note (C-016-T041 / T050 keys); still unique, not a clean sha"
+   ],
+   "dependencies": [],
+   "evidence": [
+    "rso/scale/notify/evidence/DEMO.md",
+    "ops/campaigns/C-016/tasks/C-016-T011/TASK.json"
+   ],
+   "files": [
+    "rso/scale/notify/notify.py",
+    "rso/scale/notify/__main__.py"
+   ],
+   "interface": "python -m rso.scale.notify scan|queue --coordinator NAME: one comms notice per (task_id, attempt key), recorded in comms.messages under a pg advisory lock; one DISPOSITION message after INTEGRATED / CLOSED / sent back. Reads task files; writes comms only.",
+   "invalidated_by": [
+    "any byte change to the pinned files",
+    "a workgraph task-history schema change"
+   ],
+   "name": "integration-notify",
+   "not_qualified_for": [
+    "event-driven wake (it polls; latency = scan interval; scans fire only when the coordinator session is idle)",
+    "any merge or state change (by design it makes none)"
+   ],
+   "owner": "Eupalamus (built); Palamedes (coordinator, consumer)",
+   "qualified_scope": "idempotent notices on the shared comms DB (tests + live C-016 use: #2120-#2152; re-scans posted nothing). Median integration wait C-016 8.8 min vs C-013 31 min.",
+   "source": {
+    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "sha256": {
+     "rso/scale/notify/__main__.py": "3a77738a81936a7edb8140ed549af59e886bd95c46252814d680510fbcefaf5c",
+     "rso/scale/notify/notify.py": "a0c51d170813011c1e7939b2d1b93a92363dac206a0ed77ab965d488b47569c3"
+    }
+   },
+   "stage": "AUTHOR_TESTED",
+   "tests": [
+    "rso/scale/notify/tests/test_notify.py"
+   ],
+   "users": [
+    "C-016"
+   ],
+   "version": "C-016-T011"
   }
  ],
- "pinned_at_commit": "3d807d569025cda5f5f193fc481a2f024f54b5df",
+ "pinned_at_commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
  "schema": "prometheus.rso.registry.v1"
 }

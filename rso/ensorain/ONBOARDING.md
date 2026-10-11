@@ -139,3 +139,38 @@ What the challenge taught (the reusable lessons, for the registry and the next a
 Registry rows to add when the coordinator integrates (rso/registry is Palamedes's): mutation-runner `users` +=
 "C-016-T041 RED rows (rso/ensorain/repair_v110/run_red.py, unittest variant)"; ruler-binary-retention: used with a
 non-1/2 bound (9/10) for G_R5; the candidate `ensorain-declared-memory-check` now refuses non-finite values (P1).
+
+## 6. Onboarding cost against Ares (C-016-T060; directive s8; Palamedes, coordinator)
+
+Measured from packet histories, receipts, git and the integrator's reproduction. Difficulty is NOT normalised away:
+the two experiments ask different questions of different physics.
+
+| Measurement (s8) | C-010 Ares (retained bit across an interrupt) | C-016 Ensorain (revision at a law switch) |
+|---|---|---|
+| Adapter implementation lines | 1,518 driver/evaluator/client/configs + 257 ruler | 662 physical / 480 code (subjects 139, assay 247, analysis 207, freeze 69); + repair tooling 153 (repair_v110) |
+| Shared components reused | binding, custody, receipts, ledger (built for it in C-009 / C-004) | 4, unmodified: receipt-canonical, ruler thresholds / tail, Holm, registry file_sha |
+| Shared components modified | n/a (first native engine) | 0 |
+| Time to first native execution | ~1 h after open (adapter build) | 7 min after open (T020's demand re-run, 10:14Z) |
+| Time to qualified result | 6.2 h open -> close | 3 h 58 min open (10:07Z) -> confirmatory RESULT (14:05Z); ~4.5 h to integration |
+| Q3 reviewer time | ~1.7 h (W1 + W2) | ~1.6 h (T040 ~45-60 min, T042 ~50 min, boot included) |
+| Independent challenges / defects found | 2 / 2 | 2 / 2 (T040: self-relative contrast, 5 unpinned rule lines; T042: drift passes K1-only labels, dead plastic code in family S) |
+| Repair rounds | 1 | 1 (v1.1.0), plus recorded limitations L1-L5 |
+| CPU | 26.2 CPU-min ledgered | ~0.9 core-h (receipts: T030 0.3, T040 0.07, T041 0.15, T042 0.17, T050 0.08; integrator re-runs ~0.15). The confirmatory run itself: ~265 CPU-s |
+| Memory | not recorded | 66 MB peak (confirmatory run) |
+| Operator interventions | 0 gates | 0 gates after the directive; 0 requests to Ensorain |
+| Coordination waiting share | 69% | 49% (median wait to claim 3.8 min, to integrate 8.8 min; C-013 integrate 31 min) |
+| Native semantic mismatches | (the Ares semantics were the baseline) | 9: s3 items 1-7 above, plus "a frozen contrast is innate-relative" (T040) and "declared plastic keys are not live plastic code" (T042) |
+
+Reading:
+- **Line count.** The bespoke line count fell from about 1,800 to about 660, near the operator's ~500 aspiration.
+  Most of the fall is the interface: Ensorain is importable Python, so one call is one evidence unit, and the
+  Ares-specific process client, configs and interrupt protocol vanish. The part that is maturity: exact tails,
+  thresholds, Holm, canonical rows and LF hashing were imported unchanged, and no shared component needed editing.
+- **No reduction in qualification.** Two challenges, two real defects, one repair round, as in C-010. The registry
+  saved building, not proving.
+- **The mismatches are the Observatory's lesson.** Ares-shaped assumptions failed on contact with Ensorain:
+  - an interrupt as the boundary;
+  - retention as the phenomenon;
+  - episodes as independent units;
+  - a frozen arm as the competitor.
+  Each is now a scope limit or counterexample in rso/registry, so the next adapter inherits it.

@@ -77,11 +77,13 @@ ENTRIES = [
         "tests": ["rso/slice001/tests/test_mutation.py", "rso/reach/tests/test_repair_v101.py"],
         "evidence": ["rso/reach/repair_v101/red_rows.jsonl", "rso/reach/challenge/D1/edits.json",
                      "rso/witness/challenge/", "rso/binding/challenge/"],
-        "counterexamples": ["stale .pyc made a mutant look killed or alive (run with python -B)",
+        "counterexamples": ["C-016-T040: 5 of 6 decision-rule edits survived the frozen suite and were refused only "
+                            "by the freeze hash -- a hash guard protects a run, it pins no behaviour",
+                            "stale .pyc made a mutant look killed or alive (run with python -B)",
                             "an equivalent first mutant on ledger_numbers (C-013-T020 integration)"],
         "dependencies": [],
         "invalidated_by": ["any byte change to the pinned files"],
-        "users": ["C-004", "C-009", "C-010", "C-013"],
+        "users": ["C-004", "C-009", "C-010", "C-013", "C-016 (challenge/run_edits.py, repair_v110/run_red.py)"],
     },
     {
         "name": "receipt-canonical",
@@ -99,7 +101,7 @@ ENTRIES = [
         "counterexamples": [],
         "dependencies": [],
         "invalidated_by": ["any byte change to receipt.py"],
-        "users": ["C-004", "C-009 (receipt bytes for binding)", "C-010"],
+        "users": ["C-004", "C-009 (receipt bytes for binding)", "C-010", "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)"],
     },
     {
         "name": "budget-ledger",
@@ -153,13 +155,15 @@ ENTRIES = [
         "qualified_scope": "a BINARY per-episode correct/wrong endpoint with a known chance bound (W15: 1/2, delta "
                            "1/20, alpha 1/100, n = 2048).",
         "not_qualified_for": ["continuous prediction error", "endpoints without a known chance bound",
-                              "dependent episodes"],
+                              "dependent episodes (C-016: episodes inside a plastic life share the parameter -- apply it "
+                              "per LIFETIME, never per episode)"],
         "tests": ["rso/witness/challenge/W1/"],
         "evidence": ["rso/witness/RULER.md", "rso/witness/RESULT.md s2-s3 (P-CAL: NULL 867, SHUF 987, POS 2048)"],
         "counterexamples": [],
         "dependencies": [],
         "invalidated_by": ["any byte change to ruler.py", "a non-binary endpoint"],
-        "users": ["C-010"],
+        "users": ["C-010", "C-016 Ensorain (thresholds / tail_ge as an exact sign test and gate thresholds at bounds "
+                  "1/2 and 9/10, unit = lifetime)"],
     },
     {
         "name": "stratified-holm-analysis",
@@ -179,6 +183,73 @@ ENTRIES = [
         "counterexamples": ["tampered certificate/seeded fields survive analyze (D1 integration mutation)"],
         "dependencies": [],
         "invalidated_by": ["any byte change to the pinned files"],
-        "users": ["C-013 D1"],
+        "users": ["C-013 D1", "C-016 Ensorain (holm only; analyze.py not reused)"],
+    },
+    {
+        "name": "ensorain-declared-memory-check",
+        "version": "C-016 FREEZE_ENSORAIN v1.1.0",
+        "owner": "Argus (built); Palamedes (coordinator); Ensorain owns the physics it checks",
+        "files": ["rso/ensorain/assay.py"],
+        "interface": "memory_check(g_in, g_out, plastic) (rso/ensorain/assay.py:64) + the recompute check: after a TAPE "
+                     "lifetime the genome differs only at declared plastic keys, finite and inside PLASTIC_BOUND; a "
+                     "non-plastic arm changes nothing; working state is zero at every block start.",
+        "stage": "QUALIFIED_SCOPED",
+        "qualified_scope": "Ensorain WTP-05 TAPE genomes at ensorain/ 7b1d549c8 (Q3 C-016-T040 + re-check T042: INSTRUMENT "
+                           "CLOSED; held on 26,400 dev + 10,400 challenge + 38,400 confirmatory rows; NaN fixed).",
+        "not_qualified_for": ["E0/E1 memory objects (their native check is ensorain/e0/memories.py:30 audit)",
+                              "any channel outside the genome (TAPE observations carry no global address)",
+                              "other engines"],
+        "tests": ["rso/ensorain/tests/test_assay.py", "rso/ensorain/tests/test_repair_v110.py"],
+        "evidence": ["rso/ensorain/challenge/REPORT.md", "rso/ensorain/challenge/R2/REPORT.md", "rso/ensorain/INTEGRATION.md"],
+        "counterexamples": ["v1.0.0: a NaN plastic value passed the bound (np.abs(NaN) > b is False); fixed by isfinite (R3)"],
+        "dependencies": ["receipt-canonical"],
+        "invalidated_by": ["any byte change to assay.py", "a change under ensorain/wtp5/ (re-pin)"],
+        "users": ["C-016 Ensorain"],
+    },
+    {
+        "name": "revision-assay-rule",
+        "version": "C-016 PREREGISTRATION v1.1.0",
+        "owner": "Argus (built); Palamedes (coordinator)",
+        "files": ["rso/ensorain/analysis.py"],
+        "interface": "revised(row) whole-life endpoint (analysis.py:41); subject_stats / verdict / verdicts / qualification "
+                     "(:76-146): G_PRE, G_R5, K1 = intersection-union of full-vs-frozen and full-vs-noise sign tests, "
+                     "K2 full-vs-shuffle, Holm per family, Q-a..Q-e.",
+        "stage": "CHALLENGED",
+        "qualified_scope": "within-life revision at a law switch, binary per-life endpoint, paired by seed, one host; "
+                           "REVISION_HISTORY_DEPENDENT excludes law-blind drift (C-016 RESULT, family P).",
+        "not_qualified_for": ["reading a K1-only label as 'revises' (REPORT R2 L1: law-blind drift and halt-on-success "
+                              "search pass K1)", "telling an innate pre-switch value from a learned one",
+                              "retention across a boundary", "genomes with eta near the absolute 1e-9 noise floor (L3)"],
+        "tests": ["rso/ensorain/tests/test_repair_v110.py"],
+        "evidence": ["rso/ensorain/repair_v110/red_rows.jsonl", "rso/ensorain/challenge/R2/red_rows_r2.jsonl",
+                     "rso/ensorain/RESULT.md"],
+        "counterexamples": ["v1.0.0 self-relative contrast: verdict depended on the innate value (T040 s4.1)",
+                            "walker (law-blind drift) reads REVISION_WITHOUT_RETAINED_COMPETENCE under v1.1.0 (T042 WK)",
+                            "family S from declared keys admits dead plastic code (T042 FS; 2 of 3 searched subjects)"],
+        "dependencies": ["ruler-binary-retention", "stratified-holm-analysis", "ensorain-declared-memory-check"],
+        "invalidated_by": ["any byte change to analysis.py", "a non-binary endpoint", "an engine without a frozen / "
+                           "noise-matched / shuffled arm triple"],
+        "users": ["C-016 Ensorain"],
+    },
+    {
+        "name": "integration-notify",
+        "version": "C-016-T011",
+        "owner": "Eupalamus (built); Palamedes (coordinator, consumer)",
+        "files": ["rso/scale/notify/notify.py", "rso/scale/notify/__main__.py"],
+        "interface": "python -m rso.scale.notify scan|queue --coordinator NAME: one comms notice per (task_id, attempt "
+                     "key), recorded in comms.messages under a pg advisory lock; one DISPOSITION message after "
+                     "INTEGRATED / CLOSED / sent back. Reads task files; writes comms only.",
+        "stage": "AUTHOR_TESTED",
+        "qualified_scope": "idempotent notices on the shared comms DB (tests + live C-016 use: #2120-#2152; re-scans posted "
+                           "nothing). Median integration wait C-016 8.8 min vs C-013 31 min.",
+        "not_qualified_for": ["event-driven wake (it polls; latency = scan interval; scans fire only when the coordinator "
+                              "session is idle)", "any merge or state change (by design it makes none)"],
+        "tests": ["rso/scale/notify/tests/test_notify.py"],
+        "evidence": ["rso/scale/notify/evidence/DEMO.md", "ops/campaigns/C-016/tasks/C-016-T011/TASK.json"],
+        "counterexamples": ["the attempt key keeps prose that follows the sha in the INTEGRATION_READY note "
+                            "(C-016-T041 / T050 keys); still unique, not a clean sha"],
+        "dependencies": [],
+        "invalidated_by": ["any byte change to the pinned files", "a workgraph task-history schema change"],
+        "users": ["C-016"],
     },
 ]
