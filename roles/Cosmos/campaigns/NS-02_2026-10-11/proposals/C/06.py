@@ -1,0 +1,75 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    """Co-moving frame (gauge) memory. The state holds a content vector c in R^n and a
+    reference frame R in SO(n). Every symbol writes its fixed embedding into c *expressed
+    in the current frame* (c += R e_s), and then the symbol, plus noise, drives a rotation
+    G that acts identically on content and frame (c <- G c, R <- G R). The rotation is
+    common-mode, so the body coordinates R^T c are exactly invariant to distractor-driven
+    and noise-driven motion. The raw coordinates c are scrambled; the gauge-invariant
+    relative coordinates hold the full symbol history in separate embedding subspaces."""
+
+    def __init__(self, task: Task):
+        self.task = task
+        self.ns = int(task.n_symbols)
+        self.n = 12
+        r = np.random.default_rng(161803)
+        # embeddings: cue symbols span dims 0..3, distractors 4..7, query/other 8..11
+        Emb = np.zeros((self.ns, self.n))
+        for s in range(self.ns):
+            if s < 4:
+                Emb[s, s] = 1.0
+            elif s < 8:
+                Emb[s, 4 + (s - 4)] = 1.0
+            else:
+                Emb[s, 8 + (s - 8) % 4] = 1.0
+        self.Emb = Emb
+        # fixed set of Givens planes; symbol-dependent base angles
+        self.planes = [(i, j) for i in range(self.n) for j in range(i + 1, self.n)]
+        sel = r.choice(len(self.planes), size=24, replace=False)
+        self.planes = [self.planes[q] for q in sel]
+        self.base = r.uniform(-np.pi, np.pi, size=(self.ns, len(self.planes)))
+        self.sigma = 0.5           # large angle noise: common-mode, so harmless to R^T c
+
+    def init(self, E):
+        R = np.broadcast_to(np.eye(self.n), (E, self.n, self.n)).copy()
+        return {"c": np.zeros((E, self.n)), "R": R}
+
+    def noise(self, n, rng):
+        return {"ang": rng.normal(0.0, self.sigma, size=(n, len(self.planes)))}
+
+    def step(self, state, obs_t, noise):
+        obs = np.asarray(obs_t, dtype=int)
+        c = state["c"].copy()
+        R = state["R"].copy()
+        x = onehot(obs, self.ns)
+        # write symbol embedding in current frame
+        e = x @ self.Emb                                            # (E, n)
+        c = c + np.einsum("eij,ej->ei", R, e)
+        # common-mode rotation of content and frame (product of Givens rotations)
+        ang = x @ self.base + noise["ang"]                          # (E, P)
+        co, si = np.cos(ang), np.sin(ang)
+        for p, (i, j) in enumerate(self.planes):
+            cp, sp = co[:, p], si[:, p]
+            ci, cj = c[:, i].copy(), c[:, j].copy()
+            c[:, i] = cp * ci - sp * cj
+            c[:, j] = sp * ci + cp * cj
+            Ri, Rj = R[:, i, :].copy(), R[:, j, :].copy()
+            R[:, i, :] = cp[:, None] * Ri - sp[:, None] * Rj
+            R[:, j, :] = sp[:, None] * Ri + cp[:, None] * Rj
+        return {"c": c, "R": R}
+
+    def readout_features(self, state):
+        body = np.einsum("eji,ej->ei", state["R"], state["c"])     # R^T c, gauge invariant
+        return np.concatenate([body, state["c"]], axis=1)
+
+    def full_state(self, state):
+        E = state["c"].shape[0]
+        return np.concatenate([state["c"], state["R"].reshape(E, -1)], axis=1)
+
+
+def make(task):
+    return Mechanism(task)

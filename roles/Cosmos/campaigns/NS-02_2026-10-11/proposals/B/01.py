@@ -1,0 +1,84 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    """Conserved-charge lattice: memory by conservation law, not by stability.
+
+    State: q (E, V, L) -- V charge species living on a ring of L sites.
+    The cue injects one unit of charge of species c at a random site. Every subsequent
+    step applies a stochastic, distractor-steered transport plus zero-sum local noise.
+    Each operation is exactly conservative per species, so the cue lives in a global
+    invariant (the per-species total) while its local footprint is scrambled.
+    """
+
+    def __init__(self, task: Task):
+        self.V = int(task.V)            # 4 species
+        self.n_symbols = int(task.n_symbols)
+        self.L = 32                     # ring sites
+        self.f_lo, self.f_hi = 0.2, 0.8 # per-site transfer fraction range
+        self.sigma = 0.05               # zero-sum local fluctuation scale
+        self.query_symbol = 8
+
+    def init(self, E):
+        return {
+            "q": np.zeros((E, self.V, self.L), dtype=np.float64),
+            "flag": np.zeros((E, 1), dtype=np.float64),
+        }
+
+    def noise(self, n, rng):
+        eta = rng.normal(0.0, self.sigma, size=(n, self.V, self.L))
+        eta -= eta.mean(axis=2, keepdims=True)  # zero-sum per species -> totals untouched
+        return {
+            "site": rng.integers(0, self.L, size=n),
+            "f": rng.uniform(self.f_lo, self.f_hi, size=(n, 1, self.L)),
+            "eta": eta,
+        }
+
+    def step(self, state, obs_t, noise):
+        q = state["q"].copy()
+        E = q.shape[0]
+        obs = np.asarray(obs_t)
+
+        # 1) injection: a cue symbol deposits one unit of its own species at a random site
+        is_cue = obs < self.V
+        if np.any(is_cue):
+            idx = np.nonzero(is_cue)[0]
+            q[idx, obs[idx], noise["site"][idx]] += 1.0
+
+        # 2) conservative transport, direction steered by the current symbol
+        #    {4,5} -> drift right, {6,7} -> drift left, others -> split both ways
+        f = noise["f"]
+        moved = f * q
+        stay = q - moved
+        right = (obs == 4) | (obs == 5)
+        left = (obs == 6) | (obs == 7)
+        both = ~(right | left)
+        out = stay.copy()
+        if np.any(right):
+            out[right] += np.roll(moved[right], 1, axis=2)
+        if np.any(left):
+            out[left] += np.roll(moved[left], -1, axis=2)
+        if np.any(both):
+            half = 0.5 * moved[both]
+            out[both] += np.roll(half, 1, axis=2) + np.roll(half, -1, axis=2)
+
+        # 3) zero-sum local fluctuations: scramble the local profile, keep species totals exact
+        out += noise["eta"]
+
+        flag = state["flag"].copy()
+        flag[obs == self.query_symbol] = 1.0
+        return {"q": out, "flag": flag}
+
+    def readout_features(self, state):
+        totals = state["q"].sum(axis=2)          # (E, V): the conserved charges
+        return np.concatenate([totals, state["flag"]], axis=1)
+
+    def full_state(self, state):
+        E = state["q"].shape[0]
+        return np.concatenate([state["q"].reshape(E, -1), state["flag"]], axis=1)
+
+
+def make(task):
+    return Mechanism(task)
