@@ -62,19 +62,29 @@ def visible(access_class, role=None):
 
 
 def rules():
-    """[(rule_id, compiled regex, action, class)] from pan.access_rule (cached per process)."""
+    """[(rule_id, compiled regex, action, class, scope)] from pan.access_rule (cached per process). scope 'path'
+    rules match artifact paths; 'content' rules (PAN-47, migration 015) match file text."""
     from . import db
     if "rules" not in _CACHE:
         with db.cursor() as cur:
-            cur.execute("select rule_id, pattern, action, class from pan.access_rule order by rule_id")
-            _CACHE["rules"] = [(rid, re.compile(p, re.I), act, cls) for rid, p, act, cls in cur.fetchall()]
+            cur.execute("select rule_id, pattern, action, class, scope from pan.access_rule order by rule_id")
+            _CACHE["rules"] = [(rid, re.compile(p, re.I), act, cls, sc) for rid, p, act, cls, sc in cur.fetchall()]
     return _CACHE["rules"]
 
 
 def refused(path):
-    """The id of the REFUSE rule matching `path`, or None. Called BEFORE any read of the file."""
-    for rid, rx, act, _ in rules():
-        if act == "REFUSE" and rx.search(path or ""):
+    """The id of the path-scope REFUSE rule matching `path`, or None. Called BEFORE any read of the file."""
+    for rid, rx, act, _, scope in rules():
+        if scope == "path" and act == "REFUSE" and rx.search(path or ""):
+            return rid
+    return None
+
+
+def refused_content(text):
+    """The id of the content-scope REFUSE rule matching `text`, or None. Returns the rule id only -- never the match,
+    so a caller cannot print a credential by accident."""
+    for rid, rx, act, _, scope in rules():
+        if scope == "content" and act == "REFUSE" and rx.search(text or ""):
             return rid
     return None
 
@@ -85,9 +95,25 @@ def apply_rules(out=print):
     from . import db
     counts = {}
     with db.cursor() as cur:
-        cur.execute("select rule_id, pattern, action, class from pan.access_rule order by action, rule_id")
-        for rid, pat, act, cls in cur.fetchall():
-            if act == "CLASSIFY":
+        cur.execute("select rule_id, pattern, action, class, scope from pan.access_rule order by action, rule_id")
+        for rid, pat, act, cls, scope in cur.fetchall():
+            if scope == "content":
+                # PAN-47: artifacts with any chunk matching a content rule; only ids are selected, never bodies
+                cur.execute("""select distinct c.artifact_id from pan.chunk c where c.body ~* %s""", (pat,))
+                ids = [r[0] for r in cur.fetchall()]
+                cur.execute("delete from pan.chunk where artifact_id = any(%s)", (ids,))
+                n_chunks = cur.rowcount
+                cur.execute("delete from pan.doc_embedding where artifact_id = any(%s)", (ids,))
+                n_doc = cur.rowcount
+                cur.execute("delete from pan.link where src_id = any(%s)", (ids,))
+                n_link = cur.rowcount
+                # the title was derived from the file's text (its first line or heading): it goes with the chunks
+                cur.execute("""update pan.artifact set n_chunks = 0, access_rule = %s, indexed_blob = blob_sha, title = null
+                               where artifact_id = any(%s) or (access_rule = %s and title is not null)""", (rid, ids, rid))
+                cur.execute("select count(*) from pan.artifact where access_rule = %s", (rid,))
+                counts[rid] = dict(action=act, scope=scope, newly_refused=len(ids), chunks_purged=n_chunks,
+                                   doc_vectors_purged=n_doc, links_purged=n_link, total=cur.fetchone()[0])
+            elif act == "CLASSIFY":
                 cur.execute("""update pan.artifact a set access_class = %s, access_rule = %s
                                where a.path ~* %s and (a.access_class <> %s or a.access_rule is distinct from %s)
                                  and not exists (select 1 from pan.declassification d where d.artifact_id = a.artifact_id)""",
@@ -110,6 +136,90 @@ def apply_rules(out=print):
                                    links_purged=n_link)
     out(json.dumps(counts))
     return counts
+
+
+def synthetic_credentials():
+    """(positives, negatives) for the content rule, assembled at runtime so that no source file in the repository
+    itself carries a credential-shaped literal (this file would otherwise refuse itself from the index). None of these
+    values is real."""
+    q, k = '"', "pass" + "word"
+    pos = [k + ": " + q + "hunter" + "2zz" + q, "client_" + "secret = '" + "abc" + "def123'",
+           "-----BEGIN " + "RSA PRIVATE KEY-----", "AKIA" + "ABCDEFGHIJKLMNOP", "ghp_" + "a" * 36,
+           "token sk-" + "ant-" + "x" * 24, "key: sk-" + "Z" * 40, "hf_" + "q" * 34, "db_" + k + q + ": " + q + "s3cr" + "etvalue" + q]
+    neg = [k + ": " + q + q, k + " = ${" + "DB_PASS}", "api_" + "key: " + q + "<your-key>" + q, "the " + k + " lives in keys.py",
+           "risk-" + "adjusted returns", "secrets = load()", k + "=" + q + "abc" + q, "hf_hub_download(repo)"]
+    return pos, neg
+
+
+def content_rule_checks():
+    """PAN-47 controls (counts and rule ids only; no body or match is ever selected). POSITIVE: the content rule found
+    and refused something (the committed config with a non-empty db_password). CHEAT: after the purge no chunk in the
+    index matches a content rule. NEGATIVE: placeholders, empty values and prose are not refused. Parity: PostgreSQL and
+    Python agree on every synthetic case (the chunker uses Python, the purge uses SQL)."""
+    from . import db
+    res = []
+    _CACHE.pop("rules", None)
+    content = [(rid, rx.pattern) for rid, rx, act, _, sc in rules() if sc == "content"]
+    pos, neg = synthetic_credentials()
+    with db.cursor(statement_timeout_ms=900000) as cur:
+        refused_n, left, parity_bad, titled = 0, 0, 0, 0
+        for rid, pat in content:
+            cur.execute("select count(*), count(title) from pan.artifact where access_rule = %s", (rid,))
+            n, t = cur.fetchone()
+            refused_n, titled = refused_n + n, titled + t
+            cur.execute("select count(*) from pan.chunk where body ~* %s", (pat,))
+            left += cur.fetchone()[0]
+            for s in pos + neg:
+                cur.execute("select %s ~* %s", (s, pat))
+                parity_bad += cur.fetchone()[0] != bool(re.search(pat, s, re.I))
+    res.append(dict(kind="POSITIVE", name="the content rule refused credential-bearing files (whole artifact, path kept)",
+                    ok=bool(content) and refused_n >= 1, detail="{} rule(s); {} artifacts refused".format(len(content), refused_n)))
+    res.append(dict(kind="CHEAT", name="no indexed chunk matches a content REFUSE rule", ok=left == 0,
+                    detail="{} matching chunks left".format(left)))
+    res.append(dict(kind="CHEAT", name="no content-refused artifact keeps a text-derived title (pivot would serve it)",
+                    ok=titled == 0, detail="{} titled".format(titled)))
+    res.append(dict(kind="POSITIVE", name="every synthetic credential shape is refused", ok=all(refused_content(s) for s in pos),
+                    detail="{}/{}".format(sum(bool(refused_content(s)) for s in pos), len(pos))))
+    res.append(dict(kind="NEGATIVE", name="placeholders, empty values and prose are not refused",
+                    ok=not any(refused_content(s) for s in neg), detail="{}/{} refused".format(sum(bool(refused_content(s)) for s in neg), len(neg))))
+    res.append(dict(kind="CHEAT", name="PostgreSQL and Python agree on every synthetic case (purge vs chunker)",
+                    ok=parity_bad == 0, detail="{} disagreements over {} cases".format(parity_bad, len(pos + neg))))
+    return res
+
+
+def classification_drift(cur=None):
+    """Artifacts a CLASSIFY rule matches that do not (yet) carry its class and were not declassified. Non-zero means
+    a catalog write ran without apply_rules: until it does, those files are visible at the default class."""
+    from . import db
+    if cur is None:
+        with db.cursor() as c:
+            return classification_drift(c)
+    n = 0
+    cur.execute("select pattern, class from pan.access_rule where action = 'CLASSIFY'")
+    for pat, cls in cur.fetchall():
+        cur.execute("""select count(*) from pan.artifact a where a.path ~* %s and a.access_class <> %s
+                         and not exists (select 1 from pan.declassification d where d.artifact_id = a.artifact_id)""",
+                    (pat, cls))
+        n += cur.fetchone()[0]
+    return n
+
+
+def drift_detector_works():
+    """Non-vacuity twin of the drift check: inside ONE transaction that is rolled back, a temporary CLASSIFY rule
+    naming a known PROGRAM file must register as drift. Nothing is committed; no artifact row is changed."""
+    from . import db
+    conn = db.connect()
+    try:
+        cur = conn.cursor()
+        base = classification_drift(cur)
+        cur.execute("""insert into pan.access_rule (rule_id, pattern, action, class, rationale, author)
+                       values ('T-drift-probe', '^roles/base-role/MONITORS\\.md$', 'CLASSIFY', 'EMBARGOED_OUTCOME',
+                               'transient non-vacuity probe; rolled back', 'Pan')""")
+        probe = classification_drift(cur)
+        return base, probe
+    finally:
+        conn.rollback()
+        conn.close()
 
 
 # ---------------------------------------------------------------- controls
@@ -176,7 +286,13 @@ def controls(write=True, out=print):
     import numpy as np
     from . import REPO, db, embed, pgvec, search
     res = []
+    drift = classification_drift()  # measured BEFORE this run applies the rules: what the last refresh left
     counts = apply_rules(out=lambda *a: None)
+    res.append(dict(kind="NEGATIVE", name="no classification drift: every artifact a CLASSIFY rule matches already carries its class (refresh applies the rules)",
+                    ok=drift == 0, detail="{} artifacts drifted before this run's apply".format(drift)))
+    base, probe = drift_detector_works()
+    res.append(dict(kind="POSITIVE", name="the drift check is not vacuous: a transient CLASSIFY rule (rolled back) registers as drift",
+                    ok=probe == base + 1, detail="drift {} -> {} inside the rolled-back transaction".format(base, probe)))
     burned_rule = "C-cosmos-burned-holdout"
     with db.cursor() as cur:
         cur.execute("""select artifact_id, path from pan.artifact where access_rule = %s and coalesce(n_chunks, 0) > 0
@@ -237,6 +353,7 @@ def controls(write=True, out=print):
     except PermissionError:
         closed = True
     res.append(dict(kind="CHEAT", name="an unknown clearance role fails closed", ok=closed, detail="PermissionError" if closed else "OPEN"))
+    res += content_rule_checks()
     for x in rls_proof(out=lambda *a: None):
         res.append(x)
     verdict = "PASS" if all(x["ok"] for x in res) else "FAIL"

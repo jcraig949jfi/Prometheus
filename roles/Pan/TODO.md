@@ -1,13 +1,14 @@
 # Pan TODO
 
-Currency: 2026-10-11T10:47Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-11T10:55Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] SAGACITY FOUNDATION (operator 2026-10-11, prompts/2026-10-11_sagacity_foundation): deliverables due
       2026-10-12T10:40Z -- P1 PAN-40/41/42 DONE (c22bf02f4: map, proposals 15/15, access 12/12); P2 PAN-43 DONE
-      (calibration PROMOTED; prereg A1-A4; smoke plumbing only; packet REVIEW_PACKET_2026-10-11_PAN43.txt); P3 PAN-44 DONE (MCP stdio read-only, 15/15 + SDK conformance); PAN-45
+      (calibration PROMOTED; prereg A1-A4; smoke plumbing only; packet REVIEW_PACKET_2026-10-11_PAN43.txt); P3 PAN-44 DONE (MCP stdio read-only, 15/15 + SDK conformance); PAN-45 handoff WRITTEN, checkpoint packet
+      at 2026-10-12T10:40Z; PAN-46 design note next;
       continuity handoff + checkpoint packet. Loop extended to 2026-10-16T10:40Z. PAN-46 Redis/A2A: design first.
 - [ ] Status report 10 by ~2026-10-11T16:08Z
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
@@ -18,7 +19,7 @@ date, purged after 24 h (base role s7).
 - [ ] Atlas copy each loop tick: python -m pan atlas snapshot (skips unless Atlas harvested)
 - [ ] Review packet for PAN-27 + PAN-28 (pgvector: the packet's recall gate was too easy -- record it)
 - [ ] Act on operator answers (QUESTIONS.md Q-002..Q-012) when they arrive
-- [ ] Closing report at the window end (2026-10-12T10:40Z)
+- [ ] Checkpoint packet 2026-10-12T10:40Z (Sagacity deliverables); closing report at the extended end 2026-10-16T10:40Z
 
 Closed 2026-10-09: charter, inventory, catalog, commits, chunks, vectors,
 Iceberg (8+ tables), consolidation (rows + docs), comms index, frontier intake

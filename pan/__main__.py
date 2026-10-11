@@ -52,8 +52,7 @@ import os
 import sys
 
 
-def main(argv=None):
-    os.environ.setdefault("EW_DB_HOST", "192.168.1.202")
+def build_parser():
     ap = argparse.ArgumentParser(prog="python -m pan")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("migrate")
@@ -117,6 +116,7 @@ def main(argv=None):
     p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
     p = sub.add_parser("atlas")
     p.add_argument("what", choices=["snapshot", "manifest", "controls", "lookup"])
+    p.add_argument("--force", action="store_true")
     p.add_argument("--table", default="fact", choices=["fact", "proposition", "blind_spot"])
     p.add_argument("--text", default="")
     p.add_argument("--limit", type=int, default=10)
@@ -129,7 +129,6 @@ def main(argv=None):
     p = sub.add_parser("negspace")
     p.add_argument("what", choices=["calibrate", "smoke"])
     p.add_argument("--no-llm", action="store_true")
-    p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build", "floors", "run", "controls"])
     p.add_argument("model", nargs="?")
@@ -163,7 +162,12 @@ def main(argv=None):
     p.add_argument("--no-authors", action="store_true")
     p.add_argument("-k", type=int, default=15)
     p.add_argument("--fits", action="store_true", help="models: only those estimated to fit 16 GB at Q4")
-    a = ap.parse_args(argv)
+    return ap
+
+
+def main(argv=None):
+    os.environ.setdefault("EW_DB_HOST", "192.168.1.202")
+    a = build_parser().parse_args(argv)
 
     if a.cmd == "migrate":
         from . import db

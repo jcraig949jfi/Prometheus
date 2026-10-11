@@ -176,7 +176,7 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
         cur = conn.cursor()
         for i in range(0, len(todo), batch_files):
             part = todo[i:i + batch_files]
-            rows, updates = [], []
+            rows, updates, content_refused, content_clean = [], [], [], []
             for aid, path, bsha, ext, size, _ in part:
                 ok, why = eligible(ext, size)
                 if ok and path.startswith(EXCLUDE):
@@ -196,6 +196,13 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
                     updates.append((aid, False, None, 0, bsha))
                     continue
                 text = data.decode("utf-8", "replace").replace("\x00", "").replace("\r\n", "\n")
+                crule = access.refused_content(text)      # PAN-47: credential-shaped content -> refuse the file
+                if crule:
+                    skipped["refused_by_content_rule"] = skipped.get("refused_by_content_rule", 0) + 1
+                    updates.append((aid, True, None, 0, bsha))
+                    content_refused.append((aid, crule))
+                    continue
+                content_clean.append(aid)
                 pieces = split(text, ext)
                 for ord_, (ls, le, head, body) in enumerate(pieces):
                     rows.append((aid, ord_, ls, le, (head or None), body, len(body)))
@@ -209,6 +216,15 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
             execute_values(cur, """update pan.artifact a set is_text = v.is_text, title = v.title, n_chunks = v.n,
                                    indexed_blob = v.blob from (values %s) as v(id, is_text, title, n, blob)
                                    where a.artifact_id = v.id""", updates, page_size=1000)
+            if content_refused:
+                execute_values(cur, """update pan.artifact a set access_rule = v.rule from (values %s) as v(id, rule)
+                                       where a.artifact_id = v.id""", content_refused, page_size=1000)
+                cur.execute("delete from pan.doc_embedding where artifact_id = any(%s)", ([a for a, _ in content_refused],))
+                cur.execute("delete from pan.link where src_id = any(%s)", ([a for a, _ in content_refused],))
+            if content_clean:  # a file whose credential was removed is indexed again; its old content mark goes
+                cur.execute("""update pan.artifact set access_rule = null where artifact_id = any(%s)
+                               and access_rule in (select rule_id from pan.access_rule where scope = 'content')""",
+                            (content_clean,))
             conn.commit()
             n_chunks += len(rows)
             out("  {}/{} files, {} chunks so far, {:.0f}s".format(min(i + batch_files, len(todo)), len(todo),

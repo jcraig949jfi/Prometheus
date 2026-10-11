@@ -2,7 +2,8 @@
 
   1. git fetch (in this worktree; never pull), resolve origin/main
   2. if the catalog is already at that SHA: a no-op, reported as such
-  3. repository tree -> pan.artifact (upsert; rows absent from the tree removed)
+  3. repository tree -> pan.artifact (upsert; rows absent from the tree removed); then the access rules
+     (classify, refuse) before anything is read or indexed
   4. commits -> pan.commit (new ones only; oracle as in commits.py)
   5. chunk only blobs whose indexed_blob differs
   6. embed only chunks / documents without a vector for the current models
@@ -30,7 +31,11 @@ def run(out=print, embed_chunks=True, embed_docs=True):
         cur.execute("select max(repo_sha), count(*) from pan.artifact where source='git'")
         cat, n_before = cur.fetchone()
     if cat == head:
-        res = dict(noop=True, sha=head, seconds=round(time.time() - t0, 1))
+        # the comms/Moonshot indexes ran just before this (python -m pan refresh): classify what they added
+        from . import access
+        acc = access.apply_rules(out=lambda *_: None)
+        res = dict(noop=True, sha=head, access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
+                   seconds=round(time.time() - t0, 1))
         out(json.dumps(res))
         return res
     with db.cursor() as cur:
@@ -44,6 +49,11 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     changed = sum(1 for r in _rows if before.get(r["path"]) != r["blob_sha"])
     removed = len(set(before) - {r["path"] for r in _rows})
     _upsert_repo(_rows, head)
+    # 3b. access rules BEFORE anything reads or indexes a new file (PAN-42/45): a new file matching a CLASSIFY rule
+    # would otherwise sit at the default class PROGRAM -- visible at generator clearance -- until someone ran
+    # `pan access apply`; REFUSE rules mark refused files indexed so the chunker never opens them
+    from . import access
+    acc = access.apply_rules(out=lambda *_: None)
     # 4. commits
     c = commits.run(head, out=lambda *_: None)
     # 5. chunks for changed blobs only
@@ -67,6 +77,7 @@ def run(out=print, embed_chunks=True, embed_docs=True):
                commits_total=c.get("commits"), chunks_new=ch.get("chunks"), files_rechunked=ch.get("files_chunked"),
                chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"), links=lk.get("links"),
                derived_seconds=derived_s,
+               access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
                seconds=round(time.time() - t0, 1))
     out(json.dumps(res))
     return res

@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-11T10:47Z (date -u).
+Currency: 2026-10-11T10:55Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
   2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
@@ -40,4 +40,6 @@ mcp (PAN-44): local stdio read-only server pan/mcpserve.py (pan_search, pan_pivo
   clearance fixed at launch (generator|evaluator), REFUSE-rule paths never served, read-only DB session;
   controls/MCP_20261011T104148Z.json 15/15; official SDK client (mcp 2.3.0) conformance PASS; registered nowhere
   (Q-015); contract docs/sagacity/MCP_INTERFACE_PROTOTYPE.md.
-questions for the operator: QUESTIONS.md (14 open, Q-002..Q-015; Q-014 MCP least-privilege role, Q-015 MCP registration; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).
+continuity: docs/sagacity/CONTINUITY_HANDOFF.md (standing owner: Pan seat in maintenance mode + Mnemosyne DB
+  co-owner + Aporia watcher; Q-016 unattended maintenance, default session-driven).
+questions for the operator: QUESTIONS.md (15 open, Q-002..Q-016; Q-014 MCP least-privilege role, Q-015 MCP registration; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).

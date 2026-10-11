@@ -175,6 +175,17 @@ Q-015 | PREF (seat tooling) | 2026-10-11
   directive approves a prototype, not a deployment.
   ANSWER:
 
+Q-016 | PERMISSION (scheduled task on M2) | 2026-10-11
+  After the window, should Pan's maintenance run unattended? That means a
+  nightly Windows scheduled task on M2 running `pan refresh`, `pan atlas
+  snapshot` and `pan frontier daily` (CPU embeddings), registered as a
+  MONITORS row with a bound and a watcher (Aporia). Or should it stay
+  session-driven, run by the successor seat (CONTINUITY_HANDOFF.md s0)?
+  DEFAULT meanwhile: session-driven. Pan installs no scheduled task. Index
+  currency decays visibly (every record carries its blob, commit and
+  index_current) rather than silently.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09

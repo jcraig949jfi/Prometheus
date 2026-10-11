@@ -115,6 +115,15 @@ A hidden path and a nonexistent path get the same answer:
    - Credential-shaped files are catalogued with their content purged, so the wrapped operations
      alone would still return their path metadata.
    - The server drops any record, and any requested path, matching a REFUSE rule (`access.refused`).
+   - Content scope (PAN-47, migration 015, added 2026-10-11 after the prototype): files whose text
+     carries a literal credential are refused whole. That covers a credential assigned to a
+     password/secret/key/token name, a private-key block, or a provider token shape.
+     - 132 artifacts were refused, with their chunks, vectors, links and text-derived titles
+       purged; only the path stays.
+     - The chunker refuses such files before inserting chunks.
+     - Before this, `pan_search` could have returned them as PROGRAM snippets, for example a
+       committed config with a non-empty `db_password`.
+     - Receipt: `ACCESS_20261011T110930Z.json` (20/20). Pan never selects or prints a value.
 4. **Inheritance by mention (Atlas).**
    - Atlas rows have no access class.
    - A row whose text mentions the path or basename of an artifact hidden at the clearance is
