@@ -6,19 +6,20 @@
   "lease": "COSMOS_HOME/LEASE.json via python -m prometheus.cosmos.lease (ttl 7200 s, renewed each round)",
   "start_utc": "2026-10-08T05:26Z",
   "hard_stop_utc": "2026-10-10T05:26Z",
-  "window": "W1 (h0-4) DEVELOP/REPAIR",
-  "current_experiment": "EXP-01 LOCAL SYSID discovery batch 0 (30 worlds x 4 families); checkpoint COSMOS_HOME/c4_exp01/discovery_b0.jsonl; resumable (python -m prometheus.cosmos.c4.exp01 <same args> skips done rows)",
+  "window": "CLOSED (hard stop 2026-10-10T05:26Z passed; ~3 h productive; stall incident I-1)",
+  "current_experiment": "none (EXP-04 completed 2026-10-11 in the recovery slice: INCONCLUSIVE by rule)",
   "hypothesis": "H-LOCAL (prereg roles/Cosmos/c4/prereg/EXP-01_LOCAL_DISCOVERY.md on cosmos/c4-v03): FUNCTIONAL predicted by composing one-step physics; law C4-L-0001 frozen",
-  "last_completed_test": "suite 112/112 (merged tree); c4-v03 new tests 40/40",
-  "last_receipt": "hour-1 status (STATUS_LOG.md)",
-  "next_action": "when EXP-01 completes: python -m prometheus.cosmos.c4.exp01_analyse <jsonl> A and B; apply the preregistered kill rule; record verdict",
-  "active_pids": {
-    "exp01": 123565,
-    "power_v03": "see COSMOS_HOME/c4_power_v03.log"
-  },
+  "last_completed_test": "full suite 165/166 on cosmos/c4-v03 fdd6097f0; failure fixed e030d9276 (research_check 14/14)",
+  "last_receipt": "REVIEW_PACKET_48H_2026-10-08.txt + final receipt in STATUS_LOG.md",
+  "next_action": "4 h reliability test: campaigns/RELIABILITY_4H_2026-10-11/PREREG.md",
+  "active_pids": {},
   "incidents": [
     "Cert A seed-unstable on XOR planted (instrument finding)",
-    "R-MECH harness not bit-reproducible (tuple hash seeds)"
+    "R-MECH harness not bit-reproducible (tuple hash seeds)",
+    "I-1 2026-10-08 EXP-04 stdin-spawn crash loop, 58 h undetected (INCIDENT_2026-10-08_EXP04_STALL.md)",
+    "I-2 2026-10-11 ProcessPoolExecutor max_tasks_per_child deadlock, caught by watchdog, auto-recovered",
+    "I-3 2026-10-11 supervise CLI argv bug, failed loudly, fixed",
+    "G-0008 graveyard entry missing fields (suite), fixed"
   ],
   "resources": "ubu003 4 cores / 7 GB, no GPU, spend $0",
   "c3_publication": "DONE d75fb45ef",
@@ -26,5 +27,7 @@
     "main": "records",
     "cosmos/c4-v03": "C4 repairs (merge after final reviews)"
   },
-  "c4_branch_head": "cosmos/c4-v03 (DESIGN_C4_v03.md, stats/firewall/sysid_local/cert_b/planted/exp01)"
+  "c4_branch_head": "cosmos/c4-v03 e030d9276",
+  "status": "CLOSED_INCOMPLETE",
+  "closed_utc": "2026-10-11"
 }

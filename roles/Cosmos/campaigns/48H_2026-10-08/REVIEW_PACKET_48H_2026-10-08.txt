@@ -1,0 +1,252 @@
++==============================================================================================+
+| COSMOS / CWE -- 48H AUTONOMOUS CAMPAIGN 2026-10-08 + RECOVERY 2026-10-11 -- REVIEW PACKET      |
+| Author: Cosmos (instance ubu003-623ec771, Dell E7240, 4 cores / 7 GB, no GPU), claude-opus-5-5 |
+| Date: 2026-10-11                                                                               |
+| For: operator (HITL), Ananke (R-STAT), Bellerophon (R-MECH), external reviewers                |
+| Status: CAMPAIGN FAILED AS AN AUTONOMOUS RUN (~3 of 48 h productive); science preserved;       |
+|         recovery slice done (launcher + watchdog + EXP-04); 4 h reliability test NOT YET RUN   |
+| Self-contained: every load-bearing number is inline; no repo access needed.                    |
++==============================================================================================+
+
+-----
+0. SUMMARY (read this if nothing else)
+-----
+- The 48 h window (2026-10-08T05:26Z -> 2026-10-10T05:26Z) produced ~3 h of work. At 08:19Z an experiment
+  (EXP-04) was launched in a way that could never run (spawn workers cannot re-import a stdin main); the pool
+  respawned crashing workers 4,683,366 times for 58 h while Cosmos waited on a PID-only waiter. Nothing woke
+  Cosmos. The operator found it at 2026-10-10T18:37Z. This is the headline finding of the campaign.
+- Recovery (2026-10-11, operator-scoped): a progress-watched runner/watchdog with 11 failure-injection tests,
+  including a replay of the incident; EXP-04 re-run under it. The watchdog caught a SECOND, unrelated stall in
+  production (CPython ProcessPoolExecutor + max_tasks_per_child deadlock) and recovered the run unattended.
+- Science (all EXPLORATORY, DISCOVERY split only; zero confirmation data created or spent; D2 untouched):
+  4 candidate laws proposed, 2 killed on a never-seen family (G-0007, G-0008), 1 survives by rule only
+  (L-0001, weak), 1 control. EXP-04 (local sufficiency) INCONCLUSIVE by its preregistered rules.
+- No law is close to confirmation. F-0002 not frozen. Recommendation: do NOT grant another multi-day window
+  until the 4 h reliability test passes (s20).
+
+-----
+1. STARTING REPOSITORY STATE
+-----
+- main: migration receipt 983daeb86 (2026-10-06, ubu003). Records worktree branch cosmos/c3-public-2026-09-24.
+- C3 Session 1 withheld on branch cosmos/c3-s1 e73e5eb26 (imported from an M2 git bundle, sha256 b15ee803...46fd8,
+  never pushed before publication). Autopsy branch cosmos/c3-autopsy-2026-09-30 197daf5f3: local only, pre-push
+  hook refuses it (still true; never pushed).
+- C4 design v0.2 under review: R-STAT (Ananke) final 5c0c104ab REVISE; R-MECH (Bellerophon) interim 164df3cdd with
+  two BLOCKING findings (F1, F2); R-MECH final not delivered.
+
+-----
+2. ALL MEANINGFUL COMMITS
+-----
+main (records):
+  fe135cfbf  campaign start: directive verbatim, single-owner lease (lease.py + tests), Theseus family tests
+  d75fb45ef  C3 Session 1 PUBLISHED (merge e73e5eb26), V1-V5 PASS, suite 112/112 on merged tree
+  c479608f0  publication records (INFO_LEDGER, FREEZES note, autopsy s4, WORK_STATE/STATUS/BOOTSTRAP)
+  5e6b4a479 c64229f74 3dbec9602  hourly status h1-h3 (the last before the stall)
+  (this packet + incident record + final state: see s10 of the receipt)
+cosmos/c4-v03 (C4 work; pushed as a branch, NOT merged -- merges only after both final reviews):
+  2d19678a4  R-STAT A1/A4/A5 repairs (within-family uplift; omnibus S2 + Holm; firewall/vault)
+  b86466ac0  R-MECH F1/F2 repairs (LOCAL one-step SYSID; F1 cheat impossible: HorizonError; B re-scoped)
+  07f75565b  DESIGN v0.3 draft;  7fac5e1a1  A6/A9/A3
+  b12220fc5 5b8c711e1 c2079b992 7c4126746  EXP-01 prereg, addendum (L-0003), analysis, result
+  8f2d00e4d ac94e5944 cd5f48928  EXP-02 prereg, result, B5 family-ID
+  688500a2c  stig exploration (3 explanations refuted; stopped)
+  8baf52d22  confirm.py (vault batch generation) -- NEVER RUN
+  9a8e6a46b  A14/A15 label rules;  beff33a52  cosmos_phase family (B1)
+  b05d96077 980541c44  EXP-03 prereg + result (G-0007, G-0008)
+  51f078726  RECONCILIATION_v0.2
+  f0d1fd689 859e18741  EXP-04 prereg + surrogate instrument (then the stall)
+  c7e784d3f 6a4431724 402c5a938  supervise.py runner/watchdog + tests (recovery)
+  2f8b76483  EXP-04 result
+  fdd6097f0  EXP-05 prereg (stig ring RETURN vs ACCUMULATION) -- before data
+  e030d9276  GRAVEYARD G-0008 fields (suite finding)
+
+-----
+3. SCIENTIFIC OBJECTIVES ATTEMPTED
+-----
+Q: can a decoder-free description of a substrate's LOCAL physics (one controlled step from stationary states)
+predict whether a cue is USABLE k steps later, across substrate families, beating trivial baselines
+(T2a = k only; T3-DOWN = the C3 zero-parameter rule)?
+
+-----
+4. DEVELOPMENT ROUNDS COMPLETED
+-----
+Directive asked for 12 adaptive 4 h windows. Completed: W1 only (hours 0-3), plus the 2026-10-11 recovery slice.
+W2-W12 NOT_REACHED (stall).
+
+-----
+5. TESTS AND RUNTEST OUTCOMES
+-----
+- 2026-10-08: full Cosmos suite 112/112 on the merged C3 tree (26 min); C4 suite 50/0/0 at hour 3.
+- 2026-10-11: supervise tests 11/11. Full suite on cosmos/c4-v03 fdd6097f0: 165 passed, 1 FAILED
+  (research_check: GRAVEYARD G-0008 written 10-08 without 'campaign'/'evidence' fields -- a real records defect;
+  fixed e030d9276, research_check 14/14). Full rerun scheduled at the end of the reliability window.
+- runtest: NOT RUN in this campaign. Its seal and broker-selftest steps exercise sealed holdout D's broker; under
+  "do not use another sealed holdout" Cosmos did not run it without a ruling. pytest is the evidence offered.
+
+-----
+6. WORLD FAMILIES AND EXPERIMENT COUNTS
+-----
+Families: rnn, graph, stig (C3, Cosmos), theseus_sediment (FOREIGN, Theseus 79dc4c4b8, verified, selftest 8/8),
+cosmos_phase (new, Cosmos-authored Kuramoto phase coding; no independence claim).
+| exp | split / proposal | worlds | labels |
+|---|---|---|---|
+| EXP-01 | DISCOVERY b0, natural P | 120 (30 x rnn/graph/stig/sediment) | A, B, T3 |
+| EXP-02 | DISCOVERY b1, challenge Q | 120 | A, B, T3 |
+| EXP-03 | DISCOVERY b2, natural P | 60 phase | A, B, T3 |
+| EXP-04 | re-uses the 300 above | 300 surrogate fits | prediction only |
+Planted calibration systems: Reservoir, RotReservoir, XorCue (V=2), HiddenCarrier, DelayLine, NoMemory.
+
+-----
+7. NEW MEASUREMENT INSTRUMENTS
+-----
+- sysid_local: LOCAL coordinates lam/eta/gamma/vis behind a one-step probe (G7 enforced in code); local
+  linear-Gaussian composition (Fisher memory curve). Family fingerprint: coordinates identify family at .908
+  (chance .25) -> raw coordinates are only usable within family (R-STAT B5).
+- cert_b: independent Certificate B (own ridge / random-feature decoder; imports no Cert A code).
+- firewall/vault: DISCOVERY / CONFIRMATION / EXTERNAL seed namespaces; freeze-first, spend-once ledger.
+- stats v0.3a: within-family uplift S0-A; omnibus S2; equivalence and exclusion bounds.
+- labels: USABLE / MARGINAL / NOT with excess floor .10; >= 10 per class per family, >= 4 families.
+- sysid_surrogate (EXP-04): nonlinear one-step model composed by simulation. Qualifies on rnn/sediment only;
+  underpredicts everywhere.
+- supervise (infrastructure): spawn-safe, progress-watched runner + watchdog.
+
+-----
+8. CANDIDATE LAWS PROPOSED
+-----
+- C4-L-0001 (H-LOCAL): FUNCTIONAL iff a decay-rate composition of local coordinates exceeds a threshold.
+- C4-L-0002: open logistic on local coordinates (control; not a law claim).
+- C4-L-0003: FUNCTIONAL iff log d2 > -4.3144, d2 = composed local Fisher discriminability.
+- C4-L-0004: USABLE-B iff log d2 > -2.0, boundary common to all families (shaped by several looks: weak).
+
+-----
+9. LAWS FALSIFIED AND REASONS
+-----
+- G-0007 (L-0003): on never-seen cosmos_phase, frozen theta: BA .556 (< .70 rule). Spearman(log d2, B excess)
+  .32; with an infinitesimal Jacobian only .55 -> mainly scientific (linear local composition does not see phase
+  coding), partly instrument (finite perturbations).
+- G-0008 (L-0004): phase BA .488 (below the k-only baseline .656); phase's own boundary log d2 -7.75 vs -2.0+-1.0.
+Earlier signs of trouble, honestly: EXP-02 showed L-0003 is ORDINAL within families but not calibrated across
+them (one sigmoid 3x worse than per-family); stig never fitted (Spearman .14).
+
+-----
+10. SURVIVING PROVISIONAL CANDIDATES
+-----
+- L-0001: SURVIVED_PROVISIONAL by the EXP-01 rule (uplift vs T2a .193) but BA .50 on stig and undefined on
+  sediment; never tested on phase. It is not a serious candidate. Nothing is ready for confirmation.
+
+-----
+11. REVIEWER FINDINGS RESOLVED OR REMAINING
+-----
+R-STAT (final, REVISE): A1 A2 A3 A4 A5 A6 A9 A11 A14 A15 B1 B3 B4(S1) B7 REPAIRED with tests (repairs, not
+acceptance); A7 machinery only; A8 B8 ACKNOWLEDGED; A12 discovery only; B5 PARTIAL (bound not frozen);
+A10 A13 B6 OPEN; B4 contract parity for C3 families OPEN.
+R-MECH (interim only): F1 REPAIRED BY REDESIGN; F2 RE-SCOPED; F3 text; F4 reported; F5 F6 repaired.
+R-MECH FINAL: never delivered; no message from Bellerophon in the Cosmos inbox as of 2026-10-11T05:44Z.
+Defects found by Cosmos in its own tools: S2 calibration-LRT false-rejects 30% of true universal laws (replaced);
+XorCue V=4 not linear-blind (V=2); Cert A seed-unstable on XOR; HiddenCarrier v1 inert; rho undefined for
+integer state; v0.3 family-floor rule 65% false failures (replaced); R-MECH harness not bit-reproducible
+(PYTHONHASHSEED); surrogate underprediction.
+
+-----
+12. INDEPENDENT CONFIRMATION RESULTS
+-----
+NONE. No confirmation batch was generated; the vault is empty; F-0002 not frozen. Correct: the preconditions
+(blocking findings addressed with evidence AND reconciliation complete) are not met, and no candidate survives.
+
+-----
+13. CAUSAL INTERVENTIONS PERFORMED
+-----
+None at S4. The only interventions are Certificate A's own interchange swap (label machinery) and the planted
+calibration systems.
+
+-----
+14. NEGATIVE SCIENTIFIC FINDINGS
+-----
+- Local linear composition does not transfer to phase coding (G-0007) and gives no common boundary (G-0008).
+- stig: usability is set by causal reachability of a moving sensor (all 3 EXP-01 PASSIVE worlds have v=2, k=2);
+  three repair explanations refuted (frame, resolution floor, whitening floor).
+- EXP-04: on stig, actual usability RISES with k (excess .42 -> .67 -> .82) while every composed local model
+  predicts DECAY. A sign error, not calibration.
+- A-vs-B label disagreement on sediment is a certificate POWER difference (paired vs unpaired), not mechanism.
+- The foreign family was uninformative under its natural distribution (30/30 FUNCTIONAL): authorship
+  independence was served only under the challenge proposal, and thinly (3 NONE worlds).
+
+-----
+15. NEW PHYSICAL HYPOTHESES SUGGESTED
+-----
+- H-ACCUM: on stig-like substrates usability grows with episode length because the substrate integrates the
+  cue-conditioned drive; a STATIONARY local probe cannot see it.
+- H-RETURN (rival, from reading the substrate code, before data): the stig agent moves v cells/step on a ring of
+  16 and senses +-1 cell, so it RETURNS to the cue cell periodically; R = [ring_dist(v(k+2) mod L, 0) <= 1] is
+  exact on synthetic noise-free worlds. If true, the "rise with k" is ring aliasing and stig is pure geometric
+  reachability (what T3-DOWN encodes). EXP-05 (prereg fdd6097f0, ring-length intervention 16 -> 24) decides;
+  it is queue item Q1 of the reliability test.
+- Usability may be ordinal-within-family and family-specific in calibration: a cross-substrate law might need a
+  family-invariant UNIT (none found yet).
+
+-----
+16. RESOURCE CONSUMPTION
+-----
+~7 CPU-h useful (10-08) + ~0.5 CPU-h (10-11); ~170 CPU-h WASTED on the crash loop (load ~3 for 58 h);
+5.2 GB crash log (deleted; head + sha256 + count kept). Peak RAM < 2 GB. Spend $0. No paid compute.
+
+-----
+17. INCIDENTS AND RECOVERY
+-----
+I-1 (campaign loss): see s0; full record INCIDENT_2026-10-08_EXP04_STALL.md. Root causes: (a) stdin-launched
+spawn pool; (b) PID-only waiter; (c) NO independent periodic wake -- hourly status, lease renewal and no-idle
+policy all depended on that one waiter. (c) is the real failure.
+I-2 (caught): EXP-04 relaunch stalled at 60 = 3 workers x 20 rows (CPython ProcessPoolExecutor replaces workers
+retired by max_tasks_per_child only on a later submit). The watchdog declared STALLED after 612 s, killed the
+process group, restarted; the resumed run finished 300/300 with 0 failures. Fix: incremental submit + test.
+I-3 (minor): supervise CLI swallowed options after rundir; failed loudly in seconds; fixed + test.
+Lease: expired 10-08T10:03Z, never renewed.
+
+-----
+18. REPRODUCIBILITY STATUS
+-----
+- Every result file is committed with its sha256 prefix; every experiment is resumable and seeded from
+  split_seed namespaces; world ids are content hashes.
+- R-MECH reruns need PYTHONHASHSEED=0 (Bellerophon's harness seeds from tuple __hash__).
+- Full suite: 165/166 then the one failure fixed (see s5).
+
+-----
+19. UPDATED RESEARCH BACKLOG
+-----
+1. 4 h autonomous reliability test (operator gate) -- next.
+2. R-MECH final from Bellerophon; then RECONCILIATION complete; then merge cosmos/c4-v03.
+3. B5 frozen family-ID bound; B6 contract parity / N0; C3-family contract adapters; A10/A13 report format.
+4. EXP-05 H-RETURN vs H-ACCUM (prereg done; runs in the reliability test).
+5. Surrogate calibration defect (underprediction; phase representation) -- instrument work before any reuse.
+6. Per-family boundary-straddling proposals (needed for any confirmation batch).
+
+-----
+20. RECOMMENDED NEXT 48-HOUR CAMPAIGN
+-----
+Not yet. Run the 4 h reliability test first, with pass criteria fixed in advance (hourly status written on
+schedule by an independent wake; every job terminal within its stall limit; no unexplained gap > 30 min; lease
+renewed). If it passes: a 48 h campaign scoped to instrument work and H-ACCUM on DISCOVERY only, NOT to law
+confirmation, since no candidate survives. "Not worth continuing the cross-family law search in this form" is a
+live option for the reviewers: two laws died on the first new family and the coordinates mostly fingerprint
+family identity.
+
+-----
+QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+1. Is a "local physics predicts usability" law across families plausible at all, given family fingerprinting .908
+   and both deaths on the first new family? Argue for stopping.
+2. Is EXP-04's INCONCLUSIVE a rule gap (graph, a control, failing was not anticipated) or a hidden INSTRUMENT_DEFECT?
+3. Does H-ACCUM require relaxing G7, and would that reopen R-MECH F1 (SYSID restating Certificate A)?
+4. Is the recovery infrastructure sufficient, or is the missing piece an external scheduler that does not depend
+   on the agent at all?
+
+-----
+WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Evidence earned in this campaign: everything above dated 2026-10-08 / 2026-10-11. Historical: C3 results and
+F-0000/F-0001. All C4 numbers are exploratory, on discovery worlds whose labels Cosmos has seen. No real-world
+validation is claimed or implied.
+
++==============================================================================================+
+| END. "Not worth continuing" is a first-class answer.                                           |
++==============================================================================================+
