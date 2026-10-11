@@ -1,0 +1,724 @@
+{
+ "n_disguised": 66,
+ "false_rejections": 1,
+ "false_rejection_rate": 0.015151515151515152,
+ "n_distinct_pairs": 7,
+ "false_acceptances": 0,
+ "false_acceptance_rate": 0.0,
+ "witness_collapses_at_tau": [
+  [
+   "delayline",
+   "register"
+  ],
+  [
+   "delayline",
+   "stig_static"
+  ],
+  [
+   "nomemory",
+   "reservoir_fast"
+  ],
+  [
+   "register",
+   "stig_static"
+  ]
+ ],
+ "classes": {
+  "delayline": {
+   "fired": [],
+   "viable": true
+  },
+  "graph": {
+   "fired": [
+    "M-UNREACHABLE",
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "hidden": {
+   "fired": [
+    "M-HIDDEN"
+   ],
+   "viable": true
+  },
+  "nomemory": {
+   "fired": [
+    "DEGENERATE"
+   ],
+   "viable": false
+  },
+  "phase": {
+   "fired": [
+    "M-LINBLIND",
+    "M-INTERFERENCE",
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "register": {
+   "fired": [],
+   "viable": true
+  },
+  "register_unread": {
+   "fired": [
+    "M-UNREACHABLE"
+   ],
+   "viable": false
+  },
+  "reservoir_fast": {
+   "fired": [
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "reservoir_slow": {
+   "fired": [],
+   "viable": true
+  },
+  "rnn": {
+   "fired": [
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "rotreservoir": {
+   "fired": [
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "sediment": {
+   "fired": [
+    "M-INTERFERENCE",
+    "M-DECAY"
+   ],
+   "viable": false
+  },
+  "signmasked": {
+   "fired": [
+    "M-LINBLIND"
+   ],
+   "viable": true
+  },
+  "stig_diffusing": {
+   "fired": [
+    "M-UNREACHABLE",
+    "M-NONMONOTONE"
+   ],
+   "viable": false
+  },
+  "stig_moving": {
+   "fired": [
+    "M-UNREACHABLE",
+    "M-NONMONOTONE"
+   ],
+   "viable": false
+  },
+  "stig_static": {
+   "fired": [],
+   "viable": true
+  }
+ },
+ "disguised": [
+  {
+   "key": "Permute:nomemory",
+   "d_source": 0.0,
+   "nearest": "nomemory",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:nomemory",
+   "d_source": 0.0006666666666666673,
+   "nearest": "nomemory",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:nomemory",
+   "d_source": 0.0,
+   "nearest": "nomemory",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:nomemory",
+   "d_source": 0.0,
+   "nearest": "nomemory",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:delayline",
+   "d_source": 0.0,
+   "nearest": "delayline",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:delayline",
+   "d_source": 0.0,
+   "nearest": "delayline",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:delayline",
+   "d_source": 0.0,
+   "nearest": "delayline",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:delayline",
+   "d_source": 0.0,
+   "nearest": "delayline",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:register",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:register",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:register",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:register",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:register_unread",
+   "d_source": 0.0,
+   "nearest": "register_unread",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:register_unread",
+   "d_source": 0.0,
+   "nearest": "register_unread",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:register_unread",
+   "d_source": 0.0,
+   "nearest": "register_unread",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:register_unread",
+   "d_source": 0.0,
+   "nearest": "register_unread",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:reservoir_fast",
+   "d_source": 0.009962962962962972,
+   "nearest": "reservoir_fast",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:reservoir_fast",
+   "d_source": 0.00622222222222223,
+   "nearest": "reservoir_fast",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:reservoir_fast",
+   "d_source": 0.0,
+   "nearest": "reservoir_fast",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:reservoir_fast",
+   "d_source": 0.0,
+   "nearest": "reservoir_fast",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:reservoir_slow",
+   "d_source": 0.003425925925925928,
+   "nearest": "reservoir_slow",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:reservoir_slow",
+   "d_source": 0.005555555555555543,
+   "nearest": "reservoir_slow",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:reservoir_slow",
+   "d_source": 0.0,
+   "nearest": "reservoir_slow",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:reservoir_slow",
+   "d_source": 0.0,
+   "nearest": "reservoir_slow",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:rotreservoir",
+   "d_source": 0.005314814814814817,
+   "nearest": "rotreservoir",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:rotreservoir",
+   "d_source": 0.0077407407407407425,
+   "nearest": "rotreservoir",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:rotreservoir",
+   "d_source": 0.0,
+   "nearest": "rotreservoir",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:rotreservoir",
+   "d_source": 0.0,
+   "nearest": "rotreservoir",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:signmasked",
+   "d_source": 0.0,
+   "nearest": "signmasked",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:signmasked",
+   "d_source": 0.0,
+   "nearest": "signmasked",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:signmasked",
+   "d_source": 0.0,
+   "nearest": "signmasked",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:signmasked",
+   "d_source": 0.0,
+   "nearest": "signmasked",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:hidden",
+   "d_source": 0.0,
+   "nearest": "hidden",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:hidden",
+   "d_source": 0.0,
+   "nearest": "hidden",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:hidden",
+   "d_source": 0.0,
+   "nearest": "hidden",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:hidden",
+   "d_source": 0.0,
+   "nearest": "hidden",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:rnn",
+   "d_source": 0.0053148148148148165,
+   "nearest": "rnn",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:rnn",
+   "d_source": 0.004851851851851847,
+   "nearest": "rnn",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:rnn",
+   "d_source": 0.0,
+   "nearest": "rnn",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:rnn",
+   "d_source": 0.0,
+   "nearest": "rnn",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:graph",
+   "d_source": 0.0066296296296296355,
+   "nearest": "graph",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:graph",
+   "d_source": 0.005944444444444443,
+   "nearest": "graph",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:graph",
+   "d_source": 0.0,
+   "nearest": "graph",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:graph",
+   "d_source": 0.0,
+   "nearest": "graph",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:stig_static",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:stig_static",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:stig_static",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:stig_static",
+   "d_source": 0.0,
+   "nearest": "register",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:stig_moving",
+   "d_source": 0.00014814814814814825,
+   "nearest": "stig_moving",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:stig_moving",
+   "d_source": 9.259259259259268e-05,
+   "nearest": "stig_moving",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:stig_moving",
+   "d_source": 0.0,
+   "nearest": "stig_moving",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:stig_moving",
+   "d_source": 0.0,
+   "nearest": "stig_moving",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:stig_diffusing",
+   "d_source": 0.0009814814814814892,
+   "nearest": "stig_diffusing",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:stig_diffusing",
+   "d_source": 0.06994444444444443,
+   "nearest": "stig_diffusing",
+   "nearest_is_source_or_tie": true,
+   "within_tau": false,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:stig_diffusing",
+   "d_source": 9.259259259258547e-05,
+   "nearest": "stig_diffusing",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:stig_diffusing",
+   "d_source": 0.0,
+   "nearest": "stig_diffusing",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:phase",
+   "d_source": 0.00466666666666667,
+   "nearest": "phase",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:phase",
+   "d_source": 0.005537037037037041,
+   "nearest": "phase",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:phase",
+   "d_source": 0.0,
+   "nearest": "phase",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:phase",
+   "d_source": 0.0,
+   "nearest": "phase",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Permute:sediment",
+   "d_source": 0.006203703703703699,
+   "nearest": "sediment",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "LinearEncode:sediment",
+   "d_source": 0.019833333333333328,
+   "nearest": "sediment",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "Rescale:sediment",
+   "d_source": 0.0,
+   "nearest": "sediment",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "RenameState:sediment",
+   "d_source": 0.0,
+   "nearest": "sediment",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "refactor:delayline",
+   "d_source": 0.0,
+   "nearest": "delayline",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  },
+  {
+   "key": "param:reservoir_fast",
+   "d_source": 0.01201851851851852,
+   "nearest": "reservoir_fast",
+   "nearest_is_source_or_tie": true,
+   "within_tau": true,
+   "same_class": true
+  }
+ ],
+ "pairs": [
+  {
+   "pair": [
+    "register",
+    "register_unread"
+   ],
+   "distance": 0.6642407407407407,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  },
+  {
+   "pair": [
+    "reservoir_fast",
+    "reservoir_slow"
+   ],
+   "distance": 0.6138888888888888,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  },
+  {
+   "pair": [
+    "stig_static",
+    "stig_moving"
+   ],
+   "distance": 0.6098333333333332,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  },
+  {
+   "pair": [
+    "register",
+    "signmasked"
+   ],
+   "distance": 0.23507407407407405,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  },
+  {
+   "pair": [
+    "register",
+    "hidden"
+   ],
+   "distance": 0.05503703703703704,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  },
+  {
+   "pair": [
+    "stig_moving",
+    "stig_diffusing"
+   ],
+   "distance": 0.43525925925925923,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": false
+  },
+  {
+   "pair": [
+    "nomemory",
+    "register_unread"
+   ],
+   "distance": 0.31292592592592594,
+   "kept_apart": true,
+   "apart_by_distance": true,
+   "apart_by_class": true
+  }
+ ]
+}
