@@ -1,0 +1,33 @@
+{
+ "schema": "prometheus.rso.ensorain.red_edits.v1",
+ "task": "C-016-T041",
+ "note": "Pallas's edits (from: challenge) are applied VERBATIM from rso/ensorain/challenge/edits.json by id: run_red.py reads find/replace from that file, not from here. The R-edits revert one v1.1.0 repair each. Every edit must make its named test fail (RED) on the v1.1.0 tree, and the unmodified tree must pass both test modules.",
+ "suite": ["rso.ensorain.tests.test_assay", "rso.ensorain.tests.test_repair_v110"],
+ "edits": [
+  {"id": "E1_HOLM_BYPASS", "from": "challenge", "test": "rso.ensorain.tests.test_repair_v110.Inference.test_holm_decides_not_the_raw_p"},
+  {"id": "E2_GPRE_ARM", "from": "challenge", "test": "rso.ensorain.tests.test_repair_v110.Gates.test_gpre_counts_the_full_arm"},
+  {"id": "E3_LATE_WINDOW", "from": "challenge", "test": "rso.ensorain.tests.test_repair_v110.Instrument.test_late_window_starts_three_blocks_after_the_switch"},
+  {"id": "E4_SWAP_CONTROLS", "from": "challenge", "test": "rso.ensorain.tests.test_repair_v110.Inference.test_k1_is_against_frozen_and_k2_against_shuffle"},
+  {"id": "E6_GATE_MAJORITY", "from": "challenge", "test": "rso.ensorain.tests.test_repair_v110.Gates.test_gpre_threshold_is_the_exact_binomial_not_a_majority"},
+  {"id": "R1_K1_WITHOUT_NOISE_ARM", "file": "rso/ensorain/analysis.py",
+   "find": "out[\"K1\"][\"p\"] = max(out[\"K1\"][\"p\"], out[\"K1_noise\"][\"p\"])",
+   "replace": "out[\"K1\"][\"p\"] = out[\"K1\"][\"p\"]",
+   "test": "rso.ensorain.tests.test_repair_v110.Inference.test_k1_needs_the_noise_matched_arm_too"},
+  {"id": "R2_GR5_CHANCE_HALF", "file": "rso/ensorain/analysis.py",
+   "find": "G_R5=_competence(r5, n, alpha)", "replace": "G_R5=_gate(r5, n, alpha)",
+   "test": "rso.ensorain.tests.test_repair_v110.Gates.test_gr5_has_a_competence_bound"},
+  {"id": "R3_P1_NO_ISFINITE", "file": "rso/ensorain/assay.py",
+   "find": "or not np.all(np.isfinite(ya)) ", "replace": "",
+   "test": "rso.ensorain.tests.test_repair_v110.Instrument.test_nan_plastic_value_is_flagged"},
+  {"id": "R4_ENDPOINT_LATE_ONLY", "file": "rso/ensorain/analysis.py",
+   "find": "return 2 * r[\"c_pre\"] > r[\"n_pre\"] and 2 * r[\"c_late\"] > r[\"n_late\"]",
+   "replace": "return 2 * r[\"c_late\"] > r[\"n_late\"]",
+   "test": "rso.ensorain.tests.test_repair_v110.Inference.test_endpoint_is_the_whole_life"},
+  {"id": "R5_FAMILY_S_ALL_SEARCHED", "file": "rso/ensorain/assay.py",
+   "find": "if nm.startswith(\"searched_\") and _declared(g, True))", "replace": "if nm.startswith(\"searched_\"))",
+   "test": "rso.ensorain.tests.test_repair_v110.Registered.test_family_s_is_declared_from_genome_structure"},
+  {"id": "R6_NOISE_ARM_KEEPS_ETA", "file": "rso/ensorain/assay.py",
+   "find": "h[\"eta\"] = min(h[\"eta\"], ETA_NOISE)", "replace": "h[\"eta\"] = h[\"eta\"]",
+   "test": "rso.ensorain.tests.test_repair_v110.Instrument.test_noise_arm_shares_the_full_arms_draws"}
+ ]
+}

@@ -1,5 +1,7 @@
 """C-016-T030 native assay: one Ensorain lifetime -> one row of integers, with the external declared-memory check
-and a recompute of the native accuracies (PREREGISTRATION.md s4-s5).
+and a recompute of the native accuracies (PREREGISTRATION.md s4-s5). Amended in C-016-T041 (v1.1.0): two arms
+(`noise`, the noise-matched comparator; `noswitch`, descriptive), np.isfinite in the declared-memory bound, family S
+declared from genome structure, and the controls jitter (Q-d) and learns_pre (Q-e).
 
 Read-only against ensorain/: tape.lifetime (ensorain/wtp5/tape.py:298) runs every life. Two observers are attached
 for the duration of a life and change nothing it computes: world.block (worlds.py:254) is wrapped to keep each
@@ -23,11 +25,12 @@ from ensorain.wtp5 import tape
 from ensorain.wtp5.worlds import make
 from rso.slice001.receipt import sha256_hex
 from rso.ensorain import subjects as S
+from rso.ensorain.analysis import ARMS
 
 SPEC = "C-R2-desert"
 K = 64                                   # episodes per block, as certify.py:72 and T020
-ARMS = ("full", "frozen", "shuffle", "newlife")
 FIELDS = ("v", "M", "u", "w")
+ETA_NOISE = 1e-9                         # the noise-matched arm: perturbation on, update ~1e-8 over a life (v1.1.0)
 
 
 @contextmanager
@@ -81,7 +84,7 @@ def memory_check(g_in, g_out, plastic):
                 xa, ya = x[f], y[f]
                 if f in FIELDS and (where, i, f) in keys:
                     ya = np.asarray(ya)
-                    if ya.shape != np.shape(xa) or np.any(np.abs(ya) > tape.PLASTIC_BOUND):
+                    if ya.shape != np.shape(xa) or not np.all(np.isfinite(ya)) or np.any(np.abs(ya) > tape.PLASTIC_BOUND):
                         return False, 0
                 elif isinstance(xa, np.ndarray) or isinstance(ya, np.ndarray):
                     if not (isinstance(xa, np.ndarray) and isinstance(ya, np.ndarray) and np.array_equal(xa, ya)):
@@ -91,14 +94,26 @@ def memory_check(g_in, g_out, plastic):
     return True, int(sum(np.asarray(tape._param(g_in, *k)).size for k in keys))
 
 
-def _one(g, seed, plastic, shuffle):
+def noise_matched(g):
+    """The genome with eta lowered to ETA_NOISE (never raised). tape.py:305 keeps the perturbation on while eta > 0, and
+    the rng draws are those of the full arm on the same seed: the pair differs only in the update (tape.py:349)."""
+    h = dict(g)
+    if h.get("eta", 0) > 0:
+        h["eta"] = min(h["eta"], ETA_NOISE)
+    return h
+
+
+def _one(g, seed, plastic, shuffle, noswitch=False):
     rng = np.random.default_rng(seed)
     w = make(SPEC)
     w.new_life(rng)
+    sw = w.sw                                # the drawn switch block: the windows of every arm on this seed
+    if noswitch:                             # descriptive arm: the same draws, law never flips (worlds.py:248-252)
+        w.sw = w.L
     log = []
     with _observe(w, log):
         out = tape.lifetime(g, w, rng, plasticity=plastic, K=K, history_shuffle=shuffle)
-    return w.sw, log, out
+    return sw, log, out
 
 
 def _counts(sw, log, out):
@@ -128,13 +143,13 @@ def _counts(sw, log, out):
 
 def life(g, arm, seed):
     """One lifetime of genome g under an arm -> a row of ints / bools / strings (receipt-canonical)."""
-    plastic, shuffle = arm in ("full", "shuffle", "newlife"), arm == "shuffle"
-    g_in = g
+    plastic, shuffle = arm in ("full", "shuffle", "newlife", "noise", "noswitch"), arm == "shuffle"
+    g_in = noise_matched(g) if arm == "noise" else g
     if arm == "newlife":                     # a NEW life from the learned parameters; not a resume (none exists)
         _, log0, out0 = _one(g, seed, True, False)
         ok0, _ = memory_check(g, out0["learned"], True)
         g_in = out0["learned"]
-    sw, log, out = _one(g_in, seed, plastic, shuffle)
+    sw, log, out = _one(g_in, seed, plastic, shuffle, noswitch=arm == "noswitch")
     c, rec_ok, z_ok = _counts(sw, log, out)
     mem_ok, n_car = memory_check(g_in, out["learned"], plastic)
     if arm == "newlife":
@@ -166,9 +181,18 @@ def environment():
 
 
 def controls():
-    """Instrument controls that run beside every subject set (PREREGISTRATION.md s3)."""
+    """Instrument controls that run beside every subject set (PREREGISTRATION.md s3; jitter and learns_pre are
+    Pallas's challenge genomes, registered in v1.1.0 as Q-d and Q-e and imported unchanged)."""
+    from rso.ensorain.challenge.subjects_c import jitter, learns_pre
     return {"reference": S.reference(), "smuggler": S.smuggler(), "smuggler_decorative": S.smuggler_decorative(),
-            "memoryless_plus": S.memoryless(+1), "constant_plus": S.constant(+1), "constant_minus": S.constant(-1)}
+            "memoryless_plus": S.memoryless(+1), "constant_plus": S.constant(+1), "constant_minus": S.constant(-1),
+            "jitter": jitter(), "learns_pre": learns_pre()}
+
+
+def family_s(subs):
+    """Family S (v1.1.0), from genome structure alone, before any endpoint: the searched subjects whose lifetime
+    plasticity is active (a non-empty declared plastic key set: tape.plastic_keys with eta, sigma > 0)."""
+    return sorted(nm for nm, g in subs.items() if nm.startswith("searched_") and _declared(g, True))
 
 
 def main(argv=None):
@@ -192,14 +216,31 @@ def main(argv=None):
             sys.exit("REFUSED: %s" % (bad or "confirm needs --subjects, --cleared-by and --n %d" % S.N_CONFIRM))
         subs.update(S.load_searched(a.subjects))
         seeds = [S.CONFIRM0 + i for i in range(a.n)]
+    searched, tested = [n for n in subs if n.startswith("searched_")], family_s(subs)
     rows = run(subs, ARMS, seeds)
-    res = dict(schema="prometheus.rso.ensorain.assay.v1", mode=a.mode, spec=SPEC, K=K, seeds=[seeds[0], seeds[-1]],
+    v = analysis.report(rows, a.n, searched=searched, tested=tested)
+    res = dict(schema="prometheus.rso.ensorain.assay.v1.1", mode=a.mode, spec=SPEC, K=K, seeds=[seeds[0], seeds[-1]],
                environment=environment(), cleared_by=a.cleared_by, rows_sha256=rows_sha256(rows), rows=rows,
-               verdicts=analysis.report(rows, a.n, searched=[n for n in subs if n.startswith("searched_")]), **extra)
+               family_s=tested, verdicts=v, qualification=analysis.qualification(v),
+               search_accessibility=analysis.search_accessibility(v, searched), **extra)
     with open(a.out, "w", encoding="utf-8", newline="\n") as f:
         json.dump(res, f, indent=1, sort_keys=True, default=str)
-    for name, v in res["verdicts"].items():
-        print(name, v["verdict"])
+    print_verdicts(v)
+    print("qualification", res["qualification"])
+
+
+def print_verdicts(v):
+    """Every verdict with its per-arm revised lives and late-window accuracy beside it (REPORT s4.1)."""
+    for name, x in v.items():
+        arms = " ".join("%s %d/%s" % (a, rv, _frac(c, m)) for a, rv, c, m in zip(x["arms"], x["revised_lives"], x["late"],
+                                                                              x["late_n"]))
+        print("%-22s %-38s K1 %d:%d:%d|noise %d:%d:%d K2 %d:%d:%d | revised/late: %s" % (
+            name, x["verdict"], x["K1"]["wins"], x["K1"]["losses"], x["K1"]["ties"], x["K1_noise"]["wins"],
+            x["K1_noise"]["losses"], x["K1_noise"]["ties"], x["K2"]["wins"], x["K2"]["losses"], x["K2"]["ties"], arms))
+
+
+def _frac(c, m):
+    return "%.3f" % (c / m) if m else "-"
 
 
 if __name__ == "__main__":
