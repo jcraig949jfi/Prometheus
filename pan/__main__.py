@@ -29,6 +29,7 @@
   atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
   proposals check             PAN-41: verify the Atlas/Hades schema proposals in a throwaway database
   access apply|controls       PAN-42: apply access rules (classify / refuse) | live controls + RLS proof
+  negspace calibrate|smoke [--no-llm]   PAN-43: distinctness calibration (gate) | A-D harness smoke
                               (retrieval clearance: PAN_CLEARANCE=generator|evaluator|adjudicator|infrastructure)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
@@ -118,6 +119,9 @@ def main(argv=None):
     p.add_argument("what", choices=["check"])
     p = sub.add_parser("access")
     p.add_argument("what", choices=["apply", "controls"])
+    p = sub.add_parser("negspace")
+    p.add_argument("what", choices=["calibrate", "smoke"])
+    p.add_argument("--no-llm", action="store_true")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build", "floors", "run", "controls"])
@@ -266,6 +270,12 @@ def main(argv=None):
                 print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
                                                          r["last_machine"], r["last_commit"][:70]))
             print(meta)
+    elif a.cmd == "negspace":
+        from .negspace import harness
+        if a.what == "calibrate":
+            harness.calibrate()
+        else:
+            harness.smoke(use_llm=not a.no_llm)
     elif a.cmd == "access":
         from . import access
         if a.what == "apply":
