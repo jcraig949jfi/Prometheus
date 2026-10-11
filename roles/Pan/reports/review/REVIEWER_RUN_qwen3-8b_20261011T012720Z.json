@@ -1,0 +1,34 @@
+{
+ "model": "qwen3:8b",
+ "run_id": "reviewcal-run-20261011T012720Z-spectrex5",
+ "set": "v2 (ITEMS_V2_20261010T164207Z)",
+ "protocol": "prereg v2 A1 (Ollama 0.35.0; temperature 0, seed 1, 512 tokens, thinking off)",
+ "lease": "lse-34107754edd4 spectrex5:gpu0 01:26:27Z-01:29:09Z",
+ "summary": {
+  "hits": 29,
+  "mutants": 40,
+  "recall": 0.725,
+  "recall_wilson95": [
+   0.572,
+   0.839
+  ],
+  "false_alarms": 20,
+  "clean": 20,
+  "false_alarm_rate": 1.0,
+  "false_alarm_wilson95": [
+   0.839,
+   1.0
+  ],
+  "parse_errors": 0,
+  "chance_bar": 0.7,
+  "recall_lower95": 0.572,
+  "better_than_chance": false,
+  "seconds": 53.0
+ },
+ "per_operator_hit_wrongline_nobug": {
+  "arith_flip": "5/0/0",
+  "cmp_flip": "4/3/0",
+  "negate_test": "11/2/0",
+  "off_by_one": "9/6/0"
+ }
+}
