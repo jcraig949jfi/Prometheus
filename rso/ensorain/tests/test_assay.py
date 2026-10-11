@@ -66,6 +66,22 @@ class DeclaredMemory(unittest.TestCase):
             self.assertFalse(assay.life(subjects.reference(), "frozen", DEV[3])["memory_ok"])
 
 
+    def test_plastic_value_outside_bound_is_flagged(self):
+        g = subjects.reference()
+        h = copy.deepcopy(g)
+        h["nodes"][4]["v"] = h["nodes"][4]["v"] * 0 + 1.5
+        self.assertFalse(assay.memory_check(g, h, True)[0])
+        self.assertEqual(assay.memory_check(g, copy.deepcopy(g), True), (True, 8))
+
+    def test_searched_subjects_preflight_reports_instrument_fields_only(self):
+        subs = subjects.load_searched("rso/ensorain/SUBJECTS.json")
+        pf = assay.preflight(subs, DEV[:2])
+        self.assertEqual(set(pf), set(subs))
+        for v in pf.values():
+            self.assertEqual(set(v), {"memory_ok", "recompute_ok"})
+            self.assertTrue(v["memory_ok"] and v["recompute_ok"])
+
+
 class Subjects(unittest.TestCase):
     def test_smugglers_read_the_post_switch_sign_from_a_constant(self):
         for g in (subjects.smuggler(), subjects.smuggler_decorative()):
@@ -112,6 +128,13 @@ class Analysis(unittest.TestCase):
 
 
 class Freeze(unittest.TestCase):
+    def test_confirm_cli_refuses_without_clearance_or_registered_n(self):
+        with self.assertRaises(SystemExit):
+            assay.main(["confirm", "unused.json", "--n", "400", "--subjects", "rso/ensorain/SUBJECTS.json"])
+        with self.assertRaises(SystemExit):
+            assay.main(["confirm", "unused.json", "--n", "40", "--subjects", "rso/ensorain/SUBJECTS.json",
+                        "--cleared-by", "x"])
+
     def test_confirm_refuses_on_changed_bytes(self):
         from rso.ensorain import freeze
         with mock.patch.object(freeze, "file_sha", lambda p, root=None: "0" * 64):
