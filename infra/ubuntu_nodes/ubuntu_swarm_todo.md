@@ -161,7 +161,7 @@ full Claude login. Before a machine or a disk leaves the house:
    (provision_node.sh reinstalls it), revoke the Claude token in claude.ai settings and re-copy a new one, change the
    Wi-Fi password and rebuild CIDATA.
 4. Mark it RETIRED in ubuntu_server_machines.md (keep the row); drop its DHCP reservation and its known_hosts lines.
-Secrets never go in the repo (it is public): they live in C:utoinstall_secrets on ELSA. Checked 2026-10-11: no token
+Secrets never go in the repo (it is public): they live in C:\autoinstall_secrets on ELSA. Checked 2026-10-11: no token
 or Wi-Fi string in infra/, achilles/ or roles/Achilles/, current tree or history.
 
 ## Claude (can be done over SSH from M2 without the operator)
