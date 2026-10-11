@@ -332,3 +332,19 @@ Interpretation (frozen):
 - P1 FAILS: it does not at this horizon.
 ECHOH (the E1b-like start, >= 4 steps) is reported, not tested; 0 is expected and a crossing would be a discovery.
 Compute: 2 workers alongside D2; raised to 8 when D2 completes (resumable driver, no plan change).
+
+## 15. F6 -- transplantation of the error-threshold result (RM2) to a second composite and a second world model (CONFIRMATORY; frozen 2026-10-11T21:28:01Z, before any F6 run)
+
+Motivation: RM2 (F3, reproduced F4-R) rests on one hand-built composite (COND_ONE witness, 10 critical bytes) in one world
+model (GRID LOCAL). The directive asks which mechanisms survive transplantation.
+Plan tools/plan_f6.py OUT (100 runs, FRESH seeds base 72.6e12, the setting of F1, payment ON, 2,000 ticks):
+- CM: the copier + COND_MULTI witness (14 critical bytes; FUNC, competent, heritable over 3 generations), task COND_MULTI,
+  GRID LOCAL, mutation MED / LOW / VLOW on the same 20 seeds.
+- WM: the F1 W0 composite, task COND_ONE, GRID WELL_MIXED, mutation MED / VLOW on the same 20 seeds.
+Analysis tools/analyze_f6.py (synthetic test tools/tests/test_f6.py); keep = a FUNC BOTH at the tick-2,000 census.
+- F6-P1: CM keep, VLOW > MED. Fisher one-sided, p < 0.05.
+- F6-P2: WM keep, VLOW > MED. Same test.
+- Each is NOT_TESTABLE if its two arms together have < 10 worlds with FUNC at the end.
+Interpretation: P1 and P2 HOLD -> RM2 transfers to a larger composite and to a mixing world model. A failure is a
+transplant boundary of RM2. CM LOW is reported, not tested: with 14 critical bytes, the threshold account predicts CM keeps
+less often than COND_ONE at LOW.
