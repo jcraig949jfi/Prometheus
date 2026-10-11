@@ -272,3 +272,7 @@ Interpretation (frozen):
 - P1 HOLDS: distance-1 precursors cross once maintenance is possible.
 - Reported, not tested: FUNC survival under each rule (paired payment lowers half-solver income and may raise
   extinction), and ECHOH / REP crossings.
+
+## 11-E1. ERRATUM to s11 (2026-10-11T09:19:21Z, F2 complete, BEFORE any F2 outcome was read)
+tools/analyze_f2.py crashed at json.dump: the F2-P0 / F2-P1 "holds" values were numpy booleans (scipy p-values). Fix: cast
+to bool. No rule changed; the crash printed only a traceback.

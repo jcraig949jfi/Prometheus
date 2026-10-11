@@ -30,8 +30,8 @@ def analyze(f2rows, f2plan, f1rows):
     g = lambda cell, rule, k: (cells.get(cell, {}).get(rule, {}).get(k, 0), cells.get(cell, {}).get("n", 0))
     p0 = fisher(g("W0", "PAIRED", "both_end"), g("W0", "KERNEL", "both_end"))
     p1 = fisher(g("KO1", "PAIRED", "crossed"), g("KO1", "KERNEL", "crossed"))
-    out["F2-P0"] = {"paired": g("W0", "PAIRED", "both_end"), "kernel": g("W0", "KERNEL", "both_end"), "p": p0, "holds": p0 < 0.05}
-    out["F2-P1"] = {"paired": g("KO1", "PAIRED", "crossed"), "kernel": g("KO1", "KERNEL", "crossed"), "p": p1, "holds": p1 < 0.05}
+    out["F2-P0"] = {"paired": g("W0", "PAIRED", "both_end"), "kernel": g("W0", "KERNEL", "both_end"), "p": p0, "holds": bool(p0 < 0.05)}
+    out["F2-P1"] = {"paired": g("KO1", "PAIRED", "crossed"), "kernel": g("KO1", "KERNEL", "crossed"), "p": p1, "holds": bool(p1 < 0.05)}
     return out
 
 
