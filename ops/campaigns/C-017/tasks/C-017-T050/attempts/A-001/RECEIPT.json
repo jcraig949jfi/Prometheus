@@ -1,0 +1,51 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-017-T050",
+ "campaign_id": "C-017",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-2a8591f8",
+ "host": "harry1",
+ "branch": "argus/c017-t050",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c017-t050",
+ "start_sha": "2504b063c58c8075f839f7e12ca5fe77b16be82b",
+ "end_sha": "branch head = this receipt's commit (rows+RESULT at a1b2b3f97a9ba945b2e6713375340acfd28c32c1)",
+ "dirty": false,
+ "commits": {"claim_main": "36dc1e6b7", "rows_and_result_branch": "a1b2b3f97a9ba945b2e6713375340acfd28c32c1"},
+ "files_changed": [
+  "rso/z80/runs/CONFIRM.{0..5}-6.{jsonl.gz,meta.json} (360 rows)",
+  "rso/z80/runs/CONFIRM.analysis.json (verbatim analysis output)",
+  "rso/z80/runs/CONFIRM.resources.json (CPU-s, wall, peak RSS per shard)",
+  "rso/z80/RESULT.md",
+  "ops/campaigns/C-017/tasks/C-017-T050/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "verdict ATTRIBUTION_QUALIFIED: Q1 ENDO 0/71 (w_max 6), ENV 1/72 (6), EXT 0/83 (8), INS 0/48 (3); Q2 0/274 (w_max 39); Q3 0 bad of 8/8/16/8/8; b1 fails ENV 72/72; b2 fails ENV 72/72 and EXT 23/83; b4 fails ENV 24/72 (CDIST)",
+  "rows sha256 per shard: a59f37e9 0db1d169 41c3c262 9d9842a6 8aca5e0c ab4475a4 (full in RESULT.md s5)",
+  "resources: 1950 CPU-s, 1958 s wall, peak 39 MB; one process at a time",
+  "RESULT.md carries the s11 narrowing, Q3 provenance (T040 genuine Fable 5.1; T042 mixed Fable/Opus 4.8), the T020 restatement, and per-shard resources"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.z80.freeze check", "result": "OK before and after"},
+  {"command": "python -B -m rso.z80.assay confirm rso/z80/runs/CONFIRM --cleared-by <TASK.json REF verbatim> 0/6", "result": "REFUSED exit 2, nothing written: assay.py:242 rejects a REF containing '/'"},
+  {"command": "python -B -m rso.z80.assay confirm rso/z80/runs/CONFIRM --cleared-by <same REF without slashes> i/6, i=0..5", "result": "6 shards exit 0; 58,58,61,62,61,60 rows"},
+  {"command": "python -B -m rso.z80.analysis rso/z80/runs/CONFIRM.*-6.jsonl.gz", "result": "ATTRIBUTION_QUALIFIED, failed [], unpowered [], baselines_passing_q1 []"}
+ ],
+ "red_observed": {"observed": false, "detail": "red_required false: execution of a preregistered experiment"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "the shard logs print per-run classes while running; no decision was taken from them",
+  "CPU-s is the sampled maximum of tree cpu_times at 0.1 s, so it can undercount by up to a sample"
+ ],
+ "unresolved": [
+  "TASK.json command's --cleared-by REF contains '/', which assay.py:242 refuses; I removed the slashes (RESULT.md s6.1). Integrator may want the packet text or the rule amended",
+  "ARISEN untested; recipe-table reader would pass Q1 (s11.9)"
+ ],
+ "unblocks": [],
+ "resources": {"cpu_core_hours_estimate": 0.54, "processes_max": 1, "peak_working_set_mb": 39, "paid_resources": "none", "hosts": ["harry1"]},
+ "cleanup": "scratch outside the repo under C:/Users/jcrai/argus_t050_scratch/ (measure.py, shard JSON, analysis.txt)",
+ "notes": "Read-only on archaeon/, prometheus/z80atlas/, roles/Archaeon/; no Archaeon seed, no evidence bundle; no pinned file touched. Python 3.12.10 on harry1. Headless; foreground only.",
+ "created_at_utc": "2026-10-11T21:35:46Z"
+}
