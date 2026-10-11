@@ -81,8 +81,10 @@ tolerance 0.10.
 ### G-0008 | C4 | C4-L-0004 ("common usability boundary in local-FMC units"), theta -1.9992 on USABLE-under-B
 - law: USABLE (B, excess >= .10) iff log d2 > -2.0, with a boundary common to all families (sharpness may differ).
   Shaped by several looks at EXP-01/02 discovery data (EXP-02_RESULT.md point 4).
+- campaign: C4 (48H_2026-10-08), DISCOVERY only; no confirmation data was ever created.
 - killed_by: EXP-03 on cosmos_phase: BA .488 (below the k-only baseline .656); the family's own boundary sits at
   log d2 -7.75 against the predicted -2.0 +- 1.0.
+- evidence: c4/results/EXP-03_verdict.txt, EXP-03_phase_b2.jsonl, theta_L0004.json; prereg EXP-03_NEW_FAMILY_TRANSFER.md.
 - fragments: the B-label boundary collapse for graph / rnn / sediment (-3.6 / -3.6 / -4.0) was real in discovery
   data and did not transfer to a fourth mechanism: three agreeing families were not enough.
 - disposition: dead. The lesson is about EVIDENCE, not physics: a boundary shared by three families is a
