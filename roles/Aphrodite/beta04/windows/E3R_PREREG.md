@@ -122,3 +122,39 @@ They supersede this draft wherever they conflict. In particular:
   - DEVELOPMENTAL / EITHER are therefore "expected unattainable", not "unattainable".
   - The only hard reproduction assert stays the reused off_frozen cell = 7 / 15.
 - **Wall-clock UTC start / end** in every E3-R result file (pilot, cells, pooled) is a freeze precondition.
+
+## AMENDMENT E3R-A3 (pre-data; text = code for build 40fdf5eab, E3_RUNNER s4E)
+
+All 12 implementation clarifications in E3_RUNNER s4E are ADOPTED as frozen rules:
+1. **The 14,400 s extension is a deterministic RE-RUN.** The first 3,600 s are lost and charged.
+2. **Envelopes.**
+   - An OE scratch search starts only if spent + cap <= 16 core-h.
+   - The total 14 core-h envelope is checked at job start (per-world jobs may overshoot it).
+   - Concurrent load is passed as `--debit-core-h`.
+3. **"An OE chain reaches 12"** = 5q >= 4n with complete chains, at any seed.
+4. **All OE cells and seeds share the seed-0 OE scratch** (one scratch condition).
+5. **off_xabs seeds 1-2 reuse the seed-0 non-OE scratch.** A declared deviation, the same as for OE.
+6. **Final label.**
+   - Stable or 2-of-3 majority: the majority label.
+   - All three seeds differ: the seed-0 label, tagged SEED_UNSTABLE.
+   - Stability is computed on LO labels.
+   - A CONDITIONAL result renders as `<HI> (CONDITIONAL; unconditional <LO>)`. The recommendation uses the LO label only.
+7. **NONE reading = on_xabs at seed 0.**
+   - The dominant link needs a strict majority among HORIZON / UD-R1 / UD-EXTRACT.
+   - COMPOSITION_UNDERDETERMINED and UD-OTHER count as "other", so they push the reading to MIXED.
+8. **UD-EXTRACT global-equivalence** uses the builder's seeded list set.
+9. **A failed off_frozen reproduction (not 7 / 15) HALTS the run.**
+10. **Thresholds:** a second worker starts only if >= 6 GB is free; the cap poll is 2 s (overshoot about 2 CPU-s).
+11. **"Fallback-off disagrees"** = the seed-0 LO label changes when fallback-off on_xabs replaces on_xabs.
+12. **FREEZE_E3R.json** carries the git-blob hashes.
+
+**Pilot (exposed pilot_v2; development only, not evidence):**
+
+| Seed | Label |
+|---|---|
+| 0 | SEARCH |
+| 1 | BOTH_REQUIRED |
+| 2 | BOTH_REQUIRED |
+
+- The result is BOTH_REQUIRED (MAJORITY).
+- The first held-out X-ABS firing (W0467897d f1, seeds 1-2) is recorded in the masking report.
