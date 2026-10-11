@@ -186,6 +186,21 @@ Q-016 | PERMISSION (scheduled task on M2) | 2026-10-11
   index_current) rather than silently.
   ANSWER:
 
+Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
+  PAN-47 found committed files with credential-shaped CONTENT (comms #2129;
+  values never read). The likeliest real ones:
+  - three apollo/configs/config_v2d*.yaml and apollo/scripts/evolution_monitor.py
+    (an "sk-" + 32-character provider-key shape);
+  - evidence_wiki/config.json (a non-empty db_password);
+  - apollo/scripts/launch_bakeoff_candidate.ps1.
+  Pan has purged all 132 matching files from its index (paths kept). The
+  values remain in git history and the working tree. Rotate the keys or
+  passwords, and remove the values from the files (and from history)?
+  DEFAULT meanwhile: Pan purges its index and nothing else. Owners (Apollo,
+  Mnemosyne, Harmonia, Charon, Aporia) are told; rotation is theirs or
+  yours.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09
