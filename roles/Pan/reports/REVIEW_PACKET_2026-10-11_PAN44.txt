@@ -211,6 +211,31 @@ DOES NOT:
     (registration)
   directive: roles/Pan/prompts/2026-10-11_sagacity_foundation s5
 
+-----
+9. ADDENDUM (2026-10-11, after PAN-47) -- the exclusion claim was incomplete
+-----
+  - Layer 3 refused credential FILES by path only.
+  - Files whose TEXT carried a literal credential were indexed as PROGRAM.
+    From the server's first commit (10:45:52Z) to the content purge at
+    ~11:06Z, pan_search could have served their snippets at generator
+    clearance. Examples: a committed config with a non-empty db_password,
+    and provider-key shapes in configs.
+  - No client was registered (Q-015 default). In that window the only
+    callers were Pan's own controls and the SDK conformance run, and neither
+    queried those files.
+  - Fix (PAN-47, migration 015):
+    - a content-scope REFUSE rule;
+    - 132 artifacts refused whole: chunks, vectors, links and text-derived
+      titles purged, paths kept;
+    - the chunker refuses such files before indexing.
+    Receipts: ACCESS_20261011T110930Z 20/20, MCP_20261011T110849Z 15/15
+    re-run.
+  - Owners and the operator were told (comms #2129, paths only). Rotation is
+    Q-017.
+  - Reviewer question added. Which other kinds of sensitive content (personal
+    data, embargoed numbers inside ordinary files) does a path-and-pattern
+    rule still miss?
+
 +==============================================================================+
 | END. Reviewer: "not worth continuing" is a first-class answer. So is        |
 | "an interface nobody calls is decoration -- retire it".                     |
