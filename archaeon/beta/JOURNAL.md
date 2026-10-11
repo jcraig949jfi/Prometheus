@@ -885,6 +885,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   ~02:45Z). B75 NOT launched; retry after Pan's lease ends. No compute run without the lease.
 - B75 LAUNCHED 02:59Z (Pan's lease ended): lease lse-7c919808f4aa (spectrex5:cpu12, 3 h, token captured), 12 SOLO
   cells, G=300, 12 procs. Window 5 measured from 00:29Z; est 12-18 core-h.
+- B75 RESULT (05:19Z; lease lse-7c919808f4aa RELEASED; ~2.3 h x 12 procs ~ 25 core-h -- above the 12-18 estimate):
+  PREREGISTERED census (top 10 per population): RESET-like genomes 0/12 populations; population best rewards .015-.038
+  (hand LATCH .040, RESET .065). PREDICTION (memory law's defender: <= 2/12, none beats hand RESET) MET.
+  CONFOUND CHECK (B75b, best unique genome per population, full ablation = code locked + persist none): 8/12 best
+  genomes ARE state-using (dep .026-.043) with LATCH-like re-find .00-.14 (hand LATCH .05, RESET .56); 0/12 combine
+  state use with re-find >= .31; 11/12 beat stateless REACT (.021). Outlier: 7501 best .049 (> hand LATCH) is
+  STATELESS (dep .001) with re-find .45 by roaming.
+  VERDICT: in a world where update-on-condition memory is the BEST strategy (hand RESET 1.66x LATCH), the search
+  reaches WRITE-ONCE state (8/12) but not UPDATE-ON-CONDITION state (0/12). The memory law survives its most direct
+  test; the failure is specific to the update class, not to the world. Caveat: one world, SOLO only, G=300; the
+  RESET program needs a 3-instruction counter loop + latch clear, a longer coupled chain than the latch (consistent
+  with the B55-B57 wiring mechanism).
+- WINDOW 5 TALLY: B75 ~25 + B75b eval ~0.1 = ~25 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

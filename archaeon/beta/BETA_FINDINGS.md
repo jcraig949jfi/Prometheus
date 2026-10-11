@@ -86,6 +86,14 @@ clock.
      self-modifying-code latch (best genome in 5/48). B67/B69's persist-only readout missed code-stored state
      (instrument gap, mine).
 
+6. **The memory law survives its most direct test (B74/B75).**
+   - World: a relocating pulse world (48 ticks; refill every 4; every 16 ticks each pool jumps to a random node).
+     There the update-on-condition RESET latch (unlatch after 4 empties, re-search) is the best hand strategy: 1.66x
+     the write-once LATCH.
+   - Result (12 populations, preregistered): 8/12 best genomes use write-once state (LATCH-like re-finding); 0/12
+     reach the update-on-condition RESET.
+   - The wall is specific to the update class, not to the world.
+
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
 1. **Sequential coupling has no teeth (B59).** Organisms evaluated one after another on a shared pool see the
