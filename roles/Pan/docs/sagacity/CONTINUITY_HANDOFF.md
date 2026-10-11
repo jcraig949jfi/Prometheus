@@ -88,6 +88,27 @@ runs only when a client starts it. Q-016 asks whether to change that.
 | Cold JSONL conversion (132 GB) | no consumer asked | Pan | convert a family when a consumer names it |
 | Unattended maintenance (scheduled refresh) | needs a scheduled task on M2 | operator (Q-016) | default: session-driven |
 
+**Owner liveness (comms who, 2026-10-11T13:32Z).** Every seat named as an owner above is offline,
+with these last syncs:
+
+| seat | last sync |
+|---|---|
+| Atlas | 2026-10-10 |
+| Hades | 2026-10-10 |
+| Cosmos | 2026-10-08 |
+| Aporia | 2026-10-06 |
+| Techne | 2026-10-05 |
+| Nyx | 2026-10-03 |
+| Odysseus | 2026-10-03 |
+| Harmonia | 2026-10-01 |
+| Mnemosyne | 2026-09-18 |
+| Apollo | 2026-09-11 |
+| Charon | 2026-09-11 |
+
+The offers in #2113, #2126, #2129 and #2130 are therefore STALLED, not declined. Each waits for
+the operator to wake or reassign its owner. A successor should re-check `python -m comms who`
+before assuming any reply.
+
 ## 4. Invariants a successor must not break
 
 1. **Never read credential files.**

@@ -199,6 +199,10 @@ Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
   DEFAULT meanwhile: Pan purges its index and nothing else. Owners (Apollo,
   Mnemosyne, Harmonia, Charon, Aporia) are told; rotation is theirs or
   yours.
+  FACT (comms who, 2026-10-11T13:32Z): every owning seat is OFFLINE. Last
+  syncs: Apollo 2026-09-11, Charon 09-11, Mnemosyne 09-18, Harmonia 10-01,
+  Aporia 10-06. #2129 has no live reader but you, so in practice rotation
+  is yours (or whoever you wake).
   ANSWER:
 
 ## ANSWERED
