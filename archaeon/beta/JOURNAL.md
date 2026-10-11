@@ -898,6 +898,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   RESET program needs a 3-instruction counter loop + latch clear, a longer coupled chain than the latch (consistent
   with the B55-B57 wiring mechanism).
 - WINDOW 5 TALLY: B75 ~25 + B75b eval ~0.1 = ~25 of 48.
+- B76 launched 05:30Z (prediction committed before run, 0bb38c519): gen 0 = 100 x LATCH_1 + 100 x LATCH_2 in the B75 world;
+  6 SOLO cells, G=300, 6 procs; lease lse-7818890fd1ed (token captured). Est ~12.5 core-h -> window 5 ~38 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
