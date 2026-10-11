@@ -23,7 +23,7 @@
     "rso/registry/",
     "rso/ensorain/ (the C-016 pattern)"
   ],
-  "problem": "Local CPU harry1.",
+  "problem": "Local CPU on harry1. Execute exactly PREREGISTRATION v1.1.0 s9: `python -B -m rso.z80.freeze check` (OK), then for i = 0..5 `python -B -m rso.z80.assay confirm rso/z80/runs/CONFIRM --cleared-by \"C-017-T042 integrated (Palamedes; rso/z80/challenge/R2/REPORT.md; escalation response NEW_Pallas_2026-10-11_1_RESPONSE.md)\" i/6` -- ONE shard per foreground call (timeout 600000; headless: no background jobs, so shards run one at a time, not two), then `python -B -m rso.z80.analysis rso/z80/runs/CONFIRM.*-6.jsonl.gz`. A shard that dies is re-run whole. RESULT.md MUST: (1) give the verdict (NOT_QUALIFIED / UNDERPOWERED / UNINFORMATIVE / ATTRIBUTION_QUALIFIED) and Q1 per class, Q2, Q3 forgeries, Q4 baselines b1 b2 b4 with their counts and w_max; (2) carry the s11 narrowing verbatim in meaning: ENDO = written by the parent's execution with no counted window read and invariant under the two registered alterations (exec_foreign / SEAL residual obstructed, not excluded); ENV = the target cell's prior content; origin INSERTED only -- ARISEN not tested; replay-dependent, engine-pinned, horizon-bounded ground truth; b4's separation rests on CDIST; filler-dependent label; half-solver per-run bar; (3) state the Q3 provenance: T040 challenge genuine Fable 5.1; T042 re-check mixed (Fable exploration, Opus 4.8 predictions and report after a refusal fallback) -- not a full genuine-Q3 re-check; (4) restate the T020 finding: the world demands reproduction of function, not endogenous heredity; nothing here says a Z80 organism discovered heredity; (5) resources: CPU-s, wall, peak memory per shard (measure them), rows sha256 per shard. Commit rows + meta + RESULT.md. No re-run with other seeds, no arm selection.",
   "non_goals": [
     "No edit to archaeon/, prometheus/z80atlas/ or roles/Archaeon/",
     "No use of Archaeon's registered seeds or the evidence bundle",
@@ -42,13 +42,19 @@
     "rso/z80/RESULT.md"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-11T14:28:48Z",
       "note": "C-017 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T20:58:48Z",
+      "note": "T042 integrated; cleared; Argus on Sonnet"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
