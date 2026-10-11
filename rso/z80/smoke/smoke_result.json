@@ -1,0 +1,161 @@
+{
+ "CON": [
+  {
+   "born": false,
+   "donor_contributes": true,
+   "exec_foreign": 0,
+   "reads_nbr": 0,
+   "window_frac": 0.0938,
+   "writes_nbr": 3
+  }
+ ],
+ "ENV": {
+  "born": false,
+  "donor_contributes": true,
+  "exec_foreign": 3,
+  "reads_nbr": 0,
+  "solves_with_live_neighbour": 1.0,
+  "solves_with_zero_neighbour": 0.0,
+  "window_frac": 0.0,
+  "writes_nbr": 0
+ },
+ "H": [
+  {
+   "born": true,
+   "child_sha": "6142409dd22d5ebb",
+   "child_solves": 1.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 1.0,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  },
+  {
+   "born": true,
+   "child_sha": "6142409dd22d5ebb",
+   "child_solves": 1.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 1.0,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  },
+  {
+   "born": true,
+   "child_sha": "b3447714ef803f20",
+   "child_solves": 0.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 0.9688,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  }
+ ],
+ "H_broken": [
+  {
+   "born": false,
+   "donor_contributes": true,
+   "exec_foreign": 0,
+   "reads_nbr": 0,
+   "window_frac": 0.0312,
+   "writes_nbr": 1
+  }
+ ],
+ "H_nonoise": [
+  {
+   "born": true,
+   "child_sha": "6142409dd22d5ebb",
+   "child_solves": 1.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 1.0,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  },
+  {
+   "born": true,
+   "child_sha": "6142409dd22d5ebb",
+   "child_solves": 1.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 1.0,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  },
+  {
+   "born": true,
+   "child_sha": "6142409dd22d5ebb",
+   "child_solves": 1.0,
+   "donor_contributes": false,
+   "exec_foreign": 0,
+   "fidelity": 1.0,
+   "parent_sha": "6142409dd22d5ebb",
+   "reads_nbr": 0,
+   "window_frac": 1.0,
+   "writes_nbr": 32
+  }
+ ],
+ "NH": [
+  {
+   "born": false,
+   "donor_contributes": true,
+   "exec_foreign": 0,
+   "reads_nbr": 0,
+   "window_frac": 0.0,
+   "writes_nbr": 0
+  }
+ ],
+ "all_pass": true,
+ "checks": {
+  "CON_refused_by_copy_min_frac": true,
+  "ENV_function_is_environmental": true,
+  "H_born_each_generation": true,
+  "H_exact_copy_without_noise": true,
+  "H_function_transmitted": true,
+  "H_no_donor_material": true,
+  "H_noise_run_born_and_exact_copies_function_ok": true,
+  "NH_no_child": true,
+  "detector_sensitive_to_broken_copy": true,
+  "random_run_has_no_replication": true,
+  "seeded_run_is_inserted_not_clean": true
+ },
+ "engine_random": {
+  "births_endo": 0,
+  "endo_clean": 0,
+  "endo_inserted": 0,
+  "founders": {
+   "random": 42,
+   "seeded_replicator": 0,
+   "transplanted_lineage": 0
+  },
+  "init": "random",
+  "inserted_lineage_replication": false,
+  "max_gen_inserted": 0,
+  "spontaneous_replication": false
+ },
+ "engine_seeded": {
+  "births_endo": 3443,
+  "endo_clean": 0,
+  "endo_inserted": 3443,
+  "founders": {
+   "random": 33,
+   "seeded_replicator": 3,
+   "transplanted_lineage": 0
+  },
+  "init": "seeded_replicator",
+  "inserted_lineage_replication": true,
+  "max_gen_inserted": 75,
+  "spontaneous_replication": false
+ },
+ "grammar_digest": "63ffdeca16db3333"
+}
