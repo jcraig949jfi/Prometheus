@@ -76,21 +76,22 @@ def run(out=print):
 
 def refs_cli(path, k=40):
     """Who cites PATH (backlinks) and what PATH cites (forward links), oldest first."""
-    from . import db
+    from . import access, db
+    asql, aargs = access.filter_sql("a")
     with db.cursor() as cur:
-        cur.execute("select artifact_id from pan.artifact where path=%s", (path,))
+        cur.execute("select artifact_id from pan.artifact a where path=%s" + asql, [path] + aargs)
         r = cur.fetchone()
         if not r:
-            print("not in the catalog:", path)
+            print("not in the catalog (or not visible at clearance {}):".format(access.current_role()), path)
             return
         aid = r[0]
         for title, q in (("CITED BY", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
-                                         from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s"""),
+                                         from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s""" + asql),
                          ("CITES", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
-                                      from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s""")):
-            cur.execute("select count(*) from (" + q + ") x", (aid,))
+                                      from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s""" + asql)):
+            cur.execute("select count(*) from (" + q + ") x", [aid] + aargs)
             total = cur.fetchone()[0]
-            cur.execute(q + " order by 4 nulls last limit %s", (aid, k))
+            cur.execute(q + " order by 4 nulls last limit %s", [aid] + aargs + [k])
             rows = cur.fetchall()
             print("== {} ({} total{})".format(title, total, ", first {} shown".format(len(rows)) if total > len(rows) else ""))
             for p, kind, seat, when, n in rows:
