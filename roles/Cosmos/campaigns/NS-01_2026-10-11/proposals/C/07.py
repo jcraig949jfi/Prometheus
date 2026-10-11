@@ -1,0 +1,86 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    def __init__(self, task: Task):
+        self.task = task
+        self.S = task.n_symbols
+        g = np.random.default_rng(4242)
+        self.N = 10                                   # nodes; node N-1 is ground
+        edges = [(i, (i + 1) % self.N) for i in range(self.N)]
+        while len(edges) < 18:
+            a, b = g.choice(self.N, 2, replace=False)
+            if (a, b) not in edges and (b, a) not in edges:
+                edges.append((int(a), int(b)))
+        self.M = len(edges)
+        B = np.zeros((self.M, self.N))
+        for e, (a, b) in enumerate(edges):
+            B[e, a], B[e, b] = 1.0, -1.0
+        self.B = B
+        J = np.zeros((self.S, self.N))
+        pairs_cue = [(0, 5), (2, 7), (4, 9), (6, 1)]
+        for c, (a, b) in enumerate(pairs_cue):        # cue: strong current between a node pair
+            J[c, a], J[c, b] = 3.0, -3.0
+        for s in range(4, 8):                         # distractors: weaker currents, random pairs
+            a, b = g.choice(self.N, 2, replace=False)
+            J[s, a], J[s, b] = 1.2, -1.2
+        self.J = J
+        self.thr = g.uniform(0.9, 1.3, self.M)        # fuse thresholds
+        self.g_min = 0.05                             # burnt conductance
+        self.heal = 0.04                              # healing rate toward 1
+        self.thr_noise = 0.12
+        P = np.zeros((3, self.N))                     # probe injections for readout
+        for p, node in enumerate([0, 3, 6]):
+            P[p, node] = 1.0
+        self.P = P
+
+    def _potentials(self, gcond, Jn):
+        L = np.einsum('em,ef,en->nmf', self.B, self.B, gcond.T[:, :, None] * np.ones((1, 1, 1)))
+        return None
+
+    def _solve(self, gcond, Jn):
+        # Laplacian per episode: L = B^T diag(g) B, ground last node
+        L = np.einsum('em,ne,ef->nmf', self.B, gcond, self.B)
+        Lr = L[:, :-1, :-1] + 1e-6 * np.eye(self.N - 1)[None]
+        v = np.linalg.solve(Lr, Jn[:, :-1, None])[:, :, 0]
+        return np.concatenate([v, np.zeros((v.shape[0], 1))], axis=1)
+
+    def init(self, E):
+        return {"g": np.ones((E, self.M))}
+
+    def noise(self, n, rng):
+        return {"th": rng.standard_normal((n, self.M)),
+                "h": rng.random((n, self.M))}
+
+    def step(self, state, obs_t, noise):
+        gc = state["g"]
+        Jn = self.J[obs_t]
+        active = np.abs(Jn).sum(axis=1) > 0
+        g_new = gc.copy()
+        if np.any(active):
+            idx = np.nonzero(active)[0]
+            v = self._solve(gc[idx], Jn[idx])
+            cur = gc[idx] * (v @ self.B.T)
+            thr = self.thr[None, :] * (1 + self.thr_noise * noise["th"][idx])
+            burn = np.abs(cur) > thr
+            g_new[idx] = np.where(burn, self.g_min, gc[idx])
+        g_new = g_new + self.heal * noise["h"] * (1.0 - g_new)
+        return {"g": g_new}
+
+    def readout_features(self, state):
+        gc = state["g"]
+        E = gc.shape[0]
+        feats = []
+        for p in range(self.P.shape[0]):
+            Jn = np.broadcast_to(self.P[p], (E, self.N))
+            feats.append(self._solve(gc, Jn)[:, :-1])
+        return np.concatenate(feats, axis=1)
+
+    def full_state(self, state):
+        return state["g"].copy()
+
+
+def make(task):
+    return Mechanism(task)
