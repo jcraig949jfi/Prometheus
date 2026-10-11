@@ -192,7 +192,8 @@ Outcome:
 - COMP_PERSIST: 0.
 - COMP_ANY (a competent non-replicating child of a non-competent writer): 1 run, k2_00856 (XY_AL, PARTIAL_BYTE, ON): 4
   such children among 70,032 births, none alive at the end.
-- Extinction: 1,320 - 540 informative = 780 runs (59%) dead before tick 500. Informative runs per cell: 5 - 37.
+- Extinction: 822 / 1,320 runs (62%) extinct by tick 1,000; 555 informative (alive at, or extinct after, tick 500). That
+  leaves 765 runs (58%) dead before tick 500. Informative runs per cell: 5 - 37.
 Frozen tests:
 - K-P1 (desert holds under historical operators, XY_AL COMP_SR <= 2/60): NOT_TESTABLE by its own rule (29 and 24
   informative runs, rule needs >= 30). The raw count, 0/60 in both cells, is in the predicted direction.
@@ -204,7 +205,7 @@ copy operators, with or without payment, even with the single aligned assembly r
 overwrite operator produced the only competent product (4 non-replicating machines in one world). Assembly happened at
 the rate the geometry allows, and the product was not heritable.
 Failure classification (directive F list):
-- extinction before exploration: a large share (59% of runs);
+- extinction before exploration: a large share (58% of runs dead before tick 500);
 - reachable but improbable: the one-route aligned case;
 - insufficient search duration: 1,000 ticks; LADDER2 ran 20,000 ticks and got 0/240 for COND_ONE.
 - Not instrument blindness: competence is checked on every birth.
