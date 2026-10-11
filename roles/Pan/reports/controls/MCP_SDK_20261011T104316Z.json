@@ -1,0 +1,44 @@
+{
+ "control": "PAN-44 MCP conformance with the official Python SDK client",
+ "at": "20261011T104316Z",
+ "client": "mcp==2.3.0 (scratch venv, not installed in Pan's venv)",
+ "script": "pan/tests/mcp_sdk_conformance.py",
+ "script_sha256": "3287b3ed4d99a61c75c03cbc12f17c9921ed86b762c5e848f764bbafabb3a0fc",
+ "verdict": "PASS",
+ "observed": {
+  "protocolVersion": "2025-11-25",
+  "server": "pan",
+  "tools": [
+   "pan_search",
+   "pan_pivot",
+   "pan_refs",
+   "atlas_lookup"
+  ],
+  "pan_search": {
+   "isError": false,
+   "n": 3,
+   "clearance": "generator",
+   "provenance_on_all": true
+  },
+  "pan_pivot": {
+   "isError": false,
+   "n": 9,
+   "clearance": "generator",
+   "provenance_on_all": true
+  },
+  "pan_refs": {
+   "isError": false,
+   "n": 4,
+   "clearance": "generator",
+   "provenance_on_all": true
+  },
+  "atlas_lookup": {
+   "isError": false,
+   "n": 2,
+   "clearance": "generator",
+   "provenance_on_all": true
+  },
+  "escalation_refused": true,
+  "escalation_text": "MCPError: invalid arguments for pan_search: unknown argument(s): clearance"
+ }
+}

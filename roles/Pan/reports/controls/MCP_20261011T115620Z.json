@@ -1,0 +1,107 @@
+{
+ "control": "PAN-44 read-only MCP server",
+ "at": "20261011T115620Z",
+ "verdict": "PASS",
+ "protocols": [
+  "2025-11-25",
+  "2025-06-18",
+  "2025-03-26",
+  "2024-11-05"
+ ],
+ "launch_clearances": [
+  "generator",
+  "evaluator"
+ ],
+ "results": [
+  {
+   "kind": "PROTOCOL",
+   "name": "initialize negotiates; tools/list = 4 read-only tools with closed schemas",
+   "ok": true,
+   "detail": "echo 2025-06-18; unknown version -> 2025-11-25; 4 tools"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "pan_search: records with provenance (blob sha, access class, catalog run)",
+   "ok": true,
+   "detail": "10 records; top roles/Pan/journal/2026-10-11.md"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "pan_pivot: subject + lineage + co-change + neighbours, each with provenance",
+   "ok": true,
+   "detail": "21 records; cited_by 244"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "pan_refs: same totals as the CLI operation it wraps, records with provenance",
+   "ok": true,
+   "detail": "20 records; totals {'cited_by': 244, 'cites': 95}"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "atlas_lookup: facts with provenance (store, author, harvest ids)",
+   "ok": true,
+   "detail": "5 records of 97 matched"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "burned holdout via pivot: evaluator sees it; generator gets the nonexistent-path answer",
+   "ok": true,
+   "detail": "evaluator visible=True; generator visible=False; identical to a nonexistent path: True"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "burned holdout via search: a query family per burned file; >= 4 queries reach a burned file at evaluator clearance, and NO query returns one to a generator",
+   "ok": true,
+   "detail": "16 queries over 4 files; 12 non-vacuous at evaluator; generator burned hits 0"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "prompt text asking for evaluator clearance changes nothing",
+   "ok": true,
+   "detail": "burned hits 0"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a clearance argument is refused (closed schema)",
+   "ok": true,
+   "detail": "invalid arguments for pan_search: unknown argument(s): clearance"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "credential-shaped path (REFUSE rule): catalogued but never served",
+   "ok": true,
+   "detail": "the wrapped operation alone would return it: True; served: False (path sha af759744cf0c)"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "SQL text in a lookup is literal",
+   "ok": true,
+   "detail": "matched 0; atlas.fact rows 41784 -> 41784"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "no listening socket; the server module imports no network server",
+   "ok": true,
+   "detail": "LISTEN sockets 0; banned imports []"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "launch at adjudicator clearance is refused",
+   "ok": true,
+   "detail": "exit 2; tart: PAN_CLEARANCE='adjudicator': an MCP server may launch only at generator or evaluator"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "launch at infrastructure clearance is refused",
+   "ok": true,
+   "detail": "exit 2; t: PAN_CLEARANCE='infrastructure': an MCP server may launch only at generator or evaluator"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a read-only process cannot write (server-side default_transaction_read_only)",
+   "ok": true,
+   "detail": "transaction_read_only=on; create temp table refused: True"
+  }
+ ]
+}

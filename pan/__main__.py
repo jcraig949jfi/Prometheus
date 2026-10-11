@@ -27,6 +27,12 @@
   reviewcal run MODEL | controls   PAN-37: score a local model as a reviewer on set v2 (GPU) | runner controls
   fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
   atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
+  atlas lookup --table fact|proposition|blind_spot --text T [--limit N]   PAN-44: permitted read-only Atlas lookup
+  mcp serve|controls           PAN-44: read-only stdio MCP server (search, pivot, refs, atlas_lookup) | its live controls
+  proposals check             PAN-41: verify the Atlas/Hades schema proposals in a throwaway database
+  access apply|controls       PAN-42: apply access rules (classify / refuse) | live controls + RLS proof
+  negspace calibrate|smoke [--no-llm]   PAN-43: distinctness calibration (gate) | A-D harness smoke
+                              (retrieval clearance: PAN_CLEARANCE=generator|evaluator|adjudicator|infrastructure)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -46,8 +52,7 @@ import os
 import sys
 
 
-def main(argv=None):
-    os.environ.setdefault("EW_DB_HOST", "192.168.1.202")
+def build_parser():
     ap = argparse.ArgumentParser(prog="python -m pan")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("migrate")
@@ -110,8 +115,20 @@ def main(argv=None):
     p = sub.add_parser("fleet")
     p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
     p = sub.add_parser("atlas")
-    p.add_argument("what", choices=["snapshot", "manifest", "controls"])
+    p.add_argument("what", choices=["snapshot", "manifest", "controls", "lookup"])
     p.add_argument("--force", action="store_true")
+    p.add_argument("--table", default="fact", choices=["fact", "proposition", "blind_spot"])
+    p.add_argument("--text", default="")
+    p.add_argument("--limit", type=int, default=10)
+    p = sub.add_parser("mcp")
+    p.add_argument("what", choices=["serve", "controls"])
+    p = sub.add_parser("proposals")
+    p.add_argument("what", choices=["check"])
+    p = sub.add_parser("access")
+    p.add_argument("what", choices=["apply", "controls"])
+    p = sub.add_parser("negspace")
+    p.add_argument("what", choices=["calibrate", "smoke"])
+    p.add_argument("--no-llm", action="store_true")
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build", "floors", "run", "controls"])
     p.add_argument("model", nargs="?")
@@ -145,7 +162,12 @@ def main(argv=None):
     p.add_argument("--no-authors", action="store_true")
     p.add_argument("-k", type=int, default=15)
     p.add_argument("--fits", action="store_true", help="models: only those estimated to fit 16 GB at Q4")
-    a = ap.parse_args(argv)
+    return ap
+
+
+def main(argv=None):
+    os.environ.setdefault("EW_DB_HOST", "192.168.1.202")
+    a = build_parser().parse_args(argv)
 
     if a.cmd == "migrate":
         from . import db
@@ -259,12 +281,34 @@ def main(argv=None):
                 print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
                                                          r["last_machine"], r["last_commit"][:70]))
             print(meta)
+    elif a.cmd == "negspace":
+        from .negspace import harness
+        if a.what == "calibrate":
+            harness.calibrate()
+        else:
+            harness.smoke(use_llm=not a.no_llm)
+    elif a.cmd == "access":
+        from . import access
+        if a.what == "apply":
+            access.apply_rules()
+        else:
+            access.controls()
+    elif a.cmd == "proposals":
+        from . import proposal_check
+        proposal_check.check()
+    elif a.cmd == "mcp":
+        from . import mcpserve
+        if a.what == "serve":
+            return mcpserve.main()
+        mcpserve.controls()
     elif a.cmd == "atlas":
         from . import atlas_snap
         if a.what == "snapshot":
             atlas_snap.snapshot(force=a.force)
         elif a.what == "manifest":
             atlas_snap.manifest_cli()
+        elif a.what == "lookup":
+            atlas_snap.lookup_cli(a.table, a.text, a.limit)
         else:
             atlas_snap.controls()
     elif a.cmd == "reviewcal":

@@ -88,3 +88,27 @@ compute       ~7 CPU-h / <2 GB / $0
 holdouts      D2 SEALED / UNREAD / UNSPENT
 ======================================================================
 ```
+
+```
+COSMOS / CWE -- 48H CAMPAIGN FINAL RECEIPT (late: written 2026-10-11T06:20Z)
+======================================================================
+window        2026-10-08T05:26Z -> 2026-10-10T05:26Z   CLOSED_INCOMPLETE
+productive    ~3 h of 48 (stall 08:19Z 10-08 -> found 18:37Z 10-10)
+incident      I-1 stdin spawn pool crash loop x4,683,366, PID-only waiter,
+              no independent wake  -> supervise.py + 11 failure tests
+              I-2 (10-11) executor deadlock CAUGHT by watchdog, auto-resumed
+rounds        W1 done; W2-W12 NOT_REACHED; recovery slice 10-11
+worlds        300 discovery (5 families: rnn graph stig sediment* phase)
+laws          proposed 4 | killed 2 (G-0007, G-0008) | provisional 1 (L-0001,
+              weak, by rule) | confirmation: NONE, vault empty, F-0002 unfrozen
+EXP-04        INCONCLUSIVE by rule (rnn/sediment hold; graph, phase fail;
+              stig not reached); stig rise-with-k -> EXP-05 prereg fdd6097f0
+reviews       R-STAT final reconciled (open A10 A13 B5 B6); R-MECH final MISSING
+tests         full suite 165/166 -> G-0008 record fixed e030d9276; runtest NOT RUN
+holdouts      D2 SEALED / UNREAD / UNSPENT; no other holdout used
+compute       ~7.5 CPU-h useful, ~170 CPU-h wasted; $0
+branches      main records | cosmos/c4-v03 e030d9276 (unmerged) | autopsy local
+packet        REVIEW_PACKET_48H_2026-10-08.txt
+next          4 h reliability test (RELIABILITY_4H_2026-10-11/PREREG.md)
+======================================================================
+```

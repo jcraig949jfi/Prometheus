@@ -1,0 +1,72 @@
+{
+ "control": "PAN-43 harness SMOKE (plumbing, not results)",
+ "at": "20261011T102052Z",
+ "prereg_sha256": "e7cf870c84db6054b5af47a025f306e6681b6b91f9ea865d90bc6fa4cb19c076",
+ "budgets": {
+  "dsl": 24,
+  "llm": 3
+ },
+ "llm_model": "qwen2.5-coder:14b",
+ "arms": {
+  "D": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 7,
+   "eq_supported": 3,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 3,
+   "novel_classes_with_unknown_overlap": 0
+  },
+  "Dx": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 7,
+   "eq_supported": 3,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 3,
+   "novel_classes_with_unknown_overlap": 0
+  },
+  "A": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 3,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "novel_classes_with_unknown_overlap": 0
+  },
+  "B": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 2,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "novel_classes_with_unknown_overlap": 0
+  },
+  "C": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 1,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "novel_classes_with_unknown_overlap": 0
+  },
+  "Cx": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 3,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "novel_classes_with_unknown_overlap": 0
+  }
+ }
+}

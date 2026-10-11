@@ -1,15 +1,17 @@
 # Pan status
 
-Currency: 2026-10-10T22:03Z (date -u).
+Currency: 2026-10-11T11:14Z (date -u).
 
-seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
+seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
+  2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
   JSONL rows + 25,495 JSON docs in Iceberg; 45,256 reference links; frontier
   8,812 items = 4,702 arXiv + 742 HF daily + 2,629 blog/newsletter + 141
   release entries from 35 feeds + 598 repositories of 29 GitHub owners,
   + 1,524 models; HumanEval+ on 4 local models), VALID: PARTIAL -- retrieval R@10 0.765 on 200 independent
   queries (bar 0.80 inside its interval); tuning stopped by Pan's own rule.
-latest reports: reports/STATUS_20261010T2203Z.md (status report 7), REVIEW_PACKET_2026-10-10_PAN37_39.txt, REVIEW_PACKET_2026-10-10_PAN27_28.txt,
+latest reports: reports/STATUS_20261011T1008Z.md (status report 9), REVIEW_PACKET_2026-10-11_PAN43.txt, docs/sagacity/SAGACITY_FOUNDATION_MAP.md, REVIEW_PACKET_2026-10-11_PAN37_REVIEWERS.txt, REPOBENCH_2026-10-11.md,
+  REVIEW_PACKET_2026-10-11_PAN34.txt, REVIEW_PACKET_2026-10-10_PAN37_39.txt, REVIEW_PACKET_2026-10-10_PAN27_28.txt,
   REVIEW_PACKET_2026-10-10_PAN38.txt,
   REVIEW_PACKET_2026-10-09_unit3.txt, CODEBENCH_2026-10-09.md,
   frontier/DIGEST_2026-10-09.md (feeds + new repos), controls/FEEDS_*.json,
@@ -30,4 +32,14 @@ atlas copy: Iceberg pan_atlas.* (35 tables, 143,139 rows, harvest_id 1..364), re
   (python -m pan atlas snapshot; manifest = pan.run kind atlas-snapshot); controls ATLAS_SNAP_* 6/6.
 dashboard: Data Map v4 has tabs; Machines (14) and Pantheon (74 seats) tabs added (PAN-38,
   controls/FLEET_20261010T114620Z.json 7/7); rebuild: python -m pan fleet probe + mk_datamap.py --only fleet.
-questions for the operator: QUESTIONS.md (11 open; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).
+negative space (PAN-43): distinctness instrument PROMOTED 2026-10-11T10:18:39Z
+  (controls/NEGSPACE_CALIBRATION_20261011T101839Z.json; behavioral known macro 1.000 vs best baseline 0.500,
+  symbolic 0.867 vs 0.442; EQ->EQ exactly at its analytic 0.60 floor); generation experiment frozen with
+  amendments A1-A4, NOT run (directive: no campaign); protocol + results docs/sagacity/NEGATIVE_SPACE_EVALUATION.md.
+mcp (PAN-44): local stdio read-only server pan/mcpserve.py (pan_search, pan_pivot, pan_refs, atlas_lookup);
+  clearance fixed at launch (generator|evaluator), REFUSE-rule paths never served, read-only DB session;
+  controls/MCP_20261011T104148Z.json 15/15; official SDK client (mcp 2.3.0) conformance PASS; registered nowhere
+  (Q-015); contract docs/sagacity/MCP_INTERFACE_PROTOTYPE.md.
+continuity: docs/sagacity/CONTINUITY_HANDOFF.md (standing owner: Pan seat in maintenance mode + Mnemosyne DB
+  co-owner + Aporia watcher; Q-016 unattended maintenance, default session-driven).
+questions for the operator: QUESTIONS.md (16 open, Q-002..Q-017; Q-017 credential rotation after PAN-47; Q-014 MCP least-privilege role, Q-015 MCP registration; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).

@@ -1,0 +1,35 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-016-T020",
+  "campaign_id": "C-016",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "f7a2497c843206d0a374572187e460a175b584fc",
+  "end_sha": "2adc54318",
+  "files_changed": ["rso/ensorain/COMPATIBILITY.md", "rso/ensorain/rerun_c_demand.py", "rso/ensorain/rerun_c_demand_result.json"],
+  "evidence_added": [
+    "COMPATIBILITY.md: decision (WTP-05 family C, reworded to revision not retention), pinned SHA, entry points file:line, demand evidence, control map, reset semantics, env check, registry fit",
+    "rerun_c_demand.py + result JSON: new seeds 16_020_001..040 / 16_030_001, 40 lifetimes per arm, plastic vs frozen vs history-shuffled, null ladder"
+  ],
+  "evidence_executed": [
+    {"command": "python -m rso.ensorain.rerun_c_demand rso/ensorain/rerun_c_demand_result.json", "result": "plastic role1 late .639, frozen .000, shuffled .412, nulls role1 .542; SWITCH_TRACKED 14/40 vs 11/40 shuffled; second run byte-identical"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: no failing test applies"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "one planted-genome re-run, 40 lifetimes per arm; not powered for searched arms; SCREEN numbers quoted from Ensorain journal",
+    "lineage B assessed from committed verdict text, not re-run; D1 demand gate not independently checked",
+    "pytest absent on harry1 so ensorain/wtp5/tests not run; committed admission not reproduced (registered seed); harry1 numbers not compared to ubu006"
+  ],
+  "unresolved": ["whether the operator accepts the reworded question (revision, not retention)", "WTP-05 DEEP outcome pending on ubu006"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-11T00:00:00Z",
+  "instance": "harry1-abbe9ede",
+  "host": "harry1",
+  "branch": "cadmus/c016-t020",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c016",
+  "resources": {"cpu": "two ~4 s single-process runs", "model": "one Sonnet 5.5 session"}
+}

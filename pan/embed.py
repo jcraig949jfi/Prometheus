@@ -42,6 +42,11 @@ def _model(name):
         kw = {}
         if dev == "cuda":
             kw["model_kwargs"] = {"torch_dtype": torch.float16}
+        else:
+            # 2026-10-11: an unbounded CPU refresh took ~19 cores of M2 unleased (MWO-0004 R2 wants a lease for
+            # parallel CPU work). Default to 4 threads -- light work, no lease; raise PAN_CPU_THREADS only under
+            # a spectrex5:cpu12 lease
+            torch.set_num_threads(int(os.environ.get("PAN_CPU_THREADS", "4")))
         m = SentenceTransformer(name, device=dev, **kw)
         m.max_seq_length = MODELS.get(name, {}).get("max_seq", 512)
         _LOADED[name] = m

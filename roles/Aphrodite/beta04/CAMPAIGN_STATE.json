@@ -41,31 +41,35 @@
    "id": "W04",
    "kind": "EXP",
    "start_utc": "2026-10-10T21:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W04_EXP_REPORT.md"
   },
   {
    "id": "W05",
    "kind": "DEV",
    "start_utc": "2026-10-11T01:27Z",
-   "status": "PENDING"
+   "status": "CLOSED",
+   "report": "beta04/windows/W05_DEV_REPORT.md"
   },
   {
    "id": "W06",
    "kind": "EXP",
    "start_utc": "2026-10-11T05:27Z",
-   "status": "PENDING"
+   "status": "CLOSED",
+   "report": "beta04/windows/W06_HOLD_REPORT.md"
   },
   {
    "id": "W07",
    "kind": "DEV",
    "start_utc": "2026-10-11T09:27Z",
-   "status": "PENDING"
+   "status": "CLOSED",
+   "report": "beta04/windows/W07_EXP_REPORT.md"
   },
   {
    "id": "W08",
    "kind": "EXP",
    "start_utc": "2026-10-11T13:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W09",
@@ -128,7 +132,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W04",
+ "active_window": "W08",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -143,7 +147,8 @@
   "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
   "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
   "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
-  "ALIEN_AR1": "DONE ~23:15Z; alien/runs/production committed (34912f59a)"
+  "ALIEN_AR1": "DONE ~23:15Z; alien/runs/production committed (34912f59a)",
+  "E3R": "RUNNING since 2026-10-11T11:30:12Z (driver PID 3696 + 2 workers; worktree aph-b04-tfs1; runs/e3r_production). Reproduction: off_frozen 7/15 PASS (= frozen pooled); off_xabs 9/15 REPRODUCED."
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -248,5 +253,17 @@
   "screening_caveat": "8 seeds; no significance; P(|d|>=3) ~ 0.21 per family under the null",
   "library_caveat": "library = foundry-acquired stones (oracle decomposition supplied); not stone discovery"
  },
- "AR1_result": "EXPLORATORY (FREEZE_ALIEN_AR1; primary only): 0/15 chain-qualified, scratch fails 15/15; first failing links HORIZON_R1 12, UNDERDETERMINED_STONE 3. Confounded (representation AND search differ from TFS-1). Same failing link as TFS-1 (stone acquisition), more severe; no evidence that this alternative representation escapes it. Qualifier (review v2): acquires 1/17 units vs TFS-1 14/17; composition untested; bears only weakly on MIGRATE."
+ "AR1_result": "EXPLORATORY (FREEZE_ALIEN_AR1; primary only): 0/15 chain-qualified, scratch fails 15/15; first failing links HORIZON_R1 12, UNDERDETERMINED_STONE 3. Confounded (representation AND search differ from TFS-1). Same failing link as TFS-1 (stone acquisition), more severe; no evidence that this alternative representation escapes it. Qualifier (review v2): acquires 1/17 units vs TFS-1 14/17; composition untested; bears only weakly on MIGRATE.",
+ "operator_guidance_2026_10_11": {
+  "file": "prompts/2026-10-10_beta04/02_OPERATOR_GUIDANCE_2026-10-11_verbatim.md",
+  "directives": [
+   "Run E3-R exactly as frozen at 11:30Z; no intervention",
+   "Preserve Beta-04 historical labels whatever E3-R shows",
+   "Synthesis: report three measurements separately -- mechanism ACQUISITION, UTILIZATION, AUTONOMY (learner vs search infra vs developmental machinery vs certifier)",
+   "Post-E3-R direction map: both -> Beta-05 tests generalized target-blind extraction + improved search on fresh independent families, fallback-off controls, pruning costs; OE alone -> search geometry/reachability, no extra representation complexity; X-ABS alone -> learn invariant boundaries across factorizations; neither -> re-examine dev identifiability + operator reachability, no automatic substrate migration",
+   "X-ABS positive needs independent confirmation on new families; E3-R pass != compositional discovery",
+   "Next major experiment: NOT R8; discover useful stepping stones without being told the decomposition",
+   "Close Beta-04 after E3-R"
+  ]
+ }
 }

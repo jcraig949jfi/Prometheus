@@ -1,0 +1,79 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-016-T040",
+  "campaign_id": "C-016",
+  "attempt_id": "A-001",
+  "role": "Pallas",
+  "model": "claude-fable-5-1",
+  "quality_class": "Q3",
+  "instance": "harry1-855aa018 (one headless session: boot, freeze verification, claim, set, execution, report, receipt, state commits; no background job at any point)",
+  "host": "harry1",
+  "branch": "pallas/c016-t040",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c016-t040",
+  "start_sha": "a5699de6e24f61f8f05b4623f1e4439988fcb2ec",
+  "end_sha": "0c2e312d3972f6386fb9b5da7a37efa88cb9f3ba",
+  "dirty": false,
+  "commits": {
+    "claim": "7c95657ab (main, 11:38Z)",
+    "implementing": "3a622d053 (main, 11:46Z)",
+    "set_before_outcomes": "22bf4ce85 (11:51:26Z): CHALLENGE_SET.md with predictions, EXPOSURE.md, expected.json, subjects_c.py, cases.py, witnesses.py, edits.json, run_edits.py; comms bodies CLAIMED + heartbeat",
+    "posthoc_p3_prediction_before_run": "96e995a9c (11:56:40Z)",
+    "results": "0c2e312d3: results.jsonl, mutation_rows.jsonl, REPORT.md, cases.py two-line name fix (REPORT s6.1), journal, WORK_STATE, comms bodies",
+    "origin_main_check": "00bfc4d73 fetched at 12:00Z: no change under rso/ensorain, ensorain/wtp5, ensorain/wtp3/collider.py or the four pinned shared files since a5699de6e; no merge needed",
+    "green_and_integration_ready": "the state commits carrying this receipt (main)"
+  },
+  "files_changed": [
+    "rso/ensorain/challenge/ (new: __init__.py, CHALLENGE_SET.md, EXPOSURE.md, expected.json, subjects_c.py, cases.py, posthoc_p3.py, witnesses.py, edits.json, run_edits.py, results.jsonl, mutation_rows.jsonl, REPORT.md)",
+    "roles/Pallas/{WORK_STATE.json, journal/2026-10-11.md, comms/C016-T040_CLAIMED_2026-10-11.md, comms/C016-HEARTBEAT_2026-10-11_T040_start.md, comms/C016-T040_INTEGRATION_READY_2026-10-11.md, comms/C016-HEARTBEAT_2026-10-11_T040_done.md}",
+    "ops/campaigns/C-016/tasks/C-016-T040/ (state commits on main: LEASE.json, TASK.json, this receipt)",
+    "no file under rso/ensorain/*.py, ensorain/, roles/Ensorain/ or rso/registry/ was changed in any commit; every edit was applied to the working copy only and restored (sha256 + git diff --quiet + freeze check OK, mutation_rows.jsonl)"
+  ],
+  "evidence_added": [
+    "set committed BEFORE any outcome (22bf4ce85): 5 sound, 3 broken, 2 probes, 1 comparator, 6 edits, predictions in expected.json; freeze check OK 26/26 before the claim, independently recomputed (S1), and after every edit restore",
+    "INFERENCE (REPORT s4.1): K1 and K2 are contrasts against the subject's OWN frozen and shuffled configurations, so the verdict is a function of the plastic parameter's innate value. Five subjects with the reference graph and learning rule, identical late-window behaviour (late .6336 for the four learners): innate +0.1 with perturbation and no learning (eta 1e-9, theta moved 1.5e-9) -> REVISION_NOT_HISTORY_DEPENDENT (K1 200:0 by noise, K2 101:97); innate 0 (real learner, post-hoc P3) -> REVISION_NOT_HISTORY_DEPENDENT (K1 121:78, K2 101:98); innate +0.2 (reference) -> REVISION_HISTORY_DEPENDENT (K1 192:0:8, K2 121:77); innate +1.0 (nothing learnable pre-switch) -> REVISION_HISTORY_DEPENDENT (K2 155:44); innate -0.1 (learns the pre-switch law in-life: block-0 accuracy .413, pre-competent 200/200) -> REVISION_NOT_SHOWN because its frozen arm is the Smuggler (late 1.0, K1 0:197). Sound: k_pos 217 (P .0494), critical 221, q .5701/.6240, power .7777/.9985 (P) .5235/.9882 (S) all within .002 of s7; the s11.2 pairing null holds (jitter K2 101:97, p .42)",
+    "INSTRUMENT (REPORT s4.2): memory_check/recompute_check hold on 9,600 development rows reproduced bitwise (S4, rows_sha256 1d5ccf28..., 84 s) and on 7,400 challenge rows; NaN passes the plastic bound but is flagged by the non-plastic comparison (INSTRUMENT_FAULT, fails closed); the four-policy argument is a theorem of the world (S3: 2 + 2 distinct gate observations over 12,800 gates, corridor unscored, target = s * law); timers: analytic argument (the type-1 readout pull equals any type-2 drive at the flip point; ES SNR <= ~3.7 per block) and probe clock_hybrid: never flips without a switch (100/100 no-switch lives; mean late .770 vs predicted equilibrium Phi(.75) = .773), with a switch the strongest reviser in the set (late .987, K1/K2 200:0, REVISION_HISTORY_DEPENDENT); the registered controls (all deterministic) cannot see the noise class or the innate-position dependence; E2 (which arm G_PRE reads) unpinned",
+    "INTERPRETATION (REPORT s4.3): 'revise a lifetime-learned parameter' not supported (innate_max identical in the late window, learns_pre read NOT_SHOWN; P4: theta >= .65 after one update from +0.2); 'K1 only -> revises' not supported (jitter); 'depends on its own reward history' is a property of the (learner, innate start) pair (P3 vs REF); G_R5 passes with 180/400 lives at zero post-switch role-5 (B3, synthetic); search accessibility must be read over the 3 plastic subjects (the 5 parameter-free ones tie by construction)",
+    "EDITS (REPORT s4.4): E1 Holm bypass, E2 G_PRE arm, E3 late window sw+2, E4 K1<->K2 controls, E6 majority gate SURVIVE the 19-test suite behaviourally; witnesses W1-W5 all differ as predicted; E5 control KILLED by the two predicted tests; hash guard fired on every mutant; the suite has no tree-hashing test, so every kill is behavioural",
+    "per surface (REPORT s3): INFERENCE NOT CLOSED, INSTRUMENT NOT CLOSED on the control set (code correct on every input tried), INTERPRETATION NOT CLOSED; nothing BLOCKING; nothing in s2-s4, s6-s7, s10 to change; the run can execute on the frozen code, its labels need the narrowing before T050 reads one"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m rso.ensorain.freeze check (base a5699de6e; after each of 11 edit/witness restores; after results)", "result": "OK every time; MISMATCH recorded with each mutant in place (hash_guard_fires_on_mutant true x11)"},
+    {"command": "python -B rso/ensorain/challenge/cases.py S1 S2 | S3 B1 REF B2 S5 B3 P1 P2 S4 (one process; S3 crash on my name collision in between, two-line fix)", "result": "S1 S2 S3 S4 AS_EXPECTED; S5 NOT_AS_PREDICTED; B1 B2 B3 SURVIVOR; P1 P2 RECORDED (predictions held); REF RECORDED; ~3 min CPU"},
+    {"command": "python -B rso/ensorain/challenge/run_edits.py --baseline; --edit E1..E6 --phase suite; --edit E1 E2 E3 E4 E6 --phase witness", "result": "baseline 19/19 GREEN 3.5 s; E1-E4, E6 SURVIVE (19/19 each); E5 KILLED (2 failures); 5 witnesses differ; every restore verified"},
+    {"command": "python -B rso/ensorain/challenge/posthoc_p3.py (after commit 96e995a9c); inline P4 check (theta after one update, 20 lives x 4 starts)", "result": "P3 REVISION_NOT_HISTORY_DEPENDENT (K2 prediction missed); P4 min theta .21/.41/.65/1.0"},
+    {"command": "git diff --stat 22bf4ce85 -- <set data files> (expected.json, edits.json, subjects_c.py, witnesses.py, run_edits.py, CHALLENGE_SET.md, EXPOSURE.md)", "result": "empty; cases.py differs by the two-line import rename only"},
+    {"command": "python -m workgraph validate (before each push to main)", "result": "OK"},
+    {"command": "python -m comms sync Pallas (boot; 11:57Z)", "result": "broadcasts only at boot; 0 new at 11:57Z; queue empty"}
+  ],
+  "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed before the first outcome was observed; the expected verdicts are the answer key, not a failing test"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "tooling: the probe function P1 in cases.py shadowed the imported channel constant P1; S3 crashed after S1/S2 had written rows; fixed by renaming the imports (two lines, disclosed REPORT s6.1); S1/S2 rows stand, S3 onward run under the fix",
+    "S5 prediction missed (REVISION_NOT_SHOWN, not REVISION_HISTORY_DEPENDENT): the frozen arm of a post-side innate value is the Smuggler; this miss is the report's central finding",
+    "B2 K2-direction sub-prediction missed (stronger than the reference's, not weaker); the scored verdict held",
+    "post-hoc P3's own K2 prediction missed (101:98); P3 and P4 are labelled post-hoc and unscored; the P4 row's note overstates one-update saturation (REPORT s6.3 corrects it)",
+    "development outcomes observed: 200 challenge seeds x 5 subjects x 4 arms + 40 (NaN) + 400 no-switch lives + 52 witness/P4 lives + the 400-seed development reproduction; no confirmatory seed; no searched-subject endpoint",
+    "the cascade timer was not built: P2 argues it cannot work and the hybrid probe tests the mechanism, not every construction",
+    "exposure: the integrator's killed G_PRE-removal mutant was read in T030's TASK.json before the set; not scored (EXPOSURE.md)",
+    "same vendor as the builder (different model family: opus vs fable); cell member; informed coverage review (test bodies read); reviewer ~60 min wall"
+  ],
+  "unresolved": [
+    "s1 and the s5 'licensed reading' column need a wording amendment (v1.0.1) or the result read with REPORT s4's narrowing (REPORT s5.1)",
+    "repair round (owner): noise-matched comparator or per-subject frozen/shuffle late accuracies beside each verdict; jitter and learns_pre as registered controls; no-switch descriptive arm; five decision-rule tests + np.isfinite; family S declared from genome structure (REPORT s5)",
+    "a small Q3 re-check of the repaired rule (B1, S5, W1-W5) before C-016-T050"
+  ],
+  "unblocks": [
+    "C-016-T050 (the run may execute on the frozen code; the repair round is wording + controls + tests; the coordinator sequences them)"
+  ],
+  "resources": {
+    "case_cpu_s": 190,
+    "suite_runs_s": 22,
+    "witness_wall_s": 25,
+    "core_hours_total_estimate": 0.07,
+    "processes_max": 2,
+    "paid_resources": "none",
+    "hosts": "harry1 only (nothing on ubu006; no WTP-05 seed)"
+  },
+  "created_at_utc": "2026-10-11T12:15:00Z",
+  "notes": "Directive s9 honoured: fresh session, actual claude-fable-5-1 (comms boot tier heavy), no downgrade, no confirmatory outcome seen (none exists), adversarial cases and mutations committed before their outcomes were observed. Headless rule applied throughout: no run_in_background; every command foreground with timeout <= 600 s; <= 2 computing processes. Ensorain isolation (directive s3): ensorain/ and roles/Ensorain/ read-only, no WTP-05 registered seed, nothing on ubu006, pinned SHA in my own worktree."
+}

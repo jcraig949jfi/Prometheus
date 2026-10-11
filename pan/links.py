@@ -74,24 +74,37 @@ def run(out=print):
     return res
 
 
-def refs_cli(path, k=40):
-    """Who cites PATH (backlinks) and what PATH cites (forward links), oldest first."""
-    from . import db
+def refs(path, k=40):
+    """Who cites PATH (backlinks) and what PATH cites (forward links), oldest first, as data (PAN-44: shared by the CLI
+    and the MCP server). None when PATH is not in the catalog or not visible at the current clearance."""
+    from . import access, db
+    asql, aargs = access.filter_sql("a")
     with db.cursor() as cur:
-        cur.execute("select artifact_id from pan.artifact where path=%s", (path,))
+        cur.execute("select artifact_id from pan.artifact a where path=%s" + asql, [path] + aargs)
         r = cur.fetchone()
         if not r:
-            print("not in the catalog:", path)
-            return
-        aid = r[0]
-        for title, q in (("CITED BY", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
-                                         from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s"""),
-                         ("CITES", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
-                                      from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s""")):
-            cur.execute("select count(*) from (" + q + ") x", (aid,))
+            return None
+        aid, out = r[0], dict(path=path)
+        for key, q in (("cited_by", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
+                                       from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s""" + asql),
+                       ("cites", """select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at), l.n_mentions
+                                    from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s""" + asql)):
+            cur.execute("select count(*) from (" + q + ") x", [aid] + aargs)
             total = cur.fetchone()[0]
-            cur.execute(q + " order by 4 nulls last limit %s", (aid, k))
-            rows = cur.fetchall()
-            print("== {} ({} total{})".format(title, total, ", first {} shown".format(len(rows)) if total > len(rows) else ""))
-            for p, kind, seat, when, n in rows:
-                print("  {}  [{} {} x{}]  {}".format(str(when)[:10], kind, seat or "-", n, p))
+            cur.execute(q + " order by 4 nulls last limit %s", [aid] + aargs + [k])
+            out[key] = dict(total=total, rows=[dict(path=p, kind=kind, seat=seat, when=when, n_mentions=n)
+                                               for p, kind, seat, when, n in cur.fetchall()])
+    return out
+
+
+def refs_cli(path, k=40):
+    from . import access
+    r = refs(path, k)
+    if r is None:
+        print("not in the catalog (or not visible at clearance {}):".format(access.current_role()), path)
+        return
+    for title, key in (("CITED BY", "cited_by"), ("CITES", "cites")):
+        total, rows = r[key]["total"], r[key]["rows"]
+        print("== {} ({} total{})".format(title, total, ", first {} shown".format(len(rows)) if total > len(rows) else ""))
+        for x in rows:
+            print("  {}  [{} {} x{}]  {}".format(str(x["when"])[:10], x["kind"], x["seat"] or "-", x["n_mentions"], x["path"]))

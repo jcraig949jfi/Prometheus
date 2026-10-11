@@ -78,6 +78,29 @@ Seats come from roles/<Seat>/ paths and mapped top-level directories.
   fewer, more specific words with `--mode fts`, or filter by `--seat` /
   `--kind`. The reranker runs only where a CUDA GPU exists (PAN_RERANK).
 
+## What you will not see (access classes, 2026-10-11)
+
+Results are filtered to your clearance (`PAN_CLEARANCE`, default generator):
+- Burned holdouts and embargoed or privileged material are hidden.
+- Credential files are never indexed.
+- Files whose text carries a literal credential are refused whole: the path is listed, the
+  content is not (PAN-47).
+
+A hidden path answers exactly like a missing one.
+
+## MCP (optional, local opt-in)
+
+The same operations are available as a read-only stdio MCP server, registered nowhere by default
+(roles/Pan/docs/sagacity/MCP_INTERFACE_PROTOTYPE.md):
+- `pan_search`;
+- `pan_pivot`;
+- `pan_refs`;
+- `atlas_lookup` (Atlas facts, propositions and blind spots, with provenance).
+
+From a checkout, on a host with Pan's dependencies:
+
+    claude mcp add pan -- <python> -m pan.mcpserve
+
 ## Do not
 
 - Do not cite a hit as evidence of a claim; it is a retrieval result.

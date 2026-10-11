@@ -1,0 +1,95 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-016-T030",
+ "campaign_id": "C-016",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-293acef8",
+ "host": "harry1",
+ "branch": "argus/c016-t030",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c016-t030",
+ "start_sha": "8a5a3b5725c2fd9788758a209655f630f1e88846",
+ "end_sha": "627325b25 (freeze commit; this receipt is committed after it on the same branch)",
+ "dirty": false,
+ "commits": {
+  "claim_main": "6451b6add",
+  "red_branch": "9509e8168",
+  "red_implementing_main": "d87968655",
+  "implementation_branch": "93623a03a",
+  "freeze_branch": "627325b25"
+ },
+ "files_changed": [
+  "rso/ensorain/{subjects.py,assay.py,analysis.py,freeze.py,__init__.py} (new)",
+  "rso/ensorain/tests/{__init__.py,test_assay.py} (new)",
+  "rso/ensorain/{PREREGISTRATION.md,FREEZE.md,FROZEN.json,ONBOARDING.md,SUBJECTS.json,DEV_QUALIFICATION.json} (new)",
+  "roles/Argus/{WORK_STATE.json,journal/2026-10-11.md,comms/2026-10-11_C-016-T030_*.md}",
+  "ops/campaigns/C-016/tasks/C-016-T030/{TASK.json,LEASE.json,attempts/A-001/{RECEIPT.json,RED_OUTPUT.txt}}"
+ ],
+ "evidence_added": [
+  "Cadmus demand re-run (python -m rso.ensorain.rerun_c_demand) reproduced byte-identically on harry1 (cmp) before building on it",
+  "adapter: one tape.lifetime (ensorain/wtp5/tape.py:298, read-only) -> one integer row; recompute of native accuracies (tape.py:329-351); external declared-memory check (plastic_keys only, PLASTIC_BOUND, zero working state at every block start) -- assay.py",
+  "controls: frozen (world demand), history_shuffle (causal dependence), newlife-from-learned (named; no resume exists), Smuggler + decorative Smuggler (forbidden channel), memoryless +s / constant +1 / constant -1 (the four-policy class N1-N4 collapse to)",
+  "known-answer positive detected and forbidden channel refused on development seeds 16_300_001..400 (DEV_QUALIFICATION.json, rows sha256 1d5ccf28, reproduced byte-identically): reference REVISION_HISTORY_DEPENDENT (K1 396:0:4, K2 249:149:2, Holm p 3.1e-7); smuggler, smuggler_decorative, constant_plus, constant_minus REFUSED_FIXED_PRIOR; memoryless_plus REVISION_NOT_SHOWN; memory_ok and recompute_ok on all 9,600 rows",
+  "finding: both Smuggler analogues score 1.0 on the coordinator's late-window endpoint; only the pre-switch admissibility gate G_PRE separates them",
+  "8 NEW searched subjects (search.py unchanged, arm L, C-R2-desert, 16,000 evals, seeds 16_310_001..008; 805 CPU-s) in SUBJECTS.json; endpoints NOT computed; structural: 5/8 elites set eta,sigma>0 with no plastic parameter",
+  "N = 400 from development lifetime variance (late acc mean .591 s.d. .333): exact sign-test power .999 at d=.1 (family P), .988 (family S, alpha/16)",
+  "PREREGISTRATION.md v1.0.0 + FREEZE_ENSORAIN v1.0.0 (FROZEN.json LF sha256 b198ab8f..., 26 files + version set); Ensorain re-pinned against origin/main e5bceddd7: wtp5 identical to 7b1d549c8",
+  "ONBOARDING.md: adapter 548 lines (381 code) vs C-010 1,518 (+ruler 257); reused receipt-canonical, ruler tail_ge/thresholds, stats.holm, registry file_sha; modified none; 10 semantic mismatches"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -m rso.ensorain.rerun_c_demand <scratch>/rerun.json; cmp with rso/ensorain/rerun_c_demand_result.json",
+   "result": "byte-identical, 3.9 s"
+  },
+  {
+   "command": "python -m unittest rso.ensorain.tests.test_assay (before the adapter)",
+   "result": "RED: ImportError (attempts/A-001/RED_OUTPUT.txt)"
+  },
+  {
+   "command": "python -m unittest rso.ensorain.tests.test_assay",
+   "result": "19 tests OK (1.9 s)"
+  },
+  {
+   "command": "python -m rso.ensorain.subjects search <part> (2 processes, seeds 0-3 and 4-7); merge -> SUBJECTS.json",
+   "result": "8 x 16,032 evals, 10:35:50Z..10:42:41Z"
+  },
+  {
+   "command": "python -m rso.ensorain.assay dev <out> --n 400 (twice)",
+   "result": "verdicts as in evidence_added; rows sha256 1d5ccf2838829bff... both runs"
+  },
+  {
+   "command": "python -m rso.ensorain.freeze write; python -m rso.ensorain.freeze check; blob-hash cross-check against HEAD",
+   "result": "26 files, OK, 0 blob mismatches"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "rso/ensorain/tests/test_assay.py committed at 9509e8168 before any adapter code; ImportError: cannot import name 'analysis' from 'rso.ensorain'"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "ensorain WTP-05 DEEP may land a commit to a frozen ensorain file before the confirmatory run; the runner then refuses and the freeze must be re-cut",
+  "searched subjects were preflighted on 2 development seeds through assay.preflight (instrument fields only; rows discarded unread)",
+  "power for family S uses the reference's development distribution (searched subjects' variance unknown)",
+  "the 2,000-eval timing search (seed 16_310_901) produced telemetry including a certify c_late; it is disclosed, produced no subject, and was not used for selection"
+ ],
+ "unresolved": [
+  "Q3 challenge (Pallas) of the frozen surface; then the confirmatory run (a later packet; 16_330_001..400, N=400)",
+  "registry rows proposed in ONBOARDING.md s2 (Palamedes owns rso/registry/)"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 0.3,
+  "processes_max": 2,
+  "peak_working_set_mb": 47,
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/argus-scratch/c016t030/ (search checkpoints, dev outputs)",
+ "notes": "Read-only on ensorain/ and roles/Ensorain/; no WTP-05 registered seed used; nothing run on ubu006; no request to Ensorain was needed. Python 3.12.10 / numpy 2.4.3 on harry1 (not Ensorain's pinned 3.14.4 / 2.3.5; within-host design).",
+ "created_at_utc": "2026-10-11T10:54:00Z"
+}

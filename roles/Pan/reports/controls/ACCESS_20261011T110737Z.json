@@ -1,0 +1,143 @@
+{
+ "control": "PAN-42 access classes (live catalog + throwaway-database RLS proof)",
+ "at": "20261011T110737Z",
+ "verdict": "PASS",
+ "rules_applied": {
+  "C-cosmos-burned-holdout": {
+   "action": "CLASSIFY",
+   "class_": "BURNED_HOLDOUT",
+   "newly_classified": 0,
+   "total": 4
+  },
+  "R-credential-content": {
+   "action": "REFUSE",
+   "scope": "content",
+   "newly_refused": 0,
+   "chunks_purged": 0,
+   "doc_vectors_purged": 0,
+   "links_purged": 0,
+   "total": 132
+  },
+  "R-credential-file": {
+   "action": "REFUSE",
+   "matched": 119,
+   "chunks_purged": 0,
+   "doc_vectors_purged": 0,
+   "links_purged": 0
+  }
+ },
+ "checks": [
+  {
+   "kind": "NEGATIVE",
+   "name": "no classification drift: every artifact a CLASSIFY rule matches already carries its class (refresh applies the rules)",
+   "ok": true,
+   "detail": "0 artifacts drifted before this run's apply"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "the declared-exposed Cosmos hidden sets are classified BURNED_HOLDOUT",
+   "ok": true,
+   "detail": "4 chunked files: ['prometheus/cosmos/c3_holdout_D/sealed_spec_D.json', 'prometheus/cosmos/holdout/sealed_spec.json', 'prometheus/cosmos/holdout/sealed_spec_E.json', 'prometheus/cosmos/holdout/sealed_spec_F.json']"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "an evaluator's full-text search can reach the burned files",
+   "ok": true,
+   "detail": "evaluator hits on burned files: 4"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a generator's full-text search never returns a burned file",
+   "ok": true,
+   "detail": "generator hits on burned files: 0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "a PROGRAM document (the D2 FIREWALL.md) stays visible to a generator",
+   "ok": true,
+   "detail": [
+    "prometheus/cosmos/c3_holdout_D2/FIREWALL.md",
+    "prometheus/cosmos/c3_holdout_D2/draw.py",
+    "prometheus/cosmos/c3_holdout_D2/AUDIT_BRIEF.md"
+   ]
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "the same own-vector query DOES reach the burned file at evaluator clearance (the CHEAT below is not vacuous)",
+   "ok": true,
+   "detail": "burned hits: {'pg/evaluator': 4, 'local/evaluator': 4}"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "vector search with a burned chunk's OWN vector returns no burned file to a generator (pg and local backends)",
+   "ok": true,
+   "detail": "burned hits: {'pg/generator': 0, 'local/generator': 0}"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "refused credential-shaped files hold no chunks",
+   "ok": true,
+   "detail": "119 refused files, 0 chunks"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "an unknown clearance role fails closed",
+   "ok": true,
+   "detail": "PermissionError"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "the content rule refused credential-bearing files (whole artifact, path kept)",
+   "ok": true,
+   "detail": "1 rule(s); 132 artifacts refused"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "no indexed chunk matches a content REFUSE rule",
+   "ok": true,
+   "detail": "0 matching chunks left"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "every synthetic credential shape is refused",
+   "ok": true,
+   "detail": "9/9"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "placeholders, empty values and prose are not refused",
+   "ok": true,
+   "detail": "0/8 refused"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "PostgreSQL and Python agree on every synthetic case (purge vs chunker)",
+   "ok": true,
+   "detail": "0 disagreements over 17 cases"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "RLS: the generator-like role sees only PROGRAM artifacts",
+   "ok": true,
+   "detail": "as prometheus_read: art ids [1]"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "RLS inheritance: a chunk of a hidden artifact is invisible even when queried directly",
+   "ok": true,
+   "detail": "chunk ids [10]"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "RLS: a join cannot reach hidden rows through the child table",
+   "ok": true,
+   "detail": "0 hidden rows via join"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "the superuser bypasses RLS (why non-superuser logins are required)",
+   "ok": true,
+   "detail": "superuser sees 3 art, 3 chunk"
+  }
+ ]
+}

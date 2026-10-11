@@ -274,3 +274,86 @@ def controls(write=True):
         print("{:<8} {:<5} {}  ({})".format(x["kind"], "PASS" if x["ok"] else "FAIL", x["name"], x["detail"]))
     print(verdict)
     return doc
+
+
+# ---------------------------------------------------------------- PAN-44: permitted Atlas lookup (read-only)
+
+# The permitted tables and, per table, (text columns searched, columns returned, provenance columns, order).
+# Everything else in schema atlas is reachable only through the Iceberg copy, never through this lookup.
+LOOKUP = {
+    "fact": (("fact_key", "name", "subject_key", "value_text"),
+             ("fact_id", "fact_key", "layer", "kind", "subject_type", "subject_key", "name", "value_text", "value_num",
+              "unit", "band_low", "band_high", "status"),
+             ("author", "method", "stated_at", "first_harvest_id", "last_harvest_id"),
+             "last_harvest_id desc, fact_id desc"),
+    "proposition": (("statement", "scope", "mechanisms"),
+                    ("proposition_id", "statement", "kind", "scope", "confidence", "confidence_basis", "known_confounds",
+                     "mechanisms", "untested_predictions", "status"),
+                    ("first_stated_at", "last_reviewed_at", "first_harvest_id", "last_harvest_id"),
+                    "proposition_id"),
+    "blind_spot": (("assumption", "detection_basis", "anti_experiment"),
+                   ("blind_spot_id", "assumption", "engines_checked", "engines_holding", "counterexamples",
+                    "detection_basis", "anti_experiment", "proposed_as", "status"),
+                   ("first_harvest_id", "last_harvest_id"),
+                   "blind_spot_id"),
+}
+TEXT_CAP = 600
+
+
+def _like(text):
+    return "%" + text.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_") + "%"
+
+
+def hidden_mentions(role=None):
+    """Paths (and basenames) of catalogued artifacts the role may NOT see. Atlas rows have no access class of their
+    own; under the inheritance rule (foundation map s6) a row that MENTIONS a hidden artifact inherits its
+    restriction, so the lookup drops it (fail closed: a mention is treated as derivation)."""
+    from . import access, db
+    with db.cursor() as cur:
+        cur.execute("select path from pan.artifact where not (access_class = any(%s))", (access.classes_for(role),))
+        paths = [r[0] for r in cur.fetchall()]
+    return sorted(set(paths) | {p.rsplit("/", 1)[-1] for p in paths})
+
+
+def lookup(table, text="", k=10, role=None):
+    """Read-only lookup in a permitted Atlas table: rows whose searched text columns contain TEXT (case-insensitive,
+    literal -- no wildcards), newest harvest first, each with its provenance columns. Rows that mention an artifact
+    hidden at the role's clearance are excluded and counted."""
+    from . import db
+    if table not in LOOKUP:
+        raise ValueError("atlas lookup: table must be one of {}".format(sorted(LOOKUP)))
+    k = max(1, min(int(k), 50))
+    searched, cols, prov, order = LOOKUP[table]
+    hidden = [_like(h) for h in hidden_mentions(role)]
+    where, args = [], []
+    if text:
+        where.append("(" + " or ".join("x.{}::text ilike %s".format(c) for c in searched) + ")")
+        args += [_like(text)] * len(searched)
+    base = "from atlas.{} x".format(table) + (" where " + " and ".join(where) if where else "")
+    excl = " {} not (x::text ilike any(%s))".format("and" if where else "where")
+    with db.cursor(statement_timeout_ms=30000) as cur:
+        cur.execute("select count(*) " + base, args)
+        matched = cur.fetchone()[0]
+        cur.execute("select {} {}{} order by {} limit %s".format(", ".join("x." + c for c in cols + prov), base, excl, order),
+                    args + [hidden or ["\x00never\x00"], k])
+        rows = cur.fetchall()
+        cur.execute("select count(*) " + base + excl, args + [hidden or ["\x00never\x00"]])
+        visible = cur.fetchone()[0]
+    out = []
+    for r in rows:
+        rec = {c: _norm(v) for c, v in zip(cols, r[:len(cols)])}
+        for c, v in rec.items():
+            if isinstance(v, str) and len(v) > TEXT_CAP:
+                rec[c] = v[:TEXT_CAP] + " [...]"
+        rec["provenance"] = dict({c: _norm(v) for c, v in zip(prov, r[len(cols):])}, store="atlas." + table)
+        out.append(rec)
+    return dict(table=table, text=text, matched=matched, excluded_by_mention=matched - visible, records=out)
+
+
+def lookup_cli(table, text, k=10):
+    from . import access
+    res = lookup(table, text, k)
+    print("== atlas.{} contains {!r}: {} matched, {} excluded at clearance {}, {} shown".format(
+        table, text, res["matched"], res["excluded_by_mention"], access.current_role(), len(res["records"])))
+    for r in res["records"]:
+        print(json.dumps(r, default=str)[:400])

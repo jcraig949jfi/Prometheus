@@ -1,0 +1,106 @@
+{
+  "_prereg": [
+    "PAN-43 negative-space evaluation, frozen 2026-10-11 BEFORE any evaluator score or generation run.",
+    "Operator directive: roles/Pan/prompts/2026-10-11_sagacity_foundation s3. Protocol prose: roles/Pan/docs/sagacity/NEGATIVE_SPACE_EVALUATION.md.",
+    "Primary scientific question: does accumulating experimentally characterized failures measurably redirect generation toward causally distinct, executable mechanisms?",
+    "Secondary: does giving the failures directly to the LLM help, or anchor it to the known mechanisms?",
+    "Order is fixed: calibrate the distinctness instrument first; no generation result is quoted unless the instrument passes its promotion gate."
+  ],
+  "design_caveat": "The 26 known-answer pairs and the behavioral evaluator were designed together by Pan (a WT-0-style known-answer gate, not a blind test). The symbolic held-out set is generated from a parameter space with analytic labels and was not designed pair by pair. Before any Cosmos result is promoted, a held-out calibration set built by another seat (Nyx or Techne) and kept from every generator must pass the same gate.",
+  "domain": {
+    "module": "pan/negspace/domain.py",
+    "contract": "delay recall: y_t = x_{t-3} for t >= 3, else 0",
+    "alphabet": "integers 0..9",
+    "suite_seed": 20261011,
+    "suite": "10 random (len 24), 3 constant (0, 5, 9), 4 periodic (p=2, 3; 2 each), 3 impulse (k=0, 7, 15), 3 world-wipe (random, world cleared before step 12), 1 long random (len 200)",
+    "contract_streams": "the 20 short streams without intervention (random, constant, periodic, impulse)",
+    "intervention_streams": "the 3 world-wipe streams and the 200-step stream: outside the contract; they reveal how a contract-satisfying mechanism works",
+    "mechanism_api": "class Mechanism with __init__(self, world) and step(self, x) -> int; world is a dict owned by the runner",
+    "sandbox": "static guard (imports limited to collections, itertools, math, functools; no open/exec/eval/compile/__import__/reflection/dunder attributes) then a separate `python -I` subprocess with a 20 s timeout; coverage = executed line numbers of the mechanism source"
+  },
+  "calibration": {
+    "known_answer": {
+      "module": "pan/negspace/calibration.py",
+      "pairs": {"EQUIVALENT": 8, "DISTINCT": 8, "CHEAT": 6, "UNRESOLVED": 4},
+      "scoring": {
+        "EQUIVALENT": "verdict must be EQUIVALENT",
+        "DISTINCT": "verdict must be DISTINCT",
+        "CHEAT": "verdict must not be DISTINCT (EQUIVALENT or UNKNOWN)",
+        "UNRESOLVED": "verdict must be UNKNOWN"
+      }
+    },
+    "symbolic_heldout": {
+      "module": "pan/negspace/dsl.py",
+      "n_pairs": 120,
+      "seed": 20261012,
+      "labels": "analytic from parameters: DISTINCT if (delay, reset, cap visible within 200 steps, environmental storage) differ; UNRESOLVED if the only difference is cap 1000 vs none; else EQUIVALENT",
+      "stratification": "a third of the pairs per label by construction"
+    },
+    "baselines": {
+      "text": "difflib ratio of the sources >= 0.80 -> EQUIVALENT, else DISTINCT",
+      "ast": "identical rename-canonical AST -> EQUIVALENT, else DISTINCT",
+      "embed": "bge-small-en-v1.5 cosine of the sources >= 0.95 -> EQUIVALENT, else DISTINCT",
+      "always_distinct": "DISTINCT",
+      "always_equivalent": "EQUIVALENT"
+    },
+    "candidate": "behavioral: any output difference on the suite -> DISTINCT (witness); identical outputs and full statement coverage of both -> EQUIVALENT; identical outputs with unexecuted statements -> UNKNOWN (with the lines and the experiment that would decide); one side crashing -> DISTINCT",
+    "promotion_gate": {
+      "known": {"EQUIVALENT": 0.9, "DISTINCT": 0.9, "CHEAT": 0.9, "UNRESOLVED": 0.75},
+      "symbolic": {"max_false_distinct_rate": 0.01, "min_distinct_recall": 0.95, "min_unresolved_unknown": 0.95, "min_equivalent_equivalent": 0.60},
+      "margin_over_best_baseline": 0.20,
+      "note": "macro = mean of per-category (known) or per-label (symbolic) correct rates; the candidate must beat the BEST baseline's macro by the margin on both sets. min_equivalent_equivalent is 0.60, not higher, because pairs that BOTH carry the same out-of-suite cap (1000) are truly equivalent but contain code no suite input executes; the coverage gate answers UNKNOWN there by design (known analytically before any run; about a third of the EQUIVALENT pairs)."
+    }
+  },
+  "generation_experiment": {
+    "arms": {
+      "A": "frozen LLM, no failure context",
+      "B": "frozen LLM, prompt includes text descriptions of the GIVEN failure classes (never code)",
+      "C": "frozen LLM with the external exclusion engine: proposals behaviorally EQUIVALENT to the real library (supported + GIVEN failures) or to an earlier accepted proposal are rejected; the model hears only 'rejected: equivalent to an excluded mechanism'",
+      "Cx": "as C, with a COUNTERFEIT library: the same number of random DSL mechanisms (Hades CHIASMA O3R analogue)",
+      "D": "non-LLM symbolic generation (DSL sampler, shuffled without replacement) with the real exclusion engine",
+      "Dx": "as D, with the counterfeit library"
+    },
+    "generator_model": "qwen2.5-coder:14b via local Ollama (0.35.0 at freeze), temperature 0.8, top_p 0.95, seed = 1000 x replicate + proposal index, 700 tokens, thinking off; every LLM arm sees its own last 3 proposals",
+    "libraries": {
+      "known_supported": ["S-internal-buffer"],
+      "given_failures": ["F-delay-off-by-one", "F-persistence-without-use", "F-reset-on-zero"],
+      "withheld_failures": ["F-environmental-storage-not-wipe-robust", "F-horizon-cap"],
+      "rule": "withheld classes never appear in any prompt or exclusion library; they are used only by the endpoint"
+    },
+    "budget": "100 proposals per arm per replicate; 5 replicates (seeds 1-5); a proposal is one generation call (LLM arms) or one DSL draw (D arms); wall time and tokens are recorded, not matched",
+    "endpoints": {
+      "primary": "novel_classes: distinct behavioral classes among contract-satisfying proposals that are EQUIVALENT to no known class (supported + given + withheld); classes are formed greedily by the behavioral evaluator; UNKNOWN never merges and is tallied",
+      "secondary": ["executable rate", "contract rate", "eq_given: proposals EQUIVALENT to a given failure class", "eq_withheld: proposals EQUIVALENT to a withheld failure class", "eq_supported"]
+    },
+    "hypotheses": {
+      "H1_primary": "C > A on novel_classes",
+      "H2_anchoring": "B vs A on eq_given (B > A = descriptions anchor; B < A = descriptions steer away)",
+      "H3_content": "C > Cx on novel_classes (failure content, not mere constraint)",
+      "H4_symbolic": "D vs C on novel_classes (two-sided)",
+      "H5_transfer": "B and C lower than A on eq_withheld (avoidance generalizes beyond the given classes)"
+    },
+    "statistics": "per arm, the 5 replicate values; exact two-sided permutation test on the difference of replicate means (252 relabelings); Holm across H1-H4 at alpha 0.05; H5 reported descriptively with the same test",
+    "minimum_effect": "1 novel class per 100 proposals for H1, H3, H4",
+    "falsification": [
+      "H1 is rejected unless C beats A with Holm p < 0.05 AND by at least the minimum effect.",
+      "'B helps' is claimed only if B beats A on novel_classes under the same rule; otherwise it is reported as not shown.",
+      "Anchoring is claimed only if B's eq_given exceeds A's with Holm p < 0.05.",
+      "If C does not beat Cx (H3), any C > A advantage is attributed to constraint, not to failure knowledge.",
+      "If the instrument fails its promotion gate, no endpoint is computed for a claim; the run is reported as UNCALIBRATED."
+    ],
+    "leakage_protections": [
+      "generator clearance on any retrieval (Pan access classes; foundation map s6)",
+      "withheld classes absent from prompts and libraries",
+      "B receives text only, C receives only the word 'rejected' -- never failure code",
+      "the evaluator runs mechanisms in a subprocess and never calls a model",
+      "the known-answer calibration pairs are public by design; the held-out set from another seat must be kept from every generator"
+    ],
+    "scope_limit": "The toy domain's behavior space has four visible axes, so novel_classes has a low ceiling; this harness demonstrates the instrument and the arms. Cosmos is the first scientific environment: it must supply its mechanism API, contract and intervention streams, known failure references and its own calibration pairs."
+  },
+  "amendments": [
+    {"id": "A1", "date": "2026-10-11", "after_smoke": true, "before_any_generation_run": true, "change": "PRIMARY ENDPOINT made conservative. As frozen, a contract-satisfying proposal counted as a novel class whenever it was not EQUIVALENT to a known class, so a proposal the instrument could not decide (UNKNOWN, e.g. one carrying an out-of-suite cap) counted as novelty. Now: novel requires DISTINCT from every known class and from every earlier class representative; UNKNOWN against a known class is tallied as unresolved_vs_known, UNKNOWN against an earlier class as unresolved_vs_class, neither counted as novel. Found in the plumbing smoke (NEGSPACE_SMOKE_20261011T102052Z: arm D's 3 'novel classes'), before any generation run.", "evidence": "roles/Pan/reports/controls/NEGSPACE_SMOKE_20261011T102052Z.json"},
+    {"id": "A2", "date": "2026-10-11", "after_smoke": true, "before_any_generation_run": true, "change": "FLOOR RULE added; nothing else changes (arms, budget, model, prompts and endpoints stay as frozen). In the A1 plumbing smoke 0 of 12 LLM proposals (3 per arm, seed 1) satisfied the contract and 9 of 12 were behaviorally EQUIVALENT to F-delay-off-by-one. n = 12 does not establish a floor (0/12 is compatible with a contract rate up to ~0.25), but if the generator rarely satisfies the contract, novel_classes is 0 in every LLM arm and H1/H3/H4 cannot discriminate; a null there would be a floor, not a negative. Precommitted: for each of H1, H3 and H4, if BOTH compared arms average fewer than 5 contract-satisfying proposals per replicate, that hypothesis is reported as FLOOR (untested: neither supported nor rejected) and is removed from the Holm family; contract counts are computed before any novel_classes value is read. H2 (eq_given) and H5 (eq_withheld) do not depend on the contract and are unaffected. Any redesign that raises the contract rate (contract feedback to the generator, a different model or prompt) is a NEW preregistration, not an amendment.", "evidence": "roles/Pan/reports/controls/NEGSPACE_SMOKE_20261011T102218Z.json; proposals in the Pan lake negspace/SMOKE_20261011T102218Z.json"},
+    {"id": "A3", "date": "2026-10-11", "after_smoke": true, "before_any_generation_run": true, "change": "CLAIM UNIT for H1/H3/H4 is the adjudicated FAMILY count; the behavioral count stays the measured endpoint. Found by inspecting the A1 smoke: arm D's one novel class (proposals 0 and 3, ring/history storage, cap 100) is DISTINCT from the frozen F-horizon-cap reference only because the DSL cap outputs 0 after step 100 while the reference stops storing and repeats a stale value (witness long200 step 100: 0 vs 5). Behavioral classes are therefore finer than failure families: parameter or post-horizon variants of a known family count as novel. Precommitted: (1) endpoints() lists every novel representative with its witness against each known class (novel_representatives); (2) before any H1/H3/H4 claim, the representatives of all arms are pooled, stripped of arm labels and shuffled, and adjudicated by Hades (failure boundaries) with Harmonia as adjudicator as NEW_FAMILY or VARIANT_OF(<known class>); (3) the claim uses the NEW_FAMILY count per replicate under the frozen statistics, and the raw behavioral count is reported beside it; (4) Pan does not adjudicate. Until (2) has happened, novel_classes is reported as an upper bound on conceptual novelty and supports no claim.", "evidence": "roles/Pan/reports/controls/NEGSPACE_SMOKE_20261011T102218Z.json; pan/tests/test_negspace.py::test_novel_representatives_carry_witnesses_for_adjudication"},
+    {"id": "A4", "date": "2026-10-11", "after_smoke": true, "before_any_generation_run": true, "change": "ARM D/Dx DEFECT FIXED. As frozen, the DSL sampler drew the same shuffled sequence whatever its exclusion engine rejected, so D and Dx produced identical proposals at ANY budget: the counterfeit control for the symbolic arm was vacuous by construction (seen as D = Dx in the A1 smoke and confirmed in the code). Now the sampler is rejection-aware: it skips any candidate the behavioral evaluator calls EQUIVALENT to an earlier REJECTED proposal. Like the LLM arms it learns only that a proposal was rejected, never why or which library entry matched. Skipped candidates are not proposals and consume no budget (a proposal is one emitted DSL draw, as an LLM proposal is one emitted generation). The library contents, budget, endpoint and statistics are unchanged.", "evidence": "pan/negspace/harness.py run_arm; pan/tests/test_negspace.py::test_symbolic_arm_uses_its_exclusion_library_a4"}
+  ]
+}

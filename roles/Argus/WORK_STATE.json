@@ -2,29 +2,29 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Argus",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-10T14:50:00Z",
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "updated_at_utc": "2026-10-11T12:55:00Z",
   "state": "INTEGRATION_READY",
-  "branch": "argus/c013-t012",
-  "base_sha": "7f77d5c53529c5c8a3f055297742069dba4f2fcf",
-  "head_sha": "(this commit; see receipt end_sha)",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c013-t012",
-  "model": "claude-sonnet-5-5",
+  "branch": "argus/c016-t041",
+  "base_sha": "a387bbb5a5c865304549f9415ef8ed0f6c95047a",
+  "head_sha": "(this commit; freeze ebe4860c1)",
+  "worktree_path": "C:/Prometheus-worktrees/argus-c016-t041",
+  "model": "claude-opus-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-90a937a5",
-  "session_start_utc": "2026-10-10T12:30:00Z",
-  "current_objective": "RSO Builder Cell, campaign C-013 (RSO-STRATEGIC-EXPANSION-48H), Workstream B",
-  "current_step": "C-013-T012 INTEGRATION_READY: D1 run N=15/24, STOPPED_AT_CPU_CAP 3.243 core-h; RESULT.md nothing separates; 9 certified discoveries",
+  "instance": "harry1-b2f16d20",
+  "session_start_utc": "2026-10-11T12:23:00Z",
+  "current_objective": "Continuous Observatory, campaign C-016: THE ONE repair round of the Ensorain assay (C-016-T041)",
+  "current_step": "C-016-T041 INTEGRATION_READY: PREREGISTRATION v1.1.0 (amendment 030f1746f) + FREEZE_ENSORAIN v1.1.0 (ebe4860c1, FROZEN.json fcfe67ce); dev Q-a..Q-e hold; 11/11 RED rows; no confirmatory run",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates C-013-T012 and reads RESULT.md",
+  "next_expected_milestone": "Palamedes integrates C-016-T041; Pallas re-check C-016-T042",
   "expected_next_artifact": "",
   "threads": [
     "phase3-rso"
   ],
   "campaigns": [
-    "C-013"
+    "C-016"
   ],
   "experiments": [],
   "fabric_tasks": [],
@@ -35,12 +35,15 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "ops/campaigns/C-013/tasks/C-013-T012/attempts/A-001/RECEIPT.json",
-    "rso/reach/RESULT.md"
+    "ops/campaigns/C-016/tasks/C-016-T041/attempts/A-001/RECEIPT.json",
+    "rso/ensorain/PREREGISTRATION.md",
+    "rso/ensorain/FREEZE.md",
+    "rso/ensorain/repair_v110/DEV_CHECK.json",
+    "rso/ensorain/repair_v110/red_rows.jsonl"
   ],
   "last_push_sha": "8ddaa4f19",
   "last_push_utc": "2026-10-10T11:55:00Z",
   "validation_launches_this_session": 0,
   "state_worktree": "C:/Prometheus-worktrees/argus-ops (detached, state commits to main per DISTRIBUTED_WORK s9)",
-  "environment_note": "numba venv outside the repo: C:/Prometheus-worktrees/argus-reach-venv (numba 0.65.1, numpy 2.4.6, pytest 8.3.3)"
+  "environment_note": "system Python 3.12.10 / numpy 2.4.3 on harry1 (no pytest; tests are unittest); scratch C:/Prometheus-worktrees/argus-scratch/c016t041"
 }

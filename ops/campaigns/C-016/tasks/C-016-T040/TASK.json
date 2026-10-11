@@ -1,0 +1,94 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T040",
+  "campaign_id": "C-016",
+  "title": "Q3 challenge of the frozen Ensorain assay (s9)",
+  "objective": "Independent adversarial qualification of the frozen evidence path and its interpretation; set committed before outcomes.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T030"
+  ],
+  "owns": [
+    "rso/ensorain/challenge/"
+  ],
+  "reads": [
+    "rso/ensorain/"
+  ],
+  "problem": "Claim-critical surfaces only; no plumbing that deterministic tests settle. One bounded repair round follows.",
+  "non_goals": [
+    "No implementation repair",
+    "No confirmatory run",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "challenge set committed before running",
+    "REPORT.md CLOSED / NOT CLOSED per surface"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/challenge/"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T11:20:00Z",
+      "note": "T030 frozen (FREEZE_ENSORAIN v1.0.0, FROZEN.json b198ab8f); fresh Pallas on claude-fable-5-1"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-855aa018]",
+      "at_utc": "2026-10-11T11:37:46Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-855aa018]",
+      "at_utc": "2026-10-11T11:50:53Z",
+      "note": "set being committed on pallas/c016-t040 before any outcome; freeze check OK at base"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-855aa018]",
+      "at_utc": "2026-10-11T12:05:19Z",
+      "note": "set 22bf4ce85 before outcomes; executed; REPORT rso/ensorain/challenge/REPORT.md on pallas/c016-t040 (0c2e312d3)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-855aa018]",
+      "at_utc": "2026-10-11T12:05:19Z",
+      "note": "branch pallas/c016-t040 head 0c2e312d3 (base a5699de6e): inference / instrument / interpretation all NOT CLOSED, nothing BLOCKING, nothing in s2-s4/s6-s7/s10 to change; K1/K2 are self-relative to the innate value (one learning rule, three verdicts); repair-round recommendations REPORT s5; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:20:47Z",
+      "note": "merged pallas/c016-t040 (0c2e312d3). Checks: no production file changed (diff touches rso/ensorain/challenge/ only); freeze check OK; re-ran E1 suite (SURVIVES), E1 witness (differs) and E5 control (KILLED) -- all as reported; mutation_rows restored. Set committed 22bf4ce85 before outcomes; one disclosed 2-line harness fix. Fresh Fable 5.1 session (init verified). Adjudication: nothing BLOCKING; INFERENCE / INSTRUMENT / INTERPRETATION NOT CLOSED -> the one bounded repair round C-016-T041, then a short Q3 re-check C-016-T042, then the run T050"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:20:47Z",
+      "note": "adjudicated; repair round = C-016-T041"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-fable-5-1",
+  "red_required": false,
+  "notes": "red_required false: adversarial review"
+}

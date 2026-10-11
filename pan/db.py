@@ -27,6 +27,11 @@ def _expected_system_id() -> str:
     return reg["environments"][config().get("environment", "prometheus-canonical")]["db_system_id"]
 
 
+def read_only() -> bool:
+    """True when this process was started read-only (PAN_DB_READ_ONLY=1, set by the MCP server before any import)."""
+    return os.environ.get("PAN_DB_READ_ONLY") == "1"
+
+
 def connect(dbname: str = None, *, autocommit: bool = False, statement_timeout_ms: int = 0):
     """A psycopg2 connection to `dbname` on the canonical cluster (default:
     the configured program database), refused unless the cluster's
@@ -38,8 +43,16 @@ def connect(dbname: str = None, *, autocommit: bool = False, statement_timeout_m
     if dbname:
         kw["dbname"] = dbname
     kw["application_name"] = "pan"
+    opts = []
     if statement_timeout_ms:
-        kw["options"] = "-c statement_timeout={}".format(int(statement_timeout_ms))
+        opts.append("-c statement_timeout={}".format(int(statement_timeout_ms)))
+    if read_only():
+        # PAN-44: a process started read-only (the MCP server) gets read-only sessions from the server side --
+        # every transaction refuses INSERT/UPDATE/DELETE/DDL; code paths that never write are unaffected
+        opts.append("-c default_transaction_read_only=on")
+        kw["application_name"] = "pan-readonly"
+    if opts:
+        kw["options"] = " ".join(opts)
     # bounded retry for CONNECTION-level failures only (2026-10-09: a single "server closed
     # the connection unexpectedly" at connect killed a 9-model bench while the cluster stayed
     # up); query errors are never retried here

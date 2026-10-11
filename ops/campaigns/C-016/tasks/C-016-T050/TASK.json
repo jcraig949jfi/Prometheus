@@ -1,0 +1,57 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T050",
+  "campaign_id": "C-016",
+  "title": "Bounded native Ensorain experiment + RESULT (s10)",
+  "objective": "Run the frozen experiment; outcome decided by the registered criteria; self-contained RESULT.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T042"
+  ],
+  "owns": [
+    "rso/ensorain/runs/",
+    "rso/ensorain/RESULT.md"
+  ],
+  "reads": [
+    "rso/ensorain/"
+  ],
+  "problem": "Local CPU, not ubu006. Report positive / negative / inconclusive / detection-unqualified.",
+  "non_goals": [
+    "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
+    "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
+    "No process on ubu006",
+    "No selection after inspecting the final ruler",
+    "No world change",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "runs committed",
+    "RESULT.md"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/runs/",
+    "rso/ensorain/RESULT.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: execution of a preregistered experiment"
+}

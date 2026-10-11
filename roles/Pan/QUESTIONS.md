@@ -152,6 +152,59 @@ Q-013 | PREF (M2 memory; your machine) | 2026-10-10
   only after a load check shows it 100 % on the GPU.
   ANSWER:
 
+Q-014 | PERMISSION (database roles on M1) | 2026-10-11
+  Pan's MCP prototype (PAN-44) enforces access in the application plus a
+  server-side read-only session, because every program session connects as
+  the superuser postgres (RLS does not bind it; foundation map s6). Least
+  privilege would be a login role (e.g. pan_mcp_ro) with SELECT on only
+  pan.artifact/chunk/link/doc_embedding and atlas.fact/proposition/
+  blind_spot, plus RLS on pan.artifact/pan.chunk keyed on access_class.
+  The role prometheus_read exists but has no grants and cannot log in.
+  This is a production authorization change, which the directive does not
+  grant. Create the role (Pan writes the migration; the DBA applies it)?
+  DEFAULT meanwhile: no. The MCP stays at application-level enforcement
+  plus default_transaction_read_only, as recorded in
+  MCP_INTERFACE_PROTOTYPE.md.
+  ANSWER:
+
+Q-015 | PREF (seat tooling) | 2026-10-11
+  Should seats get Pan's MCP server by default, via a project-scoped .mcp.json
+  in the canonical repo, or only by local opt-in (claude mcp add pan --
+  <venv python> -m pan.mcpserve, run from a checkout)?
+  DEFAULT meanwhile: local opt-in only. Nothing is registered anywhere. The
+  directive approves a prototype, not a deployment.
+  ANSWER:
+
+Q-016 | PERMISSION (scheduled task on M2) | 2026-10-11
+  After the window, should Pan's maintenance run unattended? That means a
+  nightly Windows scheduled task on M2 running `pan refresh`, `pan atlas
+  snapshot` and `pan frontier daily` (CPU embeddings), registered as a
+  MONITORS row with a bound and a watcher (Aporia). Or should it stay
+  session-driven, run by the successor seat (CONTINUITY_HANDOFF.md s0)?
+  DEFAULT meanwhile: session-driven. Pan installs no scheduled task. Index
+  currency decays visibly (every record carries its blob, commit and
+  index_current) rather than silently.
+  ANSWER:
+
+Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
+  PAN-47 found committed files with credential-shaped CONTENT (comms #2129;
+  values never read). The likeliest real ones:
+  - three apollo/configs/config_v2d*.yaml and apollo/scripts/evolution_monitor.py
+    (an "sk-" + 32-character provider-key shape);
+  - evidence_wiki/config.json (a non-empty db_password);
+  - apollo/scripts/launch_bakeoff_candidate.ps1.
+  Pan has purged all 132 matching files from its index (paths kept). The
+  values remain in git history and the working tree. Rotate the keys or
+  passwords, and remove the values from the files (and from history)?
+  DEFAULT meanwhile: Pan purges its index and nothing else. Owners (Apollo,
+  Mnemosyne, Harmonia, Charon, Aporia) are told; rotation is theirs or
+  yours.
+  FACT (comms who, 2026-10-11T13:32Z): every owning seat is OFFLINE. Last
+  syncs: Apollo 2026-09-11, Charon 09-11, Mnemosyne 09-18, Harmonia 10-01,
+  Aporia 10-06. #2129 has no live reader but you, so in practice rotation
+  is yours (or whoever you wake).
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09

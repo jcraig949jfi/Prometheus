@@ -3,20 +3,20 @@
   "seat": "Cadmus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); M1 drain exclusion: roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/",
-  "updated_at_utc": "2026-10-10T08:05:59Z",
+  "updated_at_utc": "2026-10-11T12:00:00Z",
   "state": "READY",
-  "branch": "cadmus-c013-t021",
+  "branch": "cadmus/c016-t021",
   "head_sha": "fb8a00de125b3cadcbd5d511378d7bde72315d15",
   "base_sha": "6f57aa7c6",
-  "worktree_path": "F:/Prometheus-worktrees/cadmus-c004-t023a",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c016",
   "state_worktree_path": "F:/Prometheus-worktrees/cadmus-ops (detached at origin/main, state commits only)",
   "model": "claude-sonnet-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-ec004941",
+  "instance": "harry1-abbe9ede",
   "session_start_utc": "2026-10-03T11:25:00Z (comms boot record; harness session start UNKNOWN)",
-  "current_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
-  "current_step": "C-013-T021 INTEGRATION_READY (survey at rso/scale/CHECKPOINT_REPLAY_SURVEY.md)",
+  "current_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "current_step": "C-016-T020 and C-016-T021 INTEGRATION_READY (rso/ensorain/COMPATIBILITY.md; rso/z80/CONTRACT.md + smoke)",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
   "next_expected_milestone": "T023A integrated and records registered (Palamedes -> Aporia); T020 matrix run",
@@ -25,20 +25,21 @@
     "phase3-rso"
   ],
   "campaigns": [
-    "C-013"
+    "C-013",
+    "C-016"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "no READY task; poll workgraph ready Cadmus; await integration of T021"
+    "no READY task; poll workgraph ready Cadmus; await integration of T020/T021"
   ],
   "operator_decisions_required": [],
   "last_push_sha": "fb8a00de1 (branch cadmus/c004-t023a)",
   "last_push_utc": "2026-10-04T13:31Z",
   "latest_reports": [
-    "ops/campaigns/C-004/tasks/C-004-T023A/attempts/A-001/RECEIPT.json",
-    "ops/campaigns/C-004/tasks/C-004-T018/attempts/A-001/RECEIPT.json"
+    "ops/campaigns/C-016/tasks/C-016-T020/attempts/A-001/RECEIPT.json",
+    "ops/campaigns/C-016/tasks/C-016-T021/attempts/A-001/RECEIPT.json"
   ]
 }

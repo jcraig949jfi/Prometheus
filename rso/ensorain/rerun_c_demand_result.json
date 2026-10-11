@@ -1,0 +1,65 @@
+{
+ "spec": "C-R2-desert",
+ "seed0": 16020001,
+ "arms": [
+  {
+   "arm": "plastic",
+   "n_lives": 40,
+   "role1_pre": 0.9215419888510819,
+   "role1_post_early": 0.0764811953267382,
+   "role1_late": 0.6390211833428118,
+   "role5": 1.0,
+   "frac_switch_tracked": 0.35
+  },
+  {
+   "arm": "frozen",
+   "n_lives": 40,
+   "role1_pre": 1.0,
+   "role1_post_early": 0.0,
+   "role1_late": 0.0,
+   "role5": 1.0,
+   "frac_switch_tracked": 0.0
+  },
+  {
+   "arm": "hist_shuffle",
+   "n_lives": 40,
+   "role1_pre": 0.6060583254708807,
+   "role1_post_early": 0.43749415738626457,
+   "role1_late": 0.41237937258884727,
+   "role5": 1.0,
+   "frac_switch_tracked": 0.275
+  }
+ ],
+ "ladder": {
+  "N0_const": {
+   "scored": 0.5283203125,
+   "role1": 0.5229007633587787,
+   "role5": 0.534
+  },
+  "N1_reactive": {
+   "scored": 0.765625,
+   "role1": 0.5419847328244275,
+   "role5": 1.0
+  },
+  "N2_short_history": {
+   "scored": 0.765625,
+   "role1": 0.5419847328244275,
+   "role5": 1.0
+  },
+  "N3_bounded_memory": {
+   "scored": 0.765625,
+   "role1": 0.5419847328244275,
+   "role5": 1.0
+  },
+  "N4_menu": {
+   "scored": 0.765625,
+   "role1": 0.5419847328244275,
+   "role5": 1.0
+  },
+  "_meta": {
+   "n_test_gates": 1024,
+   "N2_k": 2,
+   "N4_best": "table"
+  }
+ }
+}

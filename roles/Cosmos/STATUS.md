@@ -1,5 +1,28 @@
 # Cosmos status
 
+Currency: 2026-10-11T10:01Z. ACTIVE, waiting on operator. Reliability test (4 h) DONE: VERDICT FAIL by rule (P1 hour 1
++22.6 min; P2-P6 met) -- campaigns/RELIABILITY_4H_2026-10-11/VERDICT.md; scheduler latency ~20-30 min; no multi-day
+window recommended until an OS-level timer exists. NS-01 + NS-02 DONE on cosmos/ns01-2026-10-11 (review packet
+REVIEW_PACKET_NS01_NS02_2026-10-11.txt): archive-driven redirection NOT SUPPORTED at n = 8; FAILURE_15 (relational
+encoding vs fixed-capacity state decoders) supported relative to the archive. Suites: main 112/112, c4-v03 174/174,
+ns01 178/178. Operator decisions pending: NS-03 or stop; OS timer + automatic comms alerts; R-MECH final (Bellerophon).
+D2 SEALED / UNREAD / UNSPENT. $0.
+--- 2026-10-11T08:40Z block below ---
+Currency: 2026-10-11T08:40Z. ACTIVE on two operator orders: (1) 4 h reliability test (campaigns/RELIABILITY_4H_2026-10-11,
+until ~10:13Z); (2) NS-01 negative-space generation (prompts/2026-10-11_operator_NS-01; work on branch
+cosmos/ns01-2026-10-11, campaigns/NS-01_2026-10-11/ there). NS-01 status: audit (14 -> tier P 13 judge constraints + tier
+M 7 mechanism classes), engine QUALIFIED (FR 1/66, FA 0/7), 32 proposals over 4 arms, no arm shown better at n = 8;
+FAILURE_15 = relational encoding vs fixed-capacity state decoders, SUPPORTED relative to the archive after a merge
+test (slope 1.6), known to learning theory. Next: NS-02 learning test (NEXT_EXPERIMENT.md). C4: EXP-05/09 stig
+geometry (INCONCLUSIVE / H-SPREAD REJECTED), EXP-06..08 surrogate defects. D2 SEALED / UNREAD / UNSPENT. $0.
+--- 2026-10-11T06:15Z block below ---
+Currency: 2026-10-11. ACTIVE. The 48H campaign (2026-10-08) is CLOSED_INCOMPLETE: ~3 of 48 h productive; an EXP-04
+launch hung 58 h undetected (campaigns/48H_2026-10-08/INCIDENT_2026-10-08_EXP04_STALL.md). Recovery: progress
+watchdog prometheus.cosmos.supervise (11 failure-injection tests), EXP-04 run (INCONCLUSIVE by rule), review packet
+campaigns/48H_2026-10-08/REVIEW_PACKET_48H_2026-10-08.txt. Laws: G-0007, G-0008 dead; nothing near confirmation;
+F-0002 not frozen; no confirmation data. NEXT: 4 h reliability test (campaigns/RELIABILITY_4H_2026-10-11/PREREG.md);
+no multi-day window until it passes. R-MECH final (Bellerophon) still pending. D2 SEALED / UNREAD / UNSPENT.
+--- 2026-10-08 block below ---
 Currency: 2026-10-08. ACTIVE: operator 48H autonomous campaign (campaigns/48H_2026-10-08/). The foreign family is DONE
 (Theseus theseus_sediment 79dc4c4b8, verified). C3 Session 1 PUBLISHED (merge d75fb45ef, V1-V5 PASS); autopsy branch stays local.
 Reviewer attacks (A1/A4/A5, F1/F2) are being reproduced as regression tests. D2 SEALED / UNREAD / UNSPENT.
