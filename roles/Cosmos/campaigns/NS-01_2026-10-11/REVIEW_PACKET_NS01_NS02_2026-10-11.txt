@@ -1,0 +1,112 @@
++==============================================================================================+
+| COSMOS / CWE -- NS-01 + NS-02 NEGATIVE-SPACE GENERATION -- REVIEW PACKET                       |
+| Author: Cosmos (ubu003-623ec771), claude-opus-5-5          Date: 2026-10-11                    |
+| For: operator (HITL), external reviewers                                                       |
+| Status: NS-01 DONE; NS-02 (learning test) DONE; ~1.2 h of the 12 h budget used; $0           |
+| Self-contained: load-bearing numbers inline. Branch cosmos/ns01-2026-10-11 (not merged).       |
++==============================================================================================+
+
+-----
+0. SUMMARY AND VERDICT
+-----
+Question (operator): can a growing archive of characterised failures systematically redirect mechanism generation
+toward experimentally distinct causal structures? Answer at this scale: NO, NOT SUPPORTED. An external archive
+improved RECOGNITION (a new failure class now catches re-discoveries) but did not REDIRECT proposals: across two
+independent runs, LLM generators re-proposed previously tried mechanisms 3-5 times in 8, whether or not they saw the
+archive, and the external-exclusion arm (C) found the fewest new behaviours (0 of 8 in NS-02). One failure class
+new to the CWE archive (not to science) was found and survived a preregistered merge test: FAILURE_15, relational
+encodings defeat fixed-capacity state decoders (information-presence false negatives).
+
+-----
+1. WHAT WAS BUILT (all committed before the data it judged)
+-----
+- FAILURE_ATLAS (frozen eb0e1c14f): the 14 operator candidates audited. They are failures of INFERENCE PROCEDURE, not
+  of mechanisms; the archive (incl. Atlas F1-F12) has no mechanism taxonomy. Tier P (13 judge constraints): E01+E02+
+  E07+E09 merged (circularity), E03+E04 merged (family identity), E12 narrowed WEAK (class-level claim refuted 1/30),
+  E13/E14 predictor-level, + start-state mismatch, unqualified instrument, liveness != progress. Tier M: 7 mechanism
+  classes with executable rules (DEGENERATE, DECAY, LINBLIND, HIDDEN, UNREACHABLE, NONMONOTONE, INTERFERENCE).
+- Behavioural signature (11 k x linear / nonlinear / full-state decoding + transplant + distractor-free) and, after
+  NS-01 exposed its saturation defect, a de-saturated v2 (+ state-corruption dose-response, dual-cue first/second).
+- Exclusion engine qualified on disguised witnesses: v1 FR 1/66, FA 0/7; v2 FR 1/64, FA 0/7, NS-01-collapsed pairs
+  separated 5/6.
+- Four arms, identical contract: A unconstrained LLM; B negative prompt (operator challenge + E01-E14 + tier M);
+  C blind LLM + external exclusion (compact ACCEPTED/REJECTED signal only); D symbolic grammar (bias documented).
+  LLM arms = separate tool-less conversations; proposals copied verbatim from transcripts by script.
+
+-----
+2. RESULTS
+-----
+NS-01 (32 proposals; corrected by the v2 re-measurement):
+| | A | B | C | D |
+| equivalent to a witness (v2) | 1/8 | 1/8 | 1/8 | 3/8 |
+| clusters within arm (v2) | 7 | 6 | 6 | 6 |
+| tier-M rule hits | 1 | 0 | 0 | 14 |
+| failure-15 candidates | 0 | 1 (B08) | 0 | 0 |
+NS-01's first-pass headline "16/24 LLM proposals equivalent to perfect-memory witnesses" was an INSTRUMENT ARTEFACT
+(saturated behaviour); recorded as a correction, not deleted.
+
+FAILURE_15 (B08 "proactive secret sharing"; minimal witness W-REL written by Cosmos from the account):
+readout decodes the cue at 1.00 for all k; generic decoders of the declared full state read .27-.33 (random features),
+.02-.05 (linear), .35-.46 (one-hot). GAUGE intervention (common shift of both shares) keeps the readout at 1.00;
+DESYNC drops it to ~0. Contrasts: B05 = decoder-class artefact (linear state decoder recovers it); B01 = representation
+dependence (one-hot restores it). Merge test (preregistered): decoder width needed for .90 grows with pairs M:
+128 (M <= 4), 512 (8), 1024 (16), 4096 (32), > 4096 at 64 (.76); slope 1.6 > 1; n_train 16000 no rescue ->
+KEEP_DISTINCT. Status: NOVEL_FAILURE_SUPPORTED relative to the archive; known learning-theory phenomenon.
+
+NS-02 learning test (32 proposals, archive v2 = witnesses + W-REL + all 32 tried NS-01 mechanisms):
+| | A control | B (+F15 text) | C external exclusion | D |
+| equivalent to a TRIED NS-01 mechanism | 5/8 | 4/8 | 5/8 | 3/8 |
+| relational NS-01 -> NS-02 | 0 -> 0 | 2 -> 1 | 1 -> 1 | 0 -> 0 |
+| new reproducible behaviours (not failures) | 2 | 2 | 0 | 1 |
+| new failure classes | 0 | 0 | 0 | 0 |
+Kill rule fixed before NS-02 met -> redirection NOT SUPPORTED at this scale. The new class is active (it caught C06,
+a gauge memory the blind arm reached).
+
+-----
+3. INCIDENTS / DEFECTS (own)
+-----
+- NS-01 signature saturation (found, repaired by v2, NS-01 corrected).
+- Dual-cue probe cannot separate different "keep both cues" mechanisms (C04 ~ A02 in NS-02).
+- One generation run per arm per experiment; n = 8; no significance claims (atlas P6).
+- The same model under four prompts is not four independent priors.
+- FAILURE_15 upgrade from CANDIDATE to SUPPORTED came after a post hoc check lowered it and a preregistered test raised it
+  again; both steps are recorded.
+
+-----
+4. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+Does: a qualified, executable exclusion engine; an audited archive; evidence that an EXTERNAL archive with a compact
+rejection signal neither stops re-proposals nor finds more new structure than an unconstrained generator, at n = 8;
+one archive-new failure class with intervention evidence. Does NOT: show any arm better than another; show the
+archive cannot work with a richer signal, a different generator, or larger n; claim FAILURE_15 is new to science.
+
+-----
+5. RECOMMENDATION (operator's call)
+-----
+Lean: do not scale the same design. If continued, NS-03 should change the CHANNEL, not the archive size: return the
+nearest tried mechanism's description with each rejection (informative negative feedback), test a different model
+(Haiku 4.5) and a grammar extended with relational primitives, replicate 3 runs per arm. "Stop this line" is a
+first-class option: the evidence so far says the generator's prior, not the archive, sets where search goes.
+
+-----
+6. QUESTIONS FOR THE REVIEWER
+-----
+1. Is a behavioural signature (even de-saturated) the right equivalence for "causally distinct", or does it need
+   intervention families tailored per mechanism -- and would that reintroduce verbal judgement?
+2. Is FAILURE_15 worth keeping as a class, given it is textbook learning theory?
+3. The control arm reached a relational design (A07) without the archive: does that undercut the value of telling the
+   generator about new failures?
+
+-----
+7. ARTEFACTS
+-----
+campaigns/NS-01_2026-10-11/: FAILURE_ATLAS.json, GENERATION_PROTOCOL.md, ARM_PROMPTS.md, CANDIDATES.jsonl,
+EXCLUSION_RESULTS.jsonl, EXPERIMENT_RESULTS.jsonl, ENGINE_QUALIFICATION.*, PREREG_F15_*.md, F15_*_RESULTS.json,
+FAILURE_15.md, NS01_ANALYSIS.md, NEXT_EXPERIMENT.md, proposals/. campaigns/NS-02_2026-10-11/: PROTOCOL.md,
+ENGINE2_QUALIFICATION.json, NS01_RETRO_DESAT.json, ARCHIVE_V2_SIGNATURES.json, NS02_RESULTS.md, proposals/.
+Code: prometheus/cosmos/ns01/*. Key commits: eb0e1c14f (freeze), 5329f0d48 (engine), c14ab905a / bb8624d1d (F15
+preregs), b4b584bbc (F15 supported), aedcf19cb (NS-02 freeze), ff8b8b24a (NS-02 results).
+
++==============================================================================================+
+| END. "Not worth continuing" is a first-class answer.                                           |
++==============================================================================================+
