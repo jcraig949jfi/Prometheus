@@ -21,6 +21,25 @@ def planted(tapes, phys, press, epochs):
     return s
 
 
+# v1.1.0 unit parents (C-017-T041). I = vm.I
+I = vm.I
+# executes ONE target byte (window 0) and returns through a JP it wrote at window 1..2, then writes A to window 3. Target 7 (XOR A,A)
+# and its complement 0xF8 (XCHG A,D; D = 0) both leave A = 0; 7 + 0x55 = 0x5C (LD A,G) leaves 32. No read: only the counterfactual
+# can see it, and only through the +0x55 sample.
+XEXEC = T.pad([I(1, 0), 13, I(19, 0, 1), 129, I(1, 0), 12, I(19, 0, 1), 130, I(1, 0), 5, I(13), 128, I(19, 0, 1), 131, I(23)], S.G)
+# copies its whole tape, then jumps into its own fresh copy's HALT: exec_foreign > 0, reads 0 (the ONBOARDING s3.2 4/21 shape)
+OWN = T.pad([I(1, 1), 0, I(1, 2), 128, I(1, 3), 32, I(20), I(6, 3), I(16), 0xFC, I(13), 128 + 12, I(23)], S.G)
+# writes the INPUT byte of its case to window 0, then copies own 1..31 (challenge/subjects_c.py INPW)
+INPW = T.pad([I(21, 0), I(22, 0), I(19, 0, 1), 128, I(1, 1), 1, I(1, 2), 129, I(1, 3), 31, I(20), I(6, 3), I(16), 0xFC, I(23)], S.G)
+# IN A; JR +<byte 2>; OUT A; HALT (challenge/subjects_c.py JROP): byte 2 is an operand; zero makes the jump a no-op
+JROP = T.pad([I(21, 0), I(14), 0, I(22, 0), I(23)], S.G)
+
+
+def tags_of(parent, nbr, inp=(7,)):
+    res = vm.execute(parent, nbr, inp, 256, True)
+    return observe.endo_tags(res, res["nbr_window"], observe.counterfactual(parent, nbr, inp, 256, True))
+
+
 # echoes only inputs < 128: a competent-looking organism on some cases, never neighbour-dependent
 HALF = T.pad([vm.I(21, 0), vm.I(1, 1), 0x80, vm.I(12, 1), vm.I(17), 0x01, vm.I(23), vm.I(22, 0), vm.I(23)], S.G)
 
@@ -92,10 +111,10 @@ class Tags(unittest.TestCase):
         self.assertTrue(all(o["tags"] == "R" * S.G for o in born))
 
     def test_counterfactual_tags_per_byte(self):
-        z = bytes(S.G); same = {"nbr_window": z, "nbr_mask": bytes([1] * S.G)}
+        z = bytes(S.G); same = {"nbr_window": z, "nbr_mask": bytes([1] * S.G), "reads_nbr": 0}
         self.assertEqual(observe.endo_tags(same, z, [same, same]), "P" * S.G)
         self.assertEqual(observe.endo_tags(same, bytes([1]) + z[1:], [same, same]), "M" + "P" * (S.G - 1))
-        part = {"nbr_window": z, "nbr_mask": bytes([0] * 3 + [1] * (S.G - 3))}
+        part = {"nbr_window": z, "nbr_mask": bytes([0] * 3 + [1] * (S.G - 3)), "reads_nbr": 0}
         self.assertEqual(observe.endo_tags(part, z, [part, part]), "KKK" + "P" * (S.G - 3))
         moved = {"nbr_window": bytes([9]) + z[1:], "nbr_mask": bytes([1] * S.G)}       # byte 0's value follows the pre-window
         self.assertEqual(observe.endo_tags(same, z, [same, moved]), "K" + "P" * (S.G - 1))
@@ -115,6 +134,32 @@ class Tags(unittest.TestCase):
         self.assertEqual(observe.endo_tags(res, res["nbr_window"], observe.counterfactual(env, nbr, (7,), 256, True)), "K" * S.G)
         res = vm.execute(S.H(), S.NH(), (7,), 256, True)
         self.assertEqual(observe.endo_tags(res, res["nbr_window"], observe.counterfactual(S.H(), S.NH(), (7,), 256, True)), "P" * S.G)
+
+
+    def test_a_parent_that_reads_the_window_writes_no_parent_byte(self):
+        # v1.1.0 (REPORT s4.1): CDIST writes its head as circdist(t0, t2) of the target -- invariant under both alterations
+        cd = S.CDIST()
+        res = vm.execute(cd, cd, (7,), 256, True)
+        self.assertEqual((res["nbr_window"][:2], res["reads_nbr"] > 0), (cd[:2], True))
+        self.assertEqual(tags_of(cd, cd), "K" * S.G)
+        cs = assay.probe_cases(DEV[0])
+        self.assertEqual(assay.label(res["nbr_window"], tags_of(cd, cd), None, cs), "ENV")
+        self.assertFalse(assay.f0(vm.execute(cd, bytes(S.G), (7,), 256, True)["nbr_window"], cs))   # over an empty target: dead
+
+    def test_running_into_its_own_fresh_copy_stays_parent_written(self):
+        res = vm.execute(OWN, S.H(), (7,), 256, True)
+        self.assertEqual((res["reads_nbr"], res["exec_foreign"] > 0, res["halted"]), (0, True, True))
+        self.assertEqual(tags_of(OWN, S.H()), "P" * S.G)
+        self.assertEqual(tags_of(S.H(), S.H()), "P" * S.G)
+
+    def test_both_counterfactual_samples_are_load_bearing(self):
+        nbr = bytes([7]) + bytes(S.G - 1)
+        self.assertEqual(vm.execute(XEXEC, nbr, (7,), 256, True)["reads_nbr"], 0)
+        self.assertEqual(tags_of(XEXEC, nbr)[:4], "KPPK")      # window 3 follows the target under +0x55 only
+
+    def test_the_counterfactual_keeps_the_parents_input(self):
+        # ENV means the target cell, not the world's input: an input-dependent write is the parent's (REPORT s4.3)
+        self.assertEqual(tags_of(INPW, bytes(S.G), (21,)), "P" * S.G)
 
 
 class Label(unittest.TestCase):
@@ -163,6 +208,11 @@ class Label(unittest.TestCase):
         cs = assay.probe_cases(DEV[0])
         self.assertTrue(all(assay.label(o["tape"], o["tags"], o["situ"], cs) == "ENV" for o in para))
         self.assertEqual(assay.classify({"seed": DEV[0], "spec": spec, "out": E.run(spec, DEV[0])})["cls"], "ENV")
+
+    def test_the_sufficiency_filler_is_zero(self):
+        # v1.1.0 (REPORT s4.4 E2): zero, not another NOP opcode; a kept jump operand zeroed is a no-op -> ENDO (filler-dependent)
+        self.assertEqual(assay.label(JROP, "PPKPP" + "P" * (S.G - 5), None, self.cases), "ENDO")
+        self.assertEqual(assay.restrict(JROP, "PPKPP" + "P" * (S.G - 5), "P")[2], 0)
 
     def test_run_class_is_a_strict_majority(self):
         self.assertEqual(assay.run_class([]), "NONE")
@@ -237,6 +287,21 @@ class Baselines(unittest.TestCase):
         self.assertEqual(assay.classify(ext)["cls"], "EXT")
 
 
+    def test_recipe_reader_reads_the_construction(self):
+        # v1.1.0: right on every v1.0.0 recipe, an ENV output (RECON), and CDIST's recipe read as ENDO
+        got = {a["name"]: assay.b4({"seed": DEV[0], "spec": S.spec(a), "out": {}}) for a in S.ARMS}
+        for a in S.ARMS:
+            want = "ENDO" if a["name"] == "CDIST_ENDO_IMPL" else a["gt"]
+            self.assertEqual((got[a["name"]]["cls"], got[a["name"]]["origin"]), (want, a["origin"]), a["name"])
+
+    def test_cdist_arm_is_environmental_where_its_recipe_says_endogenous(self):
+        rec = assay.record(S.ARM["CDIST_ENDO_IMPL"], DEV[0], epochs=3)
+        c = assay.classify(assay.blinded(rec))
+        self.assertEqual((c["cls"], c["origin"], c["n_ENDO"]), ("ENV", "INSERTED", 0))
+        self.assertGreater(c["n_ENV"], 50)
+        self.assertEqual((assay.b4(rec)["cls"], assay.b1(rec)["cls"]), ("ENDO", "ENDO"))
+
+
 class Analysis(unittest.TestCase):
     def test_w_max_is_the_exact_binomial_threshold(self):
         from rso.witness.ruler import tail_le
@@ -251,13 +316,15 @@ class Analysis(unittest.TestCase):
         for gt in ("ENDO", "EXT", "ENV", "INS"):
             for k in range(n):
                 out.append(dict(arm=gt + "_ARM", gt=gt, origin_gt="INSERTED", forgery="", cls=gt, origin="INSERTED", refused="",
-                                b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED"))
+                                b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED", b4="ENDO", b4_origin="INSERTED"))
         for kind in ("LABELS", "PLANT"):
             out.append(dict(arm="F", gt="EXT", origin_gt="INSERTED", forgery=kind, cls="EXT", origin="INSERTED", refused="", source_cls="EXT",
-                            source_origin="INSERTED", b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED"))
+                            source_origin="INSERTED", b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED", b4="ENDO",
+                            b4_origin="INSERTED"))
         for kind in ("PHYS", "TAPE", "GEN"):
             out.append(dict(arm="F", gt="REFUSED", origin_gt="", forgery=kind, cls="REFUSED", origin="", refused="REPLAY_MISMATCH",
-                            source_cls="EXT", source_origin="INSERTED", b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED"))
+                            source_cls="EXT", source_origin="INSERTED", b1="ENDO", b2="EXT", b1_origin="INSERTED", b2_origin="INSERTED",
+                            b4="ENDO", b4_origin="INSERTED"))
         if flip:
             flip(out)
         return out
@@ -326,6 +393,21 @@ class Analysis(unittest.TestCase):
             for r in rows:
                 r["b1"] = r["gt"] if not r["forgery"] else r["b1"]
         self.assertEqual(analysis.verdict(self.rows(f))["verdict"], "UNINFORMATIVE")
+
+    def test_an_unforged_refusal_counts_as_wrong(self):
+        # v1.1.0 (REPORT s4.4 E3): PREREG s5 'REFUSED included' pinned
+        def f(rows):
+            rows += [dict(r, cls="REFUSED", origin="", refused="REPLAY_MISMATCH") for r in rows if r["gt"] == "ENV" and not r["forgery"]][:5]
+        v = analysis.verdict(self.rows(f))
+        self.assertEqual((v["verdict"], v["q1"]["ENV"]["n"], v["q1"]["ENV"]["wrong"]), ("NOT_QUALIFIED", 29, 5))
+        self.assertIn("Q1:ENV", v["failed"])
+
+    def test_the_recipe_reader_is_a_registered_baseline(self):
+        def f(rows):
+            for r in rows:
+                r["b4"] = r["gt"] if not r["forgery"] else r["b4"]
+        v = analysis.verdict(self.rows(f))
+        self.assertEqual((v["verdict"], v["baselines_passing_q1"]), ("UNINFORMATIVE", ["b4"]))
 
     def test_mixed_counts_as_wrong(self):
         def f(rows):

@@ -1,4 +1,5 @@
-"""Writes RED_EDITS.json (run from the repo root: python rso/z80/red/make_edits.py); asserts every find string is unique."""
+"""Writes RED_EDITS.json (run from the repo root: python rso/z80/red/make_edits.py); asserts every find string is unique.
+v1.1.0: 27 + 5 repair pins (R1-R5) + 4 challenge edits (E1 E2 E3 E5, verbatim from rso/z80/challenge/edits.json) = 36."""
 import json
 O, A, N = "rso/z80/observe.py", "rso/z80/assay.py", "rso/z80/analysis.py"
 E = [
@@ -30,6 +31,25 @@ E = [
  ("N8", N, 'if failed:', 'if failed and not unpowered:', "underpowered hides a failure", "test_failure_outranks_underpowered"),
  ("N9", N, 'sum(r["origin"] != r["origin_gt"] for r in R2)', '0', "origin never scored", "test_origin_errors_fail"),
 ]
+# v1.1.0 (C-017-T041): the repair's own pins, and Pallas's semantic edits applied VERBATIM from challenge/edits.json (find/replace
+# not retyped) with the test that now pins each. E4 is already S6.
+SUB = "rso/z80/subjects.py"
+E += [
+ ("R1", O, 'else "K" if reads else', 'else', "a parent that read the window may still write P bytes (the v1.0.0 tag)", "test_a_parent_that_reads_the_window_writes_no_parent_byte"),
+ ("R2", O, 'reads = res0["reads_nbr"] > 0', 'reads = res0["reads_nbr"] > 0 or res0["exec_foreign"] > 0', "foreign execution (a parent running its own fresh copy) forces K", "test_running_into_its_own_fresh_copy_stays_parent_written"),
+ ("R3", A, '"ENDO" if f0(written, cases) else "ENV"', '"ENDO"', "the recipe reader has no ENV output", "test_recipe_reader_reads_the_construction"),
+ ("R4", N, 'BASELINES = ("b1", "b2", "b4")', 'BASELINES = ("b1", "b2")', "the recipe reader is not a Q4 baseline", "test_the_recipe_reader_is_a_registered_baseline"),
+ ("R5", SUB, 'if i < 10 else BASE2[part]', 'if True else BASE2[part]', "arm 10 seeds overlap the next partition", "test_partitions_are_disjoint_from_every_registered_namespace"),
+]
+PINS = {"E1_ONE_COUNTERFACTUAL": "test_both_counterfactual_samples_are_load_bearing", "E2_NOP_FILLER_0x1E": "test_the_sufficiency_filler_is_zero",
+        "E3_REFUSED_LEAVES_DENOMINATOR": "test_an_unforged_refusal_counts_as_wrong", "E5_COUNTERFACTUAL_EMPTY_INPUT": "test_the_counterfactual_keeps_the_parents_input"}
+for c in json.load(open("rso/z80/challenge/edits.json", encoding="utf-8"))["edits"]:
+    if c["id"] in PINS:
+        E.append((c["id"], c["file"], c["find"], c["replace"], c["what"] + " (challenge/edits.json, verbatim)", PINS[c["id"]]))
+# O1 / O6: the copy-onto-itself parent READS the window, so since v1.1.0 it is K whatever the counterfactual says; the two
+# counterfactual mutants are pinned by the exec-only parent instead
+RE = {"O1": "test_both_counterfactual_samples_are_load_bearing", "O6": "test_both_counterfactual_samples_are_load_bearing"}
+E = [(i, f, a, b, w, RE.get(i, t)) for i, f, a, b, w, t in E]
 out = [dict(id=i, file=f, find=a, replace=b, what=w, expect=t) for i, f, a, b, w, t in E]
 for e in out:
     src = open(e["file"], encoding="utf-8").read()

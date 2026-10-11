@@ -5,7 +5,7 @@
   "find": "and all(a[\"nbr_mask\"][k] and a[\"nbr_window\"][k] == win[k] for a in alts) else \"K\"",
   "replace": "else \"K\"",
   "what": "P ignores the counterfactual",
-  "expect": "test_a_copy_made_by_the_neighbours_code_is_environmental"
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
  },
  {
   "id": "O2",
@@ -45,7 +45,7 @@
   "find": "bytes(alt(b) for b in nbr)",
   "replace": "bytes(nbr)",
   "what": "counterfactual does not alter the pre-window",
-  "expect": "test_a_copy_made_by_the_neighbours_code_is_environmental"
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
  },
  {
   "id": "O7",
@@ -214,5 +214,77 @@
   "replace": "0",
   "what": "origin never scored",
   "expect": "test_origin_errors_fail"
+ },
+ {
+  "id": "R1",
+  "file": "rso/z80/observe.py",
+  "find": "else \"K\" if reads else",
+  "replace": "else",
+  "what": "a parent that read the window may still write P bytes (the v1.0.0 tag)",
+  "expect": "test_a_parent_that_reads_the_window_writes_no_parent_byte"
+ },
+ {
+  "id": "R2",
+  "file": "rso/z80/observe.py",
+  "find": "reads = res0[\"reads_nbr\"] > 0",
+  "replace": "reads = res0[\"reads_nbr\"] > 0 or res0[\"exec_foreign\"] > 0",
+  "what": "foreign execution (a parent running its own fresh copy) forces K",
+  "expect": "test_running_into_its_own_fresh_copy_stays_parent_written"
+ },
+ {
+  "id": "R3",
+  "file": "rso/z80/assay.py",
+  "find": "\"ENDO\" if f0(written, cases) else \"ENV\"",
+  "replace": "\"ENDO\"",
+  "what": "the recipe reader has no ENV output",
+  "expect": "test_recipe_reader_reads_the_construction"
+ },
+ {
+  "id": "R4",
+  "file": "rso/z80/analysis.py",
+  "find": "BASELINES = (\"b1\", \"b2\", \"b4\")",
+  "replace": "BASELINES = (\"b1\", \"b2\")",
+  "what": "the recipe reader is not a Q4 baseline",
+  "expect": "test_the_recipe_reader_is_a_registered_baseline"
+ },
+ {
+  "id": "R5",
+  "file": "rso/z80/subjects.py",
+  "find": "if i < 10 else BASE2[part]",
+  "replace": "if True else BASE2[part]",
+  "what": "arm 10 seeds overlap the next partition",
+  "expect": "test_partitions_are_disjoint_from_every_registered_namespace"
+ },
+ {
+  "id": "E1_ONE_COUNTERFACTUAL",
+  "file": "rso/z80/observe.py",
+  "find": "(lambda b: b ^ 0xFF, lambda b: (b + 0x55) & 255)",
+  "replace": "(lambda b: b ^ 0xFF,)",
+  "what": "the P tag's counterfactual uses the complement pre-window only (the +0x55 sample dropped) (challenge/edits.json, verbatim)",
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
+ },
+ {
+  "id": "E2_NOP_FILLER_0x1E",
+  "file": "rso/z80/assay.py",
+  "find": "return bytes(b if t in letters else 0 for b, t in zip(tape, tags))",
+  "replace": "return bytes(b if t in letters else 0x1E for b, t in zip(tape, tags))",
+  "what": "sufficiency restriction fills non-writer bytes with the other NOP opcode (30) instead of 0 (PREREGISTRATION s11.6: zero = NOP is a choice) (challenge/edits.json, verbatim)",
+  "expect": "test_the_sufficiency_filler_is_zero"
+ },
+ {
+  "id": "E3_REFUSED_LEAVES_DENOMINATOR",
+  "file": "rso/z80/analysis.py",
+  "find": "R = [r for r in rows if not r[\"forgery\"] and r[\"gt\"] == c and r[key] != \"NONE\"]",
+  "replace": "R = [r for r in rows if not r[\"forgery\"] and r[key] not in (\"NONE\", \"REFUSED\") and r[\"gt\"] == c]",
+  "what": "Q1 drops unforged records the instrument REFUSED instead of counting them as wrong (PREREGISTRATION s5: 'MIXED, OTHER, REFUSED included') (challenge/edits.json, verbatim)",
+  "expect": "test_an_unforged_refusal_counts_as_wrong"
+ },
+ {
+  "id": "E5_COUNTERFACTUAL_EMPTY_INPUT",
+  "file": "rso/z80/observe.py",
+  "find": "return [vm.execute(tape, bytes(alt(b) for b in nbr), case, step_cap, copy_prim, -1.0)",
+  "replace": "return [vm.execute(tape, bytes(alt(b) for b in nbr), (), step_cap, copy_prim, -1.0)",
+  "what": "the counterfactual re-executes the parent with an EMPTY input stream as well as an altered pre-window: P would then also require input-independence (challenge/edits.json, verbatim)",
+  "expect": "test_the_counterfactual_keeps_the_parents_input"
  }
 ]

@@ -7,8 +7,8 @@ Q1  per ground-truth class c in ENDO / EXT / ENV / INS, over the unforged runs o
 Q2  origin (INSERTED / ARISEN), same rule, pooled over every unforged functional run whose arm declares an origin.
 Q3  forgeries, zero tolerance: LABELS and PLANT leave class and origin equal to their source run's; PHYS, TAPE and GEN are refused
     with REPLAY_MISMATCH. Each kind must be present.
-Q4  the label reader (b1) and the bytes-only detector (b2) scored by Q1 must each FAIL Q1; a baseline that passes makes the arm
-    set uninformative about attribution.
+Q4  the label reader (b1), the bytes-only detector (b2) and the recipe reader (b4, v1.1.0) scored by Q1 must each FAIL Q1; a
+    baseline that passes makes the arm set uninformative about attribution. b1 / b2 have no ENV output; b4 does (PREREG s5).
 Verdict: NOT_QUALIFIED if Q1, Q2 or Q3 fails; else UNDERPOWERED if a Q1 class or Q2 is unpowered; else UNINFORMATIVE if Q4 fails;
 else ATTRIBUTION_QUALIFIED.
 
@@ -24,6 +24,7 @@ from rso.witness.ruler import tail_le
 CLASSES = ("ENDO", "EXT", "ENV", "INS")
 BOUND, ALPHA = Fraction(1, 5), Fraction(1, 100)
 INVARIANT, REFUSE = ("LABELS", "PLANT"), ("PHYS", "TAPE", "GEN")
+BASELINES = ("b1", "b2", "b4")                                       # v1.1.0: b4, the recipe reader (assay.b4)
 
 
 def w_max(n, bound=BOUND, alpha=ALPHA):
@@ -72,7 +73,7 @@ def verdict(rows):
         Q3[kind] = {"n": len(R), "bad": bad}
         if not R or bad:
             failed.append("Q3:" + kind)
-    Q4 = {b: q1(rows, b) for b in ("b1", "b2")}
+    Q4 = {b: q1(rows, b) for b in BASELINES}
     baseline_passes = [b for b, q in Q4.items() if all(t["pass"] for t in q.values())]
     if failed:
         v = "NOT_QUALIFIED"

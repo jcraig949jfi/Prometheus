@@ -8,7 +8,8 @@ What the loop adds, per organism: TAGS, one letter per byte naming the last writ
   I  inserted at founder creation (transplant / seeded / random fill); FOUNDERS records each founder's source path:
      S supplied (transplant tapes or the seeded replicator, engine.py:176-188) or R drawn by random_tape (engine.py:21)
   P  written by the PARENT'S OWN EXECUTION: in the vm nbr_mask of the parent's res0 (engine.py:317-332) AND the same value and
-     mask when the parent is re-executed, same tape and input, over two altered pre-windows (COUNTERFACTUAL below)
+     mask when the parent is re-executed, same tape and input, over two altered pre-windows (COUNTERFACTUAL below), AND the
+     parent did not read the window (v1.1.0: res0 reads_nbr == 0)
   K  environment: an unwritten window byte (kept from the target cell), or a written byte whose value or mask changes with the
      target cell's prior content (the parent read, executed or sealed neighbour memory: engine.py:26-35, decided per byte by
      re-execution instead of by the read / exec counters, which also fire when a parent runs its own fresh copy)
@@ -63,9 +64,12 @@ def counterfactual(tape, nbr, case, step_cap, copy_prim):
 
 
 def endo_tags(res0, child, alts):
-    """Writer of each byte of an ENDOGENOUS_COPY child (child = copy_noise(res0 window)); alts = counterfactual(...)."""
-    win = res0["nbr_window"]
-    return "".join("M" if child[k] != win[k] else
+    """Writer of each byte of an ENDOGENOUS_COPY child (child = copy_noise(res0 window)); alts = counterfactual(...).
+    v1.1.0 (C-017-T041, challenge/REPORT.md s4.1): a parent that READ the window (res0 reads_nbr > 0, the engine's own donor
+    predicate engine.py:33 without exec_foreign / sealed, which the counterfactual decides) writes no P byte: every written byte is
+    K. The two alterations generate x -> +-x + c, whose invariants (circular distance, equality) passed a target-dependent write."""
+    win = res0["nbr_window"]; reads = res0["reads_nbr"] > 0
+    return "".join("M" if child[k] != win[k] else "K" if reads else
                    "P" if res0["nbr_mask"][k] and all(a["nbr_mask"][k] and a["nbr_window"][k] == win[k] for a in alts) else "K"
                    for k in range(len(win)))
 
