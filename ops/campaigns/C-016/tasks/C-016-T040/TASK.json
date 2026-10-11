@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T040",
+  "campaign_id": "C-016",
+  "title": "Q3 challenge of the frozen Ensorain assay (s9)",
+  "objective": "Independent adversarial qualification of the frozen evidence path and its interpretation; set committed before outcomes.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T030"
+  ],
+  "owns": [
+    "rso/ensorain/challenge/"
+  ],
+  "reads": [
+    "rso/ensorain/"
+  ],
+  "problem": "Claim-critical surfaces only; no plumbing that deterministic tests settle. One bounded repair round follows.",
+  "non_goals": [
+    "No implementation repair",
+    "No confirmatory run",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "challenge set committed before running",
+    "REPORT.md CLOSED / NOT CLOSED per surface"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/challenge/"
+  ],
+  "kind": "document",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-fable-5-1",
+  "red_required": false,
+  "notes": "red_required false: adversarial review"
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T020",
+  "campaign_id": "C-016",
+  "title": "Ensorain compatibility check + native phenomenon selection + controls inventory (read-only)",
+  "objective": "Decide which Ensorain package / world carries the first Observatory question, with world-demand evidence, native reset semantics and the six control types.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/ensorain/COMPATIBILITY.md"
+  ],
+  "reads": [
+    "ensorain/",
+    "roles/Ensorain/",
+    "ops/campaigns/C-014/",
+    "rso/witness/CANDIDATES.md",
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md",
+    "rso/registry/REGISTRY.json"
+  ],
+  "problem": "Candidate question (directive s4; not a conclusion): can a bounded persistent learner retain and use information across a world-drift boundary while respecting its declared memory restrictions? Two lineages to compare (coordinator survey 2026-10-11). (A) WTP-05 family C: the law flips at an unannounced block (ensorain/wtp5/worlds.py:245-252); admission GOLDILOCKS, planted solver certifies; SCREEN: plasticity arm L tracked the switch 4/8 vs base 0/8; nulls N0-N3, stateful N6, history_shuffle, ws_reset, planted solvers. An admitted demanding world, but no native float-cap audit. (B) E1 / D1: fitted TT memory, replay + error stores under one cap, the e0/memories.py:30 audit, the Smuggler; WorldD drift at PHASE2 = 600. Memory restriction and forbidden-channel control are native, but NO world passed a demand gate and E1's positive control failed. Decide with evidence; a combination is allowed only if it changes no Ensorain physics. For the chosen world: pin the SHA; list the public entry points (file:line); show the world rewards the state (a planted / lawful reference succeeds AND a named simpler competitor fails, from Ensorain's committed numbers or a small re-run with NEW seeds); map each directive-s4 distinction (capacity, world demand, search accessibility, retention, causal dependence, qualification) to a concrete control; define reset / restart by Ensorain's actual semantics (not Ares's NULL); check Python / numpy compatibility on harry1 (Ensorain pins numpy 2.3.5 / Python 3.14 and says results are host-bitwise: state what that means for us); list which registry entries apply and where their scope does NOT reach (e.g. receipt-canonical refuses floats; ruler-binary-retention is binary-only). If no world passes the demand gate, say so: that is a legitimate outcome.",
+  "non_goals": [
+    "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
+    "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
+    "No process on ubu006",
+    "No adapter code (Argus owns it)",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "COMPATIBILITY.md: decision, pinned SHA, entry points, world-demand evidence, control map, reset semantics, env check, registry fit",
+    "any re-run uses new seeds and is committed with its command"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/COMPATIBILITY.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: read-only assessment"
+}
