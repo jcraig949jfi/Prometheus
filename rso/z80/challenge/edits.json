@@ -1,0 +1,55 @@
+{
+ "what": "C-017-T040 semantic edits against FREEZE_Z80_ATTRIBUTION v1.0.0 (Pallas). Applied in place and restored by run_edits.py; never committed in a mutated state. `expect` names the frozen test predicted to turn RED (null = predicted to SURVIVE the 42-test suite); `witness` names the computation in witnesses.py that separates frozen from mutant behaviour.",
+ "edits": [
+  {
+   "id": "E1_ONE_COUNTERFACTUAL",
+   "file": "rso/z80/observe.py",
+   "find": "(lambda b: b ^ 0xFF, lambda b: (b + 0x55) & 255)",
+   "replace": "(lambda b: b ^ 0xFF,)",
+   "what": "the P tag's counterfactual uses the complement pre-window only (the +0x55 sample dropped)",
+   "expect": null,
+   "witness": "W1",
+   "prediction": "SURVIVES the suite (every frozen test's parent is either pre-window-independent or caught by the complement alone); W1: the XOR writer's byte 0 is K under the frozen two-sample rule and P under E1"
+  },
+  {
+   "id": "E2_NOP_FILLER_0x1E",
+   "file": "rso/z80/assay.py",
+   "find": "return bytes(b if t in letters else 0 for b, t in zip(tape, tags))",
+   "replace": "return bytes(b if t in letters else 0x1E for b, t in zip(tape, tags))",
+   "what": "sufficiency restriction fills non-writer bytes with the other NOP opcode (30) instead of 0 (PREREGISTRATION s11.6: zero = NOP is a choice)",
+   "expect": null,
+   "witness": "W2",
+   "prediction": "SURVIVES the suite (no frozen test has a filler byte in operand position); W2: the JR-operand tape with tags PPKPP.. is ENDO under the frozen filler and ENV under E2"
+  },
+  {
+   "id": "E3_REFUSED_LEAVES_DENOMINATOR",
+   "file": "rso/z80/analysis.py",
+   "find": "R = [r for r in rows if not r[\"forgery\"] and r[\"gt\"] == c and r[key] != \"NONE\"]",
+   "replace": "R = [r for r in rows if not r[\"forgery\"] and r[key] not in (\"NONE\", \"REFUSED\") and r[\"gt\"] == c]",
+   "what": "Q1 drops unforged records the instrument REFUSED instead of counting them as wrong (PREREGISTRATION s5: 'MIXED, OTHER, REFUSED included')",
+   "expect": null,
+   "witness": "W3",
+   "prediction": "SURVIVES the suite (no frozen Analysis test has an unforged REFUSED row); W3: 24 clean rows per class plus 5 unforged refused ENV rows give NOT_QUALIFIED (Q1:ENV wrong 5 > w_max(29) = 0) frozen and ATTRIBUTION_QUALIFIED under E3"
+  },
+  {
+   "id": "E4_CONTROL_RED_S6",
+   "file": "rso/z80/assay.py",
+   "find": "2 * labels.count(top) > len(labels)",
+   "replace": "2 * labels.count(top) >= len(labels)",
+   "what": "harness control: red/RED_EDITS.json S6 (non-strict majority) applied through this harness",
+   "expect": "test_run_class_is_a_strict_majority",
+   "witness": null,
+   "prediction": "RED on test_run_class_is_a_strict_majority (as in red_rows.jsonl)"
+  },
+  {
+   "id": "E5_COUNTERFACTUAL_EMPTY_INPUT",
+   "file": "rso/z80/observe.py",
+   "find": "return [vm.execute(tape, bytes(alt(b) for b in nbr), case, step_cap, copy_prim, -1.0)",
+   "replace": "return [vm.execute(tape, bytes(alt(b) for b in nbr), (), step_cap, copy_prim, -1.0)",
+   "what": "the counterfactual re-executes the parent with an EMPTY input stream as well as an altered pre-window: P would then also require input-independence",
+   "expect": null,
+   "witness": "W5",
+   "prediction": "SURVIVES the suite (the frozen tests' parents write input-independent windows; a 6-epoch H_ENDO_GATED mutant with input-dependent writes would make it RED, judged unlikely); W5: the input writer's byte 0 is P frozen and K under E5"
+  }
+ ]
+}
