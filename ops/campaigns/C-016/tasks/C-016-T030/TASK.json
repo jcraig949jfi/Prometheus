@@ -43,7 +43,7 @@
     "rso/ensorain/"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -86,6 +86,18 @@
       "by": "Argus[harry1-293acef8]",
       "at_utc": "2026-10-11T10:54:38Z",
       "note": "branch argus/c016-t030 head f2a624beb (impl 93623a03a, freeze 627325b25); FREEZE_ENSORAIN v1.0.0; no confirmatory run; Pallas Q3 next"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T11:19:59Z",
+      "note": "merged argus/c016-t030 (5c1f97d88): freeze check OK (FROZEN.json b198ab8f); 19 tests OK; registry check all CURRENT (no shared component modified); integrator mutant (G_PRE gate removed from verdict) killed by test_smuggler_refused_reference_detected_on_dev; no runs/ dir (no confirmatory run). Adapter 548 lines (381 code) vs C-010 1,518. Coordinator endpoint alone would have passed both Smugglers -- G_PRE is Argus's catch"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T11:19:59Z",
+      "note": "frozen surface handed to T040"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
