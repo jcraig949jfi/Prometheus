@@ -1,0 +1,60 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    """Novelty-gated Hebbian synapses. No persistent activity: each step's
+    activity is just the current input embedding x (plus recurrent recall A x).
+    The synaptic matrix A learns outer(y, y) at a rate gated by novelty
+    (1 - familiarity x^T A x), decays slowly, and is held under a Frobenius-norm
+    budget (homeostatic scaling), so stored patterns compete for capacity."""
+
+    def __init__(self, task: Task):
+        self.task = task
+        self.n_sym = int(task.n_symbols)
+        self.d = 12
+        self.lam = 0.97          # synaptic decay per step
+        self.eta = 0.8           # max Hebbian rate
+        self.theta = 1.0         # familiarity at which plasticity shuts off
+        self.Fmax = 2.0          # synaptic norm budget
+        self.beta = 0.5          # recurrent recall strength in activity
+        self.sigma = 0.01        # synaptic noise
+        gen = np.random.default_rng(31337)
+        emb = gen.standard_normal((self.n_sym, self.d))
+        emb /= np.linalg.norm(emb, axis=1, keepdims=True)
+        self.emb = emb
+
+    def init(self, E):
+        return {"A": np.zeros((E, self.d, self.d)),
+                "y": np.zeros((E, self.d))}
+
+    def noise(self, n, rng):
+        return {"xi": rng.standard_normal((n, self.d, self.d))}
+
+    def step(self, state, obs_t, noise):
+        A = state["A"]
+        x = onehot(obs_t, self.n_sym) @ self.emb                       # (E,d), unit norm
+        Ax = np.einsum("eij,ej->ei", A, x)
+        y = np.tanh(x + self.beta * Ax)                                # activity (no memory of its own)
+        fam = np.einsum("ei,ei->e", x, Ax)[:, None, None]
+        gate = np.clip(1.0 - fam / self.theta, 0.0, 1.0)               # novelty gate
+        xi = noise["xi"]
+        xi = 0.5 * (xi + np.transpose(xi, (0, 2, 1)))
+        A = self.lam * A + self.eta * gate * np.einsum("ei,ej->eij", y, y) + self.sigma * xi
+        F = np.sqrt(np.einsum("eij,eij->e", A, A))[:, None, None]
+        A = A * np.minimum(1.0, self.Fmax / np.maximum(F, 1e-12))       # homeostatic budget
+        return {"A": A, "y": y}
+
+    def readout_features(self, state):
+        E = state["A"].shape[0]
+        iu = np.triu_indices(self.d)
+        return np.concatenate([state["A"][:, iu[0], iu[1]], state["y"]], axis=1)
+
+    def full_state(self, state):
+        E = state["A"].shape[0]
+        return np.concatenate([state["A"].reshape(E, -1), state["y"]], axis=1)
+
+
+def make(task):
+    return Mechanism(task)

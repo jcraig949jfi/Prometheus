@@ -1,0 +1,73 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    """Neutral Moran-type opinion population.
+
+    The cue is held only as a conserved-in-expectation population frequency.
+    No unit stores it. Distractors trigger neutral copy events: one agent copies
+    another's opinion. This moves the frequencies as a martingale instead of
+    contracting or overwriting them.
+    """
+
+    def __init__(self, task: Task):
+        self.task = task
+        self.V = int(task.V)            # 4 opinions
+        self.N = 256                    # agents per episode
+        self.M = 8                      # max copy events per step
+        self.p_seed = 0.4               # fraction of agents converted by the cue
+        # Number of copy events for distractor symbols 4, 5, 6, 7 -> 2, 4, 6, 8
+        self.events_per_symbol = {4: 2, 5: 4, 6: 6, 7: 8}
+
+    def init(self, E):
+        # -1 = no opinion yet (an empty population before the cue)
+        return {"op": -np.ones((E, self.N), dtype=np.float64)}
+
+    def noise(self, n, rng):
+        return {
+            "u": rng.random((n, self.N)),
+            "r": rng.integers(0, self.V, size=(n, self.N)).astype(np.float64),
+            "src": rng.integers(0, self.N, size=(n, self.M)),
+            "dst": rng.integers(0, self.N, size=(n, self.M)),
+        }
+
+    def step(self, state, obs_t, noise):
+        op = state["op"].copy()
+        E = op.shape[0]
+        obs = np.asarray(obs_t).astype(np.int64)
+        rows = np.arange(E)
+
+        # Cue step: a random p_seed fraction of agents adopts the cue opinion.
+        # The rest take opinions drawn uniformly at random.
+        is_cue = obs < self.V
+        seeded = np.where(noise["u"] < self.p_seed,
+                          obs[:, None].astype(np.float64), noise["r"])
+        op = np.where(is_cue[:, None], seeded, op)
+
+        # Distractor step: neutral copy events, with the count set by the symbol
+        is_d = (obs >= 4) & (obs <= 7)
+        m = np.where(is_d, 2 * (obs - 3), 0)
+        src = noise["src"]
+        dst = noise["dst"]
+        for j in range(self.M):
+            act = j < m
+            d = dst[:, j]
+            val = op[rows, src[:, j]]
+            op[rows, d] = np.where(act, val, op[rows, d])
+
+        # Query step (8) and unused symbols: no change
+        return {"op": op}
+
+    def readout_features(self, state):
+        op = state["op"]
+        return np.stack([(op == v).mean(axis=1) for v in range(self.V)],
+                        axis=1).astype(np.float64)
+
+    def full_state(self, state):
+        return state["op"].astype(np.float64)
+
+
+def make(task):
+    return Mechanism(task)

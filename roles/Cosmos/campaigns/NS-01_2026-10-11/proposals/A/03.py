@@ -1,0 +1,54 @@
+import numpy as np
+from prometheus.cosmos.c3.system import System
+from prometheus.cosmos.c3.task import Task, onehot
+
+
+class Mechanism(System):
+    """Clock-gated write: an autonomous clock s decays geometrically from 1;
+    the write gate g = s**p is ~1 only at the first step. Memory m is a convex
+    blend m <- (1-g) m + g * emb[obs], so later symbols barely touch it.
+    A separate fast 'sensory' trace r follows every input and is overwritten."""
+
+    def __init__(self, task: Task):
+        self.task = task
+        self.n_sym = int(task.n_symbols)
+        self.d = 16
+        self.decay = 0.3          # clock multiplier per step
+        self.p = 4.0              # gate steepness: g_t = (0.3**t)**4 -> 1, 8.1e-3, 6.6e-5, ...
+        self.r_leak = 0.2         # sensory trace keeps 20% of past
+        self.sigma_m = 0.01       # memory diffusion noise per step
+        self.sigma_r = 0.05
+        gen = np.random.default_rng(424242)
+        emb = gen.standard_normal((self.n_sym, self.d))
+        emb /= np.linalg.norm(emb, axis=1, keepdims=True)
+        self.emb = emb
+
+    def init(self, E):
+        return {
+            "s": np.ones((E, 1)),               # clock
+            "m": np.zeros((E, self.d)),         # gated memory
+            "r": np.zeros((E, self.d)),         # fast sensory trace
+        }
+
+    def noise(self, n, rng):
+        return {"em": rng.standard_normal((n, self.d)),
+                "er": rng.standard_normal((n, self.d))}
+
+    def step(self, state, obs_t, noise):
+        x = onehot(obs_t, self.n_sym) @ self.emb
+        s = state["s"]
+        g = s ** self.p
+        m = (1.0 - g) * state["m"] + g * x + self.sigma_m * noise["em"]
+        r = self.r_leak * state["r"] + (1.0 - self.r_leak) * x + self.sigma_r * noise["er"]
+        s_new = self.decay * s
+        return {"s": s_new, "m": m, "r": r}
+
+    def readout_features(self, state):
+        return np.concatenate([state["m"], state["r"], state["s"]], axis=1)
+
+    def full_state(self, state):
+        return np.concatenate([state["s"], state["m"], state["r"]], axis=1)
+
+
+def make(task):
+    return Mechanism(task)
