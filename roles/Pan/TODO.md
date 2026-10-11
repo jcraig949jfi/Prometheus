@@ -1,11 +1,15 @@
 # Pan TODO
 
-Currency: 2026-10-11T04:07Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-11T09:56Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
-- [ ] Status report 9 by ~2026-10-11T10:07Z
+- [ ] SAGACITY FOUNDATION (operator 2026-10-11, prompts/2026-10-11_sagacity_foundation): deliverables due
+      2026-10-12T10:40Z -- P1 PAN-40/41/42 foundation map + schema proposals + visibility design; P2 PAN-43
+      negative-space evaluation (prereg + calibration + harness); P3 PAN-44 MCP read-only prototype; PAN-45
+      continuity handoff + checkpoint packet. Loop extended to 2026-10-16T10:40Z. PAN-46 Redis/A2A: design first.
+- [ ] Status report 10 by ~2026-10-11T16:05Z
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-11T14:30Z)
 - [ ] Machines/Pantheon tabs (+ per-engine CPU sample in the local probe, for Achilles #2090): re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
