@@ -312,3 +312,23 @@ Interpretation (frozen):
 - X1 FAILS: at LOW, reduced variation also prevents the one-step repair within 2,000 ticks. Search and maintenance
   cannot both be satisfied by one fixed rate at this horizon.
 - KO2 / ECHOH crossings are reported, not tested. ECHOH is the E1b-like starting point.
+
+## 14. F5 -- search at MED, then keep at VLOW (CONFIRMATORY; frozen 2026-10-11T17:26:27Z, before any F5 run)
+
+Motivation (post-F3/F4, disclosed):
+- MED variation finds but cannot keep a composite (F3: kept 1/20).
+- LOW variation keeps but rarely finds it (F4: 1/20 crossed from one step away).
+- The crossing forensics (XR) showed a composite can be born and go undetected by the census for ~450 ticks.
+Hypothesis: a two-phase schedule crosses and keeps where either fixed rate fails.
+Instrument tools/phased_mut.py (opt-in subclass; the kernel is unchanged): the configured mutation rate until tick 1,000,
+then VLOW. Test: byte-identical to the light census world before the switch.
+Plan tools/plan_f5.py F1_PLAN OUT, a deterministic function of the frozen F1 plan: the F1 KO1 and ECHOH worlds with
+payment ON (same seed / config / founder), 3,000 ticks, schedule PHASED (MED -> VLOW at 1,000) vs MED throughout (the
+same-horizon control). 80 runs.
+Analysis tools/analyze_f5.py (synthetic test tools/tests/test_f5.py); keep3000 = a FUNC BOTH at the tick-3,000 census.
+- F5-P1: KO1 keep3000, PHASED > MED. Fisher one-sided, p < 0.05.
+Interpretation (frozen):
+- P1 HOLDS: a search-then-keep mutation schedule resolves the search-maintenance conflict at distance 1.
+- P1 FAILS: it does not at this horizon.
+ECHOH (the E1b-like start, >= 4 steps) is reported, not tested; 0 is expected and a crossing would be a discovery.
+Compute: 2 workers alongside D2; raised to 8 when D2 completes (resumable driver, no plan change).

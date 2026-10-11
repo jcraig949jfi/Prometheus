@@ -151,6 +151,12 @@ def _run_one(spec):
         w = PairedPayWorld(cfg, spec["seed"], census_every=spec.get("census_every", 100)); s = w.run()
         out["summary"] = _keep(s); out["census"] = w.census; out["first_both"] = w.first_both; out["pp"] = w.pp
         out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log); out["end_hash"] = end_state_hash(w)
+    elif kind == "phased_mut":                                                   # F5 (prereg s14), opt-in schedule
+        from phased_mut import PhasedMutWorld
+        cfg = _cfg(spec)
+        w = PhasedMutWorld(cfg, spec["seed"], switch=spec["switch"], phase2=spec["phase2"], census_every=spec.get("census_every", 100)); s = w.run()
+        out["summary"] = _keep(s); out["census"] = w.census; out["first_both"] = w.first_both
+        out["exposure"] = sum(r.get("alive", 0) for r in w.ticks_log); out["end_hash"] = end_state_hash(w)
     elif kind == "intervene":
         from intervene import InterveneWorld
         cfg = _cfg(spec)
