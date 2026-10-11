@@ -27,6 +27,8 @@
   reviewcal run MODEL | controls   PAN-37: score a local model as a reviewer on set v2 (GPU) | runner controls
   fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
   atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
+  atlas lookup --table fact|proposition|blind_spot --text T [--limit N]   PAN-44: permitted read-only Atlas lookup
+  mcp serve|controls           PAN-44: read-only stdio MCP server (search, pivot, refs, atlas_lookup) | its live controls
   proposals check             PAN-41: verify the Atlas/Hades schema proposals in a throwaway database
   access apply|controls       PAN-42: apply access rules (classify / refuse) | live controls + RLS proof
   negspace calibrate|smoke [--no-llm]   PAN-43: distinctness calibration (gate) | A-D harness smoke
@@ -114,7 +116,12 @@ def main(argv=None):
     p = sub.add_parser("fleet")
     p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
     p = sub.add_parser("atlas")
-    p.add_argument("what", choices=["snapshot", "manifest", "controls"])
+    p.add_argument("what", choices=["snapshot", "manifest", "controls", "lookup"])
+    p.add_argument("--table", default="fact", choices=["fact", "proposition", "blind_spot"])
+    p.add_argument("--text", default="")
+    p.add_argument("--limit", type=int, default=10)
+    p = sub.add_parser("mcp")
+    p.add_argument("what", choices=["serve", "controls"])
     p = sub.add_parser("proposals")
     p.add_argument("what", choices=["check"])
     p = sub.add_parser("access")
@@ -285,12 +292,19 @@ def main(argv=None):
     elif a.cmd == "proposals":
         from . import proposal_check
         proposal_check.check()
+    elif a.cmd == "mcp":
+        from . import mcpserve
+        if a.what == "serve":
+            return mcpserve.main()
+        mcpserve.controls()
     elif a.cmd == "atlas":
         from . import atlas_snap
         if a.what == "snapshot":
             atlas_snap.snapshot(force=a.force)
         elif a.what == "manifest":
             atlas_snap.manifest_cli()
+        elif a.what == "lookup":
+            atlas_snap.lookup_cli(a.table, a.text, a.limit)
         else:
             atlas_snap.controls()
     elif a.cmd == "reviewcal":

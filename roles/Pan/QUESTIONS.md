@@ -152,6 +152,29 @@ Q-013 | PREF (M2 memory; your machine) | 2026-10-10
   only after a load check shows it 100 % on the GPU.
   ANSWER:
 
+Q-014 | PERMISSION (database roles on M1) | 2026-10-11
+  Pan's MCP prototype (PAN-44) enforces access in the application plus a
+  server-side read-only session, because every program session connects as
+  the superuser postgres (RLS does not bind it; foundation map s6). Least
+  privilege would be a login role (e.g. pan_mcp_ro) with SELECT on only
+  pan.artifact/chunk/link/doc_embedding and atlas.fact/proposition/
+  blind_spot, plus RLS on pan.artifact/pan.chunk keyed on access_class.
+  The role prometheus_read exists but has no grants and cannot log in.
+  This is a production authorization change, which the directive does not
+  grant. Create the role (Pan writes the migration; the DBA applies it)?
+  DEFAULT meanwhile: no. The MCP stays at application-level enforcement
+  plus default_transaction_read_only, as recorded in
+  MCP_INTERFACE_PROTOTYPE.md.
+  ANSWER:
+
+Q-015 | PREF (seat tooling) | 2026-10-11
+  Should seats get Pan's MCP server by default, via a project-scoped .mcp.json
+  in the canonical repo, or only by local opt-in (claude mcp add pan --
+  <venv python> -m pan.mcpserve, run from a checkout)?
+  DEFAULT meanwhile: local opt-in only. Nothing is registered anywhere. The
+  directive approves a prototype, not a deployment.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09

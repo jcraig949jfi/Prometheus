@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-11T10:30Z (date -u).
+Currency: 2026-10-11T10:47Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
   2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
@@ -36,4 +36,8 @@ negative space (PAN-43): distinctness instrument PROMOTED 2026-10-11T10:18:39Z
   (controls/NEGSPACE_CALIBRATION_20261011T101839Z.json; behavioral known macro 1.000 vs best baseline 0.500,
   symbolic 0.867 vs 0.442; EQ->EQ exactly at its analytic 0.60 floor); generation experiment frozen with
   amendments A1-A4, NOT run (directive: no campaign); protocol + results docs/sagacity/NEGATIVE_SPACE_EVALUATION.md.
-questions for the operator: QUESTIONS.md (11 open; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).
+mcp (PAN-44): local stdio read-only server pan/mcpserve.py (pan_search, pan_pivot, pan_refs, atlas_lookup);
+  clearance fixed at launch (generator|evaluator), REFUSE-rule paths never served, read-only DB session;
+  controls/MCP_20261011T104148Z.json 15/15; official SDK client (mcp 2.3.0) conformance PASS; registered nowhere
+  (Q-015); contract docs/sagacity/MCP_INTERFACE_PROTOTYPE.md.
+questions for the operator: QUESTIONS.md (14 open, Q-002..Q-015; Q-014 MCP least-privilege role, Q-015 MCP registration; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).
