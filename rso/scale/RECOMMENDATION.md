@@ -39,8 +39,12 @@ desert is Ananke FLIP (0/290), run by its owner.
 ## 3. Costs of this window
 
 - Paid compute: $0 (zero-spend authorization). GPU: 0 s.
-- D1 run: 3.24 core-hours on harry1, measured. Other C-013 compute: tens of CPU-minutes. **OPEN:** to be ledgered
-  in FINAL.
+- CPU, about 4.8 core-hours in all, every hour of it on harry1. Measured: D1 run 3.243 (T012 receipt and ledger) and
+  the runner fire test 0.08 (286 CPU-s; FIRE_TEST.md). Estimated by the seats in their receipts: T010 development
+  0.6, T011 challenge 0.6, T013 repair 0.1. The integrator's re-checks (two suite runs, re-certification, power
+  simulations) were about 0.15, estimated. T020/T021/T023-T025 receipts carry no CPU figure (documents and short
+  test suites; minutes). The Observatory's discovery cost is still small next to its proof cost: the D1 run was 2.0 h
+  of wall time inside about 9 h from freeze to integration.
 - Model sessions launched by me: Argus x3 (Opus T010, Opus T013, Sonnet T012); Pallas x1 (Fable 5.1, T011);
   Eupalamus x4 (T020, T022, T023, T024 -- T025 claimed by the same instance harry1-13757eac); Cadmus x1 (Sonnet, T021).
   Every runtime model was verified from the session init record.
