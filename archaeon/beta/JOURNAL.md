@@ -917,6 +917,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   write-once LATCH 6/6 (both readouts). LATCH vs REACT start: 6/6 vs 2/6 Fisher one-sided p ~ .03 (census), 6/6 vs 3/6
   p ~ .09 (best genome). The write-once latch is the strongest stepping stone; a compact competent start helps. Consistent
   with the B55-B57 wiring mechanism (waiting time grows with the coupled chain still to be built). WINDOW 5 ~35 of 48.
+- Memory-law revision posted (comms #2111); review packet REVIEW_PACKET_FINAL_BETA_F3_DISTANCE_WALL.txt (7fc99a1de).
+- B77 RESULT (readout parity, packet S2; prediction committed before the run; first run timed out at REACT 7603 and was
+  re-run in full -- deterministic, identical rows): EVERY unique genome above the hand LATCH classified (full dep >= .02
+  AND re-find >= .31). Populations with >= 1 RESET-like genome: random 0/12 (only 0-14 genomes per pop even beat the
+  LATCH), REACT 4/6, LATCH 6/6. PREDICTION MET. Abundance per population: LATCH 72-121 (median ~102); REACT 0/0/2/5/
+  62/104 (median 3.5). Population-level LATCH vs REACT is no longer significant (6/6 vs 4/6); abundance separates them
+  sharply. VERDICT: ordering random << REACT < LATCH holds on both readouts; 'random 0/12' is robust to the readout.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

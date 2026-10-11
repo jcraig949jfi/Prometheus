@@ -95,7 +95,8 @@ clock.
    - The wall is specific to the update class, not to the world -- from a RANDOM start.
    - **Revision (B76/B76b): it is a graded DISTANCE wall.** RESET-like populations:
      - from random gen 0: 0/12;
-     - from the stateless forager: 2/6 (preregistered census) or 3/6 (best-genome readout);
+     - from the stateless forager: 2/6 (preregistered census), 3/6 (best genome), 4/6 with every above-LATCH genome
+       classified (B77) -- but with median 3.5 RESET-like genomes per population vs ~102 from the latch;
      - from the write-once latch: 6/6, with best .075-.082 beating the hand RESET .065.
    - Update-on-condition memory is reachable when its write-once precursor is present. The law's 'not reached'
      holds from scratch, not in principle.
