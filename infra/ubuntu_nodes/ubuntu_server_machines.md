@@ -13,6 +13,7 @@ Don't record passwords here.
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **HOLD -- BAD RAM** (one weak cell, confirmed); worker OFF until a DIMM is pulled/replaced |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
+| 9 | ubu009   | jcraig   | 2026-10-11 | Ubuntu Server 26.04.1 LTS | Kioxia BG5 KBG50ZNT256G NVMe (root 232 GB) | 192.168.1.230 (USB Ethernet enx9cebe80ae6c4) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-11 |
 
 ## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
 
@@ -26,6 +27,7 @@ Don't record passwords here.
 | ubu006 | Dell Inspiron 3647 (desktop) | i3-4130 | 2C/4T | yes | 16 GB | .225 / .226 | J3B1K02 |
 | ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
 | ubu008 | ThinkPad T490s (20NX0020US) | i7-8565U | 4C/8T | yes | 16 GB | .231 / .232 | PC1AHQQD |
+| ubu009 | IdeaPad Flex 5 14IAU7 (82R7003WUS) | i3-1215U (2P+4E) | 6C/8T | yes | 8 GB LPDDR4X (soldered) | .230 (USB eth) | PW02YB1H |
 
 Corrections: ubu006 is an i3-4130 (was "Haswell, 4 threads"); ubu005 has 24 GB installed (22 GiB usable).
 Screens: all nodes blank after 5 min idle (consoleblank=300, also set live); a key or Ctrl+Alt+F2, F1 wakes them.
@@ -238,6 +240,21 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   stdin (never printed), sourced from `~/.bashrc` line 1 and `~/.profile`; `claude auth status` oauth_token, `claude -p` OK.
 - Still to do: DHCP reservation for .231; BIOS Power On with AC Attach; full `/login` only if it is to host a seat.
 
+## ubu009 (machine #9, Lenovo IdeaPad Flex 5 14IAU7, 2-in-1)
+
+- **Bought 2026-10-11** at Savers for $50 (ex-student, personal; no BIOS lock). i3-1215U (2 P-cores to 4.4 GHz + 4
+  E-cores, 8 threads, AVX2), 8 GB LPDDR4X SOLDERED (no upgrade path), Kioxia BG5 256 GB NVMe, BIOS J7CN56WW (2025-07).
+  Touchscreen + Wacom pen. No RJ45: runs on a USB Ethernet adapter (enx9cebe80ae6c4).
+- **Install:** the autoinstall boot hung ~1.2 s into the kernel (after the Wacom input lines; no Caps Lock response for
+  10 min). Operator installed manually ("old school"): no CIDATA, so keys and NOPASSWD sudo were added by hand
+  (ELSA key via ssh + password; /etc/sudoers.d/jcraig like the template; M2 key copied from ubu008).
+- **Freeze 2026-10-11 20:03:56Z** during the first provision_node.sh repo clone, as the operator moved it: the journal
+  stops dead, no shutdown (hard hang; lid-close suspend before the lid=ignore setting took effect is possible). The
+  re-run with it still and lid open completed (clone 2m08s). Next boot started with the RTC at 2026-07-27 (chrony
+  stepped it). Watch: if it hangs again, try nvme_core.default_ps_max_latency_us=0, then i915/intel_idle limits.
+- Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
+  travel machine); not urgent. Pause the worker when travelling.
+
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
 Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installed by Achilles with
@@ -252,6 +269,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | enabled, active |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
@@ -268,6 +286,7 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
   at f78d18e26); services restarted between runs on ubu001-003.
 - 2026-10-03: ubu004 got the shared GitHub token (nodes-shared, no expiry, Prometheus only; installed from
   C:/autoinstall_secrets/tokens/shared.txt, never printed, shredded on the node); push dry-run OK; worker enabled.
+- 2026-10-11 ~20:37Z: ubu009 (IdeaPad Flex 5) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-10 ~15:39Z: ubu008 (T490s) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-04 ~14:12Z: ubu005 (P52s, USB-enclosure root) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.

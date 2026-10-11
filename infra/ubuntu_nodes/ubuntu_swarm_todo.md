@@ -116,10 +116,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [x] **ELSA RAM:** done 2026-10-05, verified 22:57Z. Kit = 16 GB (4x4 GB) PC3-10600U DDR3-1333 UDIMM **2Rx8** 1.5 V
       (Motoeagle; SPD reads Samsung M378B5273DH0-CK0). All 3x2 GB removed. `Get-CimInstance Win32_PhysicalMemory` ->
       DIMM 1-4 x 4 GB, 1333 MT/s; Windows sees 16.0 GB (11.3 GB free after boot). Seat restarted; census task intact.
-- [ ] **Toshiba Satellite A665-S6070** (PSAW3U-04301C, ~2010-11, 19 V 4.74 A brick): offered 2026-10-05. Verdict: OK as a
-      light worker (`ubu009`; ubu008 = T490s), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
-      lscpu); 2 SODIMM slots, 8 GB max. Before use: SATA SSD in place of the HDD, 8 GB RAM, clean the fan and repaste
-      (A665s run hot), remove the battery. Then the normal autoinstall + provision_node.sh.
+- [x] ~~Toshiba Satellite A665~~ not bought (operator 2026-10-11).
 - [ ] **SSH by hostname from ELSA fails** (2026-10-04): `ubuNNN` resolves to IPv6 link-local and known_hosts has only
       IPv4 keys -> "Host key verification failed". Use `jcraig@192.168.1.NNN`, or add a `~/.ssh/config` HostName map.
       ubu004 answers on both .221 and .178.
@@ -130,7 +127,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       The PM991 and the second USB-C enclosure are now spares.
 - [x] **ubu008 = ThinkPad T490s** ONLINE 2026-10-10 at 192.168.1.231 (wired via dock; Wi-Fi .232). i7-8565U AVX2, 16 GB,
       512 GB NVMe. Worker active (f78d18e26), Claude token installed. Remaining: DHCP reservation, BIOS AC-attach power-on.
-      The Toshiba A665 becomes ubu009 if used.
+      ubu009 = IdeaPad Flex 5 (2026-10-11).
 - [ ] **BIOS: Power On with AC Attach = Enabled** on each laptop (F1 at boot → Config → Power; F10 to save). Also
       Config → Network → Wake On LAN = AC only. Without it, a power cut that drains the battery leaves the node off
       until someone presses the button. Each reboot takes that node's phone session down for about 2 min; it comes back by itself.
@@ -189,7 +186,7 @@ or Wi-Fi string in infra/, achilles/ or roles/Achilles/, current tree or history
 Before the session:
 - [ ] Have the Verbatim USB stick (already written; reusable) and the ISO (`D:\ISOs\`) on hand.
 - [ ] Collect for each machine: make/model, whether it has an Ethernet port, and whether it has Wi-Fi.
-- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, `ubu007` (M6500), `ubu008` (T490s), `ubu009` (Toshiba A665, if used), ... (LIZZIE-42 stays Windows, no ubu number)
+- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, `ubu007` (M6500), `ubu008` (T490s), `ubu009` (IdeaPad Flex 5), `ubu010` next, ... (LIZZIE-42 stays Windows, no ubu number)
 
 Per machine (runbook + plan s10), with the lessons from the guinea pigs:
 1. BIOS: boot **USB HDD**; set **Power On with AC Attach** while you're in there.
