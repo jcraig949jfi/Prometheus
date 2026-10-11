@@ -14,7 +14,7 @@ from rso.registry.registry import ROOT, file_sha
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(HERE, "FROZEN.json")
-VERSION = "1.0.0"
+VERSION = "1.1.0"                                                    # C-017-T041 repair round (PREREGISTRATION s0)
 FILES = ["rso/z80/" + f for f in ("__init__.py", "subjects.py", "observe.py", "assay.py", "analysis.py", "freeze.py", "PREREGISTRATION.md",
                                   "tests/__init__.py", "tests/test_attribution.py", "dev/__init__.py", "dev/dev_check.py", "dev/DEV_CHECK.json",
                                   "red/__init__.py", "red/RED_EDITS.json", "red/run_red.py")]
@@ -40,7 +40,7 @@ def mismatches(path=PATH):
 
 def write():
     from archaeon.z80atlas import grammar as GR
-    spec = dict(schema="prometheus.rso.z80.frozen.v1", what="FREEZE_Z80_ATTRIBUTION v%s (C-017-T030)" % VERSION, version=VERSION,
+    spec = dict(schema="prometheus.rso.z80.frozen.v1", what="FREEZE_Z80_ATTRIBUTION v%s (C-017-T030; v1.1.0 C-017-T041)" % VERSION, version=VERSION,
                 python=python_mm(), grammar_digest=GR.digest(), files={p: file_sha(p, ROOT) for p in sorted(FILES)})
     with open(PATH, "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(spec, indent=1, sort_keys=True) + "\n")

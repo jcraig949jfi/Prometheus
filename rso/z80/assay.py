@@ -138,7 +138,7 @@ def forge(rec, kind):
     return r
 
 
-# ---------------------------------------------------------------- the two negative-control detectors
+# ---------------------------------------------------------------- the three negative-control detectors (b3 was Pallas's, not registered)
 def b1(rec):
     """LABEL READER: the engine's own score, generation and the spec's physics label."""
     fp = rec["out"]["final_population"]; func = [o for o in fp if o.get("score", 0.0) >= 1.0]
@@ -171,12 +171,32 @@ def b2(rec):
     return {"cls": cls, "origin": "" if cls == "NONE" else origin([(t, "S") for t in init], cases)}
 
 
+def b4(rec):
+    """RECIPE READER (v1.1.0, challenge/REPORT.md s4.2): the blinded spec's CONSTRUCTION, never a byte the run produced. Physics,
+    then the planted tape (transplant tape 0, or the engine's seeded replicator) run once over a kin window (itself): no copier ->
+    INS; a copier whose WRITTEN bytes alone (unwritten ones zeroed) carry F0 -> ENDO; a copier that leaves them to the target -> ENV.
+    Nothing planted: EXT under EXTERNAL, else NONE. It has an ENV output (right on RECON) and reads CDIST's recipe as ENDO."""
+    sp = rec["spec"]; tr = sp.get("transplant"); G = sp["representation"]["genome"]; cases = probe_cases(rec["seed"])
+    t = bytes.fromhex(tr["tapes"][0])[:G].ljust(G, bytes(1)) if tr and tr.get("tapes") else None
+    if t is None and sp["init"] == "seeded_replicator":
+        t = T.pad(T.task_then_replicate(S.TASK, True) if sp.get("init_hybrid") else T.replicator(True), G)
+    if sp["reproduction"] == "EXTERNAL":
+        cls = "EXT"
+    elif t is None:
+        cls = "NONE"
+    else:
+        r = vm.execute(t, t, cases[0], FROZEN["budgets"]["early"]["step_cap"], True)
+        written = bytes(b if m else 0 for b, m in zip(r["nbr_window"], r["nbr_mask"]))
+        cls = "INS" if sum(r["nbr_mask"]) < FROZEN["copy_min_frac"] * G else "ENDO" if f0(written, cases) else "ENV"
+    return {"cls": cls, "origin": "" if cls == "NONE" else ("INSERTED" if t is not None else "ARISEN")}
+
+
 # ---------------------------------------------------------------- rows
 def row(rec, arm, forgery="", source=None):
-    c = classify(rec); x, y = b1(rec), b2(rec)
+    c = classify(rec); x, y, z = b1(rec), b2(rec), b4(rec)
     gt = "REFUSED" if forgery in ("PHYS", "TAPE", "GEN") else arm["gt"]
     r = dict(arm=arm["name"], gt=gt, origin_gt="" if gt == "REFUSED" else arm["origin"], seed=rec["seed"], forgery=forgery,
-             b1=x["cls"], b1_origin=x["origin"], b2=y["cls"], b2_origin=y["origin"], pop=len(rec["out"]["final_population"]),
+             b1=x["cls"], b1_origin=x["origin"], b2=y["cls"], b2_origin=y["origin"], b4=z["cls"], b4_origin=z["origin"], pop=len(rec["out"]["final_population"]),
              births=rec["out"]["signals"]["births"], births_endo=rec["out"]["signals"]["births_endo"], epochs=rec["out"]["signals"]["epochs"])
     r.update(c)
     if source:

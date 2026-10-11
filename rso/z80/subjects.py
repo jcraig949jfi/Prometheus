@@ -31,6 +31,16 @@ def RECON():
     return T.pad([I(21, 0), I(22, 0), 0, I(1, 1), 3, I(1, 2), 131, I(1, 3), 29, I(20), I(6, 3), I(16), 0xFC, I(23)], G)
 
 
+def CDIST():
+    """v1.1.0 (C-017-T041; Pallas's construction, challenge/subjects_c.py:17, copied so no frozen file imports the challenge set).
+    RECON with its head WRITTEN instead of kept: child[0] = circdist(t0, t2) of the TARGET cell's bytes 0 and 2 (read from the
+    window), child[1] = child[0] + 1, then COPY own bytes 2..28; 29/32 written. Over a kin target (21, ?, 0) the head is IN A /
+    OUT A; over an empty one (0, 1), dead. The function needs the target's content: ENV. Its recipe -- a planted copier that writes
+    its own function bytes -- reads ENDO (assay.b4); the v1.0.0 P tag, invariant under both alterations, called it ENDO."""
+    return T.pad([I(21, 0), I(22, 0), 0, I(19, 0, 0), 130, I(2, 1, 1), I(19, 0, 0), 128, I(4, 1), I(1, 2), 128, I(12, 2), I(17), 1, I(25),
+                  I(19, 0, 1), 128, I(5, 0), I(19, 0, 1), 129, I(1, 1), 2, I(1, 2), 130, I(1, 3), 27, I(20), I(6, 3), I(16), 0xFC, I(23)], G)
+
+
 def HOST():
     """Carries ECHO's bytes at 1..3 behind a HALT: never expresses them itself (unit known answer only, not an arm)."""
     return T.pad([I(23), I(21, 0), I(22, 0), I(23)], G)
@@ -54,10 +64,12 @@ ARMS = [
     dict(name="RECON_ENDO_IMPL", gt="ENV", origin="INSERTED", starter="RECON", n=128, phys="ENDOGENOUS_COPY", press="implicit_survival", epochs=100),
     dict(name="NH_ENDO_SHORT", gt="INS", origin="INSERTED", starter="NH", n=13, phys="ENDOGENOUS_COPY", press="competence_gated", epochs=30),
     dict(name="RANDOM_ENDO_GATED", gt="NONE", origin="", starter=None, n=0, phys="ENDOGENOUS_COPY", press="competence_gated", epochs=200),
+    # v1.1.0: the scored arm whose recipe != truth (REPORT s4.1-s4.2); 5 epochs because the written head decays (REPORT s4.1)
+    dict(name="CDIST_ENDO_IMPL", gt="ENV", origin="INSERTED", starter="CDIST", n=128, phys="ENDOGENOUS_COPY", press="implicit_survival", epochs=5),
 ]
 NAMES = [a["name"] for a in ARMS]
 ARM = {a["name"]: a for a in ARMS}
-STARTERS = {"H": H, "NH": NH, "RECON": RECON}
+STARTERS = {"H": H, "NH": NH, "RECON": RECON, "CDIST": CDIST}
 
 
 def spec(arm, epochs=None):
@@ -71,15 +83,18 @@ def spec(arm, epochs=None):
     return s
 
 
-# ---- seeds: base + 1000 * arm index + k, k = 1.. (dev 17_030, Pallas challenge 17_040, confirmatory 17_050)
+# ---- seeds: base + 1000 * arm index + k, k = 1.. (dev 17_030, Pallas challenge 17_040, confirmatory 17_050); arms 10.. (v1.1.0)
+# take BASE2 + 1000 * (index - 10) + k, because base + 10_000 is the next partition (dev arm 10 would be challenge arm 0)
 BASE = {"dev": 17_030_000, "challenge": 17_040_000, "confirm": 17_050_000}
+BASE2 = {"dev": 17_060_000, "challenge": 17_070_000, "confirm": 17_080_000}
 # registered namespaces this partition must not touch (inclusive ranges): smoke 16_021_xxx, C-016 re-runs 16_020 / 16_030 / 16_3xx,
 # C-017-T020 demand gate 17_020_001 + 100 * 17 + 23, Archaeon's small integers (scheduler.py:173, 217, 241-262: 1, 2, 100.., 2000..)
 REGISTERED = [(16_020_000, 16_031_999), (16_300_000, 16_399_999), (17_020_000, 17_022_999), (0, 1_000_000)]
 
 
 def seeds(name, part, n):
-    return [BASE[part] + 1000 * NAMES.index(name) + k for k in range(1, n + 1)]
+    i = NAMES.index(name)
+    return [(BASE[part] + 1000 * i if i < 10 else BASE2[part] + 1000 * (i - 10)) + k for k in range(1, n + 1)]
 
 
 def partition_conflicts(n=999):

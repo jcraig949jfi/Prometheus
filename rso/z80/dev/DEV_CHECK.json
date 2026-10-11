@@ -1,6 +1,9 @@
 {
  "baselines_passing_q1": [],
  "confusion": {
+  "CDIST_ENDO_IMPL": {
+   "ENV": 8
+  },
   "H_ENDO_GATED": {
    "ENDO": 8
   },
@@ -52,11 +55,15 @@
   }
  },
  "failed": [],
- "n_rows": 208,
+ "n_rows": 216,
  "partition": "dev 17_030_xxx",
  "purity": {
+  "CDIST_ENDO_IMPL": [
+   731,
+   740
+  ],
   "H_ENDO_GATED": [
-   957,
+   947,
    981
   ],
   "H_ENDO_IMPL": [
@@ -88,7 +95,7 @@
    78
   ],
   "RECON_ENDO_IMPL": [
-   1933,
+   1938,
    2096
   ],
   "SEEDED_ENDO_GATED": [
@@ -105,10 +112,10 @@
    "wrong": 0
   },
   "ENV": {
-   "n": 48,
+   "n": 56,
    "pass": true,
    "powered": true,
-   "w_max": 3,
+   "w_max": 4,
    "wrong": 0
   },
   "EXT": {
@@ -127,10 +134,10 @@
   }
  },
  "q2": {
-  "n": 145,
+  "n": 153,
   "pass": true,
   "powered": true,
-  "w_max": 17,
+  "w_max": 19,
   "wrong": 0
  },
  "q3": {
@@ -165,11 +172,11 @@
     "wrong": 0
    },
    "ENV": {
-    "n": 48,
+    "n": 56,
     "pass": false,
     "powered": true,
-    "w_max": 3,
-    "wrong": 48
+    "w_max": 4,
+    "wrong": 56
    },
    "EXT": {
     "n": 25,
@@ -195,11 +202,11 @@
     "wrong": 0
    },
    "ENV": {
-    "n": 48,
+    "n": 56,
     "pass": false,
     "powered": true,
-    "w_max": 3,
-    "wrong": 48
+    "w_max": 4,
+    "wrong": 56
    },
    "EXT": {
     "n": 25,
@@ -215,9 +222,39 @@
     "w_max": 3,
     "wrong": 0
    }
+  },
+  "b4": {
+   "ENDO": {
+    "n": 24,
+    "pass": true,
+    "powered": true,
+    "w_max": 0,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 56,
+    "pass": false,
+    "powered": true,
+    "w_max": 4,
+    "wrong": 8
+   },
+   "EXT": {
+    "n": 32,
+    "pass": true,
+    "powered": true,
+    "w_max": 1,
+    "wrong": 0
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
   }
  },
- "rows_sha256": "6e04917a8e0f676edd81eac3c661d614fd36d6a3f1ff5e0baec257335857c78e",
+ "rows_sha256": "9275147ce340e1f16b559aeb88357217349d9324a45d0ec189608e6851b13d25",
  "schema": "rso.z80.dev_check.v1",
  "unpowered": [],
  "verdict_on_dev": "ATTRIBUTION_QUALIFIED"
