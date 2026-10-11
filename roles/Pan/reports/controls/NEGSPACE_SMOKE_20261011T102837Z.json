@@ -1,0 +1,121 @@
+{
+ "control": "PAN-43 harness SMOKE (plumbing, not results)",
+ "at": "20261011T102837Z",
+ "prereg_sha256": "5d201aad9a62ebd56662d5e982e57025f7f2152ea5f690b953aec5bb59835844",
+ "budgets": {
+  "dsl": 24,
+  "llm": 0
+ },
+ "llm_model": null,
+ "arms": {
+  "D": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 5,
+   "eq_supported": 1,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 1,
+   "unresolved_vs_known": 2,
+   "unresolved_vs_class": 0,
+   "novel_representatives": [
+    {
+     "sha256": "b8ce7cc53acd88e8",
+     "witness_vs_known": {
+      "S-internal-buffer": {
+       "stream": "long200",
+       "step": 100,
+       "a": 0,
+       "b": 7
+      },
+      "F-delay-off-by-one": {
+       "stream": "rand00",
+       "step": 2,
+       "a": 0,
+       "b": 7
+      },
+      "F-persistence-without-use": {
+       "stream": "rand00",
+       "step": 0,
+       "a": 0,
+       "b": 7
+      },
+      "F-reset-on-zero": {
+       "stream": "rand00",
+       "step": 5,
+       "a": 7,
+       "b": 0
+      },
+      "F-environmental-storage-not-wipe-robust": {
+       "stream": "wipe0",
+       "step": 12,
+       "a": 8,
+       "b": 0
+      },
+      "F-horizon-cap": {
+       "stream": "long200",
+       "step": 100,
+       "a": 0,
+       "b": 5
+      }
+     }
+    }
+   ]
+  },
+  "Dx": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 6,
+   "eq_supported": 2,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 1,
+   "unresolved_vs_known": 2,
+   "unresolved_vs_class": 0,
+   "novel_representatives": [
+    {
+     "sha256": "b8ce7cc53acd88e8",
+     "witness_vs_known": {
+      "S-internal-buffer": {
+       "stream": "long200",
+       "step": 100,
+       "a": 0,
+       "b": 7
+      },
+      "F-delay-off-by-one": {
+       "stream": "rand00",
+       "step": 2,
+       "a": 0,
+       "b": 7
+      },
+      "F-persistence-without-use": {
+       "stream": "rand00",
+       "step": 0,
+       "a": 0,
+       "b": 7
+      },
+      "F-reset-on-zero": {
+       "stream": "rand00",
+       "step": 5,
+       "a": 7,
+       "b": 0
+      },
+      "F-environmental-storage-not-wipe-robust": {
+       "stream": "wipe0",
+       "step": 12,
+       "a": 8,
+       "b": 0
+      },
+      "F-horizon-cap": {
+       "stream": "long200",
+       "step": 100,
+       "a": 0,
+       "b": 5
+      }
+     }
+    }
+   ]
+  }
+ },
+ "proposals_in_lake": "negspace/SMOKE_20261011T102837Z.json"
+}

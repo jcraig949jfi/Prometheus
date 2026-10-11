@@ -1,6 +1,6 @@
 # NEGATIVE_SPACE_EVALUATION
 
-Owner: Pan (data infrastructure). Status: protocol v1, frozen 2026-10-11 before any score or run.
+Owner: Pan (data infrastructure). Status: protocol v1, frozen 2026-10-11 before any score or run; amendments A1-A4 (2026-10-11, after the plumbing smoke, before any generation run) are in the prereg.
 Directive: roles/Pan/prompts/2026-10-11_sagacity_foundation s3.
 Machine-readable rules: `pan/tests/negspace_prereg.json` (its sha256 is in every receipt).
 Code: `pan/negspace/`. Commands: `python -m pan negspace calibrate | smoke`.
@@ -182,3 +182,110 @@ recorded.
 Filled only from receipts:
 - `roles/Pan/reports/controls/NEGSPACE_CALIBRATION_<ts>.json` for the gate;
 - `NEGSPACE_SMOKE_<ts>.json` for plumbing only, never a result.
+
+### 6.1 Calibration: PROMOTED (2026-10-11T10:18:39Z)
+
+Receipt `NEGSPACE_CALIBRATION_20261011T101839Z.json`. Its prereg sha256 `e7cf870c...` is the
+LF-normalized file committed at the freeze (`ceda18a2e`), so the gate ran under the frozen rules.
+
+Known-answer set (26 pairs; correct rate per category, macro):
+
+| evaluator | EQ | DIST | CHEAT | UNRES | macro |
+|---|---:|---:|---:|---:|---:|
+| behavioral | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
+| always_equivalent (best baseline) | 1.000 | 0.000 | 1.000 | 0.000 | 0.500 |
+| ast | 0.125 | 1.000 | 0.000 | 0.000 | 0.281 |
+| always_distinct | 0.000 | 1.000 | 0.000 | 0.000 | 0.250 |
+| text | 0.375 | 0.125 | 0.333 | 0.000 | 0.208 |
+| embed | 0.125 | 0.125 | 0.167 | 0.000 | 0.104 |
+
+Symbolic held-out set (120 pairs, 40 per label):
+
+| evaluator | EQ->EQ | DIST recall | UNRES->UNKNOWN | false-DISTINCT | macro |
+|---|---:|---:|---:|---:|---:|
+| behavioral | 0.600 | 1.000 | 1.000 | 0.000 | 0.867 |
+| text (best baseline) | 0.325 | 1.000 | 0.000 | 0.650 | 0.442 |
+| embed | 0.250 | 0.775 | 0.000 | 0.662 | 0.342 |
+| ast / always_distinct | 0.000 | 1.000 | 0.000 | 1.000 | 0.333 |
+| always_equivalent | 1.000 | 0.000 | 0.000 | 0.000 | 0.333 |
+
+Behavioral confusion on the symbolic EQUIVALENT pairs: 24 EQUIVALENT, 16 UNKNOWN, 0 DISTINCT.
+All 16 UNKNOWNs are the designed case, both sides carrying the same cap 1000 that the suite
+never reaches. Every gate clause passes. The margin over the best baseline is 0.50 on the
+known-answer set and 0.425 on the symbolic set; the gate requires 0.20.
+
+How to read it:
+- **EQ->EQ sits exactly at its 0.60 floor.** That floor was set analytically before the run,
+  for exactly this cause. It is a boundary pass, not headroom. A domain with more unreachable
+  code would fail this clause; an instrument that answered EQUIVALENT there would be guessing.
+- **Surface similarity is worse than a constant.** All three similarity baselines lose to
+  always_equivalent on the known-answer set: equivalence under representation change is
+  invisible to text, AST and embeddings. On the symbolic set they call 65-100% of the
+  equivalent or unresolved pairs DISTINCT. A novelty metric built on them would report
+  representation churn as novelty.
+- **Caveat (section 3.4).** Pan designed the known-answer set and the evaluator together.
+  The symbolic set is analytic but comes from Pan's own DSL. A held-out set from another
+  seat must still pass.
+
+### 6.2 Harness smoke: plumbing only (2026-10-11T10:22:18Z)
+
+Receipt `NEGSPACE_SMOKE_20261011T102218Z.json`; the proposals themselves are in the Pan lake
+at `negspace/SMOKE_20261011T102218Z.json`. Budgets were 24 draws (D arms) and 3 calls (LLM
+arms), seed 1, qwen2.5-coder:14b. This is not a result. It is reported because it changed the
+protocol before any run.
+
+| arm | proposals | executable | contract | eq_supported | eq_given | eq_withheld | novel (behavioral) | unresolved_vs_known |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| D | 24 | 24 | 7 | 3 | 0 | 0 | 1 | 2 |
+| Dx | 24 | 24 | 7 | 3 | 0 | 0 | 1 | 2 |
+| A | 3 | 3 | 0 | 0 | 3 | 0 | 0 | 0 |
+| B | 3 | 3 | 0 | 0 | 2 | 0 | 0 | 0 |
+| C | 3 | 3 | 0 | 0 | 1 | 0 | 0 | 0 |
+| Cx | 3 | 3 | 0 | 0 | 3 | 0 | 0 | 0 |
+
+What it showed, each item checked by hand against the stored sources:
+1. **Endpoint flaw, fixed by A1.** The first smoke (10:20:52Z) counted 3 "novel classes" in
+   arm D. They were proposals the instrument could not decide (UNKNOWN against a known class:
+   cap 1000). After A1, novel requires DISTINCT; those cases are tallied as unresolved.
+2. **The generator's prior is the off-by-one.** 9 of 12 LLM proposals are behaviorally
+   EQUIVALENT to F-delay-off-by-one. The typical form is `deque([0,0,0], maxlen=3)` that
+   appends and then returns `[0]`, which is delay 2. Arm B produced it 2 of 3 times even with
+   that failure described in its prompt. Inspected example: arm A proposal 0, where stream
+   r0 wants `0,0,0,7,5,...` and the mechanism gives `0,0,7,5,7,...`. With n = 3 per arm this
+   is a description, not a test of H2.
+3. **Floor risk, A2.** 0 of 12 LLM proposals satisfy the contract. If that persists,
+   novel_classes is 0 in every LLM arm and H1/H3/H4 cannot discriminate. A2 precommits a
+   FLOOR verdict instead of a false negative. 0/12 still allows a contract rate up to about
+   0.25, so the floor is not established.
+4. **Granularity, A3.** Arm D's one behavioral "novel class" is a horizon-cap variant:
+   - The DSL cap outputs 0 after step 100.
+   - The frozen F-horizon-cap reference stops storing and repeats a stale value.
+   - Witness: long200 step 100, 0 vs 5.
+
+   Behavioral classes are finer than failure families. Under A3, family adjudication blind
+   to arm (Hades, with Harmonia adjudicating) is the claim unit, and the raw count is an upper
+   bound only.
+5. **D = Dx was a design defect, fixed by A4.** The frozen DSL sampler drew the same shuffled
+   sequence whatever its exclusion engine rejected. D and Dx were therefore identical at ANY
+   budget, and the symbolic arm's counterfeit control was vacuous by construction. I first
+   wrote this item off as a small-budget effect; the code says otherwise.
+
+   Under A4 the sampler skips candidates the evaluator calls EQUIVALENT to an earlier rejected
+   proposal. It learns only "rejected", as the LLM arms do, and skips consume no budget. The
+   rerun (`NEGSPACE_SMOKE_20261011T102837Z.json`, D arms only) separates the two arms:
+
+   | arm | contract | eq_supported | novel (behavioral) | unresolved_vs_known |
+   |---|---:|---:|---:|---:|
+   | D | 5 | 1 | 1 | 2 |
+   | Dx | 6 | 2 | 1 | 2 |
+
+   The real library suppresses repeats of the supported class. The one novel representative,
+   sha `b8ce7cc53acd88e8`, is again the horizon-cap variant (item 4).
+
+### 6.3 Status
+
+- The instrument is promoted, with the boundary and same-designer caveats above.
+- The generation experiment is frozen with A1-A4 and has not been run. The directive forbids
+  a large generation campaign in this window.
+- The first real use is a Cosmos port (section 5), after a held-out calibration set from
+  another seat passes.

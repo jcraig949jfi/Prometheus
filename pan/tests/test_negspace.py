@@ -36,3 +36,47 @@ def test_dsl_labels_are_analytic():
     pairs = dsl.sample_pairs(30, 5)
     assert len(pairs) == 30 and {lab for _, _, lab in pairs} == {"EQUIVALENT", "DISTINCT", "UNRESOLVED"}
     assert all(domain.static_guard(dsl.source(p)) is None for p, _, _ in pairs)
+
+
+def test_primary_endpoint_controls_amendment_a1():
+    """POSITIVE: a contract-satisfying mechanism behaviorally DISTINCT from every known class (environmental storage AND
+    a visible horizon cap) is one novel class; its executed-no-op twin does not add a second (EQUIVALENT merges).
+    NEGATIVE: a renamed supported mechanism is eq_supported, not novel. CHEAT (A1): a cap-1000 twin of the supported
+    mechanism differs only in code the suite never executes -- UNKNOWN against a known class is tallied, never novel."""
+    from pan.negspace import harness
+    novel = dsl.source(dict(storage="world", d=3, reset="none", cap=100, noop=False))
+    twin = dsl.source(dict(storage="world", d=3, reset="none", cap=100, noop=True))
+    recs = [dict(i=i, guard=None, src=s) for i, s in
+            enumerate([novel, twin, cal.M["list_renamed"], cal.M["history_cap1000"]])]
+    e = harness.endpoints(recs)
+    assert e["executable"] == 4 and e["contract"] == 4
+    assert e["novel_classes"] == 1 and e["eq_supported"] == 1 and e["unresolved_vs_known"] == 1
+    assert harness.endpoints(recs[2:])["novel_classes"] == 0
+
+
+def test_novel_representatives_carry_witnesses_for_adjudication():
+    """A3: the D-arm smoke's 'novel class' was a horizon-cap VARIANT (outputs 0 after the cap; the frozen F-horizon-cap
+    reference freezes its memory instead). The endpoint must expose that witness, not hide it in a count."""
+    from pan.negspace import harness
+    variant = dsl.source(dict(storage="ring", d=3, reset="none", cap=100, noop=True))
+    e = harness.endpoints([dict(i=0, guard=None, src=variant)])
+    assert e["novel_classes"] == 1
+    w = e["novel_representatives"][0]["witness_vs_known"]["F-horizon-cap"]
+    assert w["stream"] == "long200" and w["step"] == 100 and (w["a"], w["b"]) == (0, 5)
+
+
+def test_symbolic_arm_uses_its_exclusion_library_a4():
+    """A4: before the fix D and Dx drew the same shuffled sequence whatever was rejected, so the counterfeit control was
+    vacuous by construction. NEGATIVE: with no library (A-style, unarmed) nothing is rejected. POSITIVE: the real library
+    rejects at least once, and a rejected proposal's behavioral class is never drawn again."""
+    from pan.negspace import evaluators as ev
+    from pan.negspace import harness
+    recs = harness.run_arm("D", 30, seed=1)
+    rej = [r["src"] for r in recs if r.get("excluded_by") and not any(h.startswith("accepted-") for h in r["excluded_by"])]
+    assert rej, "real library never rejected anything in 30 draws"
+    later = [r["src"] for r in recs]
+    for x in rej:
+        i = later.index(x)
+        assert not any(ev.behavioral(x, y)["verdict"] == "EQUIVALENT" for y in later[i + 1:])
+    d, dx = [r["src"] for r in recs], [r["src"] for r in harness.run_arm("Dx", 30, seed=1)]
+    assert d != dx

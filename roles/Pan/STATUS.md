@@ -1,6 +1,6 @@
 # Pan status
 
-Currency: 2026-10-11T10:08Z (date -u).
+Currency: 2026-10-11T10:30Z (date -u).
 
 seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
   2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
@@ -32,4 +32,8 @@ atlas copy: Iceberg pan_atlas.* (35 tables, 143,139 rows, harvest_id 1..364), re
   (python -m pan atlas snapshot; manifest = pan.run kind atlas-snapshot); controls ATLAS_SNAP_* 6/6.
 dashboard: Data Map v4 has tabs; Machines (14) and Pantheon (74 seats) tabs added (PAN-38,
   controls/FLEET_20261010T114620Z.json 7/7); rebuild: python -m pan fleet probe + mk_datamap.py --only fleet.
+negative space (PAN-43): distinctness instrument PROMOTED 2026-10-11T10:18:39Z
+  (controls/NEGSPACE_CALIBRATION_20261011T101839Z.json; behavioral known macro 1.000 vs best baseline 0.500,
+  symbolic 0.867 vs 0.442; EQ->EQ exactly at its analytic 0.60 floor); generation experiment frozen with
+  amendments A1-A4, NOT run (directive: no campaign); protocol + results docs/sagacity/NEGATIVE_SPACE_EVALUATION.md.
 questions for the operator: QUESTIONS.md (11 open; Q-001 executed via Atlas; Q-012: host keys for ubu004-006).

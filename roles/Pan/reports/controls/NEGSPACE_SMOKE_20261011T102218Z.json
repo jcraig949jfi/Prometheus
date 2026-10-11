@@ -1,0 +1,79 @@
+{
+ "control": "PAN-43 harness SMOKE (plumbing, not results)",
+ "at": "20261011T102218Z",
+ "prereg_sha256": "606882d14650447c68d7ff4ddd933e115454f7471608485482a8e738784cd0f0",
+ "budgets": {
+  "dsl": 24,
+  "llm": 3
+ },
+ "llm_model": "qwen2.5-coder:14b",
+ "arms": {
+  "D": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 7,
+   "eq_supported": 3,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 1,
+   "unresolved_vs_known": 2,
+   "unresolved_vs_class": 0
+  },
+  "Dx": {
+   "proposals": 24,
+   "executable": 24,
+   "contract": 7,
+   "eq_supported": 3,
+   "eq_given": 0,
+   "eq_withheld": 0,
+   "novel_classes": 1,
+   "unresolved_vs_known": 2,
+   "unresolved_vs_class": 0
+  },
+  "A": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 3,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "unresolved_vs_known": 0,
+   "unresolved_vs_class": 0
+  },
+  "B": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 2,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "unresolved_vs_known": 0,
+   "unresolved_vs_class": 0
+  },
+  "C": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 1,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "unresolved_vs_known": 0,
+   "unresolved_vs_class": 0
+  },
+  "Cx": {
+   "proposals": 3,
+   "executable": 3,
+   "contract": 0,
+   "eq_supported": 0,
+   "eq_given": 3,
+   "eq_withheld": 0,
+   "novel_classes": 0,
+   "unresolved_vs_known": 0,
+   "unresolved_vs_class": 0
+  }
+ },
+ "proposals_in_lake": "negspace/SMOKE_20261011T102218Z.json"
+}

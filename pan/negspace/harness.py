@@ -5,6 +5,7 @@ python -m pan negspace calibrate   known-answer (26 pairs) + symbolic held-out (
 python -m pan negspace smoke       the smallest functional run of every arm (tiny budgets; plumbing, NOT results)
 """
 import datetime as dt
+import hashlib
 import json
 import random
 import re
@@ -192,10 +193,17 @@ def run_arm(arm, budget, seed, model=None, out=print):
     space = list(dsl.params_space())
     rng.shuffle(space)
     accepted, history, feedback, recs = [], [], None, []
+    rejected, cursor = [], 0
     for i in range(budget):
         t = time.time()
         if arm in ("D", "Dx"):
-            src = dsl.source(space[i % len(space)])
+            # A4: rejection-aware sampler -- skip candidates the behavioral evaluator calls EQUIVALENT to an earlier
+            # REJECTED proposal (it knows only that they were rejected, as the LLM arms do); skips consume no budget
+            for _ in range(len(space)):
+                src = dsl.source(space[cursor % len(space)])
+                cursor += 1
+                if not equivalent_to(src, [("r", x) for x in rejected]):
+                    break
         else:
             text = _gen(model, llm_prompt("A" if arm in ("C", "Cx") else arm, history, feedback), seed * 1000 + i)
             src = extract_code(text)
@@ -205,6 +213,7 @@ def run_arm(arm, budget, seed, model=None, out=print):
             hits = equivalent_to(src, library + [("accepted-{}".format(j), a) for j, a in enumerate(accepted)]) if lib else []
             rec["excluded_by"] = hits
             if hits:
+                rejected.append(src)
                 feedback = "Your previous proposal was rejected: it is equivalent to an excluded mechanism. Propose a different one."
             else:
                 feedback = None
@@ -220,10 +229,13 @@ def run_arm(arm, budget, seed, model=None, out=print):
 
 def endpoints(recs):
     """Identical for every arm: executable, contract-satisfying, equivalent to each known class, and the PRIMARY
-    endpoint -- distinct behavioral classes among contract-satisfying proposals equivalent to NO known class."""
+    endpoint (prereg amendment A1) -- distinct behavioral classes among contract-satisfying proposals that are
+    DISTINCT from every known class and from every earlier class; a proposal UNKNOWN against any known class or
+    class representative is tallied (unresolved_vs_known / unresolved_vs_class), never counted as novel."""
     known = known_classes()
-    reps, novel_unknown = [], 0
-    res = dict(proposals=len(recs), executable=0, contract=0, eq_supported=0, eq_given=0, eq_withheld=0, novel_classes=0)
+    reps = []
+    res = dict(proposals=len(recs), executable=0, contract=0, eq_supported=0, eq_given=0, eq_withheld=0, novel_classes=0,
+               unresolved_vs_known=0, unresolved_vs_class=0)
     for r in recs:
         if r.get("guard"):
             continue
@@ -240,25 +252,38 @@ def endpoints(recs):
         res["contract"] += 1
         if hit:
             continue
+        if any(ev.behavioral(r["src"], ref)["verdict"] == "UNKNOWN" for _, ref in known):
+            res["unresolved_vs_known"] += 1
+            continue
         verdicts = [ev.behavioral(r["src"], rep)["verdict"] for rep in reps]
-        if "EQUIVALENT" not in verdicts:
-            reps.append(r["src"])
-            novel_unknown += "UNKNOWN" in verdicts
+        if "EQUIVALENT" in verdicts:
+            continue
+        if "UNKNOWN" in verdicts:
+            res["unresolved_vs_class"] += 1
+            continue
+        reps.append(r["src"])
     res["novel_classes"] = len(reps)
-    res["novel_classes_with_unknown_overlap"] = novel_unknown
+    # A3: behavioral classes are finer than failure families; each representative carries its witness against every
+    # known class so a non-Pan seat can adjudicate NEW_FAMILY vs VARIANT_OF(<known>) blind to the arm
+    res["novel_representatives"] = [dict(sha256=hashlib.sha256(src.encode("utf-8")).hexdigest()[:16],
+                                         witness_vs_known={n: ev.behavioral(src, ref).get("witness") for n, ref in known})
+                                    for src in reps]
     return res
 
 
 def smoke(write=True, out=print, llm_model="qwen2.5-coder:14b", llm_budget=3, dsl_budget=24, use_llm=True):
     """Smallest functional run: every arm end to end at tiny budgets. Plumbing evidence only -- NOT a result."""
     from .. import REPO
-    rows = {}
+    from .. import lake
+    rows, proposals = {}, {}
     for arm in ("D", "Dx"):
-        rows[arm] = endpoints(run_arm(arm, dsl_budget, seed=1))
+        recs = run_arm(arm, dsl_budget, seed=1)
+        rows[arm], proposals[arm] = endpoints(recs), recs
         out("{} {}".format(arm, rows[arm]))
     if use_llm:
         for arm in ("A", "B", "C", "Cx"):
-            rows[arm] = endpoints(run_arm(arm, llm_budget, seed=1, model=llm_model))
+            recs = run_arm(arm, llm_budget, seed=1, model=llm_model)
+            rows[arm], proposals[arm] = endpoints(recs), recs
             out("{} {}".format(arm, rows[arm]))
         import subprocess
         subprocess.run(["ollama", "stop", llm_model], capture_output=True, timeout=60)
@@ -267,6 +292,10 @@ def smoke(write=True, out=print, llm_model="qwen2.5-coder:14b", llm_budget=3, ds
                budgets=dict(dsl=dsl_budget, llm=llm_budget if use_llm else 0), llm_model=llm_model if use_llm else None,
                arms=rows)
     if write:
+        d = lake() / "negspace"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "SMOKE_{}.json".format(at)).write_text(json.dumps(proposals, indent=1), encoding="utf-8")
+        doc["proposals_in_lake"] = "negspace/SMOKE_{}.json".format(at)
         p = REPO / "roles" / "Pan" / "reports" / "controls" / "NEGSPACE_SMOKE_{}.json".format(at)
         p.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
         out("wrote " + str(p))
