@@ -1,5 +1,13 @@
 # Cosmos status
 
+Currency: 2026-10-11T10:01Z. ACTIVE, waiting on operator. Reliability test (4 h) DONE: VERDICT FAIL by rule (P1 hour 1
++22.6 min; P2-P6 met) -- campaigns/RELIABILITY_4H_2026-10-11/VERDICT.md; scheduler latency ~20-30 min; no multi-day
+window recommended until an OS-level timer exists. NS-01 + NS-02 DONE on cosmos/ns01-2026-10-11 (review packet
+REVIEW_PACKET_NS01_NS02_2026-10-11.txt): archive-driven redirection NOT SUPPORTED at n = 8; FAILURE_15 (relational
+encoding vs fixed-capacity state decoders) supported relative to the archive. Suites: main 112/112, c4-v03 174/174,
+ns01 178/178. Operator decisions pending: NS-03 or stop; OS timer + automatic comms alerts; R-MECH final (Bellerophon).
+D2 SEALED / UNREAD / UNSPENT. $0.
+--- 2026-10-11T08:40Z block below ---
 Currency: 2026-10-11T08:40Z. ACTIVE on two operator orders: (1) 4 h reliability test (campaigns/RELIABILITY_4H_2026-10-11,
 until ~10:13Z); (2) NS-01 negative-space generation (prompts/2026-10-11_operator_NS-01; work on branch
 cosmos/ns01-2026-10-11, campaigns/NS-01_2026-10-11/ there). NS-01 status: audit (14 -> tier P 13 judge constraints + tier

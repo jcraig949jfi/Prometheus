@@ -1,15 +1,16 @@
 # Pan status
 
-Currency: 2026-10-11T04:07Z (date -u).
+Currency: 2026-10-11T10:08Z (date -u).
 
-seat state: ACTIVE (charter 2026-10-09; window to 2026-10-12T10:40Z).
+seat state: ACTIVE (charter 2026-10-09 + Sagacity Foundation directive 2026-10-11; deliverables due
+  2026-10-12T10:40Z; loop extended to 2026-10-16T10:40Z).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (index at origin/main; 2.25 M
   JSONL rows + 25,495 JSON docs in Iceberg; 45,256 reference links; frontier
   8,812 items = 4,702 arXiv + 742 HF daily + 2,629 blog/newsletter + 141
   release entries from 35 feeds + 598 repositories of 29 GitHub owners,
   + 1,524 models; HumanEval+ on 4 local models), VALID: PARTIAL -- retrieval R@10 0.765 on 200 independent
   queries (bar 0.80 inside its interval); tuning stopped by Pan's own rule.
-latest reports: reports/STATUS_20261011T0407Z.md (status report 8), REVIEW_PACKET_2026-10-11_PAN37_REVIEWERS.txt, REPOBENCH_2026-10-11.md,
+latest reports: reports/STATUS_20261011T1008Z.md (status report 9), docs/sagacity/SAGACITY_FOUNDATION_MAP.md, REVIEW_PACKET_2026-10-11_PAN37_REVIEWERS.txt, REPOBENCH_2026-10-11.md,
   REVIEW_PACKET_2026-10-11_PAN34.txt, REVIEW_PACKET_2026-10-10_PAN37_39.txt, REVIEW_PACKET_2026-10-10_PAN27_28.txt,
   REVIEW_PACKET_2026-10-10_PAN38.txt,
   REVIEW_PACKET_2026-10-09_unit3.txt, CODEBENCH_2026-10-09.md,

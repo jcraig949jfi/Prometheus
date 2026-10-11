@@ -1,0 +1,97 @@
+{
+ "control": "PAN-41 schema proposals (throwaway database pan_proposal_check, dropped)",
+ "at": "20261011T100108Z",
+ "verdict": "PASS",
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "atlas_distinction_detail.sql applies cleanly to the stubs",
+   "ok": true,
+   "detail": "applied"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "boundary.sql applies cleanly to the stubs",
+   "ok": true,
+   "detail": "applied"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "a distinction detail attaches to a kind='distinction' proposition",
+   "ok": true,
+   "detail": "inserted"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "a detail on a kind='constraint' proposition is refused",
+   "ok": true,
+   "detail": "RaiseException: ERROR:  distinction_detail: proposition P-some-constraint is not of kind distinction"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "lineage digest is recomputable from the evidence sources",
+   "ok": true,
+   "detail": "2 supports, digest matches sha256('aa,bb')"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a witness without pinned bytes (no sha256) is refused",
+   "ok": true,
+   "detail": "CheckViolation: ERROR:  new row for relation \"distinction_detail\" violates check constraint \"distinction_detail_check\""
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "an OBSERVED_FAILURE with evidence commits",
+   "ok": true,
+   "detail": "committed"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "an OBSERVED_FAILURE without evidence is refused at commit",
+   "ok": true,
+   "detail": "RaiseException: ERROR:  boundary F0: kind OBSERVED_FAILURE requires at least one boundary_evidence row"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "equivalence from a similarity score is refused",
+   "ok": true,
+   "detail": "CheckViolation: ERROR:  new row for relation \"boundary\" violates check constraint \"equivalence_needs_witness\""
+  },
+  {
+   "kind": "CHEAT",
+   "name": "equivalence without an intervention suite and pinned witness is refused",
+   "ok": true,
+   "detail": "CheckViolation: ERROR:  new row for relation \"boundary\" violates check constraint \"equivalence_needs_witness\""
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "equivalence with suite + pinned witness + evidence commits",
+   "ok": true,
+   "detail": "committed"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "an unresolved similarity without a discriminating experiment is refused",
+   "ok": true,
+   "detail": "CheckViolation: ERROR:  new row for relation \"boundary\" violates check constraint \"unresolved_names_experiment\""
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "an untested region without reachability is refused",
+   "ok": true,
+   "detail": "CheckViolation: ERROR:  new row for relation \"boundary\" violates check constraint \"untested_has_reachability\""
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "an untested region with reachability needs no evidence",
+   "ok": true,
+   "detail": "committed"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "recurrence view counts distinct engines and world families per implicated assumption",
+   "ok": true,
+   "detail": "engines, world families, boundaries = (2, 2, 3)"
+  }
+ ]
+}

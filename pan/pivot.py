@@ -12,25 +12,26 @@ import numpy as np
 
 
 def run(path, k=8):
-    from . import db, embed, search
+    from . import access, db, embed, search
+    asql, aargs = access.filter_sql("a")
     with db.cursor() as cur:
         cur.execute("""select artifact_id, kind, seat, first_commit_at, last_commit_at, title, n_chunks
-                       from pan.artifact where path=%s""", (path,))
+                       from pan.artifact a where path=%s""" + asql, [path] + aargs)
         a = cur.fetchone()
     if not a:
-        print("not in the catalog:", path)
+        print("not in the catalog (or not visible at clearance {}):".format(access.current_role()), path)
         return
     aid, kind, seat, first, last, title, n = a
     print("== WHAT IT IS\n  {}  [{} {}] first {} last {} chunks {}\n  {}".format(
         path, kind, seat or "-", str(first)[:10], str(last)[:10], n, (title or "")[:110]))
     with db.cursor() as cur:
         for name, q in (("CITED BY", "select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at) "
-                                     "from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s"),
+                                     "from pan.link l join pan.artifact a on a.artifact_id=l.src_id where l.dst_id=%s" + asql),
                         ("CITES", "select a.path, a.kind, a.seat, coalesce(a.first_commit_at, a.last_commit_at) "
-                                  "from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s")):
-            cur.execute("select count(*) from (" + q + ") x", (aid,))
+                                  "from pan.link l join pan.artifact a on a.artifact_id=l.dst_id where l.src_id=%s" + asql)):
+            cur.execute("select count(*) from (" + q + ") x", [aid] + aargs)
             total = cur.fetchone()[0]
-            cur.execute(q + " order by 4 nulls last limit %s", (aid, k))
+            cur.execute(q + " order by 4 nulls last limit %s", [aid] + aargs + [k])
             print("== LINEAGE: {} ({})".format(name, total))
             for p, kd, st, when in cur.fetchall():
                 print("  {}  [{} {}]  {}".format(str(when)[:10], kd, st or "-", p))
@@ -54,7 +55,8 @@ def run(path, k=8):
                 order = [int(ids[i]) for i in np.argsort(-sc)[: k + 1] if int(ids[i]) != aid][:k]
         if len(pos):
             with db.cursor() as cur:
-                cur.execute("select artifact_id, path, kind, seat from pan.artifact where artifact_id = any(%s)", (order,))
+                cur.execute("select artifact_id, path, kind, seat from pan.artifact a where artifact_id = any(%s)" + asql,
+                            [order] + aargs)
                 meta = {r[0]: r for r in cur.fetchall()}
             for i in order:
                 r = meta.get(i)

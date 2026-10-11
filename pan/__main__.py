@@ -27,6 +27,9 @@
   reviewcal run MODEL | controls   PAN-37: score a local model as a reviewer on set v2 (GPU) | runner controls
   fleet probe|machines|seats|controls   PAN-38: machine register + read-only probes; seat activity
   atlas snapshot [--force]|manifest|controls   PAN-27: read-only Iceberg copies of schema atlas (pan_atlas.*)
+  proposals check             PAN-41: verify the Atlas/Hades schema proposals in a throwaway database
+  access apply|controls       PAN-42: apply access rules (classify / refuse) | live controls + RLS proof
+                              (retrieval clearance: PAN_CLEARANCE=generator|evaluator|adjudicator|infrastructure)
   modelbench MODEL... [--pull] PAN-19: smoke-test local models (Ollama) with deterministic checks
   consolidate [--ext .jsonl]  PAN-16: committed JSON Lines -> Iceberg pan.result_rows + typed Parquet
   frontier arxiv|hf-models|hf-daily     PAN-09..11 intake (rate-limited, logged)
@@ -111,6 +114,10 @@ def main(argv=None):
     p.add_argument("what", choices=["probe", "machines", "seats", "controls"])
     p = sub.add_parser("atlas")
     p.add_argument("what", choices=["snapshot", "manifest", "controls"])
+    p = sub.add_parser("proposals")
+    p.add_argument("what", choices=["check"])
+    p = sub.add_parser("access")
+    p.add_argument("what", choices=["apply", "controls"])
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("reviewcal")
     p.add_argument("what", choices=["build", "floors", "run", "controls"])
@@ -259,6 +266,15 @@ def main(argv=None):
                 print("{:<14} {:<8} {:<20} {:<16} {}".format(r["seat"], r["status"], r["last_active"] or "-",
                                                          r["last_machine"], r["last_commit"][:70]))
             print(meta)
+    elif a.cmd == "access":
+        from . import access
+        if a.what == "apply":
+            access.apply_rules()
+        else:
+            access.controls()
+    elif a.cmd == "proposals":
+        from . import proposal_check
+        proposal_check.check()
     elif a.cmd == "atlas":
         from . import atlas_snap
         if a.what == "snapshot":

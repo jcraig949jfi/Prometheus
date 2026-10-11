@@ -28,6 +28,11 @@ def _filters(kind=None, seat=None, path=None, since=None):
     if since:
         sql.append("a.last_commit_at >= %s")
         args.append(since)
+    # access classes (PAN-42): every hit inherits the class of its artifact; the caller's clearance decides
+    from . import access
+    asql, aargs = access.filter_sql("a")
+    sql.append(asql[len(" and "):])
+    args += aargs
     return (" and " + " and ".join(sql)) if sql else "", args
 
 
@@ -185,6 +190,13 @@ def vector(query, k=10, model=None, kind=None, seat=None, path=None, since=None,
         top = np.argpartition(-scores, min(pool, len(scores) - 1))[:pool]
         top = top[np.argsort(-scores[top])]
         cand = [(int(ids[i]), float(scores[i])) for i in top]
+    return hydrate_chunks(cand, k, kind, seat, path, since)
+
+
+def hydrate_chunks(cand, k=10, kind=None, seat=None, path=None, since=None):
+    """[(chunk_id, score)] -> result rows, best chunk per artifact, through _filters (so access classes apply to every
+    vector backend and to raw-vector queries alike)."""
+    from . import db
     fsql, fargs = _filters(kind, seat, path, since)
     with db.cursor(statement_timeout_ms=60000) as cur:
         cur.execute("""select c.chunk_id, c.artifact_id, a.path, a.kind, a.seat, a.last_commit_at, c.line_start,
@@ -447,12 +459,14 @@ def similar_cli(path, k=10):
     from . import db, embed
     from . import pgvec
     model = embed.default_model()
+    from . import access
+    asql, aargs = access.filter_sql("a")
     with db.cursor() as cur:
         cur.execute("""select c.chunk_id from pan.chunk c join pan.artifact a on a.artifact_id=c.artifact_id
-                       where a.path = %s""", (path,))
+                       where a.path = %s""" + asql, [path] + aargs)
         mine = {r[0] for r in cur.fetchall()}
     if not mine:
-        print("no chunks for", path)
+        print("no chunks for", path, "(or not visible at clearance {})".format(access.current_role()))
         return
     if pgvec.backend() == "pg":
         with db.cursor() as cur:
@@ -475,7 +489,7 @@ def similar_cli(path, k=10):
         cur.execute("""select c.chunk_id, a.path, a.kind, a.seat, a.last_commit_at, c.line_start, c.line_end,
                               c.heading, left(c.body, 200)
                        from pan.chunk c join pan.artifact a on a.artifact_id=c.artifact_id
-                       where c.chunk_id = any(%s)""", ([int(ids[i]) for i in order],))
+                       where c.chunk_id = any(%s)""" + asql, [[int(ids[i]) for i in order]] + aargs)
         meta = {r[0]: r for r in cur.fetchall()}
     rows, seen = [], {path}
     for i in order:
@@ -491,14 +505,19 @@ def similar_cli(path, k=10):
 
 
 def cochange(path, k=15):
-    from . import db
+    """Files changed in the same commits as PATH; files the caller's clearance cannot see are left out (a file no
+    longer in the catalog counts as PROGRAM: only its path and commit history are shown)."""
+    from . import access, db
+    classes = access.classes_for()
     with db.cursor() as cur:
         cur.execute("""with mine as (select sha from pan.commit_file where path = %s),
                        n as (select count(*)::float as n from mine)
                        select cf.path, count(*) as together, round((count(*) / n.n)::numeric, 3) as share
-                       from pan.commit_file cf join mine using (sha), n
-                       where cf.path <> %s group by cf.path, n.n order by together desc, cf.path limit %s""",
-                    (path, path, k))
+                       from pan.commit_file cf join mine using (sha)
+                       left join pan.artifact a on a.source = 'git' and a.path = cf.path, n
+                       where cf.path <> %s and coalesce(a.access_class, 'PROGRAM') = any(%s)
+                       group by cf.path, n.n order by together desc, cf.path limit %s""",
+                    (path, path, classes, k))
         return cur.fetchall()
 
 

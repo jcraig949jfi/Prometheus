@@ -150,7 +150,7 @@ class BlobReader:
 
 def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
     from psycopg2.extras import execute_values
-    from . import db
+    from . import access, db
     t0 = time.time()
     run_id = "chunk-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     with db.cursor() as cur:
@@ -181,6 +181,8 @@ def run(limit: int = 0, kinds=None, out=print, batch_files: int = 400):
                 ok, why = eligible(ext, size)
                 if ok and path.startswith(EXCLUDE):
                     ok, why = False, "excluded_fixture"
+                if ok and access.refused(path):           # PAN-42: never read a refused file
+                    ok, why = False, "refused_by_access_rule"
                 if not ok:
                     skipped[why] = skipped.get(why, 0) + 1
                     updates.append((aid, False, None, 0, bsha))

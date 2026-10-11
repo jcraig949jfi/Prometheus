@@ -1,0 +1,57 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T030",
+  "campaign_id": "C-016",
+  "title": "Ensorain evidence adapter + native assay + preregistration + freeze",
+  "objective": "The smallest adapter that runs the chosen Ensorain world through the Observatory evidence path, with native controls and a preregistered endpoint, frozen.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T020"
+  ],
+  "owns": [
+    "rso/ensorain/"
+  ],
+  "reads": [
+    "rso/ensorain/COMPATIBILITY.md",
+    "rso/registry/",
+    "rso/witness/",
+    "rso/binding/",
+    "rso/slice001/"
+  ],
+  "problem": "Per COMPATIBILITY.md. Reuse registry components within their scope (`python -m rso.registry.registry for-adapter`); record every component reused, modified, or found too narrow (source-specific assumptions in common components are a deliverable). Count bespoke adapter lines. Native controls per directive s4; discovery / evaluation seeds separated and disjoint from every WTP-05 registered seed; a preregistered endpoint and decision rule; a resource spec (s13: consumption, parallelism, stopping, reproducibility, checkpoint need). Freeze manifest (LF-normalised sha256) before any subject outcome. NO confirmatory run.",
+  "non_goals": [
+    "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
+    "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
+    "No process on ubu006",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "adapter + controls + PREREGISTRATION.md + FREEZE manifest",
+    "known-answer positive detected and forbidden channel refused on development seeds",
+    "ONBOARDING.md rows: adapter lines, components reused / modified, semantic mismatches"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5"
+}
