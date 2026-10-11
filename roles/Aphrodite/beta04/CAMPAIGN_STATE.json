@@ -41,13 +41,14 @@
    "id": "W04",
    "kind": "EXP",
    "start_utc": "2026-10-10T21:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W04_EXP_REPORT.md"
   },
   {
    "id": "W05",
    "kind": "DEV",
    "start_utc": "2026-10-11T01:27Z",
-   "status": "PENDING"
+   "status": "ACTIVE"
   },
   {
    "id": "W06",
@@ -128,7 +129,7 @@
    "status": "PENDING"
   }
  ],
- "active_window": "W04",
+ "active_window": "W05",
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
