@@ -1,0 +1,43 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-016-T011",
+ "campaign_id": "C-016",
+ "attempt_id": "A-001",
+ "role": "Eupalamus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "start_sha": "7fda47ab4",
+ "end_sha": "239a0de6d39592fb9d75a865b0d45a311a38a8e4",
+ "files_changed": [
+  "rso/scale/notify/ (notify.py, __main__.py, README.md, tests/test_notify.py, evidence/)",
+  "roles/Eupalamus/comms/PROPOSAL_to_Achilles_C-016-T011_transition_hook.md"
+ ],
+ "evidence_added": [
+  "rso/scale/notify/evidence/RED.txt (import error before module existed)",
+  "rso/scale/notify/evidence/GREEN.txt (10 tests OK)",
+  "live demo: rso/scale/notify/evidence/DEMO.md"
+ ],
+ "evidence_executed": [
+  "python -m unittest rso.scale.notify.tests.test_notify -> 10 OK"
+ ],
+ "red_observed": {
+  "observed": true,
+  "note": "tests written before notify.py; run failed with import error"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "polling, not event-driven (hook proposal routed to Achilles, comms 2115)",
+  "DbSink (postgres advisory lock + comms query) is exercised by the live demo only, not by unit tests (unit tests use an in-memory sink)"
+ ],
+ "unresolved": [],
+ "unblocks": [],
+ "created_at_utc": "2026-10-11T10:13:47Z",
+ "instance": "harry1-33a3708a",
+ "host": "harry1",
+ "branch": "eupalamus/c016-t011",
+ "worktree_path": "C:/Prometheus-worktrees/eupalamus-c016-t011",
+ "resources": {
+  "paid_compute": false
+ },
+ "notes": "Idempotency record = comms.messages row (task_ref + [notify:KEY] subject marker), not a temp file."
+}
