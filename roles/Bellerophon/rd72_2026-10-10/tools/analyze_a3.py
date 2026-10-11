@@ -1,5 +1,7 @@
 """BEL-RD-72 A3 stage 2 analysis (rules: BEL_RD72_PREREG.md s5; committed before any stage-2 run).
-    python3 analyze_a3.py SCAN_RESULTS TEST_RESULTS OUT
+    python3 analyze_a3.py SCAN_RESULTS TEST_RESULTS OUT [TEST_PLAN]
+ERRATUM (prereg s5-E1): the driver does not copy the plan field `precursor` into result rows; when a row lacks it, it is
+taken from TEST_PLAN by run id. No rule, score or test changed.
 Per replanted tape: y = 1 if a FUNC origin event occurs within 100 ticks in >= 1 of its 2 worlds. Scores (from stage 1):
   S_op  = log1p(SUB) + log1p(MOVE) + log1p(INS) + log1p(DEL)   (operator-aware, the hypothesis)
   S_sub = log1p(SUB)                                           (substitution-only ruler, the simpler baseline)
@@ -22,7 +24,8 @@ def scores(row):
             "S_nz": sum(1 for b in bytes.fromhex(row["tape"]) if b)}
 
 
-def main(sres, tres, outp, B=2000):
+def main(sres, tres, outp, planp=None, B=2000):
+    pre = {p["id"]: p.get("precursor") for p in json.load(open(planp))} if planp else {}
     sc = {}
     for l in open(sres):
         x = json.loads(l)
@@ -38,7 +41,7 @@ def main(sres, tres, outp, B=2000):
         if r["arm"] == "BACKGROUND":
             bg[r["cell"]][0] += ev; bg[r["cell"]][1] += 1
         else:
-            y[(r["cell"], r["precursor"])] |= ev
+            y[(r["cell"], r["precursor"] if "precursor" in r else pre[r["id"]])] |= ev
     keys = sorted(k for k in y if k in sc)
     out = {"voids": voids, "tapes": len(keys), "completing": sum(y[k] for k in keys), "background": {c: v for c, v in bg.items()}}
     def block(ks):
@@ -61,4 +64,4 @@ def main(sres, tres, outp, B=2000):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])

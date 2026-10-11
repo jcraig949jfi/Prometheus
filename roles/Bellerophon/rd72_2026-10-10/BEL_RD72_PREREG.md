@@ -238,3 +238,9 @@ Interpretation rules (frozen):
 - Worlds losing FUNC before 500 count against crossing; per-cell FUNC survival is reported to separate extinction from
   failure to cross.
 Compute: F1 takes precedence over D2 (Workstream D is secondary per the directive); D2 starts when cores are free.
+
+## 5-E1. ERRATUM to s5 (A3 stage 2), 2026-10-11T03:23:57Z, after the stage-2 runs completed and BEFORE any stage-2 outcome was read
+tools/analyze_a3.py (frozen at 30410747f) crashed on the real results with KeyError 'precursor': the driver does not copy
+that plan field into result rows (the synthetic test rows had it). Fix: an optional 4th argument TEST_PLAN supplies the
+precursor by run id; nothing else changed (scores, AUC, bootstrap, tests, thresholds identical). New test
+tools/tests/test_analyze_a3.py::test_precursor_from_plan. The crash printed no outcome (traceback only).

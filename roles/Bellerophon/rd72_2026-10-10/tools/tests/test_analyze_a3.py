@@ -29,3 +29,15 @@ def test_sub_only_informative(tmp_path):
     _write(tmp_path, False)
     o = analyze_a3.main(str(tmp_path / "s.jsonl"), str(tmp_path / "t.jsonl"), str(tmp_path / "o.json"), B=200)
     assert o["A3-P1"] is False
+
+
+def test_precursor_from_plan(tmp_path):
+    _write(tmp_path, True)
+    rows = [json.loads(l) for l in (tmp_path / "t.jsonl").read_text().splitlines()]
+    plan = []
+    for i, r in enumerate(rows):
+        if not r.get("void"):
+            r["id"] = "a3t_%05d" % i; plan.append({"id": r["id"], "precursor": r.pop("precursor")})
+    (tmp_path / "t.jsonl").write_text("\n".join(map(json.dumps, rows))); (tmp_path / "p.json").write_text(json.dumps(plan))
+    o = analyze_a3.main(str(tmp_path / "s.jsonl"), str(tmp_path / "t.jsonl"), str(tmp_path / "o.json"), str(tmp_path / "p.json"), B=200)
+    assert o["tapes"] == 120 and o["A3-P1"] is True
