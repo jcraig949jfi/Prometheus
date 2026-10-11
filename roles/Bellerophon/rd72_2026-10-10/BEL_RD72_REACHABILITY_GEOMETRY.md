@@ -1,6 +1,6 @@
 # BEL-RD-72 REACHABILITY GEOMETRY (Workstream A, instrument + static geometry)
 
-STATUS: living document; sections marked PENDING are filled when their block completes.
+STATUS: complete except F1 dynamics (CUMULATIVE_ORGANIZATION s5 / COMPOSITION s4).
 
 ## 1. Instrument (kernel commit c83a56063, merged with the campaign; 113/113 kernel tests + 4 new)
 prometheus/z80atlas/geometry.py gained pure, opt-in functions (no historical output changes):
@@ -30,5 +30,31 @@ a DONOR (two-source) operator: the desert exists for every single-source operato
 That is the K2 test: does a population cross it through partial overwrite (operator-relative crossing), and does the
 crossing need BOTH sources (strict two-source attribution)?
 
-## 4. Operator-aware prediction (A3) -- PENDING (stage-1 scan running; stage 2 frozen, prereg s5)
-## 5. Operator substitution (A2) -- PENDING (K2 operator regimes: COPY_BYTE vs COPY_STRUCT vs PARTIAL_BYTE)
+## 4. Operator-aware prediction (A3; prereg s4, s5, s5-E1; RESULTS_LOG A3; receipt receipts/A3_stage2_analysis.json)
+Harvest: 600 non-FUNC tapes from 180 fresh worlds (3 physics), scanned under SUB / MOVE / INS / DEL.
+- 584/600 (97%) have NO one-step route to FUNC under any operator.
+- 9 have a SUB route, 7 INS / DEL only, and 0 a MOVE-only route.
+Frozen prediction in 1,194 unseen replant worlds: the operator-aware score did NOT beat substitution or byte content
+(AUC 0.592 / 0.586 / 0.606; A3-P1, P2 and P3 all fail).
+Descriptive: one-step SUB-route tapes completed 8/9 and no-route tapes 37/581, which is background level.
+Geometry is sharply predictive where it says "one step", and silent elsewhere.
+
+## 5. Operator substitution (A2; K2, prereg s3 / 3-A1; RESULTS_LOG K2; receipt receipts/K2_analysis.json)
+The same verified COND_MULTI desert under three copy operators (COPY_BYTE, COPY_STRUCT, PARTIAL_BYTE): 0 competent
+replicators in 1,320 worlds. The partial-overwrite operator (the one with a two-source route) produced the only competent
+product: 4 non-replicating machines in 1 world. Swapping the operator did not make the desert crossable at 1,000 ticks.
+
+## 6. The COND_ONE composition desert from EVOLVED material (DP; RESULTS_LOG DP; receipt receipts/DESERT_probe.json)
+13 E1b worlds where ECHO and INC replicators coexisted, scanned one step from each tape plus a donor splice from the
+partner: 0 routes in ~3.9M neighbours, and 0 of 52,000 sampled 3-step paths. A positive control (knockouts of the witness)
+finds the routes.
+
+## 7. F1 baseline accessibility (prereg s10 item 3; receipt receipts/F1_baseline_geometry.json)
+One-step routes to a FUNC COND_ONE replicator:
+| founder | routes |
+|---|---|
+| 9 single-knockout founders (KO1) | SUB 1-103 each; MOVE 8 and 4 in two of them; INS 1-2 in three |
+| 23 double-knockout founders (KO2) | 0 under every operator |
+| ECHO hybrid | 0 |
+| bare copier | 0 |
+Dynamical accessibility from these founders is F1's outcome.
