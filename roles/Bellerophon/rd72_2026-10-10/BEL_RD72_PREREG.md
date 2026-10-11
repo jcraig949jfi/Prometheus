@@ -244,3 +244,31 @@ tools/analyze_a3.py (frozen at 30410747f) crashed on the real results with KeyEr
 that plan field into result rows (the synthetic test rows had it). Fix: an optional 4th argument TEST_PLAN supplies the
 precursor by run id; nothing else changed (scores, AUC, bootstrap, tests, thresholds identical). New test
 tools/tests/test_analyze_a3.py::test_precursor_from_plan. The crash printed no outcome (traceback only).
+
+## 11. F2 -- the F1 ladder under PAIRED-HALVES payment (CONFIRMATORY test of the post-hoc F1 mechanism; frozen 2026-10-11T08:12:59Z, before any F2 run)
+
+Motivation (disclosed): F1 found that the setting does not maintain a planted composite; it decays into ECHO / INC
+half-solvers. Post hoc, from the kernel: payment is on ONE uniform input per interaction, so a half-solver is paid on ~50%
+of interactions with 2-6 critical bytes, against 100% for the composite with 10. Hypothesis: that half-credit is the
+attractor.
+Manipulation: tools/paired_pay.py (opt-in subclass; the kernel is unchanged). A kernel-correct interaction is paid only
+if the organism's pre-interaction tape is also correct on one input from the OTHER half, drawn from a separate rng.
+Half-solvers earn no bonus; the composite earns what it earned before. Base income, costs, ledger and all other physics
+are unchanged.
+Tests (tools/tests/test_paired_pay.py):
+- with payment OFF, byte-identical to the light census world;
+- an ECHO population earns < 20% of its kernel bonus;
+- the composite is still paid.
+Plan tools/plan_f2.py F1_PLAN OUT, a deterministic function of the frozen F1 plan: the W0, KO1, ECHOH and REP worlds of
+F1 with payment ON (80), with the SAME seed, config and founder, arm PAIRED. Comparator: the matched F1 world.
+Analysis tools/analyze_f2.py (synthetic test tools/tests/test_f2.py):
+- F2-P0 (maintenance): W0 FUNC BOTH at tick 2,000, PAIRED > kernel (F1: 1/20). Fisher one-sided, p < 0.05.
+- F2-P1 (crossing from distance 1): KO1 crossed, PAIRED > kernel (F1: 0/20). Fisher one-sided, p < 0.05.
+Interpretation (frozen):
+- P0 HOLDS: the half-credit payment structure CAUSES the maintenance failure. The composite null of E1b / F1 is a
+  property of the payment rule, not of the composite.
+- P0 FAILS: maintenance fails for another reason (mutational load, competition for space, budget); the hypothesis is
+  rejected.
+- P1 HOLDS: distance-1 precursors cross once maintenance is possible.
+- Reported, not tested: FUNC survival under each rule (paired payment lowers half-solver income and may raise
+  extinction), and ECHOH / REP crossings.
