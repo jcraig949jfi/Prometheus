@@ -149,6 +149,21 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] If seats need the M1 database: the operator copies the needed `keys.py` key files to the node with `scp` (Claude doesn't
       handle key files). Set `EW_DB_HOST=192.168.1.202`.
 
+## Retiring a node (sell / donate / e-waste) -- checklist (2026-10-10, operator: "people need to do better")
+
+Every node holds live secrets in plain files: the shared GitHub token (gh auth + git credential), the Claude OAuth
+token (~/.config/claude-oauth.env), our SSH keys in authorized_keys, the Wi-Fi password (netplan), and on some nodes a
+full Claude login. Before a machine or a disk leaves the house:
+1. Disable its PrometheusWorker first (no half-claimed task left behind).
+2. Wipe the disk: re-run the autoinstall (repartitions and reformats), or for an SSD `blkdiscard -f /dev/<disk>` /
+   the BIOS secure erase. Loose disks (e.g. the M6500's Momentus) get the same.
+3. If a disk leaves UNWIPED (dead, stolen, forgotten): rotate the shared GitHub token on every node
+   (provision_node.sh reinstalls it), revoke the Claude token in claude.ai settings and re-copy a new one, change the
+   Wi-Fi password and rebuild CIDATA.
+4. Mark it RETIRED in ubuntu_server_machines.md (keep the row); drop its DHCP reservation and its known_hosts lines.
+Secrets never go in the repo (it is public): they live in C:utoinstall_secrets on ELSA. Checked 2026-10-11: no token
+or Wi-Fi string in infra/, achilles/ or roles/Achilles/, current tree or history.
+
 ## Claude (can be done over SSH from M2 without the operator)
 
 - [ ] **Test Remote Control with only the setup-token** (empty `CLAUDE_CONFIG_DIR` + `CLAUDE_CODE_OAUTH_TOKEN`). If it
