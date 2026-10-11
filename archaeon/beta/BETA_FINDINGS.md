@@ -92,7 +92,13 @@ clock.
      the write-once LATCH.
    - Result (12 populations, preregistered): 8/12 best genomes use write-once state (LATCH-like re-finding); 0/12
      reach the update-on-condition RESET.
-   - The wall is specific to the update class, not to the world.
+   - The wall is specific to the update class, not to the world -- from a RANDOM start.
+   - **Revision (B76/B76b): it is a graded DISTANCE wall.** RESET-like populations:
+     - from random gen 0: 0/12;
+     - from the stateless forager: 2/6 (preregistered census) or 3/6 (best-genome readout);
+     - from the write-once latch: 6/6, with best .075-.082 beating the hand RESET .065.
+   - Update-on-condition memory is reachable when its write-once precursor is present. The law's 'not reached'
+     holds from scratch, not in principle.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

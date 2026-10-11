@@ -907,6 +907,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   READING (provisional): update-on-condition state IS reachable when its write-once precursor is present -- the
   B75 wall (0/12 from random gen 0) was distance from a reachable start. CONTROL needed before believing it:
   B76b = start from the stateless REACT (equally compact). Prediction committed with the probe.
+- B76b RESULT (07:14Z; lease RELEASED; ~50 min x 6 ~ 5 core-h): REACT-start, PREREGISTERED census (top 10 by count):
+  RESET-like 2/6 (7602, 7605). PREDICTION (<= 2/6) MET -- at the bar. EXPLORATORY best-unique-genome readout: 7601's
+  best (.078, dep .023, re-find .59) is RESET-like but not among its 10 most frequent genomes -> 3/6 (the prediction
+  would FAIL on this readout). 7603/7606 bests are high-reward LATCH variants (dep .05/.07, re-find .03/.04); 7604
+  re-find .13. INSTRUMENT NOTE: the top-10-by-count census can miss a rare best genome; it is a lower bound.
+  VERDICT (B75 + B76 + B76b): the update-on-condition wall is a GRADED DISTANCE WALL, not an absolute class wall --
+  RESET-like populations from random gen 0 0/12; from the stateless forager 2/6 (census) or 3/6 (best genome); from the
+  write-once LATCH 6/6 (both readouts). LATCH vs REACT start: 6/6 vs 2/6 Fisher one-sided p ~ .03 (census), 6/6 vs 3/6
+  p ~ .09 (best genome). The write-once latch is the strongest stepping stone; a compact competent start helps. Consistent
+  with the B55-B57 wiring mechanism (waiting time grows with the coupled chain still to be built). WINDOW 5 ~35 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
