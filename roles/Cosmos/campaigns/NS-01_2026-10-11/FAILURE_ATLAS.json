@@ -1,0 +1,355 @@
+{
+ "schema": "ns01.failure_atlas.v1",
+ "frozen_utc": "2026-10-11T07:54:01Z",
+ "directive": "roles/Cosmos/prompts/2026-10-11_operator_NS-01/DIRECTIVE_VERBATIM.md (main)",
+ "audit_summary": "The 14 operator candidates are almost all failures of INFERENCE PROCEDURE (law search, statistics, certificates), not of MECHANISMS; the archive (incl. Atlas F1-F12, Tityos T01-T18) has no mechanism-level taxonomy. Tier P: E01+E02+E07+E09 merged (circularity), E03+E04 merged (family identity), E12 narrowed to WEAK (class-level claim refuted 1/30), E13/E14 predictor-level; 3 replacements (P11 start state, P12 unqualified instrument, P13 liveness != progress) -> 13 entries, applied as JUDGE constraints. Tier M: 7 mechanism-level classes with executable witnesses/rules (ns01/signature.classify) -> the CANDIDATE exclusions, plus the 16-witness library for KNOWN_EQUIVALENCE (TAU .05). 14 was not reached by inventing distinctions.",
+ "operator_candidates_verbatim_ids": [
+  "E01",
+  "E02",
+  "E03",
+  "E04",
+  "E05",
+  "E06",
+  "E07",
+  "E08",
+  "E09",
+  "E10",
+  "E11",
+  "E12",
+  "E13",
+  "E14"
+ ],
+ "tier_P": [
+  {
+   "id": "P1",
+   "merges": [
+    "E01",
+    "E02",
+    "E07",
+    "E09"
+   ],
+   "name": "Law, coordinates or intervention arm re-derive the label/certificate definition (circularity)",
+   "evidence": [
+    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md:26-45 (main; 104/120 by a zero-parameter P1/P2 rule; two replicas REJECT)",
+    "GRAVEYARD G-0006; cross-entry note (atom C - G exp(-N) in G-0002/3/5 and law B; analytic rung BA .960 vs .964/.978; McNemar p .688/.688/.125, research/RESULTS.md R-0001)",
+    "R-MECH F1: REL@q BA .923 vs T3 .50 (c4/attacks/rmech_rerun_ubu003_h0_analysis.json); F3 S4_examples (sigma .05 -> .8 flips A, REL@q predicts it)"
+   ],
+   "witness": "tests/test_c4_sysid_local.py::test_f1_rel_cheat_cannot_be_built_through_the_probe (repair); research/analysis/t_i1_fragments_v3.py (11/15 atoms re-express the rung). No test reproduces the C3 audit (VERIFY.json local only).",
+   "cause": "the predictor's inputs are computed by the same contrast (same paired seeds, same intervention, same definition) that defines the label, so agreement is construction, not law",
+   "signature": "a zero-parameter function of the certificate's own ingredients matches the law's predictions (agreement >= .95); the predictor needs the label's intervention or seeds to be computed",
+   "equivalent_under": [
+    "renaming the coordinates",
+    "re-fitting thresholds",
+    "routing the same quantity through a probe",
+    "restating it as an intervention arm"
+   ],
+   "exclusion_test": "compute the certificate's analytic rung on the same rows; McNemar law vs rung; flag if no margin",
+   "limits": "needs the rung to be writable; E01's 'not re-run' vs 'reproduced' is inconsistent in the record (GRAVEYARD:98 vs RESULTS.md:8)",
+   "strength": "STRONG",
+   "ns01_role": "JUDGE CONSTRAINT: novelty is judged from execution only, by Certificate-B decoders, never from the generator's description; the signature does not use Certificate A"
+  },
+  {
+   "id": "P2",
+   "merges": [
+    "E08"
+   ],
+   "name": "Two certificates share one causal contrast",
+   "evidence": [
+    "R-MECH F2: B agrees with A 47/48, B_USE BA .987",
+    "c4/cert_b.py docstring; RECONCILIATION_v0.2 F2 RE-SCOPED"
+   ],
+   "witness": "tests/test_c4_cert_b.py::test_state_dict_completeness_is_not_shared, ::test_decoder_class_changes_usability_on_xor",
+   "cause": "in a passive world every behavioural certificate tests the same contrast; independence can only be in failure mechanism",
+   "signature": "agreement near 1 with identical failure sets on planted systems",
+   "equivalent_under": [
+    "different estimator",
+    "different decoder of the same contrast"
+   ],
+   "exclusion_test": "shared-failure matrix on planted systems",
+   "limits": "cannot create contrast independence in passive worlds",
+   "strength": "STRONG",
+   "ns01_role": "JUDGE CONSTRAINT: the signature combines decoders whose failure mechanisms differ (linear, random-feature, full-state, transplant)"
+  },
+  {
+   "id": "P3",
+   "merges": [
+    "E03",
+    "E04"
+   ],
+   "name": "Family identity (prevalence) carries the score instead of shared causal structure",
+   "evidence": [
+    "R-STAT A1: family-constant cheat passes S0-A 200/200 (uplift .201)",
+    "B5: local coordinates identify family .908 (exploratory)"
+   ],
+   "witness": "tests/test_c4_stats.py::test_a1_red_reference_v02_pooled_statistic_accepts_cheat, ::test_a1_family_constant_cheat_fails_s0a",
+   "cause": "pooled metrics reward predicting base rates; any family fingerprint lets a learner do that",
+   "signature": "pooled uplift with zero within-family uplift",
+   "equivalent_under": [
+    "any family-identifying feature"
+   ],
+   "exclusion_test": "within-family uplift; family-constant cheat as red reference",
+   "limits": "E03 itself is one exploratory look",
+   "strength": "STRONG (E04) / MODERATE (E03)",
+   "ns01_role": "JUDGE CONSTRAINT: arms are compared per proposal, never pooled across arms with different base rates"
+  },
+  {
+   "id": "P4",
+   "merges": [
+    "E05"
+   ],
+   "name": "Selection leakage (evidence that selected a candidate re-used as confirmation)",
+   "evidence": [
+    "R-STAT A5; L-0004 shaped by several looks then died (G-0008)"
+   ],
+   "witness": "tests/test_c4_firewall.py::test_winners_curse_is_why_the_split_exists",
+   "cause": "winner's curse",
+   "signature": "selection-set score far above fresh-set score",
+   "equivalent_under": [
+    "any re-use of selection data"
+   ],
+   "exclusion_test": "fresh-seed replication",
+   "limits": "real-data instance is one case",
+   "strength": "STRONG (mechanism)",
+   "ns01_role": "JUDGE CONSTRAINT: every candidate is frozen (code sha256) before its evaluation; any novelty claim is replicated on a fresh seed"
+  },
+  {
+   "id": "P5",
+   "merges": [
+    "E06"
+   ],
+   "name": "Valid invariant rejected (or noise promoted) through uncontrolled multiplicity",
+   "evidence": [
+    "R-STAT A4: 1-.95^10 = .40 false failure",
+    "S2 calibration-LRT on LOFO false-rejects 30% of universal laws (DESIGN_C4_v03 :60-61)",
+    "v0.3 floor rule 65% false failures"
+   ],
+   "witness": "tests/test_c4_stats.py::test_a4_universal_law_passes_s2 (repair only)",
+   "cause": "many tests, per-test alpha",
+   "signature": "failure rate of a planted truth >> nominal",
+   "equivalent_under": [
+    "more tests",
+    "more families"
+   ],
+   "exclusion_test": "planted-truth calibration",
+   "limits": "the 30% and .40 are not kept as tests",
+   "strength": "MODERATE",
+   "ns01_role": "JUDGE CONSTRAINT: 32 candidates x 7 rules; a NOVEL claim needs replication on a fresh seed AND under disguise, not one unusual signature"
+  },
+  {
+   "id": "P6",
+   "merges": [
+    "E10"
+   ],
+   "name": "Apparent discrimination from single-class or underpopulated strata",
+   "evidence": [
+    "EXP-01 sediment 30/30; EXP-02 stig 30/30; EXP-04 stig 53/7"
+   ],
+   "witness": "tests/test_c4_labels.py::test_a14_single_class_family_excluded_and_counted",
+   "cause": "no contrast in the stratum",
+   "signature": "undefined BA / one class",
+   "equivalent_under": [],
+   "exclusion_test": ">= 10 per class",
+   "limits": "",
+   "strength": "STRONG",
+   "ns01_role": "JUDGE CONSTRAINT: 8 proposals per arm; arm comparisons reported as exact counts, no significance claim"
+  },
+  {
+   "id": "P7",
+   "merges": [
+    "E11"
+   ],
+   "name": "Effects without a minimum magnitude",
+   "evidence": [
+    "A15 Theseus 'stormy' J .262 vs .25 certifies FUNCTIONAL",
+    "EXP-02 A/B disagreement = power difference"
+   ],
+   "witness": "tests/test_c4_labels.py::test_a15_ananke_stormy_example_is_marginal",
+   "cause": "significance without size",
+   "signature": "significant but < floor",
+   "equivalent_under": [],
+   "exclusion_test": "FLOOR .10 excess",
+   "limits": "",
+   "strength": "STRONG",
+   "ns01_role": "JUDGE CONSTRAINT: every signature rule uses FLOOR .10 or 2 x FLOOR"
+  },
+  {
+   "id": "P8",
+   "merges": [
+    "E12"
+   ],
+   "name": "Score-level representation/frame dependence of a measurement (NARROWED)",
+   "evidence": [
+    "EXP-01 stig lam up to 2.33 / vis 55 under absolute frame",
+    "EXP-02 T-C1: only 1/30 class flips (class-level claim REFUTED); scores move several log units"
+   ],
+   "witness": "none for EgoStig; tests/test_c4_sysid_local.py::test_g5_reencoding_invariance (related)",
+   "cause": "perturbations defined in a frame teleport integer state",
+   "signature": "coordinate changes under a physics-preserving re-encoding",
+   "equivalent_under": [],
+   "exclusion_test": "re-encode and recompute",
+   "limits": "class-level effect refuted; score-level effect never preregistered",
+   "strength": "WEAK",
+   "ns01_role": "JUDGE CONSTRAINT: the disguise test (Permute, LinearEncode, Rescale, RenameState) is applied to every candidate claimed distinct"
+  },
+  {
+   "id": "P9",
+   "merges": [
+    "E13"
+   ],
+   "name": "Local linear composition does not transfer to nonlinear / phase-coded mechanisms",
+   "evidence": [
+    "G-0007: L-0003 BA .556 on cosmos_phase; Spearman .32 (.55 infinitesimal)"
+   ],
+   "witness": "none for the failure",
+   "cause": "phase-coded memory is invisible to a linearised description",
+   "signature": "ordinal within linear families, fails on phase",
+   "equivalent_under": [],
+   "exclusion_test": "",
+   "limits": "one family, discovery data",
+   "strength": "MODERATE",
+   "ns01_role": "predictor-level; not applicable to a mechanism"
+  },
+  {
+   "id": "P10",
+   "merges": [
+    "E14"
+   ],
+   "name": "A boundary common to the seen families does not transfer",
+   "evidence": [
+    "G-0008: phase BA .488, own boundary -7.75 vs -2.0"
+   ],
+   "witness": "none",
+   "cause": "three agreeing families selected by several looks",
+   "signature": "",
+   "equivalent_under": [],
+   "exclusion_test": "",
+   "limits": "shares the score with P9 and the selection path with P4",
+   "strength": "MODERATE",
+   "ns01_role": "predictor-level; not applicable to a mechanism"
+  },
+  {
+   "id": "P11",
+   "merges": [],
+   "replacement": true,
+   "name": "Instrument assumes the stationary regime while the task starts elsewhere (start-state mismatch)",
+   "evidence": [
+    "EXP-07: a .95 signed error -.290 -> -.043 with init start (H-START rejected narrowly by rule)"
+   ],
+   "witness": "prometheus/cosmos/c4/exp07.py on planted reservoirs",
+   "cause": "start-state variance a^(k+2) masks the cue",
+   "signature": "underprediction growing with memory",
+   "equivalent_under": [],
+   "exclusion_test": "compose from system.init",
+   "limits": "residual -.04 unexplained",
+   "strength": "MODERATE",
+   "ns01_role": "JUDGE CONSTRAINT: signatures run the task exactly as the harness does (episodes from init)"
+  },
+  {
+   "id": "P12",
+   "merges": [],
+   "replacement": true,
+   "name": "Instrument used in a new domain before qualification (Atlas F9)",
+   "evidence": [
+    "EXP-04 surrogate on family data, then EXP-06 found its defect",
+    "Atlas F9 >= 6"
+   ],
+   "witness": "EXP-06 results",
+   "cause": "",
+   "signature": "",
+   "equivalent_under": [],
+   "exclusion_test": "planted qualification first",
+   "limits": "",
+   "strength": "MODERATE",
+   "ns01_role": "JUDGE CONSTRAINT: the exclusion engine is qualified on disguised witnesses BEFORE any candidate is evaluated"
+  },
+  {
+   "id": "P13",
+   "merges": [],
+   "replacement": true,
+   "name": "Operations: liveness mistaken for progress",
+   "evidence": [
+    "INCIDENT_2026-10-08_EXP04_STALL (58 h, 4,683,366 crashes)",
+    "I-2 executor deadlock"
+   ],
+   "witness": "tests/test_supervise.py::test_replay_of_the_2026_10_08_incident",
+   "cause": "",
+   "signature": "",
+   "equivalent_under": [],
+   "exclusion_test": "",
+   "limits": "",
+   "strength": "STRONG",
+   "ns01_role": "every NS-01 job runs under prometheus.cosmos.supervise"
+  }
+ ],
+ "tier_M": [
+  {
+   "id": "M-DEGENERATE",
+   "name": "cue never reaches the state at the query",
+   "witness": "ns01/witnesses.py nomemory (c3/calib NoMemory)",
+   "evidence": [
+    "C3 S1 calibration N0"
+   ],
+   "rule": "max_k full[k] < FLOOR"
+  },
+  {
+   "id": "M-DECAY",
+   "name": "contraction / noise loses the cue as k grows",
+   "witness": "reservoir_fast (c4/planted Reservoir a .5)",
+   "evidence": [
+    "test_c4_sysid_local::test_lgss_decreases_with_delay_for_leaky_channel",
+    "EXP-06/07 planted",
+    "C3 chaotic noisy graph (sensitivity without usable information) folds in here"
+   ],
+   "rule": "rf[1] >= FLOOR and rf[16] < FLOOR"
+  },
+  {
+   "id": "M-LINBLIND",
+   "name": "cue present but readable only nonlinearly",
+   "witness": "signmasked (V-generic XorCue)",
+   "evidence": [
+    "XorCue V=2: B-linear .493 vs B-rf 1.00; Cert A seed-unstable F/P/I/P/F (docstring only)"
+   ],
+   "rule": "max_k (rf - lin) >= 2 FLOOR"
+  },
+  {
+   "id": "M-HIDDEN",
+   "name": "cue carried outside the declared state",
+   "witness": "hidden (c4/planted HiddenCarrier)",
+   "evidence": [
+    "Cert A PASSIVE 5/5 vs B FUNCTIONAL; test_c4_cert_b::test_state_dict_completeness_is_not_shared"
+   ],
+   "rule": "own8 >= FLOOR (transplant)"
+  },
+  {
+   "id": "M-UNREACHABLE",
+   "name": "cue held in the state but not at the readout (passive storage; sensor out of reach)",
+   "witness": "register_unread (C3 PV); stig_moving",
+   "evidence": [
+    "C3 PASSIVE sR = 0 in 17/17",
+    "EXP-01 stig v=2 k=2 PASSIVE 3/3"
+   ],
+   "rule": "max_k (full - rf) >= 2 FLOOR"
+  },
+  {
+   "id": "M-NONMONOTONE",
+   "name": "usability returns or rises with k (geometry, ring return, trace spread)",
+   "witness": "stig_moving / stig_diffusing",
+   "evidence": [
+    "EXP-05: ring length changes usability .262; direction 44/48"
+   ],
+   "rule": "exists k1 < k2 with rf or full rising >= 2 FLOOR"
+  },
+  {
+   "id": "M-INTERFERENCE",
+   "name": "distractors overwrite what silence preserves (capacity)",
+   "witness": "none planted yet (rule only)",
+   "evidence": [
+    "C0 RESULT_run2 :56-66 carrier capacity: logger that cannot hold K+1 items loses the cue"
+   ],
+   "rule": "dfree8 - rf[8] >= 2 FLOOR"
+  }
+ ],
+ "witness_library": "prometheus/cosmos/ns01/witnesses.py (16)",
+ "rules": "prometheus/cosmos/ns01/signature.py classify (FLOOR .10, TAU .05)",
+ "evidence_sweep": "read-only agent sweep 2026-10-11 (paths verified by Cosmos for the items used)"
+}
