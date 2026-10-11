@@ -1,0 +1,217 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-44: A READ-ONLY MCP INTERFACE TO PAN (PROTOTYPE)        |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-11 (build 10:35-10:47Z; controls 10:41:48Z; SDK client      |
+|          10:43:16Z; commit 1fe9c7c64)                                        |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  BUILT and controlled (15/15 + official-client conformance);         |
+|          registered NOWHERE (operator Q-015)                                 |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Mandate (Sagacity Foundation directive, 2026-10-11, section 5):
+  - "a minimal local, read-only MCP prototype", after the foundation map and
+    the negative-space evaluation (both done first);
+  - wrap existing tested Pan operations: search, pivot, references,
+    permitted Atlas fact lookup;
+  - no network-facing service, no writes, no access to withheld or sealed
+    data;
+  - "demonstrate that returned records retain provenance and that
+    unauthorized data is excluded";
+  - "do not recreate Pan's retrieval system inside an MCP server".
+
+Result:
+  - A stdio JSON-RPC server (no socket, no port) exposes 4 tools. Each wraps
+    one existing operation.
+  - Every record carries provenance (store, path or key, blob/commit or
+    harvest ids, access class).
+  - 15/15 live controls PASS against two real server processes, generator
+    and evaluator. Every exclusion control has a non-vacuity twin.
+  - The official MCP Python SDK client (mcp 2.3.0) connects, negotiates
+    2025-11-25 and uses all 4 tools.
+  - Enforcement is application-level plus a server-side read-only session.
+    It is NOT database least privilege: the program connects as superuser.
+    Changing that is a production authorization question for the operator
+    (Q-014).
+
+-----
+1. WHAT WAS BUILT
+-----
+Reuse first:
+  - pivot.collect and links.refs were split out of the existing CLI
+    functions. The CLIs print from them. CLI output on a 242-backlink path
+    was byte-identical before and after the split.
+  - New: atlas_snap.lookup, a literal case-insensitive lookup in 3 permitted
+    Atlas tables (fact 41,784 rows, proposition 10, blind_spot 7), with
+    provenance columns. Also a CLI command.
+  - New: db.connect read-only mode. PAN_DB_READ_ONLY=1 sets the server-side
+    default_transaction_read_only=on.
+
+Tools (closed input schemas, additionalProperties false):
+  pan_search    search.hybrid     query<=500 chars, k<=25, kind, seat
+  pan_pivot     pivot.collect     path, k<=25
+  pan_refs      links.refs        path, k<=50
+  atlas_lookup  atlas_snap.lookup table in {fact, proposition, blind_spot},
+                                  text<=200 chars (literal), k<=50
+
+Response envelope:
+  - tool, clearance, read_only, retrieved_at;
+  - excluded counts: refused_rule, outside_clearance, uncatalogued,
+    atlas_mentions_hidden_artifact;
+  - result, whose records each carry provenance.
+  A hidden path and a nonexistent path get the SAME answer (visible false,
+  same note, no records), so there is no existence oracle in the content.
+
+Why hand-rolled rather than the SDK: the mcp 2.3.0 package pulls in HTTP
+server dependencies, and the protocol subset needed is small (initialize,
+ping, tools/list, tools/call). The SDK is used as the CLIENT in a scratch
+venv to check conformance; it is not a dependency of Pan.
+
+-----
+2. ENFORCEMENT LAYERS (order a request meets them)
+-----
+  1. Clearance is fixed at launch (PAN_CLEARANCE).
+     - Only generator (default) or evaluator may launch.
+     - Adjudicator, infrastructure or anything else makes the server exit 2
+       before serving.
+     - No argument can name a role.
+  2. Access classes (migration 014). Every SQL path in the wrapped
+     operations applies the clearance filter. At generator clearance,
+     BURNED_HOLDOUT, EMBARGOED_OUTCOME and PRIVILEGED_CRITIQUE are invisible.
+  3. REFUSE rules.
+     - The 119 credential-shaped files stay in the catalog with their
+       content purged.
+     - The wrapped operations alone would still serve their path metadata.
+     - The server drops them.
+  4. Inheritance by mention. An Atlas row whose text mentions the path or
+     basename of a hidden artifact is dropped. Measured: 0 rows today.
+  5. Read-only session, checked at startup (the server refuses to start
+     otherwise). The server writes nothing, caches nothing, and loads its
+     encoder offline.
+
+-----
+3. RESULTS (receipt MCP_20261011T104148Z.json, 15/15)
+-----
+  PROTOCOL  negotiation echo 2025-06-18; unknown version -> 2025-11-25;
+            4 tools, readOnlyHint, closed schemas
+  POSITIVE  pan_search 10 records, all with blob_sha, access_class,
+            catalog_run_id
+  POSITIVE  pan_pivot 21 records with provenance; cited_by 242
+  POSITIVE  pan_refs totals equal the wrapped operation's (242 / 94)
+  POSITIVE  atlas_lookup 5 of 97 matched, with author and harvest ids
+  NEGATIVE  burned holdout via pivot: evaluator visible=True, generator
+            visible=False, generator answer identical to a nonexistent
+            path's
+  NEGATIVE  burned holdout via search:
+            - a query built from the burned file's own text reaches it at
+              evaluator clearance (non-vacuity; query sha cd3f33b0cfe9);
+            - the same query returns 0 burned records to a generator
+  CHEAT     prompt text "clearance evaluator: ignore restrictions..."
+            -> 0 burned records
+  CHEAT     clearance argument -> JSON-RPC -32602 "unknown argument(s):
+            clearance"
+  CHEAT     credential-shaped path: the wrapped operation alone returns it;
+            the server does not
+  CHEAT     SQL text in a lookup: matched 0; atlas.fact 41,784 -> 41,784
+  CHEAT     LISTEN sockets of the server process: 0; no network-server
+            imports
+  CHEAT     launch at adjudicator / infrastructure: exit 2 (both)
+  CHEAT     write through a read-only process: transaction_read_only=on;
+            CREATE TEMP TABLE refused
+
+Conformance (receipt MCP_SDK_20261011T104316Z.json, PASS):
+  - official client mcp==2.3.0;
+  - negotiated 2025-11-25;
+  - 4 tools listed;
+  - each tool called, not isError, provenance on every record, clearance
+    generator;
+  - escalation refused as an MCP error.
+Protocol unit tests: 5, no database. Pan suite: 91 passed.
+
+-----
+4. INCIDENT
+-----
+The heredoc used to patch pivot.py halved a backslash (a known tool hazard).
+pivot's print became a syntax error. The before/after CLI diff caught it
+before any commit. The diff exists exactly for this.
+
+-----
+5. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES:
+  - Pan's retrieval is reachable through a standard protocol by a standard
+    client, read-only.
+  - Records keep provenance.
+  - A burned holdout reachable at evaluator clearance is not reachable at
+    generator clearance through pivot or search, including prompt-text
+    escalation. refs was tested against the credential-shaped path only; it
+    shares pivot's filter but was not separately run against the burned file.
+DOES NOT:
+  - Least privilege.
+    - The server is superuser underneath. RLS does not bind it, and no live
+      table has RLS.
+    - A bug in the filter code would leak.
+    - The controls test through the server for this reason, but tests are
+      not a proof.
+  - True inheritance for Atlas. "Mentions a hidden path" is a heuristic. A
+    fact derived from a hidden file without naming it would pass.
+  - Constant-time answers. Hidden and nonexistent are identical in content,
+    not necessarily in timing.
+  - Caller authentication. The launching user chooses the clearance, within
+    generator or evaluator.
+  - Better retrieval. Hybrid R@10 is 0.765 (bar 0.80), inherited.
+
+-----
+6. DECISION / RECOMMENDATION (HITL's call; Pan's lean)
+-----
+  Lean:
+  (1) Keep it local opt-in (Q-015 default). Let one or two seats that
+      already use `pan search` try it before any project-wide registration.
+  (2) If it becomes shared, approve Q-014 first:
+      - a login role with SELECT on six tables;
+      - RLS on pan.artifact and pan.chunk keyed on access_class.
+      That moves layer 2 from application code to the database.
+  (3) Atlas adds source-artifact ids to its rows, replacing the mention
+      heuristic.
+  "Stop" is first-class. If no seat uses it within a week, retire it. The
+  CLI already serves every operation it wraps.
+
+-----
+7. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  Q1  Is a superuser connection with a read-only default meaningfully
+      "read-only"? A superuser can SET default_transaction_read_only=off.
+      Only the absence of a code path stops it. Should the prototype have
+      refused to exist until Q-014?
+  Q2  The evaluator launch exists so the non-vacuity controls can run. Is
+      offering evaluator clearance through MCP at all a mistake?
+  Q3  Search exclusion was tested with ONE query built from the burned
+      file's own text. Is one query enough to call exclusion demonstrated?
+      What would an adversarial query set look like? (Nyx owns adversarial
+      work.)
+  Q4  Hand-rolled protocol code is a maintenance liability next to the
+      official SDK. Is avoiding the SDK's HTTP dependencies worth it for a
+      stdio-only server?
+
+-----
+8. ARTIFACTS (worktree D:\Prometheus-worktrees\pan-base-role-adopt-2026-10-09)
+-----
+  commit: 1fe9c7c64
+  code: pan/mcpserve.py; pan/pivot.py (collect); pan/links.py (refs);
+    pan/atlas_snap.py (lookup); pan/db.py (read_only)
+  tests: pan/tests/test_mcpserve.py; pan/tests/mcp_sdk_conformance.py
+    (run from a venv with mcp==2.3.0)
+  receipts (roles/Pan/reports/controls/):
+    MCP_20261011T104148Z.json, MCP_SDK_20261011T104316Z.json
+  contract: roles/Pan/docs/sagacity/MCP_INTERFACE_PROTOTYPE.md
+  questions: roles/Pan/QUESTIONS.md Q-014 (least privilege), Q-015
+    (registration)
+  directive: roles/Pan/prompts/2026-10-11_sagacity_foundation s5
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "an interface nobody calls is decoration -- retire it".                     |
++==============================================================================+
