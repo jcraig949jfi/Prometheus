@@ -316,7 +316,7 @@ def judge(k, obs, exp):
     if obs is None:
         return "NOT_RUN"
     try:
-        ok = eval(exp["check"], {"__builtins__": {}}, {"o": obs, "all": all, "any": any, "sum": sum, "len": len, "max": max, "min": min})
+        ok = eval(exp["check"], {"__builtins__": {}}, {"o": obs, "all": all, "any": any, "sum": sum, "len": len, "max": max, "min": min, "set": set})
     except Exception as e:                                                      # noqa
         return "CHECK_ERROR: %s" % e
     return exp["if_true"] if ok else exp["if_false"]
