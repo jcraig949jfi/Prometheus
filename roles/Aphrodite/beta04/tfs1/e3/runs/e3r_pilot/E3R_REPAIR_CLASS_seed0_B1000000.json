@@ -490,6 +490,10 @@
  "root": "foundry/pilot_v2",
  "rule": "SEARCH: on_frozen counts AND off_xabs not; DEVELOPMENTAL: off_xabs counts AND on_frozen not; EITHER: both single-factor cells count; BOTH_REQUIRED: only on_xabs counts; NONE: no cell counts. A cell counts iff 5q >= 4n AND 5*scratch_fails >= 4n (else TRIVIALISED if 5q >= 4n); CENSORED scratch = not failed (A3.6)",
  "seed": 0,
+ "utc_backfill": {
+  "note": "pre-A10 output (no wall-clock fields when written); upper bound = commit time of 91456b10b; SUPERSEDED by runs/e3r_pilot_a1 (A1 driver, UTC throughout)",
+  "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
+ },
  "worlds": [
   "W0467897d",
   "W1d5301d0"

@@ -372,7 +372,8 @@
      "source": "tfs1",
      "status": "NOT_ACQUIRED"
     }
-   }
+   },
+   "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
   },
   "fb1.src-tfs1.lib-constituents.seed0.oe0.B1000000.x-xabs": {
    "chain": {
@@ -700,7 +701,8 @@
      "source": "tfs1",
      "status": "NOT_ACQUIRED"
     }
-   }
+   },
+   "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
   },
   "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000": {
    "chain": {
@@ -1145,7 +1147,8 @@
      "source": "tfs1",
      "status": "ACQUIRED"
     }
-   }
+   },
+   "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
   },
   "fb1.src-tfs1.lib-constituents.seed0.oe1.B1000000.x-xabs": {
    "chain": {
@@ -1593,7 +1596,8 @@
      "source": "tfs1",
      "status": "ACQUIRED"
     }
-   }
+   },
+   "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
   }
  },
  "searches": {
@@ -2150,6 +2154,10 @@
   },
   "dir": "tfs1/e3/runs",
   "n_searches": 17
+ },
+ "utc_backfill": {
+  "note": "pre-A10 output (no wall-clock fields when written); upper bound = commit time of 91456b10b; SUPERSEDED by runs/e3r_pilot_a1 (A1 driver, UTC throughout)",
+  "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
  },
  "world": "W0467897d"
 }

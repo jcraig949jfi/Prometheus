@@ -806,33 +806,233 @@ def test_e3r_xabs_validity_rejects_non_equivalent_absorption():
 
 
 @test
-def test_e3r_repair_class_rules():
-    def V(q, sf=15, n=15, complete=True, links=None):
-        return {"n_admitted_R3_R4": n, "chain_qualified": q, "scratch_fails": sf, "complete": complete,
-                "first_failing_link_counts": links or {"HORIZON_R1": n - q}}
-    R = KP.repair_class_from
-    check(R({"off_frozen": V(7), "on_frozen": V(12), "off_xabs": V(9), "on_xabs": V(14)})["REPAIR_CLASS"] == "SEARCH",
-          "SEARCH")
-    check(R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(12), "on_xabs": V(13)})["REPAIR_CLASS"] ==
-          "DEVELOPMENTAL", "DEVELOPMENTAL")
-    check(R({"off_frozen": V(7), "on_frozen": V(13), "off_xabs": V(12), "on_xabs": V(13)})["REPAIR_CLASS"] ==
-          "EITHER", "EITHER")
-    check(R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(9), "on_xabs": V(12)})["REPAIR_CLASS"] ==
-          "BOTH_REQUIRED", "BOTH")
-    r = R({"off_frozen": V(7), "on_frozen": V(10), "off_xabs": V(9),
-           "on_xabs": V(11, links={"HORIZON_R1": 3, "UNDERDETERMINED_STONE": 1})})
-    check(r["REPAIR_CLASS"] == "NONE" and r["best_cell"] == "on_xabs" and r["best_cell_dominant"] == "HORIZON"
-          and r["recommendation_reading"].startswith("CHANGE_SEARCH"), "NONE + horizon")
-    t = R({"off_frozen": V(7), "on_frozen": V(13, sf=11), "off_xabs": V(9), "on_xabs": V(13, sf=11)})
-    check(t["REPAIR_CLASS"] == "NONE" and t["cells"]["on_frozen"]["trivialised"], "TRIVIALISED does not count")
-    check(R({"off_frozen": V(7), "on_frozen": V(13), "off_xabs": V(9, complete=False),
-             "on_xabs": V(14)})["REPAIR_CLASS"] == "INCOMPLETE", "INCOMPLETE")
-    # CENSORED scratch counts as NOT failed (A3.6)
+def test_e3r_bounds_labels_stability_and_readings():
+    """A1 bounds (LO: CENSORED / NOT_RUN not failed; HI: failed), COUNTS_CONDITIONAL, TRIVIALISED, conditional label
+    text with the unconditional (LO) label; the prereg label table; stability; fixed reading texts (A4, A5); claim
+    limits (A12)."""
+    from tfs1.e3 import e3r as R3
+
+    def fams(q, n=15, fail=15, cen=0, nr=0, links=None):
+        st = ["FAILED"] * fail + ["CENSORED"] * cen + ["NOT_RUN"] * nr
+        st += ["SOLVED"] * (n - len(st))
+        out = []
+        for i in range(n):
+            ok = i < q
+            out.append({"world": "W", "family_id": "F%02d" % i, "qualified": ok, "complete": True,
+                        "link": None if ok else "COMPOSITION_HORIZON", "detail": None if ok else "IN_CLASS",
+                        "scratch": st[i], "scratch_secondary_non_oe": "FAILED"})
+        return out
+    cs = R3.cell_summary(fams(13, fail=10, cen=3), {})
+    check(cs["scratch_fails_LO"] == 10 and cs["scratch_fails_HI"] == 13 and cs["COUNTS_CONDITIONAL"]
+          and cs["counts_HI"] and not cs["counts_LO"] and cs["trivialised_LO"] and cs["n_censored"] == 3, "bounds")
+    full = R3.cell_summary(fams(13), {})
+    no = R3.cell_summary(fams(7), {})
+    nine = R3.cell_summary(fams(9), {})
+
+    def lab(**cells):
+        base = {"off_frozen": no, "on_frozen": no, "off_xabs": nine, "on_xabs": no}
+        base.update(cells)
+        return R3.seed_label(base)
+    check(lab(on_frozen=full)["reported"] == "SEARCH", "SEARCH")
+    check(lab(on_xabs=full)["reported"] == "BOTH_REQUIRED", "BOTH_REQUIRED")
+    check(lab()["reported"] == "NONE", "NONE")
+    check(lab(off_xabs=full, on_frozen=full)["reported"] == "EITHER", "EITHER")
+    check(lab(off_xabs=full)["reported"] == "DEVELOPMENTAL", "DEVELOPMENTAL")
+    c = lab(on_frozen=cs)
+    check(not c["determined"] and c["unconditional"] == "NONE" and c["label_HI"] == "SEARCH"
+          and c["reported"].startswith("SEARCH (CONDITIONAL: 3 OE scratches censored at 3,600 CPU-s"), "CONDITIONAL")
+    inc = dict(no, complete=False)
+    check(lab(on_xabs=inc)["reported"] == "INCOMPLETE", "INCOMPLETE")
+    check(R3.stability(["SEARCH"] * 3)["stability"] == "STABLE", "STABLE")
+    m = R3.stability(["NONE", "SEARCH", "SEARCH"])
+    check(m["stability"] == "MAJORITY" and m["label"] == "SEARCH", "MAJORITY")
+    u = R3.stability(["NONE", "SEARCH", "BOTH_REQUIRED"])
+    check(u["stability"] == "SEED_UNSTABLE" and u["label"] == "NONE", "SEED_UNSTABLE")
+    # dominant link of the reading cell (strict majority; UD split)
+    f = fams(10)
+    for i in range(10, 13):
+        f[i].update(link="UNDERDETERMINED_STONE", ud={"ud": "UD-R1"})
+    check(R3.dominant(f)["dominant"] == "UD-R1", "UD-R1 dominant (3 of 5)")
+    f[12]["ud"] = {"ud": "UD-EXTRACT"}
+    d = R3.dominant(f)
+    check(d["dominant"] == "MIXED" and d["residual_links"]["UNDERDETERMINED_STONE/UD-R1"] == 2, "MIXED")
+    check(R3.dominant(fams(10))["dominant"] == "HORIZON", "HORIZON")
+    check("NOT a CHANGE_SEARCH finding" in R3.INTERPRETATION["NONE/HORIZON"]
+          and "OE + post-hoc patch" in R3.INTERPRETATION["BOTH_REQUIRED"]
+          and "WORLD" in R3.INTERPRETATION["NONE/UD-R1"]
+          and "DEVELOPMENTAL coverage" in R3.INTERPRETATION["NONE/UD-EXTRACT"]
+          and "does NOT discriminate CHANGE vs MIGRATE" in R3.SCOPE and R3.READING_CELL == "on_xabs", "texts")
+    check(any("lifetime gate" in x for x in R3.CLAIM_LIMITS["may_not_claim"])
+          and any("A1-A.5" in x for x in R3.CLAIM_LIMITS["may_not_claim"]), "claim limits")
+    return {"cases": 22}
+
+
+@test
+def test_e3r_attribution_effects_masking_ud_split():
+    from tfs1.e3 import e3r as R3
+
+    def F(fid, q, link="COMPOSITION_HORIZON"):
+        return {"world": "W", "family_id": fid, "qualified": q, "link": None if q else link, "detail": "IN_CLASS"}
+    cells = {"off_frozen": [F("a", True), F("b", False), F("c", False), F("d", False), F("e", False), F("f", False)],
+             "on_frozen": [F("a", True), F("b", True), F("c", False), F("d", True), F("e", False), F("f", True)],
+             "off_xabs": [F("a", True), F("b", False), F("c", True), F("d", True), F("e", False), F("f", False)],
+             "on_xabs": [F("a", True), F("b", True), F("c", True), F("d", True), F("e", False), F("f", False)]}
+    at = R3.attribution(cells)
+    cat = {r["family_id"]: r["category"] for r in at["families"]}
+    check(cat == {"b": "OE-only", "c": "X-ABS-only", "d": "either", "e": "neither", "f": "OE-only"}, cat)
+    check([r for r in at["families"] if r["family_id"] == "f"][0].get("note"), "interaction note")
+    check([r for r in at["families"] if r["family_id"] == "e"][0]["residual_link"] == "COMPOSITION_HORIZON", "")
+    cells["on_xabs"][4] = F("e", True)
+    check({r["family_id"]: r["category"] for r in R3.attribution(cells)["families"]}["e"] == "both-only", "both-only")
+    cs = {c: {"chain_qualified": sum(f["qualified"] for f in v)} for c, v in cells.items()}
+    e = R3.effects(cs)
+    check(e["interaction"] == 5 - 4 - 3 + 1 and e["OE_main_effect"] == (4 + 5 - 1 - 3) / 2, "effects")
+    mk = R3.masking({"W/f0": {"lambda": "(lam x (pow x 2))", "status": "ACQUIRED"}},
+                    {"W/f0": {"lambda": "(lam x (add 2 (pow x 2)))", "status": "ACQUIRED",
+                              "extraction": "xabs_absorbed"}})
+    check(mk["xabs_changed_any_stone_in_OE_cells"] and mk["units_changed"] == ["W/f0"], "masking")
+    # UD split and the post-hoc global-equivalence check (the reviewer's F2 method)
+    g = R3.global_equivalence("(add 2 (max (map (lam x (pow x 2)) xs)))", "(max (map (lam x (add 2 (mul x x))) xs))")
+    check(g["globally_equivalent"] and g["n_lists"] == 1 + 401 + 20000, "globally equivalent")
+    g2 = R3.global_equivalence("(len (filter (lam x (gt (sub x 2) 3)) xs))", "(len (filter (lam x (gt x 4)) xs))")
+    check(not g2["globally_equivalent"] and g2["n_differ"] > 0, "x > 5 vs x > 4")
     kp = KP.KP(str(ROOT), WORLD)
-    d = {"rows": {KP.PRIMARY.key(): {"units": {}, "chain": {},
-                                     "scratch": {f: {"status": "CENSORED"} for f in kp.admitted()}}}}
-    check(all(f["scratch_fails"] is False for f in kp.describe(d, KP.PRIMARY)["families"]), "CENSORED")
-    return {"cases": 8}
+    check(R3.ud_split(kp, {}, {"detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST", "unit": "p0"})["ud"] == "UD-R1", "")
+    fid = kp.r1_families("f1")[0]
+    units = {"f1": {"from": fid, "lambda": "(lam x x)", "attempts": [{"family_id": fid,
+                                                                      "found": kp.fams[fid]["witness"]}]}}
+    us = R3.ud_split(kp, units, {"detail": "STONE_DISAGREES_SEALED_PROBES", "units": ["f1"]})
+    check(us["ud"] == "UD-EXTRACT" and us["units"]["f1"]["global_equivalence_vs_sealed_r1_witness"]
+          ["globally_equivalent"], "UD-EXTRACT with global equivalence")
+    return {"tally": at["tally"], "effects": e}
+
+
+@test
+def test_e3r_xabs_singleton_probes_and_arm_view_assert():
+    lists = KP.xabs_probe_lists([[3, -2], [5]])
+    check(len(lists) == KP.XABS_N_PROBES + 8 and lists[-8:] == [[v] for v in range(-2, 6)], "singletons")
+    check(all(0 <= len(x) <= 2 and all(-2 <= v <= 5 for v in x) for x in lists[:KP.XABS_N_PROBES]), "random part")
+    kp = KP.KP(str(ROOT), WORLD)
+    fid = kp.r1_families("f1")[0]
+    check(kp.dev_inputs_checked(fid) == [i for i, _o in kp.task(fid)["dev"]], "arm view equal")
+    kp.task(fid)["dev"][0] = [[999], kp.task(fid)["dev"][0][1]]          # tamper the (cached) evaluator dev
+    try:
+        kp.dev_inputs_checked(fid)
+        raise AssertionError("tampered evaluator dev not detected")
+    except AssertionError as e:
+        check("differ from the arm view" in str(e), "assert message")
+    return {"probe_lists": len(lists)}
+
+
+@test
+def test_e3r_capped_scratch_censored_cached_and_extension():
+    """A1: an OE scratch above its cap is CENSORED (third state), cached per search key and re-used at the same cap;
+    a larger cap (the one extension) re-runs it. Tiny caps on EXPOSED pilot_v2 (the child is this test's own process)."""
+    from tfs1.e3 import e3r as R3
+    kp = KP.KP(str(ROOT), WORLD)
+    fid = kp.admitted()[0]
+    cfg = KP.Config(oe=True)
+    d = {"searches": {}, "rows": {}}
+    r = KP.run_scratch_capped(kp, d, fid, cfg, 0.3)
+    check(r["status"] == "CENSORED" and r["cap_s"] == 0.3, "censored")
+    check(R3.scratch_state(d, fid, True, KP.BUDGET)["state"] == "CENSORED", "third state")
+    r2 = KP.run_scratch_capped(kp, d, fid, cfg, 0.3)
+    check(r2.get("reused_censored_search"), "censoring re-used")
+    r3 = KP.run_scratch_capped(kp, d, fid, cfg, 0.6)
+    check(r3["status"] == "CENSORED" and r3["cap_s"] == 0.6 and not r3.get("reused_censored_search"), "extension")
+    return {"family": fid, "cpu_s": [r["cpu_s"], r3["cpu_s"]]}
+
+
+@test
+def test_e3r_lazy_scratch_order_and_stop_rule():
+    """A1.4 / A1.5: OE scratch is run only while NEEDED and not DETERMINED, in the fixed order (Int-output families
+    first, then family_id), skipping searches already decided or censored at >= this cap; the OE-scratch envelope
+    blocks a start."""
+    from tfs1.e3 import e3r_run as DR
+    import types
+    with tempfile.TemporaryDirectory() as td:
+        a = types.SimpleNamespace(root=str(ROOT), kp_frozen=td, out=td, worlds="W1d5301d0,W0467897d", workers=1,
+                                  budget=1000, deadline="2099-01-01T00:00Z", not_before="2000-01-01T00:00Z",
+                                  envelope_core_h=14.0, debit_core_h=0.0, oe_scratch_envelope_core_h=16.0,
+                                  min_free_gb=0.0, expect_off_frozen=None, expect_off_xabs=None,
+                                  with_fallback_off=False)
+        dr = DR.Driver(a)
+        order = dr.scratch_order()
+        types_ = [KP.KP(str(ROOT), w).task(f)["output_type"] for f, w in order]
+        check(types_ == sorted(types_, key=lambda t: t != "Int"), "Int-output first")
+        check([f for f, _w in order if KP.KP(str(ROOT), _w).task(f)["output_type"] == "Int"] ==
+              sorted(f for f, _w in order if KP.KP(str(ROOT), _w).task(f)["output_type"] == "Int"), "family order")
+        ran = []
+        dr.run_jobs = lambda jobs, gate=None: ran.extend(j["name"] for j in jobs)
+        state = {"n": 0}
+
+        def nd():
+            state["n"] += 1
+            return True, state["n"] > 3, None
+        dr.need_and_determined = nd
+        dr.lazy_scratch(3600.0)
+        check(len(ran) == 3 and ran[0].endswith("%s/%s/cap3600" % (order[0][1], order[0][0])), ran)
+        ran.clear()
+        dr.need_and_determined = lambda: (False, False, None)
+        dr.lazy_scratch(3600.0)
+        check(not ran, "not needed -> nothing runs")
+        dr.need_and_determined = lambda: (True, False, None)
+        dr.state["ledger_s"]["oe_scratch"] = 16 * 3600.0 - 100
+        dr.lazy_scratch(3600.0)
+        check(not ran and any("envelope" in n for n in dr.state.get("notes", [])), "envelope blocks")
+    return {"order": order}
+
+
+@test
+def test_e3r_driver_end_to_end_resumable_hard_stop_and_custody():
+    """The A9 driver on EXPOSED pilot_v2, one world, B = 2e4, 1 worker: hard stop in the past -> nothing runs and the
+    label is INCOMPLETE; a full run completes (reproduction checks pass: off_frozen == the frozen pooled file and the
+    asserted count); re-invoking runs NO new search (resumable); UTC start / end in the result and world files; the
+    claim-limits block is present."""
+    from tfs1.e3 import e3r_run as DR
+    import types
+    B, W = 20000, "W1d5301d0"
+    with tempfile.TemporaryDirectory() as td:
+        fz, out = Path(td) / "frozen", Path(td) / "run"
+        KP.run_stages(str(ROOT), W, KP.Config(budget=B), "all", str(fz), log=lambda s: None)
+        (fz / ("KPA1_POOLED_%s.json" % KP.Config(budget=B).key())).write_text(json.dumps(
+            KP.pooled(str(ROOT), [W], KP.Config(budget=B), str(fz))))
+        q0 = KP.pooled(str(ROOT), [W], KP.Config(budget=B), str(fz))["verdict"]["chain_qualified"]
+
+        def args(deadline):
+            return types.SimpleNamespace(root=str(ROOT), kp_frozen=str(fz), out=str(out), worlds=W, workers=1,
+                                         budget=B, deadline=deadline, not_before="2000-01-01T00:00Z",
+                                         envelope_core_h=14.0, debit_core_h=0.0, oe_scratch_envelope_core_h=16.0,
+                                         min_free_gb=0.0, expect_off_frozen=q0, expect_off_xabs=None,
+                                         with_fallback_off=True)
+        r0 = DR.Driver(args("2000-01-01T00:00Z")).go()
+        check(r0["driver_status"] == "HARD_STOP" and r0["REPAIR_CLASS"] == "INCOMPLETE", "hard stop")
+        r1 = DR.Driver(args("2099-01-01T00:00Z")).go()
+        check(r1["driver_status"] == "COMPLETE", r1["driver_status"])
+        chk = r1["reproduction_checks"]
+        check(chk["off_frozen_equals_frozen_pooled"] and chk["off_frozen_assert"]["pass"], chk)
+        check(all(r1["per_seed"][s]["cells"][c]["complete"] for s in (0, 1, 2) for c in R3_CELLS()), "complete")
+        check(r1["fallback_off_on_xabs"] is not None, "priority-2 row")
+        led = json.loads((out / "E3R_STATE.json").read_text())["ledger_s"]
+        fzk = set(json.loads((fz / ("KPA1_%s.json" % W)).read_text())["searches"])
+        new_cpu = sum(v.get("cpu_s", 0) for k, v in KP._load(str(out), W)["searches"].items() if k not in fzk)
+        check(abs(sum(led.values()) - new_cpu) < 1.0, "ledger %r != new-search CPU %.1f" % (led, new_cpu))
+        n_search = len(KP._load(str(out), W)["searches"])
+        r2 = DR.Driver(args("2099-01-01T00:00Z")).go()
+        check(len(KP._load(str(out), W)["searches"]) == n_search and r2["REPAIR_CLASS"] == r1["REPAIR_CLASS"],
+              "resume ran new searches")
+        check(json.loads((out / "E3R_STATE.json").read_text())["ledger_s"] == led, "resume debited CPU")
+        wf = KP._load(str(out), W)
+        check(r1["utc_start"] and r1["utc_end"] and wf.get("utc_last_write") and all(
+            v.get("utc_start") for k, v in wf["searches"].items() if k not in json.loads(
+                (fz / ("KPA1_%s.json" % W)).read_text())["searches"]), "UTC custody")
+        check(r1["claim_limits"]["may_not_claim"] and r1["scope"], "claim limits")
+    return {"label": r1["REPAIR_CLASS"], "stability": r1["stability"], "ledger_s": led}
+
+
+def R3_CELLS():
+    from tfs1.e3 import e3r as R3
+    return R3.CELLS
 
 
 def _run(fn):

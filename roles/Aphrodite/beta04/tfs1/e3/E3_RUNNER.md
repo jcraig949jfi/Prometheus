@@ -19,6 +19,7 @@ All commands run from `roles/Aphrodite/beta04/` with `OMP_NUM_THREADS=1`, one pr
 | `worlds.py` | Arm-view loader (`ArmWorld`: sha-verified, reads only `arm_view/`); coordinator-side `presentation_order`, `Evaluator`, `sealed`; `judge` (test + tribunal, value-or-FAIL); `AccessLog` (records every open during a lifetime) |
 | `e3_known_positive.py` | s1 E3-KP, **amended (prereg A1-A / A1-C)**: rows, pooled verdict, first-failing-link labels. Stage-cached in `runs/KPA1_<world>.json` (the old `runs/KP_<world>.json` are pre-amendment, kept as history) |
 | `kp_timing.py` | E3-KP core-seconds per family per stage + production projection (`runs/KPA1_TIMING.json`) |
+| `e3r.py`, `e3r_run.py` | E3-R analysis (bounds, labels, stability, attribution, UD split, readings, claim limits) and the resumable A9 driver (`E3R_STATE.json`, `E3R_RESULT.json`) |
 | `e3_identifiability.py` | E3-ID stepping-stone identifiability diagnostic (`windows/E3ID_PREREG.md`): ID-1/ID-2 classes, RETAIN-k; cache `runs/ID_<world>.json`, pooled `runs/ID_POOLED_B<b>.json` |
 | `organism.py` | s2 lifetime organism: arms P0A0 / P1A0 / P0A1 / P1A1 / RANDOM-LIBRARY / SHUFFLED-HISTORY / RANDOM-ARCHIVE |
 | `resumable.py` | Checkpointed lifetimes. A production lifetime exceeds the 15 CPU-min single-run cap. Resuming is identical to an uninterrupted run (tested) |
@@ -34,7 +35,8 @@ python -m tfs1.e3.e3_known_positive --root foundry/<set> --pooled [--worlds W1,.
     ROW = (none: primary) | --fallback off | --given-foundry-primitives | --seeds 1,2 | --all-acquired-library | --oe
 python -m tfs1.e3.kp_timing --root foundry/<set> --worlds W1,W2
 python -m tfs1.e3.e3_known_positive --root foundry/<set> --world W --stage all --out <E3R dir> --seed-cache-from <frozen KPA1 dir> [--oe] [--extract xabs]   (E3-R cells)
-python -m tfs1.e3.e3_known_positive --root foundry/<set> --repair-class --out <E3R dir>      (E3R_REPAIR_CLASS_seed0_B1000000.json)
+python -m tfs1.e3.e3r_run --root foundry/production --kp-frozen runs/kp_production --out runs/e3r_production --workers 2 --expect-off-frozen 7 --expect-off-xabs 9 --with-fallback-off
+python -m tfs1.e3.e3r_run ... --analyse-only        (recompute E3R_RESULT.json from the caches)
 python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --world W --stage id1|retain|all [--out D] [--no-cert]
 python -m tfs1.e3.e3_identifiability --root foundry/<set> --kp-out <KPA1 dir> --pooled [--worlds ..] [--out D]
 python -m tfs1.e3.resumable --root foundry/<set> --world W --arm ARM --seed S --B 200000 --ckpt runs/L_<W>_<ARM>_s<S>.json --max-cpu 780
@@ -171,7 +173,7 @@ For each qualified admitted R3/R4 solution that calls an entry e, three re-runs:
 SUPPORTED iff REPLAY qualifies and both REMOVED and SHAM fail. Supported depth = the max depth over the supported
 entries.
 
-## 3. Tests (`E3_TEST_RESULTS.json`): 23 PASS / 0 FAIL
+## 3. Tests (`E3_TEST_RESULTS.json`): 28 PASS / 0 FAIL (E3-R A1 tests: bounds / labels / stability / readings, attribution / effects / masking / UD split, singleton probes + arm-view assert, capped scratch CENSORED + extension, lazy order / stop / envelope, driver end-to-end: hard stop, resumable, ledger, UTC, claim limits)
 
 The base TFS-1 suite (`tfs1/tests`) gives 15/15 after the OE change.
 
@@ -422,6 +424,79 @@ Kinds p / s use the frozen rule.
 
 The prereg's estimate is 3.3-7 core-h. **OE scratch on List-output families is the risk.** A3.6 sets no per-process
 cap, so a long OE scratch can run for hours; budget the rolling window, or decide a cap and CENSORED in advance.
+
+## 4E. E3-R after amendment E3R-A1 (red team A1-A12 + s4 rulings; `e3r.py`, `e3r_run.py`)
+
+The module docstrings are normative.
+
+**X-ABS (A2).**
+- Probes are 200 seeded lists plus every singleton over the dev element range.
+- Only top-level `(map L xs)` nodes are candidates.
+- R is tried first, then its dual reducer (disclosed as added after seeing W6eb945cc).
+- The highest valid ancestor wins.
+- The dev inputs are asserted equal to the arm view at run time (m2).
+
+**Scratch control (A1).**
+- The OE scratch is capped at 3,600 CPU-s, in a capped child process.
+- CENSORED is a third state; NOT_RUN means the scratch was lazily not run.
+- **Bounds.** LO counts CENSORED / NOT_RUN as not failed; HI counts them as failed.
+  - A cell counts iff its chains are complete, 5q >= 4n and 5*sf >= 4n.
+  - It is TRIVIALISED if 5q >= 4n but the scratch condition fails.
+  - It is COUNTS_CONDITIONAL if LO and HI disagree.
+- **Labels.** The label is computed at LO and at HI. When they differ it is reported as
+  `<HI> (CONDITIONAL: k OE scratches censored at 3,600 CPU-s; unconditional: <LO>)`. The recommendation may use only
+  the unconditional label.
+- **Lazy OE scratch.** It runs only while some OE cell (at any seed) has 5q >= 4n AND the label is not determined.
+  Order: Int-output families first, then family_id.
+- **Extension.** If the label is still undetermined, censored searches get ONE re-run at 14,400 CPU-s.
+- **Envelope.** OE scratch is limited to 16 core-h.
+- The frozen non-OE scratch is reported beside each OE cell as a secondary control.
+
+**Seeds (A3).**
+- off_xabs, on_frozen and on_xabs run at seeds 0, 1 and 2. Seeds 1 / 2 re-use the seed-0 scratch (declared
+  deviation).
+- Stability: STABLE / MAJORITY / SEED_UNSTABLE.
+- PRIMARY output: the per-family attribution table over the seed-0 off_frozen failures. Its categories are OE-only,
+  X-ABS-only, both-only, either, neither (with the residual link).
+- The OE and X-ABS main effects and their interaction are reported per seed.
+
+**Readings (A4, A5, A7, A12).**
+- UD is split into UD-R1, UD-EXTRACT (with a post-hoc global-equivalence check of the R1 program vs the sealed R1
+  witness on the reviewer's list set, seeded) and UD-OTHER.
+- The fixed NONE reading cell is on_xabs.
+- The reading texts are `e3r.INTERPRETATION`, `SCOPE` and `CLAIM_LIMITS`.
+- A SEARCH reading appends the masking report (did X-ABS change any stone in the OE cells).
+
+**Pilot (EXPOSED pilot_v2, 1e6, the A1 driver; `runs/e3r_pilot_a1/`; development only).**
+
+| Seed | off_frozen | off_xabs | on_frozen | on_xabs | Label |
+|---|---|---|---|---|---|
+| 0 | 3/7 | 3/7 | 7/7 | 7/7 | SEARCH |
+| 1 | 2/7 | 2/7 | 3/7 | 6/7 | BOTH_REQUIRED |
+| 2 | 2/7 | 2/7 | 4/7 | 6/7 | BOTH_REQUIRED |
+
+- Overall: BOTH_REQUIRED (MAJORITY).
+- **OE scratch.** 6 FAILED. 1 NOT_RUN: not needed, because the bounds were already determined, so the label is
+  unconditional.
+- **X-ABS firing.** X-ABS fired, held out, in the OE cells at seeds 1 / 2 (W0467897d f1:
+  `(lam x (gcd 0 x))` -> `(lam x (pow (gcd 0 x) 3))`, sealed agreement 0.037 -> 1.0). That is the masking report.
+- **Spend.** The driver's new-search CPU was 1,687 s. Old `runs/e3r_pilot/` (pre-A10) files are backfilled with a
+  labelled UTC upper bound and are superseded.
+
+**Run order and custody (A6, A8-A10).** e3r_run.py runs the steps in this order, resumably:
+1. off_xabs seed 0, then the reproduction checks. A failed check HALTS the run. The checks are:
+   - off_frozen equals the frozen pooled file;
+   - `--expect-off-frozen 7`.
+   - `--expect-off-xabs 9` is EXPECTED, pending reproduction: reported, never asserted (review v2).
+2. The OE R1 searches and OE chains, seed 0.
+3. Lazy OE scratch.
+4. Seeds 1 and 2, then lazy OE scratch again.
+5. The extension.
+6. fallback-off on_xabs (priority 2).
+
+The run uses <= 2 workers, never two on one world file, with a memory check before the second. It stops at the hard
+stop 2026-10-13T09:27Z (INCOMPLETE with bounds) and honours the not-before time 2026-10-11T11:30Z. Every search
+record, world file, state file and result file carries UTC.
 
 ## 5. Development smoke (EXPOSED pilot_v2; `runs/SMOKE_*.json`, `runs/SMOKE_SUMMARY.json`)
 
