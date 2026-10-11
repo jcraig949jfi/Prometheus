@@ -38,6 +38,10 @@ Mean excess by k, predicted vs actual:
    nonlinear surrogate) predicts DECAY. A sign error, not a calibration error. This is the clearest evidence so far
    that stig's usability is history-accumulative (the trace builds up over the episode) and not visible from a
    stationary one-step response. It is NOT a verdict: stig is uninformative under A14.
+   ADDENDUM (2026-10-11, from reading Stig.step, before any new data): a simpler rival explains a rise with k.
+   The agent writes the cue at its cell and moves v cells per step on a ring of L = 16, sensing +-1 cell, so it
+   RETURNS to the cue cell periodically (period L / gcd(v, L)). H-RETURN predicts usability PERIODIC in k with
+   a period that moves with L; H-ACCUM predicts a monotone rise independent of L. EXP-05 discriminates them.
 3. phase: the surrogate predicts ~0 excess even at k=2, where 15% excess is real. The one-step model does not carry
    the cue at all. Likely instrument (random ReLU features of whitened phases do not represent circular state, or
    the fitted residual noise swamps a small phase offset); untested.
