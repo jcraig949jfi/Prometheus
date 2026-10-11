@@ -217,6 +217,17 @@ Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
   Treat any real key in these files as compromised. Rotate first. Making the
   repo private or rewriting history does not un-leak a value that was
   already public. Pan has taken no outward action.
+  ROTATION RECIPE (from code, no values read): evidence_wiki/ew/db.py
+  load_config states that the committed config.json carries cleartext
+  db_password / auth_token / machine_tokens "as a V0 trusted-LAN default".
+  Overrides need no code change. Precedence is: environment variable >
+  untracked evidence_wiki/config.local.json (gitignored) > config.json.
+  After rotating:
+  - put the new values in each host's config.local.json or environment;
+  - then blank them in config.json.
+  The canonical checkout D:\Prometheus has a config.local.json; Pan's
+  worktree does not. Pan will lose database access at rotation until one is
+  supplied. That is expected; do not delay rotation for it.
   ANSWER:
 
 ## ANSWERED
