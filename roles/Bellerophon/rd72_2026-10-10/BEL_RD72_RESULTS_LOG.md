@@ -242,3 +242,32 @@ Mechanism hypothesis (POST HOC, from reading the kernel after the outcome):
 - Untested here. The decisive test is the same ladder with ALL-OR-NOTHING payment (a bonus only for a full-panel
   correct answer), which removes the half-credit attractor; or a payment on both halves per interaction.
   -> NEXT_CAMPAIGN #1.
+
+## F2 -- the F1 ladder under PAIRED-HALVES payment (prereg s11 + erratum s11-E1; CONFIRMATORY; completed 2026-10-11T09:18Z)
+80 runs, 0 voids, plan sha256 62a92bd0..., pin f3cd80c86; analysis tools/analyze_f2.py at fc93ca78d (bool-cast erratum);
+receipt receipts/F2_analysis.json. Same seeds and founders as F1 (payment ON), payment rule changed only.
+| founder | paired rule: BOTH at end / crossed / FUNC end / established | kernel rule (F1, matched): same |
+|---|---|---|
+| W0 | 2 / (18) / 11 / 14 | 1 / (16) / 14 / 19 |
+| KO1 | 1 / 1 / 7 / 8 | 0 / 0 / 10 / 13 |
+| ECHOH | 0 / 0 / 2 / 3 | 0 / 0 / 7 / 10 |
+| REP | 0 / 0 / 2 / 3 | 0 / 0 / 3 / 4 |
+- Second-check denials: ECHOH 25,109 / 25,123 and REP 5,533 / 5,535; W0 worlds ~15% of correct events. The instrument did
+  what it was meant to: half-solvers earn nothing.
+- F2-P0 (maintenance, paired > kernel): 2/20 vs 1/20, p 0.5. FAILS. By the frozen rule the half-credit hypothesis is
+  REJECTED: the planted composite is still not maintained when half-solvers earn no bonus.
+- F2-P1 (KO1 crossing): 1/20 vs 0/20, p 0.5. FAILS.
+Descriptive:
+- Under the paired rule the composite lasts longer. The last census with a FUNC BOTH is >= 1,700 in 6/20 worlds, against
+  2/20 under the kernel rule.
+- Unpaid half-solvers still take over: one world ends with 193 INC replicators, and the composite's descendants decay to
+  them anyway. The decay does not need the half-solvers to be paid. It is a VARIATION effect (mutation breaking the
+  composite downhill), not a SELECTION-for-halves effect.
+- Paired payment lowers survival of worlds founded by non-composites (ECHOH FUNC at end 2/20 vs 7/20): they lose their
+  bonus.
+- ONE CROSSING, the first evolved composite of the campaign: f2_00022 (founder KO1 position 9, the CP operand set to 0, an
+  INC-like HI solver).
+  - A FUNC BOTH appears at tick 1,100 and is held to tick 2,000 (47 carriers at the end, next to 99 HI and 33 LO).
+  - The matched kernel-rule world (f1_00042) never crossed.
+  - The founder has 1 SUB route (restore the operand); the intermediate (the founder) is functional (HI).
+  - Single event: not a rate, not tested.
