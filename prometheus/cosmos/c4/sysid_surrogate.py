@@ -27,7 +27,7 @@ def _ridge(Z, Y, lam=RIDGE):
     return np.linalg.solve(Z.T @ Z + lam * len(Z) * np.eye(Z.shape[1]), Z.T @ Y)
 
 
-def fit_surrogate(probe: LocalProbe, n: int = N_TRAIN, seed: int = 0) -> Dict:
+def fit_surrogate(probe: LocalProbe, n: int = N_TRAIN, seed: int = 0, ridge: float = RIDGE) -> Dict:
     rng = np.random.default_rng([SEED_NS, seed])
     n_in = probe._n_in
     s0 = probe.stationary(n)
@@ -41,20 +41,23 @@ def fit_surrogate(probe: LocalProbe, n: int = N_TRAIN, seed: int = 0) -> Dict:
     X = np.hstack([Z0, np.eye(n_in)[obs]])
     P = rng.standard_normal((X.shape[1], WIDTH)) / np.sqrt(X.shape[1])
     b = rng.uniform(-1, 1, WIDTH)
-    Wdyn = _ridge(_rf(X, P, b), Z1)
+    Wdyn = _ridge(_rf(X, P, b), Z1, ridge)
     res = Z1 - _rf(X, P, b) @ Wdyn
     cov = np.cov(res.T) if res.shape[1] > 1 else np.atleast_2d(res.var())
     w, U = np.linalg.eigh(np.atleast_2d(cov))
     Lc = U * np.sqrt(np.clip(w, 0, None))
     Pr = rng.standard_normal((Z0.shape[1], WIDTH)) / np.sqrt(max(Z0.shape[1], 1))
     br = rng.uniform(-1, 1, WIDTH)
-    Wro = _ridge(_rf(Z0, Pr, br), (R0 - mr) @ Wr)
+    Wro = _ridge(_rf(Z0, Pr, br), (R0 - mr) @ Wr, ridge)
     return {"P": P, "b": b, "W": Wdyn, "L": Lc, "Pr": Pr, "br": br, "Wro": Wro, "Z0": Z0,
             "lo": Z0.min(0) - 1.0, "hi": Z0.max(0) + 1.0, "n_in": n_in}
 
 
-def predicted_accuracy(S: Dict, V: int, k: int, E: int = E_SIM, seed: int = 0) -> float:
-    """Simulate the task in the surrogate from stationary starts; ridge linear decoder of the cue; held-out acc."""
+def predicted_accuracy(S: Dict, V: int, k: int, E: int = E_SIM, seed: int = 0, noise_scale: float = 1.0,
+                       clip: bool = True) -> float:
+    """Simulate the task in the surrogate from stationary starts; ridge linear decoder of the cue; held-out acc.
+    noise_scale / clip (and fit_surrogate's ridge, n) exist only for the EXP-06 diagnosis; the defaults are the
+    frozen EXP-04 instrument."""
     rng = np.random.default_rng([SEED_NS, seed, 1])
     n_in = S["n_in"]
     Z = S["Z0"][rng.integers(0, len(S["Z0"]), E)]
@@ -63,8 +66,9 @@ def predicted_accuracy(S: Dict, V: int, k: int, E: int = E_SIM, seed: int = 0) -
     eye = np.eye(n_in)
     for o in seq:
         X = np.hstack([Z, eye[np.clip(o, 0, n_in - 1)]])
-        Z = _rf(X, S["P"], S["b"]) @ S["W"] + rng.standard_normal((E, S["L"].shape[1])) @ S["L"].T
-        Z = np.clip(Z, S["lo"], S["hi"])
+        Z = _rf(X, S["P"], S["b"]) @ S["W"] + noise_scale * (rng.standard_normal((E, S["L"].shape[1])) @ S["L"].T)
+        if clip:
+            Z = np.clip(Z, S["lo"], S["hi"])
     R = _rf(Z, S["Pr"], S["br"]) @ S["Wro"]
     h = E // 2
     Rtr, Rte = R[:h], R[h:]
