@@ -1,20 +1,30 @@
 {
  "schema": "beta04.manifest.v1",
  "campaign": "C-015",
- "head_at_generation": "f627acbe0c2b25981c7a2e9d42690b9f51a05d43",
- "n_files": 3644,
+ "head_at_generation": "af407f28fcba734eeb76e4ad99255a7ebee4067a",
+ "n_files": 3660,
  "by_category": {
-  "doc/state": 690,
+  "doc/state": 693,
   "prereg/freeze": 11,
-  "code": 67,
-  "result/data": 2865,
+  "code": 68,
+  "result/data": 2874,
   "review": 6,
-  "window-report": 5
+  "window-report": 8
  },
  "files": [
   {
+   "path": "roles/Aphrodite/beta04/ARTIFACT_MANIFEST.json",
+   "git_blob": "81c3ed71ff88afafb7b21e73dfa91db886da3759",
+   "category": "doc/state"
+  },
+  {
    "path": "roles/Aphrodite/beta04/CAMPAIGN_STATE.json",
-   "git_blob": "13ef8a7eccb0376e33021b49414b466d52036ad6",
+   "git_blob": "c235d89334a986e0634a1ed5f5a29095ef69e26d",
+   "category": "doc/state"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/COMPUTE_REPORT.json",
+   "git_blob": "7fa81747d36d8d4d7e7ff6a438abe3350b5aff9c",
    "category": "doc/state"
   },
   {
@@ -49,7 +59,7 @@
   },
   {
    "path": "roles/Aphrodite/beta04/LEDGER.json",
-   "git_blob": "4046815e9d58f29f864fcc1554d4cf16744879cb",
+   "git_blob": "afcc60e27e22a7035fe0b45b0e3c8eb7104bd18b",
    "category": "doc/state"
   },
   {
@@ -60,6 +70,11 @@
   {
    "path": "roles/Aphrodite/beta04/READING_DIGEST.md",
    "git_blob": "09865646658e4d9839e2ff13dfb1e4b9c09a8315",
+   "category": "doc/state"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/SYNTHESIS.md",
+   "git_blob": "5fbc8926ac2677da4e02ca74a567ae3bec1399c5",
    "category": "doc/state"
   },
   {
@@ -490,6 +505,11 @@
   {
    "path": "roles/Aphrodite/beta04/atlas/toys.py",
    "git_blob": "782a19a5811d22087630e3e88195ed7065bc5f37",
+   "category": "code"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/close_tools.py",
+   "git_blob": "400e254437140aa12e2c260aec64649bbaa88098",
    "category": "code"
   },
   {
@@ -17708,6 +17728,51 @@
    "category": "result/data"
   },
   {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/E3R_RESULT.json",
+   "git_blob": "fd3bde2807388e88b6cd40d69c0ef71120a78656",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/E3R_STATE.json",
+   "git_blob": "4e5e2394140eed7a2eb65fa41bb7d8392ee4a5c4",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_W0321d83c.json",
+   "git_blob": "e4345aba64b63310c1a56b4181f7c0d1c74512e0",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_W2bdef02f.json",
+   "git_blob": "d8ff12bb782c16069f86919416438371fad5ee41",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_W480ffd54.json",
+   "git_blob": "d886ac02827f0d666cac71f943199c9686162cf4",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_W483b8c31.json",
+   "git_blob": "e2ed14c90c2d779d1e504f5e5a03d752dfecd2bf",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_W6eb945cc.json",
+   "git_blob": "08d7e06a0faaf02374a5325c235744e7d560b26b",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_Wb49b6a5f.json",
+   "git_blob": "7eac35fe428510dd815bc087cfd24a4e64455518",
+   "category": "result/data"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/runs/e3r_production/KPA1_Wc025415a.json",
+   "git_blob": "b5c8af2cd09cb623abc865f4ca7cf2aceb01fc7f",
+   "category": "result/data"
+  },
+  {
    "path": "roles/Aphrodite/beta04/runs/id_production/ID_POOLED_B1000000.json",
    "git_blob": "2d8301e1d90363f036cbed5cbeae40082952f8f3",
    "category": "result/data"
@@ -18230,6 +18295,21 @@
   {
    "path": "roles/Aphrodite/beta04/windows/W04_EXP_REPORT.md",
    "git_blob": "7026b9f3214834ac517455cd92beefc51634ec87",
+   "category": "window-report"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/windows/W05_DEV_REPORT.md",
+   "git_blob": "c25b8608ac5aa28a98f12f0baa7a03dc8c652bba",
+   "category": "window-report"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/windows/W06_HOLD_REPORT.md",
+   "git_blob": "d6ca2801ce92611bd46d87263c6705c251b8c915",
+   "category": "window-report"
+  },
+  {
+   "path": "roles/Aphrodite/beta04/windows/W07_EXP_REPORT.md",
+   "git_blob": "00f0bde3d09d5d3fb20bb0fe8f2b7f8bab01b547",
    "category": "window-report"
   }
  ]

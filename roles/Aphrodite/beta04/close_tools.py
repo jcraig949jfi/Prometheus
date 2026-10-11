@@ -42,9 +42,8 @@ def _e3r():
     if not os.path.exists(p):
         return None
     d = json.load(open(p, encoding="utf-8"))
-    led = d.get("cpu_ledger") or d.get("ledger") or {}
-    v = led.get("total_core_h") if isinstance(led, dict) else None
-    return v
+    led = d.get("ledger_s") or {}
+    return sum(v for v in led.values() if isinstance(v, (int, float))) / 3600.0 if led else None
 
 
 def compute_report():
