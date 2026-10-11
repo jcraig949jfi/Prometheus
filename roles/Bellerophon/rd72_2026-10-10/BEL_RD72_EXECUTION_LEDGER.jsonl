@@ -20,3 +20,6 @@
 {"t":"2026-10-10T22:48:37Z","event":"queue","block":"F1","freeze_commit":"8bc7f5384","plan":"240 d57a610279910de6a074d5d7e5bd4052ff36ac9f85ece4a88eacd630a45bde33","workers":2,"starts_after":"A3T complete (chain_f1.sh); baseline geometry f1_geometry.py after C2R (chain_f1geo.sh)"}
 {"t":"2026-10-11T03:25:46Z","event":"complete","block":"A3T","runs":1374,"voids":0,"analysis_commit":"3e91c7b03"}
 {"t":"2026-10-11T04:34:38Z","event":"complete","block":"C2R","runs":48,"voids":0,"replay_invalid":0}
+{"t":"2026-10-11T04:35:51Z","event":"reschedule","blocks":["F1","D2"],"reason":"F1 at 14 runs/h on 2 workers (~16h); on K2 completion F1 restarts (resumable driver, no plan change) with 4 workers and D2 starts with 3 (chain_k2f1d2.sh); D2 workers raised when F1 completes"}
+{"t":"2026-10-11T06:33:12Z","event":"complete","block":"K2","runs":1320,"voids":0}
+{"t":"2026-10-11T06:33:12Z","event":"launch","block":"D2","freeze_commit":"ce4bcd5e7","plan":"3200 93560f5bdd2c2ff0ea7abc0a88f7c852f9ac4e5301de3b6d5cf2aea13f46f0e1","workers":3,"note":"started 06:30:32Z by chain_k2f1d2.sh; F1 resumed with 4 workers"}

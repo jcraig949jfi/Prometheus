@@ -179,3 +179,33 @@ Disclosures:
 4. The capability is ECHO (ruler RU-E1b), the cheapest computation in the family. This shows lineage-independent
    persistence of a MINIMAL capability, not of a complex one; directive C2's "beyond minimal copiers" holds only in that
    narrow sense.
+
+## K2 -- composing two computational blocks across a verified desert (prereg s3 + amendment 3-A1; CONFIRMATORY; completed 2026-10-11T06:30Z)
+1,320 runs, 0 voids, plan sha256 727cea06..., pin cbc7a1eb6; analysis tools/analyze_k2.py; receipt receipts/K2_analysis.json.
+Target: COND_MULTI by a FUNC replicator, from fixtures X (copier + transform block) and Y (copier + branch block).
+- Desert verification (review R1): >= 4 substitutions from X and >= 5 from Y; 0 competent in ~3e9 two-step neighbours.
+  The aligned pair has exactly one assembly route (a prefix transfer).
+- 22 cells x 60 seeds, 1,000 ticks, three operator regimes (COPY_BYTE, COPY_STRUCT, PARTIAL_BYTE), payment ON vs
+  RANDOM_REWARD (and OFF under PARTIAL_BYTE).
+Outcome:
+- COMP_SR (a competent replicator born): 0 in 1,320 runs.
+- COMP_PERSIST: 0.
+- COMP_ANY (a competent non-replicating child of a non-competent writer): 1 run, k2_00856 (XY_AL, PARTIAL_BYTE, ON): 4
+  such children among 70,032 births, none alive at the end.
+- Extinction: 1,320 - 540 informative = 780 runs (59%) dead before tick 500. Informative runs per cell: 5 - 37.
+Frozen tests:
+- K-P1 (desert holds under historical operators, XY_AL COMP_SR <= 2/60): NOT_TESTABLE by its own rule (29 and 24
+  informative runs, rule needs >= 30). The raw count, 0/60 in both cells, is in the predicted direction.
+- K-P2 (PARTIAL_BYTE crossing exceeds the controls): FAILS (1/60 vs 0/60 each; all p >= 0.5).
+- K-P3 (two-source): NOT_TESTABLE (no COMP_SR).
+- K-P4 (selection, COMP_PERSIST ON > RANDOM_REWARD): FAILS (0 vs 0).
+Reading: a verified 4-5-step desert between two working half-blocks is NOT crossed in 1,000 ticks, under any of the three
+copy operators, with or without payment, even with the single aligned assembly route present in 60 worlds. The partial-
+overwrite operator produced the only competent product (4 non-replicating machines in one world). Assembly happened at
+the rate the geometry allows, and the product was not heritable.
+Failure classification (directive F list):
+- extinction before exploration: a large share (59% of runs);
+- reachable but improbable: the one-route aligned case;
+- insufficient search duration: 1,000 ticks; LADDER2 ran 20,000 ticks and got 0/240 for COND_ONE.
+- Not instrument blindness: competence is checked on every birth.
+- Not inaccessible: an assembly route exists and was used once.
