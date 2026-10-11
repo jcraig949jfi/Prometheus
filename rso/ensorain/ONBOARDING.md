@@ -108,7 +108,7 @@ Argus[harry1-b2f16d20], claude-opus-5-5 (Q2), harry1, 2026-10-11. One bounded ro
 | Amendment committed (030f1746f) | 12:43:14Z |
 | Re-frozen | this commit (see FREEZE.md v1.1.0) |
 | CPU | DEV_CHECK 255 s (30,800 lives), RED runner ~2 min, suite 9-11 s; well under 0.2 core-h |
-| Lines changed in the frozen adapter | analysis.py +115/-40 net to 207 lines, assay.py +69 to 247, freeze.py +10 to 69 |
+| Lines changed in the frozen adapter | analysis.py +92/-23 (now 207 lines), assay.py +55/-14 (247), freeze.py +7/-3 (69); subjects.py unchanged |
 | New repair code | repair_v110/dev_check.py 67, run_red.py 86; tests/test_repair_v110.py 154 (14 tests) |
 | Shared components modified | none. ruler.thresholds used with a bound of 9/10 (G_R5), outside its W15 calibration but inside its stated function |
 | Operator interventions | 0. Requests to Ensorain: 0 |

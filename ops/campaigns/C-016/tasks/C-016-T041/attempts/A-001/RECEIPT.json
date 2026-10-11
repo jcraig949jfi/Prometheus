@@ -1,0 +1,104 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-016-T041",
+ "campaign_id": "C-016",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-b2f16d20",
+ "host": "harry1",
+ "branch": "argus/c016-t041",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c016-t041",
+ "start_sha": "a387bbb5a5c865304549f9415ef8ed0f6c95047a",
+ "end_sha": "ebe4860c1 (freeze commit; this receipt and the state/journal commit follow it on the same branch)",
+ "dirty": false,
+ "commits": {
+  "claim_main": "fefc83a4f",
+  "code_branch": "6fff93af9",
+  "amendment_branch": "030f1746f",
+  "freeze_branch": "ebe4860c1",
+  "implementing_green_main": "2abdc36b3",
+  "red_required_note_main": "af1e338d0"
+ },
+ "files_changed": [
+  "rso/ensorain/analysis.py (revised endpoint, contrast, K1 intersection-union, _competence, qualification, power_revised)",
+  "rso/ensorain/assay.py (noise_matched, noswitch in _one, np.isfinite in memory_check, family_s, controls + jitter/learns_pre, print_verdicts)",
+  "rso/ensorain/freeze.py (VERSION 1.1.0, CHALLENGE_DEPS)",
+  "rso/ensorain/PREREGISTRATION.md v1.1.0, FROZEN.json v1.1.0, FREEZE.md v1.1.0, ONBOARDING.md s5",
+  "rso/ensorain/repair_v110/{__init__.py,dev_check.py,DEV_CHECK.json,DEV_ROWS.jsonl.gz,RED_EDITS.json,run_red.py,red_rows.jsonl} (new)",
+  "rso/ensorain/tests/test_repair_v110.py (new, 14 tests)",
+  "roles/Argus/{WORK_STATE.json,journal/2026-10-11.md,comms/2026-10-11_C-016-T041_*.md}",
+  "ops/campaigns/C-016/tasks/C-016-T041/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "(1) wording narrowings: PREREGISTRATION v1.1.0 s1 (revise a genome-initialised or lifetime-learned plastic parameter; innate vs learned not distinguished) and the s5 licensed-reading column (K2 relative to the innate start; competence 9 lives in 10); s0 amendment record A1-A11 maps each change to REPORT.md",
+  "(2) K1 comparator invariant to the innate start: coordinator suggestion ACCEPTED (reasons in PREREGISTRATION s0) and extended to K2: whole-life `revised` endpoint (analysis.py:revised, pre-switch AND late-window majority-correct); K1 = full vs frozen AND full vs noise-matched (assay.py:noise_matched, eta -> 1e-9 on the same draws), p = max (intersection-union, analysis.py:subject_stats)",
+  "dev check on seeds 16_300_001..400, N = 400 (repair_v110/DEV_CHECK.json, rows sha256 b54c751b0796bc58..., 26,400 rows): reference, innate_zero, innate_max, learns_pre all REVISION_HISTORY_DEPENDENT with the same full-arm count of revised lives (255) where v1.0.0 gave the four starts three verdicts; jitter REVISION_NOT_SHOWN (K1 vs frozen alone 19:0, p 1/524288; vs noise 0:0); clock_hybrid REVISION_HISTORY_DEPENDENT (400:0; noswitch 399/400, never flips); Smugglers and constants REFUSED_FIXED_PRIOR; memoryless_plus REVISION_NOT_SHOWN",
+  "(3) Q-d jitter (must not be REVISION_*) and Q-e learns_pre (must be REVISION_*) registered (analysis.py:qualification; assay.py:controls imports challenge/subjects_c.py unchanged); dev: Q-a..Q-e all True. No-switch descriptive arm added (P2)",
+  "(4) behavioural tests (tests/test_repair_v110.py) RED on mutants: red_rows.jsonl baseline GREEN 33/33; E1_HOLM_BYPASS E2_GPRE_ARM E3_LATE_WINDOW E4_SWAP_CONTROLS E6_GATE_MAJORITY applied verbatim from challenge/edits.json (find strings kept byte-identical in v1.1.0) and R1 (IUT dropped) R2 (G_R5 chance 1/2) R3 (= P1, isfinite removed) R4 (late-only endpoint) R5 (family S = all searched) R6 (noise arm keeps eta): all 11 RED on their named tests; files restored and verified (sha256 + git diff --quiet)",
+  "(5) G_R5 competence bound: count >= k_pos(N, alpha, 9/10) = 371 of 400 (analysis.py:_competence); B3's 220/400 fails",
+  "(6) family S from genome structure (assay.py:family_s) = searched_16310006/007/008; the 5 parameter-free subjects are NOT_TESTED_PARAMETER_FREE, reported with every statistic; per-arm revised lives and late accuracies printed beside every verdict (assay.py:print_verdicts)",
+  "N / power recomputed (analysis.py:power_revised): reference dev rates full .6375, frozen 0, noise .005, shuffle .1975 -> power 1.000 (P, and S at alpha/6); sensitivity p_full .60 vs p_ctrl .45: .987 (P, N 400), .964 (S); N = 400 kept",
+  "FREEZE_ENSORAIN v1.1.0: FROZEN.json LF sha256 fcfe67ce98d0ac59ed01cc807af6ecf8c5395bd6055ae4b02a04f4375048c7ab, 34 files + version set; freeze check OK; the amendment 030f1746f precedes the freeze ebe4860c1",
+  "ONBOARDING.md s5: repair-round measurements and five lessons (self-relative contrasts; deterministic-only controls; hash guards are not pins; competence bounds; families from structure)"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -B <scratch>/proto.py 100 (8 subjects x 100 dev lives)",
+   "result": "joint endpoint separates jitter (K1 vs noise 0:0) and reads learns_pre 63:0; chosen before the code"
+  },
+  {
+   "command": "python -B -m rso.ensorain.repair_v110.dev_check",
+   "result": "255 s; Q-a..Q-e True; verdicts as in evidence_added"
+  },
+  {
+   "command": "python -B rso/ensorain/repair_v110/run_red.py",
+   "result": "baseline GREEN (33 tests); 11/11 RED; restores verified"
+  },
+  {
+   "command": "python -B -m unittest rso.ensorain.tests.test_assay rso.ensorain.tests.test_repair_v110",
+   "result": "33 tests OK (8.7 s) on the frozen tree"
+  },
+  {
+   "command": "python -B -m rso.ensorain.assay dev <scratch> --n 4",
+   "result": "CLI path OK (prints verdicts with per-arm numbers and the qualification line)"
+  },
+  {
+   "command": "python -B -m rso.ensorain.freeze write; python -B -m rso.ensorain.freeze check",
+   "result": "34 files; OK"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "behavioural RED rows on mutants (rso/ensorain/repair_v110/red_rows.jsonl, 12:38:36Z..12:40:26Z); no pre-implementation failing run (tests written after the code). The RED workgraph state was skipped by the claimant; red_required set false with this reason (af1e338d0)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "PROCESS: the GREEN state commit 2abdc36b3 was pushed while `workgraph validate` exited 1 (GREEN without RED; the validate output was piped through tail, so the exit code did not stop the push). Repaired 2 min later by af1e338d0 (validate OK). Disclosed to Palamedes",
+  "red_rows.jsonl `failures` field repeats the method name (Python 3.12 unittest output parsed loosely); the outcome fields are correct",
+  "the noise arm is eta = 1e-9, not 0 (tape.py:305 needs eta > 0 for the perturbation); PREREGISTRATION s11.4",
+  "the T040 challenge seeds (16_350_xxx) were not re-run; the five challenge subjects were re-run on DEVELOPMENT seeds 16_300_001..400 as the packet asks",
+  "DEV_ROWS.jsonl.gz carries a gzip mtime header: its bytes are not reproducible; rows_sha256 over the decoded rows is"
+ ],
+ "unresolved": [
+  "C-016-T042: Pallas re-check of the repaired surface (FREEZE.md v1.1.0 lists the surfaces)",
+  "the confirmatory run (a later packet; 16_330_001..400, N = 400, 44,800 lives, ~370 CPU-s; shell timeout >= 900 s)",
+  "registry rows proposed in ONBOARDING.md s2 and s5 (Palamedes owns rso/registry/)"
+ ],
+ "unblocks": [
+  "C-016-T042"
+ ],
+ "resources": {
+  "cpu_core_hours_estimate": 0.15,
+  "processes_max": 2,
+  "peak_working_set_mb": "not measured in T041 (v1.0.0: 47 MB at N = 100)",
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/argus-scratch/c016t041/ (prototype, edit scripts, dev4.json)",
+ "notes": "Read-only on ensorain/ and roles/Ensorain/; no WTP-05 registered seed; nothing on ubu006; no confirmatory seed and no `assay confirm`; no searched-subject endpoint computed (preflight only). One repair round; no second round. Python 3.12.10 / numpy 2.4.3 on harry1.",
+ "created_at_utc": "2026-10-11T12:52:00Z"
+}
