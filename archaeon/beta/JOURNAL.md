@@ -900,6 +900,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - WINDOW 5 TALLY: B75 ~25 + B75b eval ~0.1 = ~25 of 48.
 - B76 launched 05:30Z (prediction committed before run, 0bb38c519): gen 0 = 100 x LATCH_1 + 100 x LATCH_2 in the B75 world;
   6 SOLO cells, G=300, 6 procs; lease lse-7818890fd1ed (token captured). Est ~12.5 core-h -> window 5 ~38 of 48.
+- B76 RESULT (06:20Z; lease RELEASED; ~50 min x 6 ~ 5 core-h): RESET-like genomes in 6/6 populations started from the
+  LATCH (5-9 of top 10); the latch survives 6/6; best rewards .075-.082 > hand RESET .065. PREDICTION (<= 1/6) FAILED.
+  VERIFIED on 7601/7603 bests: reward .082/.078; code-lock no change; persist-wiped .043/.020 (register state);
+  re-find .58/.69 (hand RESET .56); leave the dead node after 0-3 ticks (hand LATCH never leaves); 32/46 instructions.
+  READING (provisional): update-on-condition state IS reachable when its write-once precursor is present -- the
+  B75 wall (0/12 from random gen 0) was distance from a reachable start. CONTROL needed before believing it:
+  B76b = start from the stateless REACT (equally compact). Prediction committed with the probe.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
