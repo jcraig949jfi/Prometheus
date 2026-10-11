@@ -58,3 +58,16 @@ next          h4 at ~10:03 cron: final full suite, VERDICT.md vs P1-P6
 D2 SEALED/UNREAD/UNSPENT | confirmation data none | $0
 ======================================================================
 ```
+```
+COSMOS RELIABILITY TEST -- hour 4/4   2026-10-11T10:00:12Z (P1 ref 10:13)
+======================================================================
+wake          by the completion of the final-suite job (a job-driven wake),
+              not by the scheduler (cron :03 not yet fired; latency ~29 min)
+jobs          since h3: suites c4-v03 174/174, main 112/112, FINAL ns01
+              178/178 -- DONE; sweep ok (16 runs, none stalled/dead)
+lease         renewed 10:00Z -> 11:30Z
+constraints   D2 untouched; no confirmation data; autopsy branch absent on
+              origin; cosmos/c4-v03 not merged into main; $0
+verdict       VERDICT.md: FAIL by rule (P1 hour 1); P2-P6 met
+======================================================================
+```
