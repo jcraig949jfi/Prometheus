@@ -148,7 +148,7 @@
   "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
   "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
   "ALIEN_AR1": "DONE ~23:15Z; alien/runs/production committed (34912f59a)",
-  "E3R": "RUNNING since 2026-10-11T11:30:12Z (driver PID 3696 + 2 workers; worktree aph-b04-tfs1; runs/e3r_production). Reproduction: off_frozen 7/15 PASS (= frozen pooled); off_xabs 9/15 REPRODUCED."
+  "E3R": "DONE 2026-10-11T13:33:05Z; outputs committed (9375eb401)"
  },
  "subagents": {
   "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
@@ -265,5 +265,61 @@
    "Next major experiment: NOT R8; discover useful stepping stones without being told the decomposition",
    "Close Beta-04 after E3-R"
   ]
+ },
+ "E3R_result": {
+  "REPAIR_CLASS": "SEARCH",
+  "stability": "MAJORITY (seed0 SEARCH, seed1 BOTH_REQUIRED, seed2 SEARCH)",
+  "unconditional": true,
+  "censored_scratch": 0,
+  "cells_chain_qualified_of_15": {
+   "seed0": {
+    "off_frozen": 7,
+    "off_xabs": 9,
+    "on_frozen": 12,
+    "on_xabs": 15
+   },
+   "seed1": {
+    "off_frozen": 9,
+    "off_xabs": 10,
+    "on_frozen": 11,
+    "on_xabs": 13
+   },
+   "seed2": {
+    "off_frozen": 8,
+    "off_xabs": 8,
+    "on_frozen": 12,
+    "on_xabs": 13
+   }
+  },
+  "main_effects": {
+   "OE": [
+    5.5,
+    2.5,
+    4.5
+   ],
+   "XABS": [
+    2.5,
+    1.5,
+    0.5
+   ],
+   "interaction": [
+    1,
+    1,
+    1
+   ]
+  },
+  "attribution_seed0": {
+   "OE-only": 3,
+   "X-ABS-only": 0,
+   "both-only": 3,
+   "either": 2,
+   "neither": 0
+  },
+  "margin": "on_frozen sits exactly at the 12/15 bar at seeds 0 and 2 and at 11 at seed 1: one family separates SEARCH from BOTH_REQUIRED",
+  "masking": "X-ABS changed stones in OE cells (W483b8c31/f0, W6eb945cc/f0, Wb49b6a5f/f1; agreement 0.0 -> 1.0): developmental machinery NOT shown fine",
+  "fallback_off_on_xabs_seed0": "9/15 (R1_ACQUISITION 6); A1-C: seed-0 LO label unchanged (agree)",
+  "compute_core_h": 2.84,
+  "reproduction": "off_frozen 7/15 = frozen E3-KP; off_xabs 9/15 reproduced",
+  "claim_limits": "runs/e3r_production/E3R_RESULT.json claim_limits (may_not_claim: TFS1 relabel, E3 gate, COMPOSITIONAL_DISCOVERY, X-ABS generality, 'developmental machinery fine', CHANGE over MIGRATE)"
  }
 }
