@@ -41,7 +41,7 @@
     "rso/ensorain/COMPATIBILITY.md"
   ],
   "kind": "document",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -78,6 +78,18 @@
       "by": "Cadmus[harry1-abbe9ede]",
       "at_utc": "2026-10-11T10:15:25Z",
       "note": "document packet; COMPATIBILITY.md committed"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "on main (7a3feb105; DEVIATION: pushed to main directly, not a branch -- second time for this seat). Checks: rerun_c_demand reproduced byte-identical on harry1 (3.6 s; LF sha256 c0c275f5, doc quotes 82fbab37 -- provenance nit); no commit by any C-016 seat touches ensorain/ or roles/Ensorain/ since 7b1d549c8. Decision accepted: WTP-05 family C, question reworded to REVISION (retention not demanded by any tested Ensorain world)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "decision taken into C-016-T030"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

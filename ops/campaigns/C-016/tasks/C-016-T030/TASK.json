@@ -22,7 +22,7 @@
     "rso/binding/",
     "rso/slice001/"
   ],
-  "problem": "Per COMPATIBILITY.md. Reuse registry components within their scope (`python -m rso.registry.registry for-adapter`); record every component reused, modified, or found too narrow (source-specific assumptions in common components are a deliverable). Count bespoke adapter lines. Native controls per directive s4; discovery / evaluation seeds separated and disjoint from every WTP-05 registered seed; a preregistered endpoint and decision rule; a resource spec (s13: consumption, parallelism, stopping, reproducibility, checkpoint need). Freeze manifest (LF-normalised sha256) before any subject outcome. NO confirmatory run.",
+  "problem": "COORDINATOR DECISION (2026-10-11, from rso/ensorain/COMPATIBILITY.md, integrated): carrier = WTP-05 family C, world C-R2-desert, TAPE genome with lifetime plasticity, pinned at ensorain/ 7b1d549c8 (re-pin and diff ensorain/wtp5/ before freezing; Ensorain's DEEP may land a commit). QUESTION (reworded on evidence, directive s4 'candidate, not conclusion'): can a bounded persistent learner REVISE a lifetime-learned parameter at an unannounced law switch while keeping the unrelated competence, and does the revision depend on its own reward history? Retention across a drift boundary is NOT demanded by any tested Ensorain world -- record that as a finding, do not claim retention. SUBJECTS: native, defined before outcomes -- the planted lawful reference switch_C (capacity) AND, for search accessibility, genomes from a search you run yourself with NEW seeds (do not reuse Ensorain's searched genomes or seeds; if a search is too costly for the window, say so and run the reference-only assay). CONTROLS (directive s4, COMPATIBILITY s5): frozen plasticity (simpler competitor), N1-N4 nulls (memoryless / short-window / register / menu), history_shuffle (causal dependence), new-life-from-learned parameters named as such (no mid-life resume exists natively), a forbidden-channel / Smuggler analogue (a genome that reads the post-switch sign from a non-plastic constant: must be refused or separated by the instrument), and an external declared-memory check (after a life the genome differs from the input only at plastic_keys; working state zero at block start). ws_reset is vacuous for family C -- do not use it as a control. ENDPOINT: per-lifetime integer count of correct role-1 gates in blocks >= sw+3 with its n (receipt-canonical refuses floats); role-5 reported separately; NOT the SWITCH_TRACKED fraction (does not separate reference from shuffle at n=40). Unit = lifetime (episodes within a life are dependent: ruler-binary-retention's scope does not reach). Paired by lifetime seed; all arms on ONE host and version set (Ensorain results are host-bitwise). Size N for a ~0.1 accuracy effect from the lifetime-level variance in rso/ensorain/rerun_c_demand_result.json, BEFORE freezing. Seeds disjoint from every WTP-05 registered seed and from 16_020_xxx / 16_030_001 (used by T020). Resource spec per s13. Freeze manifest before any subject outcome; NO confirmatory run in this packet.",
   "non_goals": [
     "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
     "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
@@ -43,13 +43,19 @@
     "rso/ensorain/"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-11T10:07:34Z",
       "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "T020 integrated; decision in problem field; launch Argus on Opus"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

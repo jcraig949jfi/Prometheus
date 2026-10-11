@@ -38,7 +38,7 @@
     "rso/z80/smoke/"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -75,6 +75,18 @@
       "by": "Cadmus[harry1-abbe9ede]",
       "at_utc": "2026-10-11T10:18:42Z",
       "note": "contract + smoke committed at 9e8d60967"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "on main (592ef9965; same direct-to-main deviation). smoke_heredity re-run reproduced smoke_result.json exactly; archaeon/ untouched. Contract: archaeon tree, owner Archaeon (activity not checked -- route any engine use through the owner)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "third-engine contract + known-answer smoke (directive s16 criterion 7)"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
