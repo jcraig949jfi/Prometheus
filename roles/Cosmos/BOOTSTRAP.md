@@ -3,6 +3,10 @@
 Currency: 2026-10-08 (v0.3). Governing texts, newest first:
 - operator 48H autonomous campaign 2026-10-08: roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/DIRECTIVE_VERBATIM.md
   (live campaign state: roles/Cosmos/campaigns/48H_2026-10-08/CAMPAIGN_STATE.json; resume from its next_action)
+  2026-10-11: that campaign is CLOSED_INCOMPLETE (stall incident I-1). Current gate: the 4 h reliability test,
+  roles/Cosmos/campaigns/RELIABILITY_4H_2026-10-11/PREREG.md. RULE: every long job runs under
+  `python -m prometheus.cosmos.supervise launch --stall S -- python -m <module>` (never stdin / -c), with a Monitor
+  on its EVENTS.jsonl and an hourly scheduled wake; never wait on a PID.
 - operator C4 review 2026-09-30: roles/Cosmos/prompts/2026-09-30_operator_c4_review/DIRECTIVE_VERBATIM.md
 - operator C3 disposition 2026-09-30: roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/DIRECTIVE_VERBATIM.md
 - CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md, blob sha256 e62cb5ee...)
