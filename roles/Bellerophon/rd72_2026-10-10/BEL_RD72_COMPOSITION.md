@@ -38,6 +38,8 @@ is >= 4 / >= 5 substitutions away, with one two-source prefix-transfer route.
   At VLOW, payment still matters (17/20 vs 8/20 unpaid).
 
 ## 5. Transplantation
+- F6: the error threshold transfers to the COND_MULTI composite (19/20 VLOW vs 0/20 MED) and to WELL_MIXED (20/20 vs
+  2/20), on fresh seeds.
 - C3F (descriptive): a foreign ECHO solver implanted into ECHO-free worlds -> ECHO present at the end 6/10 vs 4/10 for
   the sham.
 - F1 is itself a transplant of the composite witness into a fresh evolving population: it does NOT survive

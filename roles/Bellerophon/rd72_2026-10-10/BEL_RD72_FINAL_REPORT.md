@@ -3,7 +3,7 @@
 Directive: roles/Bellerophon/prompts/2026-10-10_rd72/00_OPERATOR_REVIEW_AND_DIRECTIVE_verbatim.md.
 - Campaign clock: 2026-10-10 ~09:50Z -> 2026-10-13 ~09:50Z.
 - Host ubu005 (8 cores). Branch bellerophon/rd72-2026-10-10 (worktree bellerophon-boot-20261006).
-- Status: FINAL (written 2026-10-11/12; see section 6 for the last block).
+- Status: FINAL (written 2026-10-11; every block complete, 0 voids).
 Artifacts (this directory):
 - documents: BEL_RD72_PREREG.md (s1-s15, 2 amendments, 4 errata, 1 stop disclosure), REACHABILITY_GEOMETRY,
   OPERATOR_EXPERIMENTS, COMPOSITION, CUMULATIVE_ORGANIZATION, TRIVIALITY_AUDIT, FAILURE_BOUNDARIES, NEXT_CAMPAIGN,
@@ -74,7 +74,8 @@ Raw data is host-local in ~/rd72_runs on ubu005: results, plans, and pinned code
    - The creative component is real; its long-run value is NEXT_CAMPAIGN #5.
 9. Which mechanisms survived transplantation?
    - RM4 (two-component uptake): 2 substrates in D2; the net effect also in D1's 2 new substrates.
-   - RM2 (error threshold): fresh seeds (F4-R) and F6 (section 6).
+   - RM2 (error threshold): fresh seeds (F4-R), a second composite (COND_MULTI) and a second world model (WELL_MIXED)
+     (F6: p 1.5e-10, 1.7e-9).
    - A foreign ECHO solver implanted into ECHO-free worlds: ECHO at the end 6/10 vs 4/10 sham (descriptive).
    - Did NOT survive: the planted composite into worlds evolving at MED (F1: 1/14).
 10. Which apparent discoveries collapsed under triviality controls?
@@ -132,7 +133,7 @@ Raw data is host-local in ~/rd72_runs on ubu005: results, plans, and pinned code
 | F4 | 100 | 0 | aa95d9bd4 | 20 |
 | D2 | 3,200 | 0 | ce4bcd5e7 | 800 |
 | F5 | 80 | 0 | 85de14589 | 0 (F1 seeds) |
-| F6 | 100 | (s6) | 78440c25b | 40 |
+| F6 | 100 | 0 | 78440c25b | 40 |
 Totals (excluding pilots and smoke tests): 9,049 runs, 0 voids; ~5,260 independent initial populations. Paired designs
 reuse seeds by construction and are labelled.
 Replay receipts:
@@ -161,5 +162,9 @@ MECHANISM_LIBRARY.jsonl, in the directive's 10-field format:
 - RM4 two-component uptake;
 - fault lines FL1-FL4.
 
-## 6. Last block (F6: RM2 transplantation)
-(pending)
+## 6. Last block (F6: RM2 transplantation; prereg s15)
+On 40 fresh populations the error threshold transfers:
+- COND_MULTI composite (14 critical bytes): kept 19/20 at VLOW vs 0/20 at MED (p 1.5e-10); 18/20 at LOW.
+- WELL_MIXED world (COND_ONE composite): 20/20 vs 2/20 (p 1.7e-9).
+My reported side-prediction (more critical bytes -> keeps less often at LOW) was WRONG: 18/20 vs 13/20. Byte count alone
+does not set the threshold.

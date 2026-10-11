@@ -384,3 +384,19 @@ Reading:
 Consequence: the composite in this substrate is maintenance-limited at MED (F3, F4-R) AND rarely found even from one step
 away (about 1 per 50 worlds per 2,000 ticks). A mutation schedule alone does not fix the second problem. NEXT_CAMPAIGN #1
 shifts from schedules to heritable fidelity and redundancy, with larger populations or longer search phases.
+
+## F6 -- transplantation of the error threshold (RM2) to COND_MULTI and to WELL_MIXED (prereg s15; CONFIRMATORY; completed 2026-10-11 ~22:40Z)
+100 runs, 0 voids, plan sha256 1d4cafb3..., pin 78440c25b, FRESH seeds (72.6e12+); analysis tools/analyze_f6.py; receipt
+receipts/F6_analysis.json.
+| composite / world | MED (0.008) kept / FUNC end | LOW (0.002) | VLOW (0.0005) |
+|---|---|---|---|
+| COND_MULTI witness (14 critical bytes), GRID LOCAL | 0/20 / 13 | 18/20 / 20 | 19/20 / 20 |
+| COND_ONE witness (10), GRID WELL_MIXED | 2/20 / 14 | -- | 20/20 / 20 |
+- F6-P1 (COND_MULTI keep, VLOW > MED): 19/20 vs 0/20, p 1.5e-10. HOLDS.
+- F6-P2 (WELL_MIXED keep, VLOW > MED): 20/20 vs 2/20, p 1.7e-9. HOLDS.
+- RM2 SURVIVES TRANSPLANTATION to a second, larger composite and to a mixing world model, on 40 new independent
+  populations.
+- Reported prediction WRONG: I expected the 14-byte COND_MULTI composite to keep LESS often than COND_ONE at LOW. It kept
+  18/20 vs 13/20 (F3; two-sided p 0.13, so no difference demonstrated). The critical-byte count alone does not set the
+  threshold. Post hoc candidate, untested: COND_MULTI's decay products are poor competitors (its transform half was never
+  reached in E1b, 0/14), while COND_ONE decays to an INC solver that is itself paid.

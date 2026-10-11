@@ -54,6 +54,9 @@ extinction.
   cross (1/20 vs 0/20; FUNC at end 4/20). Class: search-maintenance conflict; no single fixed rate does both in 2,000
   ticks.
 
+- F6: the threshold holds for COND_MULTI (14 critical bytes) and in WELL_MIXED; byte count alone does not predict where
+  it lies (COND_MULTI kept MORE often at LOW than COND_ONE).
+
 ## FB5 -- lineage-independent persistence (BEL-48H M4; C2, C2R)
 - Holds: ECHO regenerates after removal of every carrier (C2-b), faster than its first origin. It needs world material:
   slower after a copier-rich reset (C2R-P1) and slower after near-carrier removal (C2R-P2).
