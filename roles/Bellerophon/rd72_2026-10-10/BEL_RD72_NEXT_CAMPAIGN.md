@@ -27,9 +27,13 @@ The next campaign should attack that bound directly, and keep reachability work 
    - A two-step neighbourhood scorer (exhaustive for SUB x SUB on critical windows, sampled for mixed operators), frozen
      as a predictor, tested on KO2 founders under a maintaining schedule.
 
-5. UPTAKE ECONOMICS: the precursor-damage account. (D1 falsified the ratio rule; D2 tested the LDIR-carrier split)
-   - Whatever D2 found, the remaining question is the dose: blocking arms block different import amounts (disclosed).
-     A dose-matched block (randomly block the same NUMBER of imports in both carrier classes) is the clean follow-up.
+5. UPTAKE ECONOMICS: dose-matched two-component test. (D2: blocking imports into LDIR carriers raises origins 2-3x;
+   blocking imports into non-LDIR organisms lowers them; block-all is their sum)
+   - The arms blocked very different doses (disclosed). Next, a dose-matched block: revert the same NUMBER of imports
+     per class, chosen at random. Also measure precursor state directly (one-step distance to FUNC) instead of the
+     LDIR marker.
+   - Then: does the two-component balance predict where the net block-all effect appears (SOUP, budget 384)? That is a
+     frozen out-of-sample prediction the UF2 ratio rule failed.
 
 6. COMPOSITE-TASK PAYMENT ON EVERY INPUT CLASS. (F2 rejected half-credit as the cause; it did lengthen persistence:
    last composite census >= 1,700 in 6/20 vs 2/20)

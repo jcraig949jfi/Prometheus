@@ -10,8 +10,14 @@ extinction.
 - Stops: SOUP; budget 384 (BEL-48H S1).
 - Fault line: the BEL-48H account ("imports destroy more replicators than they create", UF2 ratio rule) FAILS as a
   prediction. In S_LOCAL imports create more FUNC than they destroy (R 0.67), yet blocking still raises origination
-  (D1-P1 FALSIFIED). Precursor-damage account: D2 (s8), pending.
-- Receipts: receipts/D1_analysis.json; D2 pending.
+  (D1-P1 FALSIFIED).
+- D2 resolves it: uptake has TWO opposing components.
+  - Imports into LDIR carriers (precursors) suppress origination: blocking them gives origins 72 -> 150 and 33 -> 111
+    (p < 1e-14 in both substrates).
+  - Imports into non-LDIR organisms promote it: blocking them gives 72 -> 50 and 33 -> 26.
+  - Block-all is their sum. It is weak in D2 (82 vs 68 discordant, p 0.14) although it was significant in BEL-48H U / U2
+    and D1. The NET suppression is a balance, which is why it appears and vanishes across substrates and seed sets.
+- Receipts: receipts/D1_analysis.json, receipts/D2_analysis.json.
 
 ## FB2 -- budget coupling of computation to heredity (BEL-48H M6; Q4)
 - Holds: copy-then-compute machines whose overlong copy consumes the step budget (EXHAUSTION), at budget <= 256.
