@@ -337,3 +337,32 @@ mutation rate at this horizon.
 Over F1 + F2 + F4, 60 KO1 worlds produced 2 crossings, both kept (f2_00022 under paired payment at MED, one at LOW). The
 ECHO-like founder and the 2-knockout founders (0 one-step routes) produced 0 in 100 worlds across F1 (MED, paid and
 unpaid), F2 and F4.
+
+## D2 -- selective uptake ablation: is the origin cost of uptake damage to precursors? (prereg s8; CONFIRMATORY; completed 2026-10-11T21:02Z)
+3,200 runs, 0 voids, plan sha256 93560f5b..., pin ce4bcd5e7; analysis tools/analyze_d2.py; receipt receipts/D2_analysis.json.
+400 seeds per substrate, 4 arms on the SAME seed. Origins = worlds with a FUNC origin event.
+| substrate | normal | block_all | block_ldir (imports into LDIR carriers reverted) | block_noldir (imports into non-LDIR reverted) |
+|---|---|---|---|---|
+| S_PAIR320 (PAIR_EXECUTION, budget 320) | 72 | 83 | 150 | 50 |
+| S_REF (BEL-48H reference: PARTIAL, WELL_MIXED, budget 256) | 33 | 36 | 111 | 26 |
+Frozen tests (one-sided sign test on discordant pairs):
+- D2-P1 (block_ldir > normal): S_PAIR320 101 vs 23 (p 1.5e-15); S_REF 92 vs 14 (p 1.5e-15). HOLDS in both.
+- D2-P2 (block_ldir > block_noldir): 122 vs 22; 94 vs 9 (p < 3e-19). HOLDS in both.
+- The PRECURSOR-DAMAGE ACCOUNT HOLDS (s8 rule: P1 and P2 in both substrates).
+Reported (not tests):
+- block_all vs normal, the BEL-48H replication arm: 58 vs 47 (p 0.16) and 24 vs 21 (p 0.38); pooled 82 vs 68 (p 0.14).
+  Same direction, NOT significant. BEL-48H U2 pooled 800 pairs at 58 vs 35 (p 0.011); D1 S_PAIR320 68 vs 41 (p 0.006).
+- block_noldir vs normal: origination goes DOWN (normal-only 51 vs block-only 29, p 0.009 for the reverse direction in
+  S_PAIR320; 21 vs 14 in S_REF, p 0.16). Imports into non-LDIR organisms HELP origination.
+- Dose (disclosed, not corrected): the arms revert very different amounts, e.g. S_REF blocked bytes block_ldir 122M vs
+  block_noldir 0.37M. Most import executions land in LDIR carriers (6.7M vs 0.96M in S_REF block_ldir).
+Reading:
+- Uptake has two opposite effects on origination, separable by the importer's state:
+  - imports INTO precursors carrying LDIR destroy them; blocking those alone raises origination 2-3x;
+  - imports into non-LDIR organisms build toward replicators (assembly, the BEL-48H 15% uptake-origin route); blocking
+    those lowers origination.
+- "Block all" is the SUM of the two. Its net sign and size depend on their balance, which is why it was +38% in BEL-48H,
+  significant in D1, absent in SOUP / budget 384 (S1), and weak here.
+- The BEL-48H "uptake suppresses origination" headline is replaced by a component account. Of the two components, the
+  damaging one is the larger and more robust.
+- Limit: LDIR presence is a marker for "precursor", not a measured precursor state. The dose differs by arm.

@@ -1,0 +1,105 @@
+{
+ "n": 3200,
+ "voids": 0,
+ "substrates": {
+  "S_PAIR320": {
+   "pairs": 400,
+   "origins": {
+    "normal": 72,
+    "block_all": 83,
+    "block_ldir": 150,
+    "block_noldir": 50
+   },
+   "D2-P1": {
+    "a_only": 101,
+    "b_only": 23,
+    "p": 0.0
+   },
+   "D2-P2": {
+    "a_only": 122,
+    "b_only": 22,
+    "p": 0.0
+   },
+   "all_vs_normal": {
+    "a_only": 58,
+    "b_only": 47,
+    "p": 0.164569
+   },
+   "noldir_vs_normal": {
+    "a_only": 29,
+    "b_only": 51,
+    "p": 0.995159
+   },
+   "dose": {
+    "normal": {},
+    "block_all": {
+     "blocked_bytes": 32807053
+    },
+    "block_ldir": {
+     "import_exec_noldir": 381217,
+     "import_exec_ldir": 2847525,
+     "blocked_bytes": 58481142
+    },
+    "block_noldir": {
+     "import_exec_noldir": 114114,
+     "blocked_bytes": 1062849,
+     "import_exec_ldir": 110787
+    }
+   },
+   "holds": true
+  },
+  "S_REF": {
+   "pairs": 400,
+   "origins": {
+    "normal": 33,
+    "block_all": 36,
+    "block_ldir": 111,
+    "block_noldir": 26
+   },
+   "D2-P1": {
+    "a_only": 92,
+    "b_only": 14,
+    "p": 0.0
+   },
+   "D2-P2": {
+    "a_only": 94,
+    "b_only": 9,
+    "p": 0.0
+   },
+   "all_vs_normal": {
+    "a_only": 24,
+    "b_only": 21,
+    "p": 0.382996
+   },
+   "noldir_vs_normal": {
+    "a_only": 14,
+    "b_only": 21,
+    "p": 0.912267
+   },
+   "dose": {
+    "normal": {},
+    "block_all": {
+     "blocked_bytes": 20195896
+    },
+    "block_ldir": {
+     "import_exec_noldir": 963590,
+     "import_exec_ldir": 6668583,
+     "blocked_bytes": 122119469
+    },
+    "block_noldir": {
+     "import_exec_noldir": 39369,
+     "blocked_bytes": 370517,
+     "import_exec_ldir": 105511
+    }
+   },
+   "holds": true
+  }
+ },
+ "D2": {
+  "holds": true,
+  "per_substrate": [
+   true,
+   true
+  ]
+ }
+}
