@@ -1,0 +1,178 @@
+==========================================================================================
+ARCHAEON PHASE 2-B SFE BETA -- REVIEW PACKET: FINDING 3 REVISION (THE UPDATE WALL IS A DISTANCE WALL)
+probes B68, B69/B69b-e, B74/B74b, B75/B75b, B76, B76b | 2026-10-09..11 | branch archaeon/p2b-sfe-2026-10-06
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+------------------------------------------------------------------------------------------
+PRIOR LAW (Finding 3, 2026-10-09): write-once state is reachable by this search; update-on-condition and keyed state
+are not, across every lever tried.
+
+VERDICT NOW: the update-on-condition wall is a GRADED DISTANCE WALL, not a class wall.
+- World: a relocating pulse world in which update-on-condition (RESET: unlatch after 4 empties, re-search) is the best
+  hand strategy, 1.66x the write-once LATCH.
+- RESET-like populations by starting point:
+    random gen 0 (B75)       0/12   (8/12 reach write-once state)
+    stateless forager (B76b) 2/6 preregistered census, 3/6 best-genome readout
+    write-once latch (B76)   6/6    (bests .075-.082 beat the hand RESET .065)
+- Supporting results:
+  - B69c/B69e: a behaviour-gating latch is reached from scratch where it is decisive, in 3 forms (register latch,
+    register patrol, self-modifying-code latch).
+
+SURVIVED:
+- Confound "the world is too hard": B75b shows write-once state IS reached (8/12) while RESET is not (0/12).
+- Mechanism verification of evolved RESETs: register state, re-find .58-.69, leave the dead node within 0-3 ticks.
+
+DIED:
+- "update-on-condition is unreachable in principle".
+- "competition raises the latch rate" (B69d NOT SUPPORTED).
+
+------------------------------------------------------------------------------------------
+1. PROVENANCE / INSTRUMENT
+------------------------------------------------------------------------------------------
+Organisms and search
+- Proteus v0 VM, unmodified.
+- CMP3 GA: N=200, E=8, E0, FOUNDRY_C2 founders, except where gen 0 is replaced (B76/B76b: 200 copies of a hand
+  program).
+
+Worlds
+- P-boom NoClock (C6) with an external pulse evaluator:
+  - b68.group_pulse: deplete 1; pools refill to their start amounts every P=4 ticks; no regen.
+  - b74.group_reloc adds relocation: every Q ticks each pool jumps to a random other node (v2), seeded by
+    (seed, ep, t).
+- B75/B76 use ticks=48, Q=16.
+
+Equivalence and teeth
+- b68 at P=None equals the B60 evaluator: .303463 = .303463.
+- b74 at Q=None: RESET = LATCH = .1188 (the counter never misfires).
+
+Hand references (solo, held-out seeds s+1000..1003 x 16 episodes)
+- REACT .021, LATCH .040, RESET .065.
+- Re-find rates: LATCH .051, RESET .56.
+
+State readout
+- FULL dependence = reward minus reward with code locked AND persist none.
+- B69e showed that persist-none alone misses state stored in self-modified genome code.
+
+------------------------------------------------------------------------------------------
+2. PREREGISTRATION CHAIN (prediction committed before the run unless stated)
+------------------------------------------------------------------------------------------
+  B68  pulse hand ladder        committed WITH its result (NOT receipted; exploratory)      parts 1-2 met, bridge 0/3
+  B69  pulse evolution          prediction in probe (before run)                           FAILED (all 3 parts)
+  B69b latch census             EXPLORATORY (readout defined after a trace)                SOLO 3/6, CONC 4/6
+  B69c census replication       0dead854d (before run)                                     parts 1-2 MET, part 3 FAILED (2 pops beat hand latch)
+  B69d competition -> rate      a4287b9fe (before run)                                     NOT SUPPORTED (count met, reward p=.22)
+  B69e full state census        instrument repair, measurement only                        --
+  B74  relocating ladder v1     before run                                                 FAILED (design flaw: half-ring shifts return pools)
+  B74  v2 (random relocation)   before run, same prediction                                FAILED (Q=8 part)
+  B74b episode length           EXPLORATORY                                                ticks 48, Q=16 -> RESET 1.66x LATCH
+  B75  evolution from random    in probe, before run (4af408837 / 09eb1e1db)               MET (0/12; none beats hand RESET)
+  B76  evolution from LATCH     0bb38c519 (before run)                                     FAILED (6/6 vs predicted <= 1/6)
+  B76b evolution from REACT     c4ce8bdbd (before run)                                     MET at the bar (2/6), census readout
+
+------------------------------------------------------------------------------------------
+3. RESULTS (exact numbers)
+------------------------------------------------------------------------------------------
+B75 (random gen 0, 12 seeds, G=300)
+- Census (top 10 by count): RESET-like 0/12. Population bests .015-.038.
+- B75b (best unique genome, full ablation):
+  - 8/12 state-using (dep .026-.043) with LATCH-like re-find .00-.14;
+  - 0/12 combine state use with re-find >= .31;
+  - 11/12 beat REACT;
+  - 7501 is stateless (dep .001), re-find .45 by roaming, reward .049.
+
+B76 (LATCH gen 0, 6 seeds)
+- Census RESET-like 6/6 (5-9 of top 10). The latch survives 6/6. Bests .075-.082.
+- 7601/7603 bests:
+  - reward .082/.078;
+  - code-lock: no change;
+  - persist-none .043/.020;
+  - re-find .58/.69;
+  - dead-node waits 0-3 ticks (hand LATCH never leaves);
+  - 32/46 instructions.
+
+B76b (REACT gen 0, 6 seeds)
+- Census RESET-like 2/6 (7602, 7605).
+- Best-genome readout adds 7601 (.078, dep .023, re-find .59) -> 3/6.
+- 7603/7606 bests are high-reward LATCH variants (re-find .03/.04); 7604 re-find .13.
+
+Fisher one-sided, LATCH vs REACT start
+- 6/6 vs 2/6 -> p ~ .03 (census).
+- 6/6 vs 3/6 -> p ~ .09 (best genome).
+
+------------------------------------------------------------------------------------------
+4. HOSTILE REVIEW + SELF-ATTACKS
+------------------------------------------------------------------------------------------
+A1 Readout choice decides B76b. The top-10-by-count census (preregistered) gives 2/6. The best-genome readout gives
+   3/6, and on it the prediction fails. CONCEDED: the LATCH > REACT contrast is p ~ .03-.09, so the "latch is THE
+   stepping stone" reading is moderate. The robust part is random 0/12 vs LATCH 6/6.
+A2 The census is a lower bound: it misses rare best genomes (B76b 7601) and non-WAIT state strategies (B69e
+   patrols). Applied identically across start conditions, but OPEN.
+A3 One world, SOLO only, G=300, 6-12 seeds per condition. B75's 0/12 is at G=300; a longer budget from random might
+   reach RESET. OPEN (not tested).
+A4 Hand programs as gen 0 inject a solution-adjacent genome (by design). The claim is about DISTANCE, not discovery
+   from scratch. The REACT arm controls for 'compact competent start'.
+A5 Re-find metric thresholds (.31 midpoint) were fixed before B75 from the hand references. Evolved RESETs exceed the
+   hand RESET (.58-.69).
+A6 PROCESS:
+   - B68 not receipted;
+   - B74 v1 design flaw (half-ring shifts);
+   - B75 smoke test journaled as 'passed' before it ran (it failed; corrected);
+   - compute estimates were low twice (window 4 tally ~39, not ~23; B75 ~25 core-h vs 12-18 estimated).
+   All recorded in JOURNAL.md.
+A7 The pulse / relocating-pulse dynamics are applied OUTSIDE the C6 world class (an external evaluator). The C6 world
+   itself never empties pools. The claim is about these evaluator-defined worlds.
+
+------------------------------------------------------------------------------------------
+5. WHAT THIS GENERATION LEARNED (shapes)
+------------------------------------------------------------------------------------------
+1. Whether state is reached depends on whether the WORLD makes it decisive. Where regeneration keeps pools full,
+   state is worth 0.000 and is not used. Where pulses empty pools, a gating latch is worth 3.6x and is reached in
+   ~half of populations.
+2. State is reached in several forms, including self-modified code. A persist-only ablation undercounts it.
+3. Update-on-condition is reached from the write-once precursor almost always, from a stateless forager sometimes,
+   and from random never (at G=300). The wall is distance in program space, graded by how much coupled structure is
+   still missing. This is consistent with the B55-B57 wiring-chain slope.
+4. Competition does not raise the latch rate (B69d), but it shapes which state forms win: patrols are excluded by an
+   invasion asymmetry (B73).
+
+------------------------------------------------------------------------------------------
+6. FINAL VERDICT and CLAIM CEILING
+------------------------------------------------------------------------------------------
+- Finding 3 revised: in Proteus v0 under CMP3, in pulse / relocating-pulse evaluator worlds, update-on-condition
+  memory (a RESET latch) is reachable from a write-once latch precursor (6/6), sometimes from a stateless forager
+  (2-3/6), and not from random gen 0 at G=300 (0/12).
+- The claim does NOT cover: other VMs or searches, longer budgets from random, keyed memory, or worlds where
+  update-on-condition is not the best strategy.
+
+------------------------------------------------------------------------------------------
+7. SUCCESSOR PRESCRIPTION
+------------------------------------------------------------------------------------------
+S1 Budget from random: B75 at G=600-900 on 6 seeds. Does RESET appear at all from scratch?
+S2 Readout parity: re-run the census of B75/B76/B76b on ALL genomes above the hand-LATCH reward, not only the top 10
+   by count.
+S3 Staged curriculum: random gen 0 in the plain pulse world (where the latch is reached), then switch to relocation.
+   Does a natural curriculum cross the wall without a hand-seeded latch?
+S4 Keyed memory: apply the same distance test (a precursor start) to the B53-B57 keyed-recall setting.
+
+------------------------------------------------------------------------------------------
+8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
+------------------------------------------------------------------------------------------
+Code
+  b68_pulse_state_controls.py
+  b69_pulse_evolution.py, b69b_latch_census.py, b69c_latch_replication.py, b69d_competition_latch_rate.py,
+    b69e_full_state_census.py
+  b73_patrol_vs_latch.py
+  b74_relocating_pulse_ladder.py, b75_reset_evolution.py, b76_reset_from_latch.py, b76b_reset_from_react.py
+
+Results
+  B68_result.json, B69*_pulse/, B69e_full_census.json, B73_result.json, B74_result*.json, B74b_episode_length.json,
+  B75_reset/, B76_from_latch/, B76b_from_react/
+
+Commits
+  0dead854d, a4287b9fe, 84d5470dd, 177d0ab2f, 4af408837, 09eb1e1db, d0afa8b5e, 0bb38c519, c4ce8bdbd, 12d4c93cd
+
+Comms
+  #1985 (update 8), #2111 (this revision)
+==========================================================================================
