@@ -28,7 +28,7 @@ if str(ROOT) not in sys.path:
 import numpy as np                                                    # noqa: E402
 
 from ensorain.wtp5 import tape                                        # noqa: E402
-from ensorain.wtp5.worlds import P0, P1, make                         # noqa: E402
+from ensorain.wtp5.worlds import P0 as CH_P0, P1 as CH_P1, make                         # noqa: E402
 from rso.ensorain import analysis, assay, freeze, subjects as S       # noqa: E402
 from rso.witness.ruler import thresholds                              # noqa: E402
 from rso.ensorain.challenge import subjects_c as C                    # noqa: E402
@@ -171,7 +171,7 @@ def S3():
         for k in range(assay.K):
             rl = int(ep["role"][k, 0])
             seen[rl].add(tuple(np.round(ep["obs"][k, 0], 6)))
-            s = ep["obs"][k, 0, P0] if rl == 1 else ep["obs"][k, 0, P1]
+            s = ep["obs"][k, 0, CH_P0] if rl == 1 else ep["obs"][k, 0, CH_P1]
             target_ok &= ep["tgt"][k, 0] == (s * law if rl == 1 else s)
             n_gates += 1
         corridor_scored += int((ep["wt"][:, 1] != 0).sum() + (ep["tgt"][:, 1] != 0).sum() + (ep["role"][:, 1] != 0).sum())
