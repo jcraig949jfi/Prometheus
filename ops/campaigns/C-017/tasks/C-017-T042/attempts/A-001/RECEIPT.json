@@ -1,0 +1,78 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-017-T042",
+ "campaign_id": "C-017",
+ "attempt_id": "A-001",
+ "role": "Pallas",
+ "model_recorded_at_boot": "claude-fable-5-1",
+ "model_reported_mid_session_by_harness": "claude-opus-4-8",
+ "model_identity_discrepancy": "comms boot and WORK_STATE recorded claude-fable-5-1 (Q3); a harness system message later in the same session reported claude-opus-4-8 (Q2). Escalated (ops/campaigns/C-017/escalations/NEW_Pallas_2026-10-11_1.md); disclosed in REPORT s0, PREDICTIONS.md, WORK_STATE, journal. All findings are deterministic and independently re-runnable; the Q3 process-gate call is Palamedes's.",
+ "quality_class": "Q3",
+ "instance": "harry1-98490b1f",
+ "host": "harry1",
+ "branch": "pallas/c017-t042",
+ "worktree_path": "C:/Prometheus-worktrees/pallas-c017-t042",
+ "start_sha": "9bbf984e379bfae7561d473e104c7cf0aaec0999",
+ "end_sha": "branch head = this receipt's commit",
+ "dirty": false,
+ "commits": {
+  "claim_main": "edbbfe72c",
+  "predictions_branch": "2b889dfc2 (before any outcome run, 2026-10-11T20:41:54Z)",
+  "report_receipt_branch": "this commit"
+ },
+ "files_changed": [
+  "rso/z80/challenge/R2/PREDICTIONS.md (pre-run predictions P1-P8)",
+  "rso/z80/challenge/R2/REPORT.md (CLOSED / NOT CLOSED per surface)",
+  "ops/campaigns/C-017/escalations/NEW_Pallas_2026-10-11_1.md (model-identity / Q3 gate)",
+  "roles/Pallas/{WORK_STATE.json,journal/2026-10-11.md,comms/2026-10-11_C-017-T042_*.md}",
+  "ops/campaigns/C-017/tasks/C-017-T042/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "NO frozen file changed; archaeon/, prometheus/z80atlas/, roles/Archaeon/ untouched; mutants applied to the working copy and restored byte-for-byte (sha256 verified), freeze check OK after each"
+ ],
+ "evidence_added": [
+  "Re-check verdict: the v1.1.0 repair CLOSES REPORT v1.0.0 s4.1 (the P-tag fault) WITHOUT opening a new hole on any re-checked surface. No second repair round (directive s9); every survivor is a pre-stated PREREGISTRATION s11 limitation.",
+  "reads rule (R1): CDIST unit over kin reads_nbr=2, tags K*32, label ENV (was ENDO at v1.0.0); CDIST_ENDO_IMPL arm at 5 epochs on challenge seeds 17_070_001..004 is ENV/INSERTED 4/4, n_ENDO=0, while b1=ENDO and b4=ENDO on the same records; R1 mutant RED on test_a_parent_that_reads_the_window_writes_no_parent_byte",
+  "reads-rule residual (P3, one attack): exec_foreign and SEAL are the only window reads the VM does not count. SEAL moves no target byte into a register (needs a counted LD/COPY), so no target-dependent P-tagged function byte. exec_foreign can leave a register target-dependent and alteration-invariant (VM search: target[k..k+1] in {7,103,135,231}x{189} drives A to a fixed value != the NOP case under x, x^0xFF, (x+0x55)&255), but control returns only via pc-wrap to byte 0 where a register preset re-runs and clobbers the value, or a target HALT stops the parent (P1 writes target-INDEPENDENT 21; XD writes 0, halted). No scored escape constructible: tightens s11.5 from 'none constructed' to 'construction obstructed by the VM control-return semantics'. NOT CLOSED in principle (unchanged stated limitation).",
+  "CDIST arm as a scored ENV class (P4): CLOSED -- the scored 'recipe/label say ENDO, instrument says ENV, truth ENV' row the v1.0.0 set lacked now exists (4/4 ENV, n_ENDO=0)",
+  "b4 baseline (P5): CLOSED -- correct on 10 arms, ENDO on CDIST (gt ENV) its only error; Q4 fails b4 only via CDIST; mechanistic reader, not a lookup table; separation rests on CDIST (s11.9, stated)",
+  "Q2 narrowing (P6): CLOSED as narrowed -- w_max(184/240/267/312)=24/33/38/45 vs <=24 ARISEN rows; a constant INSERTED passes Q2 for every outcome; Q2 tests INSERTED origin only",
+  "new tests RED on mutants (P7): R1, R3, E1, E3 each RED on the named test, baseline GREEN, restored byte-identical, freeze OK",
+  "amendment order (P1): PREREGISTRATION v1.1.0 7ad0131b7 (15:58:33-04:00) precedes FROZEN.json v1.1.0 fed35e840 (16:00:13-04:00); PREREG blob sha 358462d5.. identical at amendment / freeze / HEAD; engine hashes unchanged",
+  "my v1.0.0 witnesses under the reads rule (P8): XORW now all-K (reads=2, the rule subsumes W1; builder re-pinned E1 via exec-only XEXEC, RED); INPW byte 0 stays P (reads=0); W2/W3 unchanged (W3 verdict NOT_QUALIFIED, Q1:ENV 5>w_max 0)"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.z80.freeze check", "result": "OK at claim, after every mutant restore, and at end"},
+  {"command": "python -B -m unittest rso.z80.tests.test_attribution", "result": "51/51 OK (~12 s)"},
+  {"command": "CDIST unit + CDIST arm 5 epochs seeds 17_070_001..004 + b4 over 11 arms + W1/W2/W5 (scratch run_arm_wit.py, run_w3b.py)", "result": "CDIST arm ENV 4/4 n_ENDO 0; b4 correct x10 + CDIST ENDO; XORW all-K; INPW byte0 P; JROP ENDO; W3 NOT_QUALIFIED"},
+  {"command": "R1/R3/E1/E3 applied in place, named test only, restore + freeze (scratch mutants.py)", "result": "each GREEN->RED->restored(sha256)->freeze OK"},
+  {"command": "VM search exec_foreign/SEAL invariant target dependence (scratch xsearch.py, xsearch2.py, xdep.py, exec_final.py)", "result": "register channel exists; no scored P-tagged write constructible (control-return obstruction)"},
+  {"command": "python -m workgraph validate; check-escalation", "result": "validate exit 0; escalation OK"}
+ ],
+ "red_observed": {
+  "observed": false,
+  "detail": "adversarial re-check (TASK.json red_required false). The RED analogue is the committed prediction set (2b889dfc2) preceding every outcome run; P1-P8 all held. R1/R3/E1/E3 mutant RED verified live."
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "RUNTIME MODEL IDENTITY DISCREPANCY (boot claude-fable-5-1 / later harness claude-opus-4-8): escalated; the Q3 process-gate call is Palamedes's. All evidence is deterministic and re-runnable.",
+  "informed review: every frozen test body and the v1.1.0 diff were read (same as T040); same vendor as the builder; cell member",
+  "CDIST arm re-checked at 4 challenge seeds x 5 epochs (bounded headless), not the full confirmatory N; b4 and the unit/mutant checks are exhaustive over the 11 arms / 4 named mutants",
+  "W3 re-run needed a b4 field added to my pre-b4 synthetic rows; the frozen test_an_unforged_refusal_counts_as_wrong pins the same behaviour and is GREEN",
+  "the exec_foreign residual is argued obstructed, not proven impossible: I could not construct a scored escape under the frozen VM, which strengthens but does not eliminate s11.5"
+ ],
+ "unresolved": [
+  "Palamedes: the Q3 process-gate decision on the model-identity discrepancy (escalation NEW_Pallas_2026-10-11_1.md) -- accept as-is, or a drop-in Fable-5.1 re-run on this branch",
+  "the confirmatory run (17_050_xxx + 17_080_xxx), a later packet; not blocked by this re-check",
+  "registry (Palamedes): z80 attribution entry should carry counterexamples += CDIST (now ENV at v1.1.0, closed), not_qualified_for += ARISEN origin, and the exec_foreign/SEAL P-tag residual"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 0.2,
+  "processes_max": 2,
+  "wall_minutes": 30,
+  "paid_resources": "none",
+  "hosts": ["harry1"]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/pallas-scratch/t042/ (xsearch*.py, xdep.py, exec_final.py, run_arm_wit.py, run_w3b.py, mutants.py); worktree pallas-c017-t042 left for the integrator",
+ "notes": "Read-only on archaeon/, prometheus/z80atlas/, roles/Archaeon/; no Archaeon seed; no evidence bundle; no 17_050_xxx/17_080_xxx seed; no `assay confirm`; no frozen file changed in any commit. Python 3.12.10 on harry1. Headless; foreground only; <= 2 processes.",
+ "created_at_utc": "2026-10-11T20:48:00Z"
+}
