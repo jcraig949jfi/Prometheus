@@ -118,3 +118,36 @@ Reading (triviality, Workstream B):
   architecture.
 - One CM_ON tape (e1b_00116) loses FUNC at generation 2, a delayed failure of heredity that a one-generation test would
   not see.
+
+## A3 stage 2 -- operator-aware prediction of completion in unseen worlds (prereg s5 + erratum s5-E1; CONFIRMATORY; completed 2026-10-11 ~03:20Z)
+1,374 runs, 0 voids, plan sha256 d3ebea24..., pin 30410747f; analysis tools/analyze_a3.py at 3e91c7b03 (the erratum's
+fix: precursor joined from the plan by id); receipt receipts/A3_stage2_analysis.json.
+- Tapes: 597 replanted (2 worlds each); 46 completed (a FUNC origin within 100 ticks in >= 1 of 2 worlds).
+- Background: 1/60 (PARTIAL), 6/60 (PAIR), 2/60 (COPY) worlds originate with no transplant.
+| AUC | pooled | COPY | PARTIAL | PAIR |
+|---|---|---|---|---|
+| S_op (operator-aware) | 0.592 | 0.552 | 0.577 | 0.626 |
+| S_sub (substitution) | 0.586 | 0.497 | 0.579 | 0.632 |
+| S_nz (non-zero bytes) | 0.606 | 0.458 | 0.580 | 0.702 |
+- A3-P1 (S_op beats S_sub): 95% CI of the difference [-0.008, +0.031]. FAILS.
+- A3-P2 (S_op beats S_nz): [-0.094, +0.058]. FAILS.
+- A3-P3 (S_op > S_sub in >= 2 physics): 1 of 3. FAILS.
+- The operator-aware ruler does not predict better than substitution or byte content on this harvest.
+Why (descriptive, post hoc; the route classes are from the frozen stage-1 scan):
+| route class | tapes | completed |
+|---|---|---|
+| >= 1 one-step SUB route | 9 | 8 |
+| INS / DEL routes only (none had MOVE-only routes) | 7 | 1 |
+| no one-step route under any operator | 581 | 37 |
+- Fisher, SUB-route vs no-route: p 5e-9. Where geometry says "one substitution away", completion is near-certain.
+- 581 of 597 harvested non-FUNC tapes (97%) have no one-step route. Their completion rate (6.4%) is at or below the
+  background expected for 2 worlds (~10%). Those "completions" are other organisms' origins, not the tape's.
+- The AUC test is therefore decided by noise in the zero-route mass, and the operator-aware score has nothing to add:
+  - in this harvest, no tape is reachable by a move that substitution does not also reach;
+  - the BEL-48H move-rich precursors (N1) came from a different source, the founding assembly products of complementation
+    worlds, not random non-FUNC survivors at tick 100.
+Answer to directive Q1: NO. Operator-aware reachability did not predict transitions better than the simpler ruler in
+unseen worlds.
+Answer to Q2: in this harvest, no apparent desert was an artifact of the operator model (0 MOVE-only routes in 600
+scanned tapes).
+Limit: one-step geometry only. Multi-step accessibility was not part of the frozen scores.
