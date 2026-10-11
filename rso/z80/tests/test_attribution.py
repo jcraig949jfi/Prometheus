@@ -5,7 +5,7 @@ import copy
 import unittest
 from fractions import Fraction
 
-from archaeon.z80atlas import engine as E, vm
+from archaeon.z80atlas import engine as E, tasks as T, vm
 from rso.z80 import analysis, assay, observe, subjects as S
 
 DEV = [17_030_901 + i for i in range(6)]          # dev partition, arm slot 0 offset 900+: never used by the dev check
@@ -13,6 +13,16 @@ DEV = [17_030_901 + i for i in range(6)]          # dev partition, arm slot 0 of
 
 def short(name, epochs):
     return S.spec(S.ARM[name], epochs=epochs)
+
+
+def planted(tapes, phys, press, epochs):
+    s = S.spec(dict(S.ARM["NH_EXT_GATED"], phys=phys, press=press), epochs=epochs)
+    s["transplant"]["tapes"] = [t.hex() for t in tapes]
+    return s
+
+
+# echoes only inputs < 128: a competent-looking organism on some cases, never neighbour-dependent
+HALF = T.pad([vm.I(21, 0), vm.I(1, 1), 0x80, vm.I(12, 1), vm.I(17), 0x01, vm.I(23), vm.I(22, 0), vm.I(23)], S.G)
 
 
 class Replay(unittest.TestCase):
@@ -36,7 +46,7 @@ class Replay(unittest.TestCase):
 
     def test_implicit_survival_and_reconstructor(self):
         self.check("H_ENDO_IMPL", 20, DEV[3])
-        self.check("RECON_ENDO_GATED", 20, DEV[3])
+        self.check("RECON_ENDO_IMPL", 20, DEV[3])
 
     def test_unsupported_spec_is_refused_not_replayed(self):
         spec = short("H_ENDO_GATED", 5)
@@ -61,10 +71,19 @@ class Tags(unittest.TestCase):
         self.assertTrue(any(o["tags"] == "P" * S.G for o in born))
 
     def test_reconstructor_child_keeps_function_bytes_from_the_target(self):
-        obs = observe.replay(short("RECON_ENDO_GATED", 6), DEV[2])
+        obs = observe.replay(short("RECON_ENDO_IMPL", 6), DEV[2])
         born = [o for o in obs["final"] if o["gen"] > 0]
         self.assertTrue(born)
         self.assertTrue(all(o["tags"][:3] == "KKK" for o in born if "M" not in o["tags"][:3]))
+
+    def test_background_mutation_is_tagged_where_it_changed_bytes(self):
+        seen = 0
+        for sd in DEV:
+            for o in observe.replay(short("NH_ENDO_SHORT", 30), sd)["final"]:
+                if o["gen"] == 0 and o["tape"] != S.NH():
+                    seen += 1
+                    self.assertEqual(o["tags"], "".join("M" if a != b else "I" for a, b in zip(o["tape"], S.NH())))
+        self.assertGreater(seen, 0)
 
     def test_external_child_is_runner_written(self):
         obs = observe.replay(short("H_EXT_GATED", 6), DEV[3])
@@ -72,19 +91,30 @@ class Tags(unittest.TestCase):
         self.assertTrue(born)
         self.assertTrue(all(o["tags"] == "R" * S.G for o in born))
 
-    def test_environment_read_makes_written_bytes_kept(self):
-        res = {"nbr_window": bytes(S.G), "nbr_mask": bytes([1] * S.G), "reads_nbr": 1, "exec_foreign": 0, "sealed": False}
-        self.assertEqual(observe.endo_tags(res, bytes(S.G)), "K" * S.G)
-        res.update(reads_nbr=0)
-        self.assertEqual(observe.endo_tags(res, bytes(S.G)), "P" * S.G)
-        child = bytes([1]) + bytes(S.G - 1)
-        self.assertEqual(observe.endo_tags(res, child), "M" + "P" * (S.G - 1))
-        res.update(nbr_mask=bytes([0] * 3 + [1] * (S.G - 3)))
-        self.assertEqual(observe.endo_tags(res, bytes(S.G)), "KKK" + "P" * (S.G - 3))
-        res.update(exec_foreign=1)
-        self.assertEqual(observe.endo_tags(res, bytes(S.G)), "K" * S.G)
-        res.update(exec_foreign=0, sealed=True)
-        self.assertEqual(observe.endo_tags(res, bytes(S.G)), "K" * S.G)
+    def test_counterfactual_tags_per_byte(self):
+        z = bytes(S.G); same = {"nbr_window": z, "nbr_mask": bytes([1] * S.G)}
+        self.assertEqual(observe.endo_tags(same, z, [same, same]), "P" * S.G)
+        self.assertEqual(observe.endo_tags(same, bytes([1]) + z[1:], [same, same]), "M" + "P" * (S.G - 1))
+        part = {"nbr_window": z, "nbr_mask": bytes([0] * 3 + [1] * (S.G - 3))}
+        self.assertEqual(observe.endo_tags(part, z, [part, part]), "KKK" + "P" * (S.G - 3))
+        moved = {"nbr_window": bytes([9]) + z[1:], "nbr_mask": bytes([1] * S.G)}       # byte 0's value follows the pre-window
+        self.assertEqual(observe.endo_tags(same, z, [same, moved]), "K" + "P" * (S.G - 1))
+        unmasked = {"nbr_window": z, "nbr_mask": bytes([0]) + bytes([1] * (S.G - 1))}   # byte 0 written only for this pre-window
+        self.assertEqual(observe.endo_tags(same, z, [unmasked, same]), "K" + "P" * (S.G - 1))
+        # byte 0..2 NOT written in the actual execution, written (same value) under both altered pre-windows: still kept
+        self.assertEqual(observe.endo_tags(part, z, [same, same]), "KKK" + "P" * (S.G - 3))
+
+    def test_a_copy_made_by_the_neighbours_code_is_environmental(self):
+        # a parent that COPIES THE WINDOW ONTO ITSELF (B = C = 128): all 32 bytes written by the parent's execution, every value
+        # the target cell's. Environmental reconstruction through a read. A parent copying its own tape is P.
+        env = T.pad([vm.I(1, 1), 128, vm.I(1, 2), 128, vm.I(1, 3), 32, vm.I(20), vm.I(6, 3), vm.I(16), 0xFC, vm.I(23)], S.G)
+        nbr = S.H()
+        res = vm.execute(env, nbr, (7,), 256, True)
+        self.assertEqual(res["nbr_window"], nbr)
+        self.assertEqual(sum(res["nbr_mask"]), S.G)
+        self.assertEqual(observe.endo_tags(res, res["nbr_window"], observe.counterfactual(env, nbr, (7,), 256, True)), "K" * S.G)
+        res = vm.execute(S.H(), S.NH(), (7,), 256, True)
+        self.assertEqual(observe.endo_tags(res, res["nbr_window"], observe.counterfactual(S.H(), S.NH(), (7,), 256, True)), "P" * S.G)
 
 
 class Label(unittest.TestCase):
@@ -112,6 +142,27 @@ class Label(unittest.TestCase):
 
     def test_nonfunctional_is_unlabelled(self):
         self.assertIsNone(assay.label(bytes(S.G), "P" * S.G, None, self.cases))
+        self.assertFalse(assay.f0(HALF, self.cases))                 # solves some probe cases, not all
+
+    def test_situ_is_neighbour_dependence_not_luck(self):
+        # half-solvers solve some cases (by luck all 3 of an opportunity): never functional, alone or run by a parasite from a
+        # half-competent host. A parasite that ran a full host is functional only with it: ENV.
+        half_host = bytes([vm.I(23)]) + HALF[:S.G - 1]
+        for sd in DEV[:3]:
+            # one epoch: every neighbour observed is an original tape (a runner child is placed after the opportunities; by
+            # epoch 2 a host can mutate into a full echo, and the parasite running it is then truly neighbour-dependent)
+            for tapes in ([HALF] * 64, [S.PARASITE(), half_host] * 64):
+                spec = planted(tapes, "EXTERNAL", "implicit_survival", 1)
+                self.assertFalse(any(o["situ"] for o in observe.replay(spec, sd)["final"]), sd)
+                c = assay.classify({"seed": sd, "spec": spec, "out": E.run(spec, sd)})
+                self.assertEqual((c["cls"], c["n_ENV"]), ("NONE", 0))
+        spec = planted([S.PARASITE(), S.HOST()] * 64, "EXTERNAL", "implicit_survival", 1)
+        obs = observe.replay(spec, DEV[0])
+        para = [o for o in obs["final"] if o["tape"] == S.PARASITE() and o["situ"]]
+        self.assertTrue(para)
+        cs = assay.probe_cases(DEV[0])
+        self.assertTrue(all(assay.label(o["tape"], o["tags"], o["situ"], cs) == "ENV" for o in para))
+        self.assertEqual(assay.classify({"seed": DEV[0], "spec": spec, "out": E.run(spec, DEV[0])})["cls"], "ENV")
 
     def test_run_class_is_a_strict_majority(self):
         self.assertEqual(assay.run_class([]), "NONE")
@@ -160,8 +211,13 @@ class Classify(unittest.TestCase):
         self.assertEqual({k: assay.classify(rec)[k] for k in assay.KEYS}, {k: assay.classify(self.ext)[k] for k in assay.KEYS})
 
     def test_origin_reads_founder_bytes(self):
-        self.assertEqual(assay.origin([bytes(S.G), S.NH()], assay.probe_cases(1)), "INSERTED")
-        self.assertEqual(assay.origin([bytes(S.G)], assay.probe_cases(1)), "ARISEN")
+        cs = assay.probe_cases(1)
+        self.assertEqual(assay.origin([(bytes(S.G), "R"), (S.NH(), "S")], cs), "INSERTED")
+        self.assertEqual(assay.origin([(S.NH(), "R")], cs), "ARISEN")           # a lucky random founder is not insertion
+        self.assertEqual(assay.origin([(bytes(S.G), "S")], cs), "ARISEN")
+        obs = observe.replay(short("SEEDED_ENDO_GATED", 1), DEV[0])
+        self.assertEqual({src for _, src in obs["founders"]}, {"S", "R"})
+        self.assertTrue(all(t == S.H() for t, src in obs["founders"] if src == "S"))
         rnd = assay.record(S.ARM["RANDOM_ENDO_GATED"], DEV[5], epochs=3)
         self.assertEqual(assay.classify(rnd)["cls"], "NONE")
 
@@ -169,7 +225,7 @@ class Classify(unittest.TestCase):
 class Baselines(unittest.TestCase):
     """The two negative-control detectors must be fooled where the instrument is not."""
     def test_label_reader_never_says_env_and_follows_an_edited_spec(self):
-        rec = assay.record(S.ARM["RECON_ENDO_GATED"], DEV[0], epochs=8)
+        rec = assay.record(S.ARM["RECON_ENDO_IMPL"], DEV[0], epochs=8)
         self.assertEqual(assay.classify(rec)["cls"], "ENV")
         self.assertNotEqual(assay.b1(rec)["cls"], "ENV")
         ext = assay.record(S.ARM["H_EXT_SHORT"], DEV[1], epochs=8)
@@ -234,6 +290,16 @@ class Analysis(unittest.TestCase):
     def test_underpowered_class(self):
         self.assertEqual(analysis.verdict(self.rows(n=20))["verdict"], "UNDERPOWERED")
 
+    def test_failure_outranks_underpowered(self):
+        def f(rows):
+            r = [r for r in rows if r["forgery"] == "GEN"][0]; r["cls"] = "INS"; r["refused"] = ""
+        self.assertEqual(analysis.verdict(self.rows(f, n=20))["verdict"], "NOT_QUALIFIED")
+
+    def test_a_missing_forgery_kind_fails(self):
+        def f(rows):
+            rows[:] = [r for r in rows if r["forgery"] != "PHYS"]
+        self.assertIn("Q3:PHYS", analysis.verdict(self.rows(f))["failed"])
+
     def test_one_unrefused_forgery_fails(self):
         def f(rows):
             r = [r for r in rows if r["forgery"] == "TAPE"][0]; r["cls"] = "EXT"; r["refused"] = ""
@@ -275,7 +341,7 @@ class Seeds(unittest.TestCase):
     def test_partitions_do_not_overlap(self):
         d = set(S.seeds("H_ENDO_GATED", "dev", 50)); c = set(S.seeds("H_ENDO_GATED", "confirm", 50))
         self.assertFalse(d & c)
-        self.assertEqual(S.seeds("RECON_ENDO_GATED", "confirm", 2), [17_050_000 + 1000 * S.NAMES.index("RECON_ENDO_GATED") + k for k in (1, 2)])
+        self.assertEqual(S.seeds("RECON_ENDO_IMPL", "confirm", 2), [17_050_000 + 1000 * S.NAMES.index("RECON_ENDO_IMPL") + k for k in (1, 2)])
 
 
 if __name__ == "__main__":

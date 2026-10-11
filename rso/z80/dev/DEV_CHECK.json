@@ -1,0 +1,224 @@
+{
+ "baselines_passing_q1": [],
+ "confusion": {
+  "H_ENDO_GATED": {
+   "ENDO": 8
+  },
+  "H_ENDO_IMPL": {
+   "ENDO": 8
+  },
+  "H_EXT_GATED": {
+   "EXT": 8
+  },
+  "H_EXT_GATED/TAPE": {
+   "REFUSED": 8
+  },
+  "H_EXT_SHORT": {
+   "EXT": 8
+  },
+  "H_EXT_SHORT/LABELS": {
+   "EXT": 8
+  },
+  "H_EXT_SHORT/PHYS": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT": {
+   "INS": 48
+  },
+  "NH_ENDO_SHORT/GEN": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT/PHYS": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT/PLANT": {
+   "INS": 8
+  },
+  "NH_EXT_GATED": {
+   "EXT": 8
+  },
+  "RANDOM_ENDO_GATED": {
+   "NONE": 8
+  },
+  "RANDOM_EXT_GATED": {
+   "EXT": 1,
+   "NONE": 7
+  },
+  "RECON_ENDO_IMPL": {
+   "ENV": 48
+  },
+  "SEEDED_ENDO_GATED": {
+   "ENDO": 8
+  }
+ },
+ "failed": [],
+ "n_rows": 208,
+ "partition": "dev 17_030_xxx",
+ "purity": {
+  "H_ENDO_GATED": [
+   957,
+   981
+  ],
+  "H_ENDO_IMPL": [
+   512,
+   513
+  ],
+  "H_EXT_GATED": [
+   910,
+   912
+  ],
+  "H_EXT_SHORT": [
+   880,
+   924
+  ],
+  "NH_ENDO_SHORT": [
+   446,
+   446
+  ],
+  "NH_EXT_GATED": [
+   893,
+   895
+  ],
+  "RANDOM_ENDO_GATED": [
+   0,
+   0
+  ],
+  "RANDOM_EXT_GATED": [
+   77,
+   78
+  ],
+  "RECON_ENDO_IMPL": [
+   1933,
+   2096
+  ],
+  "SEEDED_ENDO_GATED": [
+   925,
+   968
+  ]
+ },
+ "q1": {
+  "ENDO": {
+   "n": 24,
+   "pass": true,
+   "powered": true,
+   "w_max": 0,
+   "wrong": 0
+  },
+  "ENV": {
+   "n": 48,
+   "pass": true,
+   "powered": true,
+   "w_max": 3,
+   "wrong": 0
+  },
+  "EXT": {
+   "n": 25,
+   "pass": true,
+   "powered": true,
+   "w_max": 0,
+   "wrong": 0
+  },
+  "INS": {
+   "n": 48,
+   "pass": true,
+   "powered": true,
+   "w_max": 3,
+   "wrong": 0
+  }
+ },
+ "q2": {
+  "n": 145,
+  "pass": true,
+  "powered": true,
+  "w_max": 17,
+  "wrong": 0
+ },
+ "q3": {
+  "GEN": {
+   "bad": 0,
+   "n": 8
+  },
+  "LABELS": {
+   "bad": 0,
+   "n": 8
+  },
+  "PHYS": {
+   "bad": 0,
+   "n": 16
+  },
+  "PLANT": {
+   "bad": 0,
+   "n": 8
+  },
+  "TAPE": {
+   "bad": 0,
+   "n": 8
+  }
+ },
+ "q4": {
+  "b1": {
+   "ENDO": {
+    "n": 24,
+    "pass": true,
+    "powered": true,
+    "w_max": 0,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 48,
+    "pass": false,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 48
+   },
+   "EXT": {
+    "n": 25,
+    "pass": true,
+    "powered": true,
+    "w_max": 0,
+    "wrong": 0
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
+  },
+  "b2": {
+   "ENDO": {
+    "n": 24,
+    "pass": true,
+    "powered": true,
+    "w_max": 0,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 48,
+    "pass": false,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 48
+   },
+   "EXT": {
+    "n": 25,
+    "pass": false,
+    "powered": true,
+    "w_max": 0,
+    "wrong": 7
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
+  }
+ },
+ "rows_sha256": "6e04917a8e0f676edd81eac3c661d614fd36d6a3f1ff5e0baec257335857c78e",
+ "schema": "rso.z80.dev_check.v1",
+ "unpowered": [],
+ "verdict_on_dev": "ATTRIBUTION_QUALIFIED"
+}
