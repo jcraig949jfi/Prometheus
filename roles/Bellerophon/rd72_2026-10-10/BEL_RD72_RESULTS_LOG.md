@@ -271,3 +271,22 @@ Descriptive:
   - The matched kernel-rule world (f1_00042) never crossed.
   - The founder has 1 SUB route (restore the operand); the intermediate (the founder) is functional (HI).
   - Single event: not a rate, not tested.
+
+## XR -- forensics of the one crossing (f2_00022; EXPLORATORY, post hoc; tools/replay_crossing.py, commit 45832c827)
+Receipt receipts/F2_crossing_replay.json. Replay: HalvesWorld (byte-origin tags) + the identical paired-payment code path,
+deterministic, to tick 1,100. VALID: alive and FUNC-halves counts equal the original at all 11 common censuses.
+The directive's crossing questions:
+- Which operator: a single point change. Of the composite's 8 competence-critical bytes, 7 are founder material
+  (transplant0, tick 0). The eighth, position 9 (the compare operand the KO1 founder lacked), is NEW material written at
+  the birth of tick 652.
+- Intermediate states functional: yes. The founder is an INC-like HI solver and FUNC.
+- Inherited: yes. Composite carriers were present at tick 1,100 and 47 at tick 2,000.
+- Timing: the first FUNC composite was BORN at tick 652, but the light census first saw one at tick 1,100. It existed
+  below census detection or flickered for ~450 ticks before establishing.
+- Temporal depth 652 ticks, 2 epochs (founder material + one later change), so CUMULATIVE in the E1-c sense: composed
+  across time from an earlier capability plus a later change.
+- Repeated independently: NO (1 of 40 KO1 worlds across F1 + F2).
+- Changes future reachability: not measured.
+Triviality: this is the geometrically predicted distance-1 repair of a knockout (the founder had 1 SUB route). It shows
+that the dynamics CAN take a one-step route to the composite and keep it, at ~1/20 per 2,000 ticks under paired
+payment. It is NOT an evolved innovation.
