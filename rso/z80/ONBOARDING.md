@@ -116,3 +116,45 @@ Lessons (for the registry and the next engine):
 4. **Unpinned registered sentences survive** (E1 E2 E3 E5 each passed 42/42). A sentence in the preregistration that names a
    behaviour needs a test that a mutant of that behaviour turns RED; loading the challenger's mutants verbatim makes that cheap.
 5. **Seed slots are a namespace, not a counter:** base + 1000 * arm index overflowed into the next partition at the eleventh arm.
+
+## Three-engine onboarding comparison (C-017-T060; directive s8; Palamedes, coordinator)
+
+Measured from packet histories, receipts, git and the integrators' reproductions. Difficulty is not normalised away.
+
+| Measurement | Ares C-010 (retained bit) | Ensorain C-016 (revision at a switch) | Z80 Atlas C-017 (who wrote the bytes) |
+|---|---|---|---|
+| Bespoke adapter lines | ~1,800 (driver/eval/client/configs + ruler) | 662 | 707 (observe 166 replay + counterfactual, assay, analysis, subjects, freeze) |
+| Shared components modified | n/a | 0 | 0 |
+| Selection re-scoped the operator's question | n/a | yes: retention -> revision | yes: heredity -> attribution |
+| Time to first native execution | ~1 h | 7 min | ~15 min (T020 demand gate) |
+| Open -> confirmatory result | 6.2 h | 4.0 h | 7.1 h |
+| Q3 reviewer time | ~1.7 h | ~1.6 h | ~2.0 h (T040 ~1.6 h Fable; T042 ~0.5 h, mixed after a refusal fallback) |
+| Challenges / real defects | 2 / 2 | 2 / 2 | 2 / 1 fault + 3 inference holes (P tag; Q2 vacuous; Q4 vacuous on ENV; recipe-separable) |
+| Repair rounds | 1 | 1 | 1 |
+| CPU | 26 CPU-min | ~0.9 core-h | ~4.6 core-h (T030 dev 2.5) |
+| Confirmatory run | -- | 265 CPU-s, 66 MB | 1,950 CPU-s, 39 MB |
+| Coordination waiting share | 69% | 49% | 24% |
+| Operator interventions | 0 gates | 0 | 0 |
+| Result | instrument QUALIFIED; S4, S15 NEGATIVE | reference REVISION_HISTORY_DEPENDENT; 1 of 8 searched testable | ATTRIBUTION_QUALIFIED (273/274; recipe reader fails on CDIST) |
+
+What three engines say about the Observatory:
+1. **The bespoke line count has stabilised.** It came down from ~1,800 to ~700, and no shared component has needed a
+   change since the registry existed. What remains is the engine's physics (Z80's replay and counterfactual observer;
+   Ensorain's arms), which is the part the directive says should be bespoke.
+2. **Qualification did not get cheaper.** Each engine needed one challenge, one repair round and a re-check, at
+   ~1.6-2.0 h of reviewer time. Every challenge found a real defect in a decision rule the builder believed sound.
+   The registry saves building, not proving.
+3. **Selection changed the question each time.** The selection packet re-scoped the operator's candidate question in
+   both new engines, before any adapter existed:
+   - Ensorain: retention was not demanded.
+   - Z80: heredity was not demanded; reproduction of function was.
+   "Does the world demand the phenomenon?" is now the first gate, and twice it has said no to the phenomenon we arrived
+   with.
+4. **The same instrument lesson appeared on all three engines: a contrast or baseline that cannot fail.**
+   - Ensorain: a self-relative frozen arm.
+   - Z80: baselines with no ENV output, and an origin test passed by a constant.
+   - D1 (C-013): an analyzer trusting a derived field.
+   The registry now carries each as a counterexample.
+5. **Coordination latency fell fastest.** Waiting fell from 69% to 24% of packet time with headless launch on READY
+   plus the notice scan. It still polls, and it stalls when the coordinator session is busy or the comms host is down
+   (M1 was unreachable at 21:40Z).

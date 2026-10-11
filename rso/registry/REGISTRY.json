@@ -30,7 +30,7 @@
    "owner": "Palamedes (coordinator); built by Argus under C-009",
    "qualified_scope": "FLAT inventories only: every RECEIPT row's parent is the anchored launch, every COMPLETED RECEIPT row carries receipt_sha256, no node has two RECEIPT rows (the P-FLAT predicate, C-010 PREREGISTRATION s5). Runtime-agnostic within that scope.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/binding/binding.py": "a5a7af0477253b4ff91b1f4ac639c9ba1229891c6633719f54dc0301e593923a",
      "rso/binding/contract.json": "b122aae4499f1d83abbcaac2166fb5514d55ceffd006ea2b28885c5e5707f6c7"
@@ -72,7 +72,7 @@
    "owner": "Palamedes (coordinator); keeper store shared",
    "qualified_scope": "detects bytes that changed after registration, a missing keeper row, and registration after the first check. Records BYTES, not their truth.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/slice001/evidence.py": "bd4e7bbf338bf30e1b4a2fa5bf68ed2b76db93a669a05d27a63584c6faeb2866"
     }
@@ -117,7 +117,7 @@
    "owner": "Palamedes (coordinator); challenge sets are owned by their reviewer",
    "qualified_scope": "single textual edits against committed Python sources, each run in a fresh -B subprocess; classifies KILLED / SURVIVED / ERROR. Used for 7 Q3 challenges and every integrator mutation in C-004..C-013.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/reach/repair_v101/run_red.py": "5e6bac7ae470d69e94d3788d05e3837fba06089ab234f0758a029cb6e6db0540",
      "rso/slice001/mutation.py": "ce90dd4b61f5d6ceca270961de4e91b44af708a698b6caf92f6dbd40563a215b"
@@ -133,7 +133,8 @@
     "C-009",
     "C-010",
     "C-013",
-    "C-016 (challenge/run_edits.py, repair_v110/run_red.py)"
+    "C-016 (challenge/run_edits.py, repair_v110/run_red.py)",
+    "C-017 (red/run_red.py, challenge/run_edits.py)"
    ],
    "version": "C-004 mutation.py + RED-edit pattern (C-013 repair_v101)"
   },
@@ -158,7 +159,7 @@
    "owner": "Palamedes (coordinator)",
    "qualified_scope": "canonical identity of JSON receipts built from ints, strings, lists, dicts.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/slice001/receipt.py": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
@@ -172,7 +173,8 @@
     "C-004",
     "C-009 (receipt bytes for binding)",
     "C-010",
-    "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)"
+    "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)",
+    "C-017 Z80 Atlas (rows sha256)"
    ],
    "version": "C-004 receipt.py"
   },
@@ -197,7 +199,7 @@
    "owner": "Eupalamus (T023 caps); Palamedes (coordinator)",
    "qualified_scope": "client-side accounting of declared launches; refuses a launch whose DECLARED estimate would exceed a cap. Cross-checked to the decimal by an independent tool (ledger_numbers).",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/slice001/ledger.py": "8f483e05910de587cd58d46ab38c8878679762403129d6816e3172b767b13e52"
     }
@@ -248,7 +250,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "Ares W15 retained-bit witness only. REUSABLE PATTERN (not code): per-launch inventory, P-FLAT gate (evaluate.py:179 p_flat), recompute-from-bytes evaluation, controls launched as their own bundle.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/witness/ares_client.py": "0028f21dcda032ff43876495d492ffe5e2f411afdf1723ac756626ef57adb1ec",
      "rso/witness/evaluate.py": "8bb426dee359ce14df61032a3fa647e689db9576b8f71d0606b9ef70707efdb1",
@@ -289,7 +291,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "a BINARY per-episode correct/wrong endpoint with a known chance bound (W15: 1/2, delta 1/20, alpha 1/100, n = 2048).",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/witness/ruler.py": "6b972f9eef3127dc80f66bacfa26d61097304e74f486523ad1c65d7cd31caed8"
     }
@@ -300,7 +302,8 @@
    ],
    "users": [
     "C-010",
-    "C-016 Ensorain (thresholds / tail_ge as an exact sign test and gate thresholds at bounds 1/2 and 9/10, unit = lifetime)"
+    "C-016 Ensorain (thresholds / tail_ge as an exact sign test and gate thresholds at bounds 1/2 and 9/10, unit = lifetime)",
+    "C-017 Z80 Atlas (tail_le against an error-rate bound 1/5, unit = run)"
    ],
    "version": "C-010 P-RET"
   },
@@ -329,7 +332,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "binary success counts per stratum, two-sided stratified exact test, Holm over a fixed family; power by Monte Carlo at the Holm worst-case level. Null size measured <= 0.027.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/reach/analyze.py": "8c9ff6fa4d9f60d437e12205fe7fd582a181712c7f932644d0fd16dad8627f0d",
      "rso/reach/stats.py": "1185ffc430ab54b77e28e47ce313d8b2e23303f3713a8be34c16b28f0666d396"
@@ -376,7 +379,7 @@
    "owner": "Argus (built); Palamedes (coordinator); Ensorain owns the physics it checks",
    "qualified_scope": "Ensorain WTP-05 TAPE genomes at ensorain/ 7b1d549c8 (Q3 C-016-T040 + re-check T042: INSTRUMENT CLOSED; held on 26,400 dev + 10,400 challenge + 38,400 confirmatory rows; NaN fixed).",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/ensorain/assay.py": "ce3dc25558a98617a6ab813bd7b51c3932e390827fb272b2e0303a518d9ea482"
     }
@@ -426,7 +429,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "within-life revision at a law switch, binary per-life endpoint, paired by seed, one host; REVISION_HISTORY_DEPENDENT excludes law-blind drift (C-016 RESULT, family P).",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/ensorain/analysis.py": "5f8215377a11afe4bdf18596d64c7515d58a7cc2251cb4ce78f19663cd5b5eea"
     }
@@ -466,7 +469,7 @@
    "owner": "Eupalamus (built); Palamedes (coordinator, consumer)",
    "qualified_scope": "idempotent notices on the shared comms DB (tests + live C-016 use: #2120-#2152; re-scans posted nothing). Median integration wait C-016 8.8 min vs C-013 31 min.",
    "source": {
-    "commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
     "sha256": {
      "rso/scale/notify/__main__.py": "3a77738a81936a7edb8140ed549af59e886bd95c46252814d680510fbcefaf5c",
      "rso/scale/notify/notify.py": "a0c51d170813011c1e7939b2d1b93a92363dac206a0ed77ab965d488b47569c3"
@@ -477,11 +480,68 @@
     "rso/scale/notify/tests/test_notify.py"
    ],
    "users": [
-    "C-016"
+    "C-016",
+    "C-017"
    ],
    "version": "C-016-T011"
+  },
+  {
+   "counterexamples": [
+    "v1.0.0 P tag admitted affine-invariant target-dependent writes (CDIST, T040 s4.1); fixed by the reads rule",
+    "analysis.py does not refuse an incomplete shard set: 5 of 6 shards still read ATTRIBUTION_QUALIFIED (C-017 integration); require every registered (arm, seed) before a verdict",
+    "the engine's reads_nbr / exec_foreign counters are not environment contribution (ONBOARDING s3.2)",
+    "a recipe lookup table keyed on registered arms IS the ground-truth table and cannot fail; a baseline must be a mechanism, not a table (T041 A2)"
+   ],
+   "dependencies": [
+    "receipt-canonical",
+    "ruler-binary-retention"
+   ],
+   "evidence": [
+    "rso/z80/red/red_rows.jsonl",
+    "rso/z80/challenge/REPORT.md",
+    "rso/z80/challenge/R2/REPORT.md",
+    "rso/z80/RESULT.md",
+    "rso/z80/INTEGRATION.md"
+   ],
+   "files": [
+    "rso/z80/observe.py",
+    "rso/z80/assay.py",
+    "rso/z80/analysis.py"
+   ],
+   "interface": "observe.replay(spec, seed) re-implements engine.run's population loop for the PREREGISTRATION s2 subset and refuses REPLAY_MISMATCH unless the final population matches the record byte for byte; endo_tags gives per-byte writer tags (I/R/M/P/K) with the reads rule + two-sample counterfactual; assay.classify gives run class + origin; analysis gives Q1-Q4 and the verdict.",
+   "invalidated_by": [
+    "any byte change to the pinned files",
+    "a change under archaeon/z80atlas/ or proteus/foundry/prng.py",
+    "a spec outside the s2 subset"
+   ],
+   "name": "z80-attribution-instrument",
+   "not_qualified_for": [
+    "records without replay (bytes alone cannot tell a runner-written copier from a self-written one)",
+    "ARISEN origin (Q2 tests INSERTED only)",
+    "'independent of the target' for ENDO (exec_foreign / SEAL residual obstructed, not excluded)",
+    "horizons beyond the registered ones; other topologies, physics, pressures, tasks (refused UNSUPPORTED)",
+    "a full genuine-Q3 re-check of v1.1.0 (T042 mixed)"
+   ],
+   "owner": "Argus (built); Palamedes (coordinator); Archaeon owns the engine it replays",
+   "qualified_scope": "Z80 Atlas archaeon tree at 863d34a55, well_mixed / unlimited / fixed, vmcopy G=32, ECHO_forced, ENDOGENOUS_COPY or EXTERNAL, records replayable from (spec, seed), constructed arms at the registered 10-200 epoch horizons (C-017 RESULT: ATTRIBUTION_QUALIFIED, 273/274).",
+   "source": {
+    "commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
+    "sha256": {
+     "rso/z80/analysis.py": "3d865f95faafbf41d0d6ab2297ec43d629ec8133aa4f931d95a797accfa6e8a8",
+     "rso/z80/assay.py": "a0a23118b2b62cc6d310af2bf45a8620b65772cd9fd01b58880a9d628b2f7f72",
+     "rso/z80/observe.py": "3c2e4cf33d4476859332c058bb87bed7b52240bc6534d6d951a890daf914a0b3"
+    }
+   },
+   "stage": "QUALIFIED_SCOPED",
+   "tests": [
+    "rso/z80/tests/test_attribution.py"
+   ],
+   "users": [
+    "C-017 Z80 Atlas"
+   ],
+   "version": "C-017 FREEZE_Z80_ATTRIBUTION v1.1.0"
   }
  ],
- "pinned_at_commit": "5a839f64a8a34ddfdb9bedeceeb6aedee6503d67",
+ "pinned_at_commit": "b8f8f3a8e2813a733b84104bbbea4445b0c4be6e",
  "schema": "prometheus.rso.registry.v1"
 }

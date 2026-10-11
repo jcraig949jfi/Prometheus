@@ -42,7 +42,7 @@
     "rso/z80/RESULT.md"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -85,6 +85,18 @@
       "by": "Argus[harry1-2a8591f8]",
       "at_utc": "2026-10-11T21:35:59Z",
       "note": "branch argus/c017-t050; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T21:48:41Z",
+      "note": "merged argus/c017-t050: freeze OK; analysis re-run identical (ATTRIBUTION_QUALIFIED); shard 0 reproduced byte-identical (rows a59f37e9); launch log sonnet-5-5 throughout. Integrator mutation: 5 of 6 shards still QUALIFIED -> analyzer lacks a completeness check (survivor, recorded; committed result uses all 6). --cleared-by slash defect was the coordinator's"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T21:48:41Z",
+      "note": "result preserved: rso/z80/RESULT.md + INTEGRATION.md"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

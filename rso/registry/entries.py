@@ -83,7 +83,7 @@ ENTRIES = [
                             "an equivalent first mutant on ledger_numbers (C-013-T020 integration)"],
         "dependencies": [],
         "invalidated_by": ["any byte change to the pinned files"],
-        "users": ["C-004", "C-009", "C-010", "C-013", "C-016 (challenge/run_edits.py, repair_v110/run_red.py)"],
+        "users": ["C-004", "C-009", "C-010", "C-013", "C-016 (challenge/run_edits.py, repair_v110/run_red.py)", "C-017 (red/run_red.py, challenge/run_edits.py)"],
     },
     {
         "name": "receipt-canonical",
@@ -101,7 +101,7 @@ ENTRIES = [
         "counterexamples": [],
         "dependencies": [],
         "invalidated_by": ["any byte change to receipt.py"],
-        "users": ["C-004", "C-009 (receipt bytes for binding)", "C-010", "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)"],
+        "users": ["C-004", "C-009 (receipt bytes for binding)", "C-010", "C-016 Ensorain (rows_sha256; its float refusal forced the integer endpoint)", "C-017 Z80 Atlas (rows sha256)"],
     },
     {
         "name": "budget-ledger",
@@ -163,7 +163,7 @@ ENTRIES = [
         "dependencies": [],
         "invalidated_by": ["any byte change to ruler.py", "a non-binary endpoint"],
         "users": ["C-010", "C-016 Ensorain (thresholds / tail_ge as an exact sign test and gate thresholds at bounds "
-                  "1/2 and 9/10, unit = lifetime)"],
+                  "1/2 and 9/10, unit = lifetime)", "C-017 Z80 Atlas (tail_le against an error-rate bound 1/5, unit = run)"],
     },
     {
         "name": "stratified-holm-analysis",
@@ -250,6 +250,37 @@ ENTRIES = [
                             "(C-016-T041 / T050 keys); still unique, not a clean sha"],
         "dependencies": [],
         "invalidated_by": ["any byte change to the pinned files", "a workgraph task-history schema change"],
-        "users": ["C-016"],
+        "users": ["C-016", "C-017"],
+    },
+    {
+        "name": "z80-attribution-instrument",
+        "version": "C-017 FREEZE_Z80_ATTRIBUTION v1.1.0",
+        "owner": "Argus (built); Palamedes (coordinator); Archaeon owns the engine it replays",
+        "files": ["rso/z80/observe.py", "rso/z80/assay.py", "rso/z80/analysis.py"],
+        "interface": "observe.replay(spec, seed) re-implements engine.run's population loop for the PREREGISTRATION s2 subset and "
+                     "refuses REPLAY_MISMATCH unless the final population matches the record byte for byte; endo_tags gives "
+                     "per-byte writer tags (I/R/M/P/K) with the reads rule + two-sample counterfactual; assay.classify gives run "
+                     "class + origin; analysis gives Q1-Q4 and the verdict.",
+        "stage": "QUALIFIED_SCOPED",
+        "qualified_scope": "Z80 Atlas archaeon tree at 863d34a55, well_mixed / unlimited / fixed, vmcopy G=32, ECHO_forced, "
+                           "ENDOGENOUS_COPY or EXTERNAL, records replayable from (spec, seed), constructed arms at the registered "
+                           "10-200 epoch horizons (C-017 RESULT: ATTRIBUTION_QUALIFIED, 273/274).",
+        "not_qualified_for": ["records without replay (bytes alone cannot tell a runner-written copier from a self-written one)",
+                              "ARISEN origin (Q2 tests INSERTED only)", "'independent of the target' for ENDO (exec_foreign / "
+                              "SEAL residual obstructed, not excluded)", "horizons beyond the registered ones; other topologies, "
+                              "physics, pressures, tasks (refused UNSUPPORTED)", "a full genuine-Q3 re-check of v1.1.0 (T042 mixed)"],
+        "tests": ["rso/z80/tests/test_attribution.py"],
+        "evidence": ["rso/z80/red/red_rows.jsonl", "rso/z80/challenge/REPORT.md", "rso/z80/challenge/R2/REPORT.md",
+                     "rso/z80/RESULT.md", "rso/z80/INTEGRATION.md"],
+        "counterexamples": ["v1.0.0 P tag admitted affine-invariant target-dependent writes (CDIST, T040 s4.1); fixed by the reads rule",
+                            "analysis.py does not refuse an incomplete shard set: 5 of 6 shards still read ATTRIBUTION_QUALIFIED "
+                            "(C-017 integration); require every registered (arm, seed) before a verdict",
+                            "the engine's reads_nbr / exec_foreign counters are not environment contribution (ONBOARDING s3.2)",
+                            "a recipe lookup table keyed on registered arms IS the ground-truth table and cannot fail; a baseline "
+                            "must be a mechanism, not a table (T041 A2)"],
+        "dependencies": ["receipt-canonical", "ruler-binary-retention"],
+        "invalidated_by": ["any byte change to the pinned files", "a change under archaeon/z80atlas/ or proteus/foundry/prng.py",
+                           "a spec outside the s2 subset"],
+        "users": ["C-017 Z80 Atlas"],
     },
 ]
