@@ -880,6 +880,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   CORRECTION (mine): the first smoke test FAILED (group_reloc lacked the log= kwarg used by B62's readout) although
   this entry was written as 'passed'; fixed (log=None) and the re-run smoke test passed. 12 SOLO cells, G=300,
   ticks 48 -> est ~12-15 core-h. LAUNCH in window 5 (~2026-10-11 00:29Z).
+- Heartbeat cron renewal reminder scheduled (one-shot 2026-10-12 local; the 23,53 heartbeat auto-expires ~2026-10-13).
+- WINDOW 5 00:29Z: lease spectrex5:cpu12 BUSY -- held by Pan (lse-73191f8e92df, 'PAN-34 verdict phase gpt-oss:20b@4096', to
+  ~02:45Z). B75 NOT launched; retry after Pan's lease ends. No compute run without the lease.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
