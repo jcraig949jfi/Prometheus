@@ -1,0 +1,75 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-017-T040",
+ "campaign_id": "C-017",
+ "attempt_id": "A-001",
+ "role": "Pallas",
+ "model": "claude-fable-5-1",
+ "quality_class": "Q3",
+ "instance": "harry1-b22b3a2d",
+ "host": "harry1",
+ "branch": "pallas/c017-t040",
+ "worktree_path": "C:/Prometheus-worktrees/pallas-c017-t040",
+ "start_sha": "843c2b4e9292de2abbd2937192783b56643fb414",
+ "end_sha": "5622471846146b99bd2ac902a07592fbec4cdd07",
+ "dirty": false,
+ "commits": {
+  "claim_main": "6970f0355",
+  "set_branch": "e229df290 (18:05:39Z, before any outcome)",
+  "implementing_main": "5199b6ca5",
+  "harness_fix_posthoc_key_branch": "5daa7745f (18:22:10Z; B1h prediction committed before it ran)",
+  "results_branch": "562247184"
+ },
+ "files_changed": [
+  "rso/z80/challenge/{__init__.py,CHALLENGE_SET.md,EXPOSURE.md,expected.json,edits.json,subjects_c.py,cases.py,witnesses.py,run_edits.py} (the set)",
+  "rso/z80/challenge/{rows.0-4,rows.1-4,rows.2-4,rows.3-4}.jsonl.gz (132 rows), results.jsonl (20 cases), red_rows.jsonl (baseline + 4 witness baselines + E1-E5), REPORT.md",
+  "roles/Pallas/{WORK_STATE.json,journal/2026-10-11.md,comms/2026-10-11_C-017-T040_{CLAIMED,INTEGRATION_READY}.md,comms/2026-10-11_HEARTBEAT_T040_{1,2}.md}",
+  "ops/campaigns/C-017/tasks/C-017-T040/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "NO file in rso/z80/FROZEN.json changed; archaeon/, prometheus/z80atlas/, roles/Archaeon/ untouched"
+ ],
+ "evidence_added": [
+  "challenge set committed before any outcome (e229df290): CDIST (counterfactual-invariant reconstructor; the two frozen alterations generate the affine group on Z/256 whose pair invariants are functions of +-(a-b)), arm CDIST_ENDO_IMPL at the ENV arm's settings, horizon sweep (RECON 20/40/60, H_ENDO_GATED 200, H_EXT_SHORT 30), recipe reader b4 and donor reader b3, constant-INSERTED origin, probe lottery, 4 frozen witnesses, 5 semantic edits with witnesses; predictions in expected.json",
+  "INSTRUMENT: P tag NOT CLOSED -- CDIST unit: kin tags PP..KKK, child (21,22), label ENDO; empty target child (0,1); arm: ENDO 8/8 at 5 epochs and 8/8 at 10 epochs (n_ENDO == n_pp_func every run), b3 (engine donor counter) ENV 8/8; NONE 8/8 at the registered 100 epochs (written head inside the copy-noise mask; post-hoc horizon disclosed). Replay root CLOSED: 106 records byte-equal incl. births, 0 refusals, stripped / noise-edited records invariant 60/60, 14th transplant tape placed -> REPLAY_MISMATCH; forgeries 10/10 as registered; dev shard 0/2 bitwise (c5c8f70b); 27/27 RED identical",
+  "INFERENCE: w_max exact from first principles (n* = 184 for w_max >= 24; confirmatory Q2 n 240..264 -> w_max 33..37 vs <= 24 ARISEN rows): a constant INSERTED origin passes Q2 for every outcome (1 wrong of 49 here, w_max 3); b1 / b2 have no ENV output (Q4 vacuous on ENV); b2 ENDO 6/6 at 10 epochs, EXT 6/6 at 30 (horizon-made failure); b4 recipe reader 0 class errors in all four classes and 0/54 origin (recipe-separable arms); Q1 0 errors on 49 scored challenge rows; builder's horizons held (RECON ENV 18/18 at 20-60, H_ENDO ENDO 12/12 at 200) against my prediction",
+  "INTERPRETATION: narrowing text REPORT s4.3 (ENDO = invariant under two alterations incl. input-dependent writes W5f; ENV = target cell; origin = founder supply, ARISEN untested; per-run probe lottery 1 seed / 999 -> 75 'functional' half-solvers; filler-dependent sufficiency E2/W2; sufficiency vs expression PD)",
+  "edits: E1 (one counterfactual sample) E2 (filler 0x1E) E3 (REFUSED leaves Q1) E5 (counterfactual empties the input) SURVIVE 42/42 with witnesses moved exactly as predicted; E4 control (RED_EDITS S6) RED on the named test only; hash guard fired on every mutant; every restore sha256 + git-diff verified; freeze check OK"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.z80.freeze check", "result": "OK before the claim, after every mutant restore, and at the end"},
+  {"command": "python -B -m rso.z80.challenge.cases records {0,1,2,3}/4", "result": "120 jobs, 132 rows; shard walls 485 / 427 / 584 / 584 s; rows sha256 (sorted) fb7721da4edb637d36c65cee073b6da078c17c59d43ff5e6e9d62c48df3026c0"},
+  {"command": "python -B -m rso.z80.challenge.run_edits", "result": "baseline 42/42; E1 E2 E3 E5 SURVIVES, E4 RED [test_run_class_is_a_strict_majority]; witnesses W1 K->P, W2 ENDO->ENV, W3 NOT_QUALIFIED->ATTRIBUTION_QUALIFIED, W5 P->K"},
+  {"command": "PALLAS_SCRATCH=<scratch> python -B -m rso.z80.challenge.cases score", "result": "S1-S6 AS_EXPECTED; B1 NOT_AS_PREDICTED (100 epochs) / B1h SURVIVOR; B5 NOT_AS_PREDICTED (RECON, H_ENDO parts); B6 NOT_AS_PREDICTED (b3) with structural + b4 held; B7 SURVIVOR; PL RECORDED (one sub-prediction missed); W1f W2f AS_EXPECTED; W5f PD RECORDED"},
+  {"command": "python -B -m rso.z80.assay dev <scratch>/DEV_ROWS 8 0/2", "result": "64 rows, 241 s, rows sha256 c5c8f70b... == committed DEV_ROWS.0-2"},
+  {"command": "python -B -m rso.z80.red.run_red <scratch>/red_rows.jsonl", "result": "ALL_RED 27 mutants; rows identical to red/red_rows.jsonl in (id, red, expected_red, failing)"},
+  {"command": "python -m workgraph validate", "result": "exit 0 before every state push"}
+ ],
+ "red_observed": {
+  "observed": false,
+  "detail": "adversarial review packet (TASK.json red_required false): the RED analogue is the committed prediction set (e229df290) preceding every outcome; 4 of 16 scored predictions missed and are reported with their values"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "two harness errors fixed after the first two shards were seen (5daa7745f; REPORT s6.1): a float timing field in the rows, and an 'extra tape beyond N' audit edit that actually planted a 14th cell (the instrument refused those records, correctly); every job was re-run under the fixed harness; the judge's eval namespace received `set` after the first score (one token)",
+  "B1's registered horizon (100 epochs) was a design error of mine: the fault is per organism (first-sight unit case held exactly) but the construction decays; B1h (5 / 10 epochs) is post-hoc and labelled, its prediction committed before it ran, after a diagnosis replay of one seed had shown F0 counts and head tags (not the class)",
+  "predictions missed: B5 RECON / H_ENDO drift (the builder's horizons held), B6 b3 donor-majority rule (7.6 % mixing), PL 'other = 0' (one mutant organism)",
+  "informed review (every frozen test body and mutant read), same vendor as the builder, cell member",
+  "situ was not challenged by a new construction (the frozen parasite / host unit answers stand)"
+ ],
+ "unresolved": [
+  "owner's one bounded repair round for the P tag (recommendation REPORT s5: K when res0 reads_nbr > 0, pinned by the CDIST unit answer and a short-horizon arm or test) -- or the confirmatory run on v1.0.0 carrying REPORT s4.3",
+  "PREREGISTRATION text narrowing: s4.2 / s11.5 (P = invariant under the registered alterations), s5 Q2 (ARISEN untested), s5 Q4 (b1 / b2 cannot emit ENV; b2's EXT failure is the horizon; recipe-separable arms), s11.6 (filler-dependent), s8 (blinding hides the arm name, not the recipe)",
+  "registry rows (Palamedes): z80-replay-writer-attribution counterexamples += CDIST; not_qualified_for += ARISEN origin",
+  "unpinned behaviours: the second counterfactual sample (E1), the counterfactual's input (E5), the filler (E2), REFUSED counts as wrong (E3)"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 0.6,
+  "processes_max": 2,
+  "wall_minutes": 95,
+  "paid_resources": "none",
+  "hosts": ["harry1"]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/pallas-scratch/ (vmcheck.py, t040/DEV_ROWS shard, t040/red_rows.jsonl); worktree pallas-c017-t040 left for the integrator",
+ "notes": "Read-only on archaeon/, prometheus/z80atlas/, roles/Archaeon/; no Archaeon seed, no evidence bundle; no confirmatory seed and no `assay confirm`; no production file changed in any commit (mutants applied to the working copy and restored, verified). Python 3.12.10 on harry1. Q3 reviewer time for ONBOARDING s4: ~95 min wall, ~35 CPU-min.",
+ "created_at_utc": "2026-10-11T19:22:00Z"
+}
