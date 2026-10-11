@@ -214,23 +214,30 @@ def environment():
 def main(argv):
     mode, prefix = argv[0], argv[1]
     shard = tuple(int(x) for x in argv[-1].split("/")) if "/" in argv[-1] else (0, 1)
+    meta = {"mode": mode, "shard": list(shard), "environment": environment()}
     if mode == "confirm":
         from rso.z80 import freeze
         bad = freeze.mismatches()
-        if bad or "--cleared-by" not in argv:
-            print("REFUSED: freeze mismatch %s or no --cleared-by" % bad); return 2
+        k = argv.index("--cleared-by") if "--cleared-by" in argv else -1
+        if bad or k < 0 or k + 1 >= len(argv) or "/" in argv[k + 1]:
+            print("REFUSED: freeze mismatch %s or no --cleared-by REF" % bad); return 2
+        meta.update(cleared_by=argv[k + 1], frozen_json_sha256=hashlib.sha256(open(freeze.PATH, "rb").read()).hexdigest())
         part, n_for = "confirm", lambda a: CONFIRM_N.get(a, 24)
     elif mode == "dev":
         part, n = "dev", int(argv[2]); n_for = lambda a: n
     else:
         print(__doc__); return 2
     t0 = time.time()
+    os.makedirs(os.path.dirname(os.path.abspath(prefix)), exist_ok=True)
     rows = run(part, n_for, shard)
     path = "%s.%d-%d.jsonl.gz" % (prefix, shard[0], shard[1])
     with gzip.open(path, "wt", encoding="utf-8", newline="\n") as f:
         for r in rows:
             f.write(json.dumps(r, sort_keys=True) + "\n")
-    print("rows", len(rows), "sha256", sha256_hex(rows), "wall_s", int(time.time() - t0), "->", path, environment())
+    meta.update(rows=len(rows), rows_sha256=sha256_hex(rows), wall_s=int(time.time() - t0))
+    with open("%s.%d-%d.meta.json" % (prefix, shard[0], shard[1]), "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(meta, indent=1, sort_keys=True) + "\n")
+    print("rows", len(rows), "sha256", meta["rows_sha256"], "wall_s", meta["wall_s"], "->", path, meta["environment"])
     return 0
 
 
