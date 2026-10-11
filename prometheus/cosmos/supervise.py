@@ -268,13 +268,13 @@ def main(argv=None):
     a.add_argument("--stall", type=float, required=True, help="seconds without a new result => STALLED")
     a.add_argument("--restarts", type=int, default=1)
     a.add_argument("--poll", type=float, default=10.0)
-    a.add_argument("cmd", nargs=argparse.REMAINDER)
     s = sub.add_parser("status")
     s.add_argument("rundir")
     s.add_argument("--stall", type=float, default=900.0)
-    ns = ap.parse_args(argv)
+    argv = list(sys.argv[1:] if argv is None else argv)
+    cmd = argv[argv.index("--") + 1:] if "--" in argv else []
+    ns = ap.parse_args(argv[:argv.index("--")] if "--" in argv else argv)
     if ns.op == "launch":
-        cmd = ns.cmd[1:] if ns.cmd[:1] == ["--"] else ns.cmd
         if not cmd:
             ap.error("launch needs -- <cmd ...>")
         v = launch(ns.rundir, cmd, ns.stall, ns.restarts, ns.poll)

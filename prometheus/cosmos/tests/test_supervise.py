@@ -155,3 +155,13 @@ def test_replay_of_the_2026_10_08_incident(tmp_path, monkeypatch):
     time.sleep(1)
     pid = int((rd / "PID").read_text())
     assert subprocess.run(["pgrep", "-s", str(pid)], capture_output=True).returncode == 1   # session empty
+
+
+def test_cli_launch_parses_options_and_command(tmp_path):
+    rd = tmp_path / "r"
+    s = _script(tmp_path, _driver("ok", rd, n=4))
+    r = subprocess.run([PY, "-m", "prometheus.cosmos.supervise", "launch", str(rd), "--stall", "60", "--restarts",
+                        "0", "--poll", "1", "--", PY, str(s)], capture_output=True, text=True, env=ENV,
+                       timeout=120, cwd=ROOT)
+    assert r.returncode == 0, r.stderr
+    assert json.loads(r.stdout)["verdict"] == "DONE" and len(_rows(rd)) == 4
