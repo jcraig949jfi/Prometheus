@@ -61,7 +61,13 @@ def run_synthetic_v1(input_checkpoint: bytes, spec: dict):
     return b"".join(lines), b"".join(out)[:p["checkpoint_bytes"]]
 
 
-REGISTRY = {("moonshot.synthetic", 1): run_synthetic_v1}
+def _native_wforge_v1(input_checkpoint: bytes, spec: dict):
+    """moonshot.native.wforge v1 (C-012-T007), imported on first use: synthetic-only hosts never load wforge."""
+    from .native_wforge import run_native_wforge_v1
+    return run_native_wforge_v1(input_checkpoint, spec)
+
+
+REGISTRY = {("moonshot.synthetic", 1): run_synthetic_v1, ("moonshot.native.wforge", 1): _native_wforge_v1}
 
 
 def lookup(runtime: dict):

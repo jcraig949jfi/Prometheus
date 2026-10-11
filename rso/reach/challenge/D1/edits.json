@@ -1,0 +1,59 @@
+{
+ "schema": "prometheus.pallas.challenge_edits.v1",
+ "task": "C-013-T011",
+ "note": "single-line find/replace, applied once to the working copy of THIS worktree, suite run, file restored byte-for-byte (sha256 + git diff --quiet + run_d1.check_frozen). Never committed mutated.",
+ "edits": [
+  {
+   "id": "E1_CERT_SELECTION_ON_TRAINING",
+   "surface": "certification",
+   "file": "rso/reach/certify.py",
+   "find": "sel = ru.evaluate(prog, store0, P, SELECT0, N_SELECT, sealed=False)[\"counts\"]",
+   "replace": "sel = ru.evaluate(prog, store0, P, TRAIN0, N_TRAIN, sealed=False)[\"counts\"]",
+   "targeted_tests": ["rso/reach/tests/test_certify.py"],
+   "predicted": "SURVIVES",
+   "witness": "W1"
+  },
+  {
+   "id": "E2_CERT_SEALED_GATE_NOT_FAIL",
+   "surface": "certification",
+   "file": "rso/reach/certify.py",
+   "find": "elif out[\"selection_ok\"] and v[\"verdict\"] == ru.PASS:",
+   "replace": "elif out[\"selection_ok\"] and v[\"verdict\"] != ru.FAIL:",
+   "targeted_tests": ["rso/reach/tests/test_certify.py"],
+   "predicted": "SURVIVES",
+   "witness": "W2"
+  },
+  {
+   "id": "E3_ANALYZE_NO_HOLM",
+   "surface": "inference",
+   "file": "rso/reach/analyze.py",
+   "find": "sep = adj[name] <= ALPHA",
+   "replace": "sep = raw[name] <= ALPHA",
+   "targeted_tests": ["rso/reach/tests/test_analysis.py"],
+   "predicted": "SURVIVES",
+   "witness": "W3"
+  },
+  {
+   "id": "E4_RUNNER_RESUME_DROPS_PRIOR_CPU",
+   "surface": "inference",
+   "file": "rso/reach/run_d1.py",
+   "find": "cpu, status = sum(r[\"cpu_s\"] for r in prior), \"COMPLETE\"",
+   "replace": "cpu, status = 0.0, \"COMPLETE\"",
+   "targeted_tests": ["rso/reach/tests/test_runner.py"],
+   "predicted": "SURVIVES",
+   "witness": "W4"
+  },
+  {
+   "id": "E5_CTRL_STATS_ONE_SIDED",
+   "surface": "inference",
+   "file": "rso/reach/stats.py",
+   "find": "return float(min(Fraction(1), sum(p for p in dist.values() if p <= lim)))",
+   "replace": "return float(min(Fraction(1), sum(p for t, p in dist.items() if t >= t_obs)))",
+   "targeted_tests": ["rso/reach/tests/test_stats.py"],
+   "predicted": "KILLED",
+   "witness": null
+  }
+ ],
+ "all_tests": ["rso/reach/tests/test_analysis.py", "rso/reach/tests/test_arms.py", "rso/reach/tests/test_certify.py",
+               "rso/reach/tests/test_descriptor.py", "rso/reach/tests/test_runner.py", "rso/reach/tests/test_stats.py"]
+}

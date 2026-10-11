@@ -1,0 +1,82 @@
+{
+ "frozen_utc": "2026-10-08T09:23:00Z",
+ "spec": "beta03/windows/E5N_PREREG.md",
+ "files": {
+  "engine/v2b/b03_e5.py": "a504736189da688e3b5f3479c1361c62e2e00bbe940d7c2a3dd4190c0c68531e",
+  "engine/v2b/b03.py": "1febd5d54a6d0b26c597202bf483e15e18b071b508c4ec6dbfa14abbc1b53d82",
+  "engine/v2b/b02.py": "e1463f4d5146b8524f342f376604e386fb1e21f88d5a9ac618baa1dacde7ecc8",
+  "engine/v2b/gtc.py": "e097e1d4d11f1a869a88dcd5bba9ff80a487b721d71f8a3d13d9758afdad189f",
+  "beta03/windows/E5N_PREREG.md": "97857d9ed37ef6825effe5202a0a670724122cd4307953bf43ae48fa74ee12c1",
+  "engine/w5p/donor.py": "a5d7b7551561f26764feb7706e9a7c7d18671f9aa9b4f94406c878bb4dba7715",
+  "engine/w5p/promote.py": "33a28d01a9912b2432ecdcdeeac5874633a41d9663d68615b8cb7b39cc56cbec",
+  "engine/w5p/harness.py": "204a4251747ea9121a26ec781c0f8d1efc2f7301e16f6a8702ba4e9f52b25268",
+  "engine/w5p/_paths.py": "833260931d753e3cd17d05b59ac59edd2a8a6e8c8812d6993483d5d2173c64ab",
+  "engine/w5p/__init__.py": "c10881c811394a38eddfba691ac1bd5f039c6a79bab41d0dee40bd217692503b",
+  "engine/v2b/b03_e6.py": "07ae4e43cf60677a818f11f7ea95e1c2c0f6f28e0eef8586337b65722fe198b1",
+  "engine/v2b/b03_e6_known.py": "4e7b4da0f4e5bd031a485056a6c54386f3e5de955986997b0ca8a96dcce2a96d"
+ },
+ "lead_branch": "aphrodite/b03-w5p @1e169a577",
+ "known": "beta03/runs/E5N/E5N_KNOWN.json",
+ "before": "any E1 or E5 outcome (E1 chain not started)",
+ "amendments": [
+  {
+   "utc": "2026-10-08T09:43:57Z",
+   "before_any_outcome": true,
+   "id": "A1",
+   "source": "beta03/reviews/REDTEAM_E5N_PREFREEZE.md",
+   "note": "1 BLOCKER + 5 MAJOR addressed pre-data; K5a-K5d PASS",
+   "changed": {
+    "engine/v2b/b03_e5.py": {
+     "old": "2cb1d14c108ee847",
+     "new": "a73787ecda0ce3ee"
+    },
+    "beta03/windows/E5N_PREREG.md": {
+     "old": "959b5477ca050959",
+     "new": "c3db7e8f0279325f"
+    }
+   }
+  },
+  {
+   "utc": "2026-10-08T13:35:28Z",
+   "before_any_outcome": true,
+   "id": "A2",
+   "note": "derived_schemas receipt; E6 runner frozen (cherry-pick 466b3457f); K5a-e, K6a-j PASS",
+   "changed": {
+    "engine/v2b/b03_e5.py": {
+     "old": "a73787ecda0ce3ee",
+     "new": "b0a44424bbd486b4"
+    },
+    "beta03/windows/E5N_PREREG.md": {
+     "old": "c3db7e8f0279325f",
+     "new": "a93dec63d407afdc"
+    },
+    "engine/v2b/b03_e6.py": {
+     "old": "-",
+     "new": "07ae4e43cf60677a"
+    },
+    "engine/v2b/b03_e6_known.py": {
+     "old": "-",
+     "new": "4e7b4da0f4e5bd03"
+    }
+   }
+  },
+  {
+   "utc": "2026-10-09T07:16:55Z",
+   "id": "A3",
+   "kind": "TECHNICAL_RERUN_1",
+   "after_partial_run": true,
+   "outcome_inspected": "one L_P no-op log line (disclosed)",
+   "note": "unpromotable stand-in for repeated-hole selected schemas (bookkeeping only); K5a-e PASS",
+   "changed": {
+    "engine/v2b/b03_e5.py": {
+     "old": "b0a44424bbd486b4",
+     "new": "a504736189da688e"
+    },
+    "beta03/windows/E5N_PREREG.md": {
+     "old": "a93dec63d407afdc",
+     "new": "97857d9ed37ef682"
+    }
+   }
+  }
+ ]
+}

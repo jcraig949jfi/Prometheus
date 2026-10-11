@@ -1,0 +1,928 @@
+{
+ "atlas": {
+  "atlas_version": "atlas-v0",
+  "cpu_s": 30.4,
+  "density": [
+   {
+    "all_fail_share": 0.0,
+    "class_size": 4,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 4,
+    "exact_credit_hist": [
+     3,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 1,
+    "viable_share": 0.25
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 10,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 10,
+    "exact_credit_hist": [
+     10,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 2,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.072727,
+    "class_size": 110,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 110,
+    "exact_credit_hist": [
+     85,
+     0,
+     25,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 3,
+    "viable_share": 0.227273
+   },
+   {
+    "all_fail_share": 0.06079,
+    "class_size": 658,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 658,
+    "exact_credit_hist": [
+     560,
+     30,
+     67,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 4,
+    "viable_share": 0.148936
+   },
+   {
+    "all_fail_share": 0.127916,
+    "class_size": 6817,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 6817,
+    "exact_credit_hist": [
+     5512,
+     118,
+     1186,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 5,
+    "viable_share": 0.191433
+   },
+   {
+    "all_fail_share": 0.128458,
+    "class_size": 56789,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 56789,
+    "exact_credit_hist": [
+     47232,
+     2273,
+     7232,
+     52,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 6,
+    "viable_share": 0.16829
+   }
+  ],
+  "dev_n": 12,
+  "dev_test_overlap": 0,
+  "existence": {
+   "dev_ok": true,
+   "exists": true,
+   "size_expanded": 12,
+   "size_promoted": 9,
+   "test_ok": true,
+   "type": "Int",
+   "witness": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))"
+  },
+  "family_id": "A4e2fdceefe/f29e7930069a9037",
+  "hitting_cost_enumeration": [
+   {
+    "censored": false,
+    "charges": 175034,
+    "complete_through_size": 6,
+    "cpu_s": 5.25,
+    "first_false_hits": [],
+    "hit": true,
+    "hit_charge": 175034,
+    "n_false_hits": 0,
+    "program": "(add 1 (sum (filter (lam x (L_91245740aedc x)) xs)))",
+    "seed": 0,
+    "units_expanded": 678716,
+    "units_promoted": 672510,
+    "verify_evals": 1
+   },
+   {
+    "censored": false,
+    "charges": 190968,
+    "complete_through_size": 6,
+    "cpu_s": 5.94,
+    "first_false_hits": [],
+    "hit": true,
+    "hit_charge": 190968,
+    "n_false_hits": 0,
+    "program": "(add 1 (sum (filter (lam x (L_91245740aedc x)) xs)))",
+    "seed": 1,
+    "units_expanded": 744370,
+    "units_promoted": 737582,
+    "verify_evals": 1
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 6.09,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2,
+    "units_expanded": 781090,
+    "units_promoted": 774005,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 6,
+    "cpu_s": 6.47,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3,
+    "units_expanded": 781585,
+    "units_promoted": 774395,
+    "verify_evals": 0
+   }
+  ],
+  "lattice": {
+   "any_intermediate_with_exact_credit": true,
+   "any_intermediate_with_partial_credit": true,
+   "credit_by_prune_depth": {
+    "0": {
+     "max_exact": 1.0,
+     "max_partial": 1.0,
+     "mean_exact": 1.0,
+     "mean_partial": 1.0,
+     "n": 1
+    },
+    "1": {
+     "max_exact": 0.16666666666666666,
+     "max_partial": 0.166667,
+     "mean_exact": 0.1429,
+     "mean_partial": 0.1429,
+     "n": 7
+    },
+    "2": {
+     "max_exact": 0.16666666666666666,
+     "max_partial": 0.166667,
+     "mean_exact": 0.0556,
+     "mean_partial": 0.0556,
+     "n": 6
+    },
+    "3": {
+     "max_exact": 0.16666666666666666,
+     "max_partial": 0.166667,
+     "mean_exact": 0.1667,
+     "mean_partial": 0.1667,
+     "n": 1
+    }
+   },
+   "n_paths": 12,
+   "paths_truncated": false,
+   "size": 15,
+   "truncated": false
+  },
+  "library_entries": 1,
+  "output_type": "Int",
+  "params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "revisitability": {
+   "enumeration_rank_seed0": {
+    "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))": {
+     "bracket": [
+      6170999,
+      63317267
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    },
+    "(foldl (lam a (lam b (add b a))) 1 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 16134,
+     "size": 6
+    },
+    "(foldl (lam a (lam b a)) 1 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 679,
+     "size": 4
+    },
+    "(foldl (lam a (lam b b)) 1 (filter (lam x (L_91245740aedc x)) xs))": {
+     "exact": true,
+     "in_space": true,
+     "rank": 315870,
+     "size": 7
+    },
+    "(foldl (lam a (lam b b)) 1 xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 376,
+     "size": 4
+    },
+    "1": {
+     "exact": true,
+     "in_space": true,
+     "rank": 1,
+     "size": 1
+    }
+   },
+   "genotype_restore_exact": true,
+   "witness_rank_by_seed": {
+    "0": {
+     "bracket": [
+      6170999,
+      63317267
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    },
+    "1": {
+     "bracket": [
+      6170999,
+      63317267
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    },
+    "2": {
+     "bracket": [
+      6170999,
+      63317267
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    },
+    "3": {
+     "bracket": [
+      6170999,
+      63317267
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    }
+   }
+  },
+  "robustness": [
+   {
+    "all_fail_share": 0.006,
+    "children": 500,
+    "exact_credit": 12,
+    "keep_credit_share": 0.12,
+    "program": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.12,
+    "stay_qualified_share": 0.114
+   },
+   {
+    "all_fail_share": 0.024,
+    "children": 500,
+    "exact_credit": 2,
+    "keep_credit_share": 0.242,
+    "program": "1",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.238,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.028,
+    "children": 500,
+    "exact_credit": 2,
+    "keep_credit_share": 0.468,
+    "program": "(foldl (lam a (lam b a)) 1 xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.466,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.008,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(foldl (lam a (lam b (add b a))) 1 xs)",
+    "raise_credit_share": 0.274,
+    "same_dev_behaviour_share": 0.112,
+    "stay_qualified_share": null
+   }
+  ],
+  "route": {
+   "best_for_exact": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.16666666666666666,
+       0.0,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "guided_route_cost_estimate": 5272.799999999999,
+     "magnitude": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.313425,
+       0.18369,
+       0.354391,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.166667,
+       0.0,
+       0.166667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.16666666666666666,
+      "i": 0,
+      "magnitude": 0.313425,
+      "partial": 0.166667,
+      "program": "1",
+      "share_same_size_with_exact_credit_ge": 0.25,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.18369,
+      "p_eff": 0.0011482216343327455,
+      "p_none": 0.328,
+      "p_single": 0.0007716049382716049,
+      "partial": 0.0,
+      "program": "(foldl (lam a (lam b b)) 1 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 2,
+      "magnitude": 0.354391,
+      "p_eff": 0.002422480620155039,
+      "p_none": 0.312,
+      "p_single": 0.0016666666666666668,
+      "partial": 0.166667,
+      "program": "(foldl (lam a (lam b b)) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 7
+     },
+     {
+      "exact": 1.0,
+      "i": 3,
+      "magnitude": 1.0,
+      "p_eff": 0.0002506838655853168,
+      "p_none": 0.316,
+      "p_single": 0.00017146776406035664,
+      "partial": 1.0,
+      "program": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 9
+     }
+    ]
+   },
+   "best_for_magnitude": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.16666666666666666,
+       0.0,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "guided_route_cost_estimate": 5272.799999999999,
+     "magnitude": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.313425,
+       0.18369,
+       0.354391,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.166667,
+       0.0,
+       0.166667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.16666666666666666,
+      "i": 0,
+      "magnitude": 0.313425,
+      "partial": 0.166667,
+      "program": "1",
+      "share_same_size_with_exact_credit_ge": 0.25,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.18369,
+      "p_eff": 0.0011482216343327455,
+      "p_none": 0.328,
+      "p_single": 0.0007716049382716049,
+      "partial": 0.0,
+      "program": "(foldl (lam a (lam b b)) 1 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 2,
+      "magnitude": 0.354391,
+      "p_eff": 0.002422480620155039,
+      "p_none": 0.312,
+      "p_single": 0.0016666666666666668,
+      "partial": 0.166667,
+      "program": "(foldl (lam a (lam b b)) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 7
+     },
+     {
+      "exact": 1.0,
+      "i": 3,
+      "magnitude": 1.0,
+      "p_eff": 0.0002506838655853168,
+      "p_none": 0.316,
+      "p_single": 0.00017146776406035664,
+      "partial": 1.0,
+      "program": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 9
+     }
+    ]
+   },
+   "best_for_partial": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.16666666666666666,
+       0.0,
+       0.16666666666666666,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "guided_route_cost_estimate": 5272.799999999999,
+     "magnitude": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.313425,
+       0.18369,
+       0.354391,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 359512.4735999999,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       359512.4735999999,
+       3989.0879999999997
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.166667,
+       0.0,
+       0.166667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.16666666666666666,
+      "i": 0,
+      "magnitude": 0.313425,
+      "partial": 0.166667,
+      "program": "1",
+      "share_same_size_with_exact_credit_ge": 0.25,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.18369,
+      "p_eff": 0.0011482216343327455,
+      "p_none": 0.328,
+      "p_single": 0.0007716049382716049,
+      "partial": 0.0,
+      "program": "(foldl (lam a (lam b b)) 1 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 4
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 2,
+      "magnitude": 0.354391,
+      "p_eff": 0.002422480620155039,
+      "p_none": 0.312,
+      "p_single": 0.0016666666666666668,
+      "partial": 0.166667,
+      "program": "(foldl (lam a (lam b b)) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 7
+     },
+     {
+      "exact": 1.0,
+      "i": 3,
+      "magnitude": 1.0,
+      "p_eff": 0.0002506838655853168,
+      "p_none": 0.316,
+      "p_single": 0.00017146776406035664,
+      "partial": 1.0,
+      "program": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 9
+     }
+    ]
+   },
+   "canonical": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 1090283420.6982143,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       1090283420.6982143
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.16666666666666666,
+       0.16666666666666666,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "guided_route_cost_estimate": 3592.392,
+     "magnitude": {
+      "crossing_cost_estimate": 1090283420.6982143,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       1090283420.6982143
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.313425,
+       0.313425,
+       0.178109,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "partial": {
+      "crossing_cost_estimate": 1090283420.6982143,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       1090283420.6982143
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.166667,
+       0.166667,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.16666666666666666,
+      "i": 0,
+      "magnitude": 0.313425,
+      "partial": 0.166667,
+      "program": "1",
+      "share_same_size_with_exact_credit_ge": 0.25,
+      "size": 1
+     },
+     {
+      "exact": 0.16666666666666666,
+      "i": 1,
+      "magnitude": 0.313425,
+      "p_eff": 0.0011482216343327455,
+      "p_none": 0.328,
+      "p_single": 0.0007716049382716049,
+      "partial": 0.166667,
+      "program": "(foldl (lam a (lam b a)) 1 xs)",
+      "share_same_size_with_exact_credit_ge": 0.103343,
+      "size": 4
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.178109,
+      "p_eff": 0.00046834897618913804,
+      "p_none": 0.341,
+      "p_single": 0.00030864197530864197,
+      "partial": 0.0,
+      "program": "(foldl (lam a (lam b (add b a))) 1 xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 6
+     },
+     {
+      "exact": 1.0,
+      "i": 3,
+      "magnitude": 1.0,
+      "p_eff": 0.001705553281484514,
+      "p_none": 0.302,
+      "p_single": 0.0011904761904761906,
+      "partial": 1.0,
+      "program": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))",
+      "size": 9
+     }
+    ]
+   }
+  },
+  "test_n": 40
+ },
+ "classification_route": {
+  "budget": 200000,
+  "crossing_cost_estimate": {
+   "exact": 359512.4735999999,
+   "magnitude": 359512.4735999999,
+   "partial": 359512.4735999999
+  },
+  "enumeration": "RARITY_LIMIT_BEYOND_16x",
+  "enumeration_crossing_by_seed": [
+   175034,
+   190968,
+   6170999,
+   6170999
+  ],
+  "local_search": "RARITY_LIMIT_UNANCHORED",
+  "notes": [
+   "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED"
+  ],
+  "route_start_is_generic_start": {
+   "exact": false,
+   "partial": false
+  },
+  "scale": 16,
+  "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+  "widest_unrewarded_segment_search_channel": 2
+ },
+ "cluster": "p:base_fold",
+ "complete": true,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "cpu_s": 30.44,
+ "driver": "e2-driver-v1",
+ "existence_sealed_expanded": {
+  "dev_ok": true,
+  "exists": true,
+  "size_expanded": 13,
+  "size_promoted": 13,
+  "test_ok": true,
+  "type": "Int",
+  "witness": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (not (lt (add 3 1) x))) xs))"
+ },
+ "family_id": "W480ffd54-F028-R2",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "pid": 14980,
+ "representation": "ACQUIRED_CONSTITUENTS (witness: sealed_witness_promoted->acquired)",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "rung": "R2",
+ "shard": "atlas/W480ffd54-F028-R2",
+ "shard_cpu_s": 30.44,
+ "witness_used": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (L_91245740aedc x)) xs))"
+}

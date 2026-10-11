@@ -1,0 +1,93 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-013-T010",
+ "campaign_id": "C-013",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-6417c3ea",
+ "host": "harry1",
+ "branch": "argus/c013-t010",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c013-t010",
+ "start_sha": "9b1893d6f335c18041130c1d34f8944a1e02466c",
+ "end_sha": "e3cbcb30e132ef8655b8dd821a36b9c2d1365fbd",
+ "dirty": false,
+ "commits": {
+  "wip_harness": "71002ccbf",
+  "frozen_inputs_code_commit": "307afe4b1b04aaa5d92a6684457c7857241357cd",
+  "freeze_record": "66c7ccdaedf42d0a7014c1918e1aed842c897732",
+  "merge_origin_main_explicit": "e3cbcb30e (merged 2bd2804524ecce5f12f12f3ca100a80c5cc7ca51; 76 tests re-run on the merged tree, check_frozen OK)"
+ },
+ "files_changed": [
+  "rso/reach/{__init__,_proto,arms,arms_nb,certify,stats,descriptor,calibrate,timing,run_d1,analyze,freeze_manifest}.py",
+  "rso/reach/tests/{__init__,test_arms,test_certify,test_stats,test_descriptor,test_analysis,test_runner}.py",
+  "rso/reach/{REACHABILITY_CARTOGRAPHY_V0,PREREGISTRATION,FREEZE_D1,NUMBA_DECISION,README}.md",
+  "rso/reach/{FROZEN_D1,CALIBRATION_B,DESCRIPTOR_QUALIFICATION,TIMING_py,TIMING_nb}.json",
+  "roles/Argus/comms/2026-10-10_*.md, roles/Argus/WORK_STATE.json, roles/Argus/journal/2026-10-10.md",
+  "ops/campaigns/C-013/tasks/C-013-T010/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "cartography spec committed: rso/reach/REACHABILITY_CARTOGRAPHY_V0.md (five questions EXPRESS/REACH/REWARD/CREDIT/DETECT; ten measurements M1-M10 with minimal protocols; five mechanisms kept distinct incl. genotype copying != environment-state restoration; budget-relative upper bounds, never impossibility; worked p1_slice example; machine-readable sheet schema)",
+  "harness: arms.py run_ladder restates Nyx archive_arms.py:52-102 @3318a2098 (differential on 4 toy landscapes against Nyx's file, hash-checked); chain arms differential against prototype reach.search_lineage (reach.py:95-136) on its own stream at d=1,2,3,8; arms X1/X2/X3/X3G + chain_strict/chain_neutral",
+  "certification wrapper: certify.py -- selection lives 2000..2063 (>=90% probes), sealed SEALED_BASE+130000 class_exclusion PASS (rulers.py:139-172), pure-Python oracle (oracle.py:144-171) recomputation must match exactly else VOID; fire tests: 4 impostors + one-life lookup rejected, oracle disagreement -> VOID, claimed training fitness ignored",
+  "numba decision with timing evidence: NUMBA_DECISION.md, TIMING_py.json, TIMING_nb.json -- Python reference X3 cost grows ~0.115 us/cell to ~1.5 ms/proposal at ~12k cells (worst case ~11 core-h > 3.0 threshold) -> PORTED (arms_nb.py), exact differential incl. past archive capacity",
+  "descriptor near-miss test: descriptor.py + DESCRIPTOR_QUALIFICATION.json -- planted must-fail controls fail as required (C-FIT R1 0.0, GENO R2 0.0); C-BEH R1 0.006 FAIL, R1c 1.0, R2 1.0; all 254 shortest-path intermediates score 32 or 20 of 126; 99.4% of equal-score arbitrary genomes share the full action trace (stepping stones behaviourally invisible)",
+  "outcome-blind X3G bucket calibration: calibrate.py + CALIBRATION_B.json (hit test disabled): B = 12226 / 12762 / 12388 at d = 1 / 3 / 8",
+  "stats: stats.py exact stratified conditional test (= Fisher for one stratum; brute-force oracle test), Holm, Clopper-Pearson; anchored to Nyx DESIGN s4 and Palamedes digest 02 quoted p-values; power table for N = 12/20/24 vs the 1/24 baseline",
+  "preregistration + FREEZE_D1 committed BEFORE any outcome: PREREGISTRATION.md v1.0.0 sha256 879efd398e565cb5684ba29cbe2bd9f677c2502aacbd6872d1ca40678708025d; FROZEN_D1.json sha256 45b7f1269671b2a0fd417a2b25826fc980957a021233bfe816a22e1c3bee7b2e (34 files incl. 5 prototype + 2 Nyx pins); run_d1 refuses on any hash change",
+  "runner + analysis: run_d1.py (controls first, rounds, CPU cap 3.2 core-h between rounds, min 12 rounds, --resume) and analyze.py; toy end-to-end + resume equivalence test; analysis tested on synthetic ledgers",
+  "Nyx notified by comms #2011 (attribution, SHAs) with body roles/Argus/comms/2026-10-10_NYX_derivative_notice.md"
+ ],
+ "evidence_executed": [
+  {
+   "command": "<venv>/python -m pytest rso/reach/tests -q (venv: numba 0.65.1, numpy 2.4.6, pytest 8.3.3, Python 3.12.10)",
+   "result": "76 passed (at 307afe4b1 and again on the merged tree e3cbcb30e)"
+  },
+  {
+   "command": "python -m rso.reach.timing --impl py --growth --out rso/reach/TIMING_py.json ; --impl nb",
+   "result": "see NUMBA_DECISION.md; PORT"
+  },
+  {
+   "command": "python -m rso.reach.descriptor --pool 30000 --out rso/reach/DESCRIPTOR_QUALIFICATION.json",
+   "result": "controls_ok true; C-BEH R1 FAIL (0.0055), R1c PASS (1.0), R2 PASS (1.0)"
+  },
+  {
+   "command": "python -m rso.reach.calibrate --out rso/reach/CALIBRATION_B.json [--d 8; --d 1 --d 3]",
+   "result": "complete; B_1 12226, B_3 12762, B_8 12388 (a first run was cut by the tool timeout before writing; rerun per distance reproduced the printed counts exactly)"
+  },
+  {
+   "command": "python -m rso.reach.freeze_manifest ; git show 307afe4b1:<f> | sha256sum for all 34 files",
+   "result": "0 mismatches"
+  },
+  {
+   "command": "python -c 'from rso.reach import run_d1; run_d1.check_frozen()' on e3cbcb30e",
+   "result": "OK"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "pytest rso/reach/tests before implementation: 3 collection errors (ImportError: rso.reach.arms / certify / stats absent)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "development tests executed lineages 1000-1005 of seed 20261010 (then the intended frozen range) at budgets <= 26,000 before the frozen-set guard existed; outcomes not inspected; seed and range burned, frozen set moved to seed 20261011 lineages 5000..5023 (PREREGISTRATION s0)",
+  "harry1's per-proposal cost varied 108-240 us within the session (thermal/shared); the 4 core-h cap is enforced in measured CPU time by the runner, so a slow host may stop at 20-23 rounds (power table covers N = 20)",
+  "oracle.py is I1 independence (same author as wm_mini.py, its own docstring); certification independence is from training fitness and from the compiled kernel, not from the specification"
+ ],
+ "unresolved": [
+  "C-013-T011 Pallas Q3 challenge of the frozen design (ruling s4)",
+  "numba is not installed on harry1's system Python; the run needs a numba 0.65.1 environment (the session venv is outside the repo at C:/Prometheus-worktrees/argus-reach-venv)"
+ ],
+ "unblocks": [
+  "C-013-T011",
+  "C-013-T012"
+ ],
+ "resources": {
+  "cpu_core_hours_development_estimate": 0.6,
+  "processes_max": 2,
+  "paid_resources": "none"
+ },
+ "created_at_utc": "2026-10-10T09:09:00Z",
+ "notes": "Derivative of Nyx 3318a2098 (read only); FABLE-5.1 prototype read only (pins in rso/reach/_proto.py). STOPPED at INTEGRATION_READY: the run is C-013-T012."
+}

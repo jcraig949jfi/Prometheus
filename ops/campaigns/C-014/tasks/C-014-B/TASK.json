@@ -1,0 +1,85 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-014-B",
+  "campaign_id": "C-014",
+  "epic_id": "EP-PHASE2B",
+  "title": "Defect triage for Ensorain WTP-05 / DESERT CROSSING (post-Hestia re-entry)",
+  "objective": "Classify every applicable finding as CONFIRMED_DEFECT, ALREADY_REPAIRED, NOT_APPLICABLE, NEEDS_DISCRIMINATOR, SCIENTIFIC_LIMITATION or OPEN, with evidence, and propose the C/D/E packets the classification justifies.",
+  "owner_role": "Ensorain",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-014-A"
+  ],
+  "owns": [
+    "ops/campaigns/C-014/CAMPAIGN.md",
+    "ops/campaigns/C-014/tasks/"
+  ],
+  "problem": "Classify the findings listed under task A (CAMPAIGN.md triage table) and route them to the WTP-05 packets E1/E2.",
+  "non_goals": [
+    "No repair or replay yet; propose them as PROPOSED packets"
+  ],
+  "evidence_required": [
+    "the triage table in CAMPAIGN.md",
+    "PROPOSED packets for each CONFIRMED_DEFECT repair and each replay it affects"
+  ],
+  "acceptance": {
+    "condition": "every finding from A has a class and evidence; repairs/replays proposed or NO_JUSTIFIED_FURTHER_WORK recorded with reasons"
+  },
+  "deliverables": [
+    "triage table",
+    "PROPOSED C/D/E packets"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:13:28Z",
+      "note": "instantiated from P2B-ENGINE-REENTRY; tailor before READY"
+    },
+    {
+      "status": "READY",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:37Z",
+      "note": "tailored to Ensorain WTP-05 (operator directive 2026-10-10)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:42Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:42Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "GREEN",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:42Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:42Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:42Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    }
+  ],
+  "reads": [
+    "roles/Hestia/audit/2026-10-06/dossiers/ensorain.md",
+    "ensorain/RESULTS_WTP04_MAP.md"
+  ]
+}

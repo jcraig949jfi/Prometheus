@@ -1,0 +1,132 @@
+# REACH01 R4 / ACCUM01 RESULT -- ASSISTED CONTROL (the reused component is a PLANTED mechanism)
+
+Freeze 082f2f27b. Production 13:20Z-14:3xZ on 2026-10-10: 32/32 units rc=0. Reduction:
+C:/Prometheus-data/aether_reach01/R4/REDUCTION.json (copied to R4/evidence/). Reducer r4_reduce.py: committed after 12
+units' first-success counts were visible but before any necessity value was computed. Its necessity definition
+refines the preregistered wording (all >= 80%-matching component copies inerted, then each copy alone, evaluated at a
+tile position where the solution works).
+
+## Frozen disposition: CUMULATIVE_ACQUISITION_ADVANTAGE (ASSISTED CONTROL)
+
+| arm | seeds acquiring COMBINE3 (new 3-input capability) | median first-success evaluation (budget 20,480) |
+|---|---|---|
+| N no component | 0/8 | budget+1 |
+| S shuffled component (insertable) | 0/8 | budget+1 |
+| U correct component, not promoted (restore seed only) | 0/8 | budget+1 |
+| **P correct component, promoted (insert / duplicate / relocate)** | **8/8** | **6,560** |
+
+Component necessity in P solutions:
+- 22 of the 36 checked solutions had a working position; inerting all component copies destroyed COMBINE3 in
+  22/22 (necessity 1.0).
+- Copy structure: 2 copies in 21 solutions, 3 in 5, 4 in 1, 1 in 2.
+- Typical layout: one copy at or near (0, 0) carrying A and B, and one at about (+3, -1) whose relay row now lies
+  on input C's row.
+- Inerting either copy alone drops the rung to 0-1. Both instances are causally necessary: a composition of two
+  copies of one building block in two different roles.
+
+## Attacks
+1. **Fragility:** P solutions keep COMBINE3 at a median of 1.6% of 64 tile positions (max ~6%).
+   - They are contest-arbitration-specific (cf. R3: merging continuous streams is coordinate- and seed-keyed).
+   - None is AUTONOMOUS in the R3 sense.
+2. **Geometry:** the insert offset range [-3, 3] (chosen before the task geometry was examined) contains the exact
+   shift that maps the component's row-6 relay onto input C's row 9.
+   - In this tile every input row (3..16) is reachable from a relay row within +-3, so the result cannot separate
+     "duplication + relocation helps" from "the offset range happened to be generous".
+   - A cleaner control would remove relocations that align with any input row. Not run (no new physics, but a new
+     operator; left as the next experiment).
+3. **Transplant (task 1) FAILED, measured before the freeze:** relocated by any non-zero offset, the component never
+   computes task 1 (0/256 positions at 5 offsets).
+   - The component is geometry-bound for its ORIGINAL role. Yet duplicated copies serve a NEW role (relaying a
+     different input), and that is what P exploited.
+4. **Encoded answer?** The insert operator copies cells verbatim and knows nothing of the task. But the component
+   (relay rows + combiner) was designed by the experimenter for a closely related task, and the task-2 geometry
+   was chosen by the experimenter. The advantage is real relative to N, S and U, and it is NOT evidence that the
+   substrate discovered or developed anything.
+
+## Cognitive accounting
+- Substrate: XOR combination at the merge; relay transport; contest arbitration (which also makes every solution
+  fragile).
+- Developmental machinery (decisive): the PROMOTION operator, which can duplicate and relocate a certified unit.
+  The same component, merely available (U), gave 0/8.
+- Search infrastructure: certificate-guided parent selection, held fixed across arms; equal budgets.
+- Experimenter: designed the component and both task geometries.
+- Certifier: strict 3-input dependence, copy detection, inertion necessity, position robustness.
+
+## Answer to the R4 question
+Under assisted control: a certified mechanism, once PROMOTED into a unit that later search can duplicate and
+relocate, makes a NEW capability (3-input combination) acquirable in 8/8 runs where every control fails at equal
+budget. The reused component is causally necessary, in two copies with distinct roles.
+- What made the difference is promotion, not availability (U = 0/8).
+- The result is fragile (~2% of positions), rests on a planted component, and may depend on a generous relocation
+  range. It is a demonstration that the harness can produce building-block reuse; it is not evidence of evolved
+  cumulative development.
+
+## R4b geometry control (separately preregistered, PREREGISTRATION_R4b.md, freeze 4b2093ad2): PARTIAL
+
+| promoted-component arm | vertical insert offsets | seeds acquiring COMBINE3 |
+|---|---|---|
+| P (R4) | -3..+3 | 8/8 |
+| Pno3 | -3..+2 (the exact +3 row alignment excluded) | 5/8 |
+| Pdy0 | 0 only (horizontal relocation only) | 3/8 |
+| N / S / U (R4) | no promotion | 0/8 each |
+
+Copy structure (static, first 5 solutions per unit; R4/evidence/R4b_copy_structure.json):
+- Pno3 solutions use whichever available shift brings a relay row next to input C's row (-3: row 13 to row 10;
+  +1/+2: row 6 to rows 7-8) and bridge the gap by cell mutation.
+- Pdy0 solutions stack horizontally offset duplicates on the original rows, with C bridged into an existing relay.
+
+Reading:
+- The promotion advantage is partly alignment-dependent: removing the exact aligning shift costs 3 seeds, and
+  removing all vertical relocation costs 5.
+- It does not vanish: even horizontal-only duplication beats every non-promoted control (3/8 vs 0/8).
+- The "generous offset range" alternative explains part of R4's 8/8, not all of it.
+- Duplication + relocation of a certified transport unit is the mechanism, and the search exploits any geometry that
+  places a copy near the new input.
+Still ASSISTED CONTROL, and still fragile (R4: ~1.6% of tile positions).
+
+## R4c -- GENUINE reuse of a DISCOVERED mechanism (separately preregistered, PREREGISTRATION_R4c.md, freeze 74bd235d2)
+Component: the AUTONOMOUS COMBINE discovered by certificate-guided search in LADDER01 (G1, seed 7). Its 7-cell
+minimal sufficient substructure works at 100% of positions. NOT an assisted control. Its provenance is search
+infrastructure (archive-assisted), not experimenter design. (The reducer's printed "ASSISTED CONTROL" label is a
+leftover hardcoded string; R4c is the genuine test.)
+New capability: COMBINE3 on G1 plus input C at (12, 1); alphabet {0x55, 0xAA}, chosen after seeing the mechanism
+(disclosed).
+
+### Frozen disposition: REUSE_NOT_SUPPORTED
+| arm | seeds acquiring COMBINE3 | median first-success evaluation |
+|---|---|---|
+| N none | 0/8 | budget+1 |
+| S shuffled | 0/8 | budget+1 |
+| U unpromoted | 0/8 | budget+1 |
+| **P promoted** | **7/8** | **11,691** |
+
+- The acquisition advantage is large and clean (7/8 vs 0/8 x 3).
+- The disposition fails on the necessity clause: inerting component copies destroys COMBINE3 in 19/29 checked
+  working solutions (0.66 < 0.8).
+- Copy structure: 15 solutions have 2 copies, 5 have 3, 3 have 1, and 10 have none at >= 80% match.
+  - The dominant reuse shifts the component +2 rows, landing it exactly between inputs B and C (the original sits
+    between A and B). Duplication assigns the same 2-input combiner a new input pair.
+- Post-hoc (labelled; does not change the verdict), the 0-copy solutions split two ways:
+  - P s4: mutated partial copies (5/7 and 4/7 cells) whose inertion kills the capability, so the component WAS
+    necessary and the >= 80% detector missed it;
+  - P s3: no partial copy at all. A component-free solution reached along a promotion-altered trajectory.
+- Position robustness of P solutions: median 11% of tile positions. The discovered component alone is autonomous
+  (100%), but the reused, composed solutions are not.
+- Transplant of the component's ORIGINAL role: 100% at offset (0,0), 0% at all 8 other offsets. Like the planted
+  component, its interface is bound to where the inputs land.
+
+### Reading
+- A mechanism DISCOVERED by Aether's search, promoted into a reusable unit, made a new 3-input capability
+  acquirable in 7/8 runs where no control succeeded at equal budget. In most solutions it is causally necessary,
+  as duplicated copies taking new input pairs.
+- By the frozen bar (necessity >= 0.8) this is NOT certified reuse: about a third of the solutions either hid
+  degraded copies or did not use the component at all.
+- The capability built on it is position-fragile (~11%) and low-information (inherited from the component's
+  value-detector function).
+
+Cognitive accounting:
+- Substrate: the 7-cell XOR motif.
+- Search infrastructure: discovered the motif (archive-assisted).
+- Developmental machinery: PROMOTION (duplicate / relocate). Decisive: U = 0/8.
+- Experimenter: geometries and alphabet.
+- Certifier: necessity and robustness.

@@ -1,0 +1,9 @@
+{
+  "what": "PAN-14 'python -m pan frontier like PATH': outside papers nearest to a repository file, measured by citation recovery",
+  "when": "2026-10-09T12:40Z",
+  "model": "Qwen/Qwen3-Embedding-0.6B (document vectors 512 d; paper vectors from title + abstract, same space)",
+  "benchmark_rule": "every repository file at d6b2eeeca (excluding roles/Pan/) whose chunks mention an arXiv id present in pan.frontier_item (source arxiv); success = any cited id ranked <= k among all 4,702 arXiv items by cosine to the file's document vector. Generated automatically; Pan wrote none of the citations.",
+  "result": {"files_citing": 273, "evaluated": 273, "corpus": 4702, "recall_at_10": 0.348, "recall_at_50": 0.473, "median_best_rank": 69, "random_recall_at_10": 0.0021},
+  "reading": "Real signal (about 165x the random rate at k=10) but modest: for two files in three the cited paper is not in the top 10. Use as an exploratory pivot, never as a relevance verdict.",
+  "caveats": ["A file that cites a paper may describe it in words that also match the paper (lexical leakage inflates recall).", "Only arXiv items fetched by the seed queries are in the corpus (4,702)."]
+}

@@ -1,0 +1,410 @@
+{
+ "admitted": [
+  "W6eb945cc-F047-R3",
+  "W6eb945cc-F033-R3"
+ ],
+ "alien_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "ar1_kp.py": "8590d46d6fda337eddc9588682baf0e1307e4fd5647987d5099050e82542ee1e",
+  "ar1_timing.py": "7f3834515e2f853cb1f9d01d9cb342f70397c1dce33a66cc7b4721c234c4b48a",
+  "conformance.py": "97c53feea10c6dc7f85063d898d425a26bd62616ac203fe1f672a343f8407d07",
+  "extract.py": "fc040f202eaa8e5c2188c313194be4ca4abceda771e1e4984dfe6cd4b99c0454",
+  "machine.py": "7b2b24c0194b32fd3297064fb4618302b088c66269ab2953e8c9a2733ca1b3d9",
+  "search.py": "eee69a054a9f7830d7b594ab1fc45d0d756a573c050553b568fd83da2ceb67cb"
+ },
+ "label": "PRODUCTION",
+ "rows": {
+  "ar1.mc1.lib-constituents.seed0.B1000000": {
+   "chain": {
+    "W6eb945cc-F033-R3": {
+     "family_id": "W6eb945cc-F033-R3",
+     "missing": [
+      "f0",
+      "s0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    },
+    "W6eb945cc-F047-R3": {
+     "family_id": "W6eb945cc-F047-R3",
+     "missing": [
+      "f0",
+      "s0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+    "r1_seeds": 1,
+    "row": "primary",
+    "scope": "constituents",
+    "seed": 0
+   },
+   "descriptive": {
+    "families": [
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f0",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 812.85,
+       "scratch": 189.33
+      },
+      "family_id": "W6eb945cc-F047-R3",
+      "first_failing_link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "link_info": {
+       "detail": "BUDGET_EXHAUSTED",
+       "link": "HORIZON_R1",
+       "unit": "f0"
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:post_fold",
+      "world": "W6eb945cc"
+     },
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f0",
+       "s0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 812.85,
+       "scratch": 368.58
+      },
+      "family_id": "W6eb945cc-F033-R3",
+      "first_failing_link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "link_info": {
+       "detail": "BUDGET_EXHAUSTED",
+       "link": "HORIZON_R1",
+       "unit": "f0"
+      },
+      "rung": "R3",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R3:fs:scan_of_map",
+      "world": "W6eb945cc"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+     "r1_seeds": 1,
+     "row": "primary",
+     "scope": "constituents",
+     "seed": 0
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 7.0,
+        "charge": null,
+        "cpu_s": 306.69,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W6eb945cc-F006-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 2.0,
+        "charge": null,
+        "cpu_s": 89.84,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W6eb945cc-F007-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": false,
+      "cpu_s": 396.53,
+      "from": null,
+      "kind": "f",
+      "link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "macro": null,
+      "mechanism": "f0",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "W6eb945cc"
+     },
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 7.0,
+        "charge": null,
+        "cpu_s": 232.02,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W6eb945cc-F014-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 7.7333,
+        "charge": null,
+        "cpu_s": 184.3,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "W6eb945cc-F016-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": false,
+      "cpu_s": 416.32,
+      "from": null,
+      "kind": "s",
+      "link": "HORIZON_R1",
+      "link_detail": "BUDGET_EXHAUSTED",
+      "macro": null,
+      "mechanism": "s0",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "W6eb945cc"
+     }
+    ],
+    "world": "W6eb945cc"
+   },
+   "scratch": {
+    "W6eb945cc-F033-R3": {
+     "best_credit": 3.4607,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 368.58,
+     "family_id": "W6eb945cc-F033-R3",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "W6eb945cc-F047-R3": {
+     "best_credit": 6.0,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 189.33,
+     "family_id": "W6eb945cc-F047-R3",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    }
+   },
+   "units": {
+    "f0": {
+     "attempt_labels": [
+      "HORIZON_R1",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 7.0,
+       "best_tape": "1 1 2 a [ - s 0 p 1 < . 2 / [ s 2 A ? [ l 3 n .",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 306.69,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W6eb945cc-F006-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 5
+      },
+      {
+       "best_credit": 2.0,
+       "best_tape": "[ n d # - a 0 = 2 . 1 2 . + % # % n n + n ] n *",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 89.84,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W6eb945cc-F007-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 8
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "kind": "f",
+     "link": "HORIZON_R1",
+     "link_detail": "BUDGET_EXHAUSTED",
+     "mechanism": "f0",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    },
+    "s0": {
+     "attempt_labels": [
+      "HORIZON_R1",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 7.0,
+       "best_tape": "1 1 [ a . = s < d 3 2 ? = s ? [ ? 1 n [",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 232.02,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W6eb945cc-F014-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 7
+      },
+      {
+       "best_credit": 7.7333,
+       "best_tape": "a . [ d a ? < # n # 2 % a < ? d # A ? d . 2 s A",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 184.3,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "W6eb945cc-F016-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 6
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "kind": "s",
+     "link": "HORIZON_R1",
+     "link_detail": "BUDGET_EXHAUSTED",
+     "mechanism": "s0",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    }
+   }
+  }
+ },
+ "searches": {
+  "W6eb945cc-F006-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 7.0,
+   "best_tape": "1 1 2 a [ - s 0 p 1 < . 2 / [ s 2 A ? [ l 3 n .",
+   "charges": 1000000,
+   "cpu_s": 306.69,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 18450,
+   "restarts": 5,
+   "trace": []
+  },
+  "W6eb945cc-F007-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 2.0,
+   "best_tape": "[ n d # - a 0 = 2 . 1 2 . + % # % n n + n ] n *",
+   "charges": 1000000,
+   "cpu_s": 89.84,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 15665,
+   "restarts": 8,
+   "trace": []
+  },
+  "W6eb945cc-F014-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 7.0,
+   "best_tape": "1 1 [ a . = s < d 3 2 ? = s ? [ ? 1 n [",
+   "charges": 1000000,
+   "cpu_s": 232.02,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 17695,
+   "restarts": 7,
+   "trace": []
+  },
+  "W6eb945cc-F016-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 7.7333,
+   "best_tape": "a . [ d a ? < # n # 2 % a < ? d # A ? d . 2 s A",
+   "charges": 1000000,
+   "cpu_s": 184.3,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 20047,
+   "restarts": 6,
+   "trace": []
+  },
+  "W6eb945cc-F033-R3|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 3.4607,
+   "best_tape": "[ 0 . n 0 [ 3 - [ 3 0 - # * . l l 1 . 1 n + .",
+   "charges": 1000000,
+   "cpu_s": 368.58,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 17318,
+   "restarts": 9,
+   "trace": []
+  },
+  "W6eb945cc-F047-R3|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 6.0,
+   "best_tape": "1",
+   "charges": 1000000,
+   "cpu_s": 189.33,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": null,
+   "redraws": 15298,
+   "restarts": 9,
+   "trace": []
+  }
+ },
+ "world": "W6eb945cc"
+}

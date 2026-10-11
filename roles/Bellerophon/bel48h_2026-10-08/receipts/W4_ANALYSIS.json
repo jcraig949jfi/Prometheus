@@ -1,0 +1,202 @@
+{
+ "n_results": 1050,
+ "voids": 0,
+ "table": {
+  "M1/OFF": {
+   "runs": 300,
+   "comp_sr_end": 0,
+   "wilson": [
+    0.0,
+    0.0126
+   ],
+   "extinct": 252
+  },
+  "M1/ON": {
+   "runs": 300,
+   "comp_sr_end": 10,
+   "wilson": [
+    0.0182,
+    0.0603
+   ],
+   "extinct": 256
+  },
+  "M2/OFF": {
+   "runs": 150,
+   "comp_sr_end": 0,
+   "wilson": [
+    0.0,
+    0.025
+   ],
+   "extinct": 101
+  },
+  "M2/ON": {
+   "runs": 150,
+   "comp_sr_end": 20,
+   "wilson": [
+    0.088,
+    0.197
+   ],
+   "extinct": 98
+  },
+  "M2/SHUFFLED": {
+   "runs": 150,
+   "comp_sr_end": 3,
+   "wilson": [
+    0.0068,
+    0.0571
+   ],
+   "extinct": 104
+  }
+ },
+ "W4-P1": {
+  "mcnemar_paired": {
+   "pairs": 300,
+   "only_first": 10,
+   "only_second": 0,
+   "p_two_sided": 0.001953
+  },
+  "ON": [
+   10,
+   300
+  ],
+  "OFF": [
+   0,
+   300
+  ],
+  "p_one_sided": 0.000905,
+  "verdict": "HOLDS"
+ },
+ "W4-P2": {
+  "mcnemar_paired": {
+   "OFF": {
+    "pairs": 150,
+    "only_first": 20,
+    "only_second": 0,
+    "p_two_sided": 2e-06
+   },
+   "SHUFFLED": {
+    "pairs": 150,
+    "only_first": 20,
+    "only_second": 3,
+    "p_two_sided": 0.000488
+   }
+  },
+  "counts": {
+   "ON": [
+    20,
+    150
+   ],
+   "OFF": [
+    0,
+    150
+   ],
+   "SHUFFLED": [
+    3,
+    150
+   ]
+  },
+  "p": {
+   "OFF": 0.0,
+   "SHUFFLED": 0.000148
+  },
+  "p_holm": {
+   "OFF": 0.0,
+   "SHUFFLED": 0.000148
+  },
+  "holds": true
+ },
+ "W4-P3": {
+  "classes": {
+   "SINGLE_LINEAGE_BAD": 8,
+   "OTHER": 2
+  },
+  "n": 10,
+  "modal": "SINGLE_LINEAGE_BAD",
+  "holds": true
+ },
+ "W4-P4": {
+  "n_on": 11,
+  "n_off": 0,
+  "median_on": 2.505198286444372e-05,
+  "median_off": null,
+  "holds": "DESCRIPTIVE (fewer than 10 qualifying runs per arm)"
+ },
+ "W4-P5": {
+  "novel_in_ccrit": [
+   0,
+   20
+  ],
+  "holds": false,
+  "ccrit_founder_mech": {
+   "seed": 12
+  }
+ },
+ "descriptive": {
+  "M1/ON": {
+   "C": {
+    "births": 736919,
+    "from_comp_func": 330953,
+    "joint_keep": 330621,
+    "comp_func_births": 330824,
+    "gain": 518,
+    "both_loss": 289,
+    "repro_loss": 32,
+    "task_loss": 11
+   },
+   "first_comp_sr_ticks_median": 29,
+   "n_first": 17
+  },
+  "M1/OFF": {
+   "C": {
+    "births": 359249,
+    "from_comp_func": 70,
+    "joint_keep": 70,
+    "comp_func_births": 70,
+    "gain": 98
+   },
+   "first_comp_sr_ticks_median": 38,
+   "n_first": 14
+  },
+  "M2/ON": {
+   "C": {
+    "births": 1250714,
+    "gain": 1357,
+    "from_comp_func": 336747,
+    "joint_keep": 336009,
+    "comp_func_births": 337646,
+    "both_loss": 274,
+    "repro_loss": 308,
+    "task_loss": 156
+   },
+   "first_comp_sr_ticks_median": 206,
+   "n_first": 22
+  },
+  "M2/OFF": {
+   "C": {
+    "births": 966793,
+    "from_comp_func": 1990,
+    "joint_keep": 1987,
+    "comp_func_births": 2003,
+    "task_loss": 1,
+    "gain": 142,
+    "both_loss": 1,
+    "repro_loss": 1
+   },
+   "first_comp_sr_ticks_median": 283,
+   "n_first": 20
+  },
+  "M2/SHUFFLED": {
+   "C": {
+    "births": 968469,
+    "from_comp_func": 1547,
+    "joint_keep": 1545,
+    "comp_func_births": 1565,
+    "task_loss": 1,
+    "gain": 136,
+    "repro_loss": 1
+   },
+   "first_comp_sr_ticks_median": 269,
+   "n_first": 22
+  }
+ }
+}

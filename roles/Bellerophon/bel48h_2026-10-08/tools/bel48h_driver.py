@@ -127,6 +127,12 @@ def _run_one(spec):
                 for e in w.h_events:
                     f.write(json.dumps(e, separators=(",", ":")) + "\n")
             out["events_written"] = len(w.h_events)
+    elif kind == "compete":
+        from comp import CompWorld, founder_census
+        cfg = _cfg(spec)
+        w = CompWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["comp"] = w.comp_summary(); out["census"] = founder_census(w)
+        out["end_hash"] = end_state_hash(w)
     elif kind == "comp":
         from comp import CompWorld
         cfg = _cfg(spec)
@@ -135,6 +141,21 @@ def _run_one(spec):
             k: v for k, v in (s.get("coupling") or {}).items() if k != "bonus_schedule"}
         out["dual"] = w.dual_summary(); out["heredity"] = w.heredity_summary(); out["comp"] = w.comp_summary()
         out["end_hash"] = end_state_hash(w)
+    elif kind == "uptake_fate":
+        from uptake_fate import UptakeFateWorld
+        cfg = _cfg(spec)
+        w = UptakeFateWorld(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["origin"] = w.origin_summary(); out["UF"] = dict(w.UF); out["end_hash"] = end_state_hash(w)
+    elif kind in ("origin", "origin_block", "origin_block_selfcopy"):
+        from origin import OriginWorld
+        from uptake_block import UptakeBlockWorld, SelfCopyUptakeBlockWorld
+        cfg = _cfg(spec)
+        W = {"origin": OriginWorld, "origin_block": UptakeBlockWorld, "origin_block_selfcopy": SelfCopyUptakeBlockWorld}[kind]
+        w = W(cfg, spec["seed"]); s = w.run()
+        out["summary"] = _keep(s); out["heredity"] = w.heredity_summary(); out["reach"] = w.reach_summary()
+        out["origin"] = w.origin_summary(); out["end_hash"] = end_state_hash(w)
+        if spec.get("expect_end_hash") is not None:
+            out["replay_identical"] = out["end_hash"] == spec["expect_end_hash"]
     elif kind == "plain":
         cfg = _cfg(spec)
         w = World(cfg, spec["seed"]); s = w.run()
@@ -155,6 +176,8 @@ def _run_one(spec):
         out["rng_div_tick"] = rng_div; out["pop_div_tick"] = pop_div
         sa = _finish(a); sb = _finish(b)
         out["a"] = {"summary": _keep(sa), "dual": a.dual_summary()}; out["b"] = {"summary": _keep(sb), "dual": b.dual_summary()}
+    if spec.get("expect_end_hash") is not None and "end_hash" in out:
+        out["replay_identical"] = out["end_hash"] == spec["expect_end_hash"]
     out["wall_s"] = round(time.time() - t0, 2)
     return out
 

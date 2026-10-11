@@ -1,0 +1,3874 @@
+{
+ "X3G_calibration": {
+  "K": 1971,
+  "budget": 5000,
+  "calibration_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "descriptor": "D-BEH",
+  "iterations": [
+   {
+    "K": 1743,
+    "realised_mean": 1541.3333333333333
+   },
+   {
+    "K": 1971,
+    "realised_mean": 1679.6666666666667
+   }
+  ],
+  "matched_within_5pct": true,
+  "outcome_blind": "stop_on_hit=False and no certifier: only cell counts are read",
+  "ref_arm": "D1-X3",
+  "ref_realised_cells": [
+   1932,
+   1668,
+   1628
+  ],
+  "target_mean": 1742.6666666666667
+ },
+ "attribution": "ladder derived from Nyx's design (3318a2098) via C-013 D1 (Palamedes); mapped to TFS-1",
+ "autonomous_by_arm": {
+  "A-CHAIN[none]": 0,
+  "A-CHAIN[partial]": 3,
+  "D1-X1": 2,
+  "D1-X2": 0,
+  "D1-X3": 0,
+  "D1-X3G": 0,
+  "D1-chain_neutral": 0,
+  "D1-chain_strict": 0
+ },
+ "budget": 5000,
+ "censored_cost": {
+  "A-CHAIN": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "A-CHAIN[none]": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "A-CHAIN[partial]": [
+   5000,
+   5000,
+   611,
+   5000,
+   4894,
+   5000,
+   5000,
+   4869
+  ],
+  "D1-X1": [
+   2302,
+   5000,
+   5000,
+   5000,
+   1387,
+   5000,
+   5000,
+   5000
+  ],
+  "D1-X2": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "D1-X3": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "D1-X3G": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "D1-chain_neutral": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ],
+  "D1-chain_strict": [
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000,
+   5000
+  ]
+ },
+ "contrasts_C1_C5": {
+  "C1": {
+   "better": 0,
+   "contrast": "D1-chain_neutral vs D1-chain_strict",
+   "hits": [
+    0,
+    0
+   ],
+   "isolates": "NEUTRAL ACCEPTANCE",
+   "p_one_sided": 1.0,
+   "p_two_sided": 1.0,
+   "tied": 8,
+   "worse": 0
+  },
+  "C2": {
+   "better": 2,
+   "contrast": "D1-X1 vs D1-chain_neutral",
+   "hits": [
+    2,
+    0
+   ],
+   "isolates": "RETENTION",
+   "p_one_sided": 0.25,
+   "p_two_sided": 0.5,
+   "tied": 6,
+   "worse": 0
+  },
+  "C3": {
+   "better": 0,
+   "contrast": "D1-X2 vs D1-X1",
+   "hits": [
+    0,
+    2
+   ],
+   "isolates": "RARELY-VISITED (count) SELECTION",
+   "p_one_sided": 1.0,
+   "p_two_sided": 0.5,
+   "tied": 6,
+   "worse": 2
+  },
+  "C4": {
+   "better": 0,
+   "contrast": "D1-X3 vs D1-X2",
+   "hits": [
+    0,
+    0
+   ],
+   "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+   "p_one_sided": 1.0,
+   "p_two_sided": 1.0,
+   "tied": 8,
+   "worse": 0
+  },
+  "C5": {
+   "better": 0,
+   "contrast": "D1-X3 vs D1-X3G",
+   "hits": [
+    0,
+    0
+   ],
+   "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+   "p_one_sided": 1.0,
+   "p_two_sided": 1.0,
+   "tied": 8,
+   "worse": 0
+  }
+ },
+ "cpu_s": 326.2,
+ "descriptor": "D-BEH",
+ "descriptor_arm_status": "VALIDATED",
+ "empirical_flags": {
+  "ALT_CREDIT_HELPS": false,
+  "DRIFT_CROSSES": false,
+  "FEEDBACK_USED": false,
+  "alpha": 0.05,
+  "blind_chain_hits": 0,
+  "exact_chain_hits": 0,
+  "guided_vs_blind": {
+   "better": 0,
+   "p_one_sided": 1.0,
+   "tied": 8,
+   "worse": 0
+  },
+  "partial_vs_exact": {
+   "better": 3,
+   "p_one_sided": 0.125,
+   "tied": 5,
+   "worse": 0
+  },
+  "reached_at_B": false,
+  "reading": "REACHABILITY_DESERT"
+ },
+ "hits_by_arm": {
+  "A-CHAIN[none]": 0,
+  "A-CHAIN[partial]": 3,
+  "D1-X1": 2,
+  "D1-X2": 0,
+  "D1-X3": 0,
+  "D1-X3G": 0,
+  "D1-chain_neutral": 0,
+  "D1-chain_strict": 0
+ },
+ "label": "PLANTED INSTRUMENT CALIBRATION (hand-made witness and dev design); NOT DISCOVERY",
+ "rows": {
+  "A-CHAIN[none]": [
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.25,
+    "credit": "none",
+    "decision_log_sha256": "6219a0dec5236b5c201514f2bc0a287effdd07a481e1c12d1a64a367d9e4d03a",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 329696,
+      "units_dev_promoted": 329696,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.828,
+    "credit": "none",
+    "decision_log_sha256": "aa10f04bd7870dcad1e08a9e19be7e8594652af4617b1f321cd1036a5f19049b",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 311132,
+      "units_dev_promoted": 311132,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.781,
+    "credit": "none",
+    "decision_log_sha256": "16271f5fdce1b68b42b775add35127229d58cb0960c69a8885425d3bafa5873a",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 312899,
+      "units_dev_promoted": 312899,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.797,
+    "credit": "none",
+    "decision_log_sha256": "004bbc9a477af0121ea5f91588aed2ab95f4bd2e286e4feb0d2a344226453de7",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 341897,
+      "units_dev_promoted": 341897,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.938,
+    "credit": "none",
+    "decision_log_sha256": "532a207438b2a052523c70a4ec70a45bbde484f69b9f6f95e275516123c7800c",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 315836,
+      "units_dev_promoted": 315836,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.984,
+    "credit": "none",
+    "decision_log_sha256": "c62aff99a28b2778ba6738611073c9dfe34bc5901f30378d434823ddd2147bfb",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 343230,
+      "units_dev_promoted": 343230,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.469,
+    "credit": "none",
+    "decision_log_sha256": "922787a564bc874fccaa2b4ee9aa57e09d6dfca21e1f82d4e6343cbec7776ea0",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 329229,
+      "units_dev_promoted": 329229,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.922,
+    "credit": "none",
+    "decision_log_sha256": "24848729b946d2363c3dca331e343b004061f7621cc86a5008a2dffd8be178dc",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 323362,
+      "units_dev_promoted": 323362,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "A-CHAIN[partial]": [
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.906,
+    "credit": "partial",
+    "decision_log_sha256": "c6e369d59ddf65ae08e51852732d6bbb80ace3a719f31490f52143f637412bfd",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 906041,
+      "units_dev_promoted": 906041,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 36,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.453,
+    "credit": "partial",
+    "decision_log_sha256": "acbfed4888476b56d690d47dc63424947544398ebb9f4a9282df366ebd557d28",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 494000,
+      "units_dev_promoted": 494000,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": true,
+    "arm": "A-CHAIN",
+    "autonomous_competence": true,
+    "budget": 5000,
+    "cpu_s": 0.172,
+    "credit": "partial",
+    "decision_log_sha256": "8260a7e70de31e377bab5ee2e9faafda559470e4ecf8614b15a59e0e0d37201d",
+    "descriptor": null,
+    "final_evaluation": {
+     "archive": "OFF (not an argument)",
+     "autonomous_pass": true,
+     "fresh_tribunal_ok": true,
+     "program": "(map (lam x (mod (pow x 2) 3)) (map (lam x x) xs))",
+     "test_ok": true,
+     "tribunal_salt": "FINAL"
+    },
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": true,
+    "hit_charge": 611,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 1,
+      "verify_evals": 1
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": "(map (lam x (mod (pow x 2) 3)) (map (lam x x) xs))"
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 611,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 52421,
+      "units_dev_promoted": 52421,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 1,
+     "qualified_skeletons": {
+      "map2,mod1,pow1": 611
+     }
+    },
+    "n_false_hits": 0,
+    "program": "(map (lam x (mod (pow x 2) 3)) (map (lam x x) xs))",
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 2.219,
+    "credit": "partial",
+    "decision_log_sha256": "7e153896161462eedf2e60dc60c1bf1e1ee6c942980c04bfb2f30cb8a02dac76",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 484992,
+      "units_dev_promoted": 484992,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": true,
+    "arm": "A-CHAIN",
+    "autonomous_competence": true,
+    "budget": 5000,
+    "cpu_s": 1.516,
+    "credit": "partial",
+    "decision_log_sha256": "2fe60be3ef1311480f4982e454f81cc056429abe088e9c010a84c71fc84a26a8",
+    "descriptor": null,
+    "final_evaluation": {
+     "archive": "OFF (not an argument)",
+     "autonomous_pass": true,
+     "fresh_tribunal_ok": true,
+     "program": "(map (lam x (mod (mod (pow x 2) (gcd 0 3)) 2)) xs)",
+     "test_ok": true,
+     "tribunal_salt": "FINAL"
+    },
+    "first_false_hits": [
+     {
+      "charge": 4844,
+      "program": "(map (lam x (mod (pow (pow (neg x) 2) (len xs)) (gcd 0 3))) xs)"
+     },
+     {
+      "charge": 4845,
+      "program": "(map (lam x (mod (pow (pow (neg x) 2) (len (rev xs))) (gcd 0 3))) xs)"
+     },
+     {
+      "charge": 4846,
+      "program": "(map (lam x (mod (pow (pow x 2) (len (rev xs))) (gcd 0 3))) xs)"
+     },
+     {
+      "charge": 4849,
+      "program": "(map (lam x (mod (pow (pow x 2) (len (drop 1 (rev xs)))) (gcd 0 3))) xs)"
+     },
+     {
+      "charge": 4851,
+      "program": "(map (lam x (mod (pow (pow x 2) (len (rev xs))) (gcd 0 3))) xs)"
+     }
+    ],
+    "first_visit_route": null,
+    "hit": true,
+    "hit_charge": 4894,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 1,
+      "verify_evals": 15
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": "(map (lam x (mod (mod (pow x 2) (gcd 0 3)) 2)) xs)"
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 4894,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 538534,
+      "units_dev_promoted": 538534,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 10,
+     "qualified_genotypes": 1,
+     "qualified_skeletons": {
+      "gcd1,map1,mod2,pow1": 4894
+     }
+    },
+    "n_false_hits": 14,
+    "program": "(map (lam x (mod (mod (pow x 2) (gcd 0 3)) 2)) xs)",
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.984,
+    "credit": "partial",
+    "decision_log_sha256": "c5bf80360e8fbe3aab58f27a33d978bcd54089e5b3a51899bcfa0f64d2d24c8f",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 482209,
+      "units_dev_promoted": 482209,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 3,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "A-CHAIN",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.031,
+    "credit": "partial",
+    "decision_log_sha256": "1a3f24d7c7ad78c617a61d269b38f244710ae54fc0fd6500fb105df8ba3143a8",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 495176,
+      "units_dev_promoted": 495176,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": true,
+    "arm": "A-CHAIN",
+    "autonomous_competence": true,
+    "budget": 5000,
+    "cpu_s": 1.641,
+    "credit": "partial",
+    "decision_log_sha256": "a89f62a642df18838147fc0be6a2b95f8d89952b0cd6ac83385e6491d62261dd",
+    "descriptor": null,
+    "final_evaluation": {
+     "archive": "OFF (not an argument)",
+     "autonomous_pass": true,
+     "fresh_tribunal_ok": true,
+     "program": "(map (lam x x) (map (lam x (pow (mod (neg (mod (gcd 3 x) 3)) 2) 3)) xs))",
+     "test_ok": true,
+     "tribunal_salt": "FINAL"
+    },
+    "first_false_hits": [
+     {
+      "charge": 3487,
+      "program": "(map (lam x (pow (mod (mod 3 (gcd 0 x)) 2) (mul x x))) (rev (rev xs)))"
+     },
+     {
+      "charge": 3488,
+      "program": "(map (lam x (pow (mod (mod 3 (gcd (neg 0) x)) 2) (mul x x))) (rev (rev xs)))"
+     },
+     {
+      "charge": 3491,
+      "program": "(map (lam x (pow (mod (mod 3 (gcd (neg 0) x)) 2) (mul x x))) xs)"
+     },
+     {
+      "charge": 3492,
+      "program": "(map (lam x (pow (mod (mod 3 (gcd (neg 0) x)) 2) (mul x x))) xs)"
+     },
+     {
+      "charge": 3499,
+      "program": "(map (lam x (pow (mod (gcd (mod 3 (gcd (neg 0) x)) 0) 2) (mul x x))) xs)"
+     }
+    ],
+    "first_visit_route": null,
+    "hit": true,
+    "hit_charge": 4869,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 1,
+      "verify_evals": 133
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": "(map (lam x x) (map (lam x (pow (mod (neg (mod (gcd 3 x) 3)) 2) 3)) xs))"
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 4869,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 700636,
+      "units_dev_promoted": 700636,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 64,
+     "qualified_genotypes": 1,
+     "qualified_skeletons": {
+      "gcd1,map2,mod2,neg1,pow1": 4869
+     }
+    },
+    "n_false_hits": 132,
+    "program": "(map (lam x x) (map (lam x (pow (mod (neg (mod (gcd 3 x) 3)) 2) 3)) xs))",
+    "seed": 7
+   }
+  ],
+  "D1-X1": [
+   {
+    "archive": {
+     "entries": 1535,
+     "live_entries": 537,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 537,
+     "replacements": 998
+    },
+    "archive_assisted_discovery": true,
+    "arm": "D1-X1",
+    "autonomous_competence": true,
+    "budget": 5000,
+    "cpu_s": 1.875,
+    "credit": "exact",
+    "decision_log_sha256": "e88db9993a4d27a1952e7b8d7bc5637ff7f198941e749d37102c3a82b5203d0f",
+    "descriptor": "D-BEH",
+    "final_evaluation": {
+     "archive": "OFF (not an argument)",
+     "autonomous_pass": true,
+     "fresh_tribunal_ok": true,
+     "program": "(map (lam x (mod (mul x x) 3)) xs)",
+     "test_ok": true,
+     "tribunal_salt": "FINAL"
+    },
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": true,
+    "hit_charge": 2302,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 1,
+      "verify_evals": 1
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": "(map (lam x (mod (mul x x) 3)) xs)"
+     },
+     "search": {
+      "archive_admissions": 1535,
+      "charges": 2302,
+      "genotype_restores": 2301,
+      "probe_runs": 18416,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 307972,
+      "units_dev_promoted": 307972,
+      "units_probe_expanded": 210246
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 20,
+     "qualified_genotypes": 1,
+     "qualified_skeletons": {
+      "map1,mod1,mul1": 2302
+     }
+    },
+    "n_false_hits": 0,
+    "program": "(map (lam x (mod (mul x x) 3)) xs)",
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 2176,
+     "live_entries": 545,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 545,
+     "replacements": 1631
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 4.906,
+    "credit": "exact",
+    "decision_log_sha256": "a231f32661cfcd09974996cc1ec703711271380d08a75083c7bbf2b88cd6875d",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 2176,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 803448,
+      "units_dev_promoted": 803448,
+      "units_probe_expanded": 478218
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 37,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 1538,
+     "live_entries": 175,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 175,
+     "replacements": 1363
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 3.812,
+    "credit": "exact",
+    "decision_log_sha256": "e8443a239101fa9893cf18ee6d39a32823a616ba3980b2be2c3111c93bbda339",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 1538,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 508454,
+      "units_dev_promoted": 508454,
+      "units_probe_expanded": 339158
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 8,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 2168,
+     "live_entries": 770,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 770,
+     "replacements": 1398
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 6.031,
+    "credit": "exact",
+    "decision_log_sha256": "373dbb76c1f68623541b1c2244047b325d4ecd202765efa3e65020bf42a3eb9a",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 2168,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 726155,
+      "units_dev_promoted": 726155,
+      "units_probe_expanded": 420192
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 20,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 714,
+     "live_entries": 273,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 273,
+     "replacements": 441
+    },
+    "archive_assisted_discovery": true,
+    "arm": "D1-X1",
+    "autonomous_competence": true,
+    "budget": 5000,
+    "cpu_s": 0.938,
+    "credit": "exact",
+    "decision_log_sha256": "4bc90594bef8e37ec7bd3407ad056b87f9d6f0d1efe55bd91b8882808b4b3685",
+    "descriptor": "D-BEH",
+    "final_evaluation": {
+     "archive": "OFF (not an argument)",
+     "autonomous_pass": true,
+     "fresh_tribunal_ok": true,
+     "program": "(map (lam x (pow 1 (add 2 (pow (neg 2) (gcd x (pow 3 2)))))) xs)",
+     "test_ok": true,
+     "tribunal_salt": "FINAL"
+    },
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": true,
+    "hit_charge": 1387,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 1,
+      "verify_evals": 1
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": "(map (lam x (pow 1 (add 2 (pow (neg 2) (gcd x (pow 3 2)))))) xs)"
+     },
+     "search": {
+      "archive_admissions": 714,
+      "charges": 1387,
+      "genotype_restores": 1386,
+      "probe_runs": 11096,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 188601,
+      "units_dev_promoted": 188601,
+      "units_probe_expanded": 133404
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 19,
+     "qualified_genotypes": 1,
+     "qualified_skeletons": {
+      "add1,gcd1,map1,neg1,pow3": 1387
+     }
+    },
+    "n_false_hits": 0,
+    "program": "(map (lam x (pow 1 (add 2 (pow (neg 2) (gcd x (pow 3 2)))))) xs)",
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 2906,
+     "live_entries": 946,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 946,
+     "replacements": 1960
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 5.391,
+    "credit": "exact",
+    "decision_log_sha256": "f532e9f10ccf5b7f049062e70056ced16b1200c6bb87438b998d3caf23e8e7ca",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 2906,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 379476,
+      "units_dev_promoted": 379476,
+      "units_probe_expanded": 275235
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 8,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 2197,
+     "live_entries": 332,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 332,
+     "replacements": 1865
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 4.062,
+    "credit": "exact",
+    "decision_log_sha256": "5b77ed606fc4a4b94532bd067c99fd16b972ac54cda165a4d54aa9821a5cbe85",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 2197,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 432225,
+      "units_dev_promoted": 432225,
+      "units_probe_expanded": 291949
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 8,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 2247,
+     "live_entries": 799,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 799,
+     "replacements": 1448
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X1",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 4.938,
+    "credit": "exact",
+    "decision_log_sha256": "3a02b67f0462a05fc86888c97f976a0033c3287aaa227725ee7125cbd220b187",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 2247,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 846099,
+      "units_dev_promoted": 846099,
+      "units_probe_expanded": 464114
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 19,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "D1-X2": [
+   {
+    "archive": {
+     "entries": 4205,
+     "live_entries": 2029,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 2029,
+     "replacements": 2176
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 10.406,
+    "credit": "exact",
+    "decision_log_sha256": "1dfdbc604d0a0b15bdf315bcee97cd3073c99f4ddec7239cd9d5e727a4c60538",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4205,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 514482,
+      "units_dev_promoted": 514482,
+      "units_probe_expanded": 358494
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 4203,
+     "live_entries": 1932,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1932,
+     "replacements": 2271
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.375,
+    "credit": "exact",
+    "decision_log_sha256": "631176f25b16d79e099bb872889a8499b7b76e8a9cf2e4246c27484a6ee35317",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4203,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 588705,
+      "units_dev_promoted": 588705,
+      "units_probe_expanded": 411607
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 5,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 4201,
+     "live_entries": 1713,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1713,
+     "replacements": 2488
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.172,
+    "credit": "exact",
+    "decision_log_sha256": "51750a663bee6c8233d1434fd9ba6d1312516da70e3239970b64e998cfc6e4de",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4201,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 741847,
+      "units_dev_promoted": 741847,
+      "units_probe_expanded": 501092
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 4151,
+     "live_entries": 1832,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1832,
+     "replacements": 2319
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 9.25,
+    "credit": "exact",
+    "decision_log_sha256": "7975bfa9311c7b859a37cfcb02b346ce67be3a0a47db29e4967f8ac960693a88",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4151,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 780834,
+      "units_dev_promoted": 780834,
+      "units_probe_expanded": 539251
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 6,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 4317,
+     "live_entries": 1841,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1841,
+     "replacements": 2476
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 9.203,
+    "credit": "exact",
+    "decision_log_sha256": "5ed07a258c3b7385c1086b2a1208fe291f1cc51d4f07769b864be0262ddfb1d0",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4317,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 773988,
+      "units_dev_promoted": 773988,
+      "units_probe_expanded": 520932
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 6,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 4306,
+     "live_entries": 1706,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1706,
+     "replacements": 2600
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 9.469,
+    "credit": "exact",
+    "decision_log_sha256": "436676f9cb8469a6200ab6409b9faad1bc1e1762d0c7582dfa4caf45a04e54fc",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4306,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 454497,
+      "units_dev_promoted": 454497,
+      "units_probe_expanded": 337104
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 3,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 4313,
+     "live_entries": 1655,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1655,
+     "replacements": 2658
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.516,
+    "credit": "exact",
+    "decision_log_sha256": "910cfadae744c71d6330fb1a632bcea1342b6a9bffe1d748ef83b3b7cc6d3789",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4313,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 576725,
+      "units_dev_promoted": 576725,
+      "units_probe_expanded": 394490
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 4366,
+     "live_entries": 1608,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1608,
+     "replacements": 2758
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X2",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 7.797,
+    "credit": "exact",
+    "decision_log_sha256": "a9d3de68f5e28c0b94f1d05d87b4efde0440944c6792d05856549a22862ebe78",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4366,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 425749,
+      "units_dev_promoted": 425749,
+      "units_probe_expanded": 315861
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "D1-X3": [
+   {
+    "archive": {
+     "entries": 4222,
+     "live_entries": 2019,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 2019,
+     "replacements": 2203
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 9.172,
+    "credit": "exact",
+    "decision_log_sha256": "639cd758186f9c3eaaedeb9be5d883541c2bbf7c59aeb6746a76d00728da78ff",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4222,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 515380,
+      "units_dev_promoted": 515380,
+      "units_probe_expanded": 357703
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 4224,
+     "live_entries": 1993,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1993,
+     "replacements": 2231
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 10.047,
+    "credit": "exact",
+    "decision_log_sha256": "9dd33474836d5eca44012f90147fdf954febad9e3c30471aa86225d0d6ce81d0",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4224,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 582073,
+      "units_dev_promoted": 582073,
+      "units_probe_expanded": 405026
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 5,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 4283,
+     "live_entries": 1670,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1670,
+     "replacements": 2613
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 10.797,
+    "credit": "exact",
+    "decision_log_sha256": "ee7f8905f9c62234d355ea0c4cc0e63d8117adb2983000ad57221a5dec6f923a",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4283,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 691810,
+      "units_dev_promoted": 691810,
+      "units_probe_expanded": 468079
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 6,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 4158,
+     "live_entries": 1882,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1882,
+     "replacements": 2276
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 10.312,
+    "credit": "exact",
+    "decision_log_sha256": "ac23e883aae7cbe4aca8b90c55649a21d986ba74a5a9338de3af9c23f44db082",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4158,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 730076,
+      "units_dev_promoted": 730076,
+      "units_probe_expanded": 505044
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 5,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 4297,
+     "live_entries": 1809,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1809,
+     "replacements": 2488
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.562,
+    "credit": "exact",
+    "decision_log_sha256": "b56b37a779167e3c6a9dbd51503d966c525f8be73011fb9dd01b55ee10617601",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4297,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 805075,
+      "units_dev_promoted": 805075,
+      "units_probe_expanded": 542059
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 4338,
+     "live_entries": 1705,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1705,
+     "replacements": 2633
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 7.719,
+    "credit": "exact",
+    "decision_log_sha256": "59b550c6a1c83c2886fa4e3b2d60ba40592a07abd1da659e0b74b33c9af6648c",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4338,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 453433,
+      "units_dev_promoted": 453433,
+      "units_probe_expanded": 335876
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 4346,
+     "live_entries": 1682,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1682,
+     "replacements": 2664
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.188,
+    "credit": "exact",
+    "decision_log_sha256": "6c1ad889d39dc390d861829ed6fb4b73d2fa46a1812547f588085d4614b0c469",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4346,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 571997,
+      "units_dev_promoted": 571997,
+      "units_probe_expanded": 390804
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 4366,
+     "live_entries": 1608,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1608,
+     "replacements": 2758
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 8.469,
+    "credit": "exact",
+    "decision_log_sha256": "a9d3de68f5e28c0b94f1d05d87b4efde0440944c6792d05856549a22862ebe78",
+    "descriptor": "D-BEH",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 4366,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 40000,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 425749,
+      "units_dev_promoted": 425749,
+      "units_probe_expanded": 315861
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "D1-X3G": [
+   {
+    "archive": {
+     "entries": 3896,
+     "live_entries": 1690,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1690,
+     "replacements": 2206
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 5.797,
+    "credit": "exact",
+    "decision_log_sha256": "9d52f5e77bd5ee078eb4143cb5e81ff009469fda2b9a8ca74ff43f7ce5b3e3c3",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3896,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 503138,
+      "units_dev_promoted": 503138,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 3936,
+     "live_entries": 1681,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1681,
+     "replacements": 2255
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 6.516,
+    "credit": "exact",
+    "decision_log_sha256": "889086de72320ca83069bcad3b315f2796575cb3db4843a052ce5154ae314afe",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3936,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 544809,
+      "units_dev_promoted": 544809,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 3802,
+     "live_entries": 1670,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1670,
+     "replacements": 2132
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 5.672,
+    "credit": "exact",
+    "decision_log_sha256": "a349568197a625d6b760e74d482d2e1b784f96b0991427dee9e2835a4c109e29",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3802,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 411461,
+      "units_dev_promoted": 411461,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 3,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 3897,
+     "live_entries": 1679,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1679,
+     "replacements": 2218
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 5.891,
+    "credit": "exact",
+    "decision_log_sha256": "1bb35e980a709dede016be7c47b0e9b010faa7c54ccd919eebea555fe7220417",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3897,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 488645,
+      "units_dev_promoted": 488645,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 3874,
+     "live_entries": 1676,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1676,
+     "replacements": 2198
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 5.656,
+    "credit": "exact",
+    "decision_log_sha256": "cb2ef844e020a82f03d11767b43dd90a84a2111af011ad07eb94c24523cfee47",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3874,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 530647,
+      "units_dev_promoted": 530647,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 1,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 3781,
+     "live_entries": 1672,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1672,
+     "replacements": 2109
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 6.75,
+    "credit": "exact",
+    "decision_log_sha256": "201480cb4ff11c4d283971d78d052c48d750620fa8d9172110646b69ca109935",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3781,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 436437,
+      "units_dev_promoted": 436437,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 4,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 3818,
+     "live_entries": 1675,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1675,
+     "replacements": 2143
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 7.703,
+    "credit": "exact",
+    "decision_log_sha256": "2a649e7d6f616ea2c6bd261227d4285e7cf882a51c66d8d014dbb3f3e44247ca",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3818,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 470358,
+      "units_dev_promoted": 470358,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 5,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 3888,
+     "live_entries": 1673,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": 1673,
+     "replacements": 2215
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-X3G",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 6.203,
+    "credit": "exact",
+    "decision_log_sha256": "b0538c94d513f5cad5acfc495dda06b500834aafe15077e9ff96dbef5e9357c2",
+    "descriptor": "RAND:1971",
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 3888,
+      "charges": 5000,
+      "genotype_restores": 4999,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 451556,
+      "units_dev_promoted": 451556,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 2,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "D1-chain_neutral": [
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.156,
+    "credit": "exact",
+    "decision_log_sha256": "6211f76f294a58344fbf955c149b8eb9680bc057b5ada2da2e086eb0f6f87b18",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 402046,
+      "units_dev_promoted": 402046,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 9,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.391,
+    "credit": "exact",
+    "decision_log_sha256": "a8c08348f9deda7b2c358b1e33b3f66e5029fdf6cf706ebce0ee4d11976a5cd1",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 1,
+      "state_restores": 0,
+      "units_dev_expanded": 392567,
+      "units_dev_promoted": 392567,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 8,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.281,
+    "credit": "exact",
+    "decision_log_sha256": "16271f5fdce1b68b42b775add35127229d58cb0960c69a8885425d3bafa5873a",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 312899,
+      "units_dev_promoted": 312899,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.453,
+    "credit": "exact",
+    "decision_log_sha256": "20f3b9b18a5a0d4605b301ed1b1158c21c7ca23241b9c4507b3992bc41f34048",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 637651,
+      "units_dev_promoted": 637651,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 38,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.031,
+    "credit": "exact",
+    "decision_log_sha256": "847c4c18125b45f7ec2bf63d7110ecc554e8f839395c0faa0f75be2bee0731d5",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 353921,
+      "units_dev_promoted": 353921,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 10,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.859,
+    "credit": "exact",
+    "decision_log_sha256": "c62aff99a28b2778ba6738611073c9dfe34bc5901f30378d434823ddd2147bfb",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 343230,
+      "units_dev_promoted": 343230,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.781,
+    "credit": "exact",
+    "decision_log_sha256": "922787a564bc874fccaa2b4ee9aa57e09d6dfca21e1f82d4e6343cbec7776ea0",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 329229,
+      "units_dev_promoted": 329229,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_neutral",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 1.406,
+    "credit": "exact",
+    "decision_log_sha256": "559df5dfb808d6c828b3bd72cca2ae200c73ec9b7227e4b905a89a66df0a6b52",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 371691,
+      "units_dev_promoted": 371691,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 8,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ],
+  "D1-chain_strict": [
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.516,
+    "credit": "exact",
+    "decision_log_sha256": "2db6f6799012534cc1d3eb6455e3d3f76f07c5cee8ccf58df3ee378de9445ba5",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 79536,
+      "units_dev_promoted": 79536,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.609,
+    "credit": "exact",
+    "decision_log_sha256": "b30a9b7a0f18a9d3da5a2a39eebc75c8033e592bdf82b069bcad52007cd9e59a",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 79028,
+      "units_dev_promoted": 79028,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.547,
+    "credit": "exact",
+    "decision_log_sha256": "05bc5ddf48caf181c37e0c3a13bfa674c90e0645888b81ca0ba0f6fe3af10b54",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 79310,
+      "units_dev_promoted": 79310,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.5,
+    "credit": "exact",
+    "decision_log_sha256": "0efdc384d9604de0462235efd67bf6d00179ca3b5b9bca902451cbb97faaeb37",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 78560,
+      "units_dev_promoted": 78560,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.531,
+    "credit": "exact",
+    "decision_log_sha256": "b4e9afc06ca39c851498c398e41d52b4da2c5494cffdb18337e65adb33c9797a",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 82526,
+      "units_dev_promoted": 82526,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 4
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.547,
+    "credit": "exact",
+    "decision_log_sha256": "1a6fbabd5fffd0e59d6f1b7169e5de24b3a74d7ce1a8a910d026b25bee11be7b",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 82108,
+      "units_dev_promoted": 82108,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 5
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.562,
+    "credit": "exact",
+    "decision_log_sha256": "aba6512ec601f5556cb5fc9734e6914c138280dc25141158fb64c17088c2bea3",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 79128,
+      "units_dev_promoted": 79128,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 6
+   },
+   {
+    "archive": {
+     "entries": 0,
+     "live_entries": 0,
+     "logged_descriptor_cells_visited": null,
+     "realised_cells": null,
+     "replacements": 0
+    },
+    "archive_assisted_discovery": false,
+    "arm": "D1-chain_strict",
+    "autonomous_competence": null,
+    "budget": 5000,
+    "cpu_s": 0.594,
+    "credit": "exact",
+    "decision_log_sha256": "c2dac3f470175ccb69be9b3ad172c58f828bc34ac9d3171930ebc0f46c2a8617",
+    "descriptor": null,
+    "final_evaluation": null,
+    "first_false_hits": [],
+    "first_visit_route": null,
+    "hit": false,
+    "hit_charge": null,
+    "ledger": {
+     "certifier": {
+      "final_eval_runs": 0,
+      "verify_evals": 0
+     },
+     "developmental": {
+      "library_entries": 0,
+      "library_max_depth": 0,
+      "library_sha256": null
+     },
+     "organism": {
+      "program": null
+     },
+     "search": {
+      "archive_admissions": 0,
+      "charges": 5000,
+      "genotype_restores": 1,
+      "probe_runs": 0,
+      "rejected_mutations": 0,
+      "state_restores": 0,
+      "units_dev_expanded": 81822,
+      "units_dev_promoted": 81822,
+      "units_probe_expanded": 0
+     }
+    },
+    "mechanisms": {
+     "cert_patterns_seen": 0,
+     "qualified_genotypes": 0,
+     "qualified_skeletons": {}
+    },
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 7
+   }
+  ]
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "toy": "CREDIT"
+}

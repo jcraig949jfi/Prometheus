@@ -1,0 +1,501 @@
+{
+ "REPAIR_CLASS": "SEARCH",
+ "best_cell": "on_xabs",
+ "best_cell_dominant": null,
+ "best_cell_first_failing_links": {
+  "COMPOSITION_HORIZON": 0,
+  "COMPOSITION_UNDERDETERMINED": 0,
+  "HORIZON_R1": 0,
+  "R1_ACQUISITION": 0,
+  "UNDERDETERMINED_STONE": 0
+ },
+ "budget": 1000000,
+ "cell_families": {
+  "off_frozen": [
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F085-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F081-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F061-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F035-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "NOT_FOUND_AT_BUDGET",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F077-R4",
+    "first_failing_link": "COMPOSITION_HORIZON",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F071-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F027-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   }
+  ],
+  "off_xabs": [
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F085-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F081-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "CHAIN_C_FAIL",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": null
+    },
+    "family_id": "W0467897d-F061-R3",
+    "first_failing_link": "HORIZON_R1",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F035-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "NOT_FOUND_AT_BUDGET",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F077-R4",
+    "first_failing_link": "COMPOSITION_HORIZON",
+    "link_detail": "IN_CLASS",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F071-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F027-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   }
+  ],
+  "on_frozen": [
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F085-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "CENSORED",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F081-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F061-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F035-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F077-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F071-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F027-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   }
+  ],
+  "on_xabs": [
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F085-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "CENSORED",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F081-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "closed_lambda",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W0467897d-F061-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W0467897d"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F035-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F077-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "p0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F071-R4",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   },
+   {
+    "chain_status": "SOLVED",
+    "extraction": {
+     "f1": "readout_fallback",
+     "s0": "closed_lambda"
+    },
+    "family_id": "W1d5301d0-F027-R3",
+    "first_failing_link": null,
+    "link_detail": "CHAIN_QUALIFIED",
+    "scratch_status": "NOT_FOUND_AT_BUDGET",
+    "world": "W1d5301d0"
+   }
+  ]
+ },
+ "cell_verdicts": {
+  "off_frozen": {
+   "chain_qualified": 3,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 3,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n_admitted_R3_R4": 7,
+   "scratch_fails": 7
+  },
+  "off_xabs": {
+   "chain_qualified": 3,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 3,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n_admitted_R3_R4": 7,
+   "scratch_fails": 7
+  },
+  "on_frozen": {
+   "chain_qualified": 7,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 0,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 0,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n_admitted_R3_R4": 7,
+   "scratch_fails": 6
+  },
+  "on_xabs": {
+   "chain_qualified": 7,
+   "complete": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 0,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 0,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n_admitted_R3_R4": 7,
+   "scratch_fails": 6
+  }
+ },
+ "cells": {
+  "off_frozen": {
+   "chain_ge_80pct": false,
+   "chain_qualified": 3,
+   "complete": true,
+   "counts": false,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 3,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n": 7,
+   "scratch_fails": 7,
+   "trivialised": false
+  },
+  "off_xabs": {
+   "chain_ge_80pct": false,
+   "chain_qualified": 3,
+   "complete": true,
+   "counts": false,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 1,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 3,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n": 7,
+   "scratch_fails": 7,
+   "trivialised": false
+  },
+  "on_frozen": {
+   "chain_ge_80pct": true,
+   "chain_qualified": 7,
+   "complete": true,
+   "counts": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 0,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 0,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n": 7,
+   "scratch_fails": 6,
+   "trivialised": false
+  },
+  "on_xabs": {
+   "chain_ge_80pct": true,
+   "chain_qualified": 7,
+   "complete": true,
+   "counts": true,
+   "first_failing_link_counts": {
+    "COMPOSITION_HORIZON": 0,
+    "COMPOSITION_UNDERDETERMINED": 0,
+    "HORIZON_R1": 0,
+    "INCOMPLETE": 0,
+    "R1_ACQUISITION": 0,
+    "UNDERDETERMINED_STONE": 0
+   },
+   "n": 7,
+   "scratch_fails": 6,
+   "trivialised": false
+  }
+ },
+ "claim_limits": "informs the recommendation only; no frozen Beta-04 label is relabelled; not COMPOSITIONAL_DISCOVERY (stones from sealed-decomposition-indexed R1 tasks)",
+ "label": "EXPOSED DEV DATA (pilot)",
+ "recommendation_reading": "CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY (class SEARCH)",
+ "root": "foundry/pilot_v2",
+ "rule": "SEARCH: on_frozen counts AND off_xabs not; DEVELOPMENTAL: off_xabs counts AND on_frozen not; EITHER: both single-factor cells count; BOTH_REQUIRED: only on_xabs counts; NONE: no cell counts. A cell counts iff 5q >= 4n AND 5*scratch_fails >= 4n (else TRIVIALISED if 5q >= 4n); CENSORED scratch = not failed (A3.6)",
+ "seed": 0,
+ "utc_backfill": {
+  "note": "pre-A10 output (no wall-clock fields when written); upper bound = commit time of 91456b10b; SUPERSEDED by runs/e3r_pilot_a1 (A1 driver, UTC throughout)",
+  "utc_end_upper_bound": "2026-10-10T18:47:05-04:00"
+ },
+ "worlds": [
+  "W0467897d",
+  "W1d5301d0"
+ ]
+}

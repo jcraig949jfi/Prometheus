@@ -1,0 +1,21 @@
+clean suite rc=0
+KILLED       E01 A/B sampler forces only the first pair
+KILLED       E02 exceptions keep f
+KILLED       E03 crit probes use pair 0 for every target
+KILLED       E04 decoys carry f
+KILLED       E05 loads swapped (ydep count = decoy count)
+KILLED       E06 O4LR records the true pruned literal
+KILLED       E07 O4LR draws inside the anchor
+KILLED       E08 O3U keeps the cap
+KILLED       E09 run.py err_CDE drops D
+KILLED       E10 run.py collateral baseline is end of A
+KILLED       E11 C breaks every pair at once
+KILLED       E12 O4LR counterfeit drops entries (fewer U bytes)
+KILLED       E13 weldable flag ignored
+KILLED       E14 weldable arm welds with the stale anchor
+KILLED       E15 binding budget evicts nothing
+KILLED       E16 factoring rules cost nothing
+KILLED       E17 factoring accepts rules that do not pay
+KILLED       E18 factored arm ignores the factor flag
+KILLED       E19 factoring substitutes premises lacking one vertex
+{"results": [{"mutant": "E01 A/B sampler forces only the first pair", "status": "KILLED"}, {"mutant": "E02 exceptions keep f", "status": "KILLED"}, {"mutant": "E03 crit probes use pair 0 for every target", "status": "KILLED"}, {"mutant": "E04 decoys carry f", "status": "KILLED"}, {"mutant": "E05 loads swapped (ydep count = decoy count)", "status": "KILLED"}, {"mutant": "E06 O4LR records the true pruned literal", "status": "KILLED"}, {"mutant": "E07 O4LR draws inside the anchor", "status": "KILLED"}, {"mutant": "E08 O3U keeps the cap", "status": "KILLED"}, {"mutant": "E09 run.py err_CDE drops D", "status": "KILLED"}, {"mutant": "E10 run.py collateral baseline is end of A", "status": "KILLED"}, {"mutant": "E11 C breaks every pair at once", "status": "KILLED"}, {"mutant": "E12 O4LR counterfeit drops entries (fewer U bytes)", "status": "KILLED"}, {"mutant": "E13 weldable flag ignored", "status": "KILLED"}, {"mutant": "E14 weldable arm welds with the stale anchor", "status": "KILLED"}, {"mutant": "E15 binding budget evicts nothing", "status": "KILLED"}, {"mutant": "E16 factoring rules cost nothing", "status": "KILLED"}, {"mutant": "E17 factoring accepts rules that do not pay", "status": "KILLED"}, {"mutant": "E18 factored arm ignores the factor flag", "status": "KILLED"}, {"mutant": "E19 factoring substitutes premises lacking one vertex", "status": "KILLED"}], "schema": "chiasma.e1b.mutation.v1", "summary": {"KILLED": 19, "NOT_APPLIED": 0, "SURVIVED": 0}}

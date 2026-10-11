@@ -187,6 +187,14 @@ class Archive:
     def elite_ids(self, grids=GRIDS):
         return {e for g in grids for (e, _) in self.elites[g].values()}
 
+    def top_elites(self, grids, k):
+        """THESEUS-27b: the k best elites by quality across the given grids (bounded protection)."""
+        best = {}
+        for g in grids:
+            for (e, q) in self.elites[g].values():
+                best[e] = max(q, best.get(e, -np.inf))
+        return set(sorted(best, key=lambda e: (-best[e], e))[:k])
+
 
 def save_cal(cal, path):
     with open(path, "w", encoding="utf-8") as f:

@@ -1,0 +1,9 @@
+# Manifest for 2026-10-08_external_reviews
+
+sha256 over LF-normalised bytes for UTF-8 text, raw bytes otherwise; see comms/manifest.py.
+
+- 00_README.md  sha256:48067bc3c0b631522815ed4b02d04c79c91fd3f943db053bb9a648cbca396f30
+- 01_OPERATOR_QUESTION_verbatim.md  sha256:aae8ff4110983037e9b4306c60fb0a5708b04c17e37e1baa5cc5c48e59611b15
+- 02_CHATGPT_REVIEW_1_verbatim.md  sha256:50d4a75ccda30bb0169bfeaf87724e24e118404345adff72d8403a73a23cdfb8
+- 03_GEMINI_CRITIQUE_verbatim.md  sha256:a0b355e80d2faa6f973a722991903c473b079f463a7bacd865db018dcf17a0fb
+- 04_CHATGPT_REVIEW_2_verbatim.md  sha256:3ac665ce3acc89be35fc741ffe4b2215be5d23d6dd36e6a7e06bd41e62e20b8e

@@ -1,0 +1,203 @@
+{
+ "R1": 0.8161434977578476,
+ "R1c": 1.0,
+ "R2": 1.0,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "controls_ok": true,
+ "cpu_s": 4.31,
+ "driver": "e2-driver-v1",
+ "family_id": "Wb49b6a5f-F052-R4",
+ "ledger": "INFRA",
+ "lib_witness": "(map (lam x (if (L_9bc9c358d90d x) (L_0baff3dd7c47 x) x)) xs)",
+ "lib_witness_checks": [
+  {
+   "program": "(map (lam x (if (L_9bc9c358d90d x) (L_0baff3dd7c47 x) x)) xs)",
+   "qualified": true,
+   "source": "sealed_witness_promoted->acquired",
+   "type": "List"
+  }
+ ],
+ "lib_witness_source": "sealed_witness_promoted->acquired",
+ "library_status": "ACQUIRED_CONSTITUENTS",
+ "pid": 10988,
+ "qualification": {
+  "controls_ok": true,
+  "descriptors": {
+   "C-FIT": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.0,
+     "1": 0.0,
+     "3": 0.0
+    },
+    "R1_by_prune_depth": {
+     "1": 0.0,
+     "2": 0.0
+    },
+    "R1_separation": 0.0,
+    "R1c": "FAIL",
+    "R1c_given_trace_differs": 0.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.0034860557768924302,
+    "granularity_cells_per_genotype": 0.0008530343650987082,
+    "pairs_R1c": 182,
+    "pool_cells": 7
+   },
+   "D-BEH": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.95,
+     "1": 0.7083,
+     "3": 0.6667
+    },
+    "R1_by_prune_depth": {
+     "1": 0.8049,
+     "2": 0.83
+    },
+    "R1_separation": 0.8161434977578476,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 0.7141434262948207,
+    "granularity_cells_per_genotype": 0.17475018279307825,
+    "pairs_R1c": 182,
+    "pool_cells": 1434,
+    "verdict": "FAIL"
+   },
+   "GENO": {
+    "G": "FAIL",
+    "OVERSPLIT_WARNING": true,
+    "R1": "PASS",
+    "R1_by_intermediate_score": {
+     "0": 1.0,
+     "1": 1.0,
+     "3": 1.0
+    },
+    "R1_by_prune_depth": {
+     "1": 1.0,
+     "2": 1.0
+    },
+    "R1_separation": 1.0,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "FAIL",
+    "R2_invariance": 0.0,
+    "cells_per_distinct_trace": 4.086653386454183,
+    "granularity_cells_per_genotype": 1.0,
+    "pairs_R1c": 182,
+    "pool_cells": 8206
+   },
+   "TRACE": {
+    "G": "PASS",
+    "OVERSPLIT_WARNING": false,
+    "R1": "FAIL",
+    "R1_by_intermediate_score": {
+     "0": 0.95,
+     "1": 0.7083,
+     "3": 0.6667
+    },
+    "R1_by_prune_depth": {
+     "1": 0.8049,
+     "2": 0.83
+    },
+    "R1_separation": 0.8161434977578476,
+    "R1c": "PASS",
+    "R1c_given_trace_differs": 1.0,
+    "R2": "PASS",
+    "R2_invariance": 1.0,
+    "cells_per_distinct_trace": 1.0,
+    "granularity_cells_per_genotype": 0.24469900073117232,
+    "pairs_R1c": 182,
+    "pool_cells": 2008
+   }
+  },
+  "family_id": "A49b08f5b89/c8015e21b4013fb8",
+  "intermediate_scores": [
+   0,
+   1,
+   3
+  ],
+  "intermediates": 12,
+  "intermediates_with_no_equal_score_other": 0,
+  "lattice_size": 13,
+  "lattice_truncated": false,
+  "pairs_R1": 223,
+  "pairs_R2": 68,
+  "pool_score_hist": {
+   "0": 7169,
+   "1": 1028,
+   "11": 1,
+   "12": 2,
+   "2": 2,
+   "3": 3,
+   "8": 1
+  },
+  "pool_size": 8206,
+  "qualified": [],
+  "synonym_semantic_mismatches": 0,
+  "thresholds": {
+   "G_PASS_max": 0.5,
+   "MIN_PAIRS": 20,
+   "R1_PASS": 0.9,
+   "R2_PASS": 0.9
+  },
+  "witness": "(map (lam x (if (L_9bc9c358d90d x) (L_0baff3dd7c47 x) x)) xs)"
+ },
+ "qualified": false,
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "shard": "qual/Wb49b6a5f-F052-R4",
+ "shard_cpu_s": 4.31,
+ "verdict": "FAIL"
+}

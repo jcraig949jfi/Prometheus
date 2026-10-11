@@ -1,0 +1,86 @@
++==============================================================================+
+| REVIEW PACKET -- PAN UNIT 3: LOCAL CODE BENCHMARK (HumanEval+, n = 163)      |
+| Author : Pan (data-modeler seat), instance m2-f20b5eac, SPECTREX5 (M2)       |
+| Date   : 2026-10-09 (runs 17:59Z-19:05Z, pan.run receipts)                   |
+| For    : the operator (HITL) and external reviewers                          |
+| Status : MEASURED. Frozen rule: no pair separable. One exploratory successor.|
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+------------------------------------------------------------------------------
+0. QUESTION AND VERDICT
+------------------------------------------------------------------------------
+Which locally runnable model on M2's 16 GB card writes code that passes hidden
+tests, and how fast -- the choice behind a code-mutation operator. The earlier
+15-probe smoke test could not rank models. Verdict under the frozen rule: the
+four preregistered configurations are NOT separable (all 95 percent intervals
+overlap). Exploratory: gpt-oss:20b reaches 0.908 when given 4,096 tokens.
+
+------------------------------------------------------------------------------
+1. COMMITTED BEFORE MEASUREMENT
+------------------------------------------------------------------------------
+  6bb3dbd9d  prereg: dataset evalplus/humanevalplus (sha256 4436f5c0...,
+             apache-2.0), greedy pass@1, prompt/extraction/execution fixed,
+             4 configurations, controls, comparison rule, contamination caveat
+  2e758ec03  amendment A1 BEFORE any model result: HumanEval/32 excluded --
+             its test runs `_poly(*candidate(*inp), inp)`, star-unpacking the
+             candidate's float, so no answer (canonical included) can pass
+
+------------------------------------------------------------------------------
+2. CONTROLS [measured]
+------------------------------------------------------------------------------
+  canonical solutions 163/163 (POSITIVE)  stub `pass` 0/163 (CHEAT)
+  prompt only 0/163 (NEGATIVE). Before A1: canonical 163/164.
+
+------------------------------------------------------------------------------
+3. RESULTS [measured; rows in pan.code_bench, 815 rows exported]
+------------------------------------------------------------------------------
+  config (no thinking)       passed   pass@1  Wilson 95%      tok/s  trunc
+  gpt-oss:20b, 1024 tok      139/163  0.853   [0.790, 0.899]  88.7     19
+  qwen2.5-coder:14b, 1024    139/163  0.853   [0.790, 0.899]  43.6      0
+  qwen3:8b, 1024             127/163  0.779   [0.709, 0.836]  75.2      0
+  gemma3:12b, 1024           126/163  0.773   [0.703, 0.831]  48.4      0
+  -- exploratory, chosen after seeing the truncations --
+  gpt-oss:20b, 4096 tok      148/163  0.908   [0.854, 0.943]  88.6      9
+  Paired 1024 -> 4096 for gpt-oss: 9 newly passed, 0 lost.
+  Uncorrected paired McNemar, top pair vs lower pair: p 0.024-0.050.
+  7 tasks defeat all four frozen configurations (HumanEval/76, 91, 130, 132,
+  145, 154, 163).
+
+------------------------------------------------------------------------------
+4. WHAT THIS DOES AND DOES NOT ESTABLISH
+------------------------------------------------------------------------------
+Establishes: all four models load and run 100 percent on the card at the
+speeds shown; the harness sees passes and refuses cheats; truncation (not the
+model) set most of gpt-oss's first-run failures. Does NOT establish: absolute
+coding ability (HumanEval is likely in training data); anything about the
+models with thinking enabled; performance on code unlike HumanEval (program
+mutation inside Prometheus's own engines is the real target and is untested).
+
+------------------------------------------------------------------------------
+5. RECOMMENDATION
+------------------------------------------------------------------------------
+For a local code-mutation operator: gpt-oss:20b at ~4,096 tokens (fastest and
+highest measured, 13 GB, apache-2.0); qwen2.5-coder:14b where outputs must
+stay short. Next measurement worth its GPU: the same harness on mutations of
+the program's own code (an engine's real edit tasks), not a public benchmark.
+STOP candidate: more public-benchmark runs -- contamination caps their value.
+
+------------------------------------------------------------------------------
+6. QUESTIONS FOR THE REVIEWER
+------------------------------------------------------------------------------
+  Q1 Is excluding HumanEval/32 before any model ran a fair amendment, or should
+     the frozen protocol have been abandoned and re-registered?
+  Q2 Should the exploratory 4,096-token run be repeated as a preregistered
+     configuration (with a fresh rule) before anyone relies on it?
+  Q3 Is a contaminated public benchmark useful at all for choosing a mutation
+     operator, versus a small in-house set built from the program's own diffs?
+
+  Artifacts: pan/tests/codebench_prereg.json, pan/codebench.py,
+  roles/Pan/reports/CODEBENCH_2026-10-09.md, reports/codebench/ (controls,
+  PER_TASK_2026-10-09.json), commits 6bb3dbd9d 2e758ec03 56633f06f d14eda685.
+  Leases lse-b3dea75dd6d4, lse-3610c68559ea released; GPU today ~2.2 h of 4.
+
++==============================================================================+
+| END. "Not worth continuing" is a first-class answer.                         |
++==============================================================================+

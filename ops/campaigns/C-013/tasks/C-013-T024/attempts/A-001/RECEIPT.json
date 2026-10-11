@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T024",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "d0eba60f5a3774ff58e6a5255e44042692770d32",
+  "end_sha": "c2b39fa8d84434a7aed268b1aaeea58fe26b2954",
+  "files_changed": [
+    "rso/scale/runner/retention.py",
+    "rso/scale/runner/run.py",
+    "rso/scale/runner/worker.py",
+    "rso/scale/runner/__main__.py",
+    "rso/scale/runner/RETENTION.md",
+    "rso/scale/runner/tests/test_retention.py",
+    "rso/scale/runner/tests/_util.py",
+    "rso/scale/runner/tests/mutation_check.py",
+    "rso/scale/runner/evidence/ (RED_T024.txt, GREEN_T024.txt, MUTATION_RETENTION_T024.json)"
+  ],
+  "evidence_added": [
+    "checkpoint_retention {keep_every K, keep_last M>=2} declared in RUN_MANIFEST (null = keep all); retention.prune keeps genesis, every Kth, last M (head and its input), and k/k-1 of any recorded contest; deletes only checkpoint objects no chain keeps; worker prunes after each head advance; CLI prune [--dry-run]; each pass logged to partitions/<chain>/retention.jsonl",
+    "fire test TestFireAfterPruning: worker crashed at head 9 after epochs 1-3,5-7 pruned; forced s3.8 replay VALID; resumed to 12; final forced replay VALID; run digest == control; pruned run stores fewer bytes than the unpruned run"
+  ],
+  "evidence_executed": [
+    {"command": "python -m unittest rso.scale.runner.tests.test_retention (before retention.py)", "result": "ImportError, FAILED (errors=1) (RED, evidence/RED_T024.txt)"},
+    {"command": "python -m unittest discover -s rso/scale/runner/tests -t .", "result": "46 OK (evidence/GREEN_T024.txt)"},
+    {"command": "4 retention mutants against test_retention", "result": "4/4 killed (evidence/MUTATION_RETENTION_T024.json)"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "tests written first and run against the missing module (ImportError); tests and code were committed together, so RED is not a separate commit"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "a contest recorded after its epoch was pruned cannot restore the checkpoint (M>=2 keeps every epoch a fresh contest can name)",
+    "the runner records no contest resolution, so every recorded contest counts as open",
+    "orphan checkpoints of refused publications are not pruned",
+    "single host local store only; full 17-mutant table not re-run (only the 4 new retention mutants)"
+  ],
+  "unresolved": [],
+  "unblocks": ["C-013-T025 shares the runner tree and follows in order"],
+  "created_at_utc": "2026-10-10T10:20:00Z",
+  "instance": "harry1-13757eac",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c013-t024",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c013-t024",
+  "resources": {"cpu": "test suites and mutants ~6 CPU-min (< 0.2 core-hour)", "validation_launches": 0, "gpu": 0, "cloud_usd": 0, "model": "one Q1 session"},
+  "notes": "No OS scheduler task, no Fabric restart. Design and policy semantics in rso/scale/runner/RETENTION.md."
+}

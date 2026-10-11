@@ -1,0 +1,419 @@
+{
+ "admitted": [
+  "Wc025415a-F044-R4",
+  "Wc025415a-F041-R4"
+ ],
+ "alien_code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "ar1_kp.py": "8590d46d6fda337eddc9588682baf0e1307e4fd5647987d5099050e82542ee1e",
+  "ar1_timing.py": "7f3834515e2f853cb1f9d01d9cb342f70397c1dce33a66cc7b4721c234c4b48a",
+  "conformance.py": "97c53feea10c6dc7f85063d898d425a26bd62616ac203fe1f672a343f8407d07",
+  "extract.py": "fc040f202eaa8e5c2188c313194be4ca4abceda771e1e4984dfe6cd4b99c0454",
+  "machine.py": "7b2b24c0194b32fd3297064fb4618302b088c66269ab2953e8c9a2733ca1b3d9",
+  "search.py": "eee69a054a9f7830d7b594ab1fc45d0d756a573c050553b568fd83da2ceb67cb"
+ },
+ "label": "PRODUCTION",
+ "rows": {
+  "ar1.mc1.lib-constituents.seed0.B1000000": {
+   "chain": {
+    "Wc025415a-F041-R4": {
+     "family_id": "Wc025415a-F041-R4",
+     "missing": [
+      "p0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    },
+    "Wc025415a-F044-R4": {
+     "family_id": "Wc025415a-F044-R4",
+     "missing": [
+      "p0"
+     ],
+     "status": "CHAIN_C_FAIL"
+    }
+   },
+   "config": {
+    "budget": 1000000,
+    "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+    "r1_seeds": 1,
+    "row": "primary",
+    "scope": "constituents",
+    "seed": 0
+   },
+   "descriptive": {
+    "families": [
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 305.29,
+       "scratch": 154.72
+      },
+      "family_id": "Wc025415a-F044-R4",
+      "first_failing_link": "UNDERDETERMINED_STONE",
+      "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "link_info": {
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "link": "UNDERDETERMINED_STONE",
+       "unit": "p0"
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:filter_of_map",
+      "world": "Wc025415a"
+     },
+     {
+      "chain_found": null,
+      "chain_qualified": false,
+      "chain_status": "CHAIN_C_FAIL",
+      "chain_uses_macro": null,
+      "complete": true,
+      "constituents": [
+       "f1",
+       "p0"
+      ],
+      "cpu_s": {
+       "chain": 0.0,
+       "r1_units_attributed": 305.29,
+       "scratch": 109.3
+      },
+      "family_id": "Wc025415a-F041-R4",
+      "first_failing_link": "UNDERDETERMINED_STONE",
+      "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "link_info": {
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "link": "UNDERDETERMINED_STONE",
+       "unit": "p0"
+      },
+      "rung": "R4",
+      "scratch_fails": true,
+      "scratch_status": "NOT_FOUND_AT_BUDGET",
+      "skeleton": "R4:fp:guard_p",
+      "world": "Wc025415a"
+     }
+    ],
+    "row": {
+     "budget": 1000000,
+     "key": "ar1.mc1.lib-constituents.seed0.B1000000",
+     "r1_seeds": 1,
+     "row": "primary",
+     "scope": "constituents",
+     "seed": 0
+    },
+    "units": [
+     {
+      "agrees_with_sealed_on_probe": 1.0,
+      "agrees_with_sealed_wide": 1.0,
+      "attempts": [
+       {
+        "best_credit": 12.0,
+        "charge": 800321,
+        "cpu_s": 93.31,
+        "detail": "ACQUIRED",
+        "family_id": "Wc025415a-F008-R1",
+        "found": "[ # 1 A ] p 2 * 1 p 3 l 0 . / # + [ 0 + + % 1 /",
+        "label": null,
+        "minimised": "[ 2 * 3 /",
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": false,
+      "cpu_s": 93.31,
+      "from": "Wc025415a-F008-R1",
+      "kind": "f",
+      "link": null,
+      "link_detail": null,
+      "macro": "@u16a3ac1b",
+      "mechanism": "f1",
+      "n_attempts": 1,
+      "r1_seed": 0,
+      "segment": "2 * 3 /",
+      "status": "ACQUIRED",
+      "world": "Wc025415a"
+     },
+     {
+      "agrees_with_sealed_on_probe": null,
+      "agrees_with_sealed_wide": null,
+      "attempts": [
+       {
+        "best_credit": 12.0,
+        "charge": 649834,
+        "cpu_s": 83.64,
+        "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+        "family_id": "Wc025415a-F010-R1",
+        "found": "# [ # # n 1 + 3 1 + a + + + < # . d A 0 . a . -",
+        "label": "UNDERDETERMINED_STONE",
+        "minimised": null,
+        "r1_seed": 0
+       },
+       {
+        "best_credit": 8.0,
+        "charge": null,
+        "cpu_s": 128.34,
+        "detail": "BUDGET_EXHAUSTED",
+        "family_id": "Wc025415a-F011-R1",
+        "found": null,
+        "label": "HORIZON_R1",
+        "minimised": null,
+        "r1_seed": 0
+       }
+      ],
+      "certifier_assisted_retry": true,
+      "cpu_s": 211.98,
+      "from": null,
+      "kind": "p",
+      "link": "UNDERDETERMINED_STONE",
+      "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "macro": null,
+      "mechanism": "p0",
+      "n_attempts": 2,
+      "r1_seed": null,
+      "segment": null,
+      "status": "NOT_ACQUIRED",
+      "world": "Wc025415a"
+     }
+    ],
+    "world": "Wc025415a"
+   },
+   "scratch": {
+    "Wc025415a-F041-R4": {
+     "best_credit": 10.1458,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 109.3,
+     "family_id": "Wc025415a-F041-R4",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    },
+    "Wc025415a-F044-R4": {
+     "best_credit": 3.1667,
+     "charge": null,
+     "charges": 1000000,
+     "cpu_s": 154.72,
+     "family_id": "Wc025415a-F044-R4",
+     "found": null,
+     "n_dev": 12,
+     "status": "NOT_FOUND_AT_BUDGET"
+    }
+   },
+   "units": {
+    "f1": {
+     "agrees_with_sealed_on_probe": 1.0,
+     "agrees_with_sealed_wide": 1.0,
+     "attempts": [
+      {
+       "best_credit": 12.0,
+       "charge": 800321,
+       "charges": 800321,
+       "cpu_s": 93.31,
+       "detail": "ACQUIRED",
+       "family_id": "Wc025415a-F008-R1",
+       "found": "[ # 1 A ] p 2 * 1 p 3 l 0 . / # + [ 0 + + % 1 /",
+       "label": null,
+       "minimised": "[ 2 * 3 /",
+       "minimised_verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       },
+       "n_candidates": 3,
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 6,
+       "segment": "2 * 3 /",
+       "span": [
+        1,
+        5
+       ],
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": true,
+        "test_ok": true,
+        "tribunal_ok": true
+       }
+      }
+     ],
+     "certifier_assisted_retry": false,
+     "from": "Wc025415a-F008-R1",
+     "kind": "f",
+     "macro": "@u16a3ac1b",
+     "mechanism": "f1",
+     "n_attempts": 1,
+     "r1_seed": 0,
+     "segment": "2 * 3 /",
+     "status": "ACQUIRED"
+    },
+    "p0": {
+     "attempt_labels": [
+      "UNDERDETERMINED_STONE",
+      "HORIZON_R1"
+     ],
+     "attempts": [
+      {
+       "best_credit": 12.0,
+       "charge": 649834,
+       "charges": 649834,
+       "cpu_s": 83.64,
+       "detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+       "family_id": "Wc025415a-F010-R1",
+       "found": "# [ # # n 1 + 3 1 + a + + + < # . d A 0 . a . -",
+       "label": "UNDERDETERMINED_STONE",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 4,
+       "verdict": {
+        "n_test": 40,
+        "n_tribunal": 17,
+        "qualified": false,
+        "test_ok": false,
+        "tribunal_ok": true
+       }
+      },
+      {
+       "best_credit": 8.0,
+       "best_tape": "[ [ # s d A # 2 d d / < + ? < ? [ # a l a l . 1",
+       "charge": null,
+       "charges": 1000000,
+       "cpu_s": 128.34,
+       "detail": "BUDGET_EXHAUSTED",
+       "family_id": "Wc025415a-F011-R1",
+       "found": null,
+       "label": "HORIZON_R1",
+       "n_dev": 12,
+       "r1_seed": 0,
+       "restarts": 9
+      }
+     ],
+     "certifier_assisted_retry": true,
+     "kind": "p",
+     "link": "UNDERDETERMINED_STONE",
+     "link_detail": "R1_FIRST_DEV_CONSISTENT_FAILS_TEST",
+     "mechanism": "p0",
+     "n_attempts": 2,
+     "status": "NOT_ACQUIRED"
+    }
+   }
+  }
+ },
+ "searches": {
+  "Wc025415a-F008-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 2,
+   "best_credit": 12.0,
+   "charges": 800321,
+   "cost": {
+    "len_expanded": 24,
+    "len_promoted": 24,
+    "macro_calls": 0,
+    "units_expanded_dev": 366,
+    "units_promoted_dev": 366
+   },
+   "cpu_s": 93.31,
+   "hit": true,
+   "hit_charge": 800321,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": "[ # 1 A ] p 2 * 1 p 3 l 0 . / # + [ 0 + + % 1 /",
+   "redraws": 15692,
+   "restarts": 6,
+   "trace": [],
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": true,
+    "test_ok": true,
+    "tribunal_ok": true
+   }
+  },
+  "Wc025415a-F010-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 12.0,
+   "charges": 649834,
+   "cost": {
+    "len_expanded": 24,
+    "len_promoted": 24,
+    "macro_calls": 0,
+    "units_expanded_dev": 1454,
+    "units_promoted_dev": 1454
+   },
+   "cpu_s": 83.64,
+   "hit": true,
+   "hit_charge": 649834,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "Int",
+   "program": "# [ # # n 1 + 3 1 + a + + + < # . d A 0 . a . -",
+   "redraws": 12468,
+   "restarts": 4,
+   "trace": [],
+   "verdict": {
+    "n_test": 40,
+    "n_tribunal": 17,
+    "qualified": false,
+    "test_ok": false,
+    "tribunal_ok": true
+   }
+  },
+  "Wc025415a-F011-R1|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 8.0,
+   "best_tape": "[ [ # s d A # 2 d d / < + ? < ? [ # a l a l . 1",
+   "charges": 1000000,
+   "cpu_s": 128.34,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 15695,
+   "restarts": 9,
+   "trace": []
+  },
+  "Wc025415a-F041-R4|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 10.1458,
+   "best_tape": "[ A a 1 s a 3 / - d # = + 2 - + d 2 - 2 < ? a .",
+   "charges": 1000000,
+   "cpu_s": 109.3,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 18175,
+   "restarts": 8,
+   "trace": []
+  },
+  "Wc025415a-F044-R4|seed=0|lib=-|B=1000000|mc1": {
+   "arm_view_files_opened": 1,
+   "best_credit": 3.1667,
+   "best_tape": "[ l d d 2 - a ? . < [ + ] 2 < A [ ] n [ ] . [ l",
+   "charges": 1000000,
+   "cpu_s": 154.72,
+   "hit": false,
+   "hit_charge": null,
+   "library_sha16": "-",
+   "n_dev": 12,
+   "output_type": "List",
+   "program": null,
+   "redraws": 17335,
+   "restarts": 6,
+   "trace": []
+  }
+ },
+ "world": "Wc025415a"
+}

@@ -1,0 +1,39 @@
+{
+ "label": "EXPOSED DEV DATA (pilot)",
+ "per_search": {
+  "chain": {
+   "censored_mean_cpu_s": 276.0,
+   "cpu_s_per_1e6_charges": 231.6,
+   "hits": 2,
+   "max_cpu_s": 289.23,
+   "mean_cpu_s": 161.9,
+   "n": 4
+  },
+  "r1": {
+   "censored_mean_cpu_s": 172.3,
+   "cpu_s_per_1e6_charges": 192.8,
+   "hits": 11,
+   "max_cpu_s": 310.5,
+   "mean_cpu_s": 113.4,
+   "n": 25
+  },
+  "scratch": {
+   "censored_mean_cpu_s": 215.1,
+   "cpu_s_per_1e6_charges": 226.6,
+   "hits": 1,
+   "max_cpu_s": 357.16,
+   "mean_cpu_s": 187.4,
+   "n": 7
+  }
+ },
+ "production_projection": {
+  "assumptions": "15 families, 17 units x <= 2 R1 families (E3-KP projection counts); expected = 85% of the R1 attempts run (some units acquired at the first family) x pilot mean, every chain and scratch run at the pilot mean; bound = every search at the pilot max",
+  "full_seed_row_core_h_expected": 2.37,
+  "primary_core_h_bound": 5.91,
+  "primary_core_h_expected": 2.37,
+  "r1_multiseed4_extra_core_h_bound": 10.0,
+  "r1_multiseed4_extra_core_h_expected": 3.41,
+  "wall_h_one_worker_primary_expected": 2.37
+ },
+ "total_search_cpu_s": 4794.4
+}

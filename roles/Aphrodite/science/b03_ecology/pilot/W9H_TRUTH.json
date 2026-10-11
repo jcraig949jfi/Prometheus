@@ -1,0 +1,1286 @@
+{
+ "W9H:0": {
+  "compositions": [
+   {
+    "id": "C0",
+    "inner": "M5",
+    "outer": "M3",
+    "schema": "math.gcd(abs(v), abs((1 - (({H} + v) * acc))))",
+    "screen": {
+     "acc_share": 0.682,
+     "distinct_vecs": 81,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.105
+    },
+    "strata": [
+     "GCD",
+     "MUL"
+    ]
+   },
+   {
+    "id": "C1",
+    "inner": "M3",
+    "outer": "M4",
+    "schema": "(acc * math.gcd(abs(math.gcd(abs(v), abs((1 - {H})))), abs(v)))",
+    "screen": {
+     "acc_share": 0.678,
+     "distinct_vecs": 77,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.155
+    },
+    "strata": [
+     "MIX",
+     "GCD"
+    ]
+   },
+   {
+    "id": "C2",
+    "inner": "M1",
+    "outer": "M4",
+    "schema": "(acc * math.gcd(abs((v - ({H} * first))), abs(v)))",
+    "screen": {
+     "acc_share": 0.953,
+     "distinct_vecs": 60,
+     "feasible_of_24": 3,
+     "identity_share": 0.054,
+     "w5_inst": null,
+     "w5_share": 0.155
+    },
+    "strata": [
+     "MIX",
+     "MUL"
+    ]
+   }
+  ],
+  "config_sha": "2334bb7480bd5d12d085f38ce4d9e143b4f5fa2f5c1cf631e2a77ef4e6768b4a",
+  "families": {
+   "yaaaaa": {
+    "filler": "first",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yabaaa": {
+    "filler": "(1 - v)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "ybaaaa": {
+    "filler": "last",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "ybbaaa": {
+    "filler": "(first // acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ycaaaa": {
+    "filler": "(acc + first)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ycbaaa": {
+    "filler": "(acc % v)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ydaaaa": {
+    "filler": "(first - 0)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ydbaaa": {
+    "filler": "(first * last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "yeaaaa": {
+    "filler": "(acc + v)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yebaaa": {
+    "level": "L0"
+   },
+   "yfaaaa": {
+    "filler": "last",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "yfbaaa": {
+    "filler": "math.gcd(abs(last), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ygaaaa": {
+    "filler": "(acc - 0)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ygbaaa": {
+    "filler": "(acc + last)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yhaaaa": {
+    "filler": "first",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yhbaaa": {
+    "filler": "acc",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yiaaaa": {
+    "filler": "acc",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "yibaaa": {
+    "level": "L0"
+   },
+   "yjaaaa": {
+    "filler": "(first % v)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yjbaaa": {
+    "level": "L0"
+   },
+   "ykaaaa": {
+    "filler": "last",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ykbaaa": {
+    "filler": "(acc + last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ylaaaa": {
+    "filler": "first",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ylbaaa": {
+    "filler": "(v + first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "ymaaaa": {
+    "filler": "(acc + first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "ymbaaa": {
+    "level": "L0"
+   },
+   "ynaaaa": {
+    "filler": "math.gcd(abs(acc), abs(0))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ynbaaa": {
+    "level": "L0"
+   },
+   "yoaaaa": {
+    "filler": "math.gcd(abs(last), abs(0))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yobaaa": {
+    "filler": "(v + acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "ypaaaa": {
+    "filler": "(first - 0)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "ypbaaa": {
+    "filler": "(acc * last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yqaaaa": {
+    "filler": "acc",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yqbaaa": {
+    "filler": "(last % first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yraaaa": {
+    "filler": "pow(first, first)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yrbaaa": {
+    "filler": "(acc % first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "ysaaaa": {
+    "filler": "(1 * acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ysbaaa": {
+    "level": "L0"
+   },
+   "ytaaaa": {
+    "filler": "acc",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ytbaaa": {
+    "level": "L0"
+   },
+   "yuaaaa": {
+    "level": "L0"
+   },
+   "yubaaa": {
+    "level": "L0"
+   },
+   "yvaaaa": {
+    "filler": "(acc * acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "yvbaaa": {
+    "level": "L0"
+   },
+   "ywaaaa": {
+    "filler": "(1 // acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yxaaaa": {
+    "filler": "math.gcd(abs(v), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yyaaaa": {
+    "filler": "math.gcd(abs(acc), abs(first))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yzaaaa": {
+    "filler": "math.gcd(abs(acc), abs(0))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   }
+  },
+  "mechanisms": [
+   {
+    "id": "M0",
+    "ops": [
+     "sub"
+    ],
+    "schema": "(v - {H})",
+    "screen": {
+     "acc_share": 0.256,
+     "distinct_vecs": 45,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W1",
+    "slot": "ADD",
+    "stratum": "ADD"
+   },
+   {
+    "id": "M1",
+    "ops": [
+     "sub",
+     "mul"
+    ],
+    "schema": "(v - ({H} * first))",
+    "screen": {
+     "acc_share": 0.267,
+     "distinct_vecs": 47,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "MUL",
+    "stratum": "MUL"
+   },
+   {
+    "id": "M2",
+    "ops": [
+     "add",
+     "mod"
+    ],
+    "schema": "(v + (acc % {H}))",
+    "screen": {
+     "acc_share": 0.612,
+     "distinct_vecs": 90,
+     "feasible_of_24": 3,
+     "identity_share": 0.054,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "DIV",
+    "stratum": "DIV"
+   },
+   {
+    "id": "M3",
+    "ops": [
+     "gcd",
+     "sub"
+    ],
+    "schema": "math.gcd(abs(v), abs((1 - {H})))",
+    "screen": {
+     "acc_share": 0.248,
+     "distinct_vecs": 39,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "GCD",
+    "stratum": "GCD"
+   },
+   {
+    "id": "M4",
+    "ops": [
+     "mul",
+     "gcd"
+    ],
+    "schema": "(acc * math.gcd(abs({H}), abs(v)))",
+    "screen": {
+     "acc_share": 0.802,
+     "distinct_vecs": 61,
+     "feasible_of_24": 3,
+     "identity_share": 0.054,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "MIX",
+    "stratum": "MIX"
+   },
+   {
+    "id": "M5",
+    "ops": [
+     "mul",
+     "add"
+    ],
+    "schema": "(({H} + v) * acc)",
+    "screen": {
+     "acc_share": 0.934,
+     "distinct_vecs": 104,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "ANY",
+    "stratum": "MUL"
+   }
+  ]
+ },
+ "W9H:1": {
+  "compositions": [
+   {
+    "id": "C0",
+    "inner": "M4",
+    "outer": "M3",
+    "schema": "(v + math.gcd(abs((acc * (v // {H}))), abs(acc)))",
+    "screen": {
+     "acc_share": 0.779,
+     "distinct_vecs": 36,
+     "feasible_of_24": 3,
+     "identity_share": 0.054,
+     "w5_inst": null,
+     "w5_share": 0.05
+    },
+    "strata": [
+     "GCD",
+     "MIX"
+    ]
+   },
+   {
+    "id": "C1",
+    "inner": "M1",
+    "outer": "M5",
+    "schema": "((v - (first * {H})) + v)",
+    "screen": {
+     "acc_share": 0.267,
+     "distinct_vecs": 47,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.279
+    },
+    "strata": [
+     "ADD",
+     "MUL"
+    ]
+   },
+   {
+    "id": "C2",
+    "inner": "M4",
+    "outer": "M5",
+    "schema": "((acc * (v // {H})) + v)",
+    "screen": {
+     "acc_share": 0.721,
+     "distinct_vecs": 97,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.279
+    },
+    "strata": [
+     "ADD",
+     "MIX"
+    ]
+   }
+  ],
+  "config_sha": "2334bb7480bd5d12d085f38ce4d9e143b4f5fa2f5c1cf631e2a77ef4e6768b4a",
+  "families": {
+   "yanbaa": {
+    "filler": "math.gcd(abs(v), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yaobaa": {
+    "level": "L0"
+   },
+   "ybnbaa": {
+    "filler": "(acc - 1)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "ybobaa": {
+    "filler": "(acc * first)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ycnbaa": {
+    "filler": "first",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "ycobaa": {
+    "level": "L0"
+   },
+   "ydnbaa": {
+    "filler": "acc",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ydobaa": {
+    "level": "L0"
+   },
+   "yenbaa": {
+    "level": "L0"
+   },
+   "yeobaa": {
+    "filler": "(0 - first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "yfnbaa": {
+    "filler": "math.gcd(abs(0), abs(acc))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "yfobaa": {
+    "filler": "(1 * last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "ygnbaa": {
+    "filler": "math.gcd(abs(first), abs(v))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "ygobaa": {
+    "level": "L0"
+   },
+   "yhnbaa": {
+    "filler": "(0 + first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yhobaa": {
+    "filler": "(v + v)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yinbaa": {
+    "filler": "(acc - first)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yjnbaa": {
+    "filler": "math.gcd(abs(first), abs(first))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yknbaa": {
+    "filler": "(1 + acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ylnbaa": {
+    "filler": "(last + first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "ymmbaa": {
+    "filler": "first",
+    "in_W5": true,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ymnbaa": {
+    "filler": "(acc + last)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ynmbaa": {
+    "filler": "(last // acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "ynnbaa": {
+    "filler": "(first - last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "yombaa": {
+    "filler": "(1 - first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yonbaa": {
+    "filler": "(acc + 1)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ypmbaa": {
+    "filler": "first",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "ypnbaa": {
+    "filler": "(acc + acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yqmbaa": {
+    "filler": "acc",
+    "in_W5": true,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yqnbaa": {
+    "filler": "(first + acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yrmbaa": {
+    "filler": "(acc - 0)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yrnbaa": {
+    "filler": "(first + 1)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ysmbaa": {
+    "filler": "acc",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ysnbaa": {
+    "filler": "math.gcd(abs(first), abs(v))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ytmbaa": {
+    "filler": "(acc - first)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ytnbaa": {
+    "level": "L0"
+   },
+   "yumbaa": {
+    "filler": "(acc * last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yunbaa": {
+    "filler": "pow(acc, 1)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yvmbaa": {
+    "filler": "math.gcd(abs(last), abs(v))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "yvnbaa": {
+    "filler": "(last - acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ywmbaa": {
+    "level": "L0"
+   },
+   "ywnbaa": {
+    "level": "L0"
+   },
+   "yxmbaa": {
+    "filler": "(last - 1)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "yxnbaa": {
+    "filler": "(1 - acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yymbaa": {
+    "level": "L0"
+   },
+   "yynbaa": {
+    "level": "L0"
+   },
+   "yzmbaa": {
+    "filler": "last",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yznbaa": {
+    "filler": "math.gcd(abs(first), abs(0))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   }
+  },
+  "mechanisms": [
+   {
+    "id": "M0",
+    "ops": [
+     "add",
+     "add"
+    ],
+    "schema": "(acc + (v + {H}))",
+    "screen": {
+     "acc_share": 0.915,
+     "distinct_vecs": 100,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "ADD",
+    "stratum": "ADD"
+   },
+   {
+    "id": "M1",
+    "ops": [
+     "sub",
+     "mul"
+    ],
+    "schema": "(v - (first * {H}))",
+    "screen": {
+     "acc_share": 0.267,
+     "distinct_vecs": 47,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "MUL",
+    "stratum": "MUL"
+   },
+   {
+    "id": "M2",
+    "ops": [
+     "sub",
+     "mod"
+    ],
+    "schema": "(v - (acc % {H}))",
+    "screen": {
+     "acc_share": 0.612,
+     "distinct_vecs": 90,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "DIV",
+    "stratum": "DIV"
+   },
+   {
+    "id": "M3",
+    "ops": [
+     "add",
+     "gcd"
+    ],
+    "schema": "(v + math.gcd(abs({H}), abs(acc)))",
+    "screen": {
+     "acc_share": 0.806,
+     "distinct_vecs": 71,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "GCD",
+    "stratum": "GCD"
+   },
+   {
+    "id": "M4",
+    "ops": [
+     "mul",
+     "fdiv"
+    ],
+    "schema": "(acc * (v // {H}))",
+    "screen": {
+     "acc_share": 0.643,
+     "distinct_vecs": 89,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "MIX",
+    "stratum": "MIX"
+   },
+   {
+    "id": "M5",
+    "ops": [
+     "add"
+    ],
+    "schema": "({H} + v)",
+    "screen": {
+     "acc_share": 0.264,
+     "distinct_vecs": 46,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W1",
+    "slot": "ANY",
+    "stratum": "ADD"
+   }
+  ]
+ },
+ "W9H:2": {
+  "compositions": [
+   {
+    "id": "C0",
+    "inner": "M2",
+    "outer": "M4",
+    "schema": "(last % math.gcd(abs(((acc // {H}) + v)), abs(v)))",
+    "screen": {
+     "acc_share": 0.698,
+     "distinct_vecs": 95,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.05
+    },
+    "strata": [
+     "MIX",
+     "DIV"
+    ]
+   },
+   {
+    "id": "C1",
+    "inner": "M2",
+    "outer": "M3",
+    "schema": "math.gcd(abs((1 - ((acc // {H}) + v))), abs(v))",
+    "screen": {
+     "acc_share": 0.717,
+     "distinct_vecs": 96,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.05
+    },
+    "strata": [
+     "GCD",
+     "DIV"
+    ]
+   },
+   {
+    "id": "C2",
+    "inner": "M4",
+    "outer": "M0",
+    "schema": "((acc + (last % math.gcd(abs({H}), abs(v)))) + v)",
+    "screen": {
+     "acc_share": 0.953,
+     "distinct_vecs": 59,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": null,
+     "w5_share": 0.0
+    },
+    "strata": [
+     "ADD",
+     "MIX"
+    ]
+   }
+  ],
+  "config_sha": "2334bb7480bd5d12d085f38ce4d9e143b4f5fa2f5c1cf631e2a77ef4e6768b4a",
+  "families": {
+   "yaadaa": {
+    "filler": "first",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yazcaa": {
+    "filler": "math.gcd(abs(last), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ybadaa": {
+    "filler": "(acc - first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "ybzcaa": {
+    "filler": "(acc % v)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "ycadaa": {
+    "filler": "(acc % last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yczcaa": {
+    "filler": "acc",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "ydadaa": {
+    "filler": "(acc % first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "ydzcaa": {
+    "filler": "math.gcd(abs(v), abs(acc))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yeadaa": {
+    "filler": "pow(1, acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yezcaa": {
+    "level": "L0"
+   },
+   "yfadaa": {
+    "filler": "(acc // v)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yfzcaa": {
+    "filler": "(acc - 0)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "ygadaa": {
+    "filler": "acc",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "ygzcaa": {
+    "level": "L0"
+   },
+   "yhadaa": {
+    "filler": "(acc % v)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "yhzcaa": {
+    "filler": "pow(1, acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yiadaa": {
+    "level": "L0"
+   },
+   "yizcaa": {
+    "filler": "(acc % last)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yjadaa": {
+    "filler": "math.gcd(abs(first), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yjzcaa": {
+    "filler": "math.gcd(abs(v), abs(first))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ykadaa": {
+    "filler": "(1 * acc)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ykzcaa": {
+    "filler": "(acc + last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   },
+   "yladaa": {
+    "filler": "math.gcd(abs(last), abs(v))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ylzcaa": {
+    "filler": "last",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "ymadaa": {
+    "filler": "math.gcd(abs(0), abs(v))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "ymzcaa": {
+    "filler": "math.gcd(abs(first), abs(v))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "ynadaa": {
+    "filler": "math.gcd(abs(v), abs(last))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "ynzcaa": {
+    "filler": "acc",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yoadaa": {
+    "filler": "(last + last)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yozcaa": {
+    "level": "L0"
+   },
+   "ypadaa": {
+    "level": "L0"
+   },
+   "ypzcaa": {
+    "filler": "(v + acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M3"
+   },
+   "yqadaa": {
+    "level": "L0"
+   },
+   "yqzcaa": {
+    "filler": "math.gcd(abs(first), abs(v))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C1"
+   },
+   "yradaa": {
+    "filler": "math.gcd(abs(first), abs(v))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yrzcaa": {
+    "filler": "(acc * acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "ysadaa": {
+    "filler": "(v - last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yszcaa": {
+    "level": "L0"
+   },
+   "ytadaa": {
+    "filler": "(last - acc)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M5"
+   },
+   "ytzcaa": {
+    "filler": "math.gcd(abs(acc), abs(last))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M2"
+   },
+   "yuzcaa": {
+    "level": "L0"
+   },
+   "yvzcaa": {
+    "level": "L0"
+   },
+   "ywzcaa": {
+    "level": "L0"
+   },
+   "yxzcaa": {
+    "filler": "math.gcd(abs(acc), abs(v))",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M4"
+   },
+   "yyycaa": {
+    "filler": "(last * v)",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C2"
+   },
+   "yyzcaa": {
+    "filler": "math.gcd(abs(last), abs(acc))",
+    "in_W5": false,
+    "level": "L2",
+    "src": "C0"
+   },
+   "yzycaa": {
+    "filler": "(0 + first)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M0"
+   },
+   "yzzcaa": {
+    "filler": "(acc - last)",
+    "in_W5": true,
+    "level": "L1",
+    "src": "M1"
+   }
+  },
+  "mechanisms": [
+   {
+    "id": "M0",
+    "ops": [
+     "add",
+     "add"
+    ],
+    "schema": "((acc + {H}) + v)",
+    "screen": {
+     "acc_share": 0.915,
+     "distinct_vecs": 100,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "ADD",
+    "stratum": "ADD"
+   },
+   {
+    "id": "M1",
+    "ops": [
+     "mul"
+    ],
+    "schema": "({H} * v)",
+    "screen": {
+     "acc_share": 0.256,
+     "distinct_vecs": 46,
+     "feasible_of_24": 3,
+     "identity_share": 0.221,
+     "w5_inst": 161
+    },
+    "shape": "W1",
+    "slot": "MUL",
+    "stratum": "MUL"
+   },
+   {
+    "id": "M2",
+    "ops": [
+     "add",
+     "fdiv"
+    ],
+    "schema": "((acc // {H}) + v)",
+    "screen": {
+     "acc_share": 0.748,
+     "distinct_vecs": 99,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "DIV",
+    "stratum": "DIV"
+   },
+   {
+    "id": "M3",
+    "ops": [
+     "gcd",
+     "sub"
+    ],
+    "schema": "math.gcd(abs((1 - {H})), abs(v))",
+    "screen": {
+     "acc_share": 0.248,
+     "distinct_vecs": 39,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "GCD",
+    "stratum": "GCD"
+   },
+   {
+    "id": "M4",
+    "ops": [
+     "mod",
+     "gcd"
+    ],
+    "schema": "(last % math.gcd(abs({H}), abs(v)))",
+    "screen": {
+     "acc_share": 0.248,
+     "distinct_vecs": 31,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "MIX",
+    "stratum": "MIX"
+   },
+   {
+    "id": "M5",
+    "ops": [
+     "mod",
+     "gcd"
+    ],
+    "schema": "(v % math.gcd(abs(last), abs({H})))",
+    "screen": {
+     "acc_share": 0.24,
+     "distinct_vecs": 25,
+     "feasible_of_24": 3,
+     "identity_share": 0.047,
+     "w5_inst": 161
+    },
+    "shape": "W2",
+    "slot": "ANY",
+    "stratum": "MIX"
+   }
+  ]
+ }
+}

@@ -1,24 +1,29 @@
 # Themis status
 
-Currency: 2026-10-06T10:30Z (UTC).
+Currency: 2026-10-10T18:42Z (UTC).
 
-seat state: ACTIVE. Charter: Project Moonshot, prong 3 (adopted 2026-10-05). Design of record v0.3 + the
-  OP-LC1 amendment (roles/Themis/prompts/2026-10-06_op_lc1/).
-what it asserts: PRESENT (comms Themis[m2-0e9b1ed2] on the M1 store), ACTIVE, PRODUCTIVE on Lane C
-  (C-008: T001, T002, T005 CLOSED on main with receipts), VALID not applicable (infrastructure; no science run).
-host: SPECTREX5 (M2); worktrees themis-lanec-m4 (branch themis/lanec-m4-2026-10-06, base 3bc5e74fe) and
-  themis-ops (state commits, detached at origin/main).
-scope: prong 3 only. Lane C = TH-MOON-M4 / campaign C-008 (synthetic epochs; no organisms or science).
-  Lanes A (claim map, with Palamedes) and B (wforge F09 regression -> Daedalus) are separate.
+seat state: ACTIVE. Charter: Project Moonshot, prong 3 (adopted 2026-10-05). Design of record v0.3 + OP-LC1
+  (2026-10-06, Lane C on git CAS: C-008, closed/superseded) + OP-NF2 (2026-10-10, the native execution fabric on
+  PostgreSQL: C-012; roles/Themis/prompts/2026-10-10_op_nf2/).
+what it asserts: PRESENT (comms Themis[m2-0e9b1ed2]), ACTIVE, PRODUCTIVE on C-012 (T002-T007 CLOSED; T001 open
+  on Odysseus's review), VALID not applicable (infrastructure; no science run).
+host: SPECTREX5 (M2); worktree D:\Prometheus-worktrees\themis-nf2 (branch themis/nf2-2026-10-10).
+scope: prong 3 only. C-012 = TH-MOON-M4 on PostgreSQL. Lanes A (claim map, with Palamedes) and B (wforge F09 ->
+  Daedalus) separate.
 monitors owned or fed: none.
-done: moonshot/epoch (R-EP contract v1.1; D1 epoch unit with SHA-256 semantic identity independent of git;
-  D2 CAS publication PUBLISHED / DUPLICATE / DISAGREEMENT-QUARANTINE / AMBIGUOUS / STALE, validation as a
-  separate state, fail-closed contest/taint with replay resolution); D3 matrix 148 tests green on Windows
-  and Linux, mutation table 15/16 killed + 1 equivalent; every write path resolves a lost acknowledgement
-  (field-found, 8a34b60b8); D5 node auto-join (clean approved checkout, WORKER role only) with a real ubu002
-  join validated by full replay on M2; D4 preregistration frozen (8e69de91e) before any data; D4 instrument
-  built and known-answer tested. Windows hosts must reach a LAN git remote by ssh:// (git:// push hangs).
-blockers: T003 (D4 LAN baseline) -- M2 is saturated by Aether's AIM02 production and the frozen rig puts 6
-  workers on M2; unblocks when M2 is free or M2 can reach ubu003-006 over ssh. T004 (GitHub arm) -- the
-  operator must create the dedicated repository and add the deploy key (or log in gh on M2).
-next executable action: the C-008 review packet; T003/T004 wait on their dependencies.
+done (C-012): moonshot/nf -- a versioned schema (content-addressed objects; publication guarded by parent,
+  generation and input checkpoint; append-only evidence; contests and validations fail closed; role
+  separation), 41 PG tests, mutation 29/29; executor + coordinator over Fabric v0.2, mutation 15/16 + 1
+  equivalent; two-node demonstration Q20261010A (every OP-NF2 outcome on the real path); lake materializer into
+  Pan's Iceberg, mutation 14/14; preregistered benchmark R1 (operating point ADEQUATE, T* = 3 s; P6/P7 lost;
+  T1 failed; Arm S not run); native runtime moonshot.native.wforge v1, mutation 10/10, run N20261010A (12/12
+  published and validated, = reference); review packet moonshot/pivot/C012_NF2_REVIEW_2026-10-10.md.
+residual risks: every program login is the postgres superuser, Fabric node workers included (roles and
+  triggers are bug containment, not a boundary); the executor is not sandboxed (promexec unused); Fabric v0.2
+  workers cannot demand a capability; database growth ~42 KB per epoch with no retention rule.
+blockers: none hard. Waiting: the operator's decision (packet s7); Palamedes after C-013 (Lane A, ends
+  2026-10-12T06:45Z). STALLED, not waiting -- the owners are not running (comms who, 18:42:23Z): Odysseus (T001
+  contract review; last seen 2026-10-03), Daedalus and Hestia (Lane B, F09; 09-18 and 10-08), Mnemosyne (#2002;
+  09-18). These move only if the operator wakes the seat or reassigns the item.
+next executable action: none owed in C-012 until the operator decides (contract v0.3 written); Lane A/B follow-ups as answers
+  arrive. No fabric engineering beyond that until the operator decides (lean A: adopt and park).

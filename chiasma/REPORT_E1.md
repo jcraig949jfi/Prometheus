@@ -132,3 +132,24 @@ next steps, each its own preregistration on fresh seeds:
 - STARTED_UTC.txt, FINISHED_UTC.txt and sweep_stdout.txt.
 - Freeze: chiasma/FREEZE_E1.json. Prereg: chiasma/PREREG_E1.md. Design:
   chiasma/DESIGN_E1.md. WT-0: chiasma/runs/wt0/.
+
+## Addendum 2026-10-10 (Hades[m1-ca525615]; after the report, before any outside challenge)
+
+The verdict above stands as measured. Its narrative needs one correction, found while
+sizing E1b (chiasma/e1b/DEV_NOTES.md s3):
+
+- Consolidation, the operator this report and DESIGN_E1 call compression, makes the
+  positive geometry LARGER. In this report's own evaluation rows (cap 3000), O0 (no
+  consolidation) has a smaller P than O3 in 30/30 (ratio, seed) pairs and smaller than
+  O4L in 30/30. Medians at the end of E in R11: O0 304 bytes / 44 cells, O3 391 / 56,
+  O4L 379 / 55. O0's 44 cells equal the number of true terms in the world in 30/30.
+- Reading: a consolidated cell can no longer be welded, so it freezes before reaching
+  its true term, and later positives open new cells. It is premature commitment, not
+  compression.
+- So s2's "O4L is the only gain that looks like a mechanism" is weaker than written.
+  O4L repairs damage done by consolidation itself, and the no-compression
+  counter-organism avoids that damage at fewer bytes. s6 item 1 (E1b on O4L) is
+  withdrawn before freezing; the revised plan is in DEV_NOTES s4.
+- WT-0 had no check that a compression operator reduces bytes at equal knowledge. Every
+  E1 statement about "compression" is therefore a statement about consolidation as
+  implemented, not about compression.

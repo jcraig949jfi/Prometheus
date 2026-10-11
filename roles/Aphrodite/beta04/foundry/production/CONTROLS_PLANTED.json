@@ -1,0 +1,575 @@
+[
+ {
+  "expect": "lookup solves (test inputs == dev inputs; not contract-conformant)",
+  "family_id": "PLANTED-LOOKUP",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.025,
+    "best_test_model": "const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "history2:table+const",
+    "hindsight_model": "history2:table+const",
+    "hindsight_solved": true,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": true,
+    "solved": true
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "lookup",
+    "hindsight_model": "lookup",
+    "hindsight_solved": true,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": true,
+    "solved": true
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 0,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 0.0,
+   "classes": {
+    "E": null,
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": null
+   },
+   "solved": false,
+   "solved_by": null,
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "lookup",
+   "history2"
+  ]
+ },
+ {
+  "expect": "nothing solves",
+  "family_id": "PLANTED-RANDOM",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 0,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 0.0,
+   "classes": {
+    "E": null,
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": null
+   },
+   "solved": false,
+   "solved_by": null,
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": []
+ },
+ {
+  "expect": "reactive (elementwise table) solves",
+  "family_id": "PLANTED-REACTIVE",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:elem_table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 1.0,
+    "best_test_acc": 1.0,
+    "best_test_model": "reactive:elem_table+const",
+    "hindsight_model": "reactive:elem_table+const",
+    "hindsight_solved": true,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "reactive:elem_table+const",
+    "selected_solved": true,
+    "solved": true
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 0.0,
+   "classes": {
+    "E": null,
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": null
+   },
+   "solved": false,
+   "solved_by": null,
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 7,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 8,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "reactive"
+  ]
+ },
+ {
+  "expect": "regression (W) solves",
+  "family_id": "PLANTED-REGRESSION-W",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.05,
+    "best_test_model": "lib:last_minus_head",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "reactive_max:table+const",
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 1.0,
+   "classes": {
+    "E": null,
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": {
+     "model": "W c=-1 key=none feats=['(mul x x)']",
+     "params": 4,
+     "test_acc": 1.0
+    }
+   },
+   "solved": true,
+   "solved_by": "W",
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "regression"
+  ]
+ },
+ {
+  "expect": "regression (E) solves",
+  "family_id": "PLANTED-REGRESSION-E",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:elem_table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.075,
+    "best_test_model": "lib:map_sq",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.6,
+    "best_test_acc": 0.6,
+    "best_test_model": "reactive:elem_table+const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "reactive:elem_table+const",
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 1.0,
+   "classes": {
+    "E": {
+     "model": "E key=bool:(lt x 0)",
+     "params": 4,
+     "test_acc": 1.0
+    },
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": null
+   },
+   "solved": true,
+   "solved_by": "E",
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 7,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 8,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": [
+   "regression"
+  ]
+ },
+ {
+  "expect": "regression does NOT solve (multiplicative accumulator)",
+  "family_id": "PLANTED-NONLINEAR-FOLD",
+  "nulls": {
+   "constant": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.025,
+    "best_test_model": "const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 1,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "history2": {
+    "best_consistent_test_acc": 0.025,
+    "best_test_acc": 0.025,
+    "best_test_model": "history2:table+const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "history2:table+const",
+    "selected_solved": false,
+    "solved": false
+   },
+   "library": {
+    "best_consistent_test_acc": 0.0,
+    "best_test_acc": 0.0,
+    "best_test_model": null,
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 0,
+    "n_models": 54,
+    "selected_model": null,
+    "selected_solved": false,
+    "solved": false
+   },
+   "lookup": {
+    "best_consistent_test_acc": 0.025,
+    "best_test_acc": 0.025,
+    "best_test_model": "lookup",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 2,
+    "n_models": 2,
+    "selected_model": "lookup",
+    "selected_solved": false,
+    "solved": false
+   },
+   "reactive": {
+    "best_consistent_test_acc": 0.025,
+    "best_test_acc": 0.025,
+    "best_test_model": "reactive_sum:table+const",
+    "hindsight_model": null,
+    "hindsight_solved": false,
+    "n_dev_consistent": 1,
+    "n_models": 1,
+    "selected_model": "reactive_sum:table+const",
+    "selected_solved": false,
+    "solved": false
+   }
+  },
+  "regression": {
+   "best_selected_test_acc": 0.0,
+   "classes": {
+    "E": null,
+    "F": null,
+    "P": null,
+    "S": null,
+    "W": null
+   },
+   "solved": false,
+   "solved_by": null,
+   "version": "b04-regress-v2.0"
+  },
+  "small": {
+   "budget": 100000,
+   "charge": 100000,
+   "complete_size": 6,
+   "found": null,
+   "mode": "hindsight",
+   "n_dev_consistent": 0,
+   "selected_solved": false,
+   "size_reached": 7,
+   "solved": false,
+   "test_acc": 0.0,
+   "walk_charge": 100000
+  },
+  "solved_by": []
+ }
+]

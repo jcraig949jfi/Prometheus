@@ -182,3 +182,233 @@ ERRATUM (2026-10-08T05:58Z): s5's header says "frozen 2026-10-08T06:30Z"; the fr
 
 ERRATUM (2026-10-08T06:02Z): the W4 freeze commit is ebc3daaae (ebc3daaaea3b2770bf9fa9ffbbedf698877cced6); the previous
 erratum and the ledger row wrote "ebc3daaaa" by typing error. The queued script uses the correct pin directory.
+
+## 6. WINDOW 3 -- replication reachability (W3a frozen 2026-10-08T08:15Z, before any W3 run)
+
+Seen before this freeze: the W2 frozen analysis (BEL_48H_CORRECTED results to come; ~/bel48h_runs/analysis/w2.json),
+incl. that 24/27 H1 first-FUNC tapes arose IN_PLACE (lazy detection), and the reach summaries (origin-event counts,
+LDIR critical 27/27, portability, ramp flags). W3a therefore re-measures the SAME 27 origins with an eager instrument;
+its rules below are partly informed by W2 and are labelled DISCOVERY. Confirmation on fresh, unseen origins is W6.
+
+W3a plan: tools/plan_w3.py -> 27 replays of the W2 H1 runs with a first FUNC tape, sha256
+e52ba28da5c0ec69007286bd186cba389dc712b964224c83be8879ecf91b8444, instrument tools/origin.py (eager change tags m/s/u/v/i;
+first-FUNC event dissection; per-byte reversion; carrier history). Each replay must reproduce its W2 end-state hash.
+
+Frozen classification of each origin event (unit = run = independent origin):
+  CAUSE      origin_event.kind: MUTATION | SELF_CONSTRUCT | UPTAKE | SELF_MOVE | BORN_<class>
+  STEPS      number of changed critical bytes whose individual reversion kills FUNC (necessary_changed)
+  PRECURSOR  old_copy_extent (own-position bytes the tape laid down just before the event): 0 = none; 1..57 = partial
+             copier; >= 58 = near-copier that failed the 0.9 L bar for another reason
+  ASSISTED   the carrier was born by another organism's writes (carrier_mech != init) AND >= half of its critical bytes
+             were acquired by inheritance at birth (critical_via 'i')
+  PATHWAY    ATOMIC if PRECURSOR == 0 and STEPS >= 2; SINGLE_STEP_FROM_NOTHING if PRECURSOR == 0 and STEPS == 1;
+             INCREMENTAL if PRECURSOR > 0; ASSEMBLY if CAUSE in (UPTAKE, BORN_ASSEMBLY, BORN_CONSTRUCT)
+Discovery predictions (from the grounding round's G6 reading "short ramp ending in a small step"):
+- W3-P1: STEPS == 1 in >= 60% of origins.
+- W3-P2: PRECURSOR > 0 (INCREMENTAL) in >= 40% of origins.
+- W3-P3: replay identity 27/27 (a failure is INSTRUMENT_FAILURE and voids W3a).
+- W3-P4: LDIR is among the critical bytes in 27/27 (dependence on LDIR); NOP-slide dependence (FUNC lost when zero
+  bytes become HALT) in >= 50%.
+
+ERRATUM (2026-10-08T08:03:47Z): s6 says "W3a frozen 2026-10-08T08:15Z"; the freeze is commit 4995e8b45, W3a launched 2026-10-08T08:03:32Z.
+Timestamps in this file are from now on taken from the shell clock, never written by hand.
+
+### AMENDMENT 2 (2026-10-08T08:44:22Z) -- independence: seeds are shared across cells within a lane
+
+Found while reading W3a (four 'independent' origins carried the same founder machine): every plan in this campaign
+seeds a run as SEED_BASE + lane * 1e9 + k, so run k of EVERY cell in a lane starts from the SAME initial population and
+world-RNG stream (H1: 550 runs / 150 distinct seeds; W1 v2 B lanes: 2,300 runs / 400 seeds; W4: arms of a lane share k
+by design). The pattern is inherited from the grounding plan (G1: 7 cells x 400 runs on 400 seeds). Within a cell runs
+are independent; ACROSS cells they are not.
+Rules from now on (W1 v2 results not yet read; W2/W3a already reported are corrected in their reports):
+  (1) the independent unit for any claim pooled across cells is the DISTINCT SEED (initial population); pooled counts
+      are reported per run AND per distinct seed (a seed counts once, positive if positive in any of its cells), and
+      'independent origins' = distinct seeds;
+  (2) per-cell results are primary; the frozen pooled tests (W1-P4..P7) are still computed and reported, flagged
+      CLUSTER_DEPENDENT, with the per-seed version beside them;
+  (3) W4 arms that share a seed are PAIRED by construction: the frozen Fisher tests stay primary (conservative under
+      positive pairing) and an exact McNemar on seed-pairs is reported beside each;
+  (4) every NEW plan uses a distinct seed per (lane, cell, k) unless pairing is the stated design.
+
+## 7. WINDOW 5 block 1 -- complementation repair and its ablation (frozen 2026-10-08T08:47:44Z, before any W5 run)
+
+Motivation (seen before this freeze, all W2/W3a): causal assemblies continue after the fragment founders die (A: 223 of
+407 by later-born non-FUNC writers); function persists while first-assembly lineages die (W2 s2.D); W3a origins are
+completed by single changes in copy-born carriers. Hypothesis COMPLEMENTATION REPAIR: under ENDOGENOUS_PARTIAL the
+target's surviving bytes complete the defects of degraded copiers, so functional machinery is re-made continually.
+Intervention: the kernel's target_fill = "zero" (unwritten child bytes are fresh zeros, not the target's): births still
+happen, target material does not survive. Plan tools/plan_w5.py: 240 runs, sha256
+a35cc27ba461bec4c9b454e15e0444518546a8d12cbbca693ee42fe7ebe9457e; arms paired by seed; distinct seeds per block/level.
+Endpoints (unit = seed-pair): FUNC_END = func_alive > 0 at the last tick; REPAIR_BIRTHS = FUNC-child births whose writer
+pre-tape is NOT FUNC (heredity classes ASSEMBLY + CAPTURE + CONSTRUCT) per run.
+- W5-P1: E5a HIGH, FUNC_END preserve > zero: exact McNemar on discordant pairs, two-sided p < 0.05 with preserve-only >
+  zero-only. (MED reported; prediction only for HIGH, where repair should matter most.)
+- W5-P2: E5a, REPAIR_BIRTHS higher under preserve in each mutation level: sign test over pairs (ties dropped),
+  one-sided p < 0.05 per level.
+- W5-P3: E5b, causal assembly in >= 90% of preserve runs and <= 5% of zero runs.
+Exploratory block: findings are PROVISIONAL until confirmed on fresh seeds in W6.
+
+## 8. WINDOW 5 block 2 -- reachability consequence of target material (frozen 2026-10-08T12:09:20Z, before any run)
+
+Plan tools/plan_w5b2.py: 400 runs (200 seed-pairs, arms paired by seed = same initial population), sha256
+84c0ceda246e08474e64f8560265aa8707450d68bcb242bc531891ffa873f5a8; RANDOM init, ENDOGENOUS_PARTIAL, WELL_MIXED, 500 ticks;
+target_fill preserve vs zero; OriginWorld. Analysis tools/analyze_w5b2.py (committed with this section).
+- W5-P4: a first FUNC event occurs more often under preserve than zero: exact McNemar on seed-pairs, p < 0.05 with
+  preserve-only > zero-only. (Reasoning: chimeric births complete cryptic precursors; uptake is unaffected by
+  target_fill because the partner is in the window either way.) Causes and pathways per arm are descriptive.
+
+## 9. WINDOW 6 block 1 -- confirmation on unseen independent populations (frozen 2026-10-08T12:09:20Z, before any run)
+
+Plan tools/plan_w6.py: 1,300 runs, one DISTINCT seed per run, sha256
+c1c9c39550f4091f344b36f9e668c20ad5b3aa453bad5360466d1cfadfc5e7fa. Analysis tools/analyze_w6.py (committed with this
+section; classification = analyze_w3.classify, unchanged). Unit = run = independent population.
+C1 (origin pathway, from W3a discovery; 400 runs each PARTIAL / PAIR / COPY, WELL_MIXED):
+- C1-P1: completing event is a MUTATION in >= 50% of origins.
+- C1-P2: among in-place origins, exactly one necessary changed byte in >= 50%.
+- C1-P3: the pre-event tape copies 0 own bytes (cryptic precursor) in >= 60% of origins.
+- C1-P4: >= 1 UPTAKE origin whose taken-up bytes are individually necessary (steps >= 1).
+- C1-P5: ASSISTED (copy-born carrier, >= half its critical bytes inherited at birth) in >= 50%.
+- C1-P6: LDIR critical in >= 95%.
+C2 (distributed persistence, W2 s2.D post-hoc there; 100 fresh A-fragment worlds):
+- C2-P1: FUNC alive at the end in >= 95% of runs AND the first assembly event's TRB lineage alive at the end in < 50%
+  of runs with an event AND function alive with NO assembly event's TRB lineage alive in >= 20% of runs.
+
+## 10. WINDOW 5 block 3 -- entangled vs separated architecture (frozen 2026-10-08T15:31:32Z, before any run)
+
+Motivation: W4 found 16/20 evolved ECHO machines ENTANGLED (competence- and copy-critical bytes shared; answer produced
+through the child copy) and one SEPARATED form. Question: does selection favour entanglement, and does it depend on
+payment for the computation? Plan tools/plan_w5b3.py: 192 runs, sha256
+94e7bbd0de22185ea3113de6ddb01a35ed70a52ae731a66cbe56082e0571b7c4; E = w4_00735, S = w4_00963 (both FUNC and competent,
+verified); physics v3 ECHO K40, PAIRED init, 300 ticks; coupling ON/OFF x mutation MED/HIGH x slot order ES/SE; 24
+seeds per level shared by the four arms. Census (comp.founder_census): every living FUNC organism is attributed to E or
+S by the founder mechanisms of its FUNC-critical bytes (mixed / neither excluded). E_share per seed = mean over the two
+slot orders of E/(E+S). Analysis tools/analyze_w5b3.py (committed with this section; smoke-tested).
+- W5-P6: under ON + HIGH, E_share > 0.5 in more seeds than < 0.5: one-sided sign test p < 0.05 (entanglement favoured
+  where mutation threatens the separated computation and the computation is paid).
+- W5-P7: pooled over both levels, E_share(ON) > E_share(OFF) within seed in more seeds than the reverse: one-sided sign
+  test p < 0.05 (the advantage depends on payment).
+Exploratory; specimens are single representatives of each architecture (generality limit).
+
+## 11. WINDOW 6 block 2 -- generality of two-fragment complementation (frozen 2026-10-08T18:16:03Z, before any run)
+
+Plan tools/plan_w6b2.py: 720 runs, sha256 d093d10956b27bbfd2515075bb171c75ace7cbd305af1e2e4258d2b0810a02c1. Three
+confound-free variants from evolved machine shapes, asserted at build time (A, B non-FUNC; composite FUNC; 0 single-
+substitution FUNC mutants of A and B in both physics; A holds NO LDIR and writes its 2 bytes by CONSTRUCTED writes):
+V0 = LD T,0x40 @13 + LDIR @34; V1 = LD T,0xA0 @4 + LDIR @10; V2 = LD T,0x40 @30 + LDIR @45. Arms per variant (40 paired
+seeds): PARTIAL {AB, A, B, none}, PARTIAL target_fill zero AB, ENDOGENOUS_COPY AB. Endpoint FUNC_ANY = a first FUNC tape
+occurs. Analysis tools/analyze_w6b2.py (committed with this section; smoke-tested on 18 short runs; before freezing,
+the smoke run showed A-only reaching FUNC, as W2 had, so the draft rule 'A <= 10%' was removed: A is reported only).
+Each prediction must hold in EVERY variant:
+- G-P1: FUNC_ANY in AB >= 80% of seeds; in B and in none <= 10%.
+- G-P2: AB > AB_zero (target material ablated): McNemar on seed-pairs p < 0.05, AB-only > zero-only.
+- G-P3: AB > AB_copy (complete-overwrite physics): McNemar p < 0.05, AB-only > copy-only.
+- G-P4: in AB runs, the first assembly/construct event is two-source in >= 80%: the child is FUNC, the child with its
+  target bytes zeroed is not, and the pre-birth target tape is not.
+
+## 12. WINDOW 6 block 3 -- fresh-seed confirmation of W4's provisional mechanisms (frozen 2026-10-08T18:26:36Z, before any run)
+
+Plan tools/plan_w6b3.py: 600 runs, sha256 56c76cfb766f947a034b50060207b6d5096eaeb17335160493a91db6e9286b9e; K1 ECHO K40 ON,
+300 fresh distinct seeds; K2 REP+BAD INC K16 ON, 300 fresh distinct seeds. Analysis tools/analyze_w6b3.py (committed with
+this section). Before freezing, the draft E-P2 ('OUT executed from the child copy') was tested on the 20 W4 machines and
+found false in 0/20 (see the W4 CORRECTION); it is replaced by the budget-coupling test.
+- E-P1: competent dominant machines with >= 1 shared competence/copy-critical byte >= 50%.
+- E-P2: BUDGET_COUPLED (a shared byte whose knockout kills competence at budget 256 but not at 512) >= 35% of competent
+  dominant machines (W4 post-hoc: 10/20).
+- E-P3: repaired machines (K2): modal class SINGLE_LINEAGE_BAD.
+
+## 13. WINDOW 6 block 4 -- uptake necessity, replay receipts, independent architecture pair (frozen 2026-10-08T21:49:07Z, before any run)
+
+Plans tools/plan_w6b4.py: U 1,600 runs sha256 9ee2bd822f5de3ae462893bb06019c484a6d659e1486d1132948ee9ad1266117; R 202
+replays sha256 e9e4df127d932d316c2f30780db2ca67211fc518c23fc0449c8855f9351df4ae; X 192 runs sha256
+00152553d16726677b5c7a3924f5b93e5ef2abd857464d6ee5243e28e8d25a34 (E = w6b3_00001 BUDGET_COUPLED, S = w6b3_00020 SEPARATED,
+first of each class by run id). New ablation tools/uptake_block.py (tested: partner bytes imported into the own tape are
+reverted and counted). Analysis tools/analyze_w6b4.py (committed with this section; smoke-tested on all three lanes).
+- U-P1 (instrument check): 0 UPTAKE origins in blocked worlds; >= 5 in normal worlds.
+- U-P2 (route substitutability): pooled origin count blocked >= 0.7 x normal (falsified if blocking uptake removes more
+  than 30% of origins). McNemar on seed-pairs and per-cell counts reported.
+- U-P3 (descriptive): MUTATION share of origins per arm.
+- R-P1: every replayed run reproduces its recorded end-state hash with the current code (0 voids).
+- X-P6: under ON + HIGH, E share > 0.5 in more seeds than < 0.5 (sign test p < 0.05) -- W5-P6 on an independent pair.
+- X-P7: at MED, E share ON < OFF in more seeds than ON > OFF (sign test p < 0.05) -- W5 block 3's post-hoc MED reversal
+  turned into a confirmatory prediction on an independent pair.
+
+## 14. N1 -- operator-matched completion, predictive test of CL-17 (frozen 2026-10-08T21:54:16Z, before any run)
+
+CL-17 was found POST-HOC (precursor neighbourhoods vs completing cause). This turns it into a prediction on the SAME 55
+specimens re-placed in new worlds (not new origins: it tests the mechanism's operator dependence, not its prevalence).
+Plan tools/plan_n1.py: 440 runs, sha256 7486853d6b9ec202a4c007c56464bcf02b3e9a201219da1744fe2a71ded6b975; 39 NEEDLE
+precursors (completed by mutation, 0 move routes), 16 MOVE_RICH (completed by uptake/self-move, >= 100 move routes);
+each transplanted into its origin physics, WELL_MIXED, PAIRED init, 100 ticks, mutation VLOW vs HIGH, 4 paired seeds.
+Endpoint: a first FUNC event within 100 ticks. Analysis tools/analyze_n1.py (committed with this section).
+- N-P1: NEEDLE precursors complete more under HIGH: mean per-precursor rate difference HIGH - VLOW >= 0.20.
+- N-P2: the mutation sensitivity is larger for NEEDLE than MOVE_RICH: bootstrap (over precursors) 95% CI of
+  [NEEDLE diff - MOVE_RICH diff] lies above 0.
+- N-P3: at VLOW, MOVE_RICH completions are mostly non-mutational (UPTAKE + SELF_MOVE + BORN_ASSEMBLY > MUTATION).
+
+DISCLOSURE (2026-10-08T21:54:31Z): the N1 analysis smoke run (8 runs, pilot seeds 77,995,000+, 20 ticks, 2 precursors per class,
+excluded) printed per-class rates before the real runs: NEEDLE VLOW 0.0 / HIGH 0.5, MOVE_RICH 1.0 / 1.0 -- the predicted
+direction, at n far too small to inform the frozen thresholds above, which were written before the smoke run.
+
+## 15. B1 -- budget coupling versus the execution budget (frozen 2026-10-09T01:51:36Z, before any run)
+
+Plan tools/plan_b1.py: 600 runs, sha256 bafb99833cf4facc90ab0ea9ee1722000184fe50a860a06c2a2eacdb7724a945; W4 M2 setting
+(seeded copiers, v3, ECHO, K40, ON) at budget 192 / 256 / 384, 200 seeds each (seed k shared across budgets).
+Classifier tools/analyze_b1.budget_class_b: BUDGET_COUPLED at the run's budget b = a shared byte whose knockout kills
+competence at b but not at 2b. Noted before freezing: on w4_00735 the unbounded copy (C = 0) is budget-rescued at 256 but
+not at 384 (at 384 it is classified OTHER_SHARED): the 256-byte copy also wraps over the organism's own code and the
+inputs, so 'coupling' has a COST component (budget) and a DAMAGE component (wrap-around). B1 does not separate them.
+- B-P1: the BUDGET_COUPLED share of competent dominant machines is larger at budget 192 than at 384 (Fisher one-sided
+  p < 0.05).
+- B-P2 (descriptive): shares at 192 / 256 / 384 monotone non-increasing.
+
+## 16. U2 -- fresh-seed replication of 'blocking uptake raises origination' (frozen 2026-10-09T02:47:36Z, before any run)
+
+Plan tools/plan_u2.py: the W6 block 4 U design with new seeds (57e12 +), 1,600 runs; sha256 printed at freeze in the
+execution ledger. Analysis tools/analyze_u2.py (committed with this section; same origin endpoint as U).
+- U2-P1: blocked-only discordant seed-pairs exceed normal-only, exact one-sided sign (McNemar) test p < 0.05.
+
+## 17. UF -- mechanism of uptake's net suppression (frozen 2026-10-09T05:01:42Z, before any run)
+
+Hypothesis (from W6 block 4 U): imports mostly destroy the importer's raw copy parts. Plan tools/plan_uf.py: 300 c2fa6a5cef8b4c55f4d7f19e7872a8bf4cac3c8470458cb9e59d9731b4201d00;
+instrument tools/uptake_fate.py (invariance-tested); analysis tools/analyze_uf.py (committed with this section). Unit =
+run (distinct seeds).
+- UF-P1: pooled BREAK > MAKE events (precursor proxy: LDIR AND LD T present), and runs with BREAK > MAKE outnumber the
+  reverse (one-sided sign test p < 0.05).
+- UF-P2: pooled FUNC_LOSS > FUNC_GAIN on uptake events, and runs with more losses outnumber the reverse (p < 0.05).
+
+## 18. P1 -- architecture-payment effect across a specimen panel (frozen 2026-10-09T07:43:31Z, before any run)
+
+CL-16's reproduced part (paying for computation lowers the budget-coupled share at MED) rests on two specimen pairs.
+Plan tools/plan_p1.py: 512 runs, sha256 fe53b694843dd3235d80179bca6188591be7fa03550b8bd0e7a688e3e9db2a22; 4 BUDGET_COUPLED x
+4 SEPARATED machines from W6 block 3 K1 (excluding the X pair; first by run id), 16 pairings, MED, ON/OFF x order, 8
+seeds per pairing. Analysis tools/analyze_p1.py (committed with this section). Unit = pairing.
+- P1-P1: across decided pairings, mean E share ON < OFF in more pairings than the reverse (one-sided sign test p < 0.05).
+
+## 19. S1 -- substrate perturbation of the strongest causal findings (frozen 2026-10-09T09:34:21Z, before any run)
+
+Plan tools/plan_s1.py: 1,760 runs, sha256 0471ecae666050ff40bc0bed5d2fb7a2b335d93041f5633fab98a57ee27cab35. Analysis
+tools/analyze_s1.py (committed with this section; smoke-tested 8 runs, 0 voids).
+- S1-P1 (CL-20 under a changed world model and step budget): pooled over SOUP/WELL_MIXED and GRID/WELL_MIXED/budget 384,
+  blocked-only discordant pairs exceed normal-only (one-sided p < 0.05); per-substrate results reported.
+- S1-P2 (CL-04 under changed topology): in BOTH SOUP/WELL_MIXED and GRAPH/LOCAL, AB-only (PARTIAL) exceeds copy-only
+  (COPY) FUNC_ANY discordant pairs, one-sided p < 0.05 each.
+
+## 20. U3 + P2 (frozen 2026-10-09T12:07:12Z, before any run)
+
+Plans tools/plan_u3p2.py: U3 1,800 runs sha256 aa60ffd5f62b88fd35c98a6511ed312a126e79e9bd4e245acec0fee516eb2d8c; P2 512 runs
+sha256 d5cfcdd5840e5e00aa2188d7f264e47a9ee1fd32f4ca272f474451f06d946fba. New ablation SelfCopyUptakeBlockWorld
+(tools/uptake_block.py; tested: an import outside a self-copy is kept). Analysis tools/analyze_u3p2.py (smoke-tested).
+- U3-P1: block_all > normal origins (one-sided sign test on discordant seed-triples' pairs, p < 0.05) -- third test of CL-20.
+- U3-P2: block_selfcopy > normal (p < 0.05): the self-inflicted (staging-copier) import component alone suppresses origination.
+- U3-P3: the LD T,0xA0-shape origin gain under block_selfcopy is >= 50% of the gain under block_all.
+- P2 (descriptive, two-sided): at HIGH mutation the 16 pairings' ON - OFF budget-coupled share; direction and two-sided
+  sign test reported (the two single pairs disagreed at HIGH).
+
+## 21. UF2 -- why CL-20 vanishes in SOUP and at budget 384 (frozen 2026-10-09T23:48:02Z, before any run)
+
+P2 result (s20, descriptive): at HIGH mutation 10 decided pairings, ON < OFF 3, ON > OFF 2, ties 5, two-sided p 1.0 --
+no consistent direction (the MED effect does not extend to HIGH).
+UF2 plan tools/plan_uf2.py: 450 e6d734034864a57108a2ae569b48c3a714f9ed87c6d75944cc00f2c55426db3b; UptakeFateWorld; analysis tools/analyze_uf2.py (committed with this section).
+- UF2-P1: the pooled BREAK/MAKE ratio of uptake events is LOWER in both SOUP and GRID budget 384 than in the GRID budget
+  256 reference cell run in the same block (if imports break precursors less there, the absence of the block effect is
+  explained by the UF mechanism). Per-cell sign tests and FUNC loss/gain reported.

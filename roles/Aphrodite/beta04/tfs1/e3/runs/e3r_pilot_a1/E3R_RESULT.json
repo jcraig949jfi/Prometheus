@@ -1,0 +1,944 @@
+{
+ "PRIMARY_attribution_seed0": {
+  "families": [
+   {
+    "category": "OE-only",
+    "family_id": "W0467897d-F061-R3",
+    "off_frozen_link": "HORIZON_R1",
+    "off_xabs": false,
+    "on_frozen": true,
+    "on_xabs": true,
+    "world": "W0467897d"
+   },
+   {
+    "category": "OE-only",
+    "family_id": "W0467897d-F081-R3",
+    "off_frozen_link": "HORIZON_R1",
+    "off_xabs": false,
+    "on_frozen": true,
+    "on_xabs": true,
+    "world": "W0467897d"
+   },
+   {
+    "category": "OE-only",
+    "family_id": "W0467897d-F085-R3",
+    "off_frozen_link": "HORIZON_R1",
+    "off_xabs": false,
+    "on_frozen": true,
+    "on_xabs": true,
+    "world": "W0467897d"
+   },
+   {
+    "category": "OE-only",
+    "family_id": "W1d5301d0-F077-R4",
+    "off_frozen_link": "COMPOSITION_HORIZON",
+    "off_xabs": false,
+    "on_frozen": true,
+    "on_xabs": true,
+    "world": "W1d5301d0"
+   }
+  ],
+  "tally": {
+   "OE-only": 4,
+   "X-ABS-only": 0,
+   "both-only": 0,
+   "either": 0,
+   "neither": 0
+  }
+ },
+ "REPAIR_CLASS": "BOTH_REQUIRED",
+ "REPAIR_CLASS_unconditional": "BOTH_REQUIRED",
+ "budget": 1000000,
+ "claim_limits": {
+  "may_claim": "On 15 foundry-selected families, with oracle decomposition and certifier-guided R1 acquisition, and with the readout fallback ON, at seed(s) S: pre-registered OE pruning [plus a post-hoc single-motif extraction patch] qualifies the known-positive chain at >= 12/15; the repair class is <label> (<stability>).",
+  "may_not_claim": [
+   "TFS1_INSTRUMENT_QUALIFIED = YES, or any relabel of E3-KP (still NO)",
+   "an open E3 lifetime gate (needs TFS1_INSTRUMENT_QUALIFIED = YES)",
+   "that E3-R is the counterfactual A1-A.5 repair (the trigger did not fire): not 'TFS-1 would have qualified'",
+   "COMPOSITIONAL_DISCOVERY",
+   "generality of X-ABS beyond the hoisted-reducer motif",
+   "'developmental machinery is fine' (under SEARCH with X-ABS firing in the OE cells)",
+   "evidence for CHANGE over MIGRATE"
+  ],
+  "standing_limits": [
+   "oracle decomposition (sealed-indexed R1 tasks)",
+   "certifier-guided R1 retry",
+   "15 foundry-selected families (regression to the mean, F5)",
+   "judged on the same test + tribunal as foundry admission (no fresh tribunal, F11 / M6)",
+   "seeds 1 / 2 re-use the seed-0 scratch (declared deviation)"
+  ]
+ },
+ "compute_ledger": {
+  "oe_scratch": 0.0,
+  "other": 1687.44
+ },
+ "driver": {
+  "deadline": "2026-10-13T09:27:00Z",
+  "debit_core_h": 0.0,
+  "envelope_core_h": 14.0,
+  "invocations": [
+   "2026-10-10T23:24:04Z",
+   "2026-10-10T23:25:05Z",
+   "2026-10-10T23:54:55Z"
+  ],
+  "ledger_s": {
+   "oe_scratch": 0.0,
+   "other": 1687.44
+  },
+  "notes": [
+   "ledger reset to 0 before resume: the first invocation debited the searches imported from the frozen cache (bug, fixed); no new search had run"
+  ],
+  "oe_scratch_envelope_core_h": 16.0,
+  "utc_end": "2026-10-10T23:54:55Z",
+  "utc_start": "2026-10-10T23:24:04Z",
+  "workers": 1
+ },
+ "driver_status": "ANALYSE_ONLY",
+ "fallback_off_on_xabs": {
+  "A1_C": "both rows agree (state both)",
+  "agrees_with_fallback_on": true,
+  "cell": {
+   "COUNTS_CONDITIONAL": false,
+   "certifier_assisted_retries": 1,
+   "chain_ge_80pct": false,
+   "chain_qualified": 3,
+   "complete": true,
+   "counts_HI": false,
+   "counts_LO": false,
+   "first_failing_link_counts": {
+    "R1_ACQUISITION": 4
+   },
+   "n": 7,
+   "n_censored": 0,
+   "n_not_run": 1,
+   "scratch": {
+    "CENSORED": 0,
+    "FAILED": 6,
+    "NOT_RUN": 1,
+    "SOLVED": 0
+   },
+   "scratch_fails_HI": 7,
+   "scratch_fails_LO": 6,
+   "secondary_non_oe_scratch_fails": 7,
+   "stone_agreement_before_after": {},
+   "trivialised_HI": false,
+   "trivialised_LO": false,
+   "ud_sublabels": {
+    "UD-EXTRACT": 0,
+    "UD-OTHER": 0,
+    "UD-R1": 0
+   },
+   "xabs_fired_units": [],
+   "xabs_firings": 0
+  },
+  "label_if_substituted": {
+   "determined": true,
+   "label_HI": "SEARCH",
+   "label_LO": "SEARCH",
+   "reported": "SEARCH",
+   "unconditional": "SEARCH"
+  }
+ },
+ "label": "EXPOSED DEV DATA (pilot)",
+ "per_seed": {
+  "0": {
+   "attribution": {
+    "families": [
+     {
+      "category": "OE-only",
+      "family_id": "W0467897d-F061-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W0467897d-F081-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W0467897d-F085-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W1d5301d0-F077-R4",
+      "off_frozen_link": "COMPOSITION_HORIZON",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W1d5301d0"
+     }
+    ],
+    "tally": {
+     "OE-only": 4,
+     "X-ABS-only": 0,
+     "both-only": 0,
+     "either": 0,
+     "neither": 0
+    }
+   },
+   "cells": {
+    "off_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 3,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_HORIZON": 1,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "off_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 3,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_HORIZON": 1,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 1,
+     "chain_ge_80pct": true,
+     "chain_qualified": 7,
+     "complete": true,
+     "counts_HI": true,
+     "counts_LO": true,
+     "first_failing_link_counts": {},
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 1,
+     "chain_ge_80pct": true,
+     "chain_qualified": 7,
+     "complete": true,
+     "counts_HI": true,
+     "counts_LO": true,
+     "first_failing_link_counts": {},
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    }
+   },
+   "effects": {
+    "OE_main_effect": 4.0,
+    "XABS_main_effect": 0.0,
+    "chain_qualified": {
+     "off_frozen": 3,
+     "off_xabs": 3,
+     "on_frozen": 7,
+     "on_xabs": 7
+    },
+    "interaction": 0
+   },
+   "label": {
+    "determined": true,
+    "label_HI": "SEARCH",
+    "label_LO": "SEARCH",
+    "reported": "SEARCH",
+    "unconditional": "SEARCH"
+   },
+   "masking": {
+    "units_changed": [],
+    "units_xabs_fired": [],
+    "xabs_changed_any_stone_in_OE_cells": false
+   },
+   "reading_cell": "on_xabs",
+   "reading_cell_dominant": {
+    "classes": {
+     "HORIZON": 0,
+     "OTHER": 0,
+     "UD-EXTRACT": 0,
+     "UD-R1": 0
+    },
+    "dominant": null,
+    "n_not_qualified": 0,
+    "residual_links": {}
+   }
+  },
+  "1": {
+   "attribution": {
+    "families": [
+     {
+      "category": "both-only",
+      "family_id": "W0467897d-F061-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "both-only",
+      "family_id": "W0467897d-F081-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "both-only",
+      "family_id": "W0467897d-F085-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "neither",
+      "family_id": "W1d5301d0-F027-R3",
+      "off_frozen_link": "COMPOSITION_UNDERDETERMINED",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": false,
+      "residual_detail": "CHAIN_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "residual_link": "COMPOSITION_UNDERDETERMINED",
+      "residual_ud": null,
+      "world": "W1d5301d0"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W1d5301d0-F035-R3",
+      "off_frozen_link": "COMPOSITION_UNDERDETERMINED",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W1d5301d0"
+     }
+    ],
+    "tally": {
+     "OE-only": 1,
+     "X-ABS-only": 0,
+     "both-only": 3,
+     "either": 0,
+     "neither": 1
+    }
+   },
+   "cells": {
+    "off_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 2,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 2,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "off_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 2,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 2,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 3,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 1,
+      "UNDERDETERMINED_STONE": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 3,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": true,
+     "chain_qualified": 6,
+     "complete": true,
+     "counts_HI": true,
+     "counts_LO": true,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 1
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {
+      "W0467897d/f1": {
+       "after_agreement": 1.0,
+       "after_xabs_stone": "(lam x (pow (gcd 0 x) 3))",
+       "before_agreement": 0.037,
+       "before_frozen_stone": "(lam x (gcd 0 x))"
+      }
+     },
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [
+      "W0467897d/f1"
+     ],
+     "xabs_firings": 1
+    }
+   },
+   "effects": {
+    "OE_main_effect": 2.5,
+    "XABS_main_effect": 1.5,
+    "chain_qualified": {
+     "off_frozen": 2,
+     "off_xabs": 2,
+     "on_frozen": 3,
+     "on_xabs": 6
+    },
+    "interaction": 3
+   },
+   "label": {
+    "determined": true,
+    "label_HI": "BOTH_REQUIRED",
+    "label_LO": "BOTH_REQUIRED",
+    "reported": "BOTH_REQUIRED",
+    "unconditional": "BOTH_REQUIRED"
+   },
+   "masking": {
+    "units_changed": [
+     "W0467897d/f1"
+    ],
+    "units_xabs_fired": [
+     "W0467897d/f1"
+    ],
+    "xabs_changed_any_stone_in_OE_cells": true
+   },
+   "reading_cell": "on_xabs",
+   "reading_cell_dominant": {
+    "classes": {
+     "HORIZON": 0,
+     "OTHER": 1,
+     "UD-EXTRACT": 0,
+     "UD-R1": 0
+    },
+    "dominant": "MIXED",
+    "n_not_qualified": 1,
+    "residual_links": {
+     "COMPOSITION_UNDERDETERMINED": 1
+    }
+   }
+  },
+  "2": {
+   "attribution": {
+    "families": [
+     {
+      "category": "both-only",
+      "family_id": "W0467897d-F061-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "both-only",
+      "family_id": "W0467897d-F081-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W0467897d-F085-R3",
+      "off_frozen_link": "HORIZON_R1",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W0467897d"
+     },
+     {
+      "category": "neither",
+      "family_id": "W1d5301d0-F035-R3",
+      "off_frozen_link": "COMPOSITION_UNDERDETERMINED",
+      "off_xabs": false,
+      "on_frozen": false,
+      "on_xabs": false,
+      "residual_detail": "CHAIN_FIRST_DEV_CONSISTENT_FAILS_TEST",
+      "residual_link": "COMPOSITION_UNDERDETERMINED",
+      "residual_ud": null,
+      "world": "W1d5301d0"
+     },
+     {
+      "category": "OE-only",
+      "family_id": "W1d5301d0-F077-R4",
+      "off_frozen_link": "COMPOSITION_HORIZON",
+      "off_xabs": false,
+      "on_frozen": true,
+      "on_xabs": true,
+      "world": "W1d5301d0"
+     }
+    ],
+    "tally": {
+     "OE-only": 2,
+     "X-ABS-only": 0,
+     "both-only": 2,
+     "either": 0,
+     "neither": 1
+    }
+   },
+   "cells": {
+    "off_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 2,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_HORIZON": 1,
+      "COMPOSITION_UNDERDETERMINED": 1,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "off_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 0,
+     "chain_ge_80pct": false,
+     "chain_qualified": 2,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_HORIZON": 1,
+      "COMPOSITION_UNDERDETERMINED": 1,
+      "HORIZON_R1": 3
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 0,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 7,
+      "NOT_RUN": 0,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 7,
+     "secondary_non_oe_scratch_fails": null,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_frozen": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 1,
+     "chain_ge_80pct": false,
+     "chain_qualified": 4,
+     "complete": true,
+     "counts_HI": false,
+     "counts_LO": false,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 1,
+      "UNDERDETERMINED_STONE": 2
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {},
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 2,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [],
+     "xabs_firings": 0
+    },
+    "on_xabs": {
+     "COUNTS_CONDITIONAL": false,
+     "certifier_assisted_retries": 1,
+     "chain_ge_80pct": true,
+     "chain_qualified": 6,
+     "complete": true,
+     "counts_HI": true,
+     "counts_LO": true,
+     "first_failing_link_counts": {
+      "COMPOSITION_UNDERDETERMINED": 1
+     },
+     "n": 7,
+     "n_censored": 0,
+     "n_not_run": 1,
+     "scratch": {
+      "CENSORED": 0,
+      "FAILED": 6,
+      "NOT_RUN": 1,
+      "SOLVED": 0
+     },
+     "scratch_fails_HI": 7,
+     "scratch_fails_LO": 6,
+     "secondary_non_oe_scratch_fails": 7,
+     "stone_agreement_before_after": {
+      "W0467897d/f1": {
+       "after_agreement": 1.0,
+       "after_xabs_stone": "(lam x (pow (gcd 0 x) 3))",
+       "before_agreement": 0.037,
+       "before_frozen_stone": "(lam x (gcd 0 x))"
+      }
+     },
+     "trivialised_HI": false,
+     "trivialised_LO": false,
+     "ud_sublabels": {
+      "UD-EXTRACT": 0,
+      "UD-OTHER": 0,
+      "UD-R1": 0
+     },
+     "xabs_fired_units": [
+      "W0467897d/f1"
+     ],
+     "xabs_firings": 1
+    }
+   },
+   "effects": {
+    "OE_main_effect": 3.0,
+    "XABS_main_effect": 1.0,
+    "chain_qualified": {
+     "off_frozen": 2,
+     "off_xabs": 2,
+     "on_frozen": 4,
+     "on_xabs": 6
+    },
+    "interaction": 2
+   },
+   "label": {
+    "determined": true,
+    "label_HI": "BOTH_REQUIRED",
+    "label_LO": "BOTH_REQUIRED",
+    "reported": "BOTH_REQUIRED",
+    "unconditional": "BOTH_REQUIRED"
+   },
+   "masking": {
+    "units_changed": [
+     "W0467897d/f1"
+    ],
+    "units_xabs_fired": [
+     "W0467897d/f1"
+    ],
+    "xabs_changed_any_stone_in_OE_cells": true
+   },
+   "reading_cell": "on_xabs",
+   "reading_cell_dominant": {
+    "classes": {
+     "HORIZON": 0,
+     "OTHER": 1,
+     "UD-EXTRACT": 0,
+     "UD-R1": 0
+    },
+    "dominant": "MIXED",
+    "n_not_qualified": 1,
+    "residual_links": {
+     "COMPOSITION_UNDERDETERMINED": 1
+    }
+   }
+  }
+ },
+ "per_seed_labels": {
+  "0": {
+   "determined": true,
+   "label_HI": "SEARCH",
+   "label_LO": "SEARCH",
+   "reported": "SEARCH",
+   "unconditional": "SEARCH"
+  },
+  "1": {
+   "determined": true,
+   "label_HI": "BOTH_REQUIRED",
+   "label_LO": "BOTH_REQUIRED",
+   "reported": "BOTH_REQUIRED",
+   "unconditional": "BOTH_REQUIRED"
+  },
+  "2": {
+   "determined": true,
+   "label_HI": "BOTH_REQUIRED",
+   "label_LO": "BOTH_REQUIRED",
+   "reported": "BOTH_REQUIRED",
+   "unconditional": "BOTH_REQUIRED"
+  }
+ },
+ "reading": "repair class BOTH_REQUIRED within TFS-1: OE + post-hoc patch (X-ABS, a post-hoc single-motif extraction patch)",
+ "reproduction_checks": {
+  "frozen_pooled": {
+   "chain_qualified": 3,
+   "links": {
+    "COMPOSITION_HORIZON": 1,
+    "HORIZON_R1": 3
+   },
+   "scratch_fails": 7
+  },
+  "off_frozen_assert": {
+   "expected": 3,
+   "got": 3,
+   "pass": true
+  },
+  "off_frozen_equals_frozen_pooled": true,
+  "off_xabs_expected_pending_reproduction": {
+   "complete": true,
+   "expected": 3,
+   "got": 3,
+   "status": "REPRODUCED"
+  }
+ },
+ "root": "foundry/pilot_v2",
+ "rules": {
+  "cell_counts": "complete AND 5q >= 4n AND 5*scratch_fails >= 4n (LO: CENSORED/NOT_RUN = not failed; HI: = failed)",
+  "extension_s": 14400.0,
+  "labels": "EITHER / SEARCH / DEVELOPMENTAL / BOTH_REQUIRED / NONE (prereg table); INCOMPLETE",
+  "oe_scratch_envelope_s": 57600.0,
+  "reading_cell": "on_xabs",
+  "scratch_cap_s": 3600.0,
+  "stability": "STABLE 3/3, MAJORITY 2/3 (majority label), SEED_UNSTABLE (seed-0 label)"
+ },
+ "scope": "E3-R discriminates repair class WITHIN TFS-1. It does NOT discriminate CHANGE vs MIGRATE; that decision rests on AR-1 and the synthesis. Every label is conditional on the readout fallback (A1-C; see the fallback-off row).",
+ "stability": "MAJORITY",
+ "stability_HI": {
+  "label": "BOTH_REQUIRED",
+  "per_seed": [
+   "SEARCH",
+   "BOTH_REQUIRED",
+   "BOTH_REQUIRED"
+  ],
+  "stability": "MAJORITY"
+ },
+ "utc_end": "2026-10-10T23:54:55Z",
+ "utc_start": "2026-10-10T23:24:04Z",
+ "worlds": [
+  "W0467897d",
+  "W1d5301d0"
+ ]
+}

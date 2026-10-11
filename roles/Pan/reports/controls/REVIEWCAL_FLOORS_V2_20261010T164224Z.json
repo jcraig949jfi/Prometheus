@@ -1,0 +1,159 @@
+{
+ "control": "PAN-37 reviewer chance floors (v2: prereg v2)",
+ "version": 2,
+ "items": "ITEMS_V2_20261010T164207Z.json",
+ "tell_gate": {
+  "G1": {
+   "ok": true,
+   "detail": "0 kept mutants with a v1 tell in the mutated segment"
+  },
+  "G2": {
+   "ok": true,
+   "detail": "surface_tell recall 0.025"
+  },
+  "G3": {
+   "ok": true,
+   "detail": "0 mutants introduce a shape bigram in < 10% of the other clean functions"
+  },
+  "G4": {
+   "ok": true,
+   "detail": "rare_bigram recall 0.1 vs bar 0.800 (reported; v1 showed it cannot see tells)"
+  },
+  "verdict": "USABLE"
+ },
+ "introduced_shapes": {
+  "mutants_with_rare_introduced_shape": 0,
+  "by_operator": {
+   "negate_test": "0/13",
+   "off_by_one": "0/15",
+   "arith_flip": "0/5",
+   "cmp_flip": "0/7"
+  },
+  "threshold": 0.1
+ },
+ "mutants": 40,
+ "clean": 20,
+ "mutant_function_lines": {
+  "min": 5,
+  "median": 17,
+  "max": 83
+ },
+ "share_mutants_window_covers_half_or_more": 0.25,
+ "floors": {
+  "silent": {
+   "recall": 0.0,
+   "false_alarm_rate": 0.0
+  },
+  "random_line": {
+   "expected_recall": 0.361,
+   "monte_carlo": 0.369,
+   "false_alarm_rate": 1.0
+  },
+  "middle_line": {
+   "recall": 0.475,
+   "recall_wilson95": [
+    0.329,
+    0.625
+   ],
+   "hits": 19,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "negate_test": "5/13",
+    "off_by_one": "8/15",
+    "arith_flip": "3/5",
+    "cmp_flip": "3/7"
+   }
+  },
+  "site_density": {
+   "recall": 0.7,
+   "recall_wilson95": [
+    0.546,
+    0.819
+   ],
+   "hits": 28,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "negate_test": "8/13",
+    "off_by_one": "11/15",
+    "arith_flip": "3/5",
+    "cmp_flip": "6/7"
+   }
+  },
+  "surface_tell": {
+   "recall": 0.025,
+   "recall_wilson95": [
+    0.004,
+    0.129
+   ],
+   "hits": 1,
+   "false_alarm_rate": 0.1,
+   "false_alarms": 2,
+   "unreliable_by_frozen_rule": true,
+   "by_operator": {
+    "negate_test": "0/13",
+    "off_by_one": "1/15",
+    "arith_flip": "0/5",
+    "cmp_flip": "0/7"
+   }
+  },
+  "tell_else_density": {
+   "recall": 0.675,
+   "recall_wilson95": [
+    0.52,
+    0.799
+   ],
+   "hits": 27,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": false,
+   "by_operator": {
+    "negate_test": "8/13",
+    "off_by_one": "10/15",
+    "arith_flip": "3/5",
+    "cmp_flip": "6/7"
+   }
+  },
+  "rare_bigram": {
+   "recall": 0.1,
+   "recall_wilson95": [
+    0.04,
+    0.231
+   ],
+   "hits": 4,
+   "false_alarm_rate": 1.0,
+   "false_alarms": 20,
+   "unreliable_by_frozen_rule": true,
+   "by_operator": {
+    "negate_test": "3/13",
+    "off_by_one": "1/15",
+    "arith_flip": "0/5",
+    "cmp_flip": "0/7"
+   }
+  }
+ },
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "the answer key itself scores recall 1, false alarms 0",
+   "ok": true,
+   "detail": "1.0 / 0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "a silent reviewer scores 0 and 0; a line 3 away from every bug scores 0",
+   "ok": true,
+   "detail": "silent 0/0; off-by-3 hits 0"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "the analytic random-line floor equals a 200x Monte Carlo of it within 0.02",
+   "ok": true,
+   "detail": "0.361 vs 0.369"
+  }
+ ],
+ "verdict": "PASS"
+}

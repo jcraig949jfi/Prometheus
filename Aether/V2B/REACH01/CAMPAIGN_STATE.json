@@ -1,0 +1,43 @@
+{
+  "schema": "aether.reach01.campaign_state.v1",
+  "campaign": "AETH-V2B-REACH01",
+  "order": "roles/Aether/prompts/2026-10-10_reach01/01_OPERATOR_DIRECTIVE_verbatim.md",
+  "host": "SPECTREX5 (M2), RTX 5060 Ti",
+  "seat_instance": "Aether[m2-95eba442]",
+  "branch": "aether/reach01-2026-10-10",
+  "base_main": "5956b542e",
+  "started_utc": "2026-10-10T09:23:11Z",
+  "deadline_utc": "2026-10-13T09:23:11Z",
+  "current_phase": "CLOSED (early, scaling rule)",
+  "current_experiment": "R1 TEST-4",
+  "attempt": 1,
+  "frozen_sha": {
+    "R1": "a2ce3c471",
+    "R3": "e5bbeedcd (attempt 2; attempt 1 99d6e38bd stopped for instrument defect)",
+    "R4": "082f2f27b",
+    "R4b": "4b2093ad2",
+    "LADDER01": "f372e412c",
+    "R4c": "74bd235d2",
+    "LADDERx4": "eacc39578"
+  },
+  "active_workloads": [],
+  "completed_units": {},
+  "artifact_root": "Aether/V2B/REACH01/ (tracked, small); C:/Prometheus-data/aether_reach01/ (large, untracked)",
+  "dispositions": {
+    "R1": "RECOIL_EXCHANGE_CAUSAL_REACH_NOT_SUPPORTED (decode margin 0/8; certified chains RX 2 vs X 3; RX deepest trees gen 6-8)",
+    "R2": "XOR/ADD/ROTX PLANTED_COMPOSITION_SUPPORTED; v1 EXPRESSIBILITY_STILL_BLOCKED (missing: state-dependent combination); AND/SPLICE partial",
+    "R3": "FRONTIER_NO_GAIN (attempt 2; C beats A&B on progress+bins in 5/8 seeds, bar 6/8; zero joint-dependent cells in any arm; no COMBINE)",
+    "R4": "CUMULATIVE_ACQUISITION_ADVANTAGE (ASSISTED CONTROL; planted component; P 8/8 vs N/S/U 0/8; fragile ~2% positions; geometry caveat)",
+    "R4b": "PARTIAL (Pno3 5/8, Pdy0 3/8 vs P 8/8 and controls 0/8): advantage partly alignment-dependent, not eliminated",
+    "LADDER01": "G1/C COMBINE_ONLY (3/8 COMBINE, 1 COMPOSE (s2, fragile), 1 AUTONOMOUS COMBINE (s7, 7-cell minimal)); G2/G3 and arm A NONE",
+    "R4c": "REUSE_NOT_SUPPORTED (frozen: necessity 0.66<0.8) despite acquisition P 7/8 vs controls 0/8; discovered component; fragile ~11%",
+    "LADDERx4": "COMPOSITION_RARE (C COMBINE 4/32 CI 5-28%, COMPOSE 2/32, autonomous 0; A 0/32)"
+  },
+  "next_action": "none (campaign closed); proposed next: ROBUST01 (contest-semantics change)",
+  "resume_instructions": "git fetch; checkout branch; read this file and EXPERIMENT_PLAN.md; check active_workloads ledger files; continue next_action. Never relaunch a unit whose result JSON exists (drivers skip finished units).",
+  "attempts": {
+    "R1": 1,
+    "R3": 2
+  },
+  "closed_utc": "2026-10-10T22:45Z"
+}

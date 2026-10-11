@@ -1,0 +1,1215 @@
+{
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "ended_at": "2026-10-10T08:55:05Z",
+ "namespace": "qual",
+ "other_sha": "798f58456d8dc28cd764c3c1b2f6cd8ad8f832b4",
+ "run_id": "Q20261010A",
+ "scenarios": {
+  "S1": {
+   "attempt_outcomes": {
+    "PUBLISHED": 3
+   },
+   "chain_id": "Q20261010A-S1",
+   "contests": [],
+   "equals_reference_replay": true,
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 3,
+    "generation": 3,
+    "head_checkpoint_sha256": "5f5587ab7a28e482583b550ae37e17e460e3c140234d9d470d84298b3fa0ac88",
+    "head_epoch_digest": "44a737c516d2969549085983582181cd669704f8f8becb82ae78e4b0813dbc7f",
+    "head_index": 3,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "ok": true,
+   "receipt_sha256": "cb3fc23522d8151ee4a351877252c1be88df60ba745b6737438b240586f80bcc",
+   "seconds": 41.5,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-9bb5ed1f1308",
+       "chain_id": "Q20261010A-S1",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 1,
+       "replayed": false,
+       "task_id": "tsk-5dc211bcb3e9"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-9bb5ed1f1308",
+         "claim_latency_s": 2.004,
+         "host": "ubu001",
+         "run_s": 17.106,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-5dc211bcb3e9"
+      }
+     ]
+    },
+    {
+     "epoch_index": 2,
+     "generation": 1,
+     "published": [
+      {
+       "attempt_id": "att-23dced8af0d4",
+       "chain_id": "Q20261010A-S1",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 2,
+       "replayed": false,
+       "task_id": "tsk-1a30513f817e"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-23dced8af0d4",
+         "claim_latency_s": 1.089,
+         "host": "ubu002",
+         "run_s": 17.356,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-1a30513f817e"
+      }
+     ]
+    },
+    {
+     "epoch_index": 3,
+     "generation": 2,
+     "published": [
+      {
+       "attempt_id": "att-c3d8ee5b6ac4",
+       "chain_id": "Q20261010A-S1",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 3,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 3,
+       "replayed": false,
+       "task_id": "tsk-6ee0604a5663"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-c3d8ee5b6ac4",
+         "claim_latency_s": 0.878,
+         "host": "ubu001",
+         "run_s": 1.383,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-6ee0604a5663"
+      }
+     ]
+    }
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ],
+    [
+     3,
+     "VALIDATED"
+    ]
+   ]
+  },
+  "S2": {
+   "attempt_outcomes": {
+    "DUPLICATE": 3,
+    "PUBLISHED": 3
+   },
+   "chain_id": "Q20261010A-S2",
+   "contests": [],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 3,
+    "generation": 3,
+    "head_checkpoint_sha256": "b9ab8e4a9d5799fa253b6781488cb8221cf51fd556a8f820bf49a627241d6feb",
+    "head_epoch_digest": "348845200f3f5cd263618b5a2688b8a97dced8772caae6241606665a3c6ab002",
+    "head_index": 3,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "ok": true,
+   "receipt_sha256": "813c267cd5cb92249b31c74e0ffec870c38d1c5b85a4e961404623d3466f58d3",
+   "seconds": 10.5,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-d4f8978f9fe3",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 4,
+       "replayed": false,
+       "task_id": "tsk-41797671fa73"
+      },
+      {
+       "attempt_id": "att-8212538be758",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu001",
+       "outcome": "DUPLICATE",
+       "publication_id": 4,
+       "replayed": false,
+       "task_id": "tsk-6f8ad68ae600"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-8212538be758",
+         "claim_latency_s": 1.209,
+         "host": "ubu001",
+         "run_s": 1.359,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-6f8ad68ae600"
+      },
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-d4f8978f9fe3",
+         "claim_latency_s": 0.287,
+         "host": "ubu002",
+         "run_s": 1.404,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-41797671fa73"
+      }
+     ]
+    },
+    {
+     "epoch_index": 2,
+     "generation": 1,
+     "published": [
+      {
+       "attempt_id": "att-b69a797720fa",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu001",
+       "outcome": "DUPLICATE",
+       "publication_id": 5,
+       "replayed": false,
+       "task_id": "tsk-20247c0bb005"
+      },
+      {
+       "attempt_id": "att-cbddbc94b1e9",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 5,
+       "replayed": false,
+       "task_id": "tsk-81ca6f153b2d"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-b69a797720fa",
+         "claim_latency_s": 1.401,
+         "host": "ubu001",
+         "run_s": 1.332,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-20247c0bb005"
+      },
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-cbddbc94b1e9",
+         "claim_latency_s": 0.536,
+         "host": "ubu002",
+         "run_s": 2.34,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-81ca6f153b2d"
+      }
+     ]
+    },
+    {
+     "epoch_index": 3,
+     "generation": 2,
+     "published": [
+      {
+       "attempt_id": "att-805ccec99d29",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 3,
+       "host": "ubu001",
+       "outcome": "DUPLICATE",
+       "publication_id": 6,
+       "replayed": false,
+       "task_id": "tsk-d8a05cf95fdb"
+      },
+      {
+       "attempt_id": "att-2206becefc87",
+       "chain_id": "Q20261010A-S2",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 3,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 6,
+       "replayed": false,
+       "task_id": "tsk-edbfab2aab59"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-805ccec99d29",
+         "claim_latency_s": 1.672,
+         "host": "ubu001",
+         "run_s": 1.38,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-d8a05cf95fdb"
+      },
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-2206becefc87",
+         "claim_latency_s": 1.824,
+         "host": "ubu002",
+         "run_s": 1.39,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-edbfab2aab59"
+      }
+     ]
+    }
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ],
+    [
+     3,
+     "VALIDATED"
+    ]
+   ]
+  },
+  "S3": {
+   "attempt_outcomes": {
+    "DISAGREEMENT": 1,
+    "PUBLISHED": 2
+   },
+   "chain_id": "Q20261010A-S3",
+   "contest_before": {
+    "challenger_epoch_digest": "76a66a16d4732ae79e8ac57e3238d344618756c0222b1d8755b89bbfdd4d7649",
+    "contest_id": 1,
+    "epoch_index": 1,
+    "published_epoch_digest": "898dfe55131bda9f9bc03d9c0f9c4c3130b87425a95feb43504cf533ac5e9a29",
+    "reason": "DISAGREEMENT",
+    "state": "CONTESTED",
+    "work_id": "f4e7014c401aa41fab0d476960089c670551f88f70dc0ac56a7ac4fdbdba9ba3"
+   },
+   "contests": [
+    {
+     "challenger_epoch_digest": "76a66a16d4732ae79e8ac57e3238d344618756c0222b1d8755b89bbfdd4d7649",
+     "contest_id": 1,
+     "epoch_index": 1,
+     "published_epoch_digest": "898dfe55131bda9f9bc03d9c0f9c4c3130b87425a95feb43504cf533ac5e9a29",
+     "reason": "DISAGREEMENT",
+     "state": "RESOLVED_UPHELD"
+    }
+   ],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 2,
+    "generation": 2,
+    "head_checkpoint_sha256": "6a5ca30e393242512f48668b436f54966b29ceb6757f45021c7d895793b361e8",
+    "head_epoch_digest": "28357e6aa806b21858f403998ff5eddc308896d71e41d470be9659304fdce050",
+    "head_index": 2,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "head_after_race": "HALTED",
+   "ok": true,
+   "receipt_sha256": "0cb08c80f2b5df50345bcec3a4689eab7d26f0d56fa109a9f0eca424c0a662e9",
+   "seconds": 9.0,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-388f13992762",
+       "chain_id": "Q20261010A-S3",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 7,
+       "replayed": false,
+       "task_id": "tsk-81ad8359c2b6"
+      },
+      {
+       "attempt_id": "att-e52a1bbcf910",
+       "chain_id": "Q20261010A-S3",
+       "contest_id": 1,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu002",
+       "outcome": "DISAGREEMENT",
+       "publication_id": 7,
+       "replayed": false,
+       "task_id": "tsk-75b2a263eeec"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-388f13992762",
+         "claim_latency_s": 0.68,
+         "host": "ubu001",
+         "run_s": 1.382,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-81ad8359c2b6"
+      },
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-e52a1bbcf910",
+         "claim_latency_s": 0.846,
+         "host": "ubu002",
+         "run_s": 2.408,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-75b2a263eeec"
+      }
+     ]
+    },
+    {
+     "epoch_index": 2,
+     "generation": 1,
+     "published": [
+      {
+       "attempt_id": "att-f1abaeacd7d9",
+       "chain_id": "Q20261010A-S3",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 8,
+       "replayed": false,
+       "task_id": "tsk-5c54a6dae42b"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-f1abaeacd7d9",
+         "claim_latency_s": 0.741,
+         "host": "ubu002",
+         "run_s": 2.359,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-5c54a6dae42b"
+      }
+     ]
+    }
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ]
+   ],
+   "verdict": "UPHELD"
+  },
+  "S4": {
+   "attempt_outcomes": {
+    "PUBLISHED": 4,
+    "STALE": 1
+   },
+   "chain_id": "Q20261010A-S4",
+   "contest": {
+    "challenger_epoch_digest": "c7b6f473509d25adda923f0f6c674694830865bed6f166e0db56af8c3201f1fa",
+    "contest_id": 2,
+    "epoch_index": 1,
+    "published_epoch_digest": "0e4bec2d1ed6075f6f24d7b7d573b50455fb25bb79c4b72445e8689b9a4cc7ad",
+    "reason": "AUDIT_MISMATCH",
+    "state": "CONTESTED",
+    "work_id": "6fdd8073e3d487a28c4d6bf79e1b91b7c4c9711c769813fddfa83fa3689cfacd"
+   },
+   "contests": [
+    {
+     "challenger_epoch_digest": "c7b6f473509d25adda923f0f6c674694830865bed6f166e0db56af8c3201f1fa",
+     "contest_id": 2,
+     "epoch_index": 1,
+     "published_epoch_digest": "0e4bec2d1ed6075f6f24d7b7d573b50455fb25bb79c4b72445e8689b9a4cc7ad",
+     "reason": "AUDIT_MISMATCH",
+     "state": "RESOLVED_OVERTURNED"
+    }
+   ],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 3,
+    "generation": 5,
+    "head_checkpoint_sha256": "1068411d70c2a843ec1ccd39ccb17f47434c6000f18c7358713a1c58398cb2ee",
+    "head_epoch_digest": "518e455c9047007ba69de75d770a9714f73b188f739dd23556c744c6247fa570",
+    "head_index": 3,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "ok": true,
+   "receipt_sha256": "c70679e04120f6788af1b50bb5efddf42373a44d0b3b9ea71a676a903087b748",
+   "seconds": 62.8,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-e5b90a1e120a",
+       "chain_id": "Q20261010A-S4",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 9,
+       "replayed": false,
+       "task_id": "tsk-6e5697bbe694"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-e5b90a1e120a",
+         "claim_latency_s": 0.769,
+         "host": "ubu002",
+         "run_s": 1.363,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-6e5697bbe694"
+      }
+     ]
+    },
+    {
+     "epoch_index": 1,
+     "generation": 2,
+     "published": [
+      {
+       "attempt_id": "att-41529eb4e16b",
+       "chain_id": "Q20261010A-S4",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 3,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 10,
+       "replayed": false,
+       "task_id": "tsk-4a089a50b347"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-41529eb4e16b",
+         "claim_latency_s": 0.545,
+         "host": "ubu002",
+         "run_s": 1.357,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-4a089a50b347"
+      }
+     ]
+    },
+    {
+     "epoch_index": 2,
+     "generation": 3,
+     "published": [
+      {
+       "attempt_id": "att-808cf60d8737",
+       "chain_id": "Q20261010A-S4",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 4,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 11,
+       "replayed": false,
+       "task_id": "tsk-38d34404454b"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-808cf60d8737",
+         "claim_latency_s": 1.505,
+         "host": "ubu001",
+         "run_s": 2.372,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-38d34404454b"
+      }
+     ]
+    },
+    {
+     "epoch_index": 3,
+     "generation": 4,
+     "published": [
+      {
+       "attempt_id": "att-16251f1fe757",
+       "chain_id": "Q20261010A-S4",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 5,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 12,
+       "replayed": false,
+       "task_id": "tsk-b5034f2b4c59"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-16251f1fe757",
+         "claim_latency_s": 1.838,
+         "host": "ubu001",
+         "run_s": 1.351,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-b5034f2b4c59"
+      }
+     ]
+    }
+   ],
+   "straggler": {
+    "attempts": [
+     {
+      "attempt_id": "att-f49bbf2894d3",
+      "claim_latency_s": 1.658,
+      "host": "ubu001",
+      "run_s": 46.439,
+      "status": "succeeded"
+     }
+    ],
+    "published": [
+     {
+      "attempt_id": "att-f49bbf2894d3",
+      "chain_id": "Q20261010A-S4",
+      "contest_id": null,
+      "epoch_index": 2,
+      "generation": 2,
+      "host": "ubu001",
+      "outcome": "STALE",
+      "publication_id": null,
+      "replayed": false,
+      "task_id": "tsk-7d15031a99e9"
+     }
+    ],
+    "task_id": "tsk-7d15031a99e9"
+   },
+   "validate_epoch_1": [
+    [
+     1,
+     "MISMATCH"
+    ]
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ],
+    [
+     3,
+     "VALIDATED"
+    ]
+   ],
+   "verdict": "OVERTURNED"
+  },
+  "S5": {
+   "attempt_outcomes": {
+    "INVALID": 1,
+    "PUBLISHED": 1
+   },
+   "chain_id": "Q20261010A-S5",
+   "contests": [],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 1,
+    "generation": 1,
+    "head_checkpoint_sha256": "baf125b034db8e374a660c31817d63e5e80b50b1efbc8743ef50a251c5d77dec",
+    "head_epoch_digest": "8dea33c165797e6fa6f858d35a74d2c0230c56f4fb9b35464be902aa7ec1723d",
+    "head_index": 1,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "ok": true,
+   "receipt_sha256": "d0bdc44a13345691f84531295c241668527b287f0cd51f0af3ec9f917155a077",
+   "seconds": 7.1,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-c3349ce74de9",
+       "chain_id": "Q20261010A-S5",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": null,
+       "host": "ubu001",
+       "outcome": "INVALID",
+       "publication_id": null,
+       "replayed": false,
+       "task_id": "tsk-7ce98ad96997"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-c3349ce74de9",
+         "claim_latency_s": 0.477,
+         "host": "ubu001",
+         "run_s": 1.389,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-7ce98ad96997"
+      }
+     ]
+    },
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-9aa4b31b90ed",
+       "chain_id": "Q20261010A-S5",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 13,
+       "replayed": false,
+       "task_id": "tsk-d848bafbf5fd"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-9aa4b31b90ed",
+         "claim_latency_s": 0.823,
+         "host": "ubu002",
+         "run_s": 2.34,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-d848bafbf5fd"
+      }
+     ]
+    }
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ]
+   ]
+  },
+  "S6": {
+   "attempt_outcomes": {
+    "PUBLISHED": 1,
+    "REFUSED_UNAPPROVED": 1
+   },
+   "chain_id": "Q20261010A-S6",
+   "contests": [],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 1,
+    "generation": 1,
+    "head_checkpoint_sha256": "efaf731ab48552c3d1f45cde4986ee6527a7f1fdac00c74e423a958cafb9825c",
+    "head_epoch_digest": "003a1318e64b1dd87cd7c13b60cc50a38a031b0fc52f85d82a1d1cc011d403b7",
+    "head_index": 1,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "ok": true,
+   "receipt_sha256": "f3f37bad722b97c7ef56df939f73063b1186fd92557da7cefbbb9072edae02ad",
+   "seconds": 22.2,
+   "steps": [
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-618e9637b72a",
+       "chain_id": "Q20261010A-S6",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": null,
+       "host": "ubu002",
+       "outcome": "REFUSED_UNAPPROVED",
+       "publication_id": null,
+       "replayed": false,
+       "task_id": "tsk-7c9775bf7fee"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-618e9637b72a",
+         "claim_latency_s": 1.105,
+         "host": "ubu002",
+         "run_s": 16.832,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-7c9775bf7fee"
+      }
+     ]
+    },
+    {
+     "epoch_index": 1,
+     "generation": 0,
+     "published": [
+      {
+       "attempt_id": "att-781507dcdb40",
+       "chain_id": "Q20261010A-S6",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 14,
+       "replayed": false,
+       "task_id": "tsk-9a4e2cc85779"
+      }
+     ],
+     "tasks": [
+      {
+       "attempts": [
+        {
+         "attempt_id": "att-781507dcdb40",
+         "claim_latency_s": 1.632,
+         "host": "ubu001",
+         "run_s": 1.399,
+         "status": "succeeded"
+        }
+       ],
+       "state": "completed",
+       "task_id": "tsk-9a4e2cc85779"
+      }
+     ]
+    }
+   ],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ]
+   ]
+  },
+  "S7": {
+   "attempt_outcomes": {
+    "PUBLISHED": 3
+   },
+   "chain_id": "Q20261010A-S7",
+   "contests": [],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 3,
+    "generation": 3,
+    "head_checkpoint_sha256": "95ab6a758e244b4e475981ce20b4dc1ba81bf2766a8f10d9ee7fd28e59ae7929",
+    "head_epoch_digest": "d8b975876ed9623bd22376a7d58b022fd2da0bba0557fa5c7d337bcbfa1883f2",
+    "head_index": 3,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "kills": [
+    {
+     "abandoned_after_s": 92.2,
+     "attempts": [
+      {
+       "attempt_id": "att-533e40a15d7e",
+       "claim_latency_s": 0.688,
+       "host": "ubu001",
+       "run_s": 91.885,
+       "status": "abandoned"
+      },
+      {
+       "attempt_id": "att-956253672214",
+       "claim_latency_s": 94.935,
+       "host": "ubu001",
+       "run_s": 1.354,
+       "status": "succeeded"
+      }
+     ],
+     "epoch_index": 1,
+     "killed_at": "2026-10-10T08:49:22Z",
+     "killed_attempt": "att-533e40a15d7e",
+     "published": [
+      {
+       "attempt_id": "att-956253672214",
+       "chain_id": "Q20261010A-S7",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 15,
+       "replayed": false,
+       "task_id": "tsk-18fe757108be"
+      }
+     ],
+     "task_id": "tsk-18fe757108be"
+    },
+    {
+     "abandoned_after_s": 92.2,
+     "attempts": [
+      {
+       "attempt_id": "att-729172bdf301",
+       "claim_latency_s": 1.283,
+       "host": "ubu001",
+       "run_s": 91.421,
+       "status": "abandoned"
+      },
+      {
+       "attempt_id": "att-798f0f32022c",
+       "claim_latency_s": 95.425,
+       "host": "ubu001",
+       "run_s": 1.348,
+       "status": "succeeded"
+      }
+     ],
+     "epoch_index": 2,
+     "killed_at": "2026-10-10T08:51:00Z",
+     "killed_attempt": "att-729172bdf301",
+     "published": [
+      {
+       "attempt_id": "att-798f0f32022c",
+       "chain_id": "Q20261010A-S7",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 16,
+       "replayed": false,
+       "task_id": "tsk-f3ead2e67d3e"
+      }
+     ],
+     "task_id": "tsk-f3ead2e67d3e"
+    },
+    {
+     "abandoned_after_s": 90.2,
+     "attempts": [
+      {
+       "attempt_id": "att-35cea8cbfdff",
+       "claim_latency_s": 1.238,
+       "host": "ubu001",
+       "run_s": 91.014,
+       "status": "abandoned"
+      },
+      {
+       "attempt_id": "att-0c454e7026c4",
+       "claim_latency_s": 93.473,
+       "host": "ubu001",
+       "run_s": 1.384,
+       "status": "succeeded"
+      }
+     ],
+     "epoch_index": 3,
+     "killed_at": "2026-10-10T08:52:37Z",
+     "killed_attempt": "att-35cea8cbfdff",
+     "published": [
+      {
+       "attempt_id": "att-0c454e7026c4",
+       "chain_id": "Q20261010A-S7",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 3,
+       "host": "ubu001",
+       "outcome": "PUBLISHED",
+       "publication_id": 17,
+       "replayed": false,
+       "task_id": "tsk-d236f5ee1a98"
+      }
+     ],
+     "task_id": "tsk-d236f5ee1a98"
+    }
+   ],
+   "ok": true,
+   "receipt_sha256": "85d0ccb86e2684e38af431caca33cd02d82d05ced51dd59512448d339ff2cf9a",
+   "seconds": 290.4,
+   "steps": [],
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ],
+    [
+     3,
+     "VALIDATED"
+    ]
+   ]
+  },
+  "S8": {
+   "attempt_outcomes": {
+    "PUBLISHED": 6
+   },
+   "chain_id": "Q20261010A-S8",
+   "contests": [],
+   "head": {
+    "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+    "epochs_target": 6,
+    "generation": 6,
+    "head_checkpoint_sha256": "a8c262033955d181fbb785a108d3f675cdd04624340c1a19ec355743f9b40f6e",
+    "head_epoch_digest": "b827cd0717e9df4373cf076a7ca5ee1593e16b4bf407d180db1741cf86007eb1",
+    "head_index": 6,
+    "namespace": "qual",
+    "state": "COMPLETE"
+   },
+   "lost_acks": [
+    {
+     "published": [
+      {
+       "attempt_id": "att-c3fc78aaa475",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 2,
+       "generation": 2,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 20,
+       "replayed": true,
+       "task_id": "tsk-30bf34dc9b61"
+      }
+     ]
+    },
+    {
+     "published": [
+      {
+       "attempt_id": "att-47a7b90787e9",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 4,
+       "generation": 4,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 23,
+       "replayed": true,
+       "task_id": "tsk-29932291a982"
+      }
+     ]
+    },
+    {
+     "published": [
+      {
+       "attempt_id": "att-efec11cd8773",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 6,
+       "generation": 6,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 26,
+       "replayed": true,
+       "task_id": "tsk-e260c18a9934"
+      }
+     ]
+    }
+   ],
+   "ok": true,
+   "publisher_kills": [
+    {
+     "attempt_id": "att-1051cef45c98",
+     "classified_after_kill": null,
+     "held_in_transaction": true,
+     "published": [
+      {
+       "attempt_id": "att-1051cef45c98",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 1,
+       "generation": 1,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 19,
+       "replayed": false,
+       "task_id": "tsk-07befa78a554"
+      }
+     ]
+    },
+    {
+     "attempt_id": "att-0742b04acfb1",
+     "classified_after_kill": null,
+     "held_in_transaction": true,
+     "published": [
+      {
+       "attempt_id": "att-0742b04acfb1",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 3,
+       "generation": 3,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 22,
+       "replayed": false,
+       "task_id": "tsk-2aa2a4390693"
+      }
+     ]
+    },
+    {
+     "attempt_id": "att-2d8894225042",
+     "classified_after_kill": null,
+     "held_in_transaction": true,
+     "published": [
+      {
+       "attempt_id": "att-2d8894225042",
+       "chain_id": "Q20261010A-S8",
+       "contest_id": null,
+       "epoch_index": 5,
+       "generation": 5,
+       "host": "ubu002",
+       "outcome": "PUBLISHED",
+       "publication_id": 25,
+       "replayed": false,
+       "task_id": "tsk-ccf2ee041ad6"
+      }
+     ]
+    }
+   ],
+   "receipt_sha256": "8b42460d4e7dbc23d8b3b6a2604c1bf8e532cc197e0181c35b3720848c4cd68f",
+   "seconds": 54.2,
+   "validation": [
+    [
+     1,
+     "VALIDATED"
+    ],
+    [
+     2,
+     "VALIDATED"
+    ],
+    [
+     3,
+     "VALIDATED"
+    ],
+    [
+     4,
+     "VALIDATED"
+    ],
+    [
+     5,
+     "VALIDATED"
+    ],
+    [
+     6,
+     "VALIDATED"
+    ]
+   ]
+  }
+ },
+ "schema": "moonshot_qual",
+ "started_at": "2026-10-10T08:46:48Z"
+}

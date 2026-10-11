@@ -1,0 +1,158 @@
+{
+ "K": null,
+ "archive": {
+  "entries": 0,
+  "live_entries": 0,
+  "logged_descriptor_cells_visited": null,
+  "realised_cells": null,
+  "replacements": 0
+ },
+ "archive_assisted_tag": null,
+ "arm": "desert_ref",
+ "arm_code": "D1-chain_neutral",
+ "arm_view_file_sha256": "5f3dba13810e77a7ef602a7f21c10b2e777d14c0222d447d770ed648aa204cd0",
+ "budget": 200000,
+ "burst_L": 200001,
+ "censored": true,
+ "certifier_assisted": false,
+ "components": {
+  "budget": 200000,
+  "charges": 200000,
+  "consultations_stored": [],
+  "hit": null,
+  "library_sha256": null,
+  "n_consultations": 0,
+  "n_starts": 1,
+  "witness_reference": "(map (lam x (mod x (mul 3 2))) (filter (lam x (lt (add 3 2) x)) xs))"
+ },
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "consultations": [],
+ "cpu_s": 55.516,
+ "credit": "none",
+ "decision_log_sha256": "537102881a5c4550a7964951c87638dbc32b67596c0c66fd7b6ee7744bdd632f",
+ "descriptor": null,
+ "driver": "e2-driver-v1",
+ "e2_arm": "desert_ref",
+ "family_id": "W0321d83c-F040-R3",
+ "first_dev_consistent": null,
+ "first_false_hits": [],
+ "first_visit_route": null,
+ "hit": false,
+ "hit_charge": null,
+ "ledger": {
+  "certifier": {
+   "verify_evals": 0
+  },
+  "developmental": {
+   "library_entries": 0,
+   "library_max_depth": 0,
+   "library_sha256": null
+  },
+  "organism": {
+   "program": null
+  },
+  "search": {
+   "archive_admissions": 0,
+   "charges": 200000,
+   "genotype_restores": 1,
+   "probe_runs": 0,
+   "rejected_mutations": 0,
+   "state_restores": 0,
+   "units_dev_expanded": 22286627,
+   "units_dev_promoted": 22286627,
+   "units_probe_expanded": 0
+  }
+ },
+ "library_sha256": null,
+ "library_status": "NO_LIBRARY",
+ "max_size": 28,
+ "mechanisms": {
+  "cert_patterns_first_charge": {
+   "000000000010": 479,
+   "000000001000": 4348,
+   "000000010000": 7,
+   "000000010010": 42771,
+   "000000100000": 28,
+   "000000100010": 52618,
+   "000000110000": 4780,
+   "000010000000": 34558,
+   "000100000000": 15342,
+   "000100000010": 482,
+   "001000000000": 12786,
+   "010000000000": 240,
+   "010000000010": 118047,
+   "010000010000": 2,
+   "010000010010": 615,
+   "010000100000": 57568,
+   "010000110000": 11693,
+   "010001010000": 197424,
+   "010010010000": 14934,
+   "100000000000": 86167,
+   "110000010000": 37900
+  },
+  "cert_patterns_seen": 21,
+  "qualified_genotypes": 0,
+  "qualified_skeletons": {}
+ },
+ "mutator_max_size": 28,
+ "n_consultations": 0,
+ "n_false_hits": 0,
+ "n_starts": 1,
+ "pid": 2040,
+ "primary_hit": false,
+ "program": null,
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "run": true,
+ "secondary_hit": false,
+ "seed": 3,
+ "shard": "run/W0321d83c-F040-R3/desert_ref/s3",
+ "shard_cpu_s": 55.55,
+ "start_hit": false,
+ "status": "COMPLETE"
+}

@@ -1,0 +1,190 @@
+{
+ "runs": {
+  "ollama:gemma3:12b@nothink1024": "repobench-20261009T221532Z-spectrex5",
+  "ollama:gpt-oss:20b@nothink1024": "repobench-20261009T212349Z-spectrex5",
+  "ollama:gpt-oss:20b@nothink4096": "repobench-20261010T234537Z-spectrex5",
+  "ollama:qwen2.5-coder:14b@nothink1024": "repobench-20261009T215606Z-spectrex5",
+  "ollama:qwen3:8b@nothink1024": "repobench-20261010T224522Z-spectrex5"
+ },
+ "configs": {
+  "ollama:gemma3:12b@nothink1024": {
+   "passed": 35,
+   "of": 142,
+   "pass_at_1": 0.246,
+   "wilson95": [
+    0.183,
+    0.323
+   ],
+   "shapes": {
+    "test failed": 99,
+    "pass": 35,
+    "syntax error": 8
+   }
+  },
+  "ollama:gpt-oss:20b@nothink1024": {
+   "passed": 21,
+   "of": 142,
+   "pass_at_1": 0.148,
+   "wilson95": [
+    0.099,
+    0.216
+   ],
+   "shapes": {
+    "empty response": 104,
+    "syntax error": 15,
+    "pass": 21,
+    "test failed": 2
+   }
+  },
+  "ollama:gpt-oss:20b@nothink4096": {
+   "passed": 53,
+   "of": 142,
+   "pass_at_1": 0.373,
+   "wilson95": [
+    0.298,
+    0.455
+   ],
+   "shapes": {
+    "empty response": 54,
+    "pass": 53,
+    "test failed": 29,
+    "syntax error": 6
+   }
+  },
+  "ollama:qwen2.5-coder:14b@nothink1024": {
+   "passed": 59,
+   "of": 142,
+   "pass_at_1": 0.415,
+   "wilson95": [
+    0.338,
+    0.498
+   ],
+   "shapes": {
+    "test failed": 83,
+    "pass": 59
+   }
+  },
+  "ollama:qwen3:8b@nothink1024": {
+   "passed": 50,
+   "of": 142,
+   "pass_at_1": 0.352,
+   "wilson95": [
+    0.278,
+    0.434
+   ],
+   "shapes": {
+    "test failed": 89,
+    "pass": 50,
+    "test timeout": 2,
+    "syntax error": 1
+   }
+  }
+ },
+ "pairs": [
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:gpt-oss:20b@nothink1024",
+   "only_a": 29,
+   "only_b": 15,
+   "p": 0.048766765904474596,
+   "wilson_separable": false,
+   "holm_threshold": 0.0125,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:gpt-oss:20b@nothink4096",
+   "only_a": 15,
+   "only_b": 33,
+   "p": 0.013283281562245008,
+   "wilson_separable": false,
+   "holm_threshold": 0.00833,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:qwen2.5-coder:14b@nothink1024",
+   "only_a": 4,
+   "only_b": 28,
+   "p": 1.9301194697618484e-05,
+   "wilson_separable": true,
+   "holm_threshold": 0.00625,
+   "holm_reject": true
+  },
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:qwen3:8b@nothink1024",
+   "only_a": 9,
+   "only_b": 24,
+   "p": 0.013530986849218607,
+   "wilson_separable": false,
+   "holm_threshold": 0.01,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink1024",
+   "b": "ollama:gpt-oss:20b@nothink4096",
+   "only_a": 0,
+   "only_b": 32,
+   "p": 4.656612873077393e-10,
+   "wilson_separable": true,
+   "holm_threshold": 0.005,
+   "holm_reject": true
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink1024",
+   "b": "ollama:qwen2.5-coder:14b@nothink1024",
+   "only_a": 8,
+   "only_b": 46,
+   "p": 1.3843354973452904e-07,
+   "wilson_separable": true,
+   "holm_threshold": 0.00556,
+   "holm_reject": true
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink1024",
+   "b": "ollama:qwen3:8b@nothink1024",
+   "only_a": 9,
+   "only_b": 38,
+   "p": 2.4904030624384177e-05,
+   "wilson_separable": true,
+   "holm_threshold": 0.00714,
+   "holm_reject": true
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink4096",
+   "b": "ollama:qwen2.5-coder:14b@nothink1024",
+   "only_a": 18,
+   "only_b": 24,
+   "p": 0.44079906734259566,
+   "wilson_separable": false,
+   "holm_threshold": 0.025,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink4096",
+   "b": "ollama:qwen3:8b@nothink1024",
+   "only_a": 20,
+   "only_b": 17,
+   "p": 0.7428293587290682,
+   "wilson_separable": false,
+   "holm_threshold": 0.05,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:qwen2.5-coder:14b@nothink1024",
+   "b": "ollama:qwen3:8b@nothink1024",
+   "only_a": 20,
+   "only_b": 11,
+   "p": 0.14961278438568115,
+   "wilson_separable": false,
+   "holm_threshold": 0.01667,
+   "holm_reject": false
+  }
+ ],
+ "agreement": {
+  "solved_by_none": 61,
+  "solved_by_all": 6,
+  "configs": 5
+ }
+}

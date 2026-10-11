@@ -6,7 +6,7 @@
   "can_downgrade": false,
   "escalate_to": "operator",
   "authority": "operator OP-LC1 2026-10-06 (roles/Themis/prompts/2026-10-06_op_lc1/02_OPERATOR_OP-LC1_verbatim.md)",
-  "status": "BLOCKED",
+  "status": "SUPERSEDED",
   "history": [
     {
       "status": "PROPOSED",
@@ -31,6 +31,12 @@
       "by": "Themis[m2-0e9b1ed2]",
       "at_utc": "2026-10-06T09:46:45Z",
       "note": "BLOCKED (concrete, MWO R5): frozen rig R1 puts 6 workers on M2, which is saturated by Aether AIM02 production (4 jobs, 39600 s wall cap, CPU 84-99%); running would contend with a peer seat's science and bias M1 toward PASS. Unblocks when M2 is free OR M2 can ssh to ubu003-006 (then a prereg rig amendment BEFORE any data)."
+    },
+    {
+      "status": "SUPERSEDED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:47Z",
+      "note": "SUPERSEDED by OP-NF2 (2026-10-10, roles/Themis/prompts/2026-10-10_op_nf2/): Git-CAS runtime coordination replaced by PostgreSQL + Fabric. NEVER EXECUTED -- no D4 data exists and no verdict on git CAS adequacy is drawn; the frozen prereg (8e69de91e) stays as a record of what was planned."
     }
   ],
   "task_id": "C-008-T003",

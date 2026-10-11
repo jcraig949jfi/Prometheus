@@ -1,0 +1,80 @@
+[
+ {
+  "mutant": "publish: drop generation CAS",
+  "file": "rso/scale/runner/run.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "publish: drop lease fence",
+  "file": "rso/scale/runner/run.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "publish: ignore HALTED",
+  "file": "rso/scale/runner/run.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "publish: skip verify_epoch",
+  "file": "rso/scale/runner/run.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "resume: first resumption not replayed",
+  "file": "rso/scale/runner/resume.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "resume: skip env probe",
+  "file": "rso/scale/runner/resume.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "resume: mismatch does not halt",
+  "file": "rso/scale/runner/resume.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "account: interrupted not counted",
+  "file": "rso/scale/runner/account.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=2)"
+ },
+ {
+  "mutant": "lease: dead holder not detected",
+  "file": "rso/scale/runner/lease.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "store: no verify on read",
+  "file": "rso/scale/runner/store.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "aether: tick not advanced",
+  "file": "rso/scale/runner/aether.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ },
+ {
+  "mutant": "worker: stale expected generation",
+  "file": "rso/scale/runner/worker.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=5, errors=1)"
+ },
+ {
+  "mutant": "supervisor: ignores live orphan lease",
+  "file": "rso/scale/runner/supervisor.py",
+  "result": "KILLED",
+  "tail": "FAILED (failures=1)"
+ }
+]

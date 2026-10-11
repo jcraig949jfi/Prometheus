@@ -1,0 +1,1566 @@
+{
+ "atlas": {
+  "atlas_version": "atlas-v0",
+  "cpu_s": 120.5,
+  "density": [
+   {
+    "all_fail_share": 0.0,
+    "class_size": 1,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 1,
+    "exact_credit_hist": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 1,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 1,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 1,
+    "exact_credit_hist": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 2,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 14,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 14,
+    "exact_credit_hist": [
+     14,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 3,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.0,
+    "class_size": 88,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 88,
+    "exact_credit_hist": [
+     88,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 4,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.028761,
+    "class_size": 904,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 904,
+    "exact_credit_hist": [
+     904,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 5,
+    "viable_share": 0.0
+   },
+   {
+    "all_fail_share": 0.039447,
+    "class_size": 8036,
+    "dev_consistent": 0,
+    "dev_consistent_share": 0.0,
+    "evaluated": 8036,
+    "exact_credit_hist": [
+     8036,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "exhaustive",
+    "qualified_among_dev_consistent": 0,
+    "size": 6,
+    "viable_share": 0.0
+   }
+  ],
+  "dev_n": 12,
+  "dev_test_overlap": 0,
+  "existence": {
+   "dev_ok": true,
+   "exists": true,
+   "size_expanded": 27,
+   "size_promoted": 27,
+   "test_ok": true,
+   "type": "List",
+   "witness": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)"
+  },
+  "family_id": "A602124c524/9e14d0939d60b9af",
+  "hitting_cost_enumeration": [
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 7,
+    "cpu_s": 8.77,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 0,
+    "units_expanded": 1978150,
+    "units_promoted": 1978150,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 7,
+    "cpu_s": 9.52,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 1,
+    "units_expanded": 1978722,
+    "units_promoted": 1978722,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 7,
+    "cpu_s": 9.34,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 2,
+    "units_expanded": 1978974,
+    "units_promoted": 1978974,
+    "verify_evals": 0
+   },
+   {
+    "censored": true,
+    "charges": 200000,
+    "complete_through_size": 7,
+    "cpu_s": 10.53,
+    "first_false_hits": [],
+    "hit": false,
+    "hit_charge": null,
+    "n_false_hits": 0,
+    "program": null,
+    "seed": 3,
+    "units_expanded": 1978802,
+    "units_promoted": 1978802,
+    "verify_evals": 0
+   }
+  ],
+  "lattice": {
+   "any_intermediate_with_exact_credit": true,
+   "any_intermediate_with_partial_credit": true,
+   "credit_by_prune_depth": {
+    "0": {
+     "max_exact": 1.0,
+     "max_partial": 1.0,
+     "mean_exact": 1.0,
+     "mean_partial": 1.0,
+     "n": 1
+    },
+    "1": {
+     "max_exact": 1.0,
+     "max_partial": 1.0,
+     "mean_exact": 0.0644,
+     "mean_partial": 0.2909,
+     "n": 22
+    },
+    "2": {
+     "max_exact": 0.16666666666666666,
+     "max_partial": 0.701984,
+     "mean_exact": 0.0033,
+     "mean_partial": 0.0933,
+     "n": 201
+    },
+    "3": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.701984,
+     "mean_exact": 0.0008,
+     "mean_partial": 0.0378,
+     "n": 999
+    },
+    "4": {
+     "max_exact": 0.08333333333333333,
+     "max_partial": 0.633929,
+     "mean_exact": 0.0001,
+     "mean_partial": 0.0196,
+     "n": 2998
+    },
+    "5": {
+     "max_exact": 0.0,
+     "max_partial": 0.396627,
+     "mean_exact": 0.0,
+     "mean_partial": 0.012,
+     "n": 5755
+    },
+    "6": {
+     "max_exact": 0.0,
+     "max_partial": 0.396627,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0081,
+     "n": 7327
+    },
+    "7": {
+     "max_exact": 0.0,
+     "max_partial": 0.055556,
+     "mean_exact": 0.0,
+     "mean_partial": 0.0035,
+     "n": 2697
+    }
+   },
+   "n_paths": 200000,
+   "paths_truncated": true,
+   "size": 20000,
+   "truncated": true
+  },
+  "library_entries": 0,
+  "output_type": "List",
+  "params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "revisitability": {
+   "enumeration_rank_seed0": {
+    "(map (lam x (add (mod x 3) x)) xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 68329,
+     "size": 7
+    },
+    "(map (lam x (add x x)) xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 485,
+     "size": 5
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      30830295469025074,
+      371005139992840017
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 19
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add x x)))) xs)": {
+     "bracket": [
+      218742935488275,
+      2582318657588434
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 17
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (mul x (add (mod x 3) x))))) xs)": {
+     "bracket": [
+      4507529109925444641,
+      55188638841270379775
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 21
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) x))) xs)": {
+     "bracket": [
+      1617345585008,
+      18679437656083
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 15
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (add x x) x))) xs)": {
+     "bracket": [
+      12547726079,
+      141218376634
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 13
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      4507529109925444641,
+      55188638841270379775
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 21
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)": {
+     "bracket": [
+      681471589093054327160,
+      8478240835178284636481
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 23
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add 2 x))))) xs)": {
+     "bracket": [
+      4507529109925444641,
+      55188638841270379775
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 21
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x 2)))) xs)": {
+     "bracket": [
+      30830295469025074,
+      371005139992840017
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 19
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)": {
+     "bracket": [
+      106305469624936596566480,
+      1342693899029238616171998
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 25
+    },
+    "(map (lam x (mul (add (mod x 3) x) (add x x))) xs)": {
+     "bracket": [
+      103237045,
+      1125886996
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 11
+    },
+    "(map (lam x (mul (add (mod x 3) x) x)) xs)": {
+     "bracket": [
+      916439,
+      9614227
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 9
+    },
+    "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      30830295469025074,
+      371005139992840017
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 19
+    },
+    "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) (mul x 2)))) xs)": {
+     "bracket": [
+      218742935488275,
+      2582318657588434
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 17
+    },
+    "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) 2))) xs)": {
+     "bracket": [
+      1617345585008,
+      18679437656083
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 15
+    },
+    "(map (lam x (mul (add x x) (add (mod (add x x) 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      218742935488275,
+      2582318657588434
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 17
+    },
+    "(map (lam x (mul (add x x) (add (mod x 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      1617345585008,
+      18679437656083
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 15
+    },
+    "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)": {
+     "bracket": [
+      17084715685123564616688156,
+      218946347930114836960652308
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 27
+    },
+    "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      218742935488275,
+      2582318657588434
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 17
+    },
+    "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) (add x x)))) xs)": {
+     "bracket": [
+      1617345585008,
+      18679437656083
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 15
+    },
+    "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) 2))) xs)": {
+     "bracket": [
+      12547726079,
+      141218376634
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 13
+    },
+    "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) x))) xs)": {
+     "bracket": [
+      12547726079,
+      141218376634
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 13
+    },
+    "(map (lam x (mul x (add (mod x 3) (add (mod x 3) x)))) xs)": {
+     "bracket": [
+      12547726079,
+      141218376634
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 13
+    },
+    "(map (lam x x) xs)": {
+     "exact": true,
+     "in_space": true,
+     "rank": 15,
+     "size": 3
+    },
+    "xs": {
+     "exact": true,
+     "in_space": true,
+     "rank": 1,
+     "size": 1
+    }
+   },
+   "genotype_restore_exact": true,
+   "witness_rank_by_seed": {
+    "0": {
+     "bracket": [
+      17084715685123564616688156,
+      218946347930114836960652308
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 27
+    },
+    "1": {
+     "bracket": [
+      17084715685123564616688156,
+      218946347930114836960652308
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 27
+    },
+    "2": {
+     "bracket": [
+      17084715685123564616688156,
+      218946347930114836960652308
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 27
+    },
+    "3": {
+     "bracket": [
+      17084715685123564616688156,
+      218946347930114836960652308
+     ],
+     "exact": false,
+     "rank": null,
+     "size": 27
+    }
+   }
+  },
+  "robustness": [
+   {
+    "all_fail_share": 0.02,
+    "children": 500,
+    "exact_credit": 12,
+    "keep_credit_share": 0.056,
+    "program": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.056,
+    "stay_qualified_share": 0.056
+   },
+   {
+    "all_fail_share": 0.0,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "xs",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.27,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.008,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x x) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.308,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.014,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (add x x)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.082,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.022,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (add (mod x 3) x)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.062,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.038,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) x)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.072,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.03,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add x x))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.068,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.028,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (add x x) x))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.046,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.016,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) x))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.052,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.026,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add x x)))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.066,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.032,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add (mod x 3) x)))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.064,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.038,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (mul x (add (mod x 3) x))))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.052,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.04,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.074,
+    "stay_qualified_share": null
+   },
+   {
+    "all_fail_share": 0.032,
+    "children": 500,
+    "exact_credit": 0,
+    "keep_credit_share": 1.0,
+    "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.074,
+    "stay_qualified_share": null
+   }
+  ],
+  "route": {
+   "best_for_exact": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 2.0029521643565077e+26,
+      "decreases": 0,
+      "flat_steps": 6,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       2.0029521643565077e+26
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 7
+     },
+     "guided_route_cost_estimate": 46250.94527027027,
+     "magnitude": {
+      "crossing_cost_estimate": 105237096.30720003,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       2372.8949999999995,
+       2668.14,
+       32566952.92575602,
+       9230.760000000002,
+       105237096.30720003
+      ],
+      "strict_increases": 5,
+      "values": [
+       0.090332,
+       0.093407,
+       0.119461,
+       0.119461,
+       0.119467,
+       0.122322,
+       0.120514,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 3.163613662364561e+19,
+      "decreases": 0,
+      "flat_steps": 5,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       6331216.065299999,
+       3.163613662364561e+19
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.041667,
+       0.041667,
+       0.041667,
+       0.041667,
+       0.041667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.090332,
+      "partial": 0.0,
+      "program": "(map (lam x (mul x (add (mod x 3) (add (mod x 3) x)))) xs)",
+      "size": 13
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.093407,
+      "p_eff": 0.00042142614822821917,
+      "p_none": 0.256,
+      "p_single": 0.00031354105428179507,
+      "partial": 0.0,
+      "program": "(map (lam x (mul (add x x) (add (mod x 3) (add (mod x 3) x)))) xs)",
+      "size": 15
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.119461,
+      "p_eff": 0.00037479292690788344,
+      "p_none": 0.268,
+      "p_single": 0.00027434842249657066,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add x x) (add (mod (add x x) 3) (add (mod x 3) x)))) xs)",
+      "size": 17
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.119461,
+      "p_eff": 0.00018924108188615052,
+      "p_none": 0.255,
+      "p_single": 0.00014098460600518213,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)",
+      "size": 19
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.119467,
+      "p_eff": 0.00016225849795992831,
+      "p_none": 0.218,
+      "p_single": 0.00012688614540466394,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)",
+      "size": 21
+     },
+     {
+      "exact": 0.0,
+      "i": 5,
+      "magnitude": 0.122322,
+      "p_eff": 0.00010833344166677498,
+      "p_none": 0.223,
+      "p_single": 8.417508417508417e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 23
+     },
+     {
+      "exact": 0.0,
+      "i": 6,
+      "magnitude": 0.120514,
+      "p_eff": 0.00010126049058682479,
+      "p_none": 0.238,
+      "p_single": 7.716049382716049e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 25
+     },
+     {
+      "exact": 1.0,
+      "i": 7,
+      "magnitude": 1.0,
+      "p_eff": 9.384067355081847e-05,
+      "p_none": 0.241,
+      "p_single": 7.122507122507122e-05,
+      "partial": 1.0,
+      "program": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 27
+     }
+    ]
+   },
+   "best_for_magnitude": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 2.1722217482793033e+26,
+      "decreases": 0,
+      "flat_steps": 6,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       2.1722217482793033e+26
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 7
+     },
+     "guided_route_cost_estimate": 46303.329831081086,
+     "magnitude": {
+      "crossing_cost_estimate": 105237096.30720003,
+      "decreases": 1,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       2385.6524999999997,
+       4867.355675675675,
+       3124.6762500000004,
+       6163.005405405404,
+       9230.760000000002,
+       105237096.30720003
+      ],
+      "strict_increases": 6,
+      "values": [
+       0.092207,
+       0.092456,
+       0.092915,
+       0.119461,
+       0.119467,
+       0.122322,
+       0.120514,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     },
+     "partial": {
+      "crossing_cost_estimate": 5986856721356766.0,
+      "decreases": 0,
+      "flat_steps": 5,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       36283175786.22502,
+       5986856721356766.0
+      ],
+      "strict_increases": 2,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.041667,
+       0.041667,
+       0.041667,
+       0.041667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 4
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.092207,
+      "partial": 0.0,
+      "program": "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) x))) xs)",
+      "size": 13
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.092456,
+      "p_eff": 0.0004191725324622929,
+      "p_none": 0.252,
+      "p_single": 0.00031354105428179507,
+      "partial": 0.0,
+      "program": "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) (add x x)))) xs)",
+      "size": 15
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.092915,
+      "p_eff": 0.0002054503649686916,
+      "p_none": 0.228,
+      "p_single": 0.0001586076817558299,
+      "partial": 0.0,
+      "program": "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)",
+      "size": 17
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.119461,
+      "p_eff": 0.000320033155434903,
+      "p_none": 0.238,
+      "p_single": 0.00024386526444139612,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)",
+      "size": 19
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.119467,
+      "p_eff": 0.00016225849795992831,
+      "p_none": 0.218,
+      "p_single": 0.00012688614540466394,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (add (mod x 3) x)))) xs)",
+      "size": 21
+     },
+     {
+      "exact": 0.0,
+      "i": 5,
+      "magnitude": 0.122322,
+      "p_eff": 0.00010833344166677498,
+      "p_none": 0.223,
+      "p_single": 8.417508417508417e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 23
+     },
+     {
+      "exact": 0.0,
+      "i": 6,
+      "magnitude": 0.120514,
+      "p_eff": 0.00010126049058682479,
+      "p_none": 0.238,
+      "p_single": 7.716049382716049e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 25
+     },
+     {
+      "exact": 1.0,
+      "i": 7,
+      "magnitude": 1.0,
+      "p_eff": 9.384067355081847e-05,
+      "p_none": 0.241,
+      "p_single": 7.122507122507122e-05,
+      "partial": 1.0,
+      "program": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 27
+     }
+    ]
+   },
+   "best_for_partial": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 1.2751909221237845e+27,
+      "decreases": 0,
+      "flat_steps": 6,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1.2751909221237845e+27
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 7
+     },
+     "guided_route_cost_estimate": 64967.34481418919,
+     "magnitude": {
+      "crossing_cost_estimate": 776616161976.7665,
+      "decreases": 3,
+      "flat_steps": 0,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       2420.7356249999993,
+       6445.44,
+       776616161976.7665,
+       105237096.30720003
+      ],
+      "strict_increases": 4,
+      "values": [
+       0.090365,
+       0.117477,
+       0.131428,
+       0.131297,
+       0.097447,
+       0.122322,
+       0.120514,
+       1.0
+      ],
+      "widest_unrewarded_segment": 3
+     },
+     "partial": {
+      "crossing_cost_estimate": 146770675.0851892,
+      "decreases": 1,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       2420.7356249999993,
+       6445.44,
+       5291.357837837838,
+       146770675.0851892,
+       105237096.30720003
+      ],
+      "strict_increases": 5,
+      "values": [
+       0.0,
+       0.041667,
+       0.055556,
+       0.058333,
+       0.0,
+       0.041667,
+       0.041667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 2
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.090365,
+      "partial": 0.0,
+      "program": "(map (lam x (mul x (add (mod (add (mod x 3) x) 3) 2))) xs)",
+      "size": 13
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.117477,
+      "p_eff": 0.00041309756822370894,
+      "p_none": 0.241,
+      "p_single": 0.00031354105428179507,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) 2))) xs)",
+      "size": 15
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.131428,
+      "p_eff": 0.00015514844603316453,
+      "p_none": 0.254,
+      "p_single": 0.00011574074074074075,
+      "partial": 0.055556,
+      "program": "(map (lam x (mul (add x x) (add (mod (add (mod x 3) x) 3) (mul x 2)))) xs)",
+      "size": 17
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.131297,
+      "p_eff": 0.00018898740751364896,
+      "p_none": 0.254,
+      "p_single": 0.00014098460600518213,
+      "partial": 0.058333,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x 2)))) xs)",
+      "size": 19
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.097447,
+      "p_eff": 0.00016500148947290499,
+      "p_none": 0.231,
+      "p_single": 0.00012688614540466394,
+      "partial": 0.0,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add 2 x))))) xs)",
+      "size": 21
+     },
+     {
+      "exact": 0.0,
+      "i": 5,
+      "magnitude": 0.122322,
+      "p_eff": 4.12926584130901e-05,
+      "p_none": 0.245,
+      "p_single": 3.1175957101883024e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 23
+     },
+     {
+      "exact": 0.0,
+      "i": 6,
+      "magnitude": 0.120514,
+      "p_eff": 0.00010126049058682479,
+      "p_none": 0.238,
+      "p_single": 7.716049382716049e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 25
+     },
+     {
+      "exact": 1.0,
+      "i": 7,
+      "magnitude": 1.0,
+      "p_eff": 9.384067355081847e-05,
+      "p_none": 0.241,
+      "p_single": 7.122507122507122e-05,
+      "partial": 1.0,
+      "program": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 27
+     }
+    ]
+   },
+   "canonical": {
+    "gradient": {
+     "exact": {
+      "crossing_cost_estimate": 1.5546719281299159e+44,
+      "decreases": 0,
+      "flat_steps": 12,
+      "monotone_nondecreasing": true,
+      "segment_costs": [
+       1.5546719281299159e+44
+      ],
+      "strict_increases": 1,
+      "values": [
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       0.0,
+       1.0
+      ],
+      "widest_unrewarded_segment": 13
+     },
+     "guided_route_cost_estimate": 58906.5877179331,
+     "magnitude": {
+      "crossing_cost_estimate": 971418379108.6498,
+      "decreases": 6,
+      "flat_steps": 1,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       128058614979.8178,
+       2381918.5619999995,
+       4148.60108108108,
+       2777.49,
+       45534707.52518919,
+       971418379108.6498
+      ],
+      "strict_increases": 6,
+      "values": [
+       0.098822,
+       0.098822,
+       0.090873,
+       0.089255,
+       0.100181,
+       0.094336,
+       0.097632,
+       0.097686,
+       0.132755,
+       0.120334,
+       0.123148,
+       0.122322,
+       0.120514,
+       1.0
+      ],
+      "widest_unrewarded_segment": 4
+     },
+     "partial": {
+      "crossing_cost_estimate": 4.423325177730572e+19,
+      "decreases": 3,
+      "flat_steps": 7,
+      "monotone_nondecreasing": false,
+      "segment_costs": [
+       128058614979.8178,
+       27446128290278.996,
+       4.423325177730572e+19
+      ],
+      "strict_increases": 3,
+      "values": [
+       0.016667,
+       0.016667,
+       0.0,
+       0.0,
+       0.016667,
+       0.0,
+       0.0,
+       0.0,
+       0.058333,
+       0.041667,
+       0.041667,
+       0.041667,
+       0.041667,
+       1.0
+      ],
+      "widest_unrewarded_segment": 5
+     }
+    },
+    "steps": [
+     {
+      "exact": 0.0,
+      "i": 0,
+      "magnitude": 0.098822,
+      "partial": 0.016667,
+      "program": "xs",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 1
+     },
+     {
+      "exact": 0.0,
+      "i": 1,
+      "magnitude": 0.098822,
+      "p_eff": 0.019396113146113145,
+      "p_none": 0.376,
+      "p_single": 0.012103174603174602,
+      "partial": 0.016667,
+      "program": "(map (lam x x) xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 3
+     },
+     {
+      "exact": 0.0,
+      "i": 2,
+      "magnitude": 0.090873,
+      "p_eff": 0.002063189356173397,
+      "p_none": 0.385,
+      "p_single": 0.0012688614540466393,
+      "partial": 0.0,
+      "program": "(map (lam x (add x x)) xs)",
+      "share_same_size_with_exact_credit_ge": 1.0,
+      "size": 5
+     },
+     {
+      "exact": 0.0,
+      "i": 3,
+      "magnitude": 0.089255,
+      "p_eff": 0.000610322969719403,
+      "p_none": 0.307,
+      "p_single": 0.00042295381801554636,
+      "partial": 0.0,
+      "program": "(map (lam x (add (mod x 3) x)) xs)",
+      "size": 7
+     },
+     {
+      "exact": 0.0,
+      "i": 4,
+      "magnitude": 0.100181,
+      "p_eff": 0.00031972580315121755,
+      "p_none": 0.276,
+      "p_single": 0.0002314814814814815,
+      "partial": 0.016667,
+      "program": "(map (lam x (mul (add (mod x 3) x) x)) xs)",
+      "size": 9
+     },
+     {
+      "exact": 0.0,
+      "i": 5,
+      "magnitude": 0.094336,
+      "p_eff": 0.00058762714323228,
+      "p_none": 0.253,
+      "p_single": 0.0004389574759945131,
+      "partial": 0.0,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add x x))) xs)",
+      "size": 11
+     },
+     {
+      "exact": 0.0,
+      "i": 6,
+      "magnitude": 0.097632,
+      "p_eff": 0.0007144490169181527,
+      "p_none": 0.272,
+      "p_single": 0.0005201188843164151,
+      "partial": 0.0,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (add x x) x))) xs)",
+      "size": 13
+     },
+     {
+      "exact": 0.0,
+      "i": 7,
+      "magnitude": 0.097686,
+      "p_eff": 0.00024104510905141325,
+      "p_none": 0.248,
+      "p_single": 0.00018126592200666276,
+      "partial": 0.0,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) x))) xs)",
+      "size": 15
+     },
+     {
+      "exact": 0.0,
+      "i": 8,
+      "magnitude": 0.132755,
+      "p_eff": 0.00036003729986426597,
+      "p_none": 0.238,
+      "p_single": 0.00027434842249657066,
+      "partial": 0.058333,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add x x)))) xs)",
+      "size": 17
+     },
+     {
+      "exact": 0.0,
+      "i": 9,
+      "magnitude": 0.120334,
+      "p_eff": 0.0001840530104506294,
+      "p_none": 0.234,
+      "p_single": 0.00014098460600518213,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (add (mod x 3) x)))) xs)",
+      "size": 19
+     },
+     {
+      "exact": 0.0,
+      "i": 10,
+      "magnitude": 0.123148,
+      "p_eff": 0.00011932035127911417,
+      "p_none": 0.224,
+      "p_single": 9.25925925925926e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (add (mod x 3) x) (mul x (add (mod x 3) x))))) xs)",
+      "size": 21
+     },
+     {
+      "exact": 0.0,
+      "i": 11,
+      "magnitude": 0.122322,
+      "p_eff": 0.00010833344166677498,
+      "p_none": 0.223,
+      "p_single": 8.417508417508417e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (add (mod x 3) x) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 23
+     },
+     {
+      "exact": 0.0,
+      "i": 12,
+      "magnitude": 0.120514,
+      "p_eff": 0.00010126049058682479,
+      "p_none": 0.238,
+      "p_single": 7.716049382716049e-05,
+      "partial": 0.041667,
+      "program": "(map (lam x (mul (add (mod x 3) x) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 25
+     },
+     {
+      "exact": 1.0,
+      "i": 13,
+      "magnitude": 1.0,
+      "p_eff": 9.384067355081847e-05,
+      "p_none": 0.241,
+      "p_single": 7.122507122507122e-05,
+      "partial": 1.0,
+      "program": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)",
+      "size": 27
+     }
+    ]
+   }
+  },
+  "test_n": 40
+ },
+ "classification_route": {
+  "budget": 200000,
+  "crossing_cost_estimate": {
+   "exact": 2.0029521643565077e+26,
+   "magnitude": 105237096.30720003,
+   "partial": 146770675.0851892
+  },
+  "enumeration": "RARITY_LIMIT_BEYOND_16x",
+  "enumeration_crossing_by_seed": [
+   17084715685123564616688156,
+   17084715685123564616688156,
+   17084715685123564616688156,
+   17084715685123564616688156
+  ],
+  "local_search": "REACHABILITY_DESERT_UNANCHORED",
+  "notes": [
+   "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED"
+  ],
+  "route_start_is_generic_start": {
+   "exact": false,
+   "partial": false
+  },
+  "scale": 16,
+  "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+  "widest_unrewarded_segment_search_channel": 7
+ },
+ "cluster": "f:self_compose",
+ "complete": true,
+ "config": {
+  "atlas_params": {
+   "density_max_n": 6,
+   "enum_budget": 200000,
+   "enum_max_size": 8,
+   "max_fill": 3,
+   "mutator_max_size": 28,
+   "rank_max_class": 1000000,
+   "robust_n": 500,
+   "seeds": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  "budget": 200000,
+  "descriptor": "D-BEH",
+  "final_salt": "FINAL",
+  "kcal_seeds": [
+   1000,
+   1001,
+   1002
+  ],
+  "max_fill": 3,
+  "max_size": 28,
+  "qual_params": {
+   "max_pairs": 20,
+   "mutants_per_node": 60,
+   "n_syn": 6,
+   "per_size": 1500,
+   "seed": 0,
+   "walk_n": 6000
+  },
+  "search_salt": "T0",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "cpu_s": 120.56,
+ "driver": "e2-driver-v1",
+ "existence_sealed_expanded": {
+  "dev_ok": true,
+  "exists": true,
+  "size_expanded": 27,
+  "size_promoted": 27,
+  "test_ok": true,
+  "type": "List",
+  "witness": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)"
+ },
+ "family_id": "W8f6a223e-F020-R2",
+ "library_status": "LIBRARY_UNAVAILABLE(constituent not acquired)",
+ "pid": 16252,
+ "representation": "BASE_GRAMMAR (LIBRARY_UNAVAILABLE(constituent not acquired))",
+ "root": "C:\\Prometheus-worktrees\\aphrodite-beta01\\roles\\Aphrodite\\beta04\\foundry\\production",
+ "root_label": "PRODUCTION",
+ "rung": "R2",
+ "shard": "atlas/W8f6a223e-F020-R2",
+ "shard_cpu_s": 120.56,
+ "witness_used": "(map (lam x (mul (mul x (add (mod x 3) x)) (add (mod (mul x (add (mod x 3) x)) 3) (mul x (add (mod x 3) x))))) xs)"
+}

@@ -1,0 +1,171 @@
+{
+ "controls_ok": true,
+ "cpu_s": 4.4,
+ "descriptors": {
+  "C-FIT": {
+   "G": "PASS",
+   "OVERSPLIT_WARNING": false,
+   "R1": "FAIL",
+   "R1_by_intermediate_score": {
+    "0": 0.0
+   },
+   "R1_by_prune_depth": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0
+   },
+   "R1_separation": 0.0,
+   "R1c": "FAIL",
+   "R1c_given_trace_differs": 0.0,
+   "R2": "PASS",
+   "R2_invariance": 1.0,
+   "cells_per_distinct_trace": 0.0025549310168625446,
+   "granularity_cells_per_genotype": 0.0006469979296066253,
+   "pairs_R1c": 233,
+   "pool_cells": 5
+  },
+  "D-BEH": {
+   "G": "PASS",
+   "OVERSPLIT_WARNING": false,
+   "R1": "PASS",
+   "R1_by_intermediate_score": {
+    "0": 0.9667
+   },
+   "R1_by_prune_depth": {
+    "1": 0.9917,
+    "2": 0.94,
+    "3": 0.95
+   },
+   "R1_separation": 0.9666666666666667,
+   "R1c": "PASS",
+   "R1c_given_trace_differs": 0.9957081545064378,
+   "R2": "PASS",
+   "R2_invariance": 1.0,
+   "cells_per_distinct_trace": 0.7787429739397036,
+   "granularity_cells_per_genotype": 0.1972049689440994,
+   "pairs_R1c": 233,
+   "pool_cells": 1524,
+   "verdict": "QUALIFIED"
+  },
+  "D-CERT": {
+   "G": "PASS",
+   "OVERSPLIT_WARNING": false,
+   "R1": "FAIL",
+   "R1_by_intermediate_score": {
+    "0": 0.65
+   },
+   "R1_by_prune_depth": {
+    "1": 0.7417,
+    "2": 0.58,
+    "3": 0.45
+   },
+   "R1_separation": 0.65,
+   "R1c": "FAIL",
+   "R1c_given_trace_differs": 0.6695278969957081,
+   "R2": "PASS",
+   "R2_invariance": 1.0,
+   "cells_per_distinct_trace": 0.18957588145120083,
+   "granularity_cells_per_genotype": 0.04800724637681159,
+   "pairs_R1c": 233,
+   "pool_cells": 371,
+   "verdict": "FAIL"
+  },
+  "D-RES": {
+   "G": "PASS",
+   "OVERSPLIT_WARNING": false,
+   "R1": "FAIL",
+   "R1_by_intermediate_score": {
+    "0": 0.8708
+   },
+   "R1_by_prune_depth": {
+    "1": 0.8833,
+    "2": 0.85,
+    "3": 0.9
+   },
+   "R1_separation": 0.8708333333333333,
+   "R1c": "FAIL",
+   "R1c_given_trace_differs": 0.8969957081545065,
+   "R2": "PASS",
+   "R2_invariance": 1.0,
+   "cells_per_distinct_trace": 0.13592233009708737,
+   "granularity_cells_per_genotype": 0.034420289855072464,
+   "pairs_R1c": 233,
+   "pool_cells": 266,
+   "verdict": "FAIL"
+  },
+  "GENO": {
+   "G": "FAIL",
+   "OVERSPLIT_WARNING": true,
+   "R1": "PASS",
+   "R1_by_intermediate_score": {
+    "0": 1.0
+   },
+   "R1_by_prune_depth": {
+    "1": 1.0,
+    "2": 1.0,
+    "3": 1.0
+   },
+   "R1_separation": 1.0,
+   "R1c": "PASS",
+   "R1c_given_trace_differs": 1.0,
+   "R2": "FAIL",
+   "R2_invariance": 0.0,
+   "cells_per_distinct_trace": 3.948901379662749,
+   "granularity_cells_per_genotype": 1.0,
+   "pairs_R1c": 233,
+   "pool_cells": 7728
+  },
+  "TRACE": {
+   "G": "PASS",
+   "OVERSPLIT_WARNING": false,
+   "R1": "PASS",
+   "R1_by_intermediate_score": {
+    "0": 0.9708
+   },
+   "R1_by_prune_depth": {
+    "1": 0.9917,
+    "2": 0.94,
+    "3": 1.0
+   },
+   "R1_separation": 0.9708333333333333,
+   "R1c": "PASS",
+   "R1c_given_trace_differs": 1.0,
+   "R2": "PASS",
+   "R2_invariance": 1.0,
+   "cells_per_distinct_trace": 1.0,
+   "granularity_cells_per_genotype": 0.25323498964803315,
+   "pairs_R1c": 233,
+   "pool_cells": 1957
+  }
+ },
+ "family_id": "ATLAS-TOY-CREDIT",
+ "intermediate_scores": [
+  0
+ ],
+ "intermediates": 12,
+ "intermediates_with_no_equal_score_other": 0,
+ "label": "PLANTED INSTRUMENT CALIBRATION (hand-made witness and dev design); NOT DISCOVERY",
+ "lattice_size": 13,
+ "lattice_truncated": false,
+ "pairs_R1": 240,
+ "pairs_R2": 68,
+ "pool_score_hist": {
+  "0": 7714,
+  "1": 9,
+  "10": 3,
+  "2": 1,
+  "3": 1
+ },
+ "pool_size": 7728,
+ "qualified": [
+  "D-BEH"
+ ],
+ "synonym_semantic_mismatches": 0,
+ "thresholds": {
+  "G_PASS_max": 0.5,
+  "MIN_PAIRS": 20,
+  "R1_PASS": 0.9,
+  "R2_PASS": 0.9
+ },
+ "witness": "(map (lam x (mod (mul x x) 3)) xs)"
+}

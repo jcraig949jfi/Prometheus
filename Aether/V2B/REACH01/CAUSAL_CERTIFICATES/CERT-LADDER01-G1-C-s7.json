@@ -1,0 +1,108 @@
+{
+ "id": "CERT-LADDER01-G1-C-s7",
+ "kind": "DISCOVERED AUTONOMOUS COMBINE (not COMPOSE)",
+ "semantics": "aeth01.op_xor, execution-only regime",
+ "geometry": "G1 A(8,1) B(10,1) out(9,6)",
+ "replay": {
+  "search_unit": "LADDER01/search/G1_C_s7.json",
+  "runner": "r3_frontier.v2",
+  "seed": 7,
+  "arm": "C",
+  "found_at_eval": 19623
+ },
+ "certificate": {
+  "a_only": 0,
+  "b_only": 2,
+  "shared": 5,
+  "COMPOSE": false,
+  "position_combine_frac": 1.0,
+  "other_seeds_combine": [
+   true,
+   true
+  ],
+  "AUTONOMOUS": true
+ },
+ "minimal_sufficient_cells": [
+  [
+   6,
+   0
+  ],
+  [
+   6,
+   1
+  ],
+  [
+   6,
+   2
+  ],
+  [
+   6,
+   3
+  ],
+  [
+   7,
+   0
+  ],
+  [
+   7,
+   3
+  ],
+  [
+   8,
+   0
+  ]
+ ],
+ "states": [
+  [
+   1,
+   157,
+   182,
+   128,
+   21
+  ],
+  [
+   1,
+   205,
+   13,
+   135,
+   8
+  ],
+  [
+   1,
+   121,
+   106,
+   32,
+   26
+  ],
+  [
+   1,
+   190,
+   43,
+   1,
+   21
+  ],
+  [
+   1,
+   212,
+   35,
+   57,
+   13
+  ],
+  [
+   1,
+   57,
+   108,
+   46,
+   31
+  ],
+  [
+   1,
+   156,
+   151,
+   88,
+   11
+  ]
+ ],
+ "necessary_only_combine_frac": 1.0,
+ "function_table_inputs_0F_33_55_AA": "rows a, cols b: [[46,46,46,47],[46,46,46,47],[0,0,0,1],[46,46,46,47]] = [46 unless a=0x55] XOR [b=0xAA]"
+}

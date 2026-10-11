@@ -92,7 +92,8 @@ def load_arms(rng, n_per_arm=N_PER_ARM):
             arm = lane_arm.get(e.get("lane"))
             if arm:
                 arms[arm].append({"id": e["id"], "genome": e["executableRepresentation"]})
-    for line in open(f"theseus/controls/arms_{REF}.jsonl", encoding="utf-8"):
+    arms_path = f"theseus/controls/arms_{REF}.jsonl"  # absent for --ecology-only runs (THESEUS-31c)
+    for line in (open(arms_path, encoding="utf-8") if os.path.exists(arms_path) else []):
         r = json.loads(line)
         if r["arm"] in ("B", "C", "P", "R", "A") and r["viable"]:
             arms[r["arm"]].append({"id": r["id"], "genome": r["genome"]})
