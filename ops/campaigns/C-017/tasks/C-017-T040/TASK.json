@@ -40,7 +40,7 @@
     "rso/z80/challenge/"
   ],
   "kind": "document",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,18 @@
       "by": "Pallas[harry1-b22b3a2d]",
       "at_utc": "2026-10-11T19:17:29Z",
       "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T19:19:15Z",
+      "note": "merged pallas/c017-t040 (562247184): only rso/z80/challenge/ added; freeze check OK; reproduced the CDIST unit answer myself (kin tags PPPP...KKK, label ENDO, reads_nbr 2). Set committed before runs. INSTRUMENT NOT CLOSED (P tag admits affine-invariant target-dependent writes), INFERENCE NOT CLOSED (Q2 passed by a constant; Q4 vacuous on ENV; arm set recipe-separable -- b4 0 errors; E3 unpinned), INTERPRETATION narrowing required. Nothing blocking -> the one repair round C-017-T041, then re-check C-017-T042"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T19:19:15Z",
+      "note": "adjudicated; repair round = C-017-T041"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

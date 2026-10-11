@@ -1,0 +1,53 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-017-T042",
+  "campaign_id": "C-017",
+  "title": "Short Q3 re-check of the repaired Z80 assay (v1.1.0)",
+  "objective": "Confirm the repair closes REPORT s4 without opening a new hole; no new open-ended challenge.",
+  "parent_objective": "C-017 RSO-NATIVE-ENGINE-3-Z80ATLAS",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-017-T041"
+  ],
+  "owns": [
+    "rso/z80/challenge/R2/"
+  ],
+  "reads": [
+    "rso/z80/",
+    "rso/z80/challenge/REPORT.md"
+  ],
+  "problem": "Re-run W1-W5 and the CDIST unit + arm, b4, the Q2 constant and W3 against the repaired rule; check the amendment preceded the re-freeze; check each new test is RED on its mutant; one new adversarial genome against the repaired K1 comparator. Report CLOSED / NOT CLOSED per surface. No implementation repair.",
+  "non_goals": [
+    "No confirmatory run (seeds 17_050_xxx untouched; no `assay confirm`)",
+    "No edit to archaeon/, prometheus/z80atlas/ or roles/Archaeon/",
+    "No Archaeon registered seed or evidence bundle",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "re-check REPORT under rso/z80/challenge/R2/"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/z80/challenge/R2/"
+  ],
+  "kind": "document",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T19:19:15Z",
+      "note": "from C-017-T040 adjudication"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 s9 (one bounded repair round) (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-fable-5-1",
+  "red_required": false,
+  "notes": "red_required false: adversarial re-check"
+}
