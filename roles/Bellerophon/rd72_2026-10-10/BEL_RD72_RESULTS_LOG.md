@@ -210,3 +210,35 @@ Failure classification (directive F list):
 - insufficient search duration: 1,000 ticks; LADDER2 ran 20,000 ticks and got 0/240 for COND_ONE.
 - Not instrument blindness: competence is checked on every birth.
 - Not inaccessible: an assembly route exists and was used once.
+
+## F1 -- COND_ONE desert stress test with a distance ladder (prereg s10; CONFIRMATORY; completed 2026-10-11T08:09Z)
+240 runs, 0 voids, plan sha256 d57a6102..., pin 8bc7f5384 (resumed once with more workers at 06:30Z, no plan change);
+analysis tools/analyze_f1.py; receipts receipts/F1_analysis.json, receipts/F1_baseline_geometry.json.
+| founder | paid: crossed / FUNC at end / established | unpaid: crossed / FUNC at end / established | one-step routes to target |
+|---|---|---|---|
+| W0 (the composite itself) | BOTH kept to the end 1/14 | BOTH lost before the first census in 20/20 | (is the target) |
+| KO1 (1 knockout) | 0 / 10 / 13 | 0 / 5 / 6 | SUB 1-103 |
+| KO2 | 0 / 3 / 4 | 0 / 3 / 5 | 0 |
+| KO4 | 0 / 6 / 8 | 0 / 4 / 5 | not scanned |
+| ECHOH (copier + ECHO) | 0 / 7 / 10 | 0 / 3 / 5 | 0 |
+| REP (bare copier) | 0 / 3 / 4 | 0 / 1 / 5 | 0 |
+- F1-P0 (the setting keeps a composite): 1 of 14 surviving paid W0 worlds holds a FUNC BOTH at the end. FAILS.
+- F1-P1 (KO1 > REP) and F1-P2 (KO1 paid > unpaid): 0 vs 0. FAIL.
+FROZEN INTERPRETATION (s10): the setting DESTROYS composites. The E1b null and the C3 NOT_TESTABLE are reclassified as
+DESTRUCTIVE SELECTION / INSTABILITY, not as inaccessibility. Even founders one substitution from the composite never
+produced one in 2,000 ticks.
+Trajectories (descriptive, from the census): in paid W0 worlds the composite persists 100-1,800 ticks and decays DOWNHILL.
+- The survivors at the end are the same ECHO (LO) and INC (HI) replicators E1b evolved, in 12 of the 13 that lost it.
+- One world (f1_00011) still held 47 BOTH carriers at tick 2,000, next to 100 HI and 34 LO.
+- Unpaid W0 worlds lose it before tick 100.
+Mechanism hypothesis (POST HOC, from reading the kernel after the outcome):
+- Payment is per interaction, on ONE uniform random input (world.py: task.inputs(rng); coupling.py: correct -> BONUS).
+  ECHO and INC are each paid on about 50% of interactions, the composite on 100%.
+- The composite earns at most twice a half-solver's bonus but carries 10 competence-critical bytes against 2-6, so most
+  of its mutations land on a half-solver.
+- Under this payment rule, the half-solvers are a mutation-selection attractor next to the composite. The composite is
+  downhill-unstable, and the step back up (one substitution) is not taken because a half-solver's one-step mutants
+  toward the composite are rare (KO1 SUB routes: 1-2 for most) and selected only 2:1.
+- Untested here. The decisive test is the same ladder with ALL-OR-NOTHING payment (a bonus only for a full-panel
+  correct answer), which removes the half-credit attractor; or a payment on both halves per interaction.
+  -> NEXT_CAMPAIGN #1.

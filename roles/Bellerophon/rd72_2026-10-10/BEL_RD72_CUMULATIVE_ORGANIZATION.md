@@ -1,6 +1,6 @@
 # BEL-RD-72 CUMULATIVE ORGANIZATION (Workstream C)
 
-Status: C1 (as E1 / E1b), C2, C2R and C3 complete; F1 (the desert follow-up) is reported in s5 when complete. Every number
+Status: C1 (as E1 / E1b), C2, C2R, C3 and F1 complete. Every number
 below is from a frozen analysis unless marked descriptive or exploratory; receipts in receipts/, prereg sections cited.
 
 ## 1. The question as tested
@@ -56,13 +56,27 @@ composite needs a compare-and-branch.
 - Limits: re-acquisition = first appearance (some do not last to the next 100-tick census); the NEAR arm removes more
   organisms (no size-matched sham).
 
-## 5. F1 -- crossing the composite desert from controlled distances (prereg s10)
-(To be added on completion.)
+## 5. F1 -- crossing the composite desert from controlled distances (prereg s10; RESULTS_LOG F1)
+Founders at controlled distances from a verified composite witness:
+- W0 (the composite itself), 1, 2 or 4 knockouts, an ECHO hybrid, or the bare copier;
+- payment ON and OFF, 20 worlds each.
+Results:
+- The planted composite is NOT kept. Paid, it survives to the end in 1 of 14 worlds that keep replicators and decays
+  into ECHO / INC half-solvers. Unpaid, it is gone before tick 100.
+- 0 crossings from any founder, including those one substitution away.
+By the frozen rule, the E1b null is DESTRUCTIVE SELECTION / INSTABILITY, not inaccessibility. The composite is
+downhill-unstable in this setting.
+POST HOC mechanism hypothesis: single-input per-interaction payment gives each half-solver half the composite's income
+with a fraction of its mutational target, which makes the half-solvers an attractor. NEXT_CAMPAIGN #1 tests
+all-or-nothing payment.
 
 ## 6. Disposition for Workstream C
 - Accumulation of two INDEPENDENT minimal capabilities in one population, kept by payment: observed.
-- Composition of them into one organism: not observed; geometrically far.
-- Dependency of the second mechanism on the first: not testable in this substrate at this horizon.
+- Composition of them into one organism: not observed; geometrically far. A PLANTED composite is not maintained either
+  (F1): in this setting the composite is unstable, so cumulative organization is limited by maintenance, not only by
+  reachability.
+- Dependency of the second mechanism on the first: not testable in this substrate at this horizon. The reason is now
+  known: the substrate's payment structure does not maintain the composite (F1).
 - Lineage-independent persistence: real, confirmed, and environmental (stored near-functional material) for a minimal
   capability.
 - No case was found in which an evolved mechanism changed the accessibility of a future computational mechanism (the
