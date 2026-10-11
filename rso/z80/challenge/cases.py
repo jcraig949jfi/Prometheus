@@ -72,7 +72,17 @@ def specnoise(rec):
     r["spec"].update(scheduler_reason="noise", stage="late", parents=["x"], family="y", grammar="0000000000000000")
     if r["spec"].get("transplant"):
         r["spec"]["transplant"]["from_run"] = "forged-run"
-        r["spec"]["transplant"]["tapes"] = list(r["spec"]["transplant"]["tapes"]) + ["ff" * S.G]      # beyond N: never placed
+    return r
+
+
+def extratape(rec):
+    """One tape appended to transplant.tapes: PLACED at cell len(tapes) when len(tapes) < N (the 13-tape arms), so the replay must
+    refuse; beyond N (the 128-tape arm) it is never placed, so the classification is unchanged. (First version of this audit
+    assumed 'beyond N' for every arm; the two first shards showed the refusals, which are the instrument being right.)"""
+    r = copy.deepcopy(assay.blinded(rec))
+    if not r["spec"].get("transplant"):
+        return None
+    r["spec"]["transplant"]["tapes"] = list(r["spec"]["transplant"]["tapes"]) + ["ff" * S.G]
     return r
 
 
@@ -97,11 +107,14 @@ def one_row(arm, seed, case, epochs=None, forgeries=()):
         c1 = assay.classify(strip(rec)); c2 = assay.classify(specnoise(rec))
         base["strip_equal"] = all(c1[k] == base[k] for k in assay.KEYS)
         base["specnoise_equal"] = all(c2[k] == base[k] for k in assay.KEYS)
+        xt = extratape(rec)
+        base["extratape"] = "" if xt is None else ("placed:" + assay.classify(xt)["refused"] if len(sp["transplant"]["tapes"]) < sp["population"]["N"]
+                                                   else ("beyondN:same" if all(assay.classify(xt)[k] == base[k] for k in assay.KEYS) else "beyondN:DIFFERENT"))
     rows = [base]
     for kind in forgeries:
         fr = assay.row(assay.forge(rec, kind), arm, kind, base); fr.update(case="S4", epochs_run=sp["budget"]["max_epochs"])
         rows.append(fr)
-    base["wall_s"] = round(time.time() - t0, 1)
+    base["wall_ds"] = int(round((time.time() - t0) * 10))        # deciseconds, an int (receipt-canonical refuses floats)
     return rows
 
 
@@ -113,6 +126,9 @@ def jobs():
             J.append((a, sd, "S3", None, fk))
     for sd in C.CDIST_SEEDS:
         J.append((C.CDIST_ARM, sd, "B1", None, ()))
+    for ep in (5, 10):                                                   # post-hoc probe B1h (prediction committed before it ran)
+        for sd in C.CDIST_SEEDS:
+            J.append((C.CDIST_ARM, sd, "B1h", ep, ()))
     for ep in (20, 40, 60):
         for sd in C.HZ_RECON_SEEDS:
             J.append((S.ARM["RECON_ENDO_IMPL"], sd, "B5", ep, ()))
@@ -132,7 +148,7 @@ def records(shard):
             continue
         rs = one_row(arm, sd, case, ep, fk); rows += rs
         print(case, arm["name"], sd, ep or arm["epochs"], rs[0]["cls"], rs[0]["origin"], "n_func", rs[0]["n_func"], "pp", rs[0]["n_pp_func"],
-              "b3", rs[0]["b3"], "b4", rs[0]["b4"], "eq", rs[0]["replay_equal"], "%.1fs" % rs[0]["wall_s"], flush=True)
+              "b3", rs[0]["b3"], "b4", rs[0]["b4"], "eq", rs[0]["replay_equal"], "%.1fs" % (rs[0]["wall_ds"] / 10), flush=True)
     path = os.path.join(HERE, "rows.%d-%d.jsonl.gz" % shard)
     with gzip.open(path, "wt", encoding="utf-8", newline="\n") as f:
         for r in rows:
@@ -246,7 +262,8 @@ def score():
     S3 = [r for r in rows if r["case"] == "S3" and not r["forgery"]]
     res["S3"] = dict(n=len(S3), replay_equal=sum(r["replay_equal"] for r in S3), refused=sum(r["cls"] == "REFUSED" for r in S3),
                      q1=q1_key(rows, "cls"), per_arm={a: sorted(r["cls"] for r in S3 if r["arm"] == a) for a in S.NAMES},
-                     strip_equal=sum(r.get("strip_equal", False) for r in S3), specnoise_equal=sum(r.get("specnoise_equal", False) for r in S3))
+                     strip_equal=sum(r.get("strip_equal", False) for r in S3), specnoise_equal=sum(r.get("specnoise_equal", False) for r in S3),
+                     extratape=sorted(set(r.get("extratape", "") for r in S3)))
     F = [r for r in rows if r["case"] == "S4"]
     res["S4"] = {k: dict(n=len([r for r in F if r["forgery"] == k]),
                          bad=sum((r["cls"] != r["source_cls"] or r["origin"] != r["source_origin"] or r["refused"] != "") if k in analysis.INVARIANT
@@ -255,6 +272,11 @@ def score():
     res["B1"] = dict(unit=unit_cases(cases)["B1u"], n=len(B1), cls=sorted(r["cls"] for r in B1), n_func=[r["n_func"] for r in B1], n_pp_func=[r["n_pp_func"] for r in B1],
                      n_ENDO=[r["n_ENDO"] for r in B1], n_ENV=[r["n_ENV"] for r in B1], n_INS=[r["n_INS"] for r in B1], replay_equal=sum(r["replay_equal"] for r in B1),
                      b3=sorted(r["b3"] for r in B1), b4=sorted(r["b4"] for r in B1), endo_runs=sum(r["cls"] == "ENDO" for r in B1))
+    B1h = [r for r in rows if r["case"] == "B1h"]
+    res["B1h"] = {"CDIST@%d" % ep: dict(cls=sorted(r["cls"] for r in B1h if r["epochs_run"] == ep), n_func=[r["n_func"] for r in B1h if r["epochs_run"] == ep],
+                                        n_pp_func=[r["n_pp_func"] for r in B1h if r["epochs_run"] == ep], n_ENDO=[r["n_ENDO"] for r in B1h if r["epochs_run"] == ep],
+                                        n_INS=[r["n_INS"] for r in B1h if r["epochs_run"] == ep], n_ENV=[r["n_ENV"] for r in B1h if r["epochs_run"] == ep],
+                                        endo_runs=sum(r["cls"] == "ENDO" for r in B1h if r["epochs_run"] == ep)) for ep in (5, 10)}
     B5 = [r for r in rows if r["case"] == "B5"]
     res["B5"] = {"%s@%d" % (a, ep): dict(cls=sorted(r["cls"] for r in B5 if r["arm"] == a and r["epochs_run"] == ep),
                                          n_INS=[r["n_INS"] for r in B5 if r["arm"] == a and r["epochs_run"] == ep], n_ENV=[r["n_ENV"] for r in B5 if r["arm"] == a and r["epochs_run"] == ep],
