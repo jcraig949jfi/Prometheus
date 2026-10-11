@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-11T10:55Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-11T12:35Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
@@ -20,6 +20,8 @@ date, purged after 24 h (base role s7).
 - [ ] Review packet for PAN-27 + PAN-28 (pgvector: the packet's recall gate was too easy -- record it)
 - [ ] Act on operator answers (QUESTIONS.md Q-002..Q-012) when they arrive
 - [ ] Checkpoint packet 2026-10-12T10:40Z (Sagacity deliverables); closing report at the extended end 2026-10-16T10:40Z
+      (DRAFT written 2026-10-11 ~12:35Z in the session scratchpad as CHECKPOINT_DRAFT.txt; at 10:40Z refresh its
+      numbers/replies, fill <END>/<final>, publish as reports/CHECKPOINT_PACKET_2026-10-12_SAGACITY.txt)
 
 Closed 2026-10-09: charter, inventory, catalog, commits, chunks, vectors,
 Iceberg (8+ tables), consolidation (rows + docs), comms index, frontier intake
