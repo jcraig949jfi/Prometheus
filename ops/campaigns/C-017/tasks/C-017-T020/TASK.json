@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-017-T020",
+  "campaign_id": "C-017",
+  "title": "Z80 phenomenon selection + world-demand gate (read-only; before any adapter)",
+  "objective": "Decide the first Z80 question with evidence that the world rewards the relevant state, as T020 did for Ensorain.",
+  "parent_objective": "C-017 RSO-NATIVE-ENGINE-3-Z80ATLAS",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/z80/SELECTION.md",
+    "rso/z80/demand/"
+  ],
+  "reads": [
+    "rso/z80/CONTRACT.md",
+    "rso/z80/smoke/",
+    "archaeon/z80atlas/",
+    "rso/registry/",
+    "rso/ensorain/ (the C-016 pattern)"
+  ],
+  "problem": "rso/z80/CONTRACT.md is your own contract; this packet decides WHAT to measure. The candidate question (directive s11) is 'functional inheritance vs environmental reconstruction vs seeded copying'. Known obstacles from the contract: random-founder runs have 0 endogenous births; exact self-copiers arise among random 32-byte tapes at ~9.6e-6 (Archaeon's census); seeded replicators' descendants are all inserted-ancestry. So: (1) state which subjects are native and testable (planted heritable functional programs; the engine's positive_controls(); anything evolved in Archaeon's committed runs -- read, do not re-use their seeds) and whether search accessibility is even in reach at local budgets; (2) a DEMAND GATE: in a fixed world, does functional heredity matter -- e.g. does a heritable ECHO-solving lineage keep the function over generations where a non-heritable or EXTERNAL-reproduction matched arm (grammar.matched_controls) or a broken copier loses it, and does task reward select it? Small re-runs with NEW seeds (declare a range disjoint from 16_021_xxx and every Archaeon range), committed with their commands; (3) map the directive-s4 distinctions (capacity, world demand, search accessibility, inheritance-as-retention, causal dependence, qualification) to concrete native controls, including the lottery prior and the transplant arms (scheduler.py:246-262); (4) the unit of observation and why (lineage vs run; dependent observations); (5) apply the C-016 lessons explicitly (rso/ensorain/ONBOARDING.md s5-s6, rso/registry counterexamples): no self-relative frozen contrast, an endpoint no fixed prior satisfies, a stochastic non-learner-analogue control, structure from liveness not declaration. If the world does not demand functional heredity at local budgets, say so: a legitimate outcome.",
+  "non_goals": [
+    "No edit to archaeon/, prometheus/z80atlas/ or roles/Archaeon/",
+    "No use of Archaeon's registered seeds or the evidence bundle",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "SELECTION.md: decision, subjects, demand-gate numbers, control map, unit, C-016 lessons applied",
+    "re-runs committed with commands"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/z80/SELECTION.md",
+    "rso/z80/demand/"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:28:48Z",
+      "note": "C-017 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:28:48Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: read-only selection"
+}
