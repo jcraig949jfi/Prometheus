@@ -12,6 +12,9 @@ redirected generation toward the INSTRUMENT's blind spots, not toward new mechan
 did not outperform B; its signal mostly said "equivalent to a known mechanism" and, because the engine cannot tell
 perfect memories apart, it effectively rewarded imperfection. The grammar (D) explored failure space far more widely
 (6 signature clusters vs 3-4) but produced no candidate. With n = 8 per arm, every comparison is a count, not a test.
+FAILURE_15.md: SUPPORTED relative to the archive after surviving a preregistered merge test (required decoder capacity
+grows super-linearly with relational dimension, slope 1.6) -- a known learning-theory phenomenon newly placed in the
+archive as a false-negative region of its information-presence instruments.
 
 ## 1. The audit (FAILURE_ATLAS.json, frozen eb0e1c14f)
 The 14 operator candidates are failures of INFERENCE PROCEDURE, not of mechanisms; the archive (incl. Atlas F1-F12,
@@ -74,5 +77,5 @@ D04) are near-perfect memories with mild decay or a flat plateau below 1 -- dist
 ## 6. What NS-01 does and does not establish
 Establishes: an executable, qualified exclusion engine for tier-M classes; that LLM generation under this contract
 concentrates on successful memories regardless of negative-space information; one reproducible, intervention-backed
-failure candidate (F15) in the archive's own measurement family. Does NOT establish that any arm is better than another
-(n = 8), nor that F15 is new in kind (capacity-dependent; may merge with decoder-class dependence).
+failure class (F15, survived its merge test) in the archive's own measurement family. Does NOT establish that any arm is
+better than another (n = 8), nor that F15 is new to science (it is not).

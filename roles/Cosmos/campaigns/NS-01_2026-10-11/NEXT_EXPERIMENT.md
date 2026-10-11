@@ -16,7 +16,8 @@ proposes -- and can exclusion reward causal novelty instead of imperfection?
    de-saturated signature only; a perfect memory is rejected only if its intervention profile matches a witness.
 3. Archive v2 = NS-01 tier M + M-RELATIONAL (F15 candidate; witness W-REL) + the 7 NS-01 reproducibly distinct
    behaviours as additional witnesses. Freeze before generation.
-4. F15 capacity scaling (prereg): decodability of W-REL vs decoder width {256..8192} x pairs M {1, 2, 4, 8, 16, 32, 64}
+4. F15 capacity scaling: DONE in NS-01 (KEEP_DISTINCT, slope 1.6). NS-02 extends it to a second relational family and
+   a structured decoder; original plan was: decodability of W-REL vs decoder width {256..8192} x pairs M {1, 2, 4, 8, 16, 32, 64}
    x n_train {1k, 4k, 16k}. Decide: if required capacity grows at most linearly in M -> MERGE F15 into decoder-class
    dependence (KNOWN); if super-linearly -> keep as a distinct class (relational dilution).
 5. The learning test (directive s12): rerun all four arms (8 each, fresh conversations) with archive v2; primary

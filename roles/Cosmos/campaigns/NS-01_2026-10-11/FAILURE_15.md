@@ -1,4 +1,4 @@
-# FAILURE 15 -- status: NOVEL_FAILURE_CANDIDATE (not SUPPORTED); relative to the frozen NS-01 archive only
+# FAILURE 15 -- status: NOVEL_FAILURE_SUPPORTED relative to the frozen NS-01 archive (not new to science; see end)
 
 Name: RELATIONAL ENCODING DEFEATS FIXED-CAPACITY STATE DECODERS (information-presence false negative).
 
@@ -36,3 +36,20 @@ affect any C3/C4 family (their states are not relational); flagged, not claimed.
 Provisional archive entry for NS-02: M-RELATIONAL, rule: rf - full >= .20 at some k AND full_lin and full_onehot also
 fail; witness W-REL; NS-02 must test the capacity scaling (preregistered) before it is promoted or merged into decoder-
 class dependence.
+
+## Falsification attempt (prereg PREREG_F15_CAPACITY.md, bb8624d1d; run 08:36Z, supervise DONE) -- SURVIVED
+Required generic-decoder width for excess >= .90 (W-REL, k 4, one-hot + random features, n_train 4000):
+M 1, 2, 4: 128 | M 8: 512 | M 16: 1024 | M 32: 4096 | M 64: > 4096 (.76 at 4096).
+Slope of log2 w* on log2 M (M >= 4): 1.6 (rule: <= 1.0 would MERGE). Sample-size control n_train 16000 at w 512:
+M 16 .83, M 32 .55, M 64 .31 (no rescue). VERDICT by rule: KEEP_DISTINCT ("relational dilution").
+Status raised from CANDIDATE to SUPPORTED (relative to the archive): reproducible (fresh seed, 4 disguises), minimal
+witness written from the account, causal intervention (gauge / desync), representation-change test (one-hot), and a
+preregistered merge test it survived.
+
+## Honest scope
+This is a known fact of learning theory, not a discovery: random-feature (kernel) decoders need capacity that grows with
+the number of interacting coordinate subsets a target depends on (parity-like targets; expected slope ~2 for pairwise
+relations, observed 1.6 on a coarse grid). What is new is its place in THIS program: the archive's information-presence
+instruments (C3 P1, NS-01 full[k]) are fixed-capacity generic decoders calibrated only on non-relational planted
+systems, so their "no information" verdicts have an uncalibrated false-negative region that grows super-linearly with
+relational code dimension. Limits: one witness family (Z4 shares), one decoder family, k = 4, widths in factors of 2.
