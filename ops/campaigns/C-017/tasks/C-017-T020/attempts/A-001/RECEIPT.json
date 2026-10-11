@@ -1,0 +1,38 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-017-T020",
+  "campaign_id": "C-017",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "6bd9a73465cea43bb04e03b6efbcd08b522717b0",
+  "end_sha": "0b302c034",
+  "files_changed": ["rso/z80/SELECTION.md", "rso/z80/demand/demand_gate.py", "rso/z80/demand/PREREG.md", "rso/z80/demand/demand_result.json", "rso/z80/demand/__init__.py"],
+  "evidence_added": [
+    "SELECTION.md: decision (question re-scoped from retention to byte-writer attribution), subjects, demand-gate table, control map, unit, C-016 lessons, limits",
+    "demand_gate.py + demand_result.json: 16 planted arms x 12 runs + 2 random-founder arms x 24 runs, seeds 17_020_001+100*arm+k, 200 epochs; rule committed first in PREREG.md"
+  ],
+  "evidence_executed": [
+    {"command": "python -m rso.z80.demand.demand_gate rso/z80/demand/demand_result.json 12 200", "result": "H_ENDO_GATED D 12/12 fF .983; H_ENDO_IMPL fF .264; NH_ENDO/BR_ENDO extinct 12/12; NH_EXT_GATED F 12/12 fF .873; RANDOM_ENDO births 0/24; RANDOM_EXT F 7/24"},
+    {"command": "demand_gate 1 seed 40 epochs, default vs PYTHONHASHSEED=77, cmp", "result": "byte-identical"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: no failing test applies"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "12 runs per planted arm, 200 epochs, one well-mixed world; no niches/migration/env dynamics",
+    "NH/BR endogenous extinction is guaranteed by max_age, a construction control not a selection finding",
+    "any-D run indicator is passed by drift (H_ENDO_IMPL 8/12); per-run F fraction used instead",
+    "ENV and runner-provided-birth cheat arms, world/environment-swap transplants, other endogenous physics not run at population scale",
+    "full result file produced once; byte-replay checked on a reduced run; 60-epoch pilot preceded the rule (disclosed)"
+  ],
+  "unresolved": ["operator acceptance of the re-worded first question (byte-writer attribution, not retention)"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-11T00:00:00Z",
+  "instance": "harry1-914f6281",
+  "host": "harry1",
+  "branch": "cadmus/c017-t020",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c017-t020",
+  "resources": {"cpu": "one process, ~10 min plus ~2 min pilot/replay", "model": "one Sonnet 5.5 session"}
+}
