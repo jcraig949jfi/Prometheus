@@ -95,6 +95,14 @@
       "reason": "Operator question 2026-10-10: is a 32 GB card worth buying? The decision turns on whether a ~32B model beats the 14B on the program's own code; the 14B result is already measured (59/142).",
       "precommitment": "P4: qwen2.5-coder:32b scores at least 0.08 higher than qwen2.5-coder:14b on the primary set (>= 71/142 against 59/142) AND the exact two-sided McNemar test on the paired outcomes gives p < 0.05. Loses if either clause fails.",
       "excluded_tasks": []
+    },
+    {
+      "id": "A4",
+      "date": "2026-10-11",
+      "after_measurement": true,
+      "changes_no_verdict": true,
+      "change": "SIZE ARM (A3) NOT RUN; P4 has no verdict. qwen2.5-coder:32b at num_ctx 8192 loaded at 22 GB on the 16 GB card, 35 percent on the CPU; llama-server took 14 GB of system RAM and M2 reached 89 percent RAM, so the Claude Code harness stopped the run (2026-10-10 ~23:05Z, run repobench-20261010T230040Z-spectrex5, closed FAILED; no row used). Running it needs ~14 GB of M2's RAM for 1-2 h with nothing else on the machine: the operator's call (QUESTIONS.md Q-013, default: dropped). A3 said speed would not be compared; it did not anticipate that the offload would endanger the host.",
+      "evidence": "pan.run repobench-20261010T230040Z-spectrex5 (FAILED, note); roles/Pan/journal/2026-10-10.md 22:39Z tick"
     }
   ]
 }
