@@ -1,0 +1,66 @@
+{
+ "families": {
+  "graph": {
+   "n": 60,
+   "n_usable": 11,
+   "n_not": 49,
+   "informative": true,
+   "spearman": 0.4786651694280542,
+   "usable_ba": 0.5909090909090909,
+   "pred_usable_rate": 0.03333333333333333,
+   "mean_pred_excess": 0.012266666666666669,
+   "mean_actual_excess": 0.05217037037037036,
+   "verdict": "FAILS"
+  },
+  "phase": {
+   "n": 60,
+   "n_usable": 17,
+   "n_not": 43,
+   "informative": true,
+   "spearman": -0.07882336230951585,
+   "usable_ba": 0.5,
+   "pred_usable_rate": 0.0,
+   "mean_pred_excess": -0.0009555555555555512,
+   "mean_actual_excess": 0.09651111111111112,
+   "verdict": "FAILS"
+  },
+  "rnn": {
+   "n": 60,
+   "n_usable": 33,
+   "n_not": 27,
+   "informative": true,
+   "spearman": 0.9512096941359008,
+   "usable_ba": 0.9393939393939394,
+   "pred_usable_rate": 0.48333333333333334,
+   "mean_pred_excess": 0.17935555555555555,
+   "mean_actual_excess": 0.3051185185185185,
+   "verdict": "HOLDS"
+  },
+  "sediment": {
+   "n": 60,
+   "n_usable": 45,
+   "n_not": 15,
+   "informative": true,
+   "spearman": 0.783530903359769,
+   "usable_ba": 0.8777777777777778,
+   "pred_usable_rate": 0.6333333333333333,
+   "mean_pred_excess": 0.18686666666666665,
+   "mean_actual_excess": 0.5632592592592593,
+   "verdict": "HOLDS"
+  },
+  "stig": {
+   "n": 60,
+   "n_usable": 53,
+   "n_not": 7,
+   "informative": false,
+   "spearman": 0.08819810221957514,
+   "usable_ba": null,
+   "pred_usable_rate": 0.3333333333333333,
+   "mean_pred_excess": 0.1199777777777778,
+   "mean_actual_excess": 0.6679259259259259,
+   "verdict": "NOT_REACHED (uninformative; spearman reported)"
+  }
+ },
+ "overall": "INCONCLUSIVE (pattern not covered by the prereg decision rules)",
+ "n_rows": 300
+}
