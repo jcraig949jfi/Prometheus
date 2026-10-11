@@ -2,6 +2,7 @@
 zero results because a spawn Pool was launched from stdin and the waiter watched only the PID)."""
 import json
 import os
+import shutil
 import subprocess
 import sys
 import textwrap
@@ -174,3 +175,27 @@ def test_max_tasks_per_child_does_not_deadlock(tmp_path):
     s = _script(tmp_path, _driver("ok", rd, n=12, max_tasks_per_child=2))
     subprocess.run([PY, str(s)], check=True, env=ENV, timeout=120, cwd=ROOT)
     assert sorted(r["i"] for r in _rows(rd)) == list(range(12))
+
+
+def _prog(d, status, pid, start, last):
+    d.mkdir(parents=True)
+    (d / SV.PROGRESS).write_text(json.dumps({"status": status, "pid": pid, "start_utc": SV.utc(start),
+                                             "heartbeat_utc": SV.utc(), "last_result_utc": last and SV.utc(last),
+                                             "n_total": 5, "n_done": 1, "n_failed": 0}))
+
+
+def test_sweep_flags_stalled_dead_and_unowned_runs(tmp_path):
+    now = time.time()
+    _prog(tmp_path / "done", "DONE", os.getpid(), now - 50, now - 40)
+    _prog(tmp_path / "live", "RUNNING", os.getpid(), now - 100, now - 10)
+    r = SV.sweep(tmp_path, stall_s=60, now=now)
+    assert r["ok"] and r["runs"] == {"done": "DONE", "live": "OK"}
+    _prog(tmp_path / "stuck", "RUNNING", os.getpid(), now - 5000, None)          # alive, no science
+    _prog(tmp_path / "gone", "RUNNING", 2 ** 22 + 12345, now - 100, now - 10)     # no such pid
+    r = SV.sweep(tmp_path, stall_s=60, now=now)
+    assert not r["ok"] and sorted(r["stalled_or_dead"]) == ["gone", "stuck"]
+    lease = tmp_path / "LEASE.json"
+    lease.write_text(json.dumps({"instance": "x", "expires": now - 1, "expires_utc": SV.utc(now - 1)}))
+    shutil.rmtree(tmp_path / "stuck"); shutil.rmtree(tmp_path / "gone")
+    r = SV.sweep(tmp_path, stall_s=60, lease_path=lease, now=now)
+    assert not r["ok"] and r["running_without_lease"] == ["live"]

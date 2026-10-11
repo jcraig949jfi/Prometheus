@@ -16,6 +16,7 @@ Rules enforced here:
 
     python -m prometheus.cosmos.supervise launch <rundir> --stall S [--restarts R] [--poll P] -- <cmd ...>
     python -m prometheus.cosmos.supervise status <rundir> [--stall S]
+    python -m prometheus.cosmos.supervise sweep <root> [--stall S] [--lease <LEASE.json>]
 
 `launch` runs <cmd> in its own session, watches it, and exits 0 only on DONE (non-zero on FAILED / STALLED), so a
 caller waiting on `launch` is woken by the outcome of the science, not by the death of a PID.
@@ -277,6 +278,25 @@ def launch(rundir, cmd, stall_s: float, max_restarts: int = 1, poll_s: float = 1
         return verdict
 
 
+def sweep(root, stall_s: float, lease_path=None, now: Optional[float] = None) -> dict:
+    """Judge every run under root (each dir holding PROGRESS.json) and the seat lease. Meant for an OS timer that
+    does not depend on the agent: ok is False if any run is STALLED / DEAD, or if a run is unfinished while the
+    lease has expired (nobody owns the work)."""
+    now = time.time() if now is None else now
+    runs = {}
+    for p in sorted(Path(root).glob("*/" + PROGRESS)):
+        runs[p.parent.name] = status(p.parent, stall_s, now=now)["verdict"]
+    lease = None
+    if lease_path and Path(lease_path).exists():
+        L = json.loads(Path(lease_path).read_text())
+        lease = {"instance": L.get("instance"), "expires_utc": L.get("expires_utc"),
+                 "expired": float(L.get("expires", 0)) < now}
+    bad = [k for k, v in runs.items() if v in ("STALLED", "DEAD")]
+    unowned = [k for k, v in runs.items() if v == "OK"] if lease and lease["expired"] else []
+    return {"utc": utc(now), "ok": not bad and not unowned, "runs": runs, "stalled_or_dead": bad,
+            "running_without_lease": unowned, "lease": lease}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m prometheus.cosmos.supervise")
     sub = ap.add_subparsers(dest="op", required=True)
@@ -285,6 +305,10 @@ def main(argv=None):
     a.add_argument("--stall", type=float, required=True, help="seconds without a new result => STALLED")
     a.add_argument("--restarts", type=int, default=1)
     a.add_argument("--poll", type=float, default=10.0)
+    w = sub.add_parser("sweep")
+    w.add_argument("root")
+    w.add_argument("--stall", type=float, default=900.0)
+    w.add_argument("--lease", default=None)
     s = sub.add_parser("status")
     s.add_argument("rundir")
     s.add_argument("--stall", type=float, default=900.0)
@@ -297,6 +321,10 @@ def main(argv=None):
         v = launch(ns.rundir, cmd, ns.stall, ns.restarts, ns.poll)
         print(json.dumps({"verdict": v, "rundir": ns.rundir}))
         return 0 if v in ("DONE",) else 1
+    if ns.op == "sweep":
+        r = sweep(ns.root, ns.stall, ns.lease)
+        print(json.dumps(r, default=str))
+        return 0 if r["ok"] else 3
     print(json.dumps(status(ns.rundir, ns.stall), default=str))
     return 0
 
