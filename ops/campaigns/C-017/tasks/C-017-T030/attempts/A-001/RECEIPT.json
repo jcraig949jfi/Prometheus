@@ -1,0 +1,104 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-017-T030",
+ "campaign_id": "C-017",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-6668fa07",
+ "host": "harry1",
+ "branch": "argus/c017-t030",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c017-t030",
+ "start_sha": "1f85d6d62cdbbf3a00ead5ec5b3dedddb796056e",
+ "end_sha": "dec970503 (branch head: freeze e41fff917 + journal/WORK_STATE commit)",
+ "dirty": false,
+ "commits": {
+  "claim_main": "12d0a04b4",
+  "red_branch": "37bec7820",
+  "red_implementing_main": "53c32b1e3",
+  "code_branch": "6eceadc7e",
+  "preregistration_branch": "0c7afbeea",
+  "freeze_branch": "e41fff917",
+  "journal_state_branch": "dec970503"
+ },
+ "files_changed": [
+  "rso/z80/{subjects.py,observe.py,assay.py,analysis.py,freeze.py} (new adapter, 667 physical / 471 code lines)",
+  "rso/z80/tests/{__init__.py,test_attribution.py} (new, 42 tests)",
+  "rso/z80/dev/{__init__.py,dev_check.py,DEV_CHECK.json,DEV_ROWS.{0,1}-2.jsonl.gz,DEV_POWER.{0,1}-2.jsonl.gz} (new)",
+  "rso/z80/red/{__init__.py,RED_EDITS.json,make_edits.py,run_red.py,red_rows.jsonl} (new)",
+  "rso/z80/{PREREGISTRATION.md,FROZEN.json,FREEZE.md,ONBOARDING.md} (new)",
+  "roles/Argus/{WORK_STATE.json,journal/2026-10-11.md,comms/2026-10-11_C-017-T030_*.md,comms/2026-10-11_HEARTBEAT_1.md}",
+  "ops/campaigns/C-017/tasks/C-017-T030/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "RED first: rso/z80/tests/test_attribution.py committed 37bec7820 before any implementation; python -m unittest at 15:32:55Z FAILED (ImportError)",
+  "adapter: replay observer (observe.py: engine.run's loop for the PREREGISTRATION s2 subset, byte-equal to engine.run in 5 Replay tests and on all 176 unforged dev records), per-byte writer tags I/P/K/R/M with P by counterfactual re-execution (observe.py:counterfactual, endo_tags), sufficiency label + strict-majority run class + founder-source origin (assay.py:label, run_class, origin, classify)",
+  "controls: 10 ground-truth arms (subjects.py ARMS) incl. the new ENV construction RECON (kept target-cell bytes); forgeries LABELS/PLANT (invariant) and PHYS/TAPE/GEN (refused) (assay.py:forge); negative-control detectors b1 label reader and b2 bytes-only (assay.py:b1, b2)",
+  "PREREGISTRATION.md v1.0.0 (0c7afbeea) before the freeze: Q1 per-class exact binomial w_max (bound 1/5, alpha 1/100, rso/witness/ruler.py tail_le), Q2 origin, Q3 forgeries zero tolerance, Q4 both baselines must fail Q1; seeds 17_050_xxx; N 24 per arm, 48 for RECON_ENDO_IMPL and NH_ENDO_SHORT",
+  "dev check (dev/DEV_CHECK.json; dev seeds 17_030_xxx; rows sha256 6e04917a8e0f676edd81eac3c661d614fd36d6a3f1ff5e0baec257335857c78e): rule gives ATTRIBUTION_QUALIFIED on dev rows; Q1 ENDO 0/24 EXT 0/25 ENV 0/48 INS 0/48 wrong; Q2 0/145; Q3 48/48 forgeries right; b1 wrong ENV 48/48, b2 wrong ENV 48/48 and EXT 7/25",
+  "behavioural pins: red/red_rows.jsonl baseline 42/42 GREEN, 27/27 decision-rule mutants (observe 9, assay 9, analysis 9) RED on their named test; re-run byte-identical after the preregistration commit",
+  "FREEZE_Z80_ATTRIBUTION v1.0.0 (e41fff917): FROZEN.json LF sha256 cad362fab0e5ef44fe2f87a672f4e0695ae4933b490c5d10b5e5d05e9fbf022d, 27 files (explicit list) + Python 3.12 + grammar digest 63ffdeca16db3333; freeze check OK",
+  "ONBOARDING.md: lines, reuse (receipt-canonical, ruler tail_le, registry file_sha; 0 modified), 8 native semantic mismatches, times, CPU, registry rows proposed"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -m rso.z80.smoke.smoke_heredity <scratch>",
+   "result": "ALL_PASS; byte-identical to rso/z80/smoke/smoke_result.json"
+  },
+  {
+   "command": "python -m unittest rso.z80.tests.test_attribution",
+   "result": "42 tests OK (~11 s) on the frozen tree"
+  },
+  {
+   "command": "python -m rso.z80.assay dev rso/z80/dev/DEV_ROWS 8 {0,1}/2",
+   "result": "64 + 64 rows, 327 + 307 s, rows sha256 c5c8f70b / 8964b289"
+  },
+  {
+   "command": "python -m rso.z80.dev.dev_check power {0,1}/2; python -m rso.z80.dev.dev_check summary",
+   "result": "60 + 60 rows; DEV_CHECK verdict_on_dev ATTRIBUTION_QUALIFIED"
+  },
+  {
+   "command": "python -m rso.z80.red.run_red rso/z80/red/red_rows.jsonl",
+   "result": "ALL_RED 27 mutants; sources restored and sha256-verified"
+  },
+  {
+   "command": "python -m rso.z80.freeze write; python -m rso.z80.freeze check",
+   "result": "27 files; OK"
+  },
+  {
+   "command": "python -m rso.z80.assay confirm X 0/6 (no FROZEN.json / no --cleared-by)",
+   "result": "REFUSED, exit 2 (refusal path checked before the freeze)"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "pre-implementation suite failure 15:32:55Z (37bec7820); RED state commit 53c32b1e3; plus 27 behavioural RED rows on mutants"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "the RED and IMPLEMENTING workgraph states were committed together at 16:35Z (53c32b1e3), an hour after RED was observed; the RED evidence itself is the 15:32:55Z branch commit",
+  "the CLAIMED task note and first heartbeat were posted late (16:36Z, #2159 / #2160)",
+  "design choices made on dev evidence before the freeze (PREREGISTRATION s3, s7): horizons 80/100/10 epochs, counterfactual P, founder-source origin, situ on 8 probe cases; the horizon-probe seeds 17_03x_1xx are not in DEV_CHECK.json",
+  "DEV_*.jsonl.gz carry a gzip mtime header; rows_sha256 over decoded rows is the reproducible digest"
+ ],
+ "unresolved": [
+  "Pallas Q3 challenge of the frozen surface (FREEZE.md lists five surfaces); at most one repair round",
+  "the confirmatory run (a later packet; PREREGISTRATION s9: 17_050_xxx, ~0.8 core-h, six shards two at a time)",
+  "registry rows proposed in ONBOARDING.md s5 (Palamedes owns rso/registry/)",
+  "scope limits PREREGISTRATION s11: replay-dependent; horizon-bounded ground truth; one population-scale ENV construction"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 2.5,
+  "processes_max": 2,
+  "peak_working_set_mb": "~6 MB traced Python allocation per record (tracemalloc)",
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/argus-scratch/c017t030/ (prototypes, probes, logs)",
+ "notes": "Read-only on archaeon/, prometheus/z80atlas/, roles/Archaeon/; no Archaeon seed, no evidence bundle; no confirmatory seed and no `assay confirm` run; no engine change requested (0 requests to Archaeon). Python 3.12.10 on harry1.",
+ "created_at_utc": "2026-10-11T17:38:00Z"
+}
