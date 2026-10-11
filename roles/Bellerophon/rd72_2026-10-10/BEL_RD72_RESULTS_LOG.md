@@ -151,3 +151,31 @@ unseen worlds.
 Answer to Q2: in this harvest, no apparent desert was an artifact of the operator model (0 MOVE-only routes in 600
 scanned tapes).
 Limit: one-step geometry only. Multi-step accessibility was not part of the frozen scores.
+
+## C2R -- where is the regenerated capability held? (prereg s9; CONFIRMATORY; completed 2026-10-11 ~04:30Z)
+48 runs, 0 voids, plan sha256 e6ecc430..., pin 3e21631fe; receipt receipts/C2R_analysis.json. Validity: in all 16 worlds the
+re-run REMOVE census equals the C2 run at every common (100-tick) census (0 invalid), a deterministic-replay receipt.
+| arm (removed, median) | re-acquired (first FUNC LO appearance, 20-tick census) | median delay |
+|---|---|---|
+| REMOVE (99 carriers) | 16/16 | 60 |
+| NEAR (145: carriers + within Hamming 16) | 12/16 | 80 |
+| RESET (all 254, replaced by fresh copiers) | 9/16 | 140 |
+- C2R-P1 (REMOVE faster than RESET): 13 of 15 decided worlds, sign p 0.0037. HOLDS.
+- C2R-P2 (REMOVE faster than NEAR): 10 of 12 decided, p 0.019. HOLDS.
+Reading:
+- The regeneration seen in C2-b is NOT only copier abundance. A world that keeps its non-carrier material regains the
+  capability faster and more often than an equally large, copier-rich population with no material.
+- Part of the route sits in near-carriers (variants within 16 bytes of an ECHO solver).
+- A material-free copier population still re-invents ECHO in 9/16 worlds within 1,000 ticks, as expected for the cheap
+  ECHO (triviality audit s1).
+- In the directive's terms: ENVIRONMENTAL REGENERATION from stored, near-functional material, plus fresh re-invention.
+  It is not lineage continuity.
+Disclosures:
+1. The re-acquisition count of 16/16 here vs 12/16 in C2 is consistent, because their censuses agree at every 100-tick
+   tick. The extra 4 are appearances between 100-tick censuses that did not last to a 100-tick census. "Re-acquisition"
+   here is FIRST APPEARANCE, not durable return.
+2. NEAR removes more organisms than REMOVE (median 145 vs 99) with no size-matched sham. Part of P2 may be removal size.
+3. RESET replaces the population; it does not shrink it.
+4. The capability is ECHO (ruler RU-E1b), the cheapest computation in the family. This shows lineage-independent
+   persistence of a MINIMAL capability, not of a complex one; directive C2's "beyond minimal copiers" holds only in that
+   narrow sense.
