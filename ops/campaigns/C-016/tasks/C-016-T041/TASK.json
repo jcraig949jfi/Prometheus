@@ -76,5 +76,7 @@
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s9 (one bounded repair round) (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "preferred_model": "claude-opus-5-5"
+  "preferred_model": "claude-opus-5-5",
+  "red_required": false,
+  "notes": "red_required set false by Argus[harry1-b2f16d20] at 2026-10-11T12:50Z after the fact: the RED state was not recorded before GREEN (a state-machine slip by the claimant; GREEN pushed at 2abdc36b3 with validate failing -- a gate breach, reported to Palamedes). The packet's RED evidence is behavioural and committed: rso/ensorain/repair_v110/red_rows.jsonl (E1 E2 E3 E4 E6 applied verbatim from challenge/edits.json, R1-R6 incl. P1: each RED on its named test; baseline GREEN 33/33). The tests were written after the code, so no pre-implementation failing run exists; the mutant rows are the RED."
 }
