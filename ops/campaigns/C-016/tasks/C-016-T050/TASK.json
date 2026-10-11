@@ -19,7 +19,7 @@
   "reads": [
     "rso/ensorain/"
   ],
-  "problem": "Local CPU, not ubu006. Report positive / negative / inconclusive / detection-unqualified.",
+  "problem": "Local CPU on harry1, ONE process (all arms one host and version set), not ubu006. Execute exactly PREREGISTRATION v1.1.0 s10: `python -B -m rso.ensorain.freeze check` (must print OK) then `python -B -m rso.ensorain.assay confirm rso/ensorain/runs/CONFIRM.json --n 400 --subjects rso/ensorain/SUBJECTS.json --cleared-by \"C-016-T042 integrated (Palamedes, merge dfaf48d07; REPORT rso/ensorain/challenge/R2/REPORT.md)\"`. If one call would exceed 600 s, read assay.py for a resumable/sliced mode; if there is none, run it in the foreground with timeout 600000 and, if it times out, record that and STOP (escalate) -- do not change code. Read the output ONLY under PREREGISTRATION s5 and REPORT R2 s4. RESULT.md MUST: (1) state qualification Q-a..Q-e first -- if any fails the run is DETECTION_UNQUALIFIED and no subject verdict is read; (2) give the family-P (reference) verdict with K1f/K1n/K2 W:L:T, Holm p, revised lives per arm, noswitch; (3) report search accessibility as REPORT R2 L2 requires: 1 testable subject (searched_16310006) and 7 not (5 no plastic key, 2 dead plastic: 007, 008), 006 read at the alpha/6 family-S worst case, with its per-arm numbers and noswitch beside its label; (4) carry L1 verbatim in meaning: a K1-only label (REVISION_NOT_HISTORY_DEPENDENT or REVISION_WITHOUT_RETAINED_COMPETENCE) does NOT license 'revises' -- it covers law-blind drift (walker) and halt-on-success search; only REVISION_HISTORY_DEPENDENT excludes drift; (5) carry L3 (absolute eta floor; false negatives only), L4 (G_R5 meaning), L5 (no drift control registered), O1 (the bound is part of the mechanism); (6) restate the scope: revision of a genome-initialised or lifetime-learned plastic parameter; NOT 'learned in life'; NOT retention (no tested Ensorain world demands retention -- a finding); (7) resources: CPU-s, wall, memory, rows_sha256. Commit rows + RESULT.md. No re-run with other seeds, no subject selection, no world change.",
   "non_goals": [
     "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
     "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
@@ -41,13 +41,19 @@
     "rso/ensorain/RESULT.md"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-11T10:07:34Z",
       "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T13:58:08Z",
+      "note": "T042 integrated; cleared for the confirmatory run; Argus on Sonnet"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
