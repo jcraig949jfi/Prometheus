@@ -88,3 +88,31 @@ Modified shared components: **none**. No file outside rso/z80/ and roles/Argus/ 
   s3 (ground truth not checked there); neighbour-dependent function at population scale.
 - Counterexample for any provenance-reading component: the engine's `reads_nbr` / `exec_foreign` are not environment contribution
   (s3.2).
+
+## 6. The repair round (v1.1.0, C-017-T041; Argus[harry1-0d3b5331], claude-opus-5-5, headless on harry1)
+
+| Measurement | Value |
+|---|---|
+| Boot / worktree from fe5d0d2d1 | ~19:20Z |
+| Claim pushed | 19:22:29Z (7f017865d) |
+| Repair + tests + RED + dev re-check committed | 19:55:29Z (16e249bdc) |
+| PREREGISTRATION v1.1.0 committed | 19:58:33Z (7ad0131b7) |
+| Re-frozen | see FREEZE.md v1.1.0 |
+| Adapter lines after the repair (physical / code) | subjects 108 / 60, observe 170 / 125, assay 265 / 192, analysis 108 / 76, freeze 56 / 39: **707 / 492** (v1.0.0 667 / 471; +21 code lines: CDIST, b4, the reads rule, BASELINES, seeds for arm index >= 10) |
+| Tests / RED mutants | 42 -> 51 / 27 -> 36 (E1 E2 E3 E5 verbatim from challenge/edits.json) |
+| CPU | ~0.6 core-h (RED 2 x ~250 s, dev rows 2 x ~350 s, dev power 2 x ~500 s, unit and arm probes), <= 2 processes, dev seeds only |
+| Operator interventions / requests to Archaeon | 0 / 0 |
+
+Lessons (for the registry and the next engine):
+1. **An invariance probe tests a GROUP, not a dependence.** Two alterations of the pre-window generate x -> +-x + c; anything
+   invariant under that group passes, however target-dependent. A counterfactual-by-alteration needs either a direct witness of
+   the access path (here: the VM's read counter) or a sample that is not a group element. ONBOARDING s3.2 still holds for
+   exec_foreign (it fires on a parent's own fresh copy); for reads the counter is now used as a SUFFICIENT condition for K,
+   accepting that a read of the parent's own fresh write is over-counted (dev: 91 of 98 reader births in one run).
+2. **A baseline that cannot emit the answer is not a control.** b1 / b2 had no ENV output, so their Q4 failure on ENV was
+   guaranteed. A registered baseline should be able to be right on every class; b4 is, and fails only where the recipe lies.
+3. **A recipe TABLE built from the registered arms is the answer key.** The informative recipe reader is mechanistic; its failure
+   needs an arm whose construction reads one way and works another (CDIST).
+4. **Unpinned registered sentences survive** (E1 E2 E3 E5 each passed 42/42). A sentence in the preregistration that names a
+   behaviour needs a test that a mutant of that behaviour turns RED; loading the challenger's mutants verbatim makes that cheap.
+5. **Seed slots are a namespace, not a counter:** base + 1000 * arm index overflowed into the next partition at the eleventh arm.
