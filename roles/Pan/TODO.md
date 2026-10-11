@@ -7,7 +7,7 @@ date, purged after 24 h (base role s7).
       lease gates; refresh / intake with PAN_EMBED_DEVICE=cpu
 - [ ] SAGACITY FOUNDATION (operator 2026-10-11, prompts/2026-10-11_sagacity_foundation): deliverables due
       2026-10-12T10:40Z -- P1 PAN-40/41/42 DONE (c22bf02f4: map, proposals 15/15, access 12/12); P2 PAN-43 DONE
-      (calibration PROMOTED; prereg A1-A4; smoke plumbing only); review packet PAN-43 next; P3 PAN-44 MCP read-only prototype; PAN-45
+      (calibration PROMOTED; prereg A1-A4; smoke plumbing only; packet REVIEW_PACKET_2026-10-11_PAN43.txt); P3 PAN-44 MCP read-only prototype; PAN-45
       continuity handoff + checkpoint packet. Loop extended to 2026-10-16T10:40Z. PAN-46 Redis/A2A: design first.
 - [ ] Status report 10 by ~2026-10-11T16:08Z
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011

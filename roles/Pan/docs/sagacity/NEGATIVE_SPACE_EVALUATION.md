@@ -245,8 +245,12 @@ protocol before any run.
 
 What it showed, each item checked by hand against the stored sources:
 1. **Endpoint flaw, fixed by A1.** The first smoke (10:20:52Z) counted 3 "novel classes" in
-   arm D. They were proposals the instrument could not decide (UNKNOWN against a known class:
-   cap 1000). After A1, novel requires DISTINCT; those cases are tallied as unresolved.
+   arm D:
+   - two were proposals the instrument could not decide (UNKNOWN against a known class,
+     cap 1000);
+   - the third is the cap-100 variant of item 4.
+
+   After A1, novel requires DISTINCT; undecided cases are tallied as unresolved.
 2. **The generator's prior is the off-by-one.** 9 of 12 LLM proposals are behaviorally
    EQUIVALENT to F-delay-off-by-one. The typical form is `deque([0,0,0], maxlen=3)` that
    appends and then returns `[0]`, which is delay 2. Arm B produced it 2 of 3 times even with
