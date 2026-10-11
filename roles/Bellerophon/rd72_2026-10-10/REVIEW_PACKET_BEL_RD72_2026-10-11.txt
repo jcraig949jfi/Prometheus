@@ -1,0 +1,275 @@
++==========================================================================================================+
+| REVIEW PACKET -- BEL-RD-72: Reachability Deserts, Mechanism Composition, and Cumulative Organization     |
+| Author: Bellerophon (seat), host ubu005 (8 cores), session 0eb14d49                                      |
+| Date: 2026-10-11 (campaign clock 2026-10-10T09:50Z -> 2026-10-13T09:50Z; all blocks complete early)      |
+| For: HITL operator + external reviewers                                                                  |
+| Status: FINAL. 9,049 runs in 16 blocks, 0 voids. Branch bellerophon/rd72-2026-10-10 (not yet on main).   |
+| Self-contained: every load-bearing number is inline; no repo access is needed to review this packet.     |
++==========================================================================================================+
+
+----- 0. SUMMARY AND VERDICT -----------------------------------------------------------------------------
+
+Mandate (operator directive BEL-RD-72): 72 h, no HITL. Test whether evolution in the z80atlas substrate can cross
+reachability deserts, compose independently useful mechanisms, and accumulate them. Highest-value workstream: C,
+cumulative organization. Rules: frozen preregistration, independent origins, replay receipts, triviality controls; do
+not optimise for positive results.
+
+Verdict:
+(a) Minimal computations (ECHO, INC: 2-6 critical bytes) are found, paid for and kept. A computing capability persists
+    after every carrier is removed, regenerated from near-functional material left in the world (environmental
+    regeneration, confirmed).
+(b) NO composite computation was built by evolution anywhere:
+    - 0 / 1,320 two-block worlds (K2);
+    - 0 / 150 long-horizon worlds (E1b);
+    - 0 / 160 worlds founded >= 2 steps from the composite.
+    The only crossings were 2 one-point repairs in 100 worlds founded one step away.
+(c) The decisive, causal, replicated, transplanted finding: a planted composite cannot be MAINTAINED at the mutation
+    rate at which the minimal capabilities are found. COND_ONE composite kept to tick 2,000 in 1/20 worlds at MED vs
+    13/20 LOW vs 17/20 VLOW (p 2.0e-7). Reproduced on fresh seeds (12/20 vs 1/20). Transferred to a 14-byte COND_MULTI
+    composite (19/20 vs 0/20) and to a WELL_MIXED world (20/20 vs 2/20). Payment structure is NOT the cause (removing
+    half-credit: 2/20 vs 1/20). Lowering the rate keeps but does not find; a search-then-keep schedule did not help.
+    => Composition in this substrate is bounded by an ERROR THRESHOLD before reachability can be tested.
+(d) Horizontal uptake has two opposite, separable components:
+    - imports into precursors (LDIR carriers) suppress origination: blocking them raises origins 72 -> 150 and
+      33 -> 111, p < 1e-14 in both substrates;
+    - imports into non-LDIR organisms promote it: blocking them lowers origins 72 -> 50 and 33 -> 26.
+    The BEL-48H "uptake suppresses origination" headline was their net balance; it was weak and non-significant this
+    time (82 vs 68 discordant, p 0.14).
+(e) Operator-aware geometry did NOT predict completion better than substitution or byte content (AUC 0.592 vs 0.586 vs
+    0.606). Geometry predicts sharply only at distance 1.
+
+----- 1. WHAT WAS BUILT (and committed before measurement) -----------------------------------------------
+
+Kernel (one commit, c83a56063; pure additions, historical outputs untouched, 4 tests): geometry.scan_operators /
+scan_moves / sample_paths: one-step reachability under SUB (16,320 neighbours), MOVE (50,512), INS (16,384), DEL (64),
+and DONOR (segment copy from a partner tape).
+Campaign tools (roles/Bellerophon/rd72_2026-10-10/tools/). Every new physics is an opt-in subclass; the kernel was not
+changed:
+- light_halves / halves census;
+- intervene (REMOVE / SHAM / IMPLANT, plus RESET_TAPES / REMOVE_NEAR);
+- uptake_select (revert imports by importer class);
+- paired_pay (payment only if correct on both halves);
+- phased_mut (mutation-rate switch);
+- ruler (critical bytes, hidden redundancy, 3-generation heredity);
+- trivaudit, desert_probe, budget_split, replay_crossing.
+Each analysis was committed with a synthetic test in both directions before its data; each plan was hashed at freeze;
+each run executed from a pinned code archive.
+
+----- 2. THE CLAIMS AND WHY THEY MATTER -------------------------------------------------------------------
+
+The operator review framed three questions:
+- origin (can a mechanism appear?);
+- composition (can useful mechanisms combine without destroying each other?);
+- accumulation (can organization retain earlier capabilities while acquiring more?).
+BEL-48H answered origin. This campaign attacked composition and accumulation, and found that the binding constraint is
+neither reachability nor selection but MAINTENANCE under the variation needed for search.
+
+----- 3. DESIGN AS EXECUTED (blocks in order) --------------------------------------------------------------
+
+Substrate: z80atlas v3 (coupled copy-resource ledger, income K40), 64-byte tapes, 256 cells, lifespan 40.
+Task COND_ONE: x < 128 -> x, else x + 1. The low half is solved by ECHO and the high half by INC; the composite needs a
+compare-and-branch.
+- D1 (1,900 runs): frozen loss/gain-ratio prediction of the uptake-block effect in 2 new substrates.
+- A3 (180 harvest worlds + 600-tape operator scan + 1,374 replant worlds): frozen prediction in unseen worlds.
+- K2 (1,320): two half-block replicators across a verified 4-5-step COND_MULTI desert; 3 copy operators x payment ON /
+  RANDOM_REWARD (/ OFF).
+- E1 (16, stopped) / E1b (150): 3,000-tick accumulation inside COND_ONE / COND_MULTI, paid vs unpaid.
+- C2/C3 (101) and C2R (48): source removal, mechanism ablation, foreign implant, then where the regenerated capability
+  is held.
+- F1-F6 (660): desert stress tests and their causes.
+  - Distance ladder from a verified witness: 0, 1, 2, 4 knockouts, an ECHO hybrid, a bare copier.
+  - Payment-rule manipulation.
+  - Mutation-rate manipulation, with a fresh-seed replication.
+  - Crossing at LOW mutation.
+  - Two-phase schedule.
+  - Transplantation to a second composite and world model.
+- D2 (3,200): selective uptake ablation by importer class, 2 substrates x 400 seeds x 4 arms on the same seed.
+
+----- 4. PILOTS / CENSUS --------------------------------------------------------------------------------
+
+The pilots were excluded from all analysis.
+- K XY_AL: extinct 3/3 at 1,000 ticks, so the seeds were doubled.
+- Mutation pilot: an error-catastrophe extinction hypothesis was falsified (extinction did not track the rate).
+- Persistence pilot (16 runs): it scored "population alive" and chose a setting that kept NO replicators (see 6).
+- FUNC-persistence pilot (84 runs): LOCAL / lifespan 40 / income 40 with a 32-copy transplant kept replicators in
+  about 50% of worlds.
+- Seed-independence: the historical pooled claims (grounding, coupling, multi-day) got correction records appended
+  (8a34e55e3), with the original figures preserved.
+
+----- 5. RESULTS (exact numbers; frozen tests marked HOLDS / FAILS / NOT_TESTABLE) -----------------------
+
+D1 (uptake ratio rule): R predicted NO_INCREASE in S_LOCAL; blocking raised origins 16 -> 28 (discordant 21 vs 9,
+p 0.021). D1-P1 FALSIFIED. The effect generalised (S_PAIR320: 71 -> 98, p 0.006).
+
+A3 (operator-aware prediction):
+- 597 tapes, 46 completed; background 1/60, 6/60, 2/60 worlds.
+- AUC S_op 0.592, S_sub 0.586, S_nz 0.606. CI of S_op - S_sub [-0.008, +0.031]. P1, P2, P3 FAIL.
+- Descriptive: SUB-route tapes 8/9 completed vs no-route 37/581 (background level); 0 MOVE-only routes in 600 tapes.
+
+K2 (two-block composition):
+- COMP_SR 0 / 1,320. COMP_ANY 1 run: 4 competent non-heritable products among 70,032 births, in PARTIAL_BYTE.
+- 58% of runs dead before tick 500.
+- K-P2, K-P4 FAIL; K-P1 NOT_TESTABLE (29 and 24 informative runs < 30; raw 0/60 in both cells); K-P3 NOT_TESTABLE.
+
+E1b (accumulation):
+- E1-a: LO paid 15/80 vs unpaid 6/30, p 0.67, FAILS. E1-b: BOTH 0 vs 0, FAILS.
+- Established worlds (descriptive): LO 15/16 vs 6/11 (p 0.027); HI 13/16 vs 0/11; LO retention median 0.97 vs 0.06.
+- In 13 paid worlds ECHO and INC replicators coexisted for up to 2,800 ticks; no organism ever solved both.
+- Ruler: LO solvers = whole ECHO machines 34/34 and HI = whole INC 13/13, each with 1-7 critical bytes; 46/47 are
+  FUNC + competent over 3 copy generations.
+- Desert probe: 0 one-step routes in about 3.9M neighbours (including donor splices from the partner) and 0 / 52,000
+  three-step paths. A positive control (witness knockouts) finds routes.
+
+C2 / C2R (lineage-independent persistence):
+- C2-b: after removal of every LO carrier, LO returned in 12/16 worlds, faster in 8, slower in 1, 3 ties; sign test
+  p 0.0195. HOLDS.
+- C2R first appearance after intervention: REMOVE 16/16 (median 60 ticks), NEAR (also within Hamming 16) 12/16 (80),
+  RESET (all replaced by fresh copiers) 9/16 (140).
+- C2R-P1: REMOVE faster than RESET in 13/15, p 0.0037. HOLDS. C2R-P2: faster than NEAR in 10/12, p 0.019. HOLDS.
+
+C3 (dependency): NOT_TESTABLE (0 composites in 64 runs). Foreign ECHO implant (descriptive): ECHO at the end 6/10 vs 4/10
+sham.
+
+F1 (distance ladder, MED mutation, 2,000 ticks):
+- W0 (the composite itself), paid: kept 1/14 surviving worlds; it decays to ECHO / INC solvers.
+- W0 unpaid: lost before tick 100 in 20/20.
+- 0 crossings from 1-, 2- and 4-knockout founders, the ECHO hybrid and the copier (paid and unpaid). F1-P0, P1, P2 FAIL.
+- Frozen rule: the null is DESTRUCTIVE SELECTION / INSTABILITY.
+
+F2 (no half-credit payment; same seeds): kept 2/20 vs 1/20, p 0.5. FAILS; the half-credit hypothesis is rejected.
+Descriptive: a composite census at >= 1,700 in 6/20 vs 2/20. One KO1 crossing.
+
+F3 (mutation rate; same seeds): kept 1/20 MED, 13/20 LOW, 17/20 VLOW. P0 p 2.0e-7, P1 p 6.8e-5. HOLD. At VLOW, unpaid
+keeps 8/20 vs 17/20 paid (p 0.004).
+
+F4:
+- Fresh-seed replication: 12/20 LOW vs 1/20 MED, p 2.2e-4. HOLDS.
+- KO1 crossing at LOW: 1/20 vs 0/20, p 0.5. FAILS. FUNC at end only 4/20.
+
+F5 (MED until 1,000 then VLOW, 3,000 ticks): KO1 0/20 vs 0/20. FAILS. No composite arose in the MED phase to be kept.
+
+F6 (transplant, fresh seeds): COND_MULTI composite 19/20 VLOW vs 0/20 MED (p 1.5e-10), 18/20 LOW. WELL_MIXED 20/20 vs
+2/20 (p 1.7e-9). HOLD.
+My side prediction (14 critical bytes -> keeps less often at LOW than COND_ONE's 13/20) was WRONG (18/20).
+
+Crossing forensics (f2_00022; deterministic replay valid at 11/11 censuses):
+- The first composite was born at tick 652, 450 ticks before the census saw it.
+- 7 of its 8 critical bytes are founder material; the eighth is a new byte restoring the knocked-out operand.
+- Inherited (47 carriers at tick 2,000).
+A predicted distance-1 repair, not an innovation.
+
+D2 (uptake by importer class, 400 seeds x 4 arms per substrate):
+| substrate | normal | block_all | block_ldir | block_noldir |
+|---|---|---|---|---|
+| S_PAIR320 | 72 | 83 | 150 | 50 |
+| S_REF (BEL-48H reference) | 33 | 36 | 111 | 26 |
+- D2-P1 (block_ldir > normal): 101 vs 23 and 92 vs 14. HOLDS.
+- D2-P2 (block_ldir > block_noldir): 122 vs 22 and 94 vs 9. HOLDS.
+- Block-all replication arm: 58 vs 47 and 24 vs 21; pooled p 0.14. Same direction, NOT significant.
+
+Budget coupling (Q4, static, deterministic): copy-length coupling has two separable components.
+- EXHAUSTION (input read before the copy): vanishes at budget >= 384.
+- I/O DAMAGE (input read after the copy): 95/95 failures at every budget up to 4,096.
+- Compute-first machines are immune to both.
+
+----- 6. INCIDENTS AND WHAT THEY VALIDATED ----------------------------------------------------------------
+
+- E1 was stopped at 16/80: its setting kept organisms but 0 replicators from tick 100, because the pilot proxy was
+  "alive". Disclosed; the successor setting was chosen on FUNC persistence.
+- Two analysis-interface crashes, both before any outcome was printed:
+  - A3: the plan field `precursor` was not copied into result rows;
+  - F2: numpy bool not JSON-serialisable.
+  Fixed by visible errata; no rule changed.
+- Hand-typed future timestamps (7-12 min) on 8 causal-ledger entries; corrected to commit times with the original kept.
+- A K2 extinction count was mis-typed and corrected within the hour.
+- Compute re-prioritised twice (F1 over D2; D2 widened after F2); every change logged.
+- Determinism validated three ways:
+  - C2R REMOVE re-runs equal C2 at every census, 16/16;
+  - F5 equals F1 to tick 2,000 and its MED twin to tick 1,000, 80/80;
+  - the forensic replay is valid at 11/11 censuses.
+
+----- 7. WHAT THIS DOES AND DOES NOT ESTABLISH ------------------------------------------------------------
+
+Established (causal, frozen, replicated where stated):
+- RM2: an error threshold for composite maintenance in z80atlas v3. Causal (F3), replicated (F4-R), transplanted to a
+  second composite and world model (F6).
+- RM4: two opposing components of uptake, in 2 substrates.
+- RM1: environmental regeneration of a minimal capability.
+- RM3: two-component copy-length coupling, on 4 specimens.
+
+NOT established:
+- That composites are unreachable: distance-1 crossings happen (2/100), and >= 2 steps was never reached in 2,000-3,000
+  ticks. "Inaccessible" is not claimed.
+- That RM2 holds for EVOLVED composites with redundancy: only hand-built witnesses were tested.
+- The quantitative location of the threshold: critical-byte count does not predict it (F6 side prediction wrong).
+- Any long-term exploration benefit of uptake.
+- Any C3 dependency.
+- Prevalence of the two coupling types in evolved populations.
+
+Conditionality: v3 K40, lifespan 40, 256 cells, 64-byte tapes, single substrate family.
+
+----- 8. RECOMMENDATION (operator's call; Bellerophon's lean) -------------------------------------------
+
+Lean: continue, but redirect.
+1. Next campaign: the variation-maintenance conflict.
+   - Heritable copy fidelity (a per-organism mutation-rate gene) vs a yoked fixed-rate control.
+   - Redundant composites (duplicated critical segments).
+   - More search volume (1,024+ cells, or many search worlds feeding a maintenance world).
+2. Only then rerun C3 (dependency) and K2-style two-source composition.
+3. Uptake: a dose-matched two-component test, plus a frozen out-of-sample prediction of where the net effect appears.
+4. Stop using one-step operator geometry as a general predictor, long-horizon MED-rate accumulation runs, and the
+   aggregate uptake block as a summary statistic.
+Merge: the branch is not fast-forwardable onto main (main is 420 commits ahead); a test merge is clean. The only
+non-seat change is the geometry.py addition (+106 lines, pure functions) and its test. Merging is the operator's call.
+
+----- 9. QUESTIONS FOR THE REVIEWER (written to resist agreement) ----------------------------------------
+
+Q1. Is "error threshold" more than a restatement that mutation breaks programs with more critical sites? F6's wrong
+    side prediction says byte count is not the whole story. What decides the threshold, and does RM2 earn the word
+    "mechanism"?
+Q2. All composite maintenance tests used HAND-BUILT witnesses with no redundancy. Is it fair to generalise to "composition
+    is bounded by maintenance" when evolution never got to build a composite of its own?
+Q3. C2R's regeneration is of ECHO, which a material-free copier population re-invents in 9/16 worlds. Is
+    "environmental regeneration from stored material" distinguishable from "ECHO is cheap" at this effect size (13/15)?
+Q4. D2's arms reverted wildly different doses (S_REF: 122M bytes in block_ldir vs 0.37M in block_noldir). How much of
+    "two opposing components" survives a dose-matched block?
+Q5. K-P1 was NOT_TESTABLE by an extinction rule I added in amendment A1, while the raw count was 0/60 in both cells in
+    the predicted direction. Was that rule too strict, or correctly strict?
+Q6. F2-F5 reused F1's 20 seeds. The paired design gains power, but does it hide seed-set idiosyncrasy? Only F4-R and F6
+    were fresh.
+Q7. Should the campaign have stopped running composition experiments after F1 and spent the remaining compute on the
+    heritable-fidelity test, rather than F4/F5?
+
+----- 10. ARTIFACTS -----------------------------------------------------------------------------------------
+
+Directory: roles/Bellerophon/rd72_2026-10-10/ on branch bellerophon/rd72-2026-10-10 (head 6316869d2 + this packet).
+- BEL_RD72_FINAL_REPORT.md (12 answers), BEL_RD72_RESULTS_LOG.md (every block, with receipt).
+- BEL_RD72_PREREG.md: s1-s15, amendments 3-A1 and 6-A, errata s5-E1 / s7 / s11-E1, stop disclosure 6-D1.
+- BEL_RD72_CAUSAL_LEDGER.jsonl (RD-C1..RD-C19), BEL_RD72_MECHANISM_LIBRARY.jsonl (RM1-RM4, FL1-FL4),
+  BEL_RD72_EXECUTION_LEDGER.jsonl.
+- REACHABILITY_GEOMETRY, OPERATOR_EXPERIMENTS, COMPOSITION, CUMULATIVE_ORGANIZATION, TRIVIALITY_AUDIT,
+  FAILURE_BOUNDARIES, NEXT_CAMPAIGN, REVIEW_RECORD, PILOTS (all .md).
+- receipts/*.json (one per block); tools/ (instruments, plans, analyses, tests).
+Freeze commits (pins):
+| block | freeze commit |
+|---|---|
+| D1 | 3996962c5 |
+| A3 | a33b5c8ae / 30410747f (analysis 3e91c7b03) |
+| E1b | 6570ec568 |
+| C2/C3 | 6570ec568 |
+| K2 | cbc7a1eb6 |
+| C2R | 3e21631fe |
+| F1 | 8bc7f5384 |
+| F2 | f3cd80c86 (analysis fc93ca78d) |
+| F3 | e662f8944 |
+| F4 | aa95d9bd4 |
+| D2 | ce4bcd5e7 |
+| F5 | 85de14589 |
+| F6 | 78440c25b |
+| kernel | c83a56063 |
+Raw data: ~/rd72_runs on ubu005 (host-local).
+
++==========================================================================================================+
+| END OF PACKET. "Not worth continuing" is a first-class answer: if the error threshold is judged a trivial |
+| restatement and nothing else here merits a campaign, say so.                                             |
++==========================================================================================================+
