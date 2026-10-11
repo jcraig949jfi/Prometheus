@@ -40,7 +40,7 @@
     "rso/z80/demand/"
   ],
   "kind": "document",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,18 @@
       "by": "Cadmus[harry1-914f6281]",
       "at_utc": "2026-10-11T14:49:28Z",
       "note": "SELECTION.md + demand gate on branch cadmus/c017-t020"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T15:10:54Z",
+      "note": "merged cadmus/c017-t020 (0b302c034; branch rule followed this time). Independent full re-run of the demand gate (12 runs x 200 epochs): byte-identical to demand_result.json (LF sha256 b9b7f616; doc quotes 90a35235 -- CRLF hashing nit again). Gate re-derives F/C from vm.execute, reads only the generation counter (no provenance/score). No commit touches archaeon/ or roles/Archaeon/. Decision: question re-scoped to ATTRIBUTION; finding 'reproduction of function, not endogenous heredity, is demanded' preserved"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T15:10:54Z",
+      "note": "decision taken into C-017-T030"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",

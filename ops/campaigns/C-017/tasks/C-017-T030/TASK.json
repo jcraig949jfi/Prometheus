@@ -22,7 +22,7 @@
     "rso/registry/",
     "rso/ensorain/ (the C-016 pattern)"
   ],
-  "problem": "Per SELECTION.md; same constraints as C-016-T030 (registry reuse within scope, ONBOARDING.md, freeze before outcomes, NO confirmatory run).",
+  "problem": "COORDINATOR DECISION (2026-10-11, from rso/z80/SELECTION.md, integrated): Z80 Atlas archaeon tree at 863d34a55; world well_mixed / unlimited / fixed, substrate vmcopy, G = 32, task ECHO_forced. FINDING carried (do not re-litigate): at local budgets the world demands REPRODUCTION OF FUNCTION, not endogenous heredity -- a runner-reproduced (EXTERNAL) lineage keeps the function about as well (.85-.87 vs .98); the join 'discovered AND endogenously heritable' is unreachable at local budget (copier lottery ~9.6e-6). QUESTION (re-scoped on evidence, directive s11's second clause): can the Observatory ATTRIBUTE WHO WROTE THE BYTES of a functional organism -- parent execution (endogenous), runner (EXTERNAL), neighbour (environmental reconstruction), or insertion (seeded / transplanted) -- from bytes, the VM and the generation counter, WITHOUT trusting the engine's provenance / spontaneous_replication / score fields? DESIGN GUIDANCE (yours to refine, with reasons): ground-truth classes built by construction (H_ENDO, H/NH_EXT, an ENV population arm with the function in the neighbour, an INSERTED arm via the seeded-replicator path or transplant) and FORGERY controls the detector must refuse or mis-trust correctly (e.g. provenance/labels edited to claim endogenous on an EXTERNAL run; a child window the parent's execution did not write; a planted tape relabelled as discovered). The detector re-executes bytes (vm.execute) rather than reading claims. Endpoint: per-RUN class against ground truth (unit = run; organisms are dependent), a preregistered confusion-matrix criterion with exact bounds, blinded labels for the confirmatory set. Apply the C-016 lessons (rso/registry counterexamples; rso/ensorain/ONBOARDING.md s5): no self-relative contrast; an endpoint no fixed prior satisfies; a stochastic null analogue (the IMPL copy-noise arms); structure from liveness; behavioural tests RED on mutants for every decision-rule line. SELECTION.md s7 limits apply, including the disclosed pilot that preceded the demand-gate rule. If observing a single birth needs an engine callable that does not exist (run() keeps state in locals; CONTRACT s3), you may re-implement the observation loop in rso/z80/ against the pinned engine (the Ensorain precedent), testing byte-equality with engine.run; any engine CHANGE is a request to Archaeon (asked in #2154). Seeds: declare a range disjoint from 16_021_xxx, 17_020_xxx and Archaeon's. Resource spec per s13. Freeze before any confirmatory outcome; NO confirmatory run in this packet.",
   "non_goals": [
     "No edit to archaeon/, prometheus/z80atlas/ or roles/Archaeon/",
     "No use of Archaeon's registered seeds or the evidence bundle",
@@ -41,13 +41,19 @@
     "rso/z80/"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-11T14:28:48Z",
       "note": "C-017 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:57:53Z",
+      "note": "T020 integrated; decision in problem; Argus on Opus"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
