@@ -42,7 +42,9 @@ extinction.
   - Fault line: minimal capabilities (2-6 critical bytes) sit below the threshold at MED, composites above it. The
     rate that finds the parts destroys the whole.
 - XR: one distance-1 crossing (point repair) under paired payment, inherited; n = 1.
-- F4 (crossing at LOW mutation; fresh-seed replication of F3): pending.
+- F4: the threshold is REPRODUCED on fresh seeds (12/20 LOW vs 1/20 MED). At LOW, one-step precursors still do not
+  cross (1/20 vs 0/20; FUNC at end 4/20). Class: search-maintenance conflict; no single fixed rate does both in 2,000
+  ticks.
 
 ## FB5 -- lineage-independent persistence (BEL-48H M4; C2, C2R)
 - Holds: ECHO regenerates after removal of every carrier (C2-b), faster than its first origin. It needs world material:

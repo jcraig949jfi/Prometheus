@@ -72,7 +72,8 @@ Cause, by two frozen manipulations:
 - F3: lowering the mutation rate DOES rescue it, 1/20 (MED) -> 13/20 (LOW) -> 17/20 (VLOW), p 2.0e-7. An error threshold.
 - So cumulative organization in this substrate is bounded by a variation-maintenance conflict. The mutation rate that
   lets populations find cheap capabilities destroys a ~10-critical-byte composite.
-- The only evolved composite in the campaign (F2, f2_00022) is a distance-1 repair; F4 tests crossing at LOW mutation.
+- Two distance-1 repairs were the only evolved composites (F2 f2_00022; F4, one KO1 world at LOW). F4 reproduced the
+  threshold on fresh seeds and found no fixed rate that both finds and keeps the composite in 2,000 ticks.
 
 ## 6. Disposition for Workstream C
 - Accumulation of two INDEPENDENT minimal capabilities in one population, kept by payment: observed.

@@ -50,7 +50,9 @@ is >= 4 / >= 5 substitutions away, with one two-source prefix-transfer route.
   tick 652. The deterministic replay is valid at all 11 censuses.
 - 7 of the 8 critical bytes are founder material; 47 carriers were alive at tick 2,000.
 - This is the geometrically predicted distance-1 repair, not an innovation; it occurred in 1 of 40 KO1 worlds.
-- F4 (pending) tests crossing at LOW mutation, where maintenance works.
+- F4: at LOW mutation, where maintenance works and replicated on fresh seeds (12/20 vs 1/20), one-step precursors
+  crossed in 1/20 worlds (vs 0/20 at MED). Most KO1 worlds lost their replicators. Across 60 KO1 worlds: 2 crossings,
+  both kept; 0 from the ECHO-like and 2-knockout founders.
 
 ## 7. Disposition
 - No composite computational mechanism was BUILT by evolution in this campaign (K2: 0/1,320; E1b: 0/150; F1: 0 from any

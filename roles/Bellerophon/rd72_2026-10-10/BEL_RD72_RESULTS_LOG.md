@@ -317,3 +317,23 @@ Consequence for the campaign's central question:
   heritable copy fidelity), or redundancy: NEXT_CAMPAIGN.
 Limit: the planted composite is the hand-built witness. Whether an evolved composite with redundant critical bytes would
 sit above the threshold is unknown.
+
+## F4 -- crossing at LOW mutation + fresh-seed replication of F3 (prereg s13; CONFIRMATORY; completed 2026-10-11 ~17:20Z)
+100 runs, 0 voids, plan sha256 466611fa..., pin aa95d9bd4; analysis tools/analyze_f4.py; receipt receipts/F4_analysis.json.
+| cell (payment ON) | n | crossed | composite kept to 2,000 | FUNC at end |
+|---|---|---|---|---|
+| W0 fresh seeds, MED | 20 | (17 present at t100) | 1 | 17 |
+| W0 fresh seeds, LOW | 20 | (20 present at t100) | 12 | 17 |
+| KO1, LOW (F1 seeds) | 20 | 1 (by tick 100) | 1 | 4 |
+| KO1, MED (F1, matched) | 20 | 0 | 0 | 10 |
+| KO2, LOW | 20 | 0 | 0 | 3 |
+| ECHOH, LOW | 20 | 0 | 0 | 10 |
+- F4-R (fresh-seed replication of F3-P1): 12/20 vs 1/20, Fisher one-sided p 2.2e-4. HOLDS. The error-threshold result
+  (RM2) is now REPRODUCED on 20 independent populations.
+- F4-X1 (KO1 crossing, LOW > MED): 1/20 vs 0/20, p 0.5. FAILS.
+FROZEN INTERPRETATION (s13): at LOW mutation, reduced variation also prevents the one-step repair within 2,000 ticks, and
+KO1 worlds mostly lose their replicators (FUNC at end 4/20). Search and maintenance cannot both be satisfied by one fixed
+mutation rate at this horizon.
+Over F1 + F2 + F4, 60 KO1 worlds produced 2 crossings, both kept (f2_00022 under paired payment at MED, one at LOW). The
+ECHO-like founder and the 2-knockout founders (0 one-step routes) produced 0 in 100 worlds across F1 (MED, paid and
+unpaid), F2 and F4.
