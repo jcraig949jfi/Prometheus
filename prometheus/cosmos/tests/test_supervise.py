@@ -165,3 +165,12 @@ def test_cli_launch_parses_options_and_command(tmp_path):
                        timeout=120, cwd=ROOT)
     assert r.returncode == 0, r.stderr
     assert json.loads(r.stdout)["verdict"] == "DONE" and len(_rows(rd)) == 4
+
+
+def test_max_tasks_per_child_does_not_deadlock(tmp_path):
+    """Regression (EXP-04 relaunch 2026-10-11): with all jobs submitted up front, retired workers were never replaced
+    and the run stopped at workers x max_tasks_per_child results with a live parent."""
+    rd = tmp_path / "r"
+    s = _script(tmp_path, _driver("ok", rd, n=12, max_tasks_per_child=2))
+    subprocess.run([PY, str(s)], check=True, env=ENV, timeout=120, cwd=ROOT)
+    assert sorted(r["i"] for r in _rows(rd)) == list(range(12))

@@ -112,7 +112,23 @@ def run_jobs(fn: Callable[[dict], dict], jobs: Iterable[dict], rundir, key: str,
     kw = {"max_tasks_per_child": max_tasks_per_child} if max_tasks_per_child else {}
     try:
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn"), **kw) as ex, open(outp, "a") as fh:
-            pending = {ex.submit(fn, j): j for j in todo}
+            # Submit incrementally: CPython's ProcessPoolExecutor replaces a worker retired by max_tasks_per_child
+            # only on a later submit(), so submitting everything up front deadlocks after workers x max_tasks
+            # results (observed live in EXP-04, 2026-10-11: 60 = 3 x 20 rows, then no workers and no science).
+            queue = iter(todo)
+            pending = {}
+
+            def _top_up():
+                while len(pending) < 2 * workers:
+                    j = next(queue, None)
+                    if j is None:
+                        return
+                    try:
+                        pending[ex.submit(fn, j)] = j
+                    except BrokenProcessPool as e:
+                        raise RunFailed(f"worker process died ({e}); detected at submit of {j[key]!r}") from e
+
+            _top_up()
             while pending:
                 fin, _ = wait(pending, return_when=FIRST_COMPLETED)
                 for f in fin:
@@ -135,6 +151,7 @@ def run_jobs(fn: Callable[[dict], dict], jobs: Iterable[dict], rundir, key: str,
                         prog["n_done"] += 1
                         prog["last_result_utc"] = utc()
                     _write()
+                _top_up()
     except BaseException as e:
         stop.set()
         with lock:
