@@ -41,7 +41,7 @@
     "rso/z80/"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -84,6 +84,18 @@
       "by": "Argus[harry1-6668fa07]",
       "at_utc": "2026-10-11T17:25:17Z",
       "note": "receipt A-001; branch argus/c017-t030 head dec970503 (freeze e41fff917, FROZEN.json cad362fa); no confirmatory run; next: Pallas Q3 challenge"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T17:40:45Z",
+      "note": "merged argus/c017-t030 (dec970503): freeze check OK; 42 tests OK; 27/27 RED mutants hit their named test, baseline GREEN; registry CURRENT x11 (no shared component modified); integrator mutant (strict-majority run class -> >=) killed by test_run_class_is_a_strict_majority; no runs/. Bespoke 667 lines (observe 166, assay 245, analysis 107, subjects 93, freeze 56)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T17:40:45Z",
+      "note": "frozen surface handed to T040"
     }
   ],
   "authority": "operator Continuous Observatory directive 2026-10-11 s11 ('If Ensorain qualifies cleanly and the next adapter is small, proceed to a separate third-engine campaign') + s2/s9/s13 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
