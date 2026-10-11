@@ -252,6 +252,10 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   stops dead, no shutdown (hard hang; lid-close suspend before the lid=ignore setting took effect is possible). The
   re-run with it still and lid open completed (clone 2m08s). Next boot started with the RTC at 2026-07-27 (chrony
   stepped it). Watch: if it hangs again, try nvme_core.default_ps_max_latency_us=0, then i915/intel_idle limits.
+- **Tablet/motion sensors disabled 2026-10-11 ~20:52Z** (operator: "sensitive to being moved"): lenovo_ymc (tablet-mode
+  switch via the EC) and hid_sensor_hub (2x accel_3d + intel_hinge) blacklisted in
+  /etc/modprobe.d/ubu009-no-tablet-sensors.conf, initramfs rebuilt, unloaded live. Delete the file + reboot to restore
+  (e.g. for auto-rotate under a desktop). If it still hangs when moved, suspect seating (NVMe / cables) next.
 - Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
   travel machine); not urgent. Pause the worker when travelling.
 
