@@ -3,7 +3,7 @@
   "campaign_id": "C-015",
   "thread_id": "TH-P2B-APHRODITE-V2B",
   "epic_id": "EP-PHASE2B",
-  "status": "OPEN",
+  "status": "CLOSED",
   "label": "C-P2B-APH-BETA-04",
   "title": "Aphrodite Beta-04 -- escaping the composition desert (72h ceiling, staged)",
   "objective": "Q1 cognitive demand (world foundry + null ladder), Q2 reachability (desert atlas, certificate vs random archive), Q3 composition and Q4 development (minimal TFS-1 2x2 promotion x archive; developmental inheritance with common-residual endpoint and ablation-verified depth), Q5 economics. Instruments first; tier 2; no live models; no third generation.",
@@ -36,5 +36,8 @@
   "cadence": {
     "mode": "4h DEV/EXP windows, staged gates",
     "note": "see beta04/CAMPAIGN_STATE.json"
-  }
+  },
+  "closed_utc": "2026-10-11T13:44Z",
+  "close_report": "roles/Aphrodite/beta04/SYNTHESIS.md",
+  "close_summary": "E1 WORLD_DEMAND_QUALIFIED NO (5/12 worlds; 2 pairings); E2 REACHABILITY_ATLAS_COMPLETE YES (supplied stones open the desert: 13/15 vs 0/120); E3-KP TFS1_INSTRUMENT_QUALIFIED NO (7/15) -> REACHABILITY_INSTRUMENT FAIL; FRONTIER INCONCLUSIVE_CENSORED; 4 gated fields INSTRUMENT_UNVALIDATED. First failure: stepping-stone ACQUISITION (search coverage + extraction non-invariance). E3-R REPAIR_CLASS SEARCH (MAJORITY; seed-robust needs OE + X-ABS). Recommendation CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY. Independent review v1-v3. Tier 2; 36.4 core-h; $0."
 }

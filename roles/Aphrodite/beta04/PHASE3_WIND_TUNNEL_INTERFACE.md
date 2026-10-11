@@ -1,6 +1,7 @@
-# PHASE-3 WIND-TUNNEL INTERFACE PROPOSAL FROM BETA-04 (C-015) -- DRAFT v0
+# PHASE-3 WIND-TUNNEL INTERFACE PROPOSAL FROM BETA-04 (C-015) -- v1 (FINAL AT BETA-04 CLOSE)
 
-Status: DRAFT; finalised at the Beta-04 close.
+Status: FINAL for Beta-04 (2026-10-11). It is a proposal: nothing is built on the RSO side, and it needs RSO-owner review
+(Palamedes / TH-RSO-BUILD).
 
 It proposes how Beta-04's instruments plug into the Phase-3 RSO wind tunnel. It does NOT merge runtimes (synthesis
 D01: "one minimal contract and verdict adapter only after review"). Interface terms follow the RSO v0.1 design /
@@ -64,7 +65,7 @@ Each Beta-04 label maps to {execution RAN / BLOCKED; authority QUALIFIED@stage /
 - **Render refusals apply.** E.g. "TFS-1 cannot compose" is refused (RENDER_QUANTIFIER_UNBOUND). The renderable form
   is: "in cell C, with true stones given, the chain qualified 14 / 15 at B = 1e6".
 
-## 4. What the wind tunnel should take from Beta-04's results (to be completed at close)
+## 4. What the wind tunnel should take from Beta-04's results
 - **Stone ACQUISITION needs its own qualification checks** (revised after independent review v1, F2 / F3 / F9).
   1. **Extraction invariance.** A mechanism extracted from a found program must be invariant to semantics-preserving
      refactorings of that program. In Beta-04, 3 / 4 "underdetermined" stones were mis-cuts of globally correct
@@ -80,6 +81,19 @@ Each Beta-04 label maps to {execution RAN / BLOCKED; authority QUALIFIED@stage /
   descriptor qualified on 5 / 15 families (2 / 5 clusters), which censored FRONTIER_ARCHIVE_EFFECT before any outcome.
 - **The first-failing-link vocabulary should be the wind tunnel's ascent-from-scratch report format** (RSO s14), so
   that a negative names its link.
+
+4. **A REPAIR-CLASS 2x2 is a cheap, decisive instrument once a first failing link is named** (E3-R).
+   - Cross one search intervention with one developmental intervention, at matched budget.
+   - Use 3 seeds, with stability labels (STABLE / MAJORITY / SEED_UNSTABLE).
+   - Treat censoring as a third state, with LO / HI bounds.
+   - Make a per-family attribution table the primary output.
+   - Run a masking report (did the developmental fix change stones inside the search cell?).
+   - In Beta-04 it read SEARCH (MAJORITY) at a one-family margin; only OE + X-ABS cleared the bar at every seed. The
+     interaction term and the masking report were what prevented an over-claim.
+5. **Autonomy accounting is a required report field.** Report per success what the world / ruler supplied
+   (decomposition, curriculum), what the certifier did (retry selection, judgement), what developmental machinery did
+   (fallback, extraction) and what search infrastructure did (pruning, archive). Beta-04's positives were low-autonomy
+   (SYNTHESIS s4). A wind-tunnel claim of "discovery" should be refused unless the decomposition is NOT supplied.
 
 ## 5. Minimal adapter (proposed; not built)
 `rso/adapters/beta04.py` (future, after review):

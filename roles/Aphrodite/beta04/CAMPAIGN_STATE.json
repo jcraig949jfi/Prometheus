@@ -14,7 +14,7 @@
   "TFS1": "DESIGN_ONLY",
   "GLOBAL_BEHAVIOR_IDENTITY": "FAIL"
  },
- "phase": "BOOTSTRAP",
+ "phase": "CLOSED",
  "windows": [
   {
    "id": "W01",
@@ -69,70 +69,71 @@
    "id": "W08",
    "kind": "EXP",
    "start_utc": "2026-10-11T13:27Z",
-   "status": "ACTIVE"
+   "status": "CLOSED",
+   "report": "beta04/windows/W08_CLOSE_REPORT.md"
   },
   {
    "id": "W09",
    "kind": "DEV",
    "start_utc": "2026-10-11T17:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W10",
    "kind": "EXP",
    "start_utc": "2026-10-11T21:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W11",
    "kind": "DEV",
    "start_utc": "2026-10-12T01:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W12",
    "kind": "EXP",
    "start_utc": "2026-10-12T05:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W13",
    "kind": "DEV",
    "start_utc": "2026-10-12T09:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W14",
    "kind": "EXP",
    "start_utc": "2026-10-12T13:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W15",
    "kind": "DEV",
    "start_utc": "2026-10-12T17:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W16",
    "kind": "EXP",
    "start_utc": "2026-10-12T21:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W17",
    "kind": "DEV",
    "start_utc": "2026-10-13T01:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   },
   {
    "id": "W18",
    "kind": "EXP",
    "start_utc": "2026-10-13T05:27Z",
-   "status": "PENDING"
+   "status": "NOT_NEEDED (campaign closed early)"
   }
  ],
- "active_window": "W08",
+ "active_window": null,
  "experiments": {
   "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
   "E2": "PENDING",
@@ -186,7 +187,7 @@
   ]
  },
  "cloud_spend_usd": 0,
- "next_action": "KP primary -> pooled verdict -> secondary rows -> OE repair iff triggered; E2 -> e2_analyze; close W03 21:27Z (coordinator commits from aph-b04-tfs1 worktree while E2 runs)",
+ "next_action": "Idle; await operator direction for Beta-05.",
  "outcomes_frozen_labels": {
   "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
   "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z) || direction in both informative clusters: archive arm below both comparators (descriptive)",
@@ -321,5 +322,18 @@
   "compute_core_h": 2.84,
   "reproduction": "off_frozen 7/15 = frozen E3-KP; off_xabs 9/15 reproduced",
   "claim_limits": "runs/e3r_production/E3R_RESULT.json claim_limits (may_not_claim: TFS1 relabel, E3 gate, COMPOSITIONAL_DISCOVERY, X-ABS generality, 'developmental machinery fine', CHANGE over MIGRATE)"
- }
+ },
+ "closed_utc": "2026-10-11T13:44Z",
+ "close_report": "roles/Aphrodite/beta04/SYNTHESIS.md",
+ "final_labels": {
+  "WORLD_DEMAND_QUALIFIED": "NO",
+  "REACHABILITY_ATLAS_COMPLETE": "YES",
+  "TFS1_INSTRUMENT_QUALIFIED": "NO",
+  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE",
+  "COMPOSITIONAL_DISCOVERY": "INSTRUMENT_UNVALIDATED",
+  "DEVELOPMENTAL_INHERITANCE": "INSTRUMENT_UNVALIDATED",
+  "SECOND_ORDER_ACQUISITION": "INSTRUMENT_UNVALIDATED",
+  "ECONOMIC_ADVANTAGE": "INSTRUMENT_UNVALIDATED"
+ },
+ "recommendation": "CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY (keep TFS-1). First demonstrated failure: stepping-stone ACQUISITION (search coverage + extraction non-invariance; world dev-gap 1/4). E3-R frozen class SEARCH (MAJORITY, one-family margin); seed-robust qualification needed OE + X-ABS. Next: stone discovery without supplied decomposition (not R8)."
 }
