@@ -1,0 +1,122 @@
+{
+ "A": {
+  "labels": {
+   "KNOWN_EQUIVALENCE": 5,
+   "VIABLE_DISTINCT": 2,
+   "KNOWN_FAILURE": 1
+  },
+  "clusters": 7,
+  "equiv_to_tried_ns01": [
+   1,
+   2,
+   3,
+   5,
+   8
+  ],
+  "equiv_to_witness": [
+   3
+  ],
+  "relational": [],
+  "not_in_archive_and_no_rule": [
+   4,
+   7
+  ],
+  "ns01_retro": {
+   "n": 8,
+   "equiv_to_witness_desat": 1,
+   "clusters_desat": 7,
+   "relational": []
+  }
+ },
+ "B": {
+  "labels": {
+   "KNOWN_EQUIVALENCE": 4,
+   "VIABLE_KNOWN_STRUCTURE": 2,
+   "VIABLE_DISTINCT": 2
+  },
+  "clusters": 8,
+  "equiv_to_tried_ns01": [
+   1,
+   2,
+   7,
+   8
+  ],
+  "equiv_to_witness": [],
+  "relational": [
+   3
+  ],
+  "not_in_archive_and_no_rule": [
+   4,
+   6
+  ],
+  "ns01_retro": {
+   "n": 8,
+   "equiv_to_witness_desat": 1,
+   "clusters_desat": 6,
+   "relational": [
+    "B05",
+    "B08"
+   ]
+  }
+ },
+ "C": {
+  "labels": {
+   "KNOWN_EQUIVALENCE": 5,
+   "VIABLE_KNOWN_STRUCTURE": 2,
+   "KNOWN_FAILURE": 1
+  },
+  "clusters": 7,
+  "equiv_to_tried_ns01": [
+   1,
+   3,
+   4,
+   7,
+   8
+  ],
+  "equiv_to_witness": [
+   7,
+   8
+  ],
+  "relational": [
+   6
+  ],
+  "not_in_archive_and_no_rule": [],
+  "ns01_retro": {
+   "n": 8,
+   "equiv_to_witness_desat": 1,
+   "clusters_desat": 6,
+   "relational": [
+    "C04"
+   ]
+  }
+ },
+ "D": {
+  "labels": {
+   "VIABLE_KNOWN_STRUCTURE": 1,
+   "DEGENERATE": 3,
+   "KNOWN_FAILURE": 3,
+   "VIABLE_DISTINCT": 1
+  },
+  "clusters": 6,
+  "equiv_to_tried_ns01": [
+   2,
+   4,
+   8
+  ],
+  "equiv_to_witness": [
+   2,
+   4,
+   8
+  ],
+  "relational": [],
+  "not_in_archive_and_no_rule": [
+   6
+  ],
+  "ns01_retro": {
+   "n": 8,
+   "equiv_to_witness_desat": 3,
+   "clusters_desat": 6,
+   "relational": []
+  }
+ }
+}

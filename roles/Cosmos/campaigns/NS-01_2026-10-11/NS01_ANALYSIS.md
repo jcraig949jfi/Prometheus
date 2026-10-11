@@ -3,7 +3,13 @@
 All work exploratory, visible-world. No holdout, no confirmation data, no killed law revived. Every job ran under
 prometheus.cosmos.supervise (8 jobs, 0 restarts). Artefacts in this directory; commits on cosmos/ns01-2026-10-11.
 
-## 0. Answer in one paragraph
+## CORRECTION (2026-10-11, after NS-02 stage 1; see NS-02_2026-10-11/NS01_RETRO_DESAT.json)
+The headline "16 of 24 LLM proposals are behaviourally perfect memories, indistinguishable from the witnesses" is an
+INSTRUMENT ARTEFACT of the NS-01 signature (defect 2 below). Re-measured with the qualified de-saturated signature
+(corruption dose-response + dual cue), only 1/8 proposals per LLM arm is equivalent to a witness and the LLM arms form
+6-7 distinct clusters each (D: 6). The arm comparison below is superseded on that point; F15 and the audit stand.
+
+## 0. Answer in one paragraph (as written before the correction)
 Not demonstrated. In this pilot the failure archive did not measurably redirect LLM generation toward distinct causal
 structures: 16 of 24 LLM proposals (all three LLM arms) are behaviourally perfect memories, indistinguishable from the
 archived register / delay-line witnesses, whatever their stated mechanism. The one failure-15 candidate came from the
