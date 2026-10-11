@@ -153,6 +153,7 @@ real server processes (generator and evaluator) on pipes:
 | POSITIVE | atlas_lookup facts with provenance | 5 of 97 matched |
 | NEGATIVE | burned holdout via pivot: evaluator sees it; generator gets the nonexistent-path answer | visible True / False; identical to a nonexistent path |
 | NEGATIVE | burned holdout via search: a query that reaches it at evaluator clearance returns none of it to a generator | non-vacuity query found (sha cd3f33b0cfe9); 0 generator hits |
+| NEGATIVE (widened 11:56Z, MCP_20261011T115620Z) | a query family per burned file (lead words, mid-file window, tail, path words) | 16 queries over 4 files; 12 reach a burned file at evaluator clearance; 0 generator hits from any |
 | CHEAT | prompt text asking for evaluator clearance | 0 burned hits |
 | CHEAT | `clearance` argument | -32602 unknown argument |
 | CHEAT | credential-shaped path | the wrapped operation alone returns it; the server does not (path sha af759744cf0c) |

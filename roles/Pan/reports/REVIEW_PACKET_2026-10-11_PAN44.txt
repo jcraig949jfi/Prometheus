@@ -232,6 +232,10 @@ DOES NOT:
     re-run.
   - Owners and the operator were told (comms #2129, paths only). Rotation is
     Q-017.
+  - Q3 follow-up (11:56Z, MCP_20261011T115620Z, 15/15): search exclusion now
+    uses a query family per burned file (lead, mid window, tail, path
+    words). 16 queries; 12 reach a burned file at evaluator clearance; 0
+    burned records to a generator from any of the 16.
   - Reviewer question added. Which other kinds of sensitive content (personal
     data, embargoed numbers inside ordinary files) does a path-and-pattern
     rule still miss?
