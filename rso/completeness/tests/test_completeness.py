@@ -10,7 +10,7 @@ import unittest
 
 from rso.completeness import manifest as M, verify as V
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 # ---------------------------------------------------------------- part 1: engine-agnostic
