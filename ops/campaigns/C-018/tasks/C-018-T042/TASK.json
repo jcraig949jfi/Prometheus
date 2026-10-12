@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T042",
+  "campaign_id": "C-018",
+  "title": "Short Q3 re-check of the repaired Aether assay (v1.1.0)",
+  "objective": "Confirm the repair closes REPORT s3-s4 without opening a new hole; not a second open challenge.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-018-T041"
+  ],
+  "owns": [
+    "rso/aether/challenge/R2/"
+  ],
+  "reads": [
+    "rso/aether/"
+  ],
+  "problem": "Re-run B1, B2, B5, B6, B8 (0x3004/0x3005), E5/E1h/E3h against v1.1.0; check the amendment preceded the re-freeze; each new test RED on its mutant; one new attack on the repaired N rule and on the evaluable-minimum rule. Model continuity verified. CLOSED / NOT CLOSED per surface; no implementation repair.",
+  "non_goals": [
+    "No confirmatory run (k = 0x2000+i untouched; no RELEASE.json; no `confirm run`)",
+    "No edit to Aether/ or roles/Aether/",
+    "Nothing on M2",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "re-check REPORT under rso/aether/challenge/R2/"
+  ],
+  "acceptance": {
+    "condition": "REPORT committed"
+  },
+  "deliverables": [
+    "rso/aether/challenge/R2/"
+  ],
+  "kind": "document",
+  "red_required": false,
+  "notes": "red_required false: adversarial re-check",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T13:08:40Z",
+      "note": "from C-018-T040 adjudication"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 s9 (one bounded repair round + short re-check)",
+  "preferred_model": "claude-fable-5-1"
+}
