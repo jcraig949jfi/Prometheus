@@ -302,4 +302,27 @@ ENTRIES = [
         "invalidated_by": ["any byte change to the pinned files"],
         "users": ["C-018 (required for every preregistration from C-018 on)"],
     },
+    {
+        "name": "experiment-completeness",
+        "version": "C-018-T011",
+        "owner": "Eupalamus (built); Palamedes (coordinator)",
+        "files": ["rso/completeness/manifest.py", "rso/completeness/verify.py", "rso/completeness/z80.py",
+                  "rso/completeness/manifests/z80_confirm.manifest.json"],
+        "interface": "verify(manifest, presented, sources, native_digest, pinned_manifest_sha256) -> COMPLETE | COMPLETE_EARLY_STOP | "
+                     "INCOMPLETE(missing) | REFUSED(findings); only COMPLETE / COMPLETE_EARLY_STOP license a verdict. Sealed JSON manifest: "
+                     "arms, shards {id, seeds, arm_counts, rows, rows_sha256, meta_sha256}, sources, optional preregistered early_stop.",
+        "stage": "AUTHOR_TESTED",
+        "qualified_scope": "the C-017 Z80 six-shard fixture: complete set reproduces CONFIRM.analysis.json exactly; removal, duplication, "
+                           "substitution, alteration, foreign id, seed partition, source change, re-sealed smaller manifest and early stop "
+                           "with/without trigger all detected (40 tests; 12 of 13 mutants killed, 1 equivalent; integrator mutant killed).",
+        "not_qualified_for": ["whether the frozen shards were produced by the registered procedure (that is the freeze + cleared-by gate)",
+                              "richer stopping rules than one conjunction of equalities and a count (declare a new evaluator)",
+                              "experiments whose re-runs legitimately change meta fields such as wall_s / host (pin selected fields)"],
+        "tests": ["rso/completeness/tests/test_completeness.py"],
+        "evidence": ["rso/completeness/README.md", "rso/completeness/tests/RED_OUTPUT.txt"],
+        "counterexamples": ["frozen rso/z80/analysis.py (C-017) accepts 5 of 6 shards -- the reason this exists; it stays frozen and unchanged"],
+        "dependencies": ["receipt-canonical"],
+        "invalidated_by": ["any byte change to the pinned files"],
+        "users": ["C-017 fixture (new analyzer version python -m rso.completeness.z80)", "C-018 Aether (required)"],
+    },
 ]
