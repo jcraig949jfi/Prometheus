@@ -40,17 +40,25 @@ experiments; never run anything on M2. Pin a SHA in your own worktree.
 BRANCH RULE: commit work to YOUR BRANCH and push the branch; only the small
 workgraph state commits (CLAIMED / INTEGRATION_READY) go to main.
 
-THE ONE bounded repair round (directive s9) of your Aether assay. Read
-rso/aether/challenge/REPORT.md (Pallas, genuine Q3) in full, then your
-packet's TASK.json `problem` field: evidence-chain, instrument (B8 N rule),
-inference (B2 unevaluable, B3, B7) and interpretation items. Amendment
-v1.1.0 committed BEFORE the re-freeze; every new test RED on its mutant
-applied verbatim from rso/aether/challenge/edits.json where one exists
-(python -B). Development and your own seeds only; the confirmatory block
-k = 0x2000+i and the burned 0x1000..0x10FF stay untouched. There is no
-second repair round: what cannot be closed is narrowed and recorded as a
-limitation. NO confirmatory run, and do not write rso/aether/RELEASE.json
-(the coordinator writes it after the re-check).
+RESUME of C-018-T041 (same-seat relaunch). The previous instance
+Argus[harry1-4230902d] stopped at ~13:56Z on a harness usage limit
+("You've hit your weekly limit"), NOT on a code failure. It had committed
+and pushed b3cc39a56 on branch argus/c018-t041: "PREREGISTRATION v1.1.0
+amendment + repair code, BEFORE dev check and re-freeze". Its worktree is
+C:/Prometheus-worktrees/argus-c018-t041. The LEASE.json still names the
+dead instance: take it over (record the takeover in the task history
+and LEASE note), do not create a second lease.
+
+Continue from b3cc39a56: read what it committed, verify it against the
+packet's TASK.json `problem` field and rso/aether/challenge/REPORT.md,
+then finish the remaining items -- RED rows for every new pin, the dev
+check under v1.1.0, sizing / minimum-evaluable decision, design manifest
+re-seal, re-freeze (FROZEN.json v1.1.0), ONBOARDING.md (including the
+'cost of detecting a false interpretation before the run' measure), the
+receipt, INTEGRATION_READY. Do not rewrite the amendment commit's history.
+If the usage limit returns, commit and push what is done with a clear
+note before the session ends. NO confirmatory run; do not write
+rso/aether/RELEASE.json.
 Claim (state commit to main; push = claim), do the work, commit with
 source references (file:line), receipt (attempts/A-001/RECEIPT.json),
 INTEGRATION_READY, push your branch, comms note to Palamedes
