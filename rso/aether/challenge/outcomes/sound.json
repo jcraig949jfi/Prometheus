@@ -1,0 +1,83 @@
+{
+ "S1": {
+  "design_from_code_equal": true,
+  "design_pin_equal": true,
+  "design_sealed": true,
+  "freeze_check": "OK",
+  "n_disk_match": 32,
+  "n_files": 32,
+  "n_git_match": 32,
+  "python": "3.12",
+  "version": "1.0.0"
+ },
+ "S2": {
+  "n_tests": 33,
+  "red_identical": false,
+  "red_killed": 17,
+  "red_rc": 1,
+  "red_total": 17,
+  "suite_rc": 0,
+  "suite_tail": "OK"
+ },
+ "S3": {
+  "audit_identical_bytes": false,
+  "audit_identical_json": true,
+  "controls_rc": 0,
+  "freeze_check_after": "OK",
+  "qualification_identical_bytes": false,
+  "qualification_identical_json": true,
+  "qualify_rc": 0,
+  "restored_sha256_ok": true
+ },
+ "S4": {
+  "clamp_timing_identical": true,
+  "clamp_timing_ticks": {
+   "B": 2,
+   "N": 6
+  },
+  "replay_RX_0_equal": true,
+  "replay_RX_0_tree_equal": true,
+  "replay_V1_0_equal": true,
+  "replay_V1_0_tree_equal": true
+ },
+ "S5": {
+  "bad_ref_rc": 2,
+  "forged_release_passes": true,
+  "no_flag_rc": 2,
+  "release_json_in_repo": false
+ },
+ "S6": {
+  "complete": "COMPLETE",
+  "count": "REFUSED",
+  "count_kinds": [
+   "COUNT_MISMATCH"
+  ],
+  "duplicate": "REFUSED",
+  "duplicate_kinds": [
+   "DUPLICATE"
+  ],
+  "early_stop_rule": null,
+  "missing": "INCOMPLETE",
+  "missing_list": [
+   "RX.0"
+  ],
+  "missing_never_early_stop": true,
+  "seed": "REFUSED",
+  "seed_kinds": [
+   "SEED_PARTITION"
+  ],
+  "smaller_pinned": "REFUSED",
+  "smaller_pinned_kinds": [
+   "MANIFEST_ALTERED"
+  ],
+  "smaller_unpinned": "COMPLETE",
+  "source": "REFUSED",
+  "source_kinds": [
+   "SOURCE_MISMATCH"
+  ],
+  "unexpected": "REFUSED",
+  "unexpected_kinds": [
+   "UNEXPECTED"
+  ]
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "B5": {
+  "completeness": "COMPLETE",
+  "disposition_RX": "REFUSED_RECORD_INCONSISTENT",
+  "n_distinct_arrays_sha256": 5,
+  "n_rows": 64,
+  "problems": [
+   "RX.3 seed 12291: native replay differs"
+  ],
+  "rc": 0
+ },
+ "P1": {
+  "RX_classes_printed": {
+   "CONFIRMED": 12,
+   "CONTROL_VACUOUS": 0,
+   "INSUFFICIENT": 12,
+   "MULTI_SOURCE": 0,
+   "NONSPECIFIC": 0,
+   "NOT_INTERVENTIONAL": 0,
+   "NO_CUT": 24
+  },
+  "RX_content_excess_all_printed": 0.11210937500000001,
+  "laws_printed_on_refusal": true
+ },
+ "completeness": {
+  "early_stop": null,
+  "findings": [],
+  "manifest_sha256": "8e72779edb4871a6b722587b8b776314eec0324d064ae66f89c855ed1f2b91d1",
+  "missing": [],
+  "status": "COMPLETE"
+ },
+ "experiment": "C-018-T030 Aether native ancestry-vs-content v1.0.0",
+ "laws": {
+  "RX": {
+   "agreement_category": "AGREE",
+   "classes": {
+    "CONFIRMED": 12,
+    "CONTROL_VACUOUS": 0,
+    "INSUFFICIENT": 12,
+    "MULTI_SOURCE": 0,
+    "NONSPECIFIC": 0,
+    "NOT_INTERVENTIONAL": 0,
+    "NO_CUT": 24
+   },
+   "confirmed_r2": 12,
+   "content_excess_all": 0.11210937500000001,
+   "content_excess_cond": 0.11210937500000001,
+   "disposition": "REFUSED_RECORD_INCONSISTENT",
+   "light_cone_violations": 0,
+   "n_units": 48,
+   "null_excess": 0.0005126953125,
+   "pooled_agreement": 1.0,
+   "reach_band": 6
+  },
+  "V1": {
+   "agreement_category": null,
+   "classes": {
+    "CONFIRMED": 0,
+    "CONTROL_VACUOUS": 0,
+    "INSUFFICIENT": 8,
+    "MULTI_SOURCE": 0,
+    "NONSPECIFIC": 0,
+    "NOT_INTERVENTIONAL": 0,
+    "NO_CUT": 8
+   },
+   "confirmed_r2": 0,
+   "content_excess_all": 0.00859375,
+   "content_excess_cond": null,
+   "disposition": "REFUSED_RECORD_INCONSISTENT",
+   "light_cone_violations": 0,
+   "n_units": 16,
+   "null_excess": 0.00019531249999999998,
+   "pooled_agreement": null,
+   "reach_band": 0
+  }
+ },
+ "n_distinct_arrays_sha256": 5,
+ "n_rows": 64,
+ "problems": [
+  "RX.3 seed 12291: native replay differs"
+ ],
+ "rc": 0,
+ "replay_stubbed": false
+}

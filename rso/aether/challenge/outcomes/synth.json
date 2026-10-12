@@ -1,0 +1,176 @@
+{
+ "B1": {
+  "invariant": {
+   "after": {
+    "cls": "CONFIRMED",
+    "n_I": 7,
+    "n_targets": 5,
+    "r_int": 2,
+    "removed_B": 1.0,
+    "removed_N": 0.0
+   },
+   "before": {
+    "cls": "INSUFFICIENT",
+    "n_I": 7,
+    "n_targets": 1,
+    "r_int": 2,
+    "removed_B": 1.0,
+    "removed_N": 0.0
+   },
+   "invariants_after": {
+    "gen_not_parent_plus_1": 0,
+    "non_adjacent_parent": 0,
+    "parent_not_earlier": 0
+   },
+   "problems_after": [],
+   "reparented": [
+    [
+     13566,
+     13694
+    ],
+    [
+     13565,
+     13566
+    ],
+    [
+     13438,
+     13566
+    ],
+    [
+     13822,
+     13694
+    ]
+   ],
+   "replay_arrays_check_passes": true
+  },
+  "naive": {
+   "after": {
+    "cls": "CONFIRMED",
+    "n_I": 7,
+    "n_targets": 4,
+    "r_int": 2,
+    "removed_B": 1.0,
+    "removed_N": 0.0
+   },
+   "before": {
+    "cls": "INSUFFICIENT",
+    "n_I": 7,
+    "n_targets": 1,
+    "r_int": 2,
+    "removed_B": 1.0,
+    "removed_N": 0.0
+   },
+   "invariants_after": {
+    "gen_not_parent_plus_1": 0,
+    "non_adjacent_parent": 2,
+    "parent_not_earlier": 0
+   },
+   "invariants_before": {
+    "gen_not_parent_plus_1": 0,
+    "non_adjacent_parent": 0,
+    "parent_not_earlier": 0
+   },
+   "problems_after": [],
+   "reparented": [
+    13438,
+    13565,
+    13566
+   ],
+   "replay_arrays_check_passes": true
+  },
+  "typeflip": {
+   "B_after": 11352,
+   "N_after": 11350,
+   "after": {
+    "cls": "NONSPECIFIC",
+    "n_I": 0,
+    "n_targets": 70,
+    "r_int": 0,
+    "removed_B": 1.0,
+    "removed_N": 1.0
+   },
+   "before": {
+    "cls": "NO_CUT",
+    "n_I": 0,
+    "n_targets": 0,
+    "r_int": 0,
+    "removed_B": null,
+    "removed_N": null
+   },
+   "clamp_arrays_all_minus_one": true,
+   "flipped_sites": [
+    11224
+   ],
+   "invariants_after": {
+    "gen_not_parent_plus_1": 0,
+    "non_adjacent_parent": 0,
+    "parent_not_earlier": 0
+   },
+   "problems_after": [],
+   "replay_arrays_check_passes": true
+  }
+ },
+ "B2": {
+  "a_all_nocut_with_content": {
+   "classes": {
+    "CONFIRMED": 0,
+    "CONTROL_VACUOUS": 0,
+    "INSUFFICIENT": 0,
+    "MULTI_SOURCE": 0,
+    "NONSPECIFIC": 0,
+    "NOT_INTERVENTIONAL": 0,
+    "NO_CUT": 48
+   },
+   "disposition": "CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY",
+   "n_evaluable": 0
+  },
+  "b_44_nocut_4_confirmed_r3": {
+   "confirmed_r2": 4,
+   "disposition": "NEITHER",
+   "n_evaluable": 4,
+   "need": 5,
+   "reach_band": 0
+  },
+  "c_v1_all_nocut": {
+   "disposition": "NEITHER",
+   "n_evaluable": 0
+  },
+  "e_43_nocut_5_confirmed_r2": {
+   "confirmed_r2": 5,
+   "disposition": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+   "n_evaluable": 5,
+   "need": 5
+  },
+  "statuses_available": [
+   "INCOMPLETE",
+   "REFUSED",
+   "REFUSED_RECORD_INCONSISTENT",
+   "DETECTION_UNQUALIFIED",
+   "ANCESTRY_WITH_CONTENT",
+   "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+   "CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY",
+   "NEITHER"
+  ]
+ },
+ "B3": {
+  "content_excess_cond_all_seeds": 0.7839,
+  "content_excess_cond_confirmed_seeds_only": 0.0,
+  "disposition": "ANCESTRY_WITH_CONTENT",
+  "n_confirmed": 5,
+  "n_nocut": 43,
+  "reach_band": 2
+ },
+ "B4": {
+  "cls": "CONFIRMED",
+  "ftick_N": 50,
+  "n_targets_live_for_N": 0,
+  "removed_B": 1.0,
+  "removed_N": 0.0,
+  "targets_ftick": [
+   3,
+   4,
+   5
+  ],
+  "vacuous_by_evaluator": false
+ }
+}

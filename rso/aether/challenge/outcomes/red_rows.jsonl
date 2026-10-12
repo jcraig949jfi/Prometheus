@@ -1,0 +1,22 @@
+{"edit": "BASELINE (unedited)", "result": "GREEN", "returncode": 0, "tail": "OK"}
+{"edit": 0, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.7, 0.2, 3", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 1, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.3, 3", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 2, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 2", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 3, "file": "evaluate.py", "new": "MARGIN, NULL_MAX = 0.07, 0.03", "old": "MARGIN, NULL_MAX = 0.05, 0.03", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"count": 0, "edit": 4, "file": "evaluate.py", "result": "EDIT_NOT_UNIQUE"}
+{"edit": 5, "file": "evaluate.py", "new": "vac = N is None", "old": "vac = N is None or imp[N] < 0", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 6, "file": "evaluate.py", "new": "tg = list(targets)", "old": "tg = [s for s in targets if imp[s] >= 0]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 7, "file": "evaluate.py", "new": "return bool((d <= ft[idx] + 10).all())", "old": "return bool((d <= ft[idx]).all())", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"count": 0, "edit": 8, "file": "evaluate.py", "result": "EDIT_NOT_UNIQUE"}
+{"count": 0, "edit": 9, "file": "evaluate.py", "result": "EDIT_NOT_UNIQUE"}
+{"edit": 10, "file": "evaluate.py", "new": "return B, meta[\"N\"], sorted(TR.descendants(tree, B))", "old": "return B, A.choose_nonancestor(tree, B, meta[\"origin\"], meta[\"n\"]), sorted(TR.descendants(tree, B))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 11, "file": "evaluate.py", "new": "return [] if True else", "old": "return [] if meta.get(\"arrays_sha256\") == A.arrays_sha256(a) else", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 12, "file": "evaluate.py", "new": "p2 = L[\"confirmed_r2\"] >= 3", "old": "p2 = L[\"confirmed_r2\"] >= max(3, math.ceil(0.1 * L[\"n_units\"]))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 13, "file": "evaluate.py", "new": "if L[\"null_excess\"] is None:", "old": "if L[\"null_excess\"] is None or abs(L[\"null_excess\"]) >= NULL_MAX:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 14, "file": "evaluate.py", "new": "need = max(2, math.ceil(0.1 * len(rows)))", "old": "need = max(3, math.ceil(0.1 * len(rows)))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 15, "file": "evaluate.py", "new": "[:, 1:6] - 0.125)", "old": "[:, 1:min(band, 6)] - 0.125)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 16, "file": "confirm.py", "new": "False", "old": "(pinned_design_sha256 is not None and design[\"manifest_sha256\"] != pinned_design_sha256)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 17, "file": "confirm.py", "new": "presented, sources=sources, native_digest=None)", "old": "presented, sources=sources, native_digest=M.digest)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 18, "file": "adapter.py", "new": "if g >= -1 and s != B", "old": "if g >= 1 and s != B", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 19, "file": "adapter.py", "new": "return max(cands)[2] if cands else None", "old": "return min(cands)[2] if cands else None", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"count": 0, "edit": 20, "file": "adapter.py", "result": "EDIT_NOT_UNIQUE"}
