@@ -272,7 +272,28 @@ A_vacN qualify the C3 READING, not the native selection rule; they class as regi
 
 ### 10.5 Development check result and sizing outcome
 
-(Filled after the development check; see the commit that follows this one. Nothing above changes after it.)
+Filled after the development check (s10.1-s10.4 committed unchanged at `b3cc39a56` before any v1.1.0 unit ran). DEV-class
+data, not a result.
+
+- Units: RX k = 0..15, V1 k = 0..3 under adapter 1.1.0 (qual/records/native_*; timings qual/records/DEV_TIMING.jsonl, last 20
+  rows; two processes concurrently: RX 79.8-100.3 s, mean 89.5; V1 74.3-77.4 s, mean 75.4).
+- `qualify verdict`: qualified True, all five criteria; native_dev 20/20 with no binding / tree cross-check / tree invariant /
+  clamp-fidelity problem and t0 identity 1 (qual/QUALIFICATION.json). Fixture near-misses unchanged (A_misN NONSPECIFIC,
+  A_vacN CONTROL_VACUOUS, A_wrongB NOT_INTERVENTIONAL, 4/4 each).
+- `qualify devcheck` (qual/DEV_CHECK.json): RX 8 NO_CUT, 4 INSUFFICIENT, 3 CONFIRMED (k 11, 13, 15; r_int 2, 2, 4), 1
+  NOT_INTERVENTIONAL (k 5), 0 NONSPECIFIC, 0 CONTROL_VACUOUS: **evaluable 4 of 16 -> ANCESTRY_UNEVALUABLE** (the rule doing
+  what it is for); content_excess_all 0.0095, null 0.0002. V1: 4 NO_CUT -> ANCESTRY_UNEVALUABLE.
+- The window changed N in 4 of the 8 dev units with a B (k 5, 6, 7, 11): each v1.0.0 N first diverged at tick 1, before B
+  (ticks 8, 3, 24, 4). k 7 has no candidate in its window [24, 25): N = None, INSUFFICIENT anyway (2 targets). k 11
+  (CONFIRMED, B tick 4, N tick 4) is the 0x3004 shape on a dev seed; its v1.0.0 N was not clamped, so its v1.0.0 class is not
+  known. k 13 is CONFIRMED with removed_N = 0.2 exactly (NONANC_MAX is inclusive): a threshold-edge unit. k 0 is INSUFFICIENT
+  with its single target first diverging at tick 349 (a late-target case, B7).
+- **Sizing outcome (s10.4 rule):** p = (4 + 7) / (16 + 24) = 0.275; P(Binomial(48, 0.275) < 8) = 0.027 <= 0.10 -> **the design
+  is unchanged: 48 RX (4 shards x 12) + 16 V1 (2 x 8), k = 0x2000+i.** Expected RX evaluable ~13. V1 is expected
+  ANCESTRY_UNEVALUABLE (s10.4).
+- **Budget:** one process at a time ~65.6 s per RX and 60.5 s per V1 unit (v1.0.0 measurement) -> 4,116 s, plus the analysis's
+  64 snapshots x 4.6 s and 6 full replays (~400 s) -> **~1.3 core-h**. Two concurrent processes on harry1 are slower per unit
+  (thermal; measured above) -> ~1.7 core-h. Both inside the R2 envelope; the coordinator chooses.
 
 ## 11. Interpretation the confirmatory result text must carry, whatever it is (REPORT s4.4)
 

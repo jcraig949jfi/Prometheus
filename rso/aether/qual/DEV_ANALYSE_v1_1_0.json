@@ -1,0 +1,369 @@
+{
+ "forged": {
+  "completeness": {
+   "early_stop": null,
+   "findings": [],
+   "manifest_sha256": "2f6c486643c26b3c508c0cb7c525a7f4d966aa7fb1727d97818e30d74ff43b9e",
+   "missing": [],
+   "status": "COMPLETE"
+  },
+  "disposition": "REFUSED_RECORD_INCONSISTENT",
+  "evidence": {
+   "distinct_arrays_sha256": 19,
+   "freeze_check": "OK",
+   "full_replay_verified": 3,
+   "replay_sample": "first seed of every shard: full native replay (arrays_sha256 and meta tree / B / N / origin); every unit: warm snapshot + origin recomputed",
+   "rows": 20,
+   "snapshot_bound": 19
+  },
+  "experiment": "C-018 Aether native ancestry-vs-content v1.1.0 (C-018-T030; repair round C-018-T041)",
+  "forged": true,
+  "problems": [
+   "1 rows share an arrays_sha256 with another row",
+   "RX.dev1 seed 9: warm snapshot / origin is not seed 9's"
+  ],
+  "rc": 4,
+  "replay_stubbed": true
+ },
+ "genuine": {
+  "completeness": {
+   "early_stop": null,
+   "findings": [],
+   "manifest_sha256": "1a779d46851ebd01f8b8c16c03e5c0c87ffdb21195c40896a2d12cccfa5da0ab",
+   "missing": [],
+   "status": "COMPLETE"
+  },
+  "evidence": {
+   "distinct_arrays_sha256": 20,
+   "freeze_check": "OK",
+   "full_replay_verified": 3,
+   "replay_sample": "first seed of every shard: full native replay (arrays_sha256 and meta tree / B / N / origin); every unit: warm snapshot + origin recomputed",
+   "rows": 20,
+   "snapshot_bound": 20
+  },
+  "experiment": "C-018 Aether native ancestry-vs-content v1.1.0 (C-018-T030; repair round C-018-T041)",
+  "forged": false,
+  "laws": {
+   "RX": {
+    "agreement_category": "MIXED",
+    "classes": {
+     "CONFIRMED": 3,
+     "CONTROL_VACUOUS": 0,
+     "INSUFFICIENT": 4,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 1,
+     "NO_CUT": 8
+    },
+    "confirmed_r2": 3,
+    "confirmed_targets_ftick": {
+     "11": {
+      "after_200": 0,
+      "after_300": 0,
+      "min_q1_med_q3_max": [
+       12.0,
+       12.0,
+       12.0,
+       19.0,
+       26.0
+      ],
+      "n": 3
+     },
+     "13": {
+      "after_200": 0,
+      "after_300": 0,
+      "min_q1_med_q3_max": [
+       9.0,
+       53.0,
+       71.0,
+       158.0,
+       164.0
+      ],
+      "n": 5
+     },
+     "15": {
+      "after_200": 0,
+      "after_300": 0,
+      "min_q1_med_q3_max": [
+       10.0,
+       12.0,
+       19.0,
+       59.0,
+       100.0
+      ],
+      "n": 9
+     }
+    },
+    "content_excess_all": 0.009545898437499999,
+    "content_excess_cond": 0.0322265625,
+    "content_excess_cond_confirmed_seeds": 0.028645833333333332,
+    "disposition": "ANCESTRY_UNEVALUABLE",
+    "evaluable": 4,
+    "evaluable_min": 8,
+    "label": "ANCESTRY_UNEVALUABLE [evaluable 4 of 16 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "light_cone_violations": 0,
+    "n_units": 16,
+    "need": 3,
+    "nonspecific_N_before_B": 0,
+    "null_excess": -0.0004638671875000001,
+    "pooled_agreement": 0.6579,
+    "reach_band": 2,
+    "rows": [
+     {
+      "cls": "INSUFFICIENT",
+      "ftick_B": 1,
+      "ftick_N": 22,
+      "n_targets": 1,
+      "problems": [],
+      "r_int": 2,
+      "removed_B": 1.0,
+      "removed_N": 0.0,
+      "seed": 0
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 1
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 2
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 3
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 4
+     },
+     {
+      "cls": "NOT_INTERVENTIONAL",
+      "ftick_B": 8,
+      "ftick_N": 8,
+      "n_targets": 21,
+      "problems": [],
+      "r_int": 4,
+      "removed_B": 0.4286,
+      "removed_N": 0.0,
+      "seed": 5
+     },
+     {
+      "cls": "INSUFFICIENT",
+      "ftick_B": 3,
+      "ftick_N": 4,
+      "n_targets": 1,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": 1.0,
+      "removed_N": 1.0,
+      "seed": 6
+     },
+     {
+      "cls": "INSUFFICIENT",
+      "ftick_B": 24,
+      "ftick_N": null,
+      "n_targets": 2,
+      "problems": [],
+      "r_int": 2,
+      "removed_B": 0.5,
+      "removed_N": null,
+      "seed": 7
+     },
+     {
+      "cls": "INSUFFICIENT",
+      "ftick_B": 1,
+      "ftick_N": 5,
+      "n_targets": 1,
+      "problems": [],
+      "r_int": 3,
+      "removed_B": 1.0,
+      "removed_N": 0.0,
+      "seed": 8
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 9
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 10
+     },
+     {
+      "cls": "CONFIRMED",
+      "ftick_B": 4,
+      "ftick_N": 4,
+      "n_targets": 3,
+      "problems": [],
+      "r_int": 2,
+      "removed_B": 1.0,
+      "removed_N": 0.0,
+      "seed": 11
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 12
+     },
+     {
+      "cls": "CONFIRMED",
+      "ftick_B": 1,
+      "ftick_N": 3,
+      "n_targets": 5,
+      "problems": [],
+      "r_int": 2,
+      "removed_B": 1.0,
+      "removed_N": 0.2,
+      "seed": 13
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 14
+     },
+     {
+      "cls": "CONFIRMED",
+      "ftick_B": 1,
+      "ftick_N": 3,
+      "n_targets": 9,
+      "problems": [],
+      "r_int": 4,
+      "removed_B": 1.0,
+      "removed_N": 0.0,
+      "seed": 15
+     }
+    ]
+   },
+   "V1": {
+    "agreement_category": null,
+    "classes": {
+     "CONFIRMED": 0,
+     "CONTROL_VACUOUS": 0,
+     "INSUFFICIENT": 0,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 0,
+     "NO_CUT": 4
+    },
+    "confirmed_r2": 0,
+    "confirmed_targets_ftick": {},
+    "content_excess_all": 0.0,
+    "content_excess_cond": null,
+    "content_excess_cond_confirmed_seeds": null,
+    "disposition": "ANCESTRY_UNEVALUABLE",
+    "evaluable": 0,
+    "evaluable_min": 8,
+    "label": "ANCESTRY_UNEVALUABLE [evaluable 0 of 4 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "light_cone_violations": 0,
+    "n_units": 4,
+    "need": 3,
+    "nonspecific_N_before_B": 0,
+    "null_excess": 0.0,
+    "pooled_agreement": null,
+    "reach_band": 0,
+    "rows": [
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 0
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 1
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 2
+     },
+     {
+      "cls": "NO_CUT",
+      "ftick_B": null,
+      "ftick_N": null,
+      "n_targets": 0,
+      "problems": [],
+      "r_int": 0,
+      "removed_B": null,
+      "removed_N": null,
+      "seed": 3
+     }
+    ]
+   }
+  },
+  "problems": [],
+  "rc": 0,
+  "replay_stubbed": false
+ }
+}
