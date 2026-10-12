@@ -38,7 +38,7 @@
   "kind": "document",
   "red_required": false,
   "notes": "red_required false: adversarial re-check",
-  "status": "IMPLEMENTING",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -63,6 +63,18 @@
       "by": "Pallas[harry1-cd02a995]",
       "at_utc": "2026-10-12T15:55:31Z",
       "note": "challenge set committed on pallas/c018-t042 (434e679bd) before any outcome; runs start now"
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-cd02a995]",
+      "at_utc": "2026-10-12T16:23:44Z",
+      "note": "22 checks run and scored on pallas/c018-t042 aff6248f9: 13 AS_EXPECTED, 5 RECORDED, 1 SURVIVOR (R1c), 3 NOT_AS_PREDICTED wording/harness; 56/56 RED re-run; freeze OK at the end; red_required false (adversarial re-check)"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-cd02a995]",
+      "at_utc": "2026-10-12T16:23:44Z",
+      "note": "branch pallas/c018-t042 aff6248f9: rso/aether/challenge/R2/REPORT.md -- repair closes every T040 form, no new hole; five RESULT-text limitations (REPORT s5: clamp arrays of non-sampled units, mutable pins/git is the pin, N on B's wavefront, need denominator 5->3 at n=48 with the window, minimum gates the positive); amendment b3cc39a56 before dev check and re-freeze; claude-fable-5-1 throughout; receipt A-001 (pushed at a43ddbac4). No confirmatory seed; Aether/ read-only"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 s9 (one bounded repair round + short re-check)",
