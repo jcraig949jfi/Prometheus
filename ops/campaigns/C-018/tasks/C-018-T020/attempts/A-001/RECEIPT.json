@@ -1,0 +1,39 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-018-T020",
+  "campaign_id": "C-018",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "3f8cc0150cedbb76c85948ae06aac24a5cc9cfae",
+  "end_sha": "f85462978",
+  "files_changed": ["rso/aether/SELECTION.md", "rso/aether/__init__.py", "rso/aether/demand/PREREG.md", "rso/aether/demand/__init__.py", "rso/aether/demand/fixtures.py", "rso/aether/demand/demand_gate.py", "rso/aether/demand/native_trace.py", "rso/aether/demand/demand_result.json", "rso/aether/demand/native_trace_result.json"],
+  "evidence_added": [
+    "SELECTION.md: narrow to P1/P2/P3 (P4 UNSUPPORTED natively); P2-vs-P3 dissociation demonstrated on constructed chains; falsifiability checklist C1-C10; TEST-4 preserved",
+    "demand_gate.py + demand_result.json: 5 fixtures x 4 seeds (ancestry clamp + non-ancestor, Aether decoder), teleport counterfeit, native locality 8/8, express01 P4 tables with new seeds; rules committed first in PREREG.md",
+    "native_trace.py + native_trace_result.json: Aether PROP01 tracer, 128^2, RX 6 seeds + V1 4 seeds, new seeds"
+  ],
+  "evidence_executed": [
+    {"command": "python -m rso.aether.demand.demand_gate rso/aether/demand/demand_result.json", "result": "A anc+/content+; B anc+/content absent; E anc absent/content transmitted (t0 sites 7); G insufficient, reach to r=3; N absent/absent; teleport counterfeit flagged 4/4; native V1/RX light cone 8/8"},
+    {"command": "demand_gate rerun to a second file, compare minus wall_seconds", "result": "REPLAY_IDENTICAL True"},
+    {"command": "python -m rso.aether.demand.native_trace rso/aether/demand/native_trace_result.json RX 0 6 ; ... V1 0 4", "result": "RX deep attributed trees 4/6 seeds; clamp left 89-98% of descendants diverging in 3 of them; V1 1-2 generations"},
+    {"command": "python -m workgraph validate", "result": "see commit"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: no failing test applies"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "fixtures are hand-built with exact outcomes (acc 1.0); decoder sensitivity at TEST-4's 0.05 margin not demonstrated; graded fixture required at adapter stage",
+    "clamp sites in fixtures are recipe-chosen; native probe has no non-ancestor control and differs from TEST-4 scale (128^2, warm 300)",
+    "CPU reference kernel only; GPU conformance relied on Aether r1_conformance.py",
+    "Q2 author, no Q3 challenge yet"
+  ],
+  "unresolved": ["Palamedes decision: whether the attributed-vs-interventional ancestry lead on native RX trees merits a confirmatory native run"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-12T00:00:00Z",
+  "instance": "harry1-1324c7b6",
+  "host": "harry1",
+  "branch": "cadmus/c018-t020",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c018-t020",
+  "resources": {"cpu": "one process, ~4 min demand + ~10 min native probe + ~4 min replay", "model": "one Sonnet 5.5 session"}
+}
