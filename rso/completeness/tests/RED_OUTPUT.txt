@@ -1,0 +1,12 @@
+E
+======================================================================
+ERROR: test_completeness (unittest.loader._FailedTest.test_completeness)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_completeness
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\eupalamus-c018-t011\rso\completeness\tests\test_completeness.py", line 11, in <module>
+    from rso.completeness import manifest as M, verify as V
+ImportError: cannot import name 'manifest' from 'rso.completeness' (C:\Prometheus-worktrees\eupalamus-c018-t011\rso\completeness\__init__.py)
