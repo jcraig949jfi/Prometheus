@@ -12,7 +12,7 @@ date, purged after 24 h (base role s7).
       continuity handoff + checkpoint packet. Loop extended to 2026-10-16T10:40Z. PAN-46 Redis/A2A: design first.
 - [ ] Status report 14 by ~2026-10-12T20:18Z (report 13 written 14:18Z)
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
-- [ ] Daily intake + digest (next ~2026-10-12T14:30Z; 2026-10-11 done 14:43Z)
+- [ ] Daily intake + digest (next ~2026-10-13T14:30Z; 2026-10-12 done 14:44Z)
 - [ ] Machines/Pantheon tabs (+ per-engine CPU sample in the local probe, for Achilles #2090): re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
       upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
