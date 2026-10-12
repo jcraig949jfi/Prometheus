@@ -146,6 +146,11 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] If seats need the M1 database: the operator copies the needed `keys.py` key files to the node with `scp` (Claude doesn't
       handle key files). Set `EW_DB_HOST=192.168.1.202`.
 
+- [ ] OPTION, held (operator 2026-10-12: "not a common problem"): DNS fallback on the Linux nodes (resolved
+      FallbackDNS / netplan nameservers 1.1.1.1, 8.8.8.8 after the router). Do it only if DNS stalls show up beyond
+      ELSA. ELSA already has it (2026-10-11). Context: router DNS timeouts 10-11 17:25-18:06 EDT, correlated with
+      ubu009 hung on the LAN (see machines doc, ubu009).
+
 ## Retiring a node (sell / donate / e-waste) -- checklist (2026-10-10, operator: "people need to do better")
 
 Every node holds live secrets in plain files: the shared GitHub token (gh auth + git credential), the Claude OAuth

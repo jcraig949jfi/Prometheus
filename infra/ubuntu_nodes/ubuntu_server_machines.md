@@ -265,6 +265,12 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   to efi_pstore); journald SyncIntervalSec=10s; worker disabled. BIOS pass (operator): load defaults, Fast Boot off,
   Flip-to-Start off -- pending. 24 h soak (memtester 3G loop + stress-ng 6 CPU + temp log, tmux `soak`) started 10:32Z.
   Pass -> worker back on. Fail -> REPAIR pile (operator), with this record.
+- **Ethernet flow control OFF 2026-10-12 ~10:47Z:** ELSA logged its only DNS timeouts in 6 days (4x, 17:25-18:06 EDT
+  10-11) in the 45 min after ubu009 froze at 17:21:32 while still cabled; the ASIX AX88772 had pause frames
+  negotiated ("flow control rx/tx"). Hypothesis (inferred from timing, not measured): a hung host's NIC emitting PAUSE
+  frames stalled the router's switch. `ethtool -A enx9cebe80ae6c4 autoneg off rx off tx off`, persisted by
+  /etc/udev/rules.d/90-ubu009-usbeth-no-flowcontrol.rules; link renegotiated in 3 s ("flow control off"). Test: if it
+  freezes again with no DNS stalls on ELSA, the hypothesis gains support.
 - Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
   travel machine); not urgent. Pause the worker when travelling.
 
