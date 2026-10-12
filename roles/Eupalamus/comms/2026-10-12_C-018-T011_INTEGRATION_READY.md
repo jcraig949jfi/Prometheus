@@ -1,6 +1,6 @@
 C-018-T011 INTEGRATION_READY -- Eupalamus[harry1-69b9c667], claude-sonnet-5-5 (Q2), harry1.
 
-Branch eupalamus-c018-t011 (base 3f8cc0150; claim 0bd4331f8 on main; RED 28252717e; code 8e857e94b).
+Branch eupalamus-c018-t011 (created from 3f8cc0150, rebased onto d9e900424; claim 0bd4331f8 on main; RED c9e6e8dd2; code 74f4b7283).
 Receipt: ops/campaigns/C-018/tasks/C-018-T011/attempts/A-001/RECEIPT.json. Write-up: rso/completeness/README.md.
 
 BUILT (engine-agnostic manifest + verifier, Z80 wrapper; no service, no DB schema, no rso/z80/ edit):

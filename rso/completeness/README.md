@@ -63,7 +63,7 @@ without its trigger.
 
 ## RED first, and how hard the tests bite
 
-`tests/RED_OUTPUT.txt` is the run at commit 28252717e: ImportError, the verifier did not exist (all 40 tests RED by construction).
+`tests/RED_OUTPUT.txt` is the run at commit c9e6e8dd2: ImportError, the verifier did not exist (all 40 tests RED by construction).
 After implementation, 13 single-line mutants of `verify.py` were applied (ignore missing, duplicates, row hash, meta hash, seed
 check, count check, unexpected id, source hash, pin, trigger, seal, sources-absent, excuse-with-findings): 12 killed. The survivor
 ("early stop excuses `missing` despite findings") is equivalent: a finding already forces REFUSED, so only the cosmetic `missing`
