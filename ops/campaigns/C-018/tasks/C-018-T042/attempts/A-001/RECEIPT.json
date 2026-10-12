@@ -1,0 +1,74 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T042",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "created_at_utc": "2026-10-12T16:32:00Z",
+ "role": "Pallas",
+ "model": "claude-fable-5-1",
+ "quality_class": "Q3",
+ "instance": "harry1-cd02a995",
+ "host": "harry1",
+ "branch": "pallas/c018-t042",
+ "worktree_path": "C:/Prometheus-worktrees/pallas-c018-t042",
+ "start_sha": "357e402758c6e9df5514699ef560cffe4f12f773",
+ "end_sha": "the branch commit named in the INTEGRATION_READY history note (pallas/c018-t042)",
+ "dirty": false,
+ "commits": {
+  "claim_main": "d8264c74d (15:39Z)",
+  "set_branch": "434e679bd (15:55Z, before any outcome)",
+  "implementing_main": "7074fdf48 (15:56Z)",
+  "results_report_branch": "the branch commit named in the INTEGRATION_READY history note"
+ },
+ "files_changed": [
+  "rso/aether/challenge/R2/{__init__.py,CHALLENGE_SET.md,expected.json,recheck.py} (the set and harness; two harness fixes after the first run, no judge touched)",
+  "rso/aether/challenge/R2/{REPORT.md,results.jsonl (22 checks),rows_natives_v1_1_0.jsonl (3 re-executed units),outcomes/{verify,red,window,synth,forge_G,forge_D,forge_F,forge_E5,b6}.json,outcomes/red_rows_recheck.jsonl}",
+  "roles/Pallas/{WORK_STATE.json,journal/2026-10-12.md,comms/2026-10-12_C-018-T042_{CLAIMED,INTEGRATION_READY}.txt,comms/2026-10-12_HEARTBEAT_T042.txt}",
+  "ops/campaigns/C-018/tasks/C-018-T042/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "NO file under rso/aether/ outside challenge/R2/ changed in any commit (mutants and the pin forgeries applied to the working copy and restored, sha256 + git diff --quiet on the mutated files, freeze check OK after each); Aether/, roles/Aether/ untouched; nothing on M2"
+ ],
+ "evidence_added": [
+  "re-check set committed before any outcome (434e679bd): 22 cases; predictions and judges fixed in expected.json",
+  "VERIFIED: freeze v1.1.0 OK, 32/32 pins from HEAD blobs and from disk; amendment b3cc39a56 precedes dev check 64dcfdb4a, s10.6 text 8c27b262a and re-freeze 1f2d2444f; PREREGISTRATION s10.1-s10.4 byte-identical since the amendment; evaluate.py unchanged since; design shards / seeds (k = 0x2000+i) unchanged; no RELEASE.json; all 56 RED rows re-run here: 56/56 KILLED, baseline GREEN, no EDIT_NOT_UNIQUE, rows identical to the committed file",
+  "EVIDENCE CHAIN CLOSED for every T040 form: B6 (R6) REFUSED_FREEZE_MISMATCH before any shard is read; B5/P1 (R5) a relabelled copy refused on three independent lines with nothing verdict-bearing; B1 (R1a/R1t/R1b) naive re-parenting -> tree invariant problem, type flip -> clamp fidelity problem, invariant-respecting re-parenting -> refused by the per-unit tree replay (Pallas seed 0x3001); E5 (RE5) INCOMPLETE rc 3; genuine set (RG) passes real snapshot / tree / full replay, evidence 3/3/3/3/2",
+  "TWO EVIDENCE-CHAIN LIMITATIONS demonstrated (no repair): R1c a non-sampled unit's CUT_N rewritten to 'N removed nothing' passes with problems [] and turns 0x3003 NONSPECIFIC -> CONFIRMED (r_int 6) -- clamp arrays of 58 of 64 units are producer bytes; R6b with N_CONFIRM + design + FROZEN.json rewritten, `freeze check` is OK -- every pin is a mutable file, git is the pin (FROZEN.json blob 9fe0fcb4 at 357e40275)",
+  "INSTRUMENT CLOSED for the upstream form: 0 of 9 control-needing units have N before B under v1.1.0 (3 under v1.0.0); 0 of 9 left without a control; 0x3004 / 0x3005 re-executed under adapter 1.1.0 -> N 9499 / 14707 (the T040 second-ranked candidates), CONFIRMED, removed_N 0.0, r_int 2 / 9, every array but CUT_N bit-equal to T040; 0x3003 bit-exact across sessions (arrays_sha256 identical). LIMITATION: N on B's own wavefront, 4-adjacent to a target in 7 of 9 (6 under v1.0.0), same tick as B in 2",
+  "INFERENCE CLOSED for the untested-population form (all B2/B3 shapes ANCESTRY_UNEVALUABLE; 8 NOT_INTERVENTIONAL reads NEITHER). LIMITATION on the denominator: need = max(3, ceil(10% evaluable)) is 3 up to 30 evaluable, so the P2 bar at n = 48 moved from 5 to 3; together with the window (+2 CONFIRMED on the 24 challenge units) the expected P2 margin moves ~6 vs 5 -> ~10 vs 3; both disclosed singly, joint effect unstated; EVALUABLE_MIN also gates the positive (7 CONFIRMED -> UNEVALUABLE); content conditioning unchanged, reported beside",
+  "score: 13 AS_EXPECTED, 5 RECORDED, 1 SURVIVOR, 3 NOT_AS_PREDICTED (W1 my list omitted 0x3012 -- builder right; R1a unit choice; R6b judge's git-diff clause swept my own uncommitted harness edit -- files restored, sha256 verified)"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.aether.freeze check", "result": "OK before the claim, after every mutant / forgery restore, at the end"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck verify|window|synth <scratch>", "result": "V1 V2 AS_EXPECTED; W1 NOT_AS_PREDICTED (6 N-changed, not 5), W2 RECORDED (7/9 adjacent), W3 AS_EXPECTED (3 -> 0 N before B); R1a NOT_AS_PREDICTED (class unchanged on 0x3001, invariant problem reported), R1b R1t R2 R2f AS_EXPECTED, R2d R2e R3 R4 RECORDED"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck natives <scratch> 0x3004 0x3005 / 0x3003", "result": "R8 AS_EXPECTED: N 9499 / 14707 CONFIRMED; 0x3003 arrays_sha256 identical to T040; ~72 s each"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck red <scratch>", "result": "V3 AS_EXPECTED: 56/56 KILLED, baseline GREEN, no EDIT_NOT_UNIQUE, same as committed, sources restored, freeze OK"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck forge <scratch> G|D|F|E5 (real snapshot / tree replay / full replay; freeze check stubbed because the set's design is not the frozen one)", "result": "RG AS_EXPECTED (214 s); R5 AS_EXPECTED refused on three lines (253 s); R1c SURVIVOR 0x3003 CONFIRMED with problems [] (220 s); RE5 AS_EXPECTED INCOMPLETE"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck b6 <scratch>", "result": "R6 AS_EXPECTED REFUSED_FREEZE_MISMATCH; R6b SURVIVOR in substance (freeze check OK on a fully rewritten pin set; restored, sha256 + git diff quiet on the three files, FROZEN.json disk == HEAD blob); judge's broad git-diff clause failed on my own harness edit"},
+  {"command": "python -B -m rso.aether.challenge.R2.recheck score <scratch>", "result": "22 checks: 13 AS_EXPECTED, 5 RECORDED, 1 SURVIVOR, 3 NOT_AS_PREDICTED (results.jsonl)"},
+  {"command": "python -B -m unittest rso.aether.tests.test_adapter", "result": "59 tests OK (~2 s) on the unedited sources"}
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "red_required false (adversarial re-check); the builder's 56 RED rows were re-run here: 56/56 KILLED"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "two harness fixes after the first run (score eval scope; forge path), no judge touched; recorded in REPORT s1 / s6",
+  "R5's per-unit binding executed seed 0x3003's warm-up and run_unit for the relabelled copy (Pallas's own seed)",
+  "the forged sets stub the freeze check (their design is not the frozen one); the freeze check itself is R6 / R6b",
+  "no second non-ancestor was clamped on any unit; CONTROL_VACUOUS incidence is from the stored trees only"
+ ],
+ "unresolved": [
+  "coordinator: RELEASE.json naming the commit + FROZEN.json blob; the confirmatory run; RESULT text carrying REPORT s5 items 1-5",
+  "registry proposals: REPORT s8"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 0.35,
+  "processes_max": 2,
+  "peak_working_set_mb": "< 1000 per process",
+  "paid_resources": "none",
+  "hosts": ["harry1"]
+ },
+ "cleanup": "scratch outside the repo at C:/Prometheus-worktrees/pallas-scratch-c018-r2/ (29 MB: 3 unit records, forged sets, stage JSONs); the T040 scratch pallas-scratch-c018 read only; worktree pallas-c018-t042 left for the integrator",
+ "notes": "One instance, Pallas[harry1-cd02a995], claude-fable-5-1 per comms boot 15:38Z; no harness model change reported (REPORT s0). Headless; foreground only; <= 2 concurrent processes; every call < 600 s. Read-only on Aether/ and roles/Aether/; nothing on M2; no confirmatory seed; 0 operator interventions; 0 requests to Aether."
+}
