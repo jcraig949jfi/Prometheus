@@ -1,0 +1,49 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T050",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "created_at_utc": "2026-10-12T19:16:32Z",
+ "role": "Argus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-b0323ab0",
+ "host": "harry1",
+ "branch": "argus/c018-t050",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c018-t050",
+ "start_sha": "18d3167ea",
+ "end_sha": "fa0347fd2",
+ "dirty": false,
+ "commits": {"claim_main": "8b2a8f195"},
+ "files_changed": [
+  "rso/aether/runs/CONFIRM/ (6 shard.json + 64 unit json/npz: RX.0-RX.3 x12, V1.0/V1.1 x8)",
+  "rso/aether/runs/meta/ (shard wrappers runshard.ps1/runanalyse.ps1, logs, resource files, samples.csv, analyse_full.out, result_tables.py/.json)",
+  "rso/aether/RESULT.md",
+  "ops/campaigns/C-018/tasks/C-018-T050/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "RX: CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT [evaluable 13 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]; CONFIRMED 8, NOT_INTERVENTIONAL 5, CONTROL_VACUOUS 8, INSUFFICIENT 3, NO_CUT 24; reach band 6; content excess 0.0135 registered / 0.0099 over CONFIRMED seeds; null 0.0002",
+  "V1: ANCESTRY_UNEVALUABLE [evaluable 0 of 16] = not evaluated; NO_CUT 13, INSUFFICIENT 3",
+  "P2 under v1.1.0 need and under v1.0.0 need (5 over 48): both HELD (8 CONFIRMED at r>=2); no difference",
+  "analysis evidence block: freeze_check OK, 64/64 snapshot-bound, 64/64 trees replayed, 6 fully replayed, completeness COMPLETE"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.aether.confirm run <RX.0..RX.3,V1.0,V1.1> --cleared-by C018-T042-cleared-2026-10-12", "result": "6 shards, each run once, all completed; 64 units"},
+  {"command": "python -B -m rso.aether.confirm analyse", "result": "COMPLETE, problems [], dispositions as above; run twice, second with full stdout to runs/meta/analyse_full.out"},
+  {"command": "python -B -m rso.aether.confirm design", "result": "d9e8f885c8d43a237854359c7a8ef7394485bc69483600c43d220821314c8d47 = release"},
+  {"command": "python -B rso/aether/runs/meta/result_tables.py", "result": "per-unit ftick(B), ftick(N), N distance, v1.0.0 N position; equals analyser ftick values"}
+ ],
+ "red_observed": {"observed": false, "detail": "red_required false: execution of a preregistered experiment"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "RX.0/RX.1 CPU-s and shard exit codes not captured (PS5.1 wrapper handle bug, fixed for V1); RX.2/RX.3 CPU sampled externally",
+  "a few per-unit stdout lines (seed, B, N sites; no class/outcome) from early shards were visible before all six shards existed",
+  "clamp arrays of 58 of 64 units rest on indirect binding (REPORT s5 item 1)",
+  "N window: 5 of 8 CONFIRMED units have N 4-adjacent to a target and had a v1.0.0 N that diverged before B; no v1.0.0 world was run"
+ ],
+ "unresolved": [],
+ "unblocks": [],
+ "resources": {"cpu_core_hours_estimate": 1.6, "processes_max": 2, "peak_working_set_mb": "44 per shard, 344 analyse", "paid_resources": "none", "hosts": ["harry1"]},
+ "cleanup": "none; /tmp wrappers copied into runs/meta",
+ "notes": "Headless; detached shard processes, no run_in_background; nothing on M2; Aether/ and roles/Aether/ untouched; no pinned file changed."
+}
