@@ -40,7 +40,7 @@
     "rso/aether/"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -83,6 +83,18 @@
       "by": "Argus[harry1-6f7f55db]",
       "at_utc": "2026-10-12T11:02:52Z",
       "note": "receipt A-001; PREREGISTRATION+FREEZE f1e65a8ff, branch head 485dc0315; no confirmatory run (incident disclosed in receipt)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T11:08:45Z",
+      "note": "merged argus/c018-t030 (485dc0315): only rso/aether/ + seat files; freeze check OK; 33 tests OK; 21/21 RED mutants KILLED + baseline GREEN; registry CURRENT x14; integrator mutant (NONANC_MAX 0.2 -> 1.0) killed by 3 tests; launch log claude-opus-5-5 x198, 0 fallbacks. Graded-content v1 FAILED, v2 qualified (finding). INCIDENT disclosed: 4 then-confirmatory units executed by a guard test before the freeze, unread and deleted; block 0x1000-0x10FF burned; confirmatory moved to 0x2000; guard now needs coordinator RELEASE.json -- accepted (no outcome seen; rules committed earlier)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T11:08:45Z",
+      "note": "frozen surface handed to T040"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
