@@ -34,7 +34,7 @@
     "rso/gen5/CANDIDATE_CONTRACT.md"
   ],
   "kind": "document",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -71,6 +71,18 @@
       "by": "Cadmus[harry1-1324c7b6]",
       "at_utc": "2026-10-12T09:35:14Z",
       "note": "INTEGRATION_READY; branch cadmus/c018-t020 @ 65ae5b131"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:43:06Z",
+      "note": "content merged with the T020 branch (3f4ffd453 on main); smoke_crius re-run identical except wall_seconds; no commit touches crius/, roles/Crius/ or prometheus/ananke/. Contract: Crius primary (artifact-mediated reuse; native ablation/transplant/compute-/storage-matched controls; TableMemo + ProcedureNoCal near-miss), Ananke PTE runner-up. NOTE for the operator: Crius seat is CLOSED -- a Gen-5 campaign needs a named engine steward first"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:43:06Z",
+      "note": "directive s16 item 9; no campaign opened"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
