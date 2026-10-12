@@ -956,6 +956,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   at .021-.055. Caveat: one genome per arm (n = 3 latches); 'quality' is confounded with whatever else differs
   between these three genomes. Next test (if pursued): several latches per quality band.
   WINDOW 6 TALLY (wall-clock): B78 ~21 + B79 ~15 (12 procs 03:20-~04:30, tapering) + evals ~0.5 = ~37 of 48.
+- Campaign update 9 written + posted (CAMPAIGN_UPDATE_2026-10-12.md, a54e204d9; comms #2181).
+- B80 STAGED (latch quality, 4 latches per band x 3 seeds = 24 cells, ~20 core-h; prediction + known persist-mode
+  confound in docstring). Latches verified (lengths/qualities match the census); smoke test passed (output shown).
+  LAUNCH in window 7 (~2026-10-13 00:29Z); window 6 at ~37 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
