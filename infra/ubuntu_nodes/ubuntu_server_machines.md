@@ -13,7 +13,7 @@ Don't record passwords here.
 | 6 | ubu006   | jcraig   | 2026-10-03 | Ubuntu Server 26.04.1 LTS | Seagate ST500DM002 500 GB 7200 rpm HDD | 192.168.1.225 (wired, enp2s0); Wi-Fi .226 (wlp3s0) | **Provisioned**, worker active (shared token); Claude logged in 2026-10-06 |
 | 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **HOLD -- BAD RAM** (one weak cell, confirmed); worker OFF until a DIMM is pulled/replaced |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
-| 9 | ubu009   | jcraig   | 2026-10-11 | Ubuntu Server 26.04.1 LTS | Kioxia BG5 KBG50ZNT256G NVMe (root 232 GB) | 192.168.1.230 (USB Ethernet enx9cebe80ae6c4) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-11 |
+| 9 | ubu009   | jcraig   | 2026-10-11 | Ubuntu Server 26.04.1 LTS | Kioxia BG5 KBG50ZNT256G NVMe (root 232 GB) | 192.168.1.230 (USB Ethernet enx9cebe80ae6c4) | **SOAK TEST** (freezes); worker DISABLED until 24 h clean |
 
 ## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
 
@@ -256,6 +256,15 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   switch via the EC) and hid_sensor_hub (2x accel_3d + intel_hinge) blacklisted in
   /etc/modprobe.d/ubu009-no-tablet-sensors.conf, initramfs rebuilt, unloaded live. Delete the file + reboot to restore
   (e.g. for auto-rotate under a desktop). If it still hangs when moved, suspect seating (NVMe / cables) next.
+- **Freezes continue (2026-10-11/12):** 3rd hard hang 21:21Z, stationary, 29 min into memtester (pass 1 of 5 GB clean,
+  died in pass 2: memory likely fine); two more boots overnight froze within minutes. NVMe SMART: healthy (0 media
+  errors, 7% used) but **444 unsafe shutdowns of 898 power cycles** -- the instability predates us. The RTC resets to
+  2026-07-27 20:44:02 on every hard power cycle (CMOS battery / EC). fwupd: BIOS + NVMe firmware current.
+- **Mitigations 2026-10-12 10:3xZ:** kernel cmdline `intel_idle.max_cstate=1 i915.enable_dc=0 i915.enable_psr=0
+  nvme_core.default_ps_max_latency_us=0`; sysctl soft/hardlockup_panic=1, panic_on_oops=1, panic=10 (auto-reboot, crash
+  to efi_pstore); journald SyncIntervalSec=10s; worker disabled. BIOS pass (operator): load defaults, Fast Boot off,
+  Flip-to-Start off -- pending. 24 h soak (memtester 3G loop + stress-ng 6 CPU + temp log, tmux `soak`) started 10:32Z.
+  Pass -> worker back on. Fail -> REPAIR pile (operator), with this record.
 - Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
   travel machine); not urgent. Pause the worker when travelling.
 
