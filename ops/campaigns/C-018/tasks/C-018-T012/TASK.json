@@ -1,0 +1,47 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T012",
+  "campaign_id": "C-018",
+  "title": "Control-falsifiability requirement + executable checks (directive s2B)",
+  "objective": "Every claim-critical baseline/control must be shown able to pass AND fail, without privileged access, and its failure must discriminate.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/qualify/"
+  ],
+  "reads": [
+    "rso/"
+  ],
+  "problem": "Small checklist + executable checks replaying the known cases (Z80 b1/b2 no ENV output; constant passes Q2; D1 derived field; Ensorain self-relative frozen arm; recipe lookup table).",
+  "non_goals": [
+    "No generic baseline framework",
+    "No change to frozen results"
+  ],
+  "evidence_required": [
+    "RED first",
+    "checklist",
+    "tests on the historical cases"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/qualify/"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5"
+}
