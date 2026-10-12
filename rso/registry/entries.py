@@ -283,4 +283,23 @@ ENTRIES = [
                            "a spec outside the s2 subset"],
         "users": ["C-017 Z80 Atlas"],
     },
+    {
+        "name": "control-falsifiability-checks",
+        "version": "C-018-T012",
+        "owner": "Palamedes (coordinator)",
+        "files": ["rso/qualify/falsifiable.py", "rso/qualify/FALSIFIABILITY.md"],
+        "interface": "cannot_emit / constant_passes / oracle_fails / reads_answer / trusts_derived / near_miss_rejected / audit "
+                     "on plain callables and (input, truth) cases; FALSIFIABILITY.md is the per-control checklist a preregistration must carry.",
+        "stage": "AUTHOR_TESTED",
+        "qualified_scope": "detects the five historical non-falsifiable controls (D1 derived field, Ensorain self-relative K1, Z80 "
+                           "b1/b2 no ENV output, Z80 constant origin, recipe lookup table) on miniature fixtures; 14 tests, 3 mutants killed.",
+        "not_qualified_for": ["proving a control that CAN fail is the right control (necessary, not sufficient)",
+                              "engine-specific fixtures (each adapter supplies its own detectors and cases)"],
+        "tests": ["rso/qualify/tests/test_falsifiable.py"],
+        "evidence": ["rso/qualify/FALSIFIABILITY.md (historical table)"],
+        "counterexamples": [],
+        "dependencies": [],
+        "invalidated_by": ["any byte change to the pinned files"],
+        "users": ["C-018 (required for every preregistration from C-018 on)"],
+    },
 ]
