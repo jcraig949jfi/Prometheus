@@ -20,7 +20,7 @@
     "rso/",
     "Aether/V2B/"
   ],
-  "problem": "harry1 CPU.",
+  "problem": "harry1 CPU only, nothing on M2. Release: rso/aether/RELEASE.json, release_ref C018-T042-cleared-2026-10-12 (no slash). Shards (PREREG s5/s10.5): RX.0 RX.1 RX.2 RX.3 (12 units each) and V1.0 V1.1 (8 each); ~65-90 s per unit, so ONE SHARD TAKES 13-18 MIN -- longer than a 600 s foreground call. Therefore launch each shard as a DETACHED OS PROCESS that owns its own execution (directive s15: 'scientific jobs own their execution state'), e.g. PowerShell `Start-Process -FilePath python -ArgumentList '-B','-m','rso.aether.confirm','run','RX.0','--cleared-by','C018-T042-cleared-2026-10-12' -WorkingDirectory <your worktree> -RedirectStandardOutput <log>.out -RedirectStandardError <log>.err -WindowStyle Hidden -PassThru` (record the PID), at most TWO shards at a time, and poll with short FOREGROUND checks (each <= 600 s) for the shard file rso/aether/runs/<sid>.shard.json (or the name confirm.py writes) and the process exit. Do NOT use run_in_background (that dies with your session). A shard whose process dies is re-run whole with the same seeds. Never read unit outcomes before all six shards exist. Then `python -B -m rso.aether.confirm analyse` (completeness, freeze, records, replay, qualification, null, then the dispositions). RESULT.md MUST: (1) give RX (primary) and V1 dispositions with their labels (evaluable count, minimum, need), class counts, reach band, content excess (registered AND over CONFIRMED seeds); (2) carry rso/aether/challenge/R2/REPORT.md s5 items 1-5 verbatim or equivalent -- in particular item 4: print the P2 reading under v1.0.0's registered need (5 over all 48 units, computed from the per-unit classes and r_int the analyser prints; do NOT edit the frozen analyser) beside the v1.1.0 reading, and say so in the disposition sentence if they differ; item 1: name the replayed units; item 2: the FROZEN.json blob sha and commit from RELEASE.json; item 3: per unit ftick(B), ftick(N), N's distance to the nearest target; (3) preserve TEST-4 and say nothing here reclassifies it; P4 UNSUPPORTED; V1 ANCESTRY_UNEVALUABLE (if so) = 'not evaluated'; (4) resources: CPU-s, wall, peak memory per shard (measure), and (5) the Q3 provenance: T040 and T042 genuine Fable 5.1, continuity verified. Commit runs + filled design manifest + RESULT.md. No re-run with other seeds, no unit selection.",
   "non_goals": [
     "No edit to Aether/ or roles/Aether/",
     "No Aether registered seed or frozen result",
@@ -40,13 +40,19 @@
     "rso/aether/RESULT.md"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-12T09:01:50Z",
       "note": "C-018 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T16:36:08Z",
+      "note": "T042 integrated; RELEASE.json committed; Argus on Sonnet"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
