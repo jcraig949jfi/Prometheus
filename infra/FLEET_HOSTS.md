@@ -36,7 +36,7 @@ All Ubuntu Server 26.04.1, kernel 7.0.0-38, user `jcraig`, Claude Code, `~/Prome
 | Lenovo ThinkPad X1 Carbon 5th #1 | ubu001 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U, 2C/4T | 8 GB | 238 GB NVMe | Wi-Fi .218 | `light` | Ready; phone session live |
 | Lenovo ThinkPad X1 Carbon 5th #2 | ubu002 | ThinkPad X1 Carbon 5th (20HQS2YJ00) | i5-7300U, 2C/4T | 8 GB | 238 GB NVMe | Wi-Fi .219 | `light` | Ready; phone session live |
 | Dell Latitude E7240 | ubu003 | Dell Latitude E7240 | i7-4600U, 2C/4T | 8 GB | 256 GB SATA SSD | Ethernet .220 | `light` | Provisioned; Claude login pending |
-| HP Pavilion x360 14" | ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U, 2C/4T | 8 GB | 500 GB 5400 rpm HDD (slow) | Wi-Fi .178 | `light` | Provisioned; Claude login + token pending; SSD wishlisted |
+| HP Pavilion x360 14" | ubu004 | HP Pavilion x360 14m-ba0xx | i3-7100U, 2C/4T | 8 GB | 500 GB 5400 rpm HDD (slow) | .221 (USB Ethernet, canonical); Wi-Fi .178 | `light` | Provisioned; Claude login + token pending; SSD wishlisted |
 | Lenovo ThinkPad P52s | ubu005 | ThinkPad P52s (20LB0010US) | i5-8350U, 4C/8T | 22 GB | Team MP33 1 TB NVMe, USB-C enclosure | Ethernet .222 (Wi-Fi .227) | `light` | Worker active 2026-10-04; Claude login pending |
 | Dell Inspiron 3647 | ubu006 | Dell Inspiron 3647 (small desktop) | i3-4130, 2C/4T | 16 GB (2x 8 GB, 2026-10-04) | 500 GB 7200 rpm HDD | Ethernet .225 (Wi-Fi .226) | `light` | Worker active 2026-10-03; Claude login pending |
 
