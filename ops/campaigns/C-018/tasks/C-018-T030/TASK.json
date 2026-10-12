@@ -40,7 +40,7 @@
     "rso/aether/"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -59,6 +59,30 @@
       "by": "Argus[harry1-6f7f55db]",
       "at_utc": "2026-10-12T09:43:59Z",
       "note": "Argus on claude-opus-5-5 (Q2), harry1; branch argus/c018-t030 from 3f7408d62"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "RED b19935fe0 (rso/aether/red/RED_OUTPUT.txt: ImportError before the adapter existed)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "adapter 19ff2ab0d; Part I criteria committed first"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "33 tests, 21/21 mutants; Part I v2 QUALIFIED f2c336cf5"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "receipt A-001; PREREGISTRATION+FREEZE f1e65a8ff, branch head 485dc0315; no confirmatory run (incident disclosed in receipt)"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
