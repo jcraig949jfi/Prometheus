@@ -3,17 +3,16 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T18:04:43Z",
+ "updated_at_utc": "2026-10-12T14:32:03Z",
  "state": "READY",
- "branch": "nestor/d2v13-2026-09-29 (merged to main)",
+ "branch": "nestor/npe48-2026-10-08 (merged to main 2026-10-12)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
  "threads": [
-  "ancestry-replay (Archaeon #812)",
-  "D2 custody (C3 successor seal)"
+  "NPE functional heredity (campaigns/npe-fh48-2026-10-08) -- CLOSED"
  ],
  "campaigns": [
-  "roles/Nestor/campaigns/npe-frontier-2026-09-30",
-  "roles/Nestor/campaigns/ancestry-replay-2026-09-28"
+  "roles/Nestor/campaigns/npe-fh48-2026-10-08",
+  "roles/Nestor/campaigns/npe-frontier-2026-09-30/x_task_gate_v2"
  ],
  "experiments": [
   "X-TASK-GATE (prereg 62d30e443; NOT executed)",
@@ -39,21 +38,18 @@
   "D2 designation host change (custodian + child accounts): privileged; only when designation actually requires it; owner operator"
  ],
  "next_actions": [
-  "D2 before the first designation (Odysseus C-1): once the runner/child accounts exist, re-run icacls on holdout_D2 (neither account admin; only runner Modify on runs/) and publish the true/false before anchoring the designation",
-  "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
-  "report key-holder scan booleans (public) to Odysseus"
+  "operator choice: integration rung (task output causally needed by copier) or multi-founder architecture CONFIRM"
  ],
  "operator_decisions_required": [
   "D2 designation host change (privileged; only when designation requires it)"
  ],
  "latest_reports": [
-  "comms #1054 (X-MAT-INTERNALIZE result)",
-  "comms #1055 (blinding notice to Bellerophon)",
-  "comms #1041 (X-MAT-INTERNALIZE prereg)",
-  "comms #997 (D2 v13)",
-  "comms #992 (D2 v12)",
-  "comms #990 (G2 sample)",
-  "roles/Nestor/probes/FP-001_RESULT.json"
+  "roles/Nestor/REPORT_2026-10-12_STATE.md",
+  "campaigns/npe-fh48-2026-10-08/SYNTHESIS_FH48.md",
+  "campaigns/npe-fh48-2026-10-08/FH48_REVIEW_2026-10-10.md",
+  "comms #2058 (window close)",
+  "comms #1915",
+  "comms #1894"
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
@@ -74,7 +70,9 @@
   "D2 firewall: v13 FINAL re-audit PASS; FIREWALL_AUDIT_1.json anchored (pins == audited bindings); C-1 fact (today TRUE) + C-2 residuals declared in FIREWALL.md",
   "MWO-0004 G2: 1% sample stage 1 VERIFIED + stage 2 AGREEMENT PASS (exit 0) on SKULLPORT @ 8631128c3; outputs g2_sample_check/rerun_8631128c3/",
   "CWO 2026-09-30 CURRENT: lease-cutover ack #904 confirmed (Odysseus; 8370083ae); all new claims since used the canonical Fabric lease",
-  "comms triage 2026-09-30: 68 messages reviewed, no live dependency (inbox 'unread' counter not cleared by comms done -> tooling note)"
+  "comms triage 2026-09-30: 68 messages reviewed, no live dependency (inbox 'unread' counter not cleared by comms done -> tooling note)",
+  "X-TASK-GATE-V2: Stage 0 INSTRUMENT_UNREACHABLE (TRANSIENT_ONLY), 7a521dc91",
+  "NPE-48h window: C-DIR-MAINTAIN CONFIRMED, C-ONTAPE-MAINTAIN CONFIRMED, C-ARCH-COMPETE NOT_CONFIRMED (synthesis SYNTHESIS_FH48.md)"
  ],
  "incidents": [
   "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
@@ -122,5 +120,6 @@
  "next_expected_milestone": "Aporia dispatch (X-TASK-GATE execution needs a separate dispatch)",
  "expected_next_artifact": "none until dispatched",
  "model": "claude-opus-5-5[1m]",
- "session_started_utc": "2026-09-25T12:13:33Z (transcript basis; process start UNKNOWN)"
+ "session_started_utc": "2026-09-25T12:13:33Z (transcript basis; process start UNKNOWN)",
+ "host": "BUCKKEEP"
 }
