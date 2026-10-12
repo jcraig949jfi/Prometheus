@@ -930,6 +930,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   12 (uncertain; my estimates have run low). LAUNCH in window 6 (~2026-10-12 00:29Z); window 5 at ~35 of 48.
 - WINDOW 6 OPENED 2026-10-12 00:29Z. B78 LAUNCHED: lease lse-41d321c0f933 (3 h, token captured), 12 cells, 12 procs,
   G1=200 plain pulse + G2=300 relocating pulse. Tally from wall-clock on completion.
+- B78 RESULT (03:08Z; lease renewed once, then RELEASED): natural curriculum (random gen 0 -> 200 gens plain pulse ->
+  300 gens relocating pulse), 12 seeds. Populations with >= 5 RESET-like genomes: 1/12 (7801: 7); traces 7805 (4),
+  7807 (3). State-using best at the switch: 10/12. PREDICTION ('curriculum crosses', >= 4/12) FAILED; the memory-law
+  defender (<= 1/12) MET at the bar.
+  DIAGNOSTIC (B78b, end-population best genomes): 11/12 still use REGISTER state (.016-.053) with LATCH-like re-find
+  .00-.11 (7806: code state); exceptions 7801 (.50) and 7807 (.47); 7804/7805 .27/.22. Genome lengths 16-95 instructions
+  vs the hand latch's 16. Best rewards .021-.055 vs .075-.082 from the hand-latch start.
+  READING: the curriculum DELIVERS write-once state (10/12 at the switch; it survives the switch), but evolved latches
+  rarely convert to RESET, while 200 identical COMPACT hand latches convert 6/6. HYPOTHESIS (untested): the stepping
+  stone works through compactness/uniformity of the latch genome, not merely through having a latch -- evolved
+  latches are bloated (up to 95 instructions) and diverse. Test: seed gen 0 with 200 copies of an EVOLVED latch (e.g.
+  a B78 stage-1 best) vs the hand latch; or penalise length (E1/E2 regimes) during the curriculum.
+  WINDOW 6 TALLY (wall-clock): 12 procs 00:29 to ~01:30 then tapering to 1 proc at 03:08 ~ 20-22 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

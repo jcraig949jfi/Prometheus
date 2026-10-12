@@ -100,6 +100,9 @@ clock.
      - from the write-once latch: 6/6, with best .075-.082 beating the hand RESET .065.
    - Update-on-condition memory is reachable when its write-once precursor is present. The law's 'not reached'
      holds from scratch, not in principle.
+   - **A natural curriculum mostly does NOT cross (B78).** Plain pulse first, then relocation: write-once state is
+     reached in 10/12 populations and survives the switch, but only 1/12 reach >= 5 RESET-like genomes. Evolved
+     latches (16-95 instructions, diverse) are a weaker stepping stone than 200 copies of the compact hand latch.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
