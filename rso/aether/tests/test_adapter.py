@@ -147,6 +147,14 @@ class NativeTree(unittest.TestCase):
         m, a = self.native()
         self.assertEqual(A.choose_nonancestor(m["tree"], m["B"], m["origin"], N), m["N"])
 
+    def test_nonancestor_prefers_matched_then_earliest(self):
+        m, a = self.native()
+        t = copy.deepcopy(m["tree"])
+        o = m["origin"]
+        for s, g, p, ft in ((o + N, 1, o, 2), (o - 3 * N, 3, m["N"], 3)):   # a later sibling; a farther non-ancestor
+            t["site"].append(s), t["gen"].append(g), t["parent"].append(p), t["ftick"].append(ft), t["type"].append(1)
+        self.assertEqual(A.choose_nonancestor(t, m["B"], o, N), m["N"])
+
     def test_nonancestor_excludes_unattributed(self):
         m, a = self.native()
         t = copy.deepcopy(m["tree"])

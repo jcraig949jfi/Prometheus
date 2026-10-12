@@ -148,6 +148,24 @@ def verdict():
     return 0 if out["qualified"] else 1
 
 
+def dev_check():
+    """End-to-end analysis path on DEVELOPMENT units (law_summary -> disposition with completeness 'DEV'); not a result."""
+    out = {}
+    for law in ("RX", "V1"):
+        us = [A.load_unit(p[:-5]) for p in sorted(glob.glob(os.path.join(REC, "native_%s_*.json" % law)))]
+        rows = [E.evaluate_unit(m, a) for m, a in us]
+        feats = [(m["seed"], a["H"], a["D"]) for m, a in us]
+        L = E.law_summary(rows, E.decode(feats), E.decode(feats, null=True))
+        out[law] = dict(L, rows=rows, disposition_if_complete=E.disposition(
+            {"completeness": "COMPLETE", "records_ok": all(not r["problems"] for r in rows), "qualified": True, "law": L}))
+    with open(os.path.join(os.path.dirname(OUT), "DEV_CHECK.json"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(out, indent=1, sort_keys=True, default=str) + "\n")
+    for law, L in out.items():
+        print(law, {k: L[k] for k in ("n_units", "classes", "reach_band", "pooled_agreement", "content_excess_all",
+                                      "null_excess", "disposition_if_complete")})
+    return 0
+
+
 if __name__ == "__main__":
     c = sys.argv[1]
     if c == "fixtures":
@@ -158,5 +176,7 @@ if __name__ == "__main__":
         graded([float(x) for x in sys.argv[2:]] or GRADED_P)
     elif c == "dev":
         dev(sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
+    elif c == "devcheck":
+        sys.exit(dev_check())
     elif c == "verdict":
         sys.exit(verdict())

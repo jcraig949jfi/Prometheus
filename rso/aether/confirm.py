@@ -30,13 +30,18 @@ SHARD = {"RX": 12, "V1": 8}             # seeds per shard
 K0 = 0x1000                             # confirmatory seed index k = K0 + i; development k in adapter.DEV_K
 DESIGN_PATH = os.path.join(HERE, "manifests", "confirm_design.manifest.json")
 RUNS = os.path.join(HERE, "runs", "CONFIRM")
-PINNED_DESIGN_SHA256 = None             # set at freeze (FROZEN.json carries it too)
 SOURCES = ["rso/aether/adapter.py", "rso/aether/evaluate.py", "rso/aether/confirm.py", "rso/aether/demand/fixtures.py",
            "rso/completeness/manifest.py", "rso/completeness/verify.py",
            "Aether/V2B/PROP01/prop01_run.py", "Aether/V2B/PROP01/prop01_tree.py", "Aether/V2B/REACH01/R1/r1_test4.py",
            "Aether/V2B/REACH01/R1/r1_reduce.py", "Aether/test/reference/gpu_aeth01.py", "Aether/observatory/aeth01_run.py",
            "Aether/observatory/aeth01_observatory.py"]
 REPLAY = "first seed of every shard"     # native replay sample (bit-exact arrays_sha256), PREREGISTRATION s6
+
+
+def pinned_design_sha256():
+    """The DESIGN manifest sha256 frozen in FROZEN.json (kept out of this file: this file is one of the manifest's sources)."""
+    from rso.aether import freeze
+    return freeze.load()["design_manifest_sha256"] if os.path.exists(freeze.PATH) else None
 
 
 def seeds(law):
@@ -115,7 +120,7 @@ def analyse():
     with open(DESIGN_PATH, encoding="utf-8") as f:
         design = json.load(f)
     presented = load_presented()
-    res = verify_presented(design, presented, current_sources(list(design["sources"])), PINNED_DESIGN_SHA256)
+    res = verify_presented(design, presented, current_sources(list(design["sources"])), pinned_design_sha256())
     out = {"experiment": EXPERIMENT, "completeness": res.to_dict()}
     if not res.licenses_verdict:
         print(json.dumps(out, indent=1))
@@ -165,7 +170,7 @@ def main(argv):
             return 2
         from rso.aether import freeze
         bad = freeze.mismatches()
-        if bad or PINNED_DESIGN_SHA256 is None or design_manifest()["manifest_sha256"] != PINNED_DESIGN_SHA256:
+        if bad or pinned_design_sha256() is None:
             print("REFUSED: FROZEN mismatch or design not pinned: %s" % (bad or "design"))
             return 2
         run(argv[1])
