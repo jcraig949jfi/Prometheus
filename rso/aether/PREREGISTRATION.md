@@ -293,7 +293,33 @@ data, not a result.
   ANCESTRY_UNEVALUABLE (s10.4).
 - **Budget:** one process at a time ~65.6 s per RX and 60.5 s per V1 unit (v1.0.0 measurement) -> 4,116 s, plus the analysis's
   64 snapshots x 4.6 s and 6 full replays (~400 s) -> **~1.3 core-h**. Two concurrent processes on harry1 are slower per unit
-  (thermal; measured above) -> ~1.7 core-h. Both inside the R2 envelope; the coordinator chooses.
+  (thermal; measured above) -> ~1.7 core-h. Both inside the R2 envelope; the coordinator chooses. (Superseded by s10.6.)
+
+### 10.6 Per-unit tree replay (B1, invariant-respecting form; added by Argus[harry1-d48cbcfd] before the re-freeze)
+
+Committed BEFORE its code and before the dev analysis is re-run. Why: Pallas's own `challenge/synth.py`, run unchanged
+against the v1.1.0 evaluator (qual/SYNTH_v1_1_0.json), shows the naive and type-flip B1 tampers caught (tree invariant;
+clamp fidelity) but the invariant-respecting re-parenting still classes INSUFFICIENT -> CONFIRMED with problems []. Under
+s10.1 only the full replay of the first unit of every shard compares the tree, so on 58 of 64 confirmatory units the tree's
+parent / gen / type -- which decide B, N and the targets -- would still be trusted producer fields (REPORT s4.1: "only the
+replayed tree closes" this form). Aether's `run_unit` alone (the tree, without the four recorder worlds or the content
+branches) measures 17.1 s on RX k=0 (harry1, one process).
+
+- **Rule.** `analyse()` re-runs Aether's `run_unit` (law, k) for EVERY unit and requires its `tree`, `origin` and
+  `warm_digest` to equal the unit's meta (problem "replayed Aether tree / origin is not the unit's" otherwise). B and N are
+  then the rules' outputs on a replayed tree (tree_check already recomputes both). The warm-snapshot binding (s10.1) is
+  kept: it binds the stored t0 state array, which `run_unit` does not return. The full replay sample is unchanged.
+  `evidence` gains `tree_replayed` (units whose tree was replayed and equal).
+- **Not a meaning change**: no class, threshold, status or rule changes; a unit whose tree differs is a record problem
+  (REFUSED_RECORD_INCONSISTENT), exactly as a differing full replay already was.
+- **What stays open (s12):** the CLAMP arrays (cutB / cutN first ticks) of a unit outside the full-replay sample are still
+  bound only by snapshot, tree agreement site for site and tick for tick, the invariants and clamp fidelity.
+- **Budget (replaces s10.5's last bullet):** runs 48 x 65.6 s + 16 x 60.5 s = 4,116 s; analysis 64 x (4.6 + 17.1) s +
+  6 full replays x ~65 s = ~1,780 s; total **~1.64 core-h** one process at a time (~+0.3 core-h over s10.5), ~2.1 core-h
+  at two concurrent processes on harry1. Above the packet's ~1.5 core-h sizing guide by ~0.14 core-h; inside the R2
+  envelope (<= 16 core-h per item). Recorded as an ordinary reversible choice (rso-builder-role s2.7): the analysis can drop
+  back to s10.1 by one line, and the coordinator may decline the extra cost before the run, in which case this limit
+  returns to s12.
 
 ## 11. Interpretation the confirmatory result text must carry, whatever it is (REPORT s4.4)
 
@@ -304,7 +330,7 @@ data, not a result.
 3. The class of a unit is conditional on the registered N rule (s10.2). Under v1.1.0 no NONSPECIFIC unit has ftick(N) <
    ftick(B); NONSPECIFIC still conflates damage spreading with a lateral path the attribution missed.
 4. The per-unit first-tick distribution of targets for every CONFIRMED unit; "never diverges in CUT_B" = "not within 400 ticks".
-5. How many units were snapshot-bound and fully replayed, that no row pair shares arrays, and that the analyser ran the freeze
+5. How many units were snapshot-bound, tree-replayed (s10.6) and fully replayed, that no row pair shares arrays, and that the analyser ran the freeze
    check (the `evidence` block).
 6. CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT carries s3's bound (excess < ~0.05-0.10 not excluded); Pallas's 24 challenge
    units read 0.012 with a null of -0.0004.
@@ -315,7 +341,8 @@ data, not a result.
 - Provenance of the CLAMP worlds of a unit outside the full-replay sample rests on: its t0 state being the seed's (snapshot),
   its arrays agreeing with Aether's tree site for site and tick for tick, the tree invariants, clamp fidelity, and the replay
   sample. An invariant-respecting forgery of a non-sampled unit's clamp arrays is not excluded (full replay of every unit is
-  ~1.25 core-h more; not in budget).
+  ~1.25 core-h more; not in budget). Since s10.6 the attribution TREE of every unit is replayed; only the clamp arrays
+  remain bound indirectly.
 - The window can leave a unit without a matched control (CONTROL_VACUOUS); its incidence is reported.
 - The window was chosen after reading Pallas's challenge outcomes (disclosed in s10.2); the thresholds were not changed.
 - Pallas's B4 synthetic gap is closed for the NATIVE N selection (every target diverges after N); fixtures keep recipe sites.
