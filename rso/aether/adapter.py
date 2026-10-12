@@ -152,14 +152,20 @@ def warm_snapshot(law, k, n=128, warm=300):
     return s, phys, O
 
 
+def aether_unit(law, k, n=128, warm=300, H=400):
+    """Aether's run_unit in this adapter's seed range: the ATTRIBUTED tree, origin and warm digest only (~1/4 of a unit).
+    The analyser replays it for EVERY unit (v1.1.0 s10.6, B1)."""
+    with _Seeds():
+        return P.run_unit("cpu", law, k, n, warm, H)
+
+
 def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
     """One native paired unit. (1) Aether's run_unit: the ATTRIBUTED tree. (2) B = Aether's choose_cut; N = the
     non-ancestor rule. (3) This recorder: CONTROL / IMPULSE (bit 0 of the origin payload, as prop01_run.py:135) / CUT_B /
     CUT_N in lockstep. (4) Content, Aether's r1 decodability design on the same snapshot: 8 branches with payload := V[j]
     at every r1 grid origin (16 at 128^2; one origin per world was too few to train the decoder at a 0.05 margin,
     qual/QUALIFICATION_v1_48origins.json), Aether's features vs CONTROL at `ts`. The warm-up is recomputed here and must reproduce Aether's warm digest."""
-    with _Seeds():
-        u = P.run_unit("cpu", law, k, n, warm, H)
+    u = aether_unit(law, k, n, warm, H)
     s, phys, O = warm_snapshot(law, k, n, warm)
     if P.digest(s) != u["warm_digest"] or O != u["origin"]:
         raise RuntimeError("recorder warm-up does not reproduce Aether's run_unit (law %s k %d)" % (law, k))

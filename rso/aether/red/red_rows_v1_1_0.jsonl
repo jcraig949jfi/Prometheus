@@ -45,7 +45,11 @@
 {"edit": 43, "file": "confirm.py", "new": ")", "old": "and A.P.digest(s) == meta[\"aether\"][\"warm_digest\"])", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
 {"edit": 44, "file": "confirm.py", "new": "if False:", "old": "if meta.get(\"seed\") != row[\"seed\"] or meta.get(\"law\") != law:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
 {"edit": 45, "file": "confirm.py", "new": "elif False:", "old": "elif any(m2.get(f) != meta.get(f) for f in REPLAY_META):", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
-{"edit": 46, "file": "confirm.py", "new": "if False:                                       # P1", "old": "if problems:                                       # P1", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=7)"}
+{"edit": 46, "file": "confirm.py", "new": "if False:                                       # P1", "old": "if problems:                                       # P1", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=10)"}
+{"edit": 47, "file": "confirm.py", "new": "why = None", "old": "why = tree_problem(law, row[\"seed\"], meta, tree_replay)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
+{"edit": 48, "file": "confirm.py", "new": "if not (", "old": "if not (u[\"tree\"] == meta[\"tree\"] and", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 49, "file": "confirm.py", "new": "", "old": "and u[\"origin\"] == meta[\"origin\"]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 50, "file": "confirm.py", "new": "):", "old": "and u[\"warm_digest\"] == meta[\"aether\"][\"warm_digest\"]):", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
 {"edit": "E1", "file": "confirm.py", "new": "if False:", "old": "if i == 0:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
 {"edit": "E2", "file": "evaluate.py", "new": "if False:", "old": "if roots != [meta[\"origin\"]] or t0_sites(a) != [meta[\"origin\"]]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
 {"edit": "E3", "file": "confirm.py", "new": "if False:", "old": "if meta[\"arrays_sha256\"] != row[\"arrays_sha256\"] or M.digest(meta) != row[\"meta_sha256\"]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}

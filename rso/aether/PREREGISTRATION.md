@@ -320,6 +320,17 @@ branches) measures 17.1 s on RX k=0 (harry1, one process).
   envelope (<= 16 core-h per item). Recorded as an ordinary reversible choice (rso-builder-role s2.7): the analysis can drop
   back to s10.1 by one line, and the coordinator may decline the extra cost before the run, in which case this limit
   returns to s12.
+- **Development result (filled after the text above was committed at `8c27b262a`; DEV-class).** Code: adapter.py
+  `aether_unit`, confirm.py `tree_problem`; tests 57 -> 59 (`test_B1_every_unit_tree_replayed`,
+  `test_B1_tree_replay_checks_origin_and_warm_digest`); red/run_red.py rows 47-50, 56/56 KILLED. Real `confirm.analyse` on
+  the dev units (qual/DEV_ANALYSE_v1_1_0.json, `analyser_s10_6`; two COMPLETE sub-designs RX.dev0 and RX.dev1 + V1.dev0
+  because 20 units no longer fit one 600 s call): freeze check OK, 20/20 snapshot-bound, **20/20 tree-replayed**, 3 full
+  replays, problems []; every per-unit row identical to the 20-unit s10.1 run (no class moved). Forged RX.dev1 (k=9 a copy
+  of k=8): REFUSED_RECORD_INCONSISTENT on three independent lines (duplicate arrays, snapshot, tree replay), nothing
+  verdict-bearing. Pallas's invariant-respecting tamper on dev RX k=0 (INSUFFICIENT -> CONFIRMED, evaluator problems [])
+  is refused by the real tree replay; the genuine unit passes (qual/B1_TREE_REPLAY_v1_1_0.json, `rso.aether.dev_b1_tree`).
+  Measured analysis cost: 8 units + 1 full replay 258 s, 12 units + 2 full replays 391 s wall (~24 s per unit beside the
+  replays), consistent with the budget above.
 
 ## 11. Interpretation the confirmatory result text must carry, whatever it is (REPORT s4.4)
 

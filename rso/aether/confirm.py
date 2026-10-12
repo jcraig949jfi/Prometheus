@@ -16,6 +16,7 @@ v1.1.0 (C-018-T041, Pallas B6 / B5 / B1 / P1): `analyse` runs the freeze check F
 duplicated arrays_sha256 across rows; binds EVERY unit to its seed (warm snapshot + origin recomputed) and states how many
 units were snapshot-bound and fully replayed; compares the replayed tree / B / N / origin as well as the arrays; and a
 refused analysis prints its problems and nothing verdict-bearing.
+s10.6 (Argus[harry1-d48cbcfd], before the re-freeze): Aether's attributed tree is replayed for EVERY unit (B1).
 """
 import glob
 import json
@@ -45,7 +46,7 @@ SOURCES = ["rso/aether/adapter.py", "rso/aether/evaluate.py", "rso/aether/confir
            "Aether/V2B/REACH01/R1/r1_reduce.py", "Aether/test/reference/gpu_aeth01.py", "Aether/observatory/aeth01_run.py",
            "Aether/observatory/aeth01_observatory.py"]
 REPLAY = ("first seed of every shard: full native replay (arrays_sha256 and meta tree / B / N / origin); every unit: warm "
-          "snapshot + origin recomputed")      # PREREGISTRATION s6, s10 (B1, B5)
+          "snapshot + origin recomputed, and Aether's tree replayed (s10.6)")      # PREREGISTRATION s6, s10 (B1, B5)
 REPLAY_META = ("tree", "B", "N", "origin", "B_tick")
 
 
@@ -150,11 +151,23 @@ def snapshot_problem(law, k, meta, arrays, snapshot=None):
     return None
 
 
+def tree_problem(law, k, meta, tree_replay=None):
+    """v1.1.0 s10.6 (B1, invariant-respecting form): re-run Aether's run_unit for (law, k) (~1/4 of a unit); its attributed
+    tree, origin and warm digest must equal the unit's meta. B and N are then the rules' outputs on a replayed tree
+    (tree_check recomputes both). None if equal."""
+    u = (tree_replay or A.aether_unit)(law, k, meta["n"], meta["warm"], meta["H"])
+    if not (u["tree"] == meta["tree"] and u["origin"] == meta["origin"]
+            and u["warm_digest"] == meta["aether"]["warm_digest"]):
+        return "replayed Aether tree / origin is not the unit's"
+    return None
+
+
 def _emit(out):
     print(json.dumps(out, indent=1, default=str))
 
 
-def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, freeze_check=None, emit=_emit):
+def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, freeze_check=None, emit=_emit,
+            tree_replay=None):
     """PREREGISTRATION s6 / s10. The keyword arguments exist for the guard tests (a two-shard fixture, stubbed replay);
     the CLI passes none, so the frozen paths, the FROZEN.json pin, Aether's replay and the freeze check are used."""
     from rso.aether import evaluate as E, freeze
@@ -175,7 +188,7 @@ def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, f
         return 3 if res.status == V.INCOMPLETE else 4
     with open(os.path.join(HERE, "qual", "QUALIFICATION.json"), encoding="utf-8") as f:
         qualified = json.load(f)["qualified"]
-    laws, problems, n_snap, n_replay = {}, [], 0, 0
+    laws, problems, n_snap, n_tree, n_replay = {}, [], 0, 0, 0
     shas = [row["arrays_sha256"] for sh in presented for row in sh["rows"]]
     if len(set(shas)) != len(shas):                    # B5: a copied unit is refused, whatever its seed label says
         problems.append("%d rows share an arrays_sha256 with another row" % (len(shas) - len(set(shas))))
@@ -194,6 +207,11 @@ def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, f
                 problems.append("%s seed %s: %s" % (sh["id"], row["seed"], why))
             else:
                 n_snap += 1
+            why = tree_problem(law, row["seed"], meta, tree_replay)                  # B1 (s10.6): EVERY unit's tree
+            if why:
+                problems.append("%s seed %s: %s" % (sh["id"], row["seed"], why))
+            else:
+                n_tree += 1
             if i == 0:                                    # preregistered replay sample
                 m2, a2 = replay(law, row["seed"])
                 if A.arrays_sha256(a2) != meta["arrays_sha256"]:
@@ -206,7 +224,8 @@ def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, f
             laws.setdefault(law, []).append((r, (row["seed"], arrays["H"], arrays["D"])))
     out["problems"] = problems
     out["evidence"] = {"freeze_check": "OK", "rows": len(shas), "distinct_arrays_sha256": len(set(shas)),
-                       "snapshot_bound": n_snap, "full_replay_verified": n_replay, "replay_sample": REPLAY}
+                       "snapshot_bound": n_snap, "tree_replayed": n_tree,
+                       "full_replay_verified": n_replay, "replay_sample": REPLAY}
     if problems:                                       # P1: a refusal prints the problems and nothing verdict-bearing
         out["disposition"] = "REFUSED_RECORD_INCONSISTENT"
         emit(out)

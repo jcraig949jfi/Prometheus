@@ -6,7 +6,7 @@ purged), the source is restored byte for byte and its sha256 re-checked. Baselin
     python -m rso.aether.red.run_red rso/aether/red/red_rows.jsonl
 
 v1.1.0 (C-018-T041): rows 0-20 are the C-018-T030 rows (three retargeted to the v1.1.0 lines that replaced theirs: 12 p2,
-14 need, 19 the N choice); rows 21+ pin the repair round; then Pallas's challenge/edits.json E1-E5 are applied VERBATIM
+14 need, 19 the N choice); rows 21+ pin the repair round; rows 47-50 pin s10.6 (per-unit tree replay); then Pallas's challenge/edits.json E1-E5 are applied VERBATIM
 (`old` -> `new`, in the file named there). Edits are matched line-ending agnostically (Pallas S2: on a CRLF checkout four
 T030 rows were EDIT_NOT_UNIQUE): a newline in an edit is rewritten to the file's own line ending before matching.
 """
@@ -70,6 +70,11 @@ EDITS = [
     ("confirm.py", "            if meta.get(\"seed\") != row[\"seed\"] or meta.get(\"law\") != law:", "            if False:"),
     ("confirm.py", "                elif any(m2.get(f) != meta.get(f) for f in REPLAY_META):", "                elif False:"),  # B1
     ("confirm.py", "    if problems:                                       # P1", "    if False:                                       # P1"),
+    # ---- s10.6 (Argus[harry1-d48cbcfd]): every unit's Aether tree replayed, rows 47+
+    ("confirm.py", "            why = tree_problem(law, row[\"seed\"], meta, tree_replay)", "            why = None"),
+    ("confirm.py", "if not (u[\"tree\"] == meta[\"tree\"] and ", "if not ("),
+    ("confirm.py", " and u[\"origin\"] == meta[\"origin\"]\n", "\n"),
+    ("confirm.py", "            and u[\"warm_digest\"] == meta[\"aether\"][\"warm_digest\"]):", "            ):"),
 ]
 PALLAS_EDITS = os.path.join(ROOT, "rso", "aether", "challenge", "edits.json")    # applied verbatim after EDITS
 

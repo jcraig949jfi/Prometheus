@@ -500,7 +500,7 @@ class AnalyserGuards(unittest.TestCase):
         a["imp"][0][0, k] = k
         a["H"] = np.zeros((8, 1, 1, 6, 4, 256), np.uint8)
         a["D"] = np.zeros((8, 1, 1, 6), np.float32)
-        m = dict(m, schema="prometheus.rso.aether.unit.v1", law="RX", seed=k, warm=1, B_tick=1,
+        m = dict(m, schema="prometheus.rso.aether.unit.v1", law="RX", seed=k, warm=1, H=1, B_tick=1,
                  aether={"warm_digest": A.P.digest(list(a["snap"]))})
         return m, a
 
@@ -536,9 +536,14 @@ class AnalyserGuards(unittest.TestCase):
         _, a = self.unit(k)
         return list(a["snap"]), 0, NativeTree().native()[0]["origin"]
 
+    def genuine_tree(self, law, k, n, warm, H):
+        m, _ = self.stored(law, k)
+        return {"tree": m["tree"], "origin": m["origin"], "warm_digest": m["aether"]["warm_digest"]}
+
     def run_analyse(self, **kw):
         got = []
         kw.setdefault("replay", self.stored)
+        kw.setdefault("tree_replay", self.genuine_tree)
         kw.setdefault("snapshot", self.genuine_snapshot)
         kw.setdefault("freeze_check", lambda: [])
         rc = C.analyse(runs=self.d, design_path=self.dp, pin=self.design["manifest_sha256"], emit=got.append, **kw)
@@ -554,7 +559,7 @@ class AnalyserGuards(unittest.TestCase):
         rc, out = self.run_analyse()
         self.assertEqual(rc, 0, out.get("problems"))
         self.assertEqual(out["evidence"], {"freeze_check": "OK", "rows": 4, "distinct_arrays_sha256": 4, "snapshot_bound": 4,
-                                           "full_replay_verified": 2, "replay_sample": C.REPLAY})
+                                           "tree_replayed": 4, "full_replay_verified": 2, "replay_sample": C.REPLAY})
         self.assertEqual(out["laws"]["RX"]["disposition"], "ANCESTRY_UNEVALUABLE")
         self.assertIn("evaluable 4 of 4 units", out["laws"]["RX"]["label"])
 
@@ -586,6 +591,24 @@ class AnalyserGuards(unittest.TestCase):
             t["type"][-1] = 3
             return dict(m, tree=t), a
         self.assert_refused(*self.run_analyse(replay=replay), "replayed ['tree'] differs")
+
+    def test_B1_every_unit_tree_replayed(self):
+        def tree_replay(law, k, n, warm, H):                      # seed 4 is not in the full-replay sample
+            u = self.genuine_tree(law, k, n, warm, H)
+            if k == 4:
+                u["tree"] = dict(u["tree"], type=u["tree"]["type"][:-1] + [3 - u["tree"]["type"][-1]])
+            return u
+        rc, out = self.run_analyse(tree_replay=tree_replay)
+        self.assert_refused(rc, out, "RX.1 seed 4: replayed Aether tree / origin is not the unit's")
+        self.assertEqual(out["evidence"]["tree_replayed"], 3)
+
+    def test_B1_tree_replay_checks_origin_and_warm_digest(self):
+        for field, value in (("origin", -7), ("warm_digest", "0" * 32)):
+            with self.subTest(field=field):
+                def tree_replay(law, k, n, warm, H):
+                    u = self.genuine_tree(law, k, n, warm, H)
+                    return dict(u, **{field: value}) if k == 4 else u
+                self.assert_refused(*self.run_analyse(tree_replay=tree_replay), "replayed Aether tree / origin is not")
 
     def test_B6_freeze_check_first(self):
         rc, out = self.run_analyse(freeze_check=lambda: ["design manifest differs from the frozen one"])
