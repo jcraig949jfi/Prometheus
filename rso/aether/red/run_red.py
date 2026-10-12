@@ -4,6 +4,11 @@ so every kill below is behavioural). Each edit is applied IN PLACE, the suite ru
 purged), the source is restored byte for byte and its sha256 re-checked. Baseline first, unedited.
 
     python -m rso.aether.red.run_red rso/aether/red/red_rows.jsonl
+
+v1.1.0 (C-018-T041): rows 0-20 are the C-018-T030 rows (three retargeted to the v1.1.0 lines that replaced theirs: 12 p2,
+14 need, 19 the N choice); rows 21+ pin the repair round; then Pallas's challenge/edits.json E1-E5 are applied VERBATIM
+(`old` -> `new`, in the file named there). Edits are matched line-ending agnostically (Pallas S2: on a CRLF checkout four
+T030 rows were EDIT_NOT_UNIQUE): a newline in an edit is rewritten to the file's own line ending before matching.
 """
 import hashlib
 import json
@@ -29,16 +34,44 @@ EDITS = [
     ("evaluate.py", "return B, A.choose_nonancestor(tree, B, meta[\"origin\"], meta[\"n\"]), sorted(TR.descendants(tree, B))",
      "return B, meta[\"N\"], sorted(TR.descendants(tree, B))"),
     ("evaluate.py", "return [] if meta.get(\"arrays_sha256\") == A.arrays_sha256(a) else", "return [] if True else"),
-    ("evaluate.py", "p2 = L[\"confirmed_r2\"] >= max(3, math.ceil(0.1 * L[\"n_units\"]))", "p2 = L[\"confirmed_r2\"] >= 3"),
+    ("evaluate.py", "p2 = L[\"confirmed_r2\"] >= need(L[\"evaluable\"])", "p2 = L[\"confirmed_r2\"] >= 3"),
     ("evaluate.py", "if L[\"null_excess\"] is None or abs(L[\"null_excess\"]) >= NULL_MAX:", "if L[\"null_excess\"] is None:"),
-    ("evaluate.py", "need = max(3, math.ceil(0.1 * len(rows)))", "need = max(2, math.ceil(0.1 * len(rows)))"),
+    ("evaluate.py", "return max(3, math.ceil(0.1 * n_evaluable))", "return max(2, math.ceil(0.1 * n_evaluable))"),
     ("evaluate.py", "[:, 1:min(band, 6)] - 0.125)", "[:, 1:6] - 0.125)"),
     ("confirm.py", "(pinned_design_sha256 is not None and design[\"manifest_sha256\"] != pinned_design_sha256)", "False"),
     ("confirm.py", "presented, sources=sources, native_digest=M.digest)", "presented, sources=sources, native_digest=None)"),
     ("adapter.py", "if g >= 1 and s != B", "if g >= -1 and s != B"),
-    ("adapter.py", "return min(cands)[2] if cands else None", "return max(cands)[2] if cands else None"),
+    ("adapter.py", "return ok[0][2] if ok else None", "return ok[-1][2] if ok else None"),
     ("adapter.py", "                    nx[f][y, x] = nc[f][y, x]\n", "                    pass\n"),
+    # ---- v1.1.0 (C-018-T041) repair-round pins, rows 21+
+    ("adapter.py", "if lo <= c[1] and (hi is None or c[1] < hi)", "if (hi is None or c[1] < hi)"),                 # B8
+    ("adapter.py", "if lo <= c[1] and (hi is None or c[1] < hi)", "if lo <= c[1] and (hi is None or c[1] <= hi)"),  # B4
+    ("adapter.py", "if lo <= c[1] and (hi is None or c[1] < hi)", "if lo <= c[1]"),                                # B4
+    ("evaluate.py", "    elif out[\"removed_B\"] < REMOVED_MIN:\n", "    elif out[\"removed_B\"] < REMOVED_MIN and not vac:\n"),
+    ("evaluate.py", "    bad += tree_invariants(tree, meta[\"n\"])\n", "    bad += []\n"),                           # B1
+    ("evaluate.py", "bad[\"parent not 4-adjacent\"] += dy + dx != 1", "bad[\"parent not 4-adjacent\"] += 0"),
+    ("evaluate.py", "bad[\"parent not earlier\"] += not ft[p] < ft[s]", "bad[\"parent not earlier\"] += 0"),
+    ("evaluate.py", "bad[\"gen != parent gen + 1\"] += gen[s] != gen[p] + 1", "bad[\"gen != parent gen + 1\"] += 0"),
+    ("evaluate.py", "        if p not in par:\n", "        if False:\n"),
+    ("evaluate.py", "not (f[meta[\"origin\"]] == 0 and f[site] < 0)", "not (f[site] < 0)"),
+    ("evaluate.py", "not (f[meta[\"origin\"]] == 0 and f[site] < 0)", "not (f[meta[\"origin\"]] == 0)"),
+    ("evaluate.py", "EVALUABLE_MIN = 8 ", "EVALUABLE_MIN = 7 "),                                                   # B2
+    ("evaluate.py", "    if L[\"evaluable\"] < EVALUABLE_MIN:\n", "    if False:\n"),
+    ("evaluate.py", "    need_ = need(evaluable(rows))\n", "    need_ = need(len(rows))\n"),
+    ("evaluate.py", "p2 = L[\"confirmed_r2\"] >= need(L[\"evaluable\"])", "p2 = L[\"confirmed_r2\"] >= need(L[\"n_units\"])"),
+    ("evaluate.py", "acc[r[\"seed\"]] for r in conf", "acc[r[\"seed\"]] for r in rows"),                          # B3
+    ("evaluate.py", "\"after_300\": sum(1 for t in ticks if t > 300)", "\"after_300\": sum(1 for t in ticks if t > 200)"),  # B7
+    ("evaluate.py", "and r[\"ftick_N\"] < r[\"ftick_B\"]", "and r[\"ftick_N\"] <= r[\"ftick_B\"]"),
+    ("evaluate.py", "\"%s [evaluable %d of %d units;", "\"%s [%d of %d units;"),
+    ("confirm.py", "    bad = (freeze_check or freeze.mismatches)()", "    bad = []"),                              # B6
+    ("confirm.py", "    if len(set(shas)) != len(shas):", "    if False:"),                                          # B5
+    ("confirm.py", "            why = snapshot_problem(law, row[\"seed\"], meta, arrays, snapshot)", "            why = None"),
+    ("confirm.py", "and A.P.digest(s) == meta[\"aether\"][\"warm_digest\"])", ")"),
+    ("confirm.py", "            if meta.get(\"seed\") != row[\"seed\"] or meta.get(\"law\") != law:", "            if False:"),
+    ("confirm.py", "                elif any(m2.get(f) != meta.get(f) for f in REPLAY_META):", "                elif False:"),  # B1
+    ("confirm.py", "    if problems:                                       # P1", "    if False:                                       # P1"),
 ]
+PALLAS_EDITS = os.path.join(ROOT, "rso", "aether", "challenge", "edits.json")    # applied verbatim after EDITS
 
 
 def purge():
@@ -53,17 +86,25 @@ def suite():
     return p.returncode, tail[-1] if tail else ""
 
 
+def _adapt(src, text):
+    """Rewrite a newline in an edit to the file's own line ending (CRLF checkouts; Pallas S2)."""
+    return text.replace("\n", "\r\n") if "\r\n" in src else text
+
+
 def main(out):
     rows = []
     rc, tail = suite()
     rows.append({"edit": "BASELINE (unedited)", "returncode": rc, "result": "GREEN" if rc == 0 else "BROKEN", "tail": tail})
     if rc != 0:
         raise SystemExit("baseline not green: %s" % tail)
-    for i, (f, old, new) in enumerate(EDITS):
+    with open(PALLAS_EDITS, encoding="utf-8") as fh:
+        pallas = [(k, e["file"], e["old"], e["new"]) for k, e in sorted(json.load(fh).items())]
+    for i, f, old, new in [(i, f, o, n) for i, (f, o, n) in enumerate(EDITS)] + pallas:
         path = os.path.join(ROOT, "rso", "aether", f)
         raw = open(path, "rb").read()
         sha = hashlib.sha256(raw).hexdigest()
         src = raw.decode("utf-8")
+        old, new = _adapt(src, old), _adapt(src, new)
         if src.count(old) != 1:
             rows.append({"edit": i, "file": f, "result": "EDIT_NOT_UNIQUE", "count": src.count(old)})
             continue
@@ -81,8 +122,9 @@ def main(out):
         for r in rows:
             fh.write(json.dumps(r, sort_keys=True) + "\n")
     killed = sum(1 for r in rows if r.get("result") == "KILLED")
-    print("killed %d / %d" % (killed, len(EDITS)))
-    return 0 if killed == len(EDITS) else 1
+    total = len(EDITS) + len(pallas)
+    print("killed %d / %d" % (killed, total))
+    return 0 if killed == total else 1
 
 
 if __name__ == "__main__":
