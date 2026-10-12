@@ -1,0 +1,57 @@
+{"edit": "BASELINE (unedited)", "result": "GREEN", "returncode": 0, "tail": "OK"}
+{"edit": 0, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.7, 0.2, 3", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 1, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.3, 3", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 2, "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 2", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 3, "file": "evaluate.py", "new": "MARGIN, NULL_MAX = 0.07, 0.03", "old": "MARGIN, NULL_MAX = 0.05, 0.03", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 4, "file": "evaluate.py", "new": "if len(t0_sites(a)) > 7:", "old": "if t0_sites(a) != [O]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 5, "file": "evaluate.py", "new": "vac = N is None", "old": "vac = N is None or imp[N] < 0", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 6, "file": "evaluate.py", "new": "tg = list(targets)", "old": "tg = [s for s in targets if imp[s] >= 0]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 7, "file": "evaluate.py", "new": "return bool((d <= ft[idx] + 10).all())", "old": "return bool((d <= ft[idx]).all())", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 8, "file": "evaluate.py", "new": "if False:", "old": "if set(tree[\"site\"]) != obs:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 9, "file": "evaluate.py", "new": "if False:", "old": "if B != meta[\"B\"]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 10, "file": "evaluate.py", "new": "return B, meta[\"N\"], sorted(TR.descendants(tree, B))", "old": "return B, A.choose_nonancestor(tree, B, meta[\"origin\"], meta[\"n\"]), sorted(TR.descendants(tree, B))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 11, "file": "evaluate.py", "new": "return [] if True else", "old": "return [] if meta.get(\"arrays_sha256\") == A.arrays_sha256(a) else", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 12, "file": "evaluate.py", "new": "p2 = L[\"confirmed_r2\"] >= 3", "old": "p2 = L[\"confirmed_r2\"] >= need(L[\"evaluable\"])", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 13, "file": "evaluate.py", "new": "if L[\"null_excess\"] is None:", "old": "if L[\"null_excess\"] is None or abs(L[\"null_excess\"]) >= NULL_MAX:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 14, "file": "evaluate.py", "new": "return max(2, math.ceil(0.1 * n_evaluable))", "old": "return max(3, math.ceil(0.1 * n_evaluable))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
+{"edit": 15, "file": "evaluate.py", "new": "[:, 1:6] - 0.125)", "old": "[:, 1:min(band, 6)] - 0.125)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 16, "file": "confirm.py", "new": "False", "old": "(pinned_design_sha256 is not None and design[\"manifest_sha256\"] != pinned_design_sha256)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 17, "file": "confirm.py", "new": "presented, sources=sources, native_digest=None)", "old": "presented, sources=sources, native_digest=M.digest)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 18, "file": "adapter.py", "new": "if g >= -1 and s != B", "old": "if g >= 1 and s != B", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 19, "file": "adapter.py", "new": "return ok[-1][2] if ok else None", "old": "return ok[0][2] if ok else None", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 20, "file": "adapter.py", "new": "pass", "old": "nx[f][y, x] = nc[f][y, x]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 21, "file": "adapter.py", "new": "if (hi is None or c[1] < hi)", "old": "if lo <= c[1] and (hi is None or c[1] < hi)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
+{"edit": 22, "file": "adapter.py", "new": "if lo <= c[1] and (hi is None or c[1] <= hi)", "old": "if lo <= c[1] and (hi is None or c[1] < hi)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 23, "file": "adapter.py", "new": "if lo <= c[1]", "old": "if lo <= c[1] and (hi is None or c[1] < hi)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 24, "file": "evaluate.py", "new": "elif out[\"removed_B\"] < REMOVED_MIN and not vac:", "old": "elif out[\"removed_B\"] < REMOVED_MIN:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 25, "file": "evaluate.py", "new": "bad += []", "old": "bad += tree_invariants(tree, meta[\"n\"])", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 26, "file": "evaluate.py", "new": "bad[\"parent not 4-adjacent\"] += 0", "old": "bad[\"parent not 4-adjacent\"] += dy + dx != 1", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 27, "file": "evaluate.py", "new": "bad[\"parent not earlier\"] += 0", "old": "bad[\"parent not earlier\"] += not ft[p] < ft[s]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 28, "file": "evaluate.py", "new": "bad[\"gen != parent gen + 1\"] += 0", "old": "bad[\"gen != parent gen + 1\"] += gen[s] != gen[p] + 1", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 29, "file": "evaluate.py", "new": "if False:", "old": "if p not in par:", "result": "KILLED", "returncode": 1, "tail": "FAILED (errors=1)"}
+{"edit": 30, "file": "evaluate.py", "new": "not (f[site] < 0)", "old": "not (f[meta[\"origin\"]] == 0 and f[site] < 0)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 31, "file": "evaluate.py", "new": "not (f[meta[\"origin\"]] == 0)", "old": "not (f[meta[\"origin\"]] == 0 and f[site] < 0)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 32, "file": "evaluate.py", "new": "EVALUABLE_MIN = 7", "old": "EVALUABLE_MIN = 8", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 33, "file": "evaluate.py", "new": "if False:", "old": "if L[\"evaluable\"] < EVALUABLE_MIN:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 34, "file": "evaluate.py", "new": "need_ = need(len(rows))", "old": "need_ = need(evaluable(rows))", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1, errors=1)"}
+{"edit": 35, "file": "evaluate.py", "new": "p2 = L[\"confirmed_r2\"] >= need(L[\"n_units\"])", "old": "p2 = L[\"confirmed_r2\"] >= need(L[\"evaluable\"])", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 36, "file": "evaluate.py", "new": "acc[r[\"seed\"]] for r in rows", "old": "acc[r[\"seed\"]] for r in conf", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 37, "file": "evaluate.py", "new": "\"after_300\": sum(1 for t in ticks if t > 200)", "old": "\"after_300\": sum(1 for t in ticks if t > 300)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 38, "file": "evaluate.py", "new": "and r[\"ftick_N\"] <= r[\"ftick_B\"]", "old": "and r[\"ftick_N\"] < r[\"ftick_B\"]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 39, "file": "evaluate.py", "new": "\"%s [%d of %d units;", "old": "\"%s [evaluable %d of %d units;", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 40, "file": "confirm.py", "new": "bad = []", "old": "bad = (freeze_check or freeze.mismatches)()", "result": "KILLED", "returncode": 1, "tail": "FAILED (errors=1)"}
+{"edit": 41, "file": "confirm.py", "new": "if False:", "old": "if len(set(shas)) != len(shas):", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 42, "file": "confirm.py", "new": "why = None", "old": "why = snapshot_problem(law, row[\"seed\"], meta, arrays, snapshot)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=2)"}
+{"edit": 43, "file": "confirm.py", "new": ")", "old": "and A.P.digest(s) == meta[\"aether\"][\"warm_digest\"])", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 44, "file": "confirm.py", "new": "if False:", "old": "if meta.get(\"seed\") != row[\"seed\"] or meta.get(\"law\") != law:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 45, "file": "confirm.py", "new": "elif False:", "old": "elif any(m2.get(f) != meta.get(f) for f in REPLAY_META):", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 46, "file": "confirm.py", "new": "if False:                                       # P1", "old": "if problems:                                       # P1", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=10)"}
+{"edit": 47, "file": "confirm.py", "new": "why = None", "old": "why = tree_problem(law, row[\"seed\"], meta, tree_replay)", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
+{"edit": 48, "file": "confirm.py", "new": "if not (", "old": "if not (u[\"tree\"] == meta[\"tree\"] and", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 49, "file": "confirm.py", "new": "", "old": "and u[\"origin\"] == meta[\"origin\"]", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": 50, "file": "confirm.py", "new": "):", "old": "and u[\"warm_digest\"] == meta[\"aether\"][\"warm_digest\"]):", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": "E1", "file": "confirm.py", "new": "if False:", "old": "if i == 0:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=3)"}
+{"edit": "E2", "file": "evaluate.py", "new": "if False:", "old": "if roots != [meta[\"origin\"]] or t0_sites(a) != [meta[\"origin\"]]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": "E3", "file": "confirm.py", "new": "if False:", "old": "if meta[\"arrays_sha256\"] != row[\"arrays_sha256\"] or M.digest(meta) != row[\"meta_sha256\"]:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": "E4", "file": "evaluate.py", "new": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.7, 0.2, 3", "old": "REMOVED_MIN, NONANC_MAX, TARGETS_MIN = 0.8, 0.2, 3", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}
+{"edit": "E5", "file": "confirm.py", "new": "if False:", "old": "if not res.licenses_verdict:", "result": "KILLED", "returncode": 1, "tail": "FAILED (failures=1)"}

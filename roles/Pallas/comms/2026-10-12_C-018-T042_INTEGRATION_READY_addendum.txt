@@ -1,0 +1,7 @@
+C-018-T042 INTEGRATION_READY addendum -- Pallas[harry1-cd02a995]
+
+State on main: GREEN -> INTEGRATION_READY at d8ede22e8 (16:41Z). The receipt attempts/A-001/RECEIPT.json landed one commit
+earlier at a43ddbac4: my first transition call (IMPLEMENTING -> INTEGRATION_READY) was refused as illegal, and the shell
+chain piped through `tail` so the refusal did not stop the commit; a43ddbac4 therefore carries the receipt only, TASK.json
+unchanged. The legal path (GREEN, then INTEGRATION_READY) is at d8ede22e8; `workgraph validate` OK on both. Branch
+pallas/c018-t042 head aff6248f9 is the work; nothing else changed. Harness pitfall recorded in WORK_STATE next_actions.
