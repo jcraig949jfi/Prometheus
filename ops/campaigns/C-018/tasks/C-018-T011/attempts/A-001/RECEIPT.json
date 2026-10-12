@@ -1,0 +1,54 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T011",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "role": "Eupalamus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-69b9c667",
+ "host": "harry1",
+ "branch": "eupalamus-c018-t011",
+ "worktree_path": "C:/Prometheus-worktrees/eupalamus-c018-t011",
+ "start_sha": "3f8cc0150cedbb76c85948ae06aac24a5cc9cfae",
+ "end_sha": "branch head = this receipt's commit (code at 8e857e94b)",
+ "dirty": false,
+ "commits": {"claim_main": "0bd4331f8", "red_first": "28252717e", "implementation": "8e857e94b"},
+ "files_changed": [
+  "rso/completeness/{__init__,manifest,verify,z80}.py",
+  "rso/completeness/manifests/z80_confirm.manifest.json",
+  "rso/completeness/tests/{__init__,test_completeness}.py, RED_OUTPUT.txt",
+  "rso/completeness/README.md",
+  "ops/campaigns/C-018/tasks/C-018-T011/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "roles/Eupalamus/{WORK_STATE.json,comms/2026-10-12_C-018-T011_INTEGRATION_READY.md}"
+ ],
+ "evidence_added": [
+  "40 tests green (python -m unittest rso.completeness.tests.test_completeness): 23 engine-agnostic, 17 on the committed Z80 six-shard fixture",
+  "complete set verifies COMPLETE and the wrapper's analysis equals rso/z80/runs/CONFIRM.analysis.json exactly",
+  "each shard removed -> INCOMPLETE (no verdict computed); each duplicated -> REFUSED DUPLICATE; dev-seed shard under confirm identity -> SUBSTITUTED + SEED_PARTITION; re-run with different rows sha -> SUBSTITUTED; one row altered per shard -> ALTERED; 4 meta fields -> ALTERED; dropped row; foreign id -> UNEXPECTED; changed source -> SOURCE_MISMATCH; re-sealed smaller manifest -> MANIFEST_ALTERED via pin; early stop COMPLETE_EARLY_STOP only with trigger",
+  "manifest derived from PREREGISTRATION s6 design (subjects.seeds, assay shard rule, CONFIRM_N, N_FORGE, FORGERIES), not from rows; test asserts build_manifest() == committed file; derivation predicted all six shards' seeds and per-key counts",
+  "mutation check: 13 single-line mutants of verify.py, 12 killed, 1 equivalent (finding already forces REFUSED)"
+ ],
+ "evidence_executed": [
+  {"command": "python -m unittest rso.completeness.tests.test_completeness", "result": "RED at 28252717e (ImportError, tests/RED_OUTPUT.txt); 40 tests OK at 8e857e94b"},
+  {"command": "python -m rso.completeness.z80 (default six shards)", "result": "exit 0, COMPLETE, verdict ATTRIBUTION_QUALIFIED"},
+  {"command": "python -m rso.completeness.z80 rso/z80/runs/CONFIRM.[0-4]-6.jsonl.gz", "result": "exit 3, INCOMPLETE, missing CONFIRM.5-6, no analysis printed"},
+  {"command": "python -m workgraph validate", "result": "OK"}
+ ],
+ "red_observed": {"observed": true, "detail": "tests committed first (28252717e); the run failed with ImportError because manifest/verify/z80 did not exist. Per-test discrimination shown afterwards by 13 mutants (12 killed)"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "RED was an import-level RED (whole module absent), not per-test; mutants stand in for per-test discrimination",
+  "mutant 'early stop excuses missing despite findings' survives: equivalent, only the cosmetic missing list differs"
+ ],
+ "unresolved": [
+  "meta_sha256 pins the whole meta incl. wall_s and host: right for frozen committed shards, too strict for a future experiment whose re-runs legitimately change those (README limits)",
+  "trigger language is one conjunction of equalities plus a count; sequential-test stopping rules need their own evaluator",
+  "registry entry is proposed only (Palamedes owns rso/registry/)"
+ ],
+ "unblocks": [],
+ "resources": {"cpu_core_hours_estimate": 0.01, "processes_max": 1, "paid_resources": "none", "hosts": ["harry1"]},
+ "cleanup": "none; scratch only under /tmp",
+ "notes": "rso/z80/ not edited (freeze.mismatches() == [] asserted in a test). Headless; foreground only.",
+ "created_at_utc": "2026-10-12T09:12:00Z"
+}
