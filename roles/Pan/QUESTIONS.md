@@ -135,6 +135,13 @@ Q-012 | PREF (trust store on M2) | 2026-10-10
   answer on its other address .232, or block port 22). All five rows now show
   Achilles' live hardware read of 2026-10-10, labelled "register + Achilles
   read", never "measured".
+  UPDATE 2026-10-12T11:20Z (probe for the dashboard republish):
+  - ubu001-003 answer.
+  - Refused for lack of a stored host key: ubu004, ubu005, ubu006, ubu008
+    (it now answers on port 22) and ubu009 (new in the register).
+  - ubu007 (192.168.1.3) timed out on port 22.
+  - The question now covers ubu004-006, ubu008 and ubu009. The default is
+    unchanged: Pan adds no host keys.
   ANSWER:
 
 Q-013 | PREF (M2 memory; your machine) | 2026-10-10
