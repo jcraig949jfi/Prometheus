@@ -943,6 +943,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   latches are bloated (up to 95 instructions) and diverse. Test: seed gen 0 with 200 copies of an EVOLVED latch (e.g.
   a B78 stage-1 best) vs the hand latch; or penalise length (E1/E2 regimes) during the curriculum.
   WINDOW 6 TALLY (wall-clock): 12 procs 00:29 to ~01:30 then tapering to 1 proc at 03:08 ~ 20-22 of 48.
+- B79 staged + launched (prediction in docstring, committed before run): gen 0 = 200 copies of an EVOLVED plain-pulse
+  register latch -- COMPACT_HIGH (B69d CONC 6923, 16 instr, .120), LONG_HIGH (SOLO 6929, 32, .098), LONG_LOW (SOLO
+  6924, 46, .053); 6 seeds each, relocating pulse, G=300; B77 parity readout. Smoke test passed (output shown).
+  18 cells on 12 procs, est ~15 core-h -> window 6 ~37 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
