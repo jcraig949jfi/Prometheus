@@ -1,50 +1,50 @@
 {
-  "schema": "prometheus.work_state.v1",
-  "seat": "Argus",
-  "mwo_id": "MWO-0004",
-  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "updated_at_utc": "2026-10-12T11:06:00Z",
-  "state": "READY",
-  "branch": "argus/c018-t030",
-  "base_sha": "3f7408d62f773b3d47358180907cbc271b0c6719",
-  "head_sha": "(this commit; freeze f1e65a8ff)",
-  "worktree_path": "C:/Prometheus-worktrees/argus-c018-t030",
-  "model": "claude-opus-5-5",
-  "capability_class": "Q2",
-  "host": "harry1",
-  "instance": "harry1-6f7f55db",
-  "session_start_utc": "2026-10-12T09:40:00Z",
-  "current_objective": "Generation 4, campaign C-018: Aether evidence adapter + native spatial assay + preregistration + freeze (C-018-T030)",
-  "current_step": "C-018-T030 INTEGRATION_READY: PREREGISTRATION v1.0.0 + FREEZE f1e65a8ff (design 0e9519bd); Part I QUALIFIED (v2; v1 graded FAILED, recorded); falsifiability audit ok; 33 tests, 21/21 mutants; no confirmatory run (INCIDENT: 4 then-confirmatory units executed by a guard check, deleted unread, block burned, guard hardened); state main 1ae26b068 (+ receipt timestamp fix 0113bf1f0); seat READY, no packet",
-  "in_flight": [],
-  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "Palamedes integrates C-018-T030; Pallas Q3 challenge of the frozen assay; coordinator RELEASE.json before any confirmatory run",
-  "expected_next_artifact": "",
-  "threads": [
-    "phase3-rso"
-  ],
-  "campaigns": [
-    "C-018"
-  ],
-  "experiments": [],
-  "fabric_tasks": [],
-  "running": [],
-  "blocked_on": [],
-  "next_actions": [
-    "workgraph ready Argus after the next comms sync; T040 is Pallas's"
-  ],
-  "operator_decisions_required": [],
-  "latest_reports": [
-    "ops/campaigns/C-018/tasks/C-018-T030/attempts/A-001/RECEIPT.json",
-    "rso/aether/PREREGISTRATION.md",
-    "rso/aether/FREEZE.md",
-    "rso/aether/ONBOARDING.md",
-    "rso/aether/qual/QUALIFICATION.json",
-    "rso/aether/qual/FALSIFIABILITY_AUDIT.json"
-  ],
-  "last_push_sha": "0113bf1f0",
-  "last_push_utc": "2026-10-12T11:04:30Z",
-  "validation_launches_this_session": 0,
-  "state_worktree": "C:/Prometheus-worktrees/argus-ops (detached, state commits to main per DISTRIBUTED_WORK s9)",
-  "environment_note": "system Python 3.12.10 on harry1 (no pytest; unittest); scratch C:/Prometheus-worktrees/argus-scratch/c018t030"
+ "schema": "prometheus.work_state.v1",
+ "seat": "Argus",
+ "mwo_id": "MWO-0004",
+ "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+ "updated_at_utc": "2026-10-12T15:29:58Z",
+ "state": "READY",
+ "branch": "argus/c018-t041",
+ "base_sha": "4e3a34f02",
+ "head_sha": "1f2d2444f",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c018-t041",
+ "model": "claude-opus-5-5",
+ "capability_class": "Q2",
+ "host": "harry1",
+ "instance": "harry1-d48cbcfd",
+ "session_start_utc": "2026-10-12T14:43:00Z",
+ "current_objective": "Generation 4, C-018: the one repair round of the Aether assay (C-018-T041)",
+ "current_step": "C-018-T041 INTEGRATION_READY (lease taken over from Argus[harry1-4230902d], usage-limit stop): PREREGISTRATION v1.1.0 (b3cc39a56) + s10.6 per-unit tree replay; dev check (dev seeds only) ANCESTRY_UNEVALUABLE 4/16 RX, design unchanged 48+16; RE-FREEZE v1.1.0 design d9e8f885 (1f2d2444f); 59 tests, RED 56/56; ONBOARDING s7; receipt A-001; no confirmatory run",
+ "in_flight": [],
+ "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
+ "next_expected_milestone": "Palamedes integrates C-018-T041; C-018-T042 re-check (Pallas); coordinator decides s10.6 cost and RELEASE.json",
+ "expected_next_artifact": "",
+ "threads": [
+  "phase3-rso"
+ ],
+ "campaigns": [
+  "C-018"
+ ],
+ "experiments": [],
+ "fabric_tasks": [],
+ "running": [],
+ "blocked_on": [],
+ "next_actions": [
+  "workgraph ready Argus; take READY work or close"
+ ],
+ "operator_decisions_required": [],
+ "latest_reports": [
+  "ops/campaigns/C-018/tasks/C-018-T041/attempts/A-001/RECEIPT.json",
+  "rso/aether/PREREGISTRATION.md (s10-s12)",
+  "rso/aether/ONBOARDING.md (s7)",
+  "rso/aether/qual/DEV_ANALYSE_v1_1_0.json",
+  "rso/aether/qual/SYNTH_v1_1_0.json",
+  "rso/aether/qual/B1_TREE_REPLAY_v1_1_0.json"
+ ],
+ "last_push_sha": "0113bf1f0",
+ "last_push_utc": "2026-10-12T11:04:30Z",
+ "validation_launches_this_session": 0,
+ "state_worktree": "C:/Prometheus-worktrees/argus-ops (detached, state commits to main per DISTRIBUTED_WORK s9)",
+ "environment_note": "system Python 3.12.10 on harry1 (no pytest; unittest); scratch C:/tmp/argus41"
 }

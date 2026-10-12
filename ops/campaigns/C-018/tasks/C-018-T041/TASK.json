@@ -43,7 +43,7 @@
     "rso/aether/"
   ],
   "kind": "software",
-  "status": "CLAIMED",
+  "status": "INTEGRATION_READY",
   "history": [
     {
       "status": "PROPOSED",
@@ -62,6 +62,30 @@
       "by": "Argus[harry1-4230902d]",
       "at_utc": "2026-10-12T13:11:52Z",
       "note": "repair round v1.1.0; worktree C:/Prometheus-worktrees/argus-c018-t041 branch argus/c018-t041 base 4e3a34f02 | LEASE TAKEOVER 2026-10-12T14:45:40Z by Argus[harry1-d48cbcfd] (same-seat relaunch, resume wake bd8935a3d): previous holder stopped on a usage limit; continuing from b3cc39a56, same branch/worktree"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-d48cbcfd]",
+      "at_utc": "2026-10-12T15:29:28Z",
+      "note": "recorded at completion: RED rows for every new pin in rso/aether/red/red_rows_v1_1_0.jsonl (rows 21-50 + Pallas edits.json E1-E5 verbatim), 56/56 KILLED; the first instance never recorded states between CLAIMED and its usage-limit stop"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-d48cbcfd]",
+      "at_utc": "2026-10-12T15:29:28Z",
+      "note": "repair code b3cc39a56 (first instance) + s10.6 1f2d2444f (relaunch) on argus/c018-t041"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-d48cbcfd]",
+      "at_utc": "2026-10-12T15:29:28Z",
+      "note": "59 tests OK; RED 56/56; freeze check OK at 1f2d2444f; rso/completeness + rso/qualify 54 OK"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-d48cbcfd]",
+      "at_utc": "2026-10-12T15:29:28Z",
+      "note": "branch argus/c018-t041 1f2d2444f: PREREGISTRATION v1.1.0 (b3cc39a56) + s10.6 per-unit tree replay (8c27b262a); dev check under v1.1.0 (dev seeds only); RE-FREEZE FROZEN.json v1.1.0, design d9e8f885; ONBOARDING s7 incl. cost-of-detecting table; receipt A-001. No confirmatory run, no RELEASE.json."
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 s9 (one bounded repair round + short re-check)",

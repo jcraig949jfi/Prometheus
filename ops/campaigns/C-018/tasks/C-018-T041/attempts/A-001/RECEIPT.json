@@ -1,0 +1,112 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T041",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "created_at_utc": "2026-10-12T15:28:24Z",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-d48cbcfd",
+ "host": "harry1",
+ "branch": "argus/c018-t041",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c018-t041",
+ "start_sha": "4e3a34f02",
+ "end_sha": "1f2d2444f",
+ "dirty": false,
+ "commits": {
+  "claim_main_previous_instance": "8b04f5789",
+  "amendment_v1_1_0_and_repair_code_branch_previous_instance": "b3cc39a56",
+  "lease_takeover_main": "078b7551b",
+  "dev_check_and_s10_5_branch": "64dcfdb4a",
+  "s10_6_amendment_text_branch": "8c27b262a",
+  "s10_6_code_dev_evidence_refreeze_onboarding_branch": "1f2d2444f"
+ },
+ "files_changed": [
+  "rso/aether/PREREGISTRATION.md s10-s12 (v1.1.0 amendment b3cc39a56; s10.5 dev result 64dcfdb4a; s10.6 per-unit tree replay 8c27b262a text before code, result 1f2d2444f)",
+  "rso/aether/confirm.py (:176 freeze check first B6; :193 duplicate arrays + :144 snapshot binding every unit B5; :50 REPLAY_META + :154/:210 tree replay every unit B1; :229 refusal prints problems only P1; evidence block)",
+  "rso/aether/adapter.py (:66 nonancestor_window, :74 choose_nonancestor ftick(B) <= ftick(N) < min ftick(targets) B8/B4; warm_snapshot; :155 aether_unit)",
+  "rso/aether/evaluate.py (:104 tree_invariants + clamp fidelity B1; :86 NOT_INTERVENTIONAL before vacuity; :28 EVALUABLE_MIN 8, :182 need over evaluable, :250 ANCESTRY_UNEVALUABLE, :259 label B2; B3 confirmed-seed excess; B7 tick profiles)",
+  "rso/aether/freeze.py VERSION 1.1.0; FROZEN.json v1.1.0; manifests/confirm_design.manifest.json (d9e8f885)",
+  "rso/aether/tests/test_adapter.py (33 -> 59), rso/aether/red/{run_red.py,red_rows_v1_1_0.jsonl} (56/56)",
+  "rso/aether/{dev_analyse.py,dev_b1_tree.py}; rso/aether/qual/{DEV_CHECK.json,QUALIFICATION.json,DEV_ANALYSE_v1_1_0.json,SYNTH_v1_1_0.json,B1_TREE_REPLAY_v1_1_0.json,records/ (dev RX 0-15, V1 0-3 under adapter 1.1.0)}",
+  "rso/aether/ONBOARDING.md s7",
+  "ops/campaigns/C-018/tasks/C-018-T041/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}; roles/Argus/{WORK_STATE.json,journal/2026-10-12.md,comms/}"
+ ],
+ "evidence_added": [
+  "PREREGISTRATION v1.1.0 committed (b3cc39a56 13:32Z) before any v1.1.0 dev unit ran (unit mtimes 13:34-13:47Z) and before the re-freeze (1f2d2444f); s10.6 text (8c27b262a) before its code",
+  "dev check (dev seeds k 0..15 RX, 0..3 V1 only): qualified True 5/5; RX 8 NO_CUT / 4 INSUFFICIENT / 3 CONFIRMED / 1 NOT_INTERVENTIONAL -> ANCESTRY_UNEVALUABLE [evaluable 4 of 16]; V1 4 NO_CUT -> ANCESTRY_UNEVALUABLE; re-derived byte-identical by the relaunch",
+  "sizing (s10.4 rule): p = 11/40 = 0.275, P(Bin(48,0.275) < 8) = 0.0274 <= 0.10 -> design unchanged 48 RX + 16 V1, k = 0x2000+i; V1 not enlarged (decided pre-run; reported as ANCESTRY_UNEVALUABLE)",
+  "B8 window disclosed: moves Pallas's 0x3004 / 0x3005 NONSPECIFIC -> CONFIRMED (their second-ranked N, removed_N 0.00); 0x3003 stays NONSPECIFIC",
+  "real confirm.analyse on dev units: genuine passes (freeze check OK, 20/20 snapshot-bound, 20/20 tree-replayed, 3 full replays); forged copy refused on 3 independent lines with nothing verdict-bearing",
+  "Pallas's synth.py unchanged on v1.1.0 (SYNTH_v1_1_0.json): B1 naive / type-flip caught by the evaluator; B1 invariant-respecting caught only by the s10.6 tree replay (B1_TREE_REPLAY_v1_1_0.json); B2 a/b/c/e and B3 -> ANCESTRY_UNEVALUABLE",
+  "ONBOARDING s7.3: cost of detecting a false interpretation before the run, per survivor (v1.0.0 print vs v1.1.0 print, detect / repair cost); detection + repair ~2.3 core-h ~ 1.4x one confirmatory run"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -B -m unittest rso.aether.tests.test_adapter",
+   "result": "59 tests OK at 1f2d2444f (57 at b3cc39a56)"
+  },
+  {
+   "command": "python -B -m rso.aether.red.run_red rso/aether/red/red_rows_v1_1_0.jsonl",
+   "result": "baseline GREEN; 56/56 KILLED (51 builder rows incl. 4 new s10.6 rows + Pallas edits.json E1-E5 verbatim); sources restored, sha256-verified"
+  },
+  {
+   "command": "python -B -m rso.aether.qualify devcheck; qualify verdict",
+   "result": "DEV_CHECK.json / QUALIFICATION.json byte-identical to the first instance's; qualified True"
+  },
+  {
+   "command": "python -B -m rso.aether.dev_analyse <scratch> [--forged] [--shards ...]",
+   "result": "s10.1 genuine + forged re-run identical; s10.6 genuine (2 sub-designs) problems [] 20/20 tree-replayed; forged REFUSED_RECORD_INCONSISTENT"
+  },
+  {
+   "command": "python -B -m rso.aether.challenge.synth all; python -B -m rso.aether.dev_b1_tree",
+   "result": "SYNTH_v1_1_0.json; tamper refused by tree replay, genuine passes (rc 0)"
+  },
+  {
+   "command": "python -B -m rso.aether.confirm design --write; freeze write; freeze check",
+   "result": "design d9e8f885c8d43a237854359c7a8ef7394485bc69483600c43d220821314c8d47; 32 files; OK (also after commit)"
+  },
+  {
+   "command": "python -B -m rso.aether.confirm analyse (no runs present)",
+   "result": "freeze check passes, then INCOMPLETE; no RELEASE.json"
+  },
+  {
+   "command": "python -B -m unittest rso.completeness.tests.test_completeness rso.qualify.tests.test_falsifiable",
+   "result": "54 OK (shared components unchanged)"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "every new pin has a RED row: red_rows_v1_1_0.jsonl rows 21-50 + Pallas E1-E5 verbatim, 56/56 KILLED"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "s10.6 added by the relaunch after the dev check: a further pre-freeze amendment (no class / threshold / status change), text committed before code; raises confirmatory analysis cost ~0.3 core-h (total ~1.64 core-h, above the ~1.5 guide by ~0.14); coordinator may decline (one line) and the limit returns to PREREGISTRATION s12",
+  "the B8 window was chosen after reading Pallas's outcomes and moves 2 of her 3 native NONSPECIFIC units to CONFIRMED (disclosed s10.2); thresholds unchanged",
+  "NOT_INTERVENTIONAL is now decided before control vacuity (registered-order change, s10.2 item 4)",
+  "clamp arrays of units outside the 6-unit full-replay sample remain indirectly bound (s12)",
+  "B4 synthetic late-N: fixture recipe N still CONFIRMED; native selection excludes it",
+  "dev end-to-end s10.6 run split into two COMPLETE sub-designs (600 s foreground limit); pooled per-unit rows identical to the 20-unit run",
+  "the final freeze write after the s10.6 dev analysis changed only the PREREGISTRATION.md pin (s10.6 result text); the design pin d9e8f885 and every code pin are those the dev analysis's freeze check ran under"
+ ],
+ "unresolved": [
+  "C-018-T042 short independent re-check of v1.1.0 (directive s9); no second repair round",
+  "coordinator RELEASE.json and the confirmatory run (~1.64 core-h) -- later packets",
+  "registry proposals: REPORT s8 + ONBOARDING s7.5"
+ ],
+ "unblocks": [
+  "C-018-T042"
+ ],
+ "resources": {
+  "cpu_core_hours_estimate": 1.15,
+  "processes_max": 2,
+  "peak_working_set_mb": "< 1000 per process",
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ]
+ },
+ "cleanup": "scratch outside the repo at C:/tmp/argus41 (dev end-to-end sets, red re-run copies)",
+ "notes": "Two instances of the same seat: Argus[harry1-4230902d] (claim -> amendment -> dev check; stopped on a harness weekly usage limit ~13:56Z, not a code failure) and Argus[harry1-d48cbcfd] (lease takeover 078b7551b, verification, s10.6, re-freeze, record), both claude-opus-5-5 per comms boot. Read-only on Aether/ and roles/Aether/; nothing on M2; no confirmatory seed; 0 operator interventions. Headless; foreground only; <= 2 concurrent processes."
+}
