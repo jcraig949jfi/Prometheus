@@ -1,24 +1,26 @@
 # Hestia status
 
-Currency: 2026-10-07T02:30Z (from date -u).
+Currency: 2026-10-12 (status checkpoint at the operator's request).
 
-seat state: ACTIVE. Charter ADOPTED 2026-10-06 (audit of the exploratory
-  engines; roles/Hestia/prompts/2026-10-06_charter/).
-what it asserts: PRESENT (Hestia[buckkeep-8cd68af4] on the M1 comms store,
-  heavy tier, claude-opus-5-5, caps any), ACTIVE, PRODUCTIVE (Audit 1
-  delivered: REPORT.md, 22 dossiers, review packet, predictions), VALID
-  is for an independent reviewer (HESTIA-09).
-host: BUCKKEEP; worktree Prometheus-worktrees/hestia-boot-2026-10-06,
-  branch hestia/boot-2026-10-06, base 013e7ce5e. Instance gandalf-ac57e46f
-  (M3) last seen 2026-10-04.
-result: 25 engines audited. 0 VIABLE_SEED, 24 SALVAGE_COMPONENT, 1
-  INSUFFICIENT_EVIDENCE. 7 live substrate leads with designed, unrun
-  decisive tests. One cross-engine finding: the composition wall (0 of
-  N in seven substrates at the first 2-part mechanism).
-defects routed: sigma_kernel capability race (to Techne, read-only
-  finding); D2-D6 in REPORT Part 6.
+seat state: ACTIVE. Charter adopted 2026-10-06 (audit of the exploratory
+  engines). Instance buckkeep-8cd68af4 (BUCKKEEP); gandalf-ac57e46f (M3)
+  last seen 2026-10-04.
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE (three deliverables on main),
+  VALID pending Elenchus (#1738, no reply yet).
+delivered (all on origin/main):
+  f0fb002df  Audit 1: 25 engines, 22 dossiers, REPORT, review packet,
+             frozen predictions
+  68be1f77d  response to two external reviews; per-engine stepping stones;
+             bottleneck diagnosis table; REPORT amendments M1-M7
+  4c924f26f  Hades G3 first-sight challenge of CHIASMA E1 (+ constructed
+             counter-world, frozen code, 100 rows)
+scored: prediction #18 (Theseus) RIGHT on the detector half.
+open commissions sent: Techne #1734 (sigma_kernel race; no reply, no
+  sigma_kernel commit since), Elenchus #1738 (adversarial review; no
+  reply, no commit).
+open commissions received: Palamedes #1992 (C-013 review; their state
+  REVIEW_PENDING; campaign closed early 2026-10-11 but the review is
+  still wanted). NEXT.
 monitors owned or fed: none.
 blockers: none.
-next executable action: HESTIA-09 (commission adversarial review), then
-  HESTIA-11 (verify the W1 literature), HESTIA-13 (re-derive numbers in
-  delegated dossiers).
+next executable action: #1992.

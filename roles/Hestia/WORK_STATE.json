@@ -3,7 +3,7 @@
   "seat": "Hestia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-07T02:30:00Z",
+  "updated_at_utc": "2026-10-12T00:00:00Z",
   "state": "ACTIVE",
   "instance": "buckkeep-8cd68af4 (BUCKKEEP); gandalf-ac57e46f (M3) last seen 2026-10-04",
   "branch": "hestia/boot-2026-10-06",
@@ -12,15 +12,18 @@
   "model": "claude-opus-5-5",
   "host": "BUCKKEEP",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md). Charter: operator 2026-10-06, roles/Hestia/prompts/2026-10-06_charter/ (audit of the exploratory engines).",
-  "current_objective": "Audit 1 follow-through: independent review, literature verification, number re-derivation, defect routing",
-  "current_step": "Audit 1 delivered (REPORT.md, 22 dossiers, review packet, frozen predictions)",
+  "current_objective": "Review commissions on Audit 1 findings: Hades G3 delivered (4c924f26f); Palamedes C-013 review (#1992) next",
+  "current_step": "status checkpoint requested by the operator 2026-10-12; seat records refreshed",
   "in_flight": [],
-  "progress": "25/25 engines audited; 0 VIABLE_SEED, 24 SALVAGE_COMPONENT, 1 INSUFFICIENT_EVIDENCE",
+  "progress": "Audit 1 (25 engines) delivered f0fb002df; response to external reviews 68be1f77d; Hades G3 challenge 4c924f26f; prediction #18 scored",
   "finish_condition": "Audit 1 independently reviewed and its CLAIMED numbers re-tiered; decisive tests tracked",
   "next_expected_milestone": "Elenchus review commissioned; VERIFICATION.md",
   "expected_next_artifact": "roles/Hestia/audit/2026-10-06/VERIFICATION.md",
   "threads": [
-    "Audit 1 (2026-10-06)"
+    "Audit 1 (2026-10-06)",
+    "External-review response (2026-10-08)",
+    "Hades G3 (2026-10-10)",
+    "Palamedes C-013 review (#1992, open)"
   ],
   "campaigns": [],
   "experiments": [],
@@ -30,21 +33,23 @@
   "blocked_on": [],
   "resource_status": "none held; read-only audit; no engine run",
   "last_receipt": "roles/Hestia/journal/2026-10-07.md",
-  "last_push_sha": "(this commit; see git log -1 -- roles/Hestia/WORK_STATE.json)",
-  "last_push_utc": "2026-10-07",
+  "last_push_sha": "4c924f26f (G3 challenge); this commit supersedes",
+  "last_push_utc": "2026-10-10",
   "session_started_utc": "2026-10-06 (BUCKKEEP session 8cd68af4; exact start not captured)",
-  "next": "HESTIA-09, HESTIA-11, HESTIA-13 (BACKLOG_H0H5.md)",
+  "next": "Palamedes #1992 (C-013 review: D1 diagnosis, Foundry status, duplication, roadmap fidelity to M1-M7); then HESTIA-11, HESTIA-13",
   "next_actions": [
-    "HESTIA-09 commission adversarial review",
+    "#1992 Palamedes C-013 review (REVIEW_PENDING on their side; campaign closed early 2026-10-11 but the review is still wanted)",
     "HESTIA-11 verify W1 literature",
     "HESTIA-13 re-derive delegated dossier numbers",
-    "HESTIA-12/14 routing"
+    "HESTIA-17 decisive-tests table"
   ],
   "operator_decisions_required": [
     "NEW (XL, HESTIA-25): are the neural/LLM-evolution engines (apollo, aethon, ignis, rhea) in audit scope? Default: out, per the charter's 'distinct from ... ANNs and LLMs'."
   ],
   "latest_reports": [
     "roles/Hestia/audit/2026-10-06/REPORT.md",
-    "roles/Hestia/audit/2026-10-06/REVIEW_PACKET_AUDIT1_2026-10-07.txt"
+    "roles/Hestia/audit/2026-10-06/RESPONSE_TO_EXTERNAL_REVIEWS_2026-10-08.md",
+    "roles/Hestia/reviews/2026-10-10_HADES_G3_CHIASMA_E1.md",
+    "roles/Hestia/STATUS_REPORT_2026-10-12.md"
   ]
 }
