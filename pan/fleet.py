@@ -29,6 +29,9 @@ DOC = "infra/FLEET_HOSTS.md"
 HW_DOC = "infra/ubuntu_nodes/ubuntu_server_machines.md"     # Achilles' "Fleet hardware" table, read live on its date
 CENSUS = "docs/fleet/fleet_state.json"
 LINUX_USER = "jcraig"                 # FLEET_HOSTS.md, "Linux nodes": user `jcraig` on every node
+# Nodes the fleet owner asked Pan not to probe, by name and with the message that asked (lifted when Achilles says so)
+PROBE_EXCLUDED = {"UBU007": "HOLD: bad RAM (Achilles, comms #2215, 2026-10-12)",
+                  "UBU009": "SOAK: freeze investigation (Achilles, comms #2215, 2026-10-12)"}
 NOT_SEATS = {"base-role", "generic-worker-role", "rso-builder-role", "template"}
 BUCKETS = ((24, "active"), (24 * 7, "week"), (24 * 30, "month"))
 
@@ -353,12 +356,25 @@ def _local_probe():
     return f, None
 
 
+def probe_targets(machines, out=print):
+    """{host: address} for every Linux node with an address, minus PROBE_EXCLUDED (each skip is reported)."""
+    targets = {}
+    for m in machines:
+        if m["family"] != "Linux" or not m["ip"]:
+            continue
+        if m["host"] in PROBE_EXCLUDED:
+            out("{:<16} skip   not probed: {}".format(m["host"], PROBE_EXCLUDED[m["host"]]))
+            continue
+        targets[m["host"]] = m["ip"]
+    return targets
+
+
 def probe(out=print, addresses=None):
     """Probe every Linux node in the register (ssh, read-only) and the local host if it is in the register; one
     pan.host_probe row per attempt, failures included. `addresses` ({host: address}) overrides the targets."""
     from . import db
     machines = full_register()
-    targets = addresses or {m["host"]: m["ip"] for m in machines if m["family"] == "Linux" and m["ip"]}
+    targets = addresses or probe_targets(machines, out)
     run_id = "fleet-probe-{}-{}".format(dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), host().lower())
     results = {}
     for h, addr in sorted(targets.items()):

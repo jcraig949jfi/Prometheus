@@ -147,3 +147,18 @@ def test_a_wrong_hardware_row_still_shows_as_a_measured_disagreement():
     reg = {r["host"]: r for r in fleet.overlay(fleet.register(DOC), hw, date)}["UBU005"]
     miss = fleet.merge(reg, fleet.parse_kv(KV), dt.datetime.now(dt.timezone.utc), "ssh")["mismatch"]
     assert "99 threads, measured 8" in miss
+
+
+def test_probe_targets_skip_owner_excluded_nodes():
+    """POSITIVE: an ordinary Linux node with an address is probed. NEGATIVE: an excluded node is skipped and the skip is
+    reported with its reason; a node without an address and a non-Linux host are not targets."""
+    from pan import fleet
+    ms = [dict(host="UBU001", family="Linux", ip="192.168.1.218"),
+          dict(host="UBU007", family="Linux", ip="192.168.1.3"),
+          dict(host="UBU009", family="Linux", ip="192.168.1.230"),
+          dict(host="UBUX", family="Linux", ip=None),
+          dict(host="SPECTREX5", family="Windows", ip="192.168.1.10")]
+    said = []
+    t = fleet.probe_targets(ms, out=said.append)
+    assert t == {"UBU001": "192.168.1.218"}
+    assert len(said) == 2 and all("#2215" in x for x in said)
