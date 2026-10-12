@@ -142,7 +142,7 @@ Q-012 | PREF (trust store on M2) | 2026-10-10
   - ubu007 (192.168.1.3) timed out on port 22.
   - The question now covers ubu004-006, ubu008 and ubu009. The default is
     unchanged: Pan adds no host keys.
-  UPDATE 2026-10-12T13:2xZ (Achilles, comms #2215):
+  UPDATE 2026-10-12T13:22:09Z (Achilles, comms #2215):
   - A vetted source now exists at origin/main:infra/ubuntu_nodes/
     known_hosts.fleet (commit 8b2c14270). It holds the ed25519 host keys for
     ubu001-006, 008 and 009, both addresses each.
