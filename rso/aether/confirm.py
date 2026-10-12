@@ -27,7 +27,10 @@ EXPERIMENT = "C-018-T030 Aether native ancestry-vs-content v1.0.0"
 ARMS = ("RX", "V1")                     # RX primary; V1 the shallow-tree comparison
 N_CONFIRM = {"RX": 48, "V1": 16}        # sized from measured throughput (PREREGISTRATION s5)
 SHARD = {"RX": 12, "V1": 8}             # seeds per shard
-K0 = 0x1000                             # confirmatory seed index k = K0 + i; development k in adapter.DEV_K
+K0 = 0x2000                             # confirmatory seed index k = K0 + i; development k in adapter.DEV_K
+BURNED = range(0x1000, 0x1100)          # INCIDENT 2026-10-12 (PREREGISTRATION s5): 0x1000..0x1003 executed by mistake, deleted
+                                        # unread; the whole block is burned and never used as confirmatory
+RELEASE_PATH = os.path.join(HERE, "RELEASE.json")   # written by the coordinator ONLY after the Q3 challenge (directive s9)
 DESIGN_PATH = os.path.join(HERE, "manifests", "confirm_design.manifest.json")
 RUNS = os.path.join(HERE, "runs", "CONFIRM")
 SOURCES = ["rso/aether/adapter.py", "rso/aether/evaluate.py", "rso/aether/confirm.py", "rso/aether/demand/fixtures.py",
@@ -42,6 +45,20 @@ def pinned_design_sha256():
     """The DESIGN manifest sha256 frozen in FROZEN.json (kept out of this file: this file is one of the manifest's sources)."""
     from rso.aether import freeze
     return freeze.load()["design_manifest_sha256"] if os.path.exists(freeze.PATH) else None
+
+
+def release_problem(ref):
+    """A flag is not a release: the coordinator commits RELEASE.json {released_by, release_ref, design_manifest_sha256} after
+    the challenge, and the run needs `--cleared-by <release_ref>` to match it and the frozen design."""
+    if not os.path.exists(RELEASE_PATH):
+        return "no RELEASE.json (the coordinator writes it after the Q3 challenge)"
+    with open(RELEASE_PATH, encoding="utf-8") as f:
+        rel = json.load(f)
+    if not rel.get("released_by") or rel.get("release_ref") != ref:
+        return "RELEASE.json does not name release_ref %r" % ref
+    if rel.get("design_manifest_sha256") != pinned_design_sha256():
+        return "RELEASE.json releases a different design manifest"
+    return None
 
 
 def seeds(law):
@@ -165,8 +182,13 @@ def main(argv):
         print(m["manifest_sha256"])
         return 0
     if cmd == "run":
-        if "--cleared-by" not in argv or len(argv) < 2:
+        ref = argv[argv.index("--cleared-by") + 1] if "--cleared-by" in argv[:-1] else None
+        if ref is None or len(argv) < 2:
             print("REFUSED: a confirmatory run needs --cleared-by <coordinator release> (no confirmatory run in C-018-T030)")
+            return 2
+        why = release_problem(ref)
+        if why:
+            print("REFUSED: %s" % why)
             return 2
         from rso.aether import freeze
         bad = freeze.mismatches()

@@ -265,6 +265,7 @@ class Seeds(unittest.TestCase):
     def test_disjoint(self):
         conf = {k for law in C.ARMS for k in C.seeds(law)}
         self.assertFalse(conf & set(A.DEV_K))
+        self.assertFalse(conf & set(C.BURNED))
         bases = list(A.SEEDS.values())
         for b in bases:                                 # Cadmus 0xC18A..0xC18E and Aether 0xE2010000 / 0xE2011000 / 0x1A9F
             self.assertNotIn(b >> 16, (0xC18A, 0xC18B, 0xC18C, 0xC18D, 0xC18E, 0xE201))
@@ -310,6 +311,7 @@ class Completeness(unittest.TestCase):
 
     def test_run_guard(self):
         self.assertEqual(C.main(["run", "RX.0"]), 2)                     # no --cleared-by: refused before any execution
+        self.assertEqual(C.main(["run", "RX.0", "--cleared-by", "not-a-release"]), 2)   # a flag alone is not a release
 
 
 class FixtureEndToEnd(unittest.TestCase):
