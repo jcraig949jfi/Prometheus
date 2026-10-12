@@ -237,6 +237,21 @@ Q-017 | SECURITY (outside Pan's authority) | 2026-10-11
   supplied. That is expected; do not delay rotation for it.
   ANSWER:
 
+Q-018 | PERMISSION (LAN service) | 2026-10-12
+  Host the Data Map dashboard locally on an internal website, in addition to
+  the claude.ai copy? Pan's proposed shape:
+  - static files only: HTML plus the same JSON datasets, d3 vendored;
+  - rebuilt by `pan refresh`;
+  - served read-only by a tiny static server bound to the LAN address, with
+    the firewall limited to 192.168.1.0/24;
+  - no database connection in the web process;
+  - kept running by a scheduled task (the same decision as Q-016).
+  The Sagacity directive excluded new network-facing services, so this needs
+  your word, plus the host and port.
+  DEFAULT meanwhile: no local site. The claude.ai dashboard is republished
+  by Pan's loop.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09
