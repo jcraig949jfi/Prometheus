@@ -66,8 +66,8 @@ runs only when a client starts it. Q-016 asks whether to change that.
 | Access classes (migration 014) + RLS proof | APPLIED (Pan's own schema) | `pan access controls` 12/12; RLS proof in a throwaway DB |
 | NEGATIVE_SPACE_EVALUATION.md (P2) | instrument PROMOTED; protocol frozen + A1-A4; NOT RUN | NEGSPACE_CALIBRATION_20261011T101839Z; review packet PAN43 |
 | MCP_INTERFACE_PROTOTYPE.md (P3) | BUILT, controlled, registered nowhere | MCP_20261011T104148Z 15/15; MCP_SDK_20261011T104316Z PASS; review packet PAN44 |
-| CONTINUITY_HANDOFF.md | this file | -- |
-| Checkpoint packet | due 2026-10-12T10:40Z | -- |
+| CONTINUITY_HANDOFF.md | this file; checkpoint update 2026-10-12T10:42Z | -- |
+| Checkpoint packet | DELIVERED 2026-10-12T10:42Z | reports/CHECKPOINT_PACKET_2026-10-12_SAGACITY.txt |
 
 ## 3. What remains unimplemented (and who it belongs to)
 
@@ -108,6 +108,14 @@ with these last syncs:
 The offers in #2113, #2126, #2129 and #2130 are therefore STALLED, not declined. Each waits for
 the operator to wake or reassign its owner. A successor should re-check `python -m comms who`
 before assuming any reply.
+
+**Checkpoint update (2026-10-12T10:42Z).**
+- Since the first version of this file:
+  - the repository was found to be PUBLIC (Q-017 escalated, #2161);
+  - the loop had a 20:26-01:50Z gap (I7 in the packet);
+  - the operator added three notes, captured in roles/Pan/prompts/2026-10-12_*. The COI-01 dispatch
+    plan was not acted on, per the operator, and keeps Pan on this work.
+- Nothing in section 1 changed.
 
 ## 4. Invariants a successor must not break
 

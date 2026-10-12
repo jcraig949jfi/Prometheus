@@ -1,0 +1,323 @@
++==============================================================================+
+| CHECKPOINT PACKET -- PAN: SAGACITY LEARNING FOUNDATION (DIRECTIVE 2026-10-11)|
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-12T10:40Z checkpoint (directive recorded 2026-10-11       |
+|          09:56:44Z; work through 2026-10-12T10:42Z; published 10:42Z)       |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  all five deliverables delivered; P2 instrument PROMOTED (no         |
+|          generation run, by directive); P3 prototype built, registered       |
+|          nowhere; one security finding outside Pan's authority (Q-017)       |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+The directive asked for a foundation, not a platform:
+  (a) a foundation map, P1;
+  (b) a preregistered negative-space evaluation, P2;
+  (c) a small read-only MCP prototype, only after (a) and (b), P3;
+  (d) a continuity handoff;
+  (e) this checkpoint packet.
+It also asked for a recommended standing maintenance owner. Limits: no
+production authorization change, no Atlas population, no network service, no
+writes, no sealed data through MCP, and no generation campaign.
+
+Verdict, deliverable by deliverable:
+  P1  DONE.
+      - The program has an information plane but almost no knowledge plane.
+        Pan holds 421,366 artifacts and 408,916 chunks; Atlas holds 41,784
+        facts. Against that: 10 propositions, 7 evidence links, 0 CONTRADICTS
+        edges, 1 EXPLAINS edge.
+      - Two Atlas schema proposals were verified in a throwaway database
+        (15/15) and NOT applied.
+      - Access classes were applied in Pan's own schema (now 20/20 controls).
+  P2  DONE as far as the directive allows.
+      - The behavioral distinctness instrument passed its frozen gate:
+        known-answer 1.000 vs baseline 0.500, symbolic 0.867 vs 0.442.
+      - One clause passes exactly at its floor.
+      - Four prereg amendments came from a plumbing smoke, two of them real
+        defects.
+      - No generation run.
+  P3  BUILT.
+      - Stdio, 4 tools wrapping tested Pan operations, provenance on every
+        record.
+      - 15/15 controls; the official MCP client connects.
+      - Enforcement is application-level: the program connects as superuser
+        (Q-014).
+  (d) CONTINUITY_HANDOFF.md. Standing owner: a Pan seat in maintenance mode,
+      with Mnemosyne as database co-owner and Aporia as watcher.
+  (e) This packet.
+
+Also found and fixed in the window. Two of these are security-relevant:
+  - PAN-47. Credential-shaped CONTENT inside ordinarily named committed files
+    was indexed and searchable. 132 files were purged (paths kept). Rotation
+    is outside Pan's authority (Q-017).
+  - `pan refresh` did not apply access rules. A new sealed file would have
+    been visible to generators until a manual run. Now fixed and drift-checked.
+
+-----
+1. DELIVERABLES AND RECEIPTS
+-----
+  deliverable                    state          receipt / evidence
+  SAGACITY_FOUNDATION_MAP.md     done           measured populations; gaps G1-G7
+  schema proposals (Atlas)       verified,      PROPOSALS_20261011T100108Z 15/15
+                                 not applied    (throwaway db, dropped)
+  access classes (mig. 014+015)  applied (pan)  ACCESS_20261011T110930Z 20/20
+  NEGATIVE_SPACE_EVALUATION.md   instrument     NEGSPACE_CALIBRATION_
+                                                20261011T101839Z
+                                 PROMOTED       PROMOTED; prereg A1-A4
+  MCP_INTERFACE_PROTOTYPE.md     built          MCP_20261011T115620Z 15/15;
+                                                MCP_SDK_20261011T104316Z PASS
+  CONTINUITY_HANDOFF.md          written        owner, 9 maintenance items,
+                                                invariants
+  PAN46 design note              no cache built precommitted trigger
+  review packets                 PAN43, PAN44 (with addendum)
+
+-----
+2. P1 -- THE FOUNDATION MAP (what exists, measured)
+-----
+Information plane:
+  - Pan: 421,366 artifacts (git 77,721; fs 341,502; comms 2,109; Moonshot
+    34); 408,916 chunks with full-text and HNSW vector indexes; 62,575
+    document vectors; ~46,800 citation links. These are the P1 measurements.
+    At the checkpoint (2026-10-12T09:03Z): 421,727 artifacts, 408,335
+    chunks, 66,508 document vectors, 47,356 links. The index is current at
+    36b967d42.
+  - Atlas: 41,784 facts, each with an evidence pointer; 13,995 sources; 2,270
+    experiments; 600 conclusions; 221 defects; 5,693 edges.
+Knowledge plane:
+  - 10 propositions (6 of kind distinction); 7 proposition-evidence links;
+    7 blind spots.
+  - Edges: CONTRADICTS 0, EXPLAINS 1.
+  - primitive_use: 4,249 rows, all PRESENT. Absence is never recorded.
+Gaps:
+  G1  abstraction rate
+  G2  no contradiction structure
+  G3  no equivalence-with-witness
+  G4  absence never recorded
+  G5  negative results under-harvested
+  G6  access unenforced: every session connects as superuser; 0 tables with
+      RLS
+  G7  no distinctness instrument (P2 addresses this)
+Proposals (Atlas and Hades own them; Pan only proposed):
+  - atlas.distinction_detail;
+  - atlas.boundary, with members, evidence and six kinds;
+  - a cross-engine assumption-failure recurrence view.
+  Verified 15/15 in a throwaway database. Not applied.
+Access design (applied in Pan's own schema only):
+  - Classes: PROGRAM, BURNED_HOLDOUT, EMBARGOED_OUTCOME, PRIVILEGED_CRITIQUE.
+    SEALED never enters Pan.
+  - Derived data inherits by join; declassification is logged.
+  - RLS was proven in a throwaway database with an existing non-superuser
+    role.
+
+-----
+3. P2 -- NEGATIVE-SPACE EVALUATION (see REVIEW_PACKET_2026-10-11_PAN43)
+-----
+  - Instrument: behavioral differential testing on a frozen intervention
+    suite, with a coverage gate that answers UNKNOWN where the suite cannot
+    decide.
+  - Known-answer results (26 pairs): 1.000 in every category, vs
+    always_equivalent 0.500.
+  - Symbolic results (120 analytic pairs):
+    - macro 0.867 vs text 0.442;
+    - false-DISTINCT 0;
+    - EQ->EQ 0.600, exactly at its analytic floor.
+  - Text, AST and embedding similarity all score below a constant on the
+    known-answer set.
+  - Amendments from the plumbing smoke:
+    - A1: UNKNOWN had counted as novelty (a defect).
+    - A2: floor rule. 0/12 LLM proposals met the contract; 9/12 were the
+      off-by-one.
+    - A3: behavioral classes are finer than failure families. Claim unit =
+      blind family adjudication by Hades and Harmonia.
+    - A4: arm D's counterfeit control was vacuous by construction (a
+      defect).
+  - Lean: do not run the toy at full budget. Port it to Cosmos, with a
+    held-out calibration set from Nyx or Techne.
+
+-----
+4. P3 -- READ-ONLY MCP PROTOTYPE (see REVIEW_PACKET_2026-10-11_PAN44)
+-----
+  - Tools: pan_search, pan_pivot, pan_refs, atlas_lookup. All are thin
+    wrappers; pivot and refs were split from the CLI with byte-identical
+    output.
+  - Enforcement:
+    - clearance fixed at launch (generator or evaluator);
+    - closed schemas;
+    - access classes;
+    - a hidden path answers like a missing one;
+    - REFUSE rules (path and content);
+    - Atlas inheritance by mention;
+    - a server-side read-only session.
+  - Controls (15/15) include:
+    - burned holdout via pivot: evaluator sees it, generator does not;
+    - burned holdout via search: 16 queries over 4 files, 12 non-vacuous at
+      evaluator, 0 generator hits;
+    - escalation by argument, launch and prompt text all refused;
+    - SQL text treated as literal;
+    - no listening socket;
+    - writes refused.
+  - Limits:
+    - superuser underneath (Q-014);
+    - Atlas inheritance is a heuristic;
+    - not constant-time;
+    - the launching user chooses the clearance.
+
+-----
+5. PAN-45/46/47
+-----
+PAN-45 continuity:
+  - Standing owner: a Pan seat in maintenance mode, Mnemosyne as database
+    co-owner, Aporia as watcher.
+  - Maintenance: refresh (CPU, 4 threads, no lease), document vectors on the
+    GPU under a lease, access controls, Atlas snapshot, daily intake.
+  - Unattended maintenance is Q-016 (default: session-driven).
+PAN-46 cache and Fabric:
+  - No cache. No measured need or demand; Redis on M1 is unreachable from
+    M2; a cache is a second copy needing access enforcement.
+  - Trigger precommitted: at least 2 consumers reading at least 20/h over 3
+    days, or a latency budget Postgres misses.
+  - Fabric v0.2 is frozen. The A2A route is a zero-code proposal
+    (node-declared pan.search / pan.pivot via the existing script executor)
+    in fabric/BACKLOG_AFTER_FREEZE.md.
+PAN-47 credential-shaped content (security):
+  - Path-only REFUSE rules missed literal secrets inside committed files.
+  - The likeliest real ones:
+    - an sk- provider-key shape in three apollo/configs/config_v2d*.yaml
+      files and apollo/scripts/evolution_monitor.py;
+    - a non-empty db_password in evidence_wiki/config.json.
+  - Migration 015 adds a content rule. 132 artifacts were refused whole:
+    1,916 chunks, 132 document vectors, 105 links and the titles purged.
+  - The chunker refuses such files before indexing.
+  - Values were never selected or printed.
+  - Owners and the operator were told (comms #2129). Rotation and history
+    rewrite: Q-017.
+  - ESCALATED 2026-10-11T17:1xZ: the repository (github.com/jcraig949jfi/
+    Prometheus) is PUBLIC (anonymous GitHub API: visibility public).
+    - These values have been public since they were committed: the apollo
+      configs since 2026-04-04, evidence_wiki/config.json since 2026-09-01,
+      and a committed azure.env (never opened by Pan) since 2026-09-23.
+    - Aphrodite and the operator were told in #2161.
+
+-----
+6. INCIDENTS (failure shapes, receipt times)
+-----
+  I1  `pan atlas snapshot` raised AttributeError on main from c22bf02f4
+      (10:06:48Z) to 0e3d14dcd (11:10:15Z). My parser change moved --force
+      onto another subparser. No snapshot was due. Fixed with build_parser()
+      and a test that checks every dispatched attribute.
+  I2  Refresh never applied access rules. Latent from migration 014
+      (c22bf02f4, 10:06:48Z) to 0e3d14dcd (11:10:15Z). No new sealed file
+      arrived in the window (drift measured 0).
+      Fixed, with a drift check and a rolled-back non-vacuity twin.
+  I3  Unleased CPU (MWO-0004 R2).
+      - A CPU refresh held about 20 cores from roughly 10:49Z.
+      - Lease taken late at 10:56:41Z; job stopped at 11:02:16Z.
+      - Upper bound about 4.4 core-hours, up to about 2.6 of them unleased.
+      - The GPU redo under a lease took 116.6 s.
+      - CPU threads are now capped at 4 by default.
+  I4  Credential-shaped content was servable through pan_search from
+      10:45:52Z to about 11:06Z (PAN-47). No MCP client was registered.
+  I5  Three journal times and two packet headers were written by estimate,
+      then corrected from commit and comms receipts.
+  I6  The Bash heredoc halved backslashes twice (pivot print, a SQL regex).
+      Both were caught before commit, by a CLI diff and a syntax check.
+  I7  Loop gap.
+      - The last tick ran at 2026-10-11T20:23:38Z.
+      - The scheduled wakeups did not run until the operator asked "Alive?"
+        at 01:50Z. M2 did not reboot; the cause is unknown.
+      - Status report 11 was about 3 h 50 min late; no other duty fell due.
+      - The gap is recorded in journal/2026-10-12.md.
+      - The loop has ticked hourly since.
+  I8  One claim in a reading was wrong: that the atlas.boundary proposal had
+      no supersession. Checking the SQL caught it before commit.
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES:
+  - A measured map of what the record holds, and where knowledge is missing.
+  - A calibrated, conservative equivalence instrument for a toy domain.
+  - A frozen, amended protocol able to reject each hypothesis.
+  - A read-only retrieval interface with provenance and tested exclusion.
+  - Access enforcement in Pan's pipeline, including content refusal.
+DOES NOT:
+  - Answer whether negative knowledge redirects search. There is no
+    generation run, and the toy has a low ceiling.
+  - Show that the instrument generalizes (same designer, EQ clause at its
+    floor).
+  - Provide database least privilege (superuser; no live RLS).
+  - Rotate any leaked secret, or prove the 132 refused files all hold real
+    secrets. Many may be examples.
+
+-----
+8. DECISIONS FOR THE OPERATOR (defaults in force meanwhile)
+-----
+  Q-014  least-privilege login role + RLS for Pan/MCP (default: no)
+  Q-015  MCP registration for seats (default: local opt-in)
+  Q-016  unattended nightly maintenance task on M2 (default: session-driven)
+  Q-017  rotate the credential-shaped secrets and remove them from files and
+         history (default: Pan purges its index only). As of 09:01Z: no
+         answer, and the files are unchanged on origin.
+  Captured, not acted on (operator, 2026-10-12, roles/Pan/prompts/):
+    - 2026-10-12_limits_of_mind_note/: epistemic agency; limited
+      self-access.
+    - 2026-10-12_cognitive_opacity_independence_note/: SELF-01, plus the
+      COI-01 dispatch plan as an extension. Seven Wave-1 seats; Pan is
+      supporting and not redirected. Pan dispatched nothing, per the
+      instruction.
+  Standing owner (handoff s0): Pan maintenance seat + Mnemosyne + Aporia
+  STALLED handoffs:
+    - Every owning seat is offline (comms who 2026-10-11T13:32Z). Last
+      syncs: Apollo and Charon 09-11, Mnemosyne 09-18, Harmonia 10-01,
+      Aporia 10-06, Hades and Atlas 10-10.
+    - Q-017 rotation and the P2 offers (A3 adjudication, held-out set)
+      wait for the operator to wake or reassign owners.
+    - Mnemosyne, recommended as DB co-owner, has itself been offline
+      since 09-18.
+  Pan's lean:
+    - Q-017 first: real keys may be live.
+    - Q-014 before any shared MCP use.
+    - Port P2 to Cosmos rather than run the toy.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  Q1  P1 calls the knowledge plane "embryonic" on counts: 10 propositions,
+      0 CONTRADICTS. Is count the right measure, or are the 600 verbatim
+      conclusions already a knowledge plane that Pan under-reads?
+  Q2  P2 promoted an instrument the same seat designed and tested, with one
+      clause at its floor. Should "PROMOTED" wait for the other seat's
+      held-out set?
+  Q3  Pan found two of its own gaps (I2, PAN-47) only by accident: a search
+      snippet and a handoff inventory. What systematic audit would have found
+      them first?
+  Q4  Is a Pan maintenance seat worth its cost, against folding maintenance
+      into Mnemosyne?
+
+-----
+10. ARTIFACTS (worktree D:\Prometheus-worktrees\pan-base-role-adopt-2026-10-09)
+-----
+  directive: roles/Pan/prompts/2026-10-11_sagacity_foundation
+  docs: roles/Pan/docs/sagacity/{SAGACITY_FOUNDATION_MAP, NEGATIVE_SPACE_
+    EVALUATION, MCP_INTERFACE_PROTOTYPE, CONTINUITY_HANDOFF,
+    PAN46_CACHE_AND_FABRIC_DESIGN}.md; proposals/*.sql
+  packets: roles/Pan/reports/REVIEW_PACKET_2026-10-11_{PAN43,PAN44}.txt
+  receipts: roles/Pan/reports/controls/{PROPOSALS_20261011T100108Z,
+    ACCESS_20261011T110930Z, NEGSPACE_CALIBRATION_20261011T101839Z,
+    NEGSPACE_SMOKE_*, MCP_20261011T115620Z, MCP_SDK_20261011T104316Z}.json
+  code: pan/{access,mcpserve,atlas_snap,pivot,links,refresh,chunker,embed}.py;
+    pan/negspace/; pan/migrations/014_access.sql, 015_content_refuse.sql
+  commits: c22bf02f4 (P1), ceda18a2e + 4289d2581 (P2), 1fe9c7c64 (P3),
+    0e3d14dcd (PAN-45/47), 6446907ef (PAN-46), 99c3a6d83 (public-repo
+    escalation), 3a39a4e52 / dd19bb902 / d3c399a01 (captures), and the commit
+    that adds this packet
+  tests: Pan suite 95 passed (2026-10-12T09:03Z)
+  questions: roles/Pan/QUESTIONS.md Q-014..Q-017
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "this foundation is infrastructure for a question nobody has yet run".      |
++==============================================================================+
