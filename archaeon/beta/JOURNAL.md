@@ -928,6 +928,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   reachable) -> 300 gens relocating pulse; 12 seeds 7801-7812; readout = B77 parity + state use at the switch. World
   objects verified independent (ticks 24 vs 48); smoke test PASSED (ran, output shown). Est ~3 core-h/cell -> ~36 for
   12 (uncertain; my estimates have run low). LAUNCH in window 6 (~2026-10-12 00:29Z); window 5 at ~35 of 48.
+- WINDOW 6 OPENED 2026-10-12 00:29Z. B78 LAUNCHED: lease lse-41d321c0f933 (3 h, token captured), 12 cells, 12 procs,
+  G1=200 plain pulse + G2=300 relocating pulse. Tally from wall-clock on completion.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
