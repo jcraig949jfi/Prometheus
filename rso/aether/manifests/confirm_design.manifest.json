@@ -1,0 +1,161 @@
+{
+ "arms": [
+  "RX",
+  "V1"
+ ],
+ "early_stop": null,
+ "experiment_id": "C-018-T030 Aether native ancestry-vs-content v1.0.0",
+ "manifest_sha256": "0e9519bdc3c27214c6a564cf217422afebbe7df999c41856e520b44945545ea6",
+ "row_key_fields": [
+  "law"
+ ],
+ "schema": "prometheus.rso.completeness.manifest.v1",
+ "seed_field": "seed",
+ "shards": [
+  {
+   "arm_counts": {
+    "RX": 12
+   },
+   "id": "RX.0",
+   "meta_sha256": "PENDING",
+   "rows": 12,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8192,
+    8193,
+    8194,
+    8195,
+    8196,
+    8197,
+    8198,
+    8199,
+    8200,
+    8201,
+    8202,
+    8203
+   ]
+  },
+  {
+   "arm_counts": {
+    "RX": 12
+   },
+   "id": "RX.1",
+   "meta_sha256": "PENDING",
+   "rows": 12,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8204,
+    8205,
+    8206,
+    8207,
+    8208,
+    8209,
+    8210,
+    8211,
+    8212,
+    8213,
+    8214,
+    8215
+   ]
+  },
+  {
+   "arm_counts": {
+    "RX": 12
+   },
+   "id": "RX.2",
+   "meta_sha256": "PENDING",
+   "rows": 12,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8216,
+    8217,
+    8218,
+    8219,
+    8220,
+    8221,
+    8222,
+    8223,
+    8224,
+    8225,
+    8226,
+    8227
+   ]
+  },
+  {
+   "arm_counts": {
+    "RX": 12
+   },
+   "id": "RX.3",
+   "meta_sha256": "PENDING",
+   "rows": 12,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8228,
+    8229,
+    8230,
+    8231,
+    8232,
+    8233,
+    8234,
+    8235,
+    8236,
+    8237,
+    8238,
+    8239
+   ]
+  },
+  {
+   "arm_counts": {
+    "V1": 8
+   },
+   "id": "V1.0",
+   "meta_sha256": "PENDING",
+   "rows": 8,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8192,
+    8193,
+    8194,
+    8195,
+    8196,
+    8197,
+    8198,
+    8199
+   ]
+  },
+  {
+   "arm_counts": {
+    "V1": 8
+   },
+   "id": "V1.1",
+   "meta_sha256": "PENDING",
+   "rows": 8,
+   "rows_sha256": "PENDING",
+   "seeds": [
+    8200,
+    8201,
+    8202,
+    8203,
+    8204,
+    8205,
+    8206,
+    8207
+   ]
+  }
+ ],
+ "sources": {
+  "Aether/V2B/PROP01/prop01_run.py": "cb62021f3acdbd80588677b69d25f84562894f68e2cf76e779cf2eb18ccb4f58",
+  "Aether/V2B/PROP01/prop01_tree.py": "9d034fc4c1dddb2e633fe683d60260e5b28b7b958dd8c72ddc2f76fb31c09b3c",
+  "Aether/V2B/REACH01/R1/r1_reduce.py": "f211843ebc70c6d873bd25d098688dfe69264a43c485609904513b70f5568fd4",
+  "Aether/V2B/REACH01/R1/r1_test4.py": "aa57a736803d6e65219db16b203793edca4c58dca5b8acf7ad5e347d4ef88c98",
+  "Aether/observatory/aeth01_observatory.py": "24d4cdd4877369d45b8b88088322e20756eb1a39a4dc7328734e08b0388b77fe",
+  "Aether/observatory/aeth01_run.py": "9d1e19d973024d0f9d6fc1f9969b29f110f007e9c7be77d718b4b49d3b213cb5",
+  "Aether/test/reference/gpu_aeth01.py": "379961f5e62ad2c6017096d6f4b871a57eb586ffdf5e9eaf49add6385c87f345",
+  "rso/aether/adapter.py": "21247740bfa8e045097bec43ca10804c343f3e0cf2158dc6bc78e2290c0b79e7",
+  "rso/aether/confirm.py": "cba3c4699fbb74415b2c38ed7300e54408cfcfed8e0e13fb6cc811f3ad25cc57",
+  "rso/aether/demand/fixtures.py": "98082b9d9b784b1610d7399c8eb8e283a318871abfd262c7dcc2da42485d3bfb",
+  "rso/aether/evaluate.py": "f1b354914719a86f59e4bebb1d064bc554fd7cd12e391744f0c5b06e903212ea",
+  "rso/completeness/manifest.py": "a6209df1971c498cf55c593d938393f3c1cce3913c7750873ec01859a9ea4238",
+  "rso/completeness/verify.py": "7de7143a80fb83b57382a18e1654ae41c16afe6d9a0f7e8857b67529206f4140"
+ }
+}
