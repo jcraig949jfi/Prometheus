@@ -1,6 +1,6 @@
 # Extension to the 2026-10-12 Cognitive Opacity Independence note: the COI-01 dispatch plan
 
-Captured by Pan at the operator's request, on 2026-10-12 shortly after 08:00Z. The operator's words were
+Captured by Pan at the operator's request, on 2026-10-12 at about 08:57Z (receipt: date -u 08:57:31Z). The operator's words were
 "Capture this as well as an extension. Do not act on it."
 
 This text extends NOTE.md in this folder. It is VERBATIM, with typography normalized to ASCII:
