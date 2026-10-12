@@ -71,5 +71,15 @@
         "if_held": "SURVIVOR"},
  "EDITS_RESTORED": {"predict": "every edited file restored byte for byte (sha256, git diff --quiet) and freeze check OK after each",
         "check": "len(r['rows']) == 5 and all(x['restored_sha256_ok'] and x['git_diff_quiet'] and x['freeze_check_after'] == 'OK' for x in r['rows'])",
-        "if_held": "AS_EXPECTED"}
+        "if_held": "AS_EXPECTED"},
+
+ "E1h": {"predict": "POST-HOC (added after the first run showed the forged design's source pin refusing a mutated confirm.py with SOURCE_MISMATCH; committed before it runs): with the design's sources re-sealed under the mutant (what B6 shows an attacker can do at analysis time), the E1 mutant analyses the dup6 set as COMPLETE with problems [] and prints a verdict; the frozen code with the same re-sealed design still reports the one replay problem",
+         "check": "r['result'] == 'SURVIVES' and r['witness']['completeness'] == 'COMPLETE' and r['witness']['problems'] == [] and r['witness']['disposition_RX'] not in (None, 'REFUSED_RECORD_INCONSISTENT') and any('native replay differs' in p for p in r['witness_baseline']['problems'])",
+         "if_held": "SURVIVOR"},
+ "E3h": {"predict": "POST-HOC: with the design's sources re-sealed under the mutant, the E3 mutant reports COMPLETE with problems [] on the edited-row set; the frozen code with the same re-sealed design reports exactly one 'unit files differ from the shard row' problem (replay stubbed in both)",
+         "check": "r['result'] == 'SURVIVES' and r['witness']['completeness'] == 'COMPLETE' and r['witness']['problems'] == [] and len(r['witness_baseline']['problems']) == 1 and 'differ from the shard row' in r['witness_baseline']['problems'][0]",
+         "if_held": "SURVIVOR"},
+ "EDITS_POSTHOC_RESTORED": {"predict": "both post-hoc edits restored byte for byte and freeze check OK",
+         "check": "len(r['rows']) == 2 and all(x['restored_sha256_ok'] and x['git_diff_quiet'] and x['freeze_check_after'] == 'OK' for x in r['rows'])",
+         "if_held": "AS_EXPECTED"}
 }

@@ -345,7 +345,13 @@ def score(scratch):
         for row in (json.loads(l) for l in open(ep, encoding="utf-8")):
             if row.get("edit", "").startswith("E"):
                 cases[row["edit"]] = row
-        cases["EDITS_RESTORED"] = {"rows": [r for r in cases.values() if isinstance(r, dict) and str(r.get("edit", "")).startswith("E")]}
+        cases["EDITS_RESTORED"] = {"rows": [cases[k] for k in ("E1", "E2", "E3", "E4", "E5") if k in cases]}
+    pp = os.path.join(scratch, "edits_posthoc.jsonl")
+    if os.path.exists(pp):
+        for row in (json.loads(l) for l in open(pp, encoding="utf-8")):
+            if str(row.get("edit", "")).endswith("h"):
+                cases[row["edit"]] = row
+        cases["EDITS_POSTHOC_RESTORED"] = {"rows": [cases[k] for k in ("E1h", "E3h") if k in cases]}
     env = {"all": all, "any": any, "len": len, "abs": abs, "sum": sum, "set": set, "min": min, "max": max, "str": str, "isinstance": isinstance, "dict": dict}
     results = []
     for cid, e in exp.items():

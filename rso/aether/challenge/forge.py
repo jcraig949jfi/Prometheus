@@ -89,6 +89,20 @@ def _stub_replay(out):
     A.native_unit = stub
 
 
+def reseal_sources(out):
+    """POST-HOC (E1h / E3h): re-seal the forged design with the CURRENT source hashes, i.e. what an attacker who can
+    rewrite the design pin (B6) would do after mutating the analyser. Written beside the original, never over it."""
+    with open(os.path.join(out, "design.manifest.json"), encoding="utf-8") as f:
+        d = json.load(f)
+    specs = [{k: s[k] for k in ("id", "seeds", "arm_counts", "rows", "rows_sha256", "meta_sha256")} for s in d["shards"]]
+    d2 = M.build(d["experiment_id"] + " (sources re-sealed)", arms=d["arms"], shards=specs, sources=C.current_sources(),
+                 row_key_fields=d["row_key_fields"], seed_field=d["seed_field"], early_stop=d["early_stop"])
+    p = os.path.join(out, "design.resealed.manifest.json")
+    with open(p, "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(d2, indent=1, sort_keys=True) + "\n")
+    return p
+
+
 def analyse(out, design_path=None, stub_replay=False):
     C.RUNS = out
     if design_path is not None:
@@ -156,7 +170,10 @@ def e3(out):
     sh["meta"]["rows_sha256"] = M.digest(sh["rows"])
     with open(p, "w", encoding="utf-8", newline="\n") as f:
         json.dump(sh, f, sort_keys=True, indent=1)
-    return analyse(o3, os.path.join(o3, "design.manifest.json"), stub_replay=True)
+    reseal = "--reseal-sources" in sys.argv
+    r = analyse(o3, reseal_sources(o3) if reseal else os.path.join(o3, "design.manifest.json"), stub_replay=True)
+    r["design_resealed"] = reseal
+    return r
 
 
 def e5(out):
@@ -175,7 +192,9 @@ if __name__ == "__main__":
         print(json.dumps({"design_sha256": d["manifest_sha256"], **distinct_arrays(sys.argv[3])}, indent=1))
     elif cmd == "analyse":
         out = sys.argv[2]
-        r = analyse(out, os.path.join(out, "design.manifest.json"), stub_replay="--stub-replay" in sys.argv)
+        dp = reseal_sources(out) if "--reseal-sources" in sys.argv else os.path.join(out, "design.manifest.json")
+        r = analyse(out, dp, stub_replay="--stub-replay" in sys.argv)
+        r["design_resealed"] = "--reseal-sources" in sys.argv
         r.update(distinct_arrays(out))
         print(json.dumps(r, indent=1, default=str))
     elif cmd == "pin5":
