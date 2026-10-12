@@ -1,0 +1,27 @@
+C-018-T042 INTEGRATION_READY -- Pallas[harry1-cd02a995], claude-fable-5-1 (Q3; no model change reported this session)
+
+Branch pallas/c018-t042 (base 357e40275): rso/aether/challenge/R2/{CHALLENGE_SET.md, expected.json, recheck.py (set at
+434e679bd before any outcome), outcomes/, rows_natives_v1_1_0.jsonl, results.jsonl, REPORT.md}; roles/Pallas/
+{WORK_STATE.json, journal, comms}. Receipt attempts/A-001/RECEIPT.json with the state commit on main. Nothing under
+rso/aether/ outside challenge/R2/ changed in any commit; freeze check OK throughout; no confirmatory seed; Aether/ read-only.
+
+VERDICT (REPORT s3): the repair closes every T040 finding in the form it was attacked and opens no new hole. The run may
+proceed under v1.1.0. The RESULT must carry five limitations (REPORT s5), verbatim or equivalent:
+ 1. clamp arrays of the 58 non-sampled units are producer bytes (R1c: CUT_N rewritten -> 0x3003 NONSPECIFIC->CONFIRMED,
+    r_int 6, problems [] under real snapshot binding, real per-unit tree replay, real full replay of the sampled rows);
+ 2. every pin is a mutable file (R6b: N_CONFIRM edited + design --write + freeze write -> `freeze check` OK); the RESULT
+    and the release record cite the commit and FROZEN.json blob (9fe0fcb4 at 357e40275);
+ 3. the N window puts N on B's own wavefront: adjacent to a target in 7 of the 9 control-needing units (6 under v1.0.0),
+    same tick as B in 2; NONSPECIFIC still conflates damage spreading with a lateral path; report N's distance to the
+    nearest target per unit; upstream form CLOSED (0 of 9 N before B; 0 of 9 without a control);
+ 4. the need denominator: at n = 48 the P2 bar moved from 5 to 3 CONFIRMED-at-depth units (10% binds above 30 evaluable);
+    with the window adding +2 CONFIRMED on the 24 challenge units (0x3004 r 2, 0x3005 r 9 re-executed) the expected
+    margin moves from ~6 vs 5 (v1.0.0) to ~10 vs 3 (v1.1.0); both disclosed singly, joint effect unstated; report P2 under
+    the v1.0.0 need beside the registered one;
+ 5. EVALUABLE_MIN gates the positive too (7 CONFIRMED -> ANCESTRY_UNEVALUABLE; conservative); content conditioning
+    unchanged, reported beside (s11.2).
+Score: 22 checks -- 13 AS_EXPECTED, 5 RECORDED, 1 SURVIVOR (R1c), 3 NOT_AS_PREDICTED in wording / harness scope only
+(W1 list omitted 0x3012 -- builder right; R1a unit choice; R6b git-diff clause swept my own harness edit, files restored
+sha256-verified). 56/56 RED here. Amendment b3cc39a56 precedes dev check 64dcfdb4a and re-freeze 1f2d2444f; s10.1-10.4
+unchanged since; design seeds unchanged. Cost ~0.35 core-h, ~57 min wall, 0 paid, 0 Aether requests.
+Registry proposals REPORT s8. Seat idle after this; `workgraph ready Pallas` re-run at close.

@@ -1,0 +1,186 @@
+{
+ "B1_invariant": {
+  "after": {
+   "cls": "CONFIRMED",
+   "n_I": 33,
+   "n_targets": 24,
+   "r_int": 6,
+   "removed_B": 1.0,
+   "removed_N": 0.0
+  },
+  "before": {
+   "cls": "CONFIRMED",
+   "n_I": 33,
+   "n_targets": 22,
+   "r_int": 6,
+   "removed_B": 1.0,
+   "removed_N": 0.0
+  },
+  "invariants_after": {
+   "gen_not_parent_plus_1": 0,
+   "non_adjacent_parent": 0,
+   "parent_not_earlier": 0
+  },
+  "k_hex": "0x3001",
+  "problems_after": [],
+  "reparented": 2,
+  "tree_problem_genuine": null,
+  "tree_problem_tampered": "replayed Aether tree / origin is not the unit's",
+  "wall_s": 36.0
+ },
+ "B1_naive": {
+  "after": {
+   "cls": "CONFIRMED",
+   "n_I": 33,
+   "n_targets": 25,
+   "r_int": 6,
+   "removed_B": 1.0,
+   "removed_N": 0.0
+  },
+  "before": {
+   "cls": "CONFIRMED",
+   "n_I": 33,
+   "n_targets": 22,
+   "r_int": 6,
+   "removed_B": 1.0,
+   "removed_N": 0.0
+  },
+  "invariants_after": {
+   "gen_not_parent_plus_1": 0,
+   "non_adjacent_parent": 3,
+   "parent_not_earlier": 0
+  },
+  "k_hex": "0x3001",
+  "problems_after": [
+   "tree invariant: parent not 4-adjacent at 3 sites"
+  ],
+  "reparented": 3
+ },
+ "B1_typeflip": {
+  "after": {
+   "cls": "NONSPECIFIC",
+   "n_I": 0,
+   "n_targets": 3,
+   "r_int": 0,
+   "removed_B": 1.0,
+   "removed_N": 1.0
+  },
+  "before": {
+   "cls": "NO_CUT",
+   "n_I": 0,
+   "n_targets": 0,
+   "r_int": 0,
+   "removed_B": null,
+   "removed_N": null
+  },
+  "clamp_arrays_all_minus_one": true,
+  "flipped_sites": [
+   8589
+  ],
+  "k_hex": "0x3010",
+  "problems_after": [
+   "cutB array is not a clamp of site 8588 (origin tick -1, site tick -1)",
+   "cutN array is not a clamp of site 8332 (origin tick -1, site tick -1)"
+  ]
+ },
+ "B2": {
+  "a_all_nocut_with_content": {
+   "classes": {
+    "CONFIRMED": 0,
+    "CONTROL_VACUOUS": 0,
+    "INSUFFICIENT": 0,
+    "MULTI_SOURCE": 0,
+    "NONSPECIFIC": 0,
+    "NOT_INTERVENTIONAL": 0,
+    "NO_CUT": 48
+   },
+   "disposition": "ANCESTRY_UNEVALUABLE",
+   "n_evaluable": 0
+  },
+  "b_44_nocut_4_confirmed_r3": {
+   "confirmed_r2": 4,
+   "disposition": "ANCESTRY_UNEVALUABLE",
+   "n_evaluable": 4,
+   "need": 5,
+   "reach_band": 3
+  },
+  "c_v1_all_nocut": {
+   "disposition": "ANCESTRY_UNEVALUABLE",
+   "n_evaluable": 0
+  },
+  "e_43_nocut_5_confirmed_r2": {
+   "confirmed_r2": 5,
+   "disposition": "ANCESTRY_UNEVALUABLE",
+   "n_evaluable": 5,
+   "need": 5
+  },
+  "statuses_available": [
+   "INCOMPLETE",
+   "REFUSED",
+   "REFUSED_RECORD_INCONSISTENT",
+   "DETECTION_UNQUALIFIED",
+   "ANCESTRY_WITH_CONTENT",
+   "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+   "CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY",
+   "NEITHER"
+  ]
+ },
+ "B2d_3conf_5noti_40nocut": {
+  "confirmed_r2": 3,
+  "disposition": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+  "evaluable": 8,
+  "label": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT [evaluable 8 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+  "need": 3,
+  "need_v100_over_48": 5
+ },
+ "B2e_7conf_41nocut": {
+  "confirmed_r2": 7,
+  "disposition": "ANCESTRY_UNEVALUABLE",
+  "evaluable": 7,
+  "label": "ANCESTRY_UNEVALUABLE [evaluable 7 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+  "p2_would_hold_v100": true,
+  "reach_band": 3
+ },
+ "B2f_8noti_40nocut": {
+  "disposition": "NEITHER",
+  "evaluable": 8,
+  "label": "NEITHER [evaluable 8 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]"
+ },
+ "B3": {
+  "content_excess_cond_all_seeds": 0.7839,
+  "content_excess_cond_confirmed_seeds_only": 0.0,
+  "disposition": "ANCESTRY_UNEVALUABLE",
+  "n_confirmed": 5,
+  "n_nocut": 43,
+  "reach_band": 2
+ },
+ "B3r_8conf_at_chance_40nocut_at_1": {
+  "content_excess_cond": 0.7292,
+  "content_excess_cond_confirmed_seeds": 0.0,
+  "disposition": "ANCESTRY_WITH_CONTENT",
+  "label": "ANCESTRY_WITH_CONTENT [evaluable 8 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]"
+ },
+ "B4": {
+  "cls": "CONFIRMED",
+  "ftick_N": 50,
+  "n_targets_live_for_N": 0,
+  "removed_B": 1.0,
+  "removed_N": 0.0,
+  "targets_ftick": [
+   3,
+   4,
+   5
+  ],
+  "vacuous_by_evaluator": false
+ },
+ "need_table": {
+  "0": 3,
+  "13": 3,
+  "20": 3,
+  "30": 3,
+  "31": 4,
+  "40": 4,
+  "48": 5,
+  "8": 3
+ }
+}

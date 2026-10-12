@@ -363,7 +363,7 @@ def forge(scratch, which):
 
 # ---------------------------------------------------------------- R6 / R6b: the pin from a mutable file, under v1.1.0
 def b6(scratch):
-    res = {"pin5": FG.pin5(T040, os.path.join(scratch, "forged_pin5"))}
+    res = {"pin5": FG.pin5(os.path.dirname(T040), os.path.join(scratch, "forged_pin5"))}     # forge.genuine_path appends /units
     # R6b: an attacker who rewrites EVERY mutable file: confirm.py's N_CONFIRM, the committed design manifest and FROZEN.json
     # (via freeze write) -- then runs the freeze check. Transient; restored byte for byte.
     cp = os.path.join(ROOT, "rso", "aether", "confirm.py")
@@ -431,7 +431,7 @@ def score(scratch):
             results.append({"case": cid, "status": "NOT_RUN", "predict": e["predict"]})
             continue
         try:
-            held = bool(eval(e["check"], dict(env), {"r": r}))
+            held = bool(eval(e["check"], dict(env, r=r)))      # r in globals: a generator inside a check cannot see eval locals
             err = None
         except Exception as ex:                      # noqa: BLE001
             held, err = False, "%s: %s" % (type(ex).__name__, ex)

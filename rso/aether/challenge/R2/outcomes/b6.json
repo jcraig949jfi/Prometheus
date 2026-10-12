@@ -1,0 +1,37 @@
+{
+ "freeze_check_after_restore": "OK",
+ "frozen_blob_sha256_HEAD": "9fe0fcb4e2ab59f1547d36652141d90380d81771495180b970a3802e8382d306",
+ "frozen_disk_sha256_after_restore": "9fe0fcb4e2ab59f1547d36652141d90380d81771495180b970a3802e8382d306",
+ "full_rewrite": {
+  "design_written": "62827ce13219657d950cfc5ab4566710537d34f8f1031999afc2b7c3dc9c8198",
+  "freeze_check_out": "OK",
+  "freeze_check_rc": 0,
+  "freeze_write": "32 files; design 62827ce13219657d950cfc5ab4566710537d34f8f1031999afc2b7c3dc9c8198",
+  "n_shards_in_rewritten_design": 5,
+  "rewritten_confirm_pin": "5881b0cb638b213420e76dbb3eb6a6d50344dc5133bf3a64ff37eb2cf67e600f",
+  "rewritten_design_pin": "62827ce13219657d950cfc5ab4566710537d34f8f1031999afc2b7c3dc9c8198"
+ },
+ "git_diff_quiet": false,
+ "pin5": {
+  "analyse": {
+   "disposition": "REFUSED_FREEZE_MISMATCH",
+   "experiment": "C-018 Aether native ancestry-vs-content v1.1.0 (C-018-T030; repair round C-018-T041)",
+   "problems": [
+    "design manifest differs from the frozen one"
+   ],
+   "rc": 4,
+   "replay_stubbed": false
+  },
+  "forged_design_sha256": "40efc8a3ad69412a59553c93bf746ecaee7d86bfe783b511668a34337abc6bfe",
+  "freeze_mismatches_after_restore": [],
+  "freeze_mismatches_while_mutated": [
+   "design manifest differs from the frozen one"
+  ],
+  "git_diff_quiet": true,
+  "n_distinct_arrays_sha256": 5,
+  "n_rows": 56,
+  "n_shards_in_forged_design": 5,
+  "restored_sha256_ok": true
+ },
+ "restored_sha256_ok": true
+}

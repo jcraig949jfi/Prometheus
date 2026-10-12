@@ -1,0 +1,136 @@
+{
+ "completeness": {
+  "early_stop": null,
+  "findings": [],
+  "manifest_sha256": "909cb56e2705283539f966c7e5d63a183c6af6f3464068a4d57d609d692727d8",
+  "missing": [],
+  "status": "COMPLETE"
+ },
+ "evidence": {
+  "distinct_arrays_sha256": 3,
+  "freeze_check": "OK",
+  "full_replay_verified": 2,
+  "replay_sample": "first seed of every shard: full native replay (arrays_sha256 and meta tree / B / N / origin); every unit: warm snapshot + origin recomputed, and Aether's tree replayed (s10.6)",
+  "rows": 3,
+  "snapshot_bound": 3,
+  "tree_replayed": 3
+ },
+ "experiment": "C-018 Aether native ancestry-vs-content v1.1.0 (C-018-T030; repair round C-018-T041)",
+ "freeze_check_stubbed": "yes: the set's design is not the frozen one; the freeze check itself is R6; replay, snapshot and tree replay are the real Aether paths",
+ "laws": {
+  "RX": {
+   "agreement_category": "AGREE",
+   "classes": {
+    "CONFIRMED": 3,
+    "CONTROL_VACUOUS": 0,
+    "INSUFFICIENT": 0,
+    "MULTI_SOURCE": 0,
+    "NONSPECIFIC": 0,
+    "NOT_INTERVENTIONAL": 0,
+    "NO_CUT": 0
+   },
+   "confirmed_r2": 3,
+   "confirmed_targets_ftick": {
+    "12291": {
+     "after_200": 0,
+     "after_300": 0,
+     "min_q1_med_q3_max": [
+      10.0,
+      15.5,
+      24.0,
+      50.5,
+      84.0
+     ],
+     "n": 27
+    },
+    "12292": {
+     "after_200": 0,
+     "after_300": 0,
+     "min_q1_med_q3_max": [
+      6.0,
+      6.0,
+      6.0,
+      71.0,
+      136.0
+     ],
+     "n": 3
+    },
+    "12293": {
+     "after_200": 0,
+     "after_300": 0,
+     "min_q1_med_q3_max": [
+      57.0,
+      79.0,
+      109.0,
+      118.0,
+      187.0
+     ],
+     "n": 39
+    }
+   },
+   "content_excess_all": 0.005598958333333333,
+   "content_excess_cond": 0.013671875,
+   "content_excess_cond_confirmed_seeds": 0.013671875,
+   "disposition": "ANCESTRY_UNEVALUABLE",
+   "evaluable": 3,
+   "evaluable_min": 8,
+   "label": "ANCESTRY_UNEVALUABLE [evaluable 3 of 3 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+   "light_cone_violations": 0,
+   "n_units": 3,
+   "need": 3,
+   "nonspecific_N_before_B": 0,
+   "null_excess": 0.0014322916666666668,
+   "pooled_agreement": 1.0,
+   "reach_band": 2,
+   "rows": [
+    {
+     "cls": "CONFIRMED",
+     "ftick_B": 4,
+     "ftick_N": 4,
+     "n_targets": 3,
+     "problems": [],
+     "r_int": 2,
+     "removed_B": 1.0,
+     "removed_N": 0.0,
+     "seed": 12292
+    },
+    {
+     "cls": "CONFIRMED",
+     "ftick_B": 1,
+     "ftick_N": 4,
+     "n_targets": 27,
+     "problems": [],
+     "r_int": 6,
+     "removed_B": 1.0,
+     "removed_N": 0.0,
+     "seed": 12291
+    },
+    {
+     "cls": "CONFIRMED",
+     "ftick_B": 4,
+     "ftick_N": 5,
+     "n_targets": 39,
+     "problems": [],
+     "r_int": 9,
+     "removed_B": 1.0,
+     "removed_N": 0.0,
+     "seed": 12293
+    }
+   ]
+  }
+ },
+ "mentions_classes": true,
+ "printed_keys": [
+  "completeness",
+  "evidence",
+  "experiment",
+  "freeze_check_stubbed",
+  "laws",
+  "problems",
+  "rc",
+  "wall_s"
+ ],
+ "problems": [],
+ "rc": 0,
+ "wall_s": 220.0
+}
