@@ -85,3 +85,80 @@ and 4 burned seeds. Lesson for every adapter: never exercise a release gate by p
 - Registry proposals in section 2.
 - Whether to also preregister a secondary B rule (largest attributed subtree) for RULE-rooted deep trees: not done here
   (budget, and it departs from Aether's preregistered PROP01 rule).
+
+## 7. Repair round v1.1.0 (C-018-T041; directive s9, the one bounded repair round)
+
+Argus[harry1-4230902d] (claim 13:11:52Z, amendment b3cc39a56 13:32Z, dev check 13:32-13:56Z, stopped on a harness usage
+limit) and Argus[harry1-d48cbcfd] (same-seat relaunch, lease takeover 14:45Z, verification, s10.6, re-freeze), both
+claude-opus-5-5 (Q2), headless on harry1. Answering Pallas's Q3 challenge (challenge/REPORT.md). PREREGISTRATION s10-s12.
+No confirmatory seed executed; no RELEASE.json; Aether/ and roles/Aether/ untouched; nothing on M2.
+
+### 7.1 Lines (physical; v1.0.0 -> v1.1.0)
+
+| File | v1.0.0 | v1.1.0 | What changed |
+|---|---|---|---|
+| adapter.py | 236 | 268 | N window (B8 / B4); `warm_snapshot` and `aether_unit` factored out for the analyser |
+| evaluate.py | 194 | 262 | tree invariants + clamp fidelity (B1); NOT_INTERVENTIONAL before vacuity; EVALUABLE_MIN / `need` / ANCESTRY_UNEVALUABLE / `label` (B2); B3 / B7 reporting |
+| confirm.py | 185 | 279 | freeze check first (B6); duplicate refusal, per-unit snapshot binding and per-unit tree replay (B5, B1); replayed tree in the sample (B1); refusal prints problems only (P1); `evidence` block |
+| tests / red | 425 | 786 | 33 -> 59 tests; 21 -> 56 mutants (51 builder rows + Pallas edits.json E1-E5 verbatim), all KILLED; harness line-ending agnostic (S2) |
+| dev harnesses | -- | 104 | dev_analyse.py (real analyse on dev seeds, genuine and forged), dev_b1_tree.py |
+
+Shared components modified: none. Requests to Aether: 0.
+
+### 7.2 Costs of the repair round (directive s14)
+
+| Measure | Value |
+|---|---|
+| Engineering wall | ~45 min (first instance, claim -> dev check) + ~50 min (relaunch: verification, s10.6, re-freeze, record); a ~50 min gap for the usage-limit stop and relaunch is coordination waiting, not engineering |
+| Execution CPU | ~1.15 core-h, <= 2 processes: dev natives 20 units 1,734 s (two concurrent); RED harness 4 runs ~12 min; dev end-to-end analyses ~31 min (s10.1 twice, s10.6 once); qualify / synth / timing ~2 min |
+| Confirmatory budget (frozen, not spent) | ~1.64 core-h one process at a time (s10.6; was ~1.25 at v1.0.0) |
+| Operator interventions | 0 |
+| Reviewer time (Pallas, T040) | ~2 h wall, ~1.1 core-h (REPORT s2) |
+
+### 7.3 Cost of detecting a false scientific interpretation before the confirmatory run (Gen-4 measure)
+
+What each of Pallas's survivors would have let the FROZEN v1.0.0 analyser print, what v1.1.0 prints on the same
+construction, and what detecting it cost. "v1.0.0 printed" is from challenge/REPORT.md and challenge/outcomes/; "v1.1.0" is
+measured here (qual/SYNTH_v1_1_0.json = Pallas's synth.py run unchanged on v1.1.0; qual/DEV_ANALYSE_v1_1_0.json;
+qual/B1_TREE_REPLAY_v1_1_0.json; the guard tests).
+
+| Survivor | v1.0.0 analyser would have printed | v1.1.0 prints | Cost to detect (Pallas) | Cost to repair |
+|---|---|---|---|---|
+| B6 re-sealed 5-shard design | COMPLETE, rc 0, **ANCESTRY_WITH_CONTENT** (12 CONFIRMED, band 6) for 5 distinct units | REFUSED_FREEZE_MISMATCH, nothing else read | 6.4 min CPU | 1 line + 1 test |
+| B5 64 rows / 5 distinct units | COMPLETE; 12 CONFIRMED; content excess 0.112 (genuine 0.012); refused only via 1 of 6 replays | REFUSED_RECORD_INCONSISTENT on duplicate arrays + snapshot (+ tree replay); dev forged set shows all three lines | 7.4 min CPU | ~10 lines, 4 tests; +4.6 s CPU per unit at analysis |
+| B1 naive re-parenting | INSUFFICIENT -> **CONFIRMED**, problems [] | tree invariant problem -> refused | synth, seconds | ~20 lines (tree_invariants) |
+| B1 type flip (NO_CUT unit) | NO_CUT -> **NONSPECIFIC** on 70 targets from never-run clamp arrays | clamp-fidelity problem -> refused | synth, seconds | 4 lines |
+| B1 invariant-respecting | INSUFFICIENT -> **CONFIRMED**, problems [] | evaluator still [] (SYNTH); refused by the per-unit tree replay (s10.6; B1_TREE_REPLAY) | synth, seconds | ~12 lines; +17 s CPU per unit (~0.3 core-h per confirmatory analysis) |
+| E5 completeness stop | class counts + content excess under INCOMPLETE (mutant) | pinned: test RED on the mutant | edits 2 min | 1 test |
+| E1h / E3h replay / binding | ANCESTRY_WITH_CONTENT / COMPLETE with problems [] (mutant + re-seal) | B6 refuses the re-seal; each guard has a test RED on its mutant | post-hoc ~9 min | 2 tests |
+| P1 refusal leak | class counts and content excess under REFUSED_RECORD_INCONSISTENT | problems only | read of B5 output | 1 line + 1 test |
+| B2 no-cut honesty | 48 NO_CUT -> CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY; 16 V1 NO_CUT -> **NEITHER**; 43 NO_CUT + 5 CONFIRMED -> CAUSAL_PROPAGATION... | all four ANCESTRY_UNEVALUABLE with "evaluable E of n" | synth, seconds | ~15 lines + prereg; dev check shows the dev set itself is unevaluable (4 of 16) |
+| B3 radius-only conditioning | ANCESTRY_WITH_CONTENT on cond 0.784 from units with no ancestry (CONFIRMED-seed excess 0.0) | both numbers printed beside each other (and that construction is now ANCESTRY_UNEVALUABLE, 5 evaluable) | synth, seconds | 3 lines |
+| B8 choice of N | 2 of 3 native NONSPECIFIC decided by an N that diverged before B (0x3004 / 0x3005) | window excludes it; those two units would read CONFIRMED (disclosed, s10.2) | altn 1.6 min + 32 natives ~34 min | ~15 lines + prereg; 1 dev unit (k 11) is the same shape |
+| B4 late N (synthetic) | CONFIRMED with removed_N 0.0 | natively unreachable (every target after N); fixture recipe N still CONFIRMED (stated limit) | synth, seconds | 0 (bound in the window) |
+| B7 horizon | no target timing printed | per-CONFIRMED-unit first-tick profile | stored arrays, seconds | 10 lines |
+
+Total to detect: Pallas ~1.1 core-h and ~2 h wall; total to repair: ~1.15 core-h and ~1.6 h engineering. Against that,
+the bold entries are verdict-bearing false readings the v1.0.0 analyser could have printed with problems [] -- B6's
+ANCESTRY_WITH_CONTENT and the two B1 CONFIRMED units are positive ancestry claims, the B1 type flip a specificity class
+from clamp worlds never run -- and B2 would have printed NEITHER for V1 having tested nothing. The whole detection +
+repair cost (~2.3 core-h) is ~1.4x one confirmatory run (~1.64 core-h) and was spent before any confirmatory outcome
+existed.
+
+### 7.4 New semantic mismatches (s3 continued)
+
+7. **"A completeness check certifies the evidence."** At a first analysis the design's digests come from the presented
+   shards: COMPLETE on 59 copies of 5 units (B5). Provenance needs per-unit binding to the seed, not presence.
+8. **"The engine's tree is a measurement."** Parent / gen / type are producer fields that decide B, N and the targets;
+   invariants catch careless tampering, only a replay catches careful tampering (B1, s10.6).
+9. **"Earliest diverging non-ancestor is the best matched control."** In Aether it is the site most likely to be an
+   unattributed upstream contributor (B8).
+10. **"NEITHER means absent."** Without an evaluable count it can mean "nothing was tested" (B2).
+
+### 7.5 Open for the coordinator
+
+- C-018-T042 short independent re-check of v1.1.0 (directive s9). Limits it inherits: PREREGISTRATION s12.
+- s10.6 raises the confirmatory analysis cost by ~0.3 core-h (total ~1.64); declining it returns the invariant-respecting
+  B1 form to s12 (one line in confirm.analyse).
+- Registry proposals: REPORT s8 stands; add to experiment-completeness `not_qualified_for` "provenance at a first analysis
+  without per-unit binding".

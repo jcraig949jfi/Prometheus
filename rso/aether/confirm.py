@@ -12,18 +12,25 @@ with the shard writer's own rows digest (native_digest = manifest.digest) so a r
 duplicate, conflicting, foreign, seed-partition, count and source findings are verify()'s own. The DESIGN manifest's sha256 is
 pinned in FROZEN.json, so a smaller re-sealed design is REFUSED. After the run the filled manifest is committed and pinned too
 (then SUBSTITUTED becomes detectable for later re-verification). There is no early-stop rule: early_stop = null.
+v1.1.0 (C-018-T041, Pallas B6 / B5 / B1 / P1): `analyse` runs the freeze check FIRST and refuses on any mismatch; refuses a
+duplicated arrays_sha256 across rows; binds EVERY unit to its seed (warm snapshot + origin recomputed) and states how many
+units were snapshot-bound and fully replayed; compares the replayed tree / B / N / origin as well as the arrays; and a
+refused analysis prints its problems and nothing verdict-bearing.
+s10.6 (Argus[harry1-d48cbcfd], before the re-freeze): Aether's attributed tree is replayed for EVERY unit (B1).
 """
 import glob
 import json
 import os
 import sys
 
+import numpy as np
+
 from rso.aether import adapter as A
 from rso.completeness import manifest as M, verify as V
 from rso.registry.registry import ROOT, file_sha
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-EXPERIMENT = "C-018-T030 Aether native ancestry-vs-content v1.0.0"
+EXPERIMENT = "C-018 Aether native ancestry-vs-content v1.1.0 (C-018-T030; repair round C-018-T041)"
 ARMS = ("RX", "V1")                     # RX primary; V1 the shallow-tree comparison
 N_CONFIRM = {"RX": 48, "V1": 16}        # sized from measured throughput (PREREGISTRATION s5)
 SHARD = {"RX": 12, "V1": 8}             # seeds per shard
@@ -38,7 +45,9 @@ SOURCES = ["rso/aether/adapter.py", "rso/aether/evaluate.py", "rso/aether/confir
            "Aether/V2B/PROP01/prop01_run.py", "Aether/V2B/PROP01/prop01_tree.py", "Aether/V2B/REACH01/R1/r1_test4.py",
            "Aether/V2B/REACH01/R1/r1_reduce.py", "Aether/test/reference/gpu_aeth01.py", "Aether/observatory/aeth01_run.py",
            "Aether/observatory/aeth01_observatory.py"]
-REPLAY = "first seed of every shard"     # native replay sample (bit-exact arrays_sha256), PREREGISTRATION s6
+REPLAY = ("first seed of every shard: full native replay (arrays_sha256 and meta tree / B / N / origin); every unit: warm "
+          "snapshot + origin recomputed, and Aether's tree replayed (s10.6)")      # PREREGISTRATION s6, s10 (B1, B5)
+REPLAY_META = ("tree", "B", "N", "origin", "B_tick")
 
 
 def pinned_design_sha256():
@@ -124,47 +133,110 @@ def run(sid):
         json.dump(make_shard(sid, rows), f, sort_keys=True, indent=1)
 
 
-def load_presented():
+def load_presented(runs=None):
     out = []
-    for p in sorted(glob.glob(os.path.join(RUNS, "*.shard.json"))):
+    for p in sorted(glob.glob(os.path.join(runs or RUNS, "*.shard.json"))):
         with open(p, encoding="utf-8") as f:
             out.append(json.load(f))
     return out
 
 
-def analyse():
-    from rso.aether import evaluate as E
-    with open(DESIGN_PATH, encoding="utf-8") as f:
+def snapshot_problem(law, k, meta, arrays, snapshot=None):
+    """v1.1.0 (B5): bind a unit to its seed by recomputing Aether's warm snapshot and origin for (law, k) (~1/10 of a
+    unit): the stored t0 CONTROL state, the origin and Aether's warm digest must all be the seed's. None if bound."""
+    s, _, O = (snapshot or A.warm_snapshot)(law, k, meta["n"], meta["warm"])
+    if not (np.array_equal(np.stack(s), arrays["snap"]) and O == meta["origin"]
+            and A.P.digest(s) == meta["aether"]["warm_digest"]):
+        return "warm snapshot / origin is not seed %s's" % k
+    return None
+
+
+def tree_problem(law, k, meta, tree_replay=None):
+    """v1.1.0 s10.6 (B1, invariant-respecting form): re-run Aether's run_unit for (law, k) (~1/4 of a unit); its attributed
+    tree, origin and warm digest must equal the unit's meta. B and N are then the rules' outputs on a replayed tree
+    (tree_check recomputes both). None if equal."""
+    u = (tree_replay or A.aether_unit)(law, k, meta["n"], meta["warm"], meta["H"])
+    if not (u["tree"] == meta["tree"] and u["origin"] == meta["origin"]
+            and u["warm_digest"] == meta["aether"]["warm_digest"]):
+        return "replayed Aether tree / origin is not the unit's"
+    return None
+
+
+def _emit(out):
+    print(json.dumps(out, indent=1, default=str))
+
+
+def analyse(runs=None, design_path=None, pin=None, replay=None, snapshot=None, freeze_check=None, emit=_emit,
+            tree_replay=None):
+    """PREREGISTRATION s6 / s10. The keyword arguments exist for the guard tests (a two-shard fixture, stubbed replay);
+    the CLI passes none, so the frozen paths, the FROZEN.json pin, Aether's replay and the freeze check are used."""
+    from rso.aether import evaluate as E, freeze
+    runs, design_path = runs or RUNS, design_path or DESIGN_PATH
+    replay = replay or A.native_unit
+    bad = (freeze_check or freeze.mismatches)()       # B6: the analyser runs the freeze check itself, first
+    if bad:
+        emit({"experiment": EXPERIMENT, "disposition": "REFUSED_FREEZE_MISMATCH", "problems": bad})
+        return 4
+    with open(design_path, encoding="utf-8") as f:
         design = json.load(f)
-    presented = load_presented()
-    res = verify_presented(design, presented, current_sources(list(design["sources"])), pinned_design_sha256())
+    presented = load_presented(runs)
+    res = verify_presented(design, presented, current_sources(list(design["sources"])),
+                           pinned_design_sha256() if pin is None else pin)
     out = {"experiment": EXPERIMENT, "completeness": res.to_dict()}
     if not res.licenses_verdict:
-        print(json.dumps(out, indent=1))
+        emit(out)
         return 3 if res.status == V.INCOMPLETE else 4
     with open(os.path.join(HERE, "qual", "QUALIFICATION.json"), encoding="utf-8") as f:
         qualified = json.load(f)["qualified"]
-    laws, problems = {}, []
+    laws, problems, n_snap, n_tree, n_replay = {}, [], 0, 0, 0
+    shas = [row["arrays_sha256"] for sh in presented for row in sh["rows"]]
+    if len(set(shas)) != len(shas):                    # B5: a copied unit is refused, whatever its seed label says
+        problems.append("%d rows share an arrays_sha256 with another row" % (len(shas) - len(set(shas))))
     for sh in presented:
         law = sh["rows"][0]["law"]
         for i, row in enumerate(sh["rows"]):
-            meta, arrays = A.load_unit(os.path.join(RUNS, sh["id"], "native_%s_%s" % (law, row["seed"])))
+            meta, arrays = A.load_unit(os.path.join(runs, sh["id"], "native_%s_%s" % (law, row["seed"])))
             if meta["arrays_sha256"] != row["arrays_sha256"] or M.digest(meta) != row["meta_sha256"]:
                 problems.append("%s seed %s: unit files differ from the shard row" % (sh["id"], row["seed"]))
+            if meta.get("seed") != row["seed"] or meta.get("law") != law:
+                problems.append("%s seed %s: unit meta names %s seed %s" % (sh["id"], row["seed"], meta.get("law"), meta.get("seed")))
             r = E.evaluate_unit(meta, arrays)
             problems += ["%s seed %s: %s" % (sh["id"], row["seed"], p) for p in r["problems"]]
+            why = snapshot_problem(law, row["seed"], meta, arrays, snapshot)          # B5: EVERY unit
+            if why:
+                problems.append("%s seed %s: %s" % (sh["id"], row["seed"], why))
+            else:
+                n_snap += 1
+            why = tree_problem(law, row["seed"], meta, tree_replay)                  # B1 (s10.6): EVERY unit's tree
+            if why:
+                problems.append("%s seed %s: %s" % (sh["id"], row["seed"], why))
+            else:
+                n_tree += 1
             if i == 0:                                    # preregistered replay sample
-                m2, a2 = A.native_unit(law, row["seed"])
+                m2, a2 = replay(law, row["seed"])
                 if A.arrays_sha256(a2) != meta["arrays_sha256"]:
                     problems.append("%s seed %s: native replay differs" % (sh["id"], row["seed"]))
+                elif any(m2.get(f) != meta.get(f) for f in REPLAY_META):             # B1: the replayed TREE too
+                    problems.append("%s seed %s: replayed %s differs" % (sh["id"], row["seed"],
+                                                                         [f for f in REPLAY_META if m2.get(f) != meta.get(f)]))
+                else:
+                    n_replay += 1
             laws.setdefault(law, []).append((r, (row["seed"], arrays["H"], arrays["D"])))
-    out["problems"], out["laws"] = problems, {}
+    out["problems"] = problems
+    out["evidence"] = {"freeze_check": "OK", "rows": len(shas), "distinct_arrays_sha256": len(set(shas)),
+                       "snapshot_bound": n_snap, "tree_replayed": n_tree,
+                       "full_replay_verified": n_replay, "replay_sample": REPLAY}
+    if problems:                                       # P1: a refusal prints the problems and nothing verdict-bearing
+        out["disposition"] = "REFUSED_RECORD_INCONSISTENT"
+        emit(out)
+        return 4
+    out["laws"] = {}
     for law, items in laws.items():
         rows, feats = [x[0] for x in items], [x[1] for x in items]
         L = E.law_summary(rows, E.decode(feats), E.decode(feats, null=True))
-        out["laws"][law] = dict(L, disposition=E.disposition({"completeness": res.status, "records_ok": not problems,
-                                                               "qualified": qualified, "law": L}))
-    print(json.dumps(out, indent=1, default=str))
+        d = E.disposition({"completeness": res.status, "records_ok": True, "qualified": qualified, "law": L})
+        out["laws"][law] = dict(L, disposition=d, label=E.label(d, L), rows=rows)
+    emit(out)
     return 0
 
 
@@ -184,7 +256,7 @@ def main(argv):
     if cmd == "run":
         ref = argv[argv.index("--cleared-by") + 1] if "--cleared-by" in argv[:-1] else None
         if ref is None or len(argv) < 2:
-            print("REFUSED: a confirmatory run needs --cleared-by <coordinator release> (no confirmatory run in C-018-T030)")
+            print("REFUSED: a confirmatory run needs --cleared-by <coordinator release> (no confirmatory run in C-018-T030 / T041)")
             return 2
         why = release_problem(ref)
         if why:

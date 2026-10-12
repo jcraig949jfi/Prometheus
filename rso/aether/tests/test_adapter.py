@@ -2,8 +2,14 @@
     python -m unittest rso.aether.tests.test_adapter -v
 RED FIRST: committed before rso/aether/{adapter,evaluate,confirm}.py existed (red/RED_OUTPUT.txt).
 Synthetic records exercise every decision line of the evaluator; small fixture runs (Aether's own V1 law_step, 48^2,
-<= 24 ticks) exercise the recorder end to end. No confirmatory seed is executed here."""
+<= 24 ticks) exercise the recorder end to end. No confirmatory seed is executed here.
+v1.1.0 (C-018-T041): classes NonAncestorWindow, TreeStructure, Evaluable, Reporting, AnalyserGuards pin the repair round;
+every one is RED on its mutant (red/run_red.py rows 21+, and Pallas's challenge/edits.json E1 E2 E3 E5 applied verbatim)."""
 import copy
+import json
+import os
+import shutil
+import tempfile
 import unittest
 
 import numpy as np
@@ -171,8 +177,8 @@ class NativeTree(unittest.TestCase):
     def test_recorded_B_or_N_not_trusted(self):
         m, a = self.native()
         self.assertEqual(E.tree_check(m, a), [])
-        self.assertTrue(any("B" in p for p in E.tree_check(dict(m, B=m["origin"] + 2), a)))
-        self.assertTrue(any("N" in p for p in E.tree_check(dict(m, N=m["origin"] + 6), a)))
+        self.assertTrue(any("recorded B" in p for p in E.tree_check(dict(m, B=m["origin"] + 2), a)))
+        self.assertTrue(any("recorded N" in p for p in E.tree_check(dict(m, N=m["origin"] + 6), a)))
 
     def test_tree_must_match_observed_divergence(self):
         m, a = self.native()
@@ -229,7 +235,8 @@ class Content(unittest.TestCase):
 
 class Disposition(unittest.TestCase):
     def law(self, **kw):
-        d = {"n_units": 40, "confirmed_r2": 8, "content_excess_cond": 0.0, "content_excess_all": 0.0, "null_excess": 0.0}
+        d = {"n_units": 40, "evaluable": 40, "need": 4, "confirmed_r2": 8, "content_excess_cond": 0.0,
+             "content_excess_all": 0.0, "null_excess": 0.0}
         d.update(kw)
         return d
 
@@ -332,6 +339,311 @@ class FixtureEndToEnd(unittest.TestCase):
     def test_teleport_flagged(self):
         meta, a = A.fixture_unit("A", 0, n=48, horizon=12, law="TELEPORT")
         self.assertFalse(E.light_cone(meta, a)[0])
+
+
+def native_shape(n=N, origin=(8, 3), ticks_up=1, ticks_m=5, extra=()):
+    """Pallas's 0x3004 / 0x3005 shape (REPORT s4.2): B = O+(0,1) first diverges at tick 4 with a CARRY chain of targets at
+    ticks 6..8; U = O-(1,0), a generation-1 sibling that diverged at tick `ticks_up` (BEFORE B: a possible unattributed
+    upstream contributor); M = O+(1,0), a generation-1 sibling at tick `ticks_m`. Both are at B's distance from O."""
+    o = origin[0] * n + origin[1]
+    rows = [(o, 0, -1, 0, 0), (o + 1, 1, o, 4, 1), (o + 2, 2, o + 1, 6, 2), (o + 3, 3, o + 2, 7, 2), (o + 4, 4, o + 3, 8, 2),
+            (o - n, 1, o, ticks_up, 1), (o + n, 1, o, ticks_m, 1)] + list(extra)
+    return {k: [r[i] for r in rows] for i, k in enumerate(("site", "gen", "parent", "ftick", "type"))}, o
+
+
+class NonAncestorWindow(unittest.TestCase):
+    """B8 / B4: N must satisfy ftick(B) <= ftick(N) < min ftick(targets)."""
+    def test_upstream_sibling_is_not_the_control(self):
+        tree, o = native_shape()
+        self.assertEqual(A.nonancestor_candidates(tree, o + 1, o, N)[0][2], o - N)     # v1.0.0's N: the upstream sibling
+        self.assertEqual(A.nonancestor_window(tree, o + 1), (4, 6))
+        self.assertEqual(A.choose_nonancestor(tree, o + 1, o, N), o + N)               # v1.1.0: the matched sibling
+
+    def test_window_edges(self):
+        tree, o = native_shape(ticks_m=4)                                               # ftick(N) == ftick(B): allowed
+        self.assertEqual(A.choose_nonancestor(tree, o + 1, o, N), o + N)
+        tree, o = native_shape(ticks_m=6)                                               # == first target tick: excluded
+        self.assertIsNone(A.choose_nonancestor(tree, o + 1, o, N))
+        tree, o = native_shape(ticks_up=7, ticks_m=9)                                   # both after the targets began
+        self.assertIsNone(A.choose_nonancestor(tree, o + 1, o, N))
+
+    def test_ranking_inside_window(self):
+        far = (8 * N + 3 + 2 * N, 2, 8 * N + 3 + N, 5, 1)                                # distance 2 from O, tick 5
+        tree, o = native_shape(ticks_m=5, extra=[far])
+        self.assertEqual(A.choose_nonancestor(tree, o + 1, o, N), o + N)               # matched distance first
+
+    def test_no_window_control_means_vacuous_not_interventional_stands(self):
+        meta, a = chain()
+        meta["N"] = None
+        self.assertEqual(E.ancestry(meta, a)["cls"], "CONTROL_VACUOUS")                 # B clamp removes: N needed
+        a["ftick_cutB"][:] = a["ftick_impulse"]
+        a["ftick_cutB"][meta["B"]] = -1
+        self.assertEqual(E.ancestry(meta, a)["cls"], "NOT_INTERVENTIONAL")              # B clamp fails: no N needed
+
+
+class TreeStructure(unittest.TestCase):
+    """B1: native tree invariants and clamp-world fidelity in tree_check; the roots line (Pallas E2)."""
+    def setUp(self):
+        self.m, self.a = NativeTree().native()
+
+    def test_native_shape_is_clean(self):
+        self.assertEqual(E.tree_check(self.m, self.a), [])
+        tree, _ = native_shape()
+        self.assertEqual(E.tree_invariants(tree, N), [])
+
+    def test_invariants(self):
+        tree, o = native_shape()
+        t = copy.deepcopy(tree)
+        t["parent"][4] = o + 2                                    # o+4 re-parented two sites away, gen kept
+        p = E.tree_invariants(t, N)
+        self.assertTrue(any("4-adjacent" in x for x in p) and any("gen != parent" in x for x in p))
+        t = copy.deepcopy(tree)
+        t["ftick"][2] = 9                                         # o+2 after its child o+3
+        self.assertTrue(any("not earlier" in x for x in E.tree_invariants(t, N)))
+        t = copy.deepcopy(tree)
+        t["gen"][3] = 5
+        self.assertEqual(E.tree_invariants(t, N), ["tree invariant: gen != parent gen + 1 at 2 sites"])
+        t = copy.deepcopy(tree)
+        t["parent"][3] = 0
+        self.assertTrue(any("not in tree" in x for x in E.tree_invariants(t, N)))
+
+    def test_tree_check_runs_invariants(self):
+        t = copy.deepcopy(self.m["tree"])
+        o = self.m["origin"]
+        i = t["site"].index(o + 4)
+        t["parent"][i] = o + 2
+        self.assertTrue(any("4-adjacent" in x for x in E.tree_check(dict(self.m, tree=t), self.a)))
+
+    def test_clamp_world_must_be_a_clamp(self):
+        a = dict(self.a, ftick_cutB=np.full(N * N, -1, np.int16))     # no CUT_B world was run (Pallas's type-flip form)
+        self.assertTrue(any("cutB array is not a clamp" in x for x in E.tree_check(self.m, a)))
+        a = dict(self.a, ftick_cutN=self.a["ftick_impulse"].copy())   # N diverges in its own clamp world
+        self.assertTrue(any("cutN array is not a clamp" in x for x in E.tree_check(self.m, a)))
+
+    def test_origin_line(self):
+        m = dict(self.m, origin=self.m["origin"] + 1)                 # recorded origin is not the root / t0 site
+        self.assertTrue(any(x.startswith("origin:") for x in E.tree_check(m, self.a)))
+
+
+def summary_rows():
+    r = {"cls": "NO_CUT", "r_int": 0, "agreement": None, "n_targets": 0, "light_cone_ok": True, "ftick_B": None,
+         "ftick_N": None, "targets_ftick": None}
+    conf = [dict(r, cls="CONFIRMED", r_int=3, agreement=1.0, n_targets=4, ftick_B=1, ftick_N=2,
+                 targets_ftick=E.tick_profile([5, 6, 250, 320]), seed=s) for s in range(3)]
+    ni = [dict(r, cls="NOT_INTERVENTIONAL", agreement=0.0, n_targets=4, ftick_B=1, ftick_N=2, seed=3 + s) for s in range(5)]
+    return conf + ni + [dict(r, seed=8 + s) for s in range(40)]
+
+
+class Evaluable(unittest.TestCase):
+    """B2: `need` over EVALUABLE units; fewer than EVALUABLE_MIN -> ANCESTRY_UNEVALUABLE; label carries the count."""
+    def law(self, **kw):
+        return Disposition().law(**kw)
+
+    def base(self, L):
+        return {"completeness": "COMPLETE", "qualified": True, "records_ok": True, "law": L}
+
+    def test_unevaluable_population(self):
+        self.assertEqual(E.EVALUABLE_MIN, 8)
+        for ev in (0, 7):
+            L = self.law(n_units=48, evaluable=ev, confirmed_r2=min(ev, 3), content_excess_all=0.07)
+            self.assertEqual(E.disposition(self.base(L)), "ANCESTRY_UNEVALUABLE")
+        L = self.law(n_units=48, evaluable=8, confirmed_r2=3)
+        self.assertEqual(E.disposition(self.base(L)), "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT")
+
+    def test_need_counts_evaluable_units_only(self):
+        self.assertEqual([E.need(x) for x in (0, 8, 30, 31, 48)], [3, 3, 3, 4, 5])
+        L = self.law(n_units=48, evaluable=10, confirmed_r2=3)          # v1.0.0: need 5 over 48 units -> NEITHER
+        self.assertEqual(E.disposition(self.base(L)), "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT")
+        rows = summary_rows()                                            # 3 CONFIRMED r 3 of 8 evaluable; 40 NO_CUT
+        self.assertEqual(E.reach_band(rows), 3)
+        self.assertEqual(E.evaluable(rows), 8)
+
+    def test_label(self):
+        L = self.law(n_units=48, evaluable=10, need=3)
+        self.assertEqual(E.label("NEITHER", L), "NEITHER [evaluable 10 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]")
+
+
+class Reporting(unittest.TestCase):
+    """B3 / B7: content over the CONFIRMED units' own seeds and the targets' first-tick profile, beside the registered."""
+    def test_confirmed_seed_content_and_tick_profile(self):
+        rows = summary_rows()
+        acc = {r["seed"]: np.full((4, 6), 0.125 if r["cls"] == "CONFIRMED" else 1.0) for r in rows}
+        L = E.law_summary(rows, acc, {s: np.full((4, 6), 0.125) for s in acc})
+        self.assertGreater(L["content_excess_cond"], 0.7)                 # registered: radius band over every seed
+        self.assertEqual(L["content_excess_cond_confirmed_seeds"], 0.0)  # the CONFIRMED units' own features: chance
+        self.assertEqual((L["evaluable"], L["need"], L["reach_band"]), (8, 3, 3))
+        self.assertEqual(L["confirmed_targets_ftick"]["0"], {"n": 4, "min_q1_med_q3_max": [5.0, 5.8, 128.0, 267.5, 320.0],
+                                                             "after_200": 2, "after_300": 1})
+        self.assertEqual(L["nonspecific_N_before_B"], 0)
+        rows[3] = dict(rows[3], cls="NONSPECIFIC", ftick_B=4, ftick_N=1)
+        rows[4] = dict(rows[4], cls="NONSPECIFIC", ftick_B=4, ftick_N=4)        # same tick: inside the window, not upstream
+        self.assertEqual(E.law_summary(rows, acc, acc)["nonspecific_N_before_B"], 1)
+        self.assertIsNone(E.tick_profile([]))
+
+    def test_unit_row_carries_ticks(self):
+        m, a = NativeTree().native()
+        r = E.evaluate_unit(dict(m, seed=0), a)
+        self.assertEqual((r["ftick_B"], r["ftick_N"], r["targets_ftick"]["n"]), (1, 1, 5))
+
+
+class AnalyserGuards(unittest.TestCase):
+    """confirm.analyse on a two-shard fixture with stubbed replay / snapshot / freeze check (the shape of Pallas's
+    forge.e3 / e5). Each guard has a test that is RED on its mutant: E5 completeness stop, E3 unit-file binding, E1 replay
+    sample (challenge/edits.json verbatim), B6 freeze check, B5 duplicate refusal and per-unit snapshot binding, B1 replayed
+    tree, P1 nothing verdict-bearing on refusal."""
+    SEEDS = {"RX.0": [1, 2], "RX.1": [3, 4]}
+
+    def unit(self, k):
+        m, a = NativeTree().native()
+        a = {x: v.copy() for x, v in a.items()}
+        a["snap"][0][0, k] = k                                    # a seed-specific t0 state (single-site impulse kept)
+        a["imp"][0][0, k] = k
+        a["H"] = np.zeros((8, 1, 1, 6, 4, 256), np.uint8)
+        a["D"] = np.zeros((8, 1, 1, 6), np.float32)
+        m = dict(m, schema="prometheus.rso.aether.unit.v1", law="RX", seed=k, warm=1, H=1, B_tick=1,
+                 aether={"warm_digest": A.P.digest(list(a["snap"]))})
+        return m, a
+
+    def setUp(self):
+        self.d = tempfile.mkdtemp()
+        specs = []
+        for sid, ks in self.SEEDS.items():
+            os.makedirs(os.path.join(self.d, sid))
+            rows = []
+            for k in ks:
+                meta = A.save_unit(os.path.join(self.d, sid, "native_RX_%d" % k), *self.unit(k))
+                rows.append({"law": "RX", "seed": k, "arrays_sha256": meta["arrays_sha256"], "meta_sha256": M.digest(meta)})
+            self.write_shard(sid, rows)
+            specs.append({"id": sid, "seeds": ks, "arm_counts": {"RX": 2}, "rows": 2, "rows_sha256": "PENDING",
+                          "meta_sha256": "PENDING"})
+        self.design = M.build("T041 guard fixture", arms=["RX"], shards=specs, sources={}, row_key_fields=["law"],
+                              seed_field="seed", early_stop=None)
+        self.dp = os.path.join(self.d, "design.json")
+        with open(self.dp, "w", encoding="utf-8") as f:
+            json.dump(self.design, f)
+
+    def tearDown(self):
+        shutil.rmtree(self.d, ignore_errors=True)
+
+    def write_shard(self, sid, rows):
+        with open(os.path.join(self.d, sid + ".shard.json"), "w", encoding="utf-8") as f:
+            json.dump(C.make_shard(sid, rows), f)
+
+    def stored(self, law, k, *_a, **_k):
+        return A.load_unit(os.path.join(self.d, "RX.%d" % ((k - 1) // 2), "native_%s_%d" % (law, k)))
+
+    def genuine_snapshot(self, law, k, n, warm):
+        _, a = self.unit(k)
+        return list(a["snap"]), 0, NativeTree().native()[0]["origin"]
+
+    def genuine_tree(self, law, k, n, warm, H):
+        m, _ = self.stored(law, k)
+        return {"tree": m["tree"], "origin": m["origin"], "warm_digest": m["aether"]["warm_digest"]}
+
+    def run_analyse(self, **kw):
+        got = []
+        kw.setdefault("replay", self.stored)
+        kw.setdefault("tree_replay", self.genuine_tree)
+        kw.setdefault("snapshot", self.genuine_snapshot)
+        kw.setdefault("freeze_check", lambda: [])
+        rc = C.analyse(runs=self.d, design_path=self.dp, pin=self.design["manifest_sha256"], emit=got.append, **kw)
+        return rc, got[0]
+
+    def assert_refused(self, rc, out, needle):
+        self.assertEqual(rc, 4)
+        self.assertTrue(any(needle in p for p in out["problems"]), out.get("problems"))
+        self.assertNotIn("laws", out)                                 # P1: nothing verdict-bearing
+        self.assertNotIn("classes", json.dumps(out))
+
+    def test_clean_fixture_reports_evidence(self):
+        rc, out = self.run_analyse()
+        self.assertEqual(rc, 0, out.get("problems"))
+        self.assertEqual(out["evidence"], {"freeze_check": "OK", "rows": 4, "distinct_arrays_sha256": 4, "snapshot_bound": 4,
+                                           "tree_replayed": 4, "full_replay_verified": 2, "replay_sample": C.REPLAY})
+        self.assertEqual(out["laws"]["RX"]["disposition"], "ANCESTRY_UNEVALUABLE")
+        self.assertIn("evaluable 4 of 4 units", out["laws"]["RX"]["label"])
+
+    def test_E5_incomplete_stops_before_units(self):
+        os.remove(os.path.join(self.d, "RX.1.shard.json"))
+        rc, out = self.run_analyse()
+        self.assertEqual(rc, 3)
+        self.assertNotIn("laws", out)
+        self.assertNotIn("problems", out)
+
+    def test_E3_unit_files_bound_to_row(self):
+        p = os.path.join(self.d, "RX.1.shard.json")
+        with open(p, encoding="utf-8") as f:
+            sh = json.load(f)
+        sh["rows"][1]["arrays_sha256"] = "f" * 64
+        self.write_shard("RX.1", sh["rows"])
+        self.assert_refused(*self.run_analyse(), "unit files differ from the shard row")
+
+    def test_E1_replay_sample(self):
+        def replay(law, k):
+            m, a = self.stored(law, k)
+            return m, dict(a, ftick_cutN=a["ftick_cutN"][::-1].copy())
+        self.assert_refused(*self.run_analyse(replay=replay), "native replay differs")
+
+    def test_B1_replayed_tree(self):
+        def replay(law, k):
+            m, a = self.stored(law, k)
+            t = copy.deepcopy(m["tree"])
+            t["type"][-1] = 3
+            return dict(m, tree=t), a
+        self.assert_refused(*self.run_analyse(replay=replay), "replayed ['tree'] differs")
+
+    def test_B1_every_unit_tree_replayed(self):
+        def tree_replay(law, k, n, warm, H):                      # seed 4 is not in the full-replay sample
+            u = self.genuine_tree(law, k, n, warm, H)
+            if k == 4:
+                u["tree"] = dict(u["tree"], type=u["tree"]["type"][:-1] + [3 - u["tree"]["type"][-1]])
+            return u
+        rc, out = self.run_analyse(tree_replay=tree_replay)
+        self.assert_refused(rc, out, "RX.1 seed 4: replayed Aether tree / origin is not the unit's")
+        self.assertEqual(out["evidence"]["tree_replayed"], 3)
+
+    def test_B1_tree_replay_checks_origin_and_warm_digest(self):
+        for field, value in (("origin", -7), ("warm_digest", "0" * 32)):
+            with self.subTest(field=field):
+                def tree_replay(law, k, n, warm, H):
+                    u = self.genuine_tree(law, k, n, warm, H)
+                    return dict(u, **{field: value}) if k == 4 else u
+                self.assert_refused(*self.run_analyse(tree_replay=tree_replay), "replayed Aether tree / origin is not")
+
+    def test_B6_freeze_check_first(self):
+        rc, out = self.run_analyse(freeze_check=lambda: ["design manifest differs from the frozen one"])
+        self.assertEqual((rc, out["disposition"]), (4, "REFUSED_FREEZE_MISMATCH"))
+        self.assertNotIn("completeness", out)
+
+    def copy_as(self, k_src, k_dst, relabel=True):
+        m, a = A.load_unit(os.path.join(self.d, "RX.1", "native_RX_%d" % k_src))
+        m = A.save_unit(os.path.join(self.d, "RX.1", "native_RX_%d" % k_dst), dict(m, seed=k_dst if relabel else k_src), a)
+        rows = [json.load(open(os.path.join(self.d, "RX.1.shard.json"), encoding="utf-8"))["rows"][0],
+                {"law": "RX", "seed": k_dst, "arrays_sha256": m["arrays_sha256"], "meta_sha256": M.digest(m)}]
+        self.write_shard("RX.1", rows)
+
+    def test_B5_duplicate_arrays_refused(self):
+        self.copy_as(3, 4)
+        self.assert_refused(*self.run_analyse(snapshot=lambda law, k, n, w: self.genuine_snapshot(law, 3, n, w)),
+                            "rows share an arrays_sha256")
+
+    def test_B5_every_unit_snapshot_bound(self):
+        self.copy_as(3, 4)
+        self.assert_refused(*self.run_analyse(), "warm snapshot / origin is not seed 4's")
+
+    def test_meta_names_its_row(self):
+        self.copy_as(3, 4, relabel=False)
+        self.assert_refused(*self.run_analyse(snapshot=lambda law, k, n, w: self.genuine_snapshot(law, 3, n, w)),
+                            "unit meta names RX seed 3")
+
+    def test_B5_warm_digest_is_the_seeds(self):
+        p = os.path.join(self.d, "RX.1", "native_RX_4")
+        m, a = A.load_unit(p)
+        m = A.save_unit(p, dict(m, aether={"warm_digest": "0" * 32}), a)     # stored snap genuine, Aether digest not
+        rows = json.load(open(os.path.join(self.d, "RX.1.shard.json"), encoding="utf-8"))["rows"]
+        rows[1]["meta_sha256"] = M.digest(m)
+        self.write_shard("RX.1", rows)
+        self.assert_refused(*self.run_analyse(), "warm snapshot / origin is not seed 4's")
 
 
 if __name__ == "__main__":

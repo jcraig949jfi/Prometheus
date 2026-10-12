@@ -14,7 +14,7 @@ from rso.registry.registry import ROOT, file_sha
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(HERE, "FROZEN.json")
-VERSION = "1.0.0"
+VERSION = "1.1.0"                      # 1.0.0 frozen in C-018-T030; 1.1.0 = the one repair round, C-018-T041
 FILES = ["rso/aether/" + f for f in (
     "__init__.py", "adapter.py", "evaluate.py", "confirm.py", "qualify.py", "controls.py", "freeze.py", "PREREGISTRATION.md",
     "tests/__init__.py", "tests/test_adapter.py", "demand/__init__.py", "demand/fixtures.py", "demand/demand_gate.py",
@@ -55,7 +55,7 @@ def write():
     design = confirm.design_manifest()
     if committed != design:
         raise SystemExit("manifests/confirm_design.manifest.json is stale: run `python -m rso.aether.confirm design --write`")
-    spec = dict(schema="prometheus.rso.aether.frozen.v1", what="FREEZE_AETHER_ANCESTRY_CONTENT v%s (C-018-T030)" % VERSION,
+    spec = dict(schema="prometheus.rso.aether.frozen.v1", what="FREEZE_AETHER_ANCESTRY_CONTENT v%s (C-018-T030; repair round C-018-T041)" % VERSION,
                 version=VERSION, python=python_mm(), design_manifest_sha256=design["manifest_sha256"],
                 files={p: file_sha(p, ROOT) for p in sorted(FILES)})
     with open(PATH, "w", encoding="utf-8", newline="\n") as f:

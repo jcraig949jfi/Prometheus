@@ -9,6 +9,9 @@ What is new here is OBSERVATION only: lockstep CONTROL / IMPULSE / CUT_B / CUT_N
 semantics: the clamped site's five fields := CONTROL's, every tick), per-site first-divergence ticks, digests, and the
 non-ancestor rule. The record is (meta JSON, arrays NPZ); `arrays_sha256` binds them. The evaluator (evaluate.py) re-derives
 every verdict from the arrays and the engine's tree; it never reads a producer verdict.
+v1.1.0 (C-018-T041, the one repair round; PREREGISTRATION s10): the non-ancestor is chosen inside the timing window
+ftick(B) <= ftick(N) < min ftick(targets) (Pallas B8 / B4); `warm_snapshot` is factored out so the analyser can bind every
+unit to its seed (B5).
 """
 import hashlib
 import json
@@ -20,7 +23,7 @@ from rso.aether.demand import fixtures as F    # sets sys.path to the pinned Aet
 import prop01_run as P                         # noqa: E402  (Aether, unmodified)
 import prop01_tree as TR                       # noqa: E402  (Aether, unmodified)
 
-ADAPTER = "rso.aether.adapter 1.0.0"
+ADAPTER = "rso.aether.adapter 1.1.0"
 _, K = P.load_backend("cpu")
 # NEW seed range, disjoint from Cadmus's 0xC18A..0xC18E and every Aether range (0xE2010000, 0xE2011000, 0x1A9F; grep'd)
 SEEDS = {"rng": 0xC30A0000, "phys": 0xC30B0000, "imp": 0xC30E0000, "graded": 0xC30C0000}
@@ -46,11 +49,9 @@ def cheb(n, a, b):
     return max(min(dy, n - dy), min(dx, n - dx))
 
 
-def choose_nonancestor(tree, B, O, n):
-    """N for the non-ancestor clamp: an ATTRIBUTED site (generation >= 1) outside B's subtree and B's ancestry, i.e. by the
-    engine's own attribution an ancestor of none of B's descendants; divergent by construction (it is in the tree), so its
-    clamp is a real intervention, never the identity. Matched to B: min |cheb(N,O) - cheb(B,O)|, then earliest first
-    divergence, then lowest index. None if no such site exists."""
+def nonancestor_candidates(tree, B, O, n):
+    """Every ATTRIBUTED site (generation >= 1) outside B's subtree and B's ancestry -- by the engine's own attribution an
+    ancestor of none of B's descendants -- ranked (|cheb(N,O) - cheb(B,O)|, first divergence, index). v1.0.0 took the first."""
     par = dict(zip(tree["site"], tree["parent"]))
     desc = TR.descendants(tree, B)
     anc, p = set(), par.get(B, -1)
@@ -58,9 +59,25 @@ def choose_nonancestor(tree, B, O, n):
         anc.add(p)
         p = par.get(p)
     dB = cheb(n, B, O)
-    cands = [(abs(cheb(n, s, O) - dB), t, s) for s, g, t in zip(tree["site"], tree["gen"], tree["ftick"])
-             if g >= 1 and s != B and s != O and s not in desc and s not in anc]
-    return min(cands)[2] if cands else None
+    return sorted((abs(cheb(n, s, O) - dB), t, s) for s, g, t in zip(tree["site"], tree["gen"], tree["ftick"])
+                  if g >= 1 and s != B and s != O and s not in desc and s not in anc)
+
+
+def nonancestor_window(tree, B):
+    """(lo, hi) = (ftick(B), min ftick over B's attributed descendants; None if B has none). v1.1.0 (B8): a site that
+    first diverged BEFORE B can be an unattributed upstream contributor of B, so it is not a matched non-ancestor control;
+    (B4): a site that first diverged at or after a target cannot have removed it, so N must precede every target."""
+    ft = dict(zip(tree["site"], tree["ftick"]))
+    return ft[B], min((ft[s] for s in TR.descendants(tree, B)), default=None)
+
+
+def choose_nonancestor(tree, B, O, n):
+    """N for the non-ancestor clamp: the first-ranked candidate (nonancestor_candidates) whose first divergence t satisfies
+    lo <= t < hi (nonancestor_window). Divergent by construction (it is in the tree), so its clamp is a real intervention,
+    never the identity. None if no candidate is in the window (the unit then has no matched control: CONTROL_VACUOUS)."""
+    lo, hi = nonancestor_window(tree, B)
+    ok = [c for c in nonancestor_candidates(tree, B, O, n) if lo <= c[1] and (hi is None or c[1] < hi)]
+    return ok[0][2] if ok else None
 
 
 def pair_run(step, control, impulse, horizon, clamps, keep=()):
@@ -120,14 +137,11 @@ class _Seeds:
         P.RNG_SEED_BASE, P.PHYS_SEED_BASE, P.IMPULSE_DOMAIN = self.old
 
 
-def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
-    """One native paired unit. (1) Aether's run_unit: the ATTRIBUTED tree. (2) B = Aether's choose_cut; N = the
-    non-ancestor rule. (3) This recorder: CONTROL / IMPULSE (bit 0 of the origin payload, as prop01_run.py:135) / CUT_B /
-    CUT_N in lockstep. (4) Content, Aether's r1 decodability design on the same snapshot: 8 branches with payload := V[j]
-    at every r1 grid origin (16 at 128^2; one origin per world was too few to train the decoder at a 0.05 margin,
-    qual/QUALIFICATION_v1_48origins.json), Aether's features vs CONTROL at `ts`. The warm-up is recomputed here and must reproduce Aether's warm digest."""
+def warm_snapshot(law, k, n=128, warm=300):
+    """Aether's soup (aeth01_run.build_initial) warmed `warm` ticks by Aether's law_step, and Aether's origin (pick_origin),
+    in this adapter's seed range: (state fields, phys seed, origin). ~1/10 of a unit; the analyser recomputes it for EVERY
+    unit to bind the unit's stored `snap` to its seed (v1.1.0, B5)."""
     with _Seeds():
-        u = P.run_unit("cpu", law, k, n, warm, H)
         f0, _ = P.R.build_initial(P.R.SPARSE_SOUP, n, n, P.RNG_SEED_BASE + k, write_density=P.DENSITY,
                                   energy_mode=P.R.ENERGY_UNIFORM)
         phys = P.PHYS_SEED_BASE + k
@@ -135,6 +149,24 @@ def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
         for t in range(warm):
             s, _ = P.law_step(np, K, law, n, phys, t + 1, s)
         O = P.pick_origin(np, K, s, k)
+    return s, phys, O
+
+
+def aether_unit(law, k, n=128, warm=300, H=400):
+    """Aether's run_unit in this adapter's seed range: the ATTRIBUTED tree, origin and warm digest only (~1/4 of a unit).
+    The analyser replays it for EVERY unit (v1.1.0 s10.6, B1)."""
+    with _Seeds():
+        return P.run_unit("cpu", law, k, n, warm, H)
+
+
+def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
+    """One native paired unit. (1) Aether's run_unit: the ATTRIBUTED tree. (2) B = Aether's choose_cut; N = the
+    non-ancestor rule. (3) This recorder: CONTROL / IMPULSE (bit 0 of the origin payload, as prop01_run.py:135) / CUT_B /
+    CUT_N in lockstep. (4) Content, Aether's r1 decodability design on the same snapshot: 8 branches with payload := V[j]
+    at every r1 grid origin (16 at 128^2; one origin per world was too few to train the decoder at a 0.05 margin,
+    qual/QUALIFICATION_v1_48origins.json), Aether's features vs CONTROL at `ts`. The warm-up is recomputed here and must reproduce Aether's warm digest."""
+    u = aether_unit(law, k, n, warm, H)
+    s, phys, O = warm_snapshot(law, k, n, warm)
     if P.digest(s) != u["warm_digest"] or O != u["origin"]:
         raise RuntimeError("recorder warm-up does not reproduce Aether's run_unit (law %s k %d)" % (law, k))
     B, bt = TR.choose_cut(u)

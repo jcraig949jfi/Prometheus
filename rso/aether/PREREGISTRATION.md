@@ -1,4 +1,9 @@
-# Aether native ancestry-vs-content assay -- PREREGISTRATION v1.0.0 (C-018-T030)
+# Aether native ancestry-vs-content assay -- PREREGISTRATION v1.1.0 (C-018-T030; amended C-018-T041)
+
+**v1.1.0 = v1.0.0 (sections 0-9, unchanged text below) + the amendment in sections 10-12**, made in the ONE bounded repair
+round (operator directive Gen-4 s9) after Pallas's Q3 challenge (C-018-T040, rso/aether/challenge/REPORT.md) and BEFORE any
+confirmatory outcome exists. Where s10 changes a v1.0.0 rule, s10 governs; the v1.0.0 text is kept as the record of what was
+frozen and challenged.
 
 Author: Argus[harry1-6f7f55db], claude-opus-5-5 (Q2), headless on harry1 (M4), 2026-10-12. Branch `argus/c018-t030` from
 base `3f7408d62`. Authority: operator directive OBSERVATORY GENERATION 4 (roles/Palamedes/prompts/2026-10-12_generation4/
@@ -179,3 +184,177 @@ manifest is committed and pinned for later re-verification.
 - Native classes NONSPECIFIC / NOT_INTERVENTIONAL were exercised on fixtures and synthetic records, not on dev native units
   (all dev units were NO_CUT or INSUFFICIENT).
 - Q2 author; no Q3 challenge yet (Pallas, after this freeze).
+
+## 10. Amendment v1.1.0 -- the one bounded repair round (C-018-T041)
+
+Author: Argus[harry1-4230902d], claude-opus-5-5 (Q2), headless on harry1 (M4), 2026-10-12. Branch `argus/c018-t041` from base
+`4e3a34f02` (Palamedes's integration of C-018-T040). Read-only against `Aether/` and `roles/Aether/`; nothing on M2; no
+confirmatory seed executed (k = 0x2000+i untouched; the burned 0x1000..0x10FF untouched); no RELEASE.json written. This
+section is committed BEFORE the v1.1.0 development check (s10.4) and BEFORE the re-freeze. Source references are to the
+v1.1.0 files. Every item below cites the REPORT finding it answers.
+
+### 10.1 Evidence chain (no registered meaning changes; REPORT s3 EVIDENCE CHAIN, s5 items 1-4)
+
+| Finding | v1.1.0 | Where |
+|---|---|---|
+| B6 pin from a mutable file | `analyse()` runs `freeze.mismatches()` FIRST and refuses on any mismatch: disposition REFUSED_FREEZE_MISMATCH, rc 4, nothing else read | confirm.py `analyse` (first statement after imports) |
+| B5 duplicated evidence | a duplicated `arrays_sha256` across rows is refused; EVERY unit is bound to its seed by recomputing Aether's warm snapshot and origin (`adapter.warm_snapshot`, 4.6 s measured on RX k=0, ~7% of a unit) and comparing the stored t0 CONTROL state, the origin and Aether's `warm_digest`; a unit's meta must name its row's law and seed. The result carries `evidence` = {freeze_check, rows, distinct_arrays_sha256, snapshot_bound, full_replay_verified, replay_sample} | confirm.py `snapshot_problem`, `analyse` |
+| B1 tree tamper | the replay sample compares the replayed meta `tree`, `B`, `N`, `origin`, `B_tick` as well as `arrays_sha256`; `tree_check` adds the native tree invariants (parent present, 4-adjacent, earlier, gen = parent gen + 1) and clamp-world fidelity (in CUT_B / CUT_N the origin diverges at t0 and the clamped site never diverges: closes Pallas's type-flip form, whose clamp arrays were never run) | evaluate.py `tree_invariants`, `tree_check`; confirm.py `REPLAY_META` |
+| E5 / E1h / E3h unpinned guards | one behavioural test per guard on a two-shard fixture with stubbed replay / snapshot / freeze check (tests `AnalyserGuards`); Pallas's challenge/edits.json E1-E5 applied VERBATIM by red/run_red.py: all RED | tests/test_adapter.py, red/red_rows_v1_1_0.jsonl |
+| P1 refusal leak | a refused analysis (completeness, freeze, record problems) prints its problems and nothing verdict-bearing (no `laws`, no class counts) | confirm.py `analyse` |
+| S2 harness portability | run_red matches edits line-ending agnostically | red/run_red.py `_adapt` |
+
+### 10.2 Instrument: the non-ancestor rule (REPORT s4.2 B8, B4)
+
+**Rule v1.1.0.** N is the first candidate of the v1.0.0 ranking (attributed, generation >= 1, outside B's subtree and B's
+ancestry; min |cheb(N,O) - cheb(B,O)|, then earliest first divergence, then lowest index) whose first divergence t satisfies
+**ftick(B) <= t < min ftick(targets)** (adapter.py `nonancestor_window`, `choose_nonancestor`). No candidate in the window ->
+N = None -> the unit has no matched control.
+
+Reasons, recorded as an ordinary reversible choice (rso-builder-role s2.7):
+1. Lower bound (B8). A site that first diverged BEFORE B can have fed B through a path the conservative single-parent
+   attribution does not record (prop01 keeps the minimum-generation parent); clamping it is not a non-ancestor control. A
+   site that first diverged at or after B cannot have caused B's first divergence.
+2. Strict upper bound (B4). Before N diverges its clamp is the identity (adapter.py `pair_run`), so a target that diverged at
+   or before N's first divergence cannot be removed by N. Pallas wrote `<=`; `<` is the tighter form of the same requirement
+   (every target is time-live for N) and does not re-open B4.
+3. Rejected: two non-ancestors with NONSPECIFIC only if both remove > 0.2 (a fifth clamp world, ~+15% per unit, and a second
+   registered threshold); splitting NONSPECIFIC_UPSTREAM (keeps a control that is not a matched control: the class would still
+   depend on the N choice). Revisit trigger: the re-check (C-018-T042) finds the window leaves too many units without a control.
+4. NOT_INTERVENTIONAL is now decided BEFORE control vacuity (evaluate.py `ancestry`): a B clamp that fails (removed_B < 0.8)
+   needs no non-ancestor control. Under v1.0.0 such a unit with no N read CONTROL_VACUOUS. CONFIRMED / NONSPECIFIC still need a
+   divergent N; without one the unit is CONTROL_VACUOUS (not evaluable).
+
+**Effect on Pallas's challenge units (from the published rows, outcomes rows_natives.jsonl `extras.N_candidates`; no seed
+re-executed by this seat).** Of the 11 RX units with a B, the window removes the upstream first-ranked candidate in 0x3000,
+0x3004, 0x3005, 0x3006, 0x3016. New N: 0x3000 5792 (INSUFFICIENT anyway), 0x3004 9499 (tick 4), 0x3005 14707 (tick 5); none in
+window for 0x3006 and 0x3012 (both INSUFFICIENT) and 0x3016 (NOT_INTERVENTIONAL, kept by item 4). 9499 and 14707 are exactly
+Pallas's second-ranked candidates (outcomes/altn_summary.json), clamped by Pallas with removed_N 0.00 in both: under v1.1.0
+those two units would read CONFIRMED. **Disclosure: this amendment moves 2 of Pallas's 3 native NONSPECIFIC units to CONFIRMED;
+the direction is the finding's (the v1.0.0 rule preferred an upstream contributor), and is stated so a reviewer can weigh
+it.** 0x3003 (N tick 4 after B tick 1, before the first target at 10) stays NONSPECIFIC: genuine non-specificity remains
+readable. Evaluable incidence on those 24 units is unchanged at 7. Fixtures keep their recipe N (the near-misses A_misN /
+A_vacN qualify the C3 READING, not the native selection rule; they class as registered, qual/QUALIFICATION.json).
+
+### 10.3 Inference (REPORT s4.3 B2, B3; s4.2 B7)
+
+- **Evaluable units** = CONFIRMED + NONSPECIFIC + NOT_INTERVENTIONAL (the units on which the ancestry question was asked).
+  **EVALUABLE_MIN = 8.** Fewer evaluable units than 8 -> **ANCESTRY_UNEVALUABLE** (after completeness, records, qualification
+  and the decoder null; before P2). It is never read as absence of ancestry.
+- `need` = max(3, ceil(10% of the EVALUABLE units)) in both the reach band and P2 (evaluate.py `need`, `reach_band`,
+  `disposition`). v1.0.0 counted every unit, NO_CUT included. This is not stricter in every case (48 units with 14 evaluable:
+  need 3 instead of 5): the denominator is now the units that were tested, which is what B2 asks; the minimum of 3 CONFIRMED
+  units and the minimum of 8 evaluable together bound how small a tested set may decide P2.
+- Disposition order: completeness -> records -> qualification -> decoder null -> ANCESTRY_UNEVALUABLE -> P2 x P3 (unchanged
+  thresholds: removed 0.8 / 0.2, 3 targets, margin 0.05, null 0.03).
+- Every printed disposition carries `label` = "<DISPOSITION> [evaluable E of n units; minimum 8; need k CONFIRMED at r >= 2]".
+- **B3 (reporting only; the registered rule is unchanged, owner's call per REPORT s5 item 7):** `content_excess_cond_confirmed_
+  seeds` = the conditioned excess over the CONFIRMED units' own seeds, printed beside `content_excess_cond`. If the two fall on
+  different sides of MARGIN the result text says so (s11 item 2).
+- **B7 (reporting only):** per CONFIRMED unit, `confirmed_targets_ftick` = the targets' first-divergence profile (min, quartiles,
+  max, number after ticks 200 and 300); each unit row carries ftick_B, ftick_N, targets_ftick. `nonspecific_N_before_B` is
+  printed (0 by construction under s10.2).
+
+### 10.4 V1, sizing and the development check (decided here, before any v1.1.0 development unit is run)
+
+- **V1.** Evaluable incidence on V1 is 0 of 8 challenge units and 0 of 2 development units. Reaching 8 evaluable V1 units at an
+  incidence below ~5% would need > 160 units (> 2.7 core-h): over budget. **Decision: V1 is NOT enlarged.** It stays the
+  shallow-tree comparison and is expected, and will be reported, as ANCESTRY_UNEVALUABLE with its evaluable count and
+  `content_excess_all`; that is "ancestry not evaluated on V1", never a negative V1 ancestry result.
+- **RX sizing rule.** p = evaluable / units pooled over the v1.1.0 development RX units k = 0..15 (this packet) and Pallas's
+  24 RX challenge units under v1.1.0 (7 evaluable, s10.2). If P(Binomial(48, p) < 8) > 0.10, RX is enlarged to 64 units (4
+  shards x 16) and V1 reduced to 8 units (1 shard) to hold the confirmatory budget at ~1.5 core-h; otherwise the design keeps
+  48 RX (4 x 12) and 16 V1 (2 x 8). Either way the seeds are k = 0x2000+i (same k = same initial soup for both laws). The
+  outcome of this rule is recorded in s10.5 after the development check.
+- **Development check (dev seeds only, k in 0..15):** RX k = 0..15 and V1 k = 0..3 re-run with the v1.1.0 adapter
+  (`python -m rso.aether.qualify dev`), `qualify verdict` and `qualify devcheck` re-derived; tree invariants, clamp fidelity,
+  snapshot binding and a full replay are checked on development units.
+
+### 10.5 Development check result and sizing outcome
+
+Filled after the development check (s10.1-s10.4 committed unchanged at `b3cc39a56` before any v1.1.0 unit ran). DEV-class
+data, not a result.
+
+- Units: RX k = 0..15, V1 k = 0..3 under adapter 1.1.0 (qual/records/native_*; timings qual/records/DEV_TIMING.jsonl, last 20
+  rows; two processes concurrently: RX 79.8-100.3 s, mean 89.5; V1 74.3-77.4 s, mean 75.4).
+- `qualify verdict`: qualified True, all five criteria; native_dev 20/20 with no binding / tree cross-check / tree invariant /
+  clamp-fidelity problem and t0 identity 1 (qual/QUALIFICATION.json). Fixture near-misses unchanged (A_misN NONSPECIFIC,
+  A_vacN CONTROL_VACUOUS, A_wrongB NOT_INTERVENTIONAL, 4/4 each).
+- `qualify devcheck` (qual/DEV_CHECK.json): RX 8 NO_CUT, 4 INSUFFICIENT, 3 CONFIRMED (k 11, 13, 15; r_int 2, 2, 4), 1
+  NOT_INTERVENTIONAL (k 5), 0 NONSPECIFIC, 0 CONTROL_VACUOUS: **evaluable 4 of 16 -> ANCESTRY_UNEVALUABLE** (the rule doing
+  what it is for); content_excess_all 0.0095, null 0.0002. V1: 4 NO_CUT -> ANCESTRY_UNEVALUABLE.
+- The window changed N in 4 of the 8 dev units with a B (k 5, 6, 7, 11): each v1.0.0 N first diverged at tick 1, before B
+  (ticks 8, 3, 24, 4). k 7 has no candidate in its window [24, 25): N = None, INSUFFICIENT anyway (2 targets). k 11
+  (CONFIRMED, B tick 4, N tick 4) is the 0x3004 shape on a dev seed; its v1.0.0 N was not clamped, so its v1.0.0 class is not
+  known. k 13 is CONFIRMED with removed_N = 0.2 exactly (NONANC_MAX is inclusive): a threshold-edge unit. k 0 is INSUFFICIENT
+  with its single target first diverging at tick 349 (a late-target case, B7).
+- **Sizing outcome (s10.4 rule):** p = (4 + 7) / (16 + 24) = 0.275; P(Binomial(48, 0.275) < 8) = 0.027 <= 0.10 -> **the design
+  is unchanged: 48 RX (4 shards x 12) + 16 V1 (2 x 8), k = 0x2000+i.** Expected RX evaluable ~13. V1 is expected
+  ANCESTRY_UNEVALUABLE (s10.4).
+- **Budget:** one process at a time ~65.6 s per RX and 60.5 s per V1 unit (v1.0.0 measurement) -> 4,116 s, plus the analysis's
+  64 snapshots x 4.6 s and 6 full replays (~400 s) -> **~1.3 core-h**. Two concurrent processes on harry1 are slower per unit
+  (thermal; measured above) -> ~1.7 core-h. Both inside the R2 envelope; the coordinator chooses. (Superseded by s10.6.)
+
+### 10.6 Per-unit tree replay (B1, invariant-respecting form; added by Argus[harry1-d48cbcfd] before the re-freeze)
+
+Committed BEFORE its code and before the dev analysis is re-run. Why: Pallas's own `challenge/synth.py`, run unchanged
+against the v1.1.0 evaluator (qual/SYNTH_v1_1_0.json), shows the naive and type-flip B1 tampers caught (tree invariant;
+clamp fidelity) but the invariant-respecting re-parenting still classes INSUFFICIENT -> CONFIRMED with problems []. Under
+s10.1 only the full replay of the first unit of every shard compares the tree, so on 58 of 64 confirmatory units the tree's
+parent / gen / type -- which decide B, N and the targets -- would still be trusted producer fields (REPORT s4.1: "only the
+replayed tree closes" this form). Aether's `run_unit` alone (the tree, without the four recorder worlds or the content
+branches) measures 17.1 s on RX k=0 (harry1, one process).
+
+- **Rule.** `analyse()` re-runs Aether's `run_unit` (law, k) for EVERY unit and requires its `tree`, `origin` and
+  `warm_digest` to equal the unit's meta (problem "replayed Aether tree / origin is not the unit's" otherwise). B and N are
+  then the rules' outputs on a replayed tree (tree_check already recomputes both). The warm-snapshot binding (s10.1) is
+  kept: it binds the stored t0 state array, which `run_unit` does not return. The full replay sample is unchanged.
+  `evidence` gains `tree_replayed` (units whose tree was replayed and equal).
+- **Not a meaning change**: no class, threshold, status or rule changes; a unit whose tree differs is a record problem
+  (REFUSED_RECORD_INCONSISTENT), exactly as a differing full replay already was.
+- **What stays open (s12):** the CLAMP arrays (cutB / cutN first ticks) of a unit outside the full-replay sample are still
+  bound only by snapshot, tree agreement site for site and tick for tick, the invariants and clamp fidelity.
+- **Budget (replaces s10.5's last bullet):** runs 48 x 65.6 s + 16 x 60.5 s = 4,116 s; analysis 64 x (4.6 + 17.1) s +
+  6 full replays x ~65 s = ~1,780 s; total **~1.64 core-h** one process at a time (~+0.3 core-h over s10.5), ~2.1 core-h
+  at two concurrent processes on harry1. Above the packet's ~1.5 core-h sizing guide by ~0.14 core-h; inside the R2
+  envelope (<= 16 core-h per item). Recorded as an ordinary reversible choice (rso-builder-role s2.7): the analysis can drop
+  back to s10.1 by one line, and the coordinator may decline the extra cost before the run, in which case this limit
+  returns to s12.
+- **Development result (filled after the text above was committed at `8c27b262a`; DEV-class).** Code: adapter.py
+  `aether_unit`, confirm.py `tree_problem`; tests 57 -> 59 (`test_B1_every_unit_tree_replayed`,
+  `test_B1_tree_replay_checks_origin_and_warm_digest`); red/run_red.py rows 47-50, 56/56 KILLED. Real `confirm.analyse` on
+  the dev units (qual/DEV_ANALYSE_v1_1_0.json, `analyser_s10_6`; two COMPLETE sub-designs RX.dev0 and RX.dev1 + V1.dev0
+  because 20 units no longer fit one 600 s call): freeze check OK, 20/20 snapshot-bound, **20/20 tree-replayed**, 3 full
+  replays, problems []; every per-unit row identical to the 20-unit s10.1 run (no class moved). Forged RX.dev1 (k=9 a copy
+  of k=8): REFUSED_RECORD_INCONSISTENT on three independent lines (duplicate arrays, snapshot, tree replay), nothing
+  verdict-bearing. Pallas's invariant-respecting tamper on dev RX k=0 (INSUFFICIENT -> CONFIRMED, evaluator problems [])
+  is refused by the real tree replay; the genuine unit passes (qual/B1_TREE_REPLAY_v1_1_0.json, `rso.aether.dev_b1_tree`).
+  Measured analysis cost: 8 units + 1 full replay 258 s, 12 units + 2 full replays 391 s wall (~24 s per unit beside the
+  replays), consistent with the budget above.
+
+## 11. Interpretation the confirmatory result text must carry, whatever it is (REPORT s4.4)
+
+1. The evaluable count beside every disposition (the `label`). NEITHER / CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY are emitted
+   only with >= 8 evaluable units; ANCESTRY_UNEVALUABLE means "ancestry not evaluated", not "absent".
+2. ANCESTRY_WITH_CONTENT means co-occurrence at the radius-band level across the population; the conditioned excess over the
+   CONFIRMED units' own features is printed beside it, and a disagreement across MARGIN is stated in words.
+3. The class of a unit is conditional on the registered N rule (s10.2). Under v1.1.0 no NONSPECIFIC unit has ftick(N) <
+   ftick(B); NONSPECIFIC still conflates damage spreading with a lateral path the attribution missed.
+4. The per-unit first-tick distribution of targets for every CONFIRMED unit; "never diverges in CUT_B" = "not within 400 ticks".
+5. How many units were snapshot-bound, tree-replayed (s10.6) and fully replayed, that no row pair shares arrays, and that the analyser ran the freeze
+   check (the `evidence` block).
+6. CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT carries s3's bound (excess < ~0.05-0.10 not excluded); Pallas's 24 challenge
+   units read 0.012 with a null of -0.0004.
+7. Nothing here reclassifies TEST-4.
+
+## 12. Limits added or kept by v1.1.0
+
+- Provenance of the CLAMP worlds of a unit outside the full-replay sample rests on: its t0 state being the seed's (snapshot),
+  its arrays agreeing with Aether's tree site for site and tick for tick, the tree invariants, clamp fidelity, and the replay
+  sample. An invariant-respecting forgery of a non-sampled unit's clamp arrays is not excluded (full replay of every unit is
+  ~1.25 core-h more; not in budget). Since s10.6 the attribution TREE of every unit is replayed; only the clamp arrays
+  remain bound indirectly.
+- The window can leave a unit without a matched control (CONTROL_VACUOUS); its incidence is reported.
+- The window was chosen after reading Pallas's challenge outcomes (disclosed in s10.2); the thresholds were not changed.
+- Pallas's B4 synthetic gap is closed for the NATIVE N selection (every target diverges after N); fixtures keep recipe sites.
+- There is no second repair round (directive s9): anything the re-check (C-018-T042) finds open is reported as a limitation.
