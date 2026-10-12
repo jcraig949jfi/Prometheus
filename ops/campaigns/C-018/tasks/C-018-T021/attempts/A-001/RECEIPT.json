@@ -1,0 +1,34 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-018-T021",
+  "campaign_id": "C-018",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "3f8cc0150cedbb76c85948ae06aac24a5cc9cfae",
+  "end_sha": "3f4ffd453",
+  "files_changed": ["rso/gen5/CANDIDATE_CONTRACT.md", "rso/gen5/__init__.py", "rso/gen5/smoke_crius.py", "rso/gen5/smoke_crius_result.json"],
+  "evidence_added": [
+    "CANDIDATE_CONTRACT.md: five-class survey; primary Crius (artifact-mediated reuse), runner-up Ananke PTE; owner, pinned files, entry points file:line, demand-gate sketch, qualification difficulties",
+    "smoke_crius.py + smoke_crius_result.json: Crius's committed controls execute on 3 new seeds in 5.5 s (executability only, no claim)"
+  ],
+  "evidence_executed": [
+    {"command": "python -m rso.gen5.smoke_crius rso/gen5/smoke_crius_result.json", "result": "REUSE ACC 49/50/50 vs FRESH 26/32/28; NOCAL and TABLE_MEMO show no gain; ablate-all = code-only = compute/storage-matched; 5.5 s"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: no failing test applies"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "Ananke, Aphrodite, Proteus-graph, Tyche read not run; Hestia dossier numbers partly CLAIMED",
+    "Crius positive is hand-built and the world leaks primitive identity; smoke is not a demand-gate pass"
+  ],
+  "unresolved": ["Palamedes/operator: confirm Crius vs Ananke and name an engine steward for the closed Crius lane"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-12T00:00:00Z",
+  "instance": "harry1-1324c7b6",
+  "host": "harry1",
+  "branch": "cadmus/c018-t020",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c018-t020",
+  "resources": {"cpu": "one process, seconds", "model": "one Sonnet 5.5 session"}
+}
