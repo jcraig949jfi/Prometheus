@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T020",
+  "campaign_id": "C-018",
+  "title": "Aether selection + demand gate for P1-P4 (read-only, before any adapter)",
+  "objective": "Decide which of P1 (spatial influence), P2 (causal ancestry), P3 (information transmission), P4 (transformation) Aether supports as a bounded, independently discriminating native experiment -- or reject.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/aether/SELECTION.md",
+    "rso/aether/demand/"
+  ],
+  "reads": [
+    "Aether/",
+    "roles/Aether/",
+    "roles/Hestia/audit/2026-10-06/dossiers/Aether.md",
+    "rso/registry/",
+    "rso/z80/SELECTION.md (pattern)"
+  ],
+  "problem": "Read Aether/V2B/REACH01/R1_TEST4_RESULT.md, Aether/V2B/TEST-3/OPERATOR_REVIEW.md, Aether/V2B/THREE_FLIGHT_SYNTHESIS_2026-10-07.md, roles/Hestia/audit/2026-10-06/dossiers/Aether.md and the committed Aether source/instrumentation (decode, clamp, non-ancestor, ruler fixtures: 'exchange decodes at r=1 only; relay chain decodes at r=1..6; label-unrelated divergence at chance'). PRESERVE TEST-4's disposition (RECOIL_EXCHANGE_CAUSAL_REACH_NOT_SUPPORTED; information largely gone beyond radius 3): Generation 4 does not reclassify it. For each of P1-P4 state whether the committed source supports: a known-answer positive (a planted relay / chain may qualify the INSTRUMENT, not discovery); a suitable negative control; a native intervention that changes a causal pathway (clamp); an independently recomputable outcome; a bounded resource requirement on harry1 CPU (measure throughput; do not use M2); an observable distinction NOT already settled by TEST-4. The key contrast the directive wants: can the Observatory tell P2 (ancestry) from P3 (recoverable content) -- e.g. a planted chain that propagates structure WITHOUT content vs one that carries content. If P3/P4 are unsupported natively, narrow to P1/P2 and say so; if even P1/P2 lack an independently discriminating question, recommend another spatial system. Do not alter physics. Small re-runs with NEW seeds (declare a range disjoint from every Aether range), committed with commands. Apply the falsifiability checklist (each control: alternative it represents, pass/fail observations, impossibility by construction, privileged access, discrimination) -- rso/qualify/ if landed, else directive s2B text.",
+  "non_goals": [
+    "No edit to Aether/ or roles/Aether/",
+    "No Aether registered seed or frozen result",
+    "Nothing run on M2",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "SELECTION.md: per-P decision with evidence, controls, unit, interventions, resources, what TEST-4 already settles",
+    "re-runs committed with commands"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/SELECTION.md",
+    "rso/aether/demand/"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[harry1-1324c7b6]",
+      "at_utc": "2026-10-12T09:04:51Z",
+      "note": "claim; worktree cadmus-c018-t020"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[harry1-1324c7b6]",
+      "at_utc": "2026-10-12T09:31:07Z",
+      "note": "IMPLEMENTING; branch cadmus/c018-t020 @ d142791c7"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[harry1-1324c7b6]",
+      "at_utc": "2026-10-12T09:31:07Z",
+      "note": "GREEN; branch cadmus/c018-t020 @ d142791c7"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[harry1-1324c7b6]",
+      "at_utc": "2026-10-12T09:31:07Z",
+      "note": "INTEGRATION_READY; branch cadmus/c018-t020 @ d142791c7"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:40:31Z",
+      "note": "merged cadmus/c018-t020 (branch rule followed): only rso/aether/ + rso/gen5/ (T021) + seat files; demand gate re-run identical except wall_seconds (4 min 12 s). Decision: P1/P2/P3, P4 UNSUPPORTED; native question = attributed vs interventional ancestry + content (T030)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:40:31Z",
+      "note": "decision taken into C-018-T030 (s16 item 4)"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: read-only selection"
+}

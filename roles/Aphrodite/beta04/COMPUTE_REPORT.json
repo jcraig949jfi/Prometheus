@@ -1,0 +1,122 @@
+{
+ "schema": "beta04.compute.v1",
+ "campaign": "C-015",
+ "cap": "48 core-h per rolling 24 h; <= 4 workers; $0 cloud",
+ "rows": [
+  {
+   "item": "E2 shards (qual/kcal/atlas/run)",
+   "core_h": 10.363,
+   "files": 633,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "E2 prelaunch",
+   "core_h": 0.038,
+   "files": 1,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "E3-KP production, all rows (unique searches)",
+   "core_h": 2.279,
+   "files": 7,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "E3-ID production (unique searches + enumerations)",
+   "core_h": 0.38,
+   "files": 7,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "AR-1 production (unique searches)",
+   "core_h": 2.507,
+   "files": 7,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "E3-R production (driver CPU ledger)",
+   "core_h": 2.836,
+   "files": 1,
+   "kind": "MEASURED"
+  },
+  {
+   "item": "FOUNDRY v1 pilot + build (FOUNDRY_DESIGN s pilot total)",
+   "core_h": 1.4,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "FOUNDRY v2 repair round (FOUNDRY_DESIGN s round total)",
+   "core_h": 1.3,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "FOUNDRY production, 12 secret worlds (FOUNDRY_DESIGN s production)",
+   "core_h": 4.4,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE core build (W01)",
+   "core_h": 0.7,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE E3 runner + smoke (estimate from SMOKE cost model)",
+   "core_h": 1.0,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE E3-KP alignment + pilot timing",
+   "core_h": 1.7,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE E3-ID build + pilot",
+   "core_h": 0.35,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE E3-R build + pilot",
+   "core_h": 0.65,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "SUBSTRATE E3-R A1 code + pilot",
+   "core_h": 0.75,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "ATLAS build + calibration",
+   "core_h": 2.5,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "ATLAS E2 driver + timing",
+   "core_h": 1.0,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "ALIEN AR-1 build + pilot",
+   "core_h": 1.43,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "K-AB conformance (estimate)",
+   "core_h": 0.2,
+   "kind": "REPORTED"
+  },
+  {
+   "item": "Red teams + independent reviews (foundry red team ~0.47; others < 0.1 each)",
+   "core_h": 0.6,
+   "kind": "REPORTED"
+  }
+ ],
+ "total_measured_core_h": 18.4,
+ "total_reported_core_h": 17.98,
+ "total_core_h": 36.38,
+ "notes": [
+  "MEASURED = sum of recorded per-search/per-shard CPU seconds, each unique search counted once; process start-up and orchestration overhead not included.",
+  "REPORTED = figures stated by the leads/reviewers in their docs; not independently re-measured.",
+  "Everything before E3-R ran between 2026-10-10 09:27Z and 2026-10-11 01:30Z, i.e. inside one rolling 24 h window; its total is below the 48 core-h cap. E3-R starts at/after 2026-10-11 11:30Z.",
+  "Cloud spend: $0. No live models."
+ ]
+}

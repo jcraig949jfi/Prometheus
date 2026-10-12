@@ -1,0 +1,129 @@
+{
+ "D": 30,
+ "K": 0,
+ "W": 8,
+ "abandoned_attempts": 3,
+ "approved_code_sha": "55c74f7cb456b5417306136ebd4c4b1d4648a035",
+ "arm": "R",
+ "drain_left_busy": 0,
+ "ended_at": "2026-10-10T11:07:06Z",
+ "fabric_schema": "fabric_b_r1_r_d30_w8_40a6",
+ "iters": 50900634,
+ "kills": [
+  {
+   "killed_at": "2026-10-10T10:56:36Z",
+   "killed_at_db_epoch": 1791629797.026402,
+   "victim_pid": 251631,
+   "victim_was_executing": true
+  },
+  {
+   "killed_at": "2026-10-10T10:59:06Z",
+   "killed_at_db_epoch": 1791629946.469815,
+   "victim_pid": 251688,
+   "victim_was_executing": true
+  },
+  {
+   "killed_at": "2026-10-10T11:01:35Z",
+   "killed_at_db_epoch": 1791630096.381358,
+   "victim_pid": 251745,
+   "victim_was_executing": true
+  }
+ ],
+ "label": "R_D30_W8",
+ "loop_errors": [],
+ "metrics": {
+  "M1_coordination_wall_fraction": 0.0020759944540977493,
+  "M2_retries_per_published": 0.046153846153846156,
+  "M3_p95_gap_over_median_execute": 0.0007212945440836511,
+  "M4_abandonment_rate": 0.04411764705882353,
+  "M5_bytes_moved_per_published": 13346.892307692307,
+  "M6_db_bytes_per_published": 66922.33846153846,
+  "M7_tripwire_bytes_per_30d": 18787509907.355892,
+  "attempts_executed": 68,
+  "db_errors": 0,
+  "execute_s": {
+   "median": 78.6043541431427,
+   "p95": 93.63134098052979
+  },
+  "finish_s": {
+   "median": 0.01708197593688965,
+   "p95": 0.030532121658325195
+  },
+  "gap_s": {
+   "median": 0.028200984001159668,
+   "n": 60,
+   "p95": 0.05669689178466797
+  },
+  "moonshot_non_published": 0,
+  "publish_latency_s": {
+   "median": 0.15289998054504395,
+   "p95": 0.3854250907897949
+  },
+  "published": 65,
+  "queue_s": {
+   "median": 93.95400285720825,
+   "p95": 175.23486399650574
+  },
+  "tasks": 65,
+  "throughput_per_s": 0.10830864368759278,
+  "transfer_s": {
+   "median": 0.09506702423095703,
+   "p95": 0.17396283149719238
+  },
+  "wall_s": 600.1367738246918
+ },
+ "moonshot_schema": "moonshot_b_r1_r_d30_w8_40a6",
+ "node_load_before": {
+  "ubu001": [
+   "10:54:02 up 7 days, 20:16,  2 users,  load average: 0.23, 1.17, 1.75",
+   "%CPU COMMAND",
+   " 3.5 sshd-session",
+   " 0.9 claude",
+   " 0.0 irq/139-iwlwifi",
+   " 0.0 upowerd",
+   " 0.0 kworker/0:0-cgroup_release"
+  ],
+  "ubu002": [
+   "10:54:03 up 7 days, 20:12,  2 users,  load average: 0.21, 1.09, 1.69",
+   "%CPU COMMAND",
+   " 3.5 sshd-session",
+   " 1.2 claude",
+   " 0.0 irq/138-iwlwifi",
+   " 0.0 upowerd",
+   " 0.0 kworker/0:2-events"
+  ]
+ },
+ "recovery": [
+  {
+   "abandoned_attempt": "att-9ecfca05a788",
+   "recovered_s": 189.64476704597473,
+   "task_id": "tsk-c08aa8af0cca"
+  },
+  {
+   "abandoned_attempt": "att-a3ccdf1d1f8f",
+   "recovered_s": 131.67738604545593,
+   "task_id": "tsk-e4f2bb23bf8e"
+  },
+  {
+   "abandoned_attempt": "att-f65329fb4c73",
+   "recovered_s": 124.60010409355164,
+   "task_id": "tsk-9bcc3e56b8ae"
+  }
+ ],
+ "smoke": false,
+ "started_at": "2026-10-10T10:54:01Z",
+ "validation": {
+  "byte_failures": 0,
+  "byte_verified": 65,
+  "replay_mismatches": 0,
+  "replayed": 6
+ },
+ "verdict": [
+  "RECONSIDER",
+  [
+   "B4"
+  ]
+ ],
+ "wall_s": 600.0,
+ "wpn": 4
+}

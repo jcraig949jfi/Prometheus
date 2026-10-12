@@ -1,0 +1,531 @@
+{
+ "pairs": [
+  [
+   72,
+   96
+  ],
+  [
+   73,
+   97
+  ],
+  [
+   74,
+   98
+  ],
+  [
+   75,
+   99
+  ],
+  [
+   76,
+   100
+  ],
+  [
+   77,
+   101
+  ],
+  [
+   78,
+   102
+  ],
+  [
+   80,
+   104
+  ],
+  [
+   82,
+   106
+  ],
+  [
+   83,
+   107
+  ],
+  [
+   84,
+   108
+  ],
+  [
+   85,
+   109
+  ],
+  [
+   86,
+   110
+  ],
+  [
+   87,
+   111
+  ],
+  [
+   88,
+   112
+  ],
+  [
+   89,
+   113
+  ],
+  [
+   90,
+   114
+  ],
+  [
+   91,
+   115
+  ],
+  [
+   92,
+   116
+  ],
+  [
+   93,
+   117
+  ],
+  [
+   94,
+   118
+  ],
+  [
+   95,
+   119
+  ]
+ ],
+ "amendment": "A1 (pre-data, red-team REDTEAM_E1_E2_PREFREEZE.md)",
+ "positive_control_arm": "L_P|g11_O10",
+ "learnable_after_inheritance_descriptive": {
+  "L_g11|g11_O10": {
+   "families": 28,
+   "pairs": 10
+  },
+  "L_I0|g11_O10": {
+   "families": 24,
+   "pairs": 8
+  }
+ },
+ "end_state_L_P_gt_L_g11": {
+  "n": 22,
+  "nonzero": 11,
+  "sum": -25,
+  "mean": -1.136,
+  "median": 0.0,
+  "better": 3,
+  "worse": 8,
+  "tied": 11,
+  "p_one_sided": 0.972168,
+  "p_two_sided": 0.078125,
+  "attainable_min_p": 0.00048828,
+  "diffs": [
+   -1,
+   -1,
+   0,
+   0,
+   1,
+   -6,
+   0,
+   0,
+   2,
+   -4,
+   0,
+   0,
+   4,
+   0,
+   0,
+   0,
+   -4,
+   -8,
+   -4,
+   -4,
+   0,
+   0
+  ]
+ },
+ "ceiling_condition_4": "AN_EXTENDING_RECIPIENT_ACQUIRED",
+ "interference_attainable_min_p_two_sided": 0.03125,
+ "interference_nonzero_pairs_k": 6,
+ "caveats": [
+  "composition-of-inherited (a18.compositions) is OFF for transplanted recipients (held=[]): H3 is tested in E3/E5, not here (red-team E1-4)",
+  "ceiling thresholds (25%, PC 5/3) were set after the W01 diagnostic (red-team E1-4)",
+  "share compares cell-level own-start with family-level common measures (E1-9)",
+  "427 identical programs occur in both seed blocks: part of inherited capability may be memorised overlap (E1-10)"
+ ],
+ "n_pairs": 22,
+ "common_residual_slots": 329,
+ "positive_control": {
+  "families": 35,
+  "pairs": 12,
+  "pass": true
+ },
+ "A_inherited_capability_vs_pristine": {
+  "START|L_g11": 143,
+  "START|L_I0": 44,
+  "START|L_P": 0
+ },
+ "B_common_residual_slots_per_pair": {
+  "96": 19,
+  "97": 11,
+  "98": 18,
+  "99": 11,
+  "100": 19,
+  "101": 14,
+  "102": 18,
+  "104": 20,
+  "106": 14,
+  "107": 17,
+  "108": 15,
+  "109": 11,
+  "110": 15,
+  "111": 14,
+  "112": 17,
+  "113": 11,
+  "114": 7,
+  "115": 17,
+  "116": 15,
+  "117": 16,
+  "118": 8,
+  "119": 22
+ },
+ "C_new_acquisition_common": {
+  "L_g11|g11_O10": 28,
+  "L_I0|g11_O10": 24,
+  "L_P|g11_O10": 35
+ },
+ "C_new_acquisition_common_per_pair": {
+  "L_g11|g11_O10": {
+   "96": 2,
+   "97": 6,
+   "98": 1,
+   "99": 0,
+   "100": 0,
+   "101": 1,
+   "102": 0,
+   "104": 0,
+   "106": 0,
+   "107": 5,
+   "108": 0,
+   "109": 0,
+   "110": 0,
+   "111": 2,
+   "112": 2,
+   "113": 0,
+   "114": 0,
+   "115": 3,
+   "116": 0,
+   "117": 2,
+   "118": 4,
+   "119": 0
+  },
+  "L_I0|g11_O10": {
+   "96": 2,
+   "97": 6,
+   "98": 1,
+   "99": 0,
+   "100": 0,
+   "101": 1,
+   "102": 0,
+   "104": 0,
+   "106": 0,
+   "107": 5,
+   "108": 0,
+   "109": 0,
+   "110": 0,
+   "111": 0,
+   "112": 4,
+   "113": 0,
+   "114": 0,
+   "115": 0,
+   "116": 0,
+   "117": 1,
+   "118": 4,
+   "119": 0
+  },
+  "L_P|g11_O10": {
+   "96": 2,
+   "97": 6,
+   "98": 1,
+   "99": 0,
+   "100": 5,
+   "101": 1,
+   "102": 0,
+   "104": 0,
+   "106": 0,
+   "107": 5,
+   "108": 0,
+   "109": 1,
+   "110": 0,
+   "111": 2,
+   "112": 4,
+   "113": 0,
+   "114": 3,
+   "115": 0,
+   "116": 0,
+   "117": 1,
+   "118": 4,
+   "119": 0
+  }
+ },
+ "own_start_improvement_secondary": {
+  "L_g11|g11_O10": 33,
+  "L_I0|g11_O10": 88,
+  "L_P|g11_O10": 137
+ },
+ "D_end_state_reach": {
+  "L_g11|g11_O10": 388,
+  "L_I0|g11_O10": 355,
+  "L_P|g11_O10": 363
+ },
+ "E_interference_test_L_g11_vs_L_P_common": {
+  "n": 22,
+  "nonzero": 6,
+  "sum": -7,
+  "mean": -0.318,
+  "median": 0.0,
+  "better": 2,
+  "worse": 4,
+  "tied": 16,
+  "p_one_sided": 0.859375,
+  "p_two_sided": 0.4375,
+  "attainable_min_p": 0.015625,
+  "diffs": [
+   0,
+   0,
+   0,
+   0,
+   -5,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   -1,
+   0,
+   0,
+   -2,
+   0,
+   -3,
+   3,
+   0,
+   1,
+   0,
+   0
+  ]
+ },
+ "saturation_own_start_L_g11_vs_L_P": {
+  "n": 22,
+  "nonzero": 21,
+  "sum": -104,
+  "mean": -4.727,
+  "median": -5.0,
+  "better": 1,
+  "worse": 20,
+  "tied": 1,
+  "p_one_sided": 0.999999,
+  "p_two_sided": 5e-06,
+  "attainable_min_p": 4.8e-07,
+  "diffs": [
+   -4,
+   -7,
+   0,
+   -9,
+   -5,
+   -5,
+   -7,
+   -5,
+   -4,
+   -2,
+   -7,
+   -3,
+   -6,
+   -4,
+   -3,
+   -6,
+   -6,
+   3,
+   -5,
+   -7,
+   -7,
+   -5
+  ]
+ },
+ "saturation_own_start_p_one_sided_negative": 2e-06,
+ "headroom_share_of_deficit": 0.9327,
+ "enabling_test_L_g11_vs_L_P_common": {
+  "n": 22,
+  "nonzero": 6,
+  "sum": -7,
+  "mean": -0.318,
+  "median": 0.0,
+  "better": 2,
+  "worse": 4,
+  "tied": 16,
+  "p_one_sided": 0.859375,
+  "p_two_sided": 0.4375,
+  "attainable_min_p": 0.015625,
+  "diffs": [
+   0,
+   0,
+   0,
+   0,
+   -5,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   -1,
+   0,
+   0,
+   -2,
+   0,
+   -3,
+   3,
+   0,
+   1,
+   0,
+   0
+  ]
+ },
+ "holm_reject_[interference,saturation]": [
+  false,
+  true
+ ],
+ "failed_opportunities": {
+  "L_g11|g11_O10": 301,
+  "L_I0|g11_O10": 305,
+  "L_P|g11_O10": 294
+ },
+ "best_arm_fraction_of_common_acquired": 0.1064,
+ "ordering_charge_ratio_L_g11_over_L_P": {
+  "n": 339,
+  "median": 1.0
+ },
+ "compositional_extensions_of_inherited": [
+  {
+   "pair": [
+    75,
+    99
+   ],
+   "extensions": [
+    [
+     "(acc - {H})",
+     "(acc - ({H} - v))"
+    ]
+   ],
+   "acq_common": 0
+  },
+  {
+   "pair": [
+    78,
+    102
+   ],
+   "extensions": [
+    [
+     "({H} + v)",
+     "((acc + {H}) + v)"
+    ]
+   ],
+   "acq_common": 0
+  },
+  {
+   "pair": [
+    87,
+    111
+   ],
+   "extensions": [
+    [
+     "(acc + {H})",
+     "(acc + math.gcd(abs({H}), abs(v)))"
+    ]
+   ],
+   "acq_common": 2
+  },
+  {
+   "pair": [
+    89,
+    113
+   ],
+   "extensions": [
+    [
+     "(acc + {H})",
+     "(acc + ({H} - v))"
+    ]
+   ],
+   "acq_common": 0
+  },
+  {
+   "pair": [
+    90,
+    114
+   ],
+   "extensions": [
+    [
+     "((acc + {H}) + v)",
+     "((acc + ({H} // v)) + v)"
+    ]
+   ],
+   "acq_common": 0
+  },
+  {
+   "pair": [
+    92,
+    116
+   ],
+   "extensions": [
+    [
+     "(acc - math.gcd(abs({H}), abs(v)))",
+     "(acc - math.gcd(abs(math.gcd(abs({H}), abs({H}))), abs(v)))"
+    ],
+    [
+     "(acc - {H})",
+     "(acc - math.gcd(abs(math.gcd(abs({H}), abs({H}))), abs(v)))"
+    ]
+   ],
+   "acq_common": 0
+  },
+  {
+   "pair": [
+    93,
+    117
+   ],
+   "extensions": [
+    [
+     "(acc + {H})",
+     "(acc + math.gcd(abs({H}), abs(v)))"
+    ]
+   ],
+   "acq_common": 2
+  }
+ ],
+ "semantic_classes": {
+  "L_g11|g11_O10": {
+   "n_derived_median": 5.0,
+   "classes_median": 5.0
+  },
+  "L_I0|g11_O10": {
+   "n_derived_median": 4.0,
+   "classes_median": 7.5
+  },
+  "L_P|g11_O10": {
+   "n_derived_median": 3.5,
+   "classes_median": 7.5
+  }
+ },
+ "donor_memorise_selected": {
+  "g11_O10": 0,
+  "g0_O4": 11
+ },
+ "labels": {
+  "INTERFERENCE_SUPPORTED": false,
+  "SATURATION_SUPPORTED": true,
+  "REPRESENTATION_CEILING_CONSISTENT": false
+ },
+ "known": {
+  "K1_reproduces_Beta02_E12_seed25": true,
+  "K2_reducer_reproduces_W01_on_R8": true,
+  "K3_composes_on": true,
+  "K3_detects_R8_pairs_66_and_57": true,
+  "K1b_donor_full_equals_b02_donor": true,
+  "pass": true
+ },
+ "disposition": "MEASURED"
+}

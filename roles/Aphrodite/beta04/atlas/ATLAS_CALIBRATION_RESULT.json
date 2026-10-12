@@ -1,0 +1,2592 @@
+{
+ "base_budget": 5000,
+ "label": "PLANTED INSTRUMENT CALIBRATION (hand-made witness and dev design); NOT DISCOVERY",
+ "pilot": {
+  "W1-F023-R2": {
+   "cpu_s": {
+    "atlas": 20.5,
+    "ladder": 132.9,
+    "qual": 3.2,
+    "total": 156.6
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.9,
+    "D-CERT": 0.2545454545454545,
+    "D-RES": 0.8818181818181818,
+    "TRACE": 0.9
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "QUALIFIED",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 10,
+    "paths_truncated": false,
+    "size": 12
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    220,
+    66
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 8161.884000000001,
+     "magnitude": 2305.2162162162163,
+     "partial": 8161.884000000001
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     61157176,
+     61157176,
+     61157176,
+     61157176
+    ],
+    "local_search": "RARITY_LIMIT_UNANCHORED",
+    "notes": [
+     "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED"
+    ],
+    "route_start_is_generic_start": {
+     "exact": false,
+     "partial": false
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 1
+   },
+   "task_sha256": "6d1e1cce92743093fccab03f83ae679fa04015662bcd45565d716ca3c95364e7",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     61157176,
+     623202131
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 10
+   },
+   "witness_size": 10
+  },
+  "W1-F037-R3": {
+   "cpu_s": {
+    "atlas": 12.0,
+    "ladder": 135.0,
+    "qual": 10.8,
+    "total": 157.8
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.8324902723735409,
+    "D-CERT": 0.7865758754863813,
+    "D-RES": 0.7723735408560312,
+    "TRACE": 0.8445525291828794
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "FAIL",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 6000,
+    "paths_truncated": false,
+    "size": 258
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    5140,
+    1542
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 10777.536,
+     "magnitude": 3483.4378378378383,
+     "partial": 3483.4378378378383
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     18679437656084,
+     18679437656084,
+     18679437656084,
+     18679437656084
+    ],
+    "local_search": "RARITY_LIMIT_UNANCHORED",
+    "notes": [
+     "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED"
+    ],
+    "route_start_is_generic_start": {
+     "exact": false,
+     "partial": false
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 1
+   },
+   "task_sha256": "5fa79bf3e4b008fe05558bad207779d8637ed7474ac3aff0504053dbfa8be017",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     18679437656084,
+     218742935488274
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 16
+   },
+   "witness_size": 16
+  },
+  "W2-F019-R2": {
+   "cpu_s": {
+    "atlas": 18.1,
+    "ladder": 110.1,
+    "qual": 2.4,
+    "total": 130.7
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.8170103092783505,
+    "D-CERT": 0.08247422680412371,
+    "D-RES": 0.29896907216494845,
+    "TRACE": 0.836340206185567
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "FAIL",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 60,
+    "paths_truncated": false,
+    "size": 42
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    776,
+    246
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 3353.4,
+     "magnitude": 3353.4,
+     "partial": 3353.4
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     6531346521,
+     6531346521,
+     6531346521,
+     6531346521
+    ],
+    "local_search": "REACHED_PREDICTED_UNANCHORED",
+    "notes": [
+     "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED"
+    ],
+    "route_start_is_generic_start": {
+     "exact": false,
+     "partial": false
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 1
+   },
+   "task_sha256": "20d7556cc1ee342ae7f074e4afb791f315204e649c0403036ebe127ff2fc1ca0",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     6531346521,
+     69107995482
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 12
+   },
+   "witness_size": 12
+  },
+  "W2-F028-R3": {
+   "cpu_s": {
+    "atlas": 20.8,
+    "ladder": 145.5,
+    "qual": 35.5,
+    "total": 201.8
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.9435828981979506,
+    "D-CERT": 0.5909073063483962,
+    "D-RES": 0.4040281104000628,
+    "TRACE": 0.9481763574260924
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "QUALIFIED",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 200000,
+    "paths_truncated": true,
+    "size": 1276
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    25471,
+    7646
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "enumeration": "REPRESENTATION_LIMIT",
+    "local_search": "REPRESENTATION_LIMIT",
+    "notes": [
+     "witness larger than the mutator's max_size"
+    ],
+    "scale": 16
+   },
+   "task_sha256": "c756ea835fc34cfecd2615346d2d65a433bfee30d2e475ecc1e200c117803a8c",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     2582318657588435,
+     30830295469025073
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 18
+   },
+   "witness_size": 18
+  },
+  "W3-F021-R2": {
+   "cpu_s": {
+    "atlas": 17.3,
+    "ladder": 119.1,
+    "qual": 6.0,
+    "total": 142.4
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.7339816933638444,
+    "D-CERT": 0.016018306636155607,
+    "D-RES": 0.4691075514874142,
+    "TRACE": 0.7934782608695652
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "FAIL",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 5640,
+    "paths_truncated": false,
+    "size": 89
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    1748,
+    524
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 888591.3797508198,
+     "magnitude": 5488.649232786887,
+     "partial": 888591.3797508198
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     6531346521,
+     6531346521,
+     6531346521,
+     6531346521
+    ],
+    "local_search": "REACHABILITY_DESERT_UNANCHORED",
+    "notes": [
+     "route starts are not the search's generic starts: the estimates omit the approach cost and are NOT anchored; label suffixed _UNANCHORED",
+     "diagnostic: the magnitude channel (a numeric-closeness heuristic, not a correctness credit; used by no search here) WOULD see a gradient (crossing estimate 5.49e+03)"
+    ],
+    "route_start_is_generic_start": {
+     "exact": false,
+     "partial": false
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 2
+   },
+   "task_sha256": "e62f8b2fc9c35135d0ac408b6fe8614b117c6ba1d5c00d8aca33cf7418edf2df",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     6531346521,
+     69107995482
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 12
+   },
+   "witness_size": 12
+  },
+  "W3-F032-R3": {
+   "cpu_s": {
+    "atlas": 9.0,
+    "ladder": 142.1,
+    "qual": 8.5,
+    "total": 159.6
+   },
+   "descriptor_R1": {
+    "D-BEH": 0.7094017094017094,
+    "D-CERT": 0.48925148925148926,
+    "D-RES": 0.47681947681947684,
+    "TRACE": 0.7112147112147112
+   },
+   "descriptor_verdicts": {
+    "D-BEH": "FAIL",
+    "D-CERT": "FAIL",
+    "D-RES": "FAIL"
+   },
+   "enum_false_hits": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hits_by_seed_at_80k": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "exists": true,
+   "ladder_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 4,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "ladder_hits_of_4": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "lattice": {
+    "any_intermediate_with_exact_credit": true,
+    "n_paths": 25200,
+    "paths_truncated": false,
+    "size": 195
+   },
+   "qual_controls_ok": true,
+   "qual_pairs": [
+    3861,
+    1160
+   ],
+   "route_classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 2914320.384,
+     "magnitude": 5435.424000000001,
+     "partial": 26463.068214443956
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     141218376635,
+     141218376635,
+     141218376635,
+     141218376635
+    ],
+    "local_search": "CREDIT_LIMIT",
+    "notes": [
+     "search channel 'exact' cannot cross within 16x; alternative channel(s) ['partial'] can"
+    ],
+    "route_start_is_generic_start": {
+     "exact": true,
+     "partial": true
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 2
+   },
+   "task_sha256": "fb0a57a10293cbcc7ff9e83e30873745f702e5547a89cacea40e7a2dffd7fcc1",
+   "witness_rank_bracket_seed0": {
+    "bracket": [
+     141218376635,
+     1617345585007
+    ],
+    "exact": false,
+    "rank": null,
+    "size": 14
+   },
+   "witness_size": 14
+  }
+ },
+ "toys": {
+  "CREDIT": {
+   "arms_autonomous_of_8": {
+    "A-CHAIN": 0,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 3,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 0,
+    "C3-RAND": 0
+   },
+   "arms_cpu_s": 156.5,
+   "arms_hits_of_8": {
+    "A-CHAIN": 0,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 3,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 0,
+    "C3-RAND": 0
+   },
+   "arms_median_censored_cost": {
+    "A-CHAIN": 5000,
+    "A-CHAIN[none]": 5000,
+    "A-CHAIN[partial]": 5000,
+    "A-FRESH": 5000,
+    "B1-RETAIN": 5000,
+    "B2-DESCSEL": 5000,
+    "B3-CELLADMIT": 5000,
+    "C2-RAND": 5000,
+    "C3-RAND": 5000
+   },
+   "atlas_cpu_s": 15.8,
+   "classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 38579735.145063765,
+     "magnitude": 952.7118750000002,
+     "partial": 1848.7440000000004
+    },
+    "enumeration": "RARITY_LIMIT",
+    "enumeration_crossing_by_seed": [
+     42646,
+     29253,
+     45297,
+     25973,
+     17958,
+     11480,
+     13268,
+     27048
+    ],
+    "local_search": "CREDIT_LIMIT",
+    "local_search_empirical_hits_at_B": {
+     "A-CHAIN": 0,
+     "A-FRESH": 0
+    },
+    "notes": [
+     "search channel 'exact' cannot cross within 16x; alternative channel(s) ['partial'] can"
+    ],
+    "route_start_is_generic_start": {
+     "exact": true,
+     "partial": true
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 3
+   },
+   "contrasts": {
+    "A-CHAIN vs A-CHAIN[none]": {
+     "better": 0,
+     "factor": "feedback used (credit-guided vs credit-blind drift)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "A-CHAIN vs A-FRESH": {
+     "better": 0,
+     "factor": "no restarts",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "A-CHAIN[partial] vs A-CHAIN": {
+     "better": 3,
+     "factor": "partial credit",
+     "hits": [
+      3,
+      0
+     ],
+     "p_one_sided": 0.125,
+     "tied": 5,
+     "worse": 0
+    },
+    "B1-RETAIN vs A-FRESH": {
+     "better": 0,
+     "factor": "retention",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs B1-RETAIN": {
+     "better": 0,
+     "factor": "descriptor selection",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs C2-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (selection)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B3-CELLADMIT vs B1-RETAIN": {
+     "better": 0,
+     "factor": "cell admission",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B3-CELLADMIT vs C3-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (admission)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    }
+   },
+   "d1_X3G_K": 1971,
+   "d1_ladder_contrasts": {
+    "C1": {
+     "better": 0,
+     "contrast": "D1-chain_neutral vs D1-chain_strict",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "NEUTRAL ACCEPTANCE",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "C2": {
+     "better": 2,
+     "contrast": "D1-X1 vs D1-chain_neutral",
+     "hits": [
+      2,
+      0
+     ],
+     "isolates": "RETENTION",
+     "p_one_sided": 0.25,
+     "p_two_sided": 0.5,
+     "tied": 6,
+     "worse": 0
+    },
+    "C3": {
+     "better": 0,
+     "contrast": "D1-X2 vs D1-X1",
+     "hits": [
+      0,
+      2
+     ],
+     "isolates": "RARELY-VISITED (count) SELECTION",
+     "p_one_sided": 1.0,
+     "p_two_sided": 0.5,
+     "tied": 6,
+     "worse": 2
+    },
+    "C4": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X2",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "C5": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X3G",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    }
+   },
+   "d1_ladder_descriptor_status": "VALIDATED",
+   "d1_ladder_empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 3,
+     "p_one_sided": 0.125,
+     "tied": 5,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "REACHABILITY_DESERT"
+   },
+   "d1_ladder_hits_of_8": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 3,
+    "D1-X1": 2,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "density_viable_share_by_size": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.000996,
+    "7": 0.001054
+   },
+   "descriptor_arm_status": "VALIDATED",
+   "descriptor_qualification": {
+    "C-FIT": {
+     "R1_separation": 0.0,
+     "R1c_given_trace_differs": 0.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.0006469979296066253,
+     "verdict": null
+    },
+    "D-BEH": {
+     "R1_separation": 0.9666666666666667,
+     "R1c_given_trace_differs": 0.9957081545064378,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.1972049689440994,
+     "verdict": "QUALIFIED"
+    },
+    "D-CERT": {
+     "R1_separation": 0.65,
+     "R1c_given_trace_differs": 0.6695278969957081,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.04800724637681159,
+     "verdict": "FAIL"
+    },
+    "D-RES": {
+     "R1_separation": 0.8708333333333333,
+     "R1c_given_trace_differs": 0.8969957081545065,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.034420289855072464,
+     "verdict": "FAIL"
+    },
+    "GENO": {
+     "R1_separation": 1.0,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 0.0,
+     "granularity_cells_per_genotype": 1.0,
+     "verdict": null
+    },
+    "TRACE": {
+     "R1_separation": 0.9708333333333333,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.25323498964803315,
+     "verdict": null
+    }
+   },
+   "empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 3,
+     "p_one_sided": 0.125,
+     "tied": 5,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "REACHABILITY_DESERT"
+   },
+   "enum_false_hits_by_seed": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hitting_cost_by_seed": [
+    42646,
+    29253,
+    45297,
+    25973,
+    17958,
+    11480,
+    13268,
+    27048
+   ],
+   "existence": true,
+   "qual_controls_ok": true,
+   "random_K": {
+    "C2": 1050,
+    "C3": 1020
+   },
+   "route_canonical": [
+    [
+     "xs",
+     0.0,
+     0.0,
+     null
+    ],
+    [
+     "(map (lam x x) xs)",
+     0.0,
+     0.0,
+     0.01909018076210505
+    ],
+    [
+     "(map (lam x (mod x 3)) xs)",
+     0.0,
+     0.626667,
+     0.0012475208840304584
+    ],
+    [
+     "(map (lam x (mod (mul x x) 3)) xs)",
+     1.0,
+     1.0,
+     0.0010496352845397248
+    ]
+   ],
+   "scale_cpu_s": 952.9000000000001,
+   "scaling_success_and_new_mechanism_rate_per_1k": {
+    "A-CHAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      3,
+      0.125
+     ],
+     "4": [
+      2,
+      0.2875
+     ]
+    },
+    "A-FRESH": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      0,
+      0.0
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "B1-RETAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      0,
+      0.0
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "B3-CELLADMIT": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      1,
+      0.0063
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "C3-RAND": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      4,
+      0.225
+     ],
+     "4": [
+      2,
+      0.1
+     ]
+    }
+   },
+   "witness_rank_by_seed": {
+    "0": 57674,
+    "1": 63604,
+    "2": 66663,
+    "3": 70722,
+    "4": 28065,
+    "5": 55822,
+    "6": 39057,
+    "7": 84313
+   },
+   "witness_robustness": {
+    "all_fail_share": 0.025,
+    "children": 1000,
+    "exact_credit": 10,
+    "keep_credit_share": 0.1,
+    "program": "(map (lam x (mod (mul x x) 3)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.1,
+    "stay_qualified_share": 0.097
+   }
+  },
+  "DESERT": {
+   "arms_autonomous_of_8": {
+    "A-CHAIN": 4,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 4,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 1,
+    "C3-RAND": 0
+   },
+   "arms_cpu_s": 137.6,
+   "arms_hits_of_8": {
+    "A-CHAIN": 4,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 4,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 1,
+    "C3-RAND": 0
+   },
+   "arms_median_censored_cost": {
+    "A-CHAIN": 5000,
+    "A-CHAIN[none]": 5000,
+    "A-CHAIN[partial]": 5000,
+    "A-FRESH": 5000,
+    "B1-RETAIN": 5000,
+    "B2-DESCSEL": 5000,
+    "B3-CELLADMIT": 5000,
+    "C2-RAND": 5000,
+    "C3-RAND": 5000
+   },
+   "atlas_cpu_s": 15.0,
+   "classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 40311897.68174282,
+     "magnitude": 952.7118750000002,
+     "partial": 40311897.68174282
+    },
+    "enumeration": "RARITY_LIMIT",
+    "enumeration_crossing_by_seed": [
+     16601,
+     15611,
+     16215,
+     10496,
+     14819,
+     9261,
+     27516,
+     26965
+    ],
+    "local_search": "REACHABILITY_DESERT",
+    "local_search_empirical_hits_at_B": {
+     "A-CHAIN": 4,
+     "A-FRESH": 0
+    },
+    "notes": [
+     "diagnostic: the magnitude channel (a numeric-closeness heuristic, not a correctness credit; used by no search here) WOULD see a gradient (crossing estimate 953)"
+    ],
+    "route_start_is_generic_start": {
+     "exact": true,
+     "partial": true
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 3
+   },
+   "contrasts": {
+    "A-CHAIN vs A-CHAIN[none]": {
+     "better": 4,
+     "factor": "feedback used (credit-guided vs credit-blind drift)",
+     "hits": [
+      4,
+      0
+     ],
+     "p_one_sided": 0.0625,
+     "tied": 4,
+     "worse": 0
+    },
+    "A-CHAIN vs A-FRESH": {
+     "better": 4,
+     "factor": "no restarts",
+     "hits": [
+      4,
+      0
+     ],
+     "p_one_sided": 0.0625,
+     "tied": 4,
+     "worse": 0
+    },
+    "A-CHAIN[partial] vs A-CHAIN": {
+     "better": 3,
+     "factor": "partial credit",
+     "hits": [
+      4,
+      4
+     ],
+     "p_one_sided": 0.625,
+     "tied": 2,
+     "worse": 3
+    },
+    "B1-RETAIN vs A-FRESH": {
+     "better": 0,
+     "factor": "retention",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs B1-RETAIN": {
+     "better": 0,
+     "factor": "descriptor selection",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs C2-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (selection)",
+     "hits": [
+      0,
+      1
+     ],
+     "p_one_sided": 1.0,
+     "tied": 7,
+     "worse": 1
+    },
+    "B3-CELLADMIT vs B1-RETAIN": {
+     "better": 0,
+     "factor": "cell admission",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B3-CELLADMIT vs C3-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (admission)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    }
+   },
+   "d1_X3G_K": 1893,
+   "d1_ladder_contrasts": {
+    "C1": {
+     "better": 4,
+     "contrast": "D1-chain_neutral vs D1-chain_strict",
+     "hits": [
+      4,
+      0
+     ],
+     "isolates": "NEUTRAL ACCEPTANCE",
+     "p_one_sided": 0.0625,
+     "p_two_sided": 0.125,
+     "tied": 4,
+     "worse": 0
+    },
+    "C2": {
+     "better": 3,
+     "contrast": "D1-X1 vs D1-chain_neutral",
+     "hits": [
+      5,
+      4
+     ],
+     "isolates": "RETENTION",
+     "p_one_sided": 0.71875,
+     "p_two_sided": 0.59375,
+     "tied": 2,
+     "worse": 3
+    },
+    "C3": {
+     "better": 0,
+     "contrast": "D1-X2 vs D1-X1",
+     "hits": [
+      0,
+      5
+     ],
+     "isolates": "RARELY-VISITED (count) SELECTION",
+     "p_one_sided": 1.0,
+     "p_two_sided": 0.0625,
+     "tied": 3,
+     "worse": 5
+    },
+    "C4": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X2",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "C5": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X3G",
+     "hits": [
+      0,
+      2
+     ],
+     "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+     "p_one_sided": 1.0,
+     "p_two_sided": 0.5,
+     "tied": 6,
+     "worse": 2
+    }
+   },
+   "d1_ladder_descriptor_status": "VALIDATED",
+   "d1_ladder_empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 4,
+    "guided_vs_blind": {
+     "better": 4,
+     "p_one_sided": 0.0625,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 3,
+     "p_one_sided": 0.625,
+     "tied": 2,
+     "worse": 3
+    },
+    "reached_at_B": true,
+    "reading": "REACHABILITY_DESERT"
+   },
+   "d1_ladder_hits_of_8": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 4,
+    "D1-X1": 5,
+    "D1-X2": 0,
+    "D1-X3": 0,
+    "D1-X3G": 2,
+    "D1-chain_neutral": 4,
+    "D1-chain_strict": 0
+   },
+   "density_viable_share_by_size": {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.000498,
+    "7": 0.000736
+   },
+   "descriptor_arm_status": "VALIDATED",
+   "descriptor_qualification": {
+    "C-FIT": {
+     "R1_separation": 0.0,
+     "R1c_given_trace_differs": 0.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.0005132811497497754,
+     "verdict": null
+    },
+    "D-BEH": {
+     "R1_separation": 0.9666666666666667,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.15732067239830616,
+     "verdict": "QUALIFIED"
+    },
+    "D-CERT": {
+     "R1_separation": 0.008333333333333333,
+     "R1c_given_trace_differs": 0.008620689655172414,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.004362889772873091,
+     "verdict": "FAIL"
+    },
+    "D-RES": {
+     "R1_separation": 0.6458333333333334,
+     "R1c_given_trace_differs": 0.6681034482758621,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.022199409726677787,
+     "verdict": "FAIL"
+    },
+    "GENO": {
+     "R1_separation": 1.0,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 0.0,
+     "granularity_cells_per_genotype": 1.0,
+     "verdict": null
+    },
+    "TRACE": {
+     "R1_separation": 0.9666666666666667,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.2579237777492622,
+     "verdict": null
+    }
+   },
+   "empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 4,
+    "guided_vs_blind": {
+     "better": 4,
+     "p_one_sided": 0.0625,
+     "tied": 4,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 3,
+     "p_one_sided": 0.625,
+     "tied": 2,
+     "worse": 3
+    },
+    "reached_at_B": true,
+    "reading": "REACHABILITY_DESERT"
+   },
+   "enum_false_hits_by_seed": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hitting_cost_by_seed": [
+    16601,
+    15611,
+    16215,
+    10496,
+    14819,
+    9261,
+    27516,
+    26965
+   ],
+   "existence": true,
+   "qual_controls_ok": true,
+   "random_K": {
+    "C2": 850,
+    "C3": 844
+   },
+   "route_canonical": [
+    [
+     "xs",
+     0.0,
+     0.0,
+     null
+    ],
+    [
+     "(map (lam x x) xs)",
+     0.0,
+     0.0,
+     0.019120339025552293
+    ],
+    [
+     "(map (lam x (mul x x)) xs)",
+     0.0,
+     0.0,
+     0.0019051973784484076
+    ],
+    [
+     "(map (lam x (pow (mul x x) 2)) xs)",
+     1.0,
+     1.0,
+     0.0004512309580535702
+    ]
+   ],
+   "scale_cpu_s": 929.1,
+   "scaling_success_and_new_mechanism_rate_per_1k": {
+    "A-CHAIN": {
+     "1": [
+      3,
+      0.4
+     ],
+     "16": [
+      4,
+      0.0563
+     ],
+     "4": [
+      4,
+      0.225
+     ]
+    },
+    "A-FRESH": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      1,
+      0.0031
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "B1-RETAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      1,
+      0.0063
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "B3-CELLADMIT": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      3,
+      0.0281
+     ],
+     "4": [
+      1,
+      0.025
+     ]
+    },
+    "C3-RAND": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      4,
+      0.15
+     ],
+     "4": [
+      3,
+      0.1125
+     ]
+    }
+   },
+   "witness_rank_by_seed": {
+    "0": 21190,
+    "1": 38166,
+    "2": 67001,
+    "3": 88677,
+    "4": 26848,
+    "5": 32485,
+    "6": 34366,
+    "7": 75607
+   },
+   "witness_robustness": {
+    "all_fail_share": 0.011,
+    "children": 1000,
+    "exact_credit": 10,
+    "keep_credit_share": 0.099,
+    "program": "(map (lam x (pow (mul x x) 2)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.099,
+    "stay_qualified_share": 0.099
+   }
+  },
+  "GRADED": {
+   "arms_autonomous_of_8": {
+    "A-CHAIN": 8,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 8,
+    "A-FRESH": 0,
+    "B1-RETAIN": 2,
+    "B2-DESCSEL": 3,
+    "B3-CELLADMIT": 1,
+    "C2-RAND": 2,
+    "C3-RAND": 1
+   },
+   "arms_cpu_s": 118.3,
+   "arms_hits_of_8": {
+    "A-CHAIN": 8,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 8,
+    "A-FRESH": 0,
+    "B1-RETAIN": 2,
+    "B2-DESCSEL": 3,
+    "B3-CELLADMIT": 1,
+    "C2-RAND": 2,
+    "C3-RAND": 1
+   },
+   "arms_median_censored_cost": {
+    "A-CHAIN": 1767,
+    "A-CHAIN[none]": 5000,
+    "A-CHAIN[partial]": 2273,
+    "A-FRESH": 5000,
+    "B1-RETAIN": 5000,
+    "B2-DESCSEL": 5000,
+    "B3-CELLADMIT": 5000,
+    "C2-RAND": 5000,
+    "C3-RAND": 5000
+   },
+   "atlas_cpu_s": 14.6,
+   "classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 25471.87524111653,
+     "magnitude": 25471.87524111653,
+     "partial": 25471.87524111653
+    },
+    "enumeration": "RARITY_LIMIT",
+    "enumeration_crossing_by_seed": [
+     13740,
+     14003,
+     25588,
+     47343,
+     19818,
+     24228,
+     17761,
+     10865
+    ],
+    "local_search": "RARITY_LIMIT",
+    "local_search_empirical_hits_at_B": {
+     "A-CHAIN": 8,
+     "A-FRESH": 0
+    },
+    "notes": [],
+    "route_start_is_generic_start": {
+     "exact": true,
+     "partial": true
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 2
+   },
+   "contrasts": {
+    "A-CHAIN vs A-CHAIN[none]": {
+     "better": 8,
+     "factor": "feedback used (credit-guided vs credit-blind drift)",
+     "hits": [
+      8,
+      0
+     ],
+     "p_one_sided": 0.003906,
+     "tied": 0,
+     "worse": 0
+    },
+    "A-CHAIN vs A-FRESH": {
+     "better": 8,
+     "factor": "no restarts",
+     "hits": [
+      8,
+      0
+     ],
+     "p_one_sided": 0.003906,
+     "tied": 0,
+     "worse": 0
+    },
+    "A-CHAIN[partial] vs A-CHAIN": {
+     "better": 4,
+     "factor": "partial credit",
+     "hits": [
+      8,
+      8
+     ],
+     "p_one_sided": 0.941406,
+     "tied": 0,
+     "worse": 4
+    },
+    "B1-RETAIN vs A-FRESH": {
+     "better": 2,
+     "factor": "retention",
+     "hits": [
+      2,
+      0
+     ],
+     "p_one_sided": 0.25,
+     "tied": 6,
+     "worse": 0
+    },
+    "B2-DESCSEL vs B1-RETAIN": {
+     "better": 3,
+     "factor": "descriptor selection",
+     "hits": [
+      3,
+      2
+     ],
+     "p_one_sided": 0.1875,
+     "tied": 4,
+     "worse": 1
+    },
+    "B2-DESCSEL vs C2-RAND": {
+     "better": 2,
+     "factor": "descriptor vs random cells (selection)",
+     "hits": [
+      3,
+      2
+     ],
+     "p_one_sided": 0.5,
+     "tied": 4,
+     "worse": 2
+    },
+    "B3-CELLADMIT vs B1-RETAIN": {
+     "better": 1,
+     "factor": "cell admission",
+     "hits": [
+      1,
+      2
+     ],
+     "p_one_sided": 0.625,
+     "tied": 5,
+     "worse": 2
+    },
+    "B3-CELLADMIT vs C3-RAND": {
+     "better": 1,
+     "factor": "descriptor vs random cells (admission)",
+     "hits": [
+      1,
+      1
+     ],
+     "p_one_sided": 0.5,
+     "tied": 6,
+     "worse": 1
+    }
+   },
+   "d1_X3G_K": 1935,
+   "d1_ladder_contrasts": {
+    "C1": {
+     "better": 8,
+     "contrast": "D1-chain_neutral vs D1-chain_strict",
+     "hits": [
+      8,
+      0
+     ],
+     "isolates": "NEUTRAL ACCEPTANCE",
+     "p_one_sided": 0.003906,
+     "p_two_sided": 0.007812,
+     "tied": 0,
+     "worse": 0
+    },
+    "C2": {
+     "better": 2,
+     "contrast": "D1-X1 vs D1-chain_neutral",
+     "hits": [
+      4,
+      8
+     ],
+     "isolates": "RETENTION",
+     "p_one_sided": 0.980469,
+     "p_two_sided": 0.046875,
+     "tied": 0,
+     "worse": 6
+    },
+    "C3": {
+     "better": 2,
+     "contrast": "D1-X2 vs D1-X1",
+     "hits": [
+      2,
+      4
+     ],
+     "isolates": "RARELY-VISITED (count) SELECTION",
+     "p_one_sided": 0.6875,
+     "p_two_sided": 0.6875,
+     "tied": 3,
+     "worse": 3
+    },
+    "C4": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X2",
+     "hits": [
+      1,
+      2
+     ],
+     "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+     "p_one_sided": 1.0,
+     "p_two_sided": 0.5,
+     "tied": 6,
+     "worse": 2
+    },
+    "C5": {
+     "better": 1,
+     "contrast": "D1-X3 vs D1-X3G",
+     "hits": [
+      1,
+      0
+     ],
+     "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+     "p_one_sided": 0.5,
+     "p_two_sided": 1.0,
+     "tied": 7,
+     "worse": 0
+    }
+   },
+   "d1_ladder_descriptor_status": "INSTRUMENT_UNVALIDATED",
+   "d1_ladder_empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": true,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 8,
+    "guided_vs_blind": {
+     "better": 8,
+     "p_one_sided": 0.003906,
+     "tied": 0,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 4,
+     "p_one_sided": 0.941406,
+     "tied": 0,
+     "worse": 4
+    },
+    "reached_at_B": true,
+    "reading": "RARITY_LIMIT"
+   },
+   "d1_ladder_hits_of_8": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 8,
+    "D1-X1": 4,
+    "D1-X2": 2,
+    "D1-X3": 1,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 8,
+    "D1-chain_strict": 0
+   },
+   "density_viable_share_by_size": {
+    "1": 1.0,
+    "2": 1.0,
+    "3": 0.428571,
+    "4": 0.272727,
+    "5": 0.248894,
+    "6": 0.200348,
+    "7": 0.185022
+   },
+   "descriptor_arm_status": "INSTRUMENT_UNVALIDATED",
+   "descriptor_qualification": {
+    "C-FIT": {
+     "R1_separation": 0.0,
+     "R1c_given_trace_differs": 0.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.0008985879332477536,
+     "verdict": null
+    },
+    "D-BEH": {
+     "R1_separation": 0.775,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.19332477535301668,
+     "verdict": "FAIL"
+    },
+    "D-CERT": {
+     "R1_separation": 0.5,
+     "R1c_given_trace_differs": 0.6451612903225806,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.06611039794608473,
+     "verdict": "FAIL"
+    },
+    "D-RES": {
+     "R1_separation": 0.6375,
+     "R1c_given_trace_differs": 0.8225806451612904,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.046469833119383824,
+     "verdict": "FAIL"
+    },
+    "GENO": {
+     "R1_separation": 1.0,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 0.0,
+     "granularity_cells_per_genotype": 1.0,
+     "verdict": null
+    },
+    "TRACE": {
+     "R1_separation": 0.775,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.2626444159178434,
+     "verdict": null
+    }
+   },
+   "empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": true,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 8,
+    "guided_vs_blind": {
+     "better": 8,
+     "p_one_sided": 0.003906,
+     "tied": 0,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 4,
+     "p_one_sided": 0.941406,
+     "tied": 0,
+     "worse": 4
+    },
+    "reached_at_B": true,
+    "reading": "RARITY_LIMIT"
+   },
+   "enum_false_hits_by_seed": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hitting_cost_by_seed": [
+    13740,
+    14003,
+    25588,
+    47343,
+    19818,
+    24228,
+    17761,
+    10865
+   ],
+   "existence": true,
+   "qual_controls_ok": true,
+   "random_K": {
+    "C2": 229,
+    "C3": 1028
+   },
+   "route_canonical": [
+    [
+     "xs",
+     0.3,
+     0.566667,
+     null
+    ],
+    [
+     "(map (lam x x) xs)",
+     0.3,
+     0.566667,
+     0.019616166293637927
+    ],
+    [
+     "(map (lam x (mul x x)) xs)",
+     0.6,
+     0.686667,
+     0.0020013587603259293
+    ],
+    [
+     "(map (lam x (pow (mul x x) 2)) xs)",
+     1.0,
+     1.0,
+     0.0004384118967452301
+    ]
+   ],
+   "scale_cpu_s": 946.0999999999999,
+   "scaling_success_and_new_mechanism_rate_per_1k": {
+    "A-CHAIN": {
+     "1": [
+      4,
+      0.7
+     ],
+     "16": [
+      4,
+      0.0969
+     ],
+     "4": [
+      4,
+      0.3875
+     ]
+    },
+    "A-FRESH": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      2,
+      0.0063
+     ],
+     "4": [
+      1,
+      0.0125
+     ]
+    },
+    "B1-RETAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      4,
+      0.0656
+     ],
+     "4": [
+      3,
+      0.0625
+     ]
+    },
+    "B3-CELLADMIT": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      4,
+      0.0344
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "C3-RAND": {
+     "1": [
+      1,
+      0.1
+     ],
+     "16": [
+      4,
+      0.1625
+     ],
+     "4": [
+      3,
+      0.325
+     ]
+    }
+   },
+   "witness_rank_by_seed": {
+    "0": 18365,
+    "1": 28049,
+    "2": 62889,
+    "3": 47343,
+    "4": 47668,
+    "5": 31982,
+    "6": 20931,
+    "7": 21168
+   },
+   "witness_robustness": {
+    "all_fail_share": 0.014,
+    "children": 1000,
+    "exact_credit": 10,
+    "keep_credit_share": 0.088,
+    "program": "(map (lam x (pow (mul x x) 2)) xs)",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.088,
+    "stay_qualified_share": 0.088
+   }
+  },
+  "TOY-D2": {
+   "arms_autonomous_of_8": {
+    "A-CHAIN": 0,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 0,
+    "C3-RAND": 0
+   },
+   "arms_cpu_s": 125.2,
+   "arms_hits_of_8": {
+    "A-CHAIN": 0,
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "A-FRESH": 0,
+    "B1-RETAIN": 0,
+    "B2-DESCSEL": 0,
+    "B3-CELLADMIT": 0,
+    "C2-RAND": 0,
+    "C3-RAND": 0
+   },
+   "arms_median_censored_cost": {
+    "A-CHAIN": 5000,
+    "A-CHAIN[none]": 5000,
+    "A-CHAIN[partial]": 5000,
+    "A-FRESH": 5000,
+    "B1-RETAIN": 5000,
+    "B2-DESCSEL": 5000,
+    "B3-CELLADMIT": 5000,
+    "C2-RAND": 5000,
+    "C3-RAND": 5000
+   },
+   "atlas_cpu_s": 18.1,
+   "classification": {
+    "budget": 5000,
+    "crossing_cost_estimate": {
+     "exact": 7822.859960655739,
+     "magnitude": 226.44000000000005,
+     "partial": 7822.859960655739
+    },
+    "enumeration": "RARITY_LIMIT_BEYOND_16x",
+    "enumeration_crossing_by_seed": [
+     78783,
+     75319,
+     26234,
+     50779,
+     41556,
+     50261,
+     11573,
+     89449
+    ],
+    "local_search": "RARITY_LIMIT",
+    "local_search_empirical_hits_at_B": {
+     "A-CHAIN": 0,
+     "A-FRESH": 0
+    },
+    "notes": [],
+    "route_start_is_generic_start": {
+     "exact": true,
+     "partial": true
+    },
+    "scale": 16,
+    "status": "PREDICTION (lattice-relative; NOT calibrated: see ATLAS_DESIGN.md s8)",
+    "widest_unrewarded_segment_search_channel": 2
+   },
+   "contrasts": {
+    "A-CHAIN vs A-CHAIN[none]": {
+     "better": 0,
+     "factor": "feedback used (credit-guided vs credit-blind drift)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "A-CHAIN vs A-FRESH": {
+     "better": 0,
+     "factor": "no restarts",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "A-CHAIN[partial] vs A-CHAIN": {
+     "better": 0,
+     "factor": "partial credit",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B1-RETAIN vs A-FRESH": {
+     "better": 0,
+     "factor": "retention",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs B1-RETAIN": {
+     "better": 0,
+     "factor": "descriptor selection",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B2-DESCSEL vs C2-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (selection)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B3-CELLADMIT vs B1-RETAIN": {
+     "better": 0,
+     "factor": "cell admission",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "B3-CELLADMIT vs C3-RAND": {
+     "better": 0,
+     "factor": "descriptor vs random cells (admission)",
+     "hits": [
+      0,
+      0
+     ],
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    }
+   },
+   "d1_X3G_K": 1835,
+   "d1_ladder_contrasts": {
+    "C1": {
+     "better": 0,
+     "contrast": "D1-chain_neutral vs D1-chain_strict",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "NEUTRAL ACCEPTANCE",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "C2": {
+     "better": 0,
+     "contrast": "D1-X1 vs D1-chain_neutral",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "RETENTION",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "C3": {
+     "better": 1,
+     "contrast": "D1-X2 vs D1-X1",
+     "hits": [
+      1,
+      0
+     ],
+     "isolates": "RARELY-VISITED (count) SELECTION",
+     "p_one_sided": 0.5,
+     "p_two_sided": 1.0,
+     "tied": 7,
+     "worse": 0
+    },
+    "C4": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X2",
+     "hits": [
+      0,
+      1
+     ],
+     "isolates": "ADMISSION OF WORSE genomes into NEW cells",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 7,
+     "worse": 1
+    },
+    "C5": {
+     "better": 0,
+     "contrast": "D1-X3 vs D1-X3G",
+     "hits": [
+      0,
+      0
+     ],
+     "isolates": "BEHAVIOUR-CELL STRUCTURE vs matched structure-free archive",
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    }
+   },
+   "d1_ladder_descriptor_status": "VALIDATED",
+   "d1_ladder_empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "d1_ladder_hits_of_8": {
+    "A-CHAIN[none]": 0,
+    "A-CHAIN[partial]": 0,
+    "D1-X1": 0,
+    "D1-X2": 1,
+    "D1-X3": 0,
+    "D1-X3G": 0,
+    "D1-chain_neutral": 0,
+    "D1-chain_strict": 0
+   },
+   "density_viable_share_by_size": {
+    "1": 0.25,
+    "2": 0.071429,
+    "3": 0.109375,
+    "4": 0.1,
+    "5": 0.097077,
+    "6": 0.089122,
+    "7": 0.0892
+   },
+   "descriptor_arm_status": "VALIDATED",
+   "descriptor_qualification": {
+    "C-FIT": {
+     "R1_separation": 0.0,
+     "R1c_given_trace_differs": 0.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.000585480093676815,
+     "verdict": null
+    },
+    "D-BEH": {
+     "R1_separation": 0.91,
+     "R1c_given_trace_differs": 0.9891304347826086,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.11744730679156909,
+     "verdict": "QUALIFIED"
+    },
+    "D-CERT": {
+     "R1_separation": 0.0,
+     "R1c_given_trace_differs": 0.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.000585480093676815,
+     "verdict": "FAIL"
+    },
+    "D-RES": {
+     "R1_separation": 0.38333333333333336,
+     "R1c_given_trace_differs": 0.4166666666666667,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.012295081967213115,
+     "verdict": "FAIL"
+    },
+    "GENO": {
+     "R1_separation": 1.0,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 0.0,
+     "granularity_cells_per_genotype": 1.0,
+     "verdict": null
+    },
+    "TRACE": {
+     "R1_separation": 0.92,
+     "R1c_given_trace_differs": 1.0,
+     "R2_invariance": 1.0,
+     "granularity_cells_per_genotype": 0.17845433255269322,
+     "verdict": null
+    }
+   },
+   "empirical_flags": {
+    "ALT_CREDIT_HELPS": false,
+    "DRIFT_CROSSES": false,
+    "FEEDBACK_USED": false,
+    "alpha": 0.05,
+    "blind_chain_hits": 0,
+    "exact_chain_hits": 0,
+    "guided_vs_blind": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "partial_vs_exact": {
+     "better": 0,
+     "p_one_sided": 1.0,
+     "tied": 8,
+     "worse": 0
+    },
+    "reached_at_B": false,
+    "reading": "UNRESOLVED_ALL_CENSORED"
+   },
+   "enum_false_hits_by_seed": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "enum_hitting_cost_by_seed": [
+    78783,
+    75319,
+    26234,
+    50779,
+    41556,
+    50261,
+    11573,
+    89449
+   ],
+   "existence": true,
+   "qual_controls_ok": true,
+   "random_K": {
+    "C2": 800,
+    "C3": 866
+   },
+   "route_canonical": [
+    [
+     "0",
+     0.0,
+     0.0,
+     null
+    ],
+    [
+     "(sum xs)",
+     0.0,
+     0.0,
+     0.013096547750013097
+    ],
+    [
+     "(sum (map (lam x x) xs))",
+     0.0,
+     0.0,
+     0.009760624679979518
+    ],
+    [
+     "(sum (map (lam x (L_e8691a5e8b00 (L_e8691a5e8b00 x))) xs))",
+     1.0,
+     1.0,
+     0.00039490376688830644
+    ]
+   ],
+   "scale_cpu_s": 766.4,
+   "scaling_success_and_new_mechanism_rate_per_1k": {
+    "A-CHAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      1,
+      0.0219
+     ],
+     "4": [
+      1,
+      0.0875
+     ]
+    },
+    "A-FRESH": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      3,
+      0.0156
+     ],
+     "4": [
+      1,
+      0.025
+     ]
+    },
+    "B1-RETAIN": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      0,
+      0.0
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "B3-CELLADMIT": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      1,
+      0.0031
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    },
+    "C3-RAND": {
+     "1": [
+      0,
+      0.0
+     ],
+     "16": [
+      0,
+      0.0
+     ],
+     "4": [
+      0,
+      0.0
+     ]
+    }
+   },
+   "witness_rank_by_seed": {
+    "0": 78783,
+    "1": 75319,
+    "2": 26234,
+    "3": 50779,
+    "4": 41556,
+    "5": 50261,
+    "6": 11573,
+    "7": 89449
+   },
+   "witness_robustness": {
+    "all_fail_share": 0.006,
+    "children": 1000,
+    "exact_credit": 8,
+    "keep_credit_share": 0.102,
+    "program": "(sum (map (lam x (L_e8691a5e8b00 (L_e8691a5e8b00 x))) xs))",
+    "raise_credit_share": 0.0,
+    "same_dev_behaviour_share": 0.102,
+    "stay_qualified_share": 0.101
+   }
+  }
+ }
+}

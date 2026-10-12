@@ -1,0 +1,208 @@
+{
+ "label": "DIAGNOSTIC (not preregistered)",
+ "point": "N_D1_W2",
+ "published": 45,
+ "total_bytes": 2940928,
+ "bytes_per_published": 65354,
+ "relations": [
+  {
+   "schema": "fabric",
+   "table": "blobs",
+   "rows": 271,
+   "heap": 221184,
+   "toast": 286720,
+   "indexes": 57344,
+   "total": 589824,
+   "bytes_per_published": 13107,
+   "share": 0.2006
+  },
+  {
+   "schema": "fabric",
+   "table": "tasks",
+   "rows": 45,
+   "heap": 73728,
+   "toast": 376832,
+   "indexes": 49152,
+   "total": 524288,
+   "bytes_per_published": 11651,
+   "share": 0.1783
+  },
+  {
+   "schema": "moonshot",
+   "table": "objects",
+   "rows": 188,
+   "heap": 131072,
+   "toast": 286720,
+   "indexes": 40960,
+   "total": 483328,
+   "bytes_per_published": 10741,
+   "share": 0.1643
+  },
+  {
+   "schema": "fabric",
+   "table": "events",
+   "rows": 587,
+   "heap": 212992,
+   "toast": 8192,
+   "indexes": 98304,
+   "total": 344064,
+   "bytes_per_published": 7646,
+   "share": 0.117
+  },
+  {
+   "schema": "fabric",
+   "table": "artifacts",
+   "rows": 360,
+   "heap": 106496,
+   "toast": 8192,
+   "indexes": 40960,
+   "total": 180224,
+   "bytes_per_published": 4005,
+   "share": 0.0613
+  },
+  {
+   "schema": "fabric",
+   "table": "attempts",
+   "rows": 45,
+   "heap": 73728,
+   "toast": 8192,
+   "indexes": 49152,
+   "total": 155648,
+   "bytes_per_published": 3459,
+   "share": 0.0529
+  },
+  {
+   "schema": "moonshot",
+   "table": "attempts",
+   "rows": 45,
+   "heap": 49152,
+   "toast": 8192,
+   "indexes": 32768,
+   "total": 114688,
+   "bytes_per_published": 2549,
+   "share": 0.039
+  },
+  {
+   "schema": "moonshot",
+   "table": "publications",
+   "rows": 45,
+   "heap": 16384,
+   "toast": 8192,
+   "indexes": 49152,
+   "total": 98304,
+   "bytes_per_published": 2185,
+   "share": 0.0334
+  },
+  {
+   "schema": "fabric",
+   "table": "messages",
+   "rows": 90,
+   "heap": 32768,
+   "toast": 8192,
+   "indexes": 32768,
+   "total": 98304,
+   "bytes_per_published": 2185,
+   "share": 0.0334
+  },
+  {
+   "schema": "moonshot",
+   "table": "results",
+   "rows": 45,
+   "heap": 24576,
+   "toast": 8192,
+   "indexes": 32768,
+   "total": 90112,
+   "bytes_per_published": 2002,
+   "share": 0.0306
+  },
+  {
+   "schema": "moonshot",
+   "table": "events",
+   "rows": 49,
+   "heap": 16384,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 65536,
+   "bytes_per_published": 1456,
+   "share": 0.0223
+  },
+  {
+   "schema": "moonshot",
+   "table": "meta",
+   "rows": 1,
+   "heap": 8192,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 32768,
+   "bytes_per_published": 728,
+   "share": 0.0111
+  },
+  {
+   "schema": "fabric",
+   "table": "agent_instances",
+   "rows": 2,
+   "heap": 8192,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 32768,
+   "bytes_per_published": 728,
+   "share": 0.0111
+  },
+  {
+   "schema": "fabric",
+   "table": "agents",
+   "rows": 2,
+   "heap": 8192,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 32768,
+   "bytes_per_published": 728,
+   "share": 0.0111
+  },
+  {
+   "schema": "moonshot",
+   "table": "chains",
+   "rows": 4,
+   "heap": 8192,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 32768,
+   "bytes_per_published": 728,
+   "share": 0.0111
+  },
+  {
+   "schema": "moonshot",
+   "table": "contests",
+   "rows": 0,
+   "heap": 0,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 24576,
+   "bytes_per_published": 546,
+   "share": 0.0084
+  },
+  {
+   "schema": "fabric",
+   "table": "leases",
+   "rows": 0,
+   "heap": 0,
+   "toast": 8192,
+   "indexes": 16384,
+   "total": 24576,
+   "bytes_per_published": 546,
+   "share": 0.0084
+  },
+  {
+   "schema": "moonshot",
+   "table": "validations",
+   "rows": 0,
+   "heap": 0,
+   "toast": 8192,
+   "indexes": 8192,
+   "total": 16384,
+   "bytes_per_published": 364,
+   "share": 0.0056
+  }
+ ],
+ "note": "per-relation totals include TOAST and indexes; fixed per-relation overhead (empty pages) is included, so per-epoch figures overstate the marginal cost at small P"
+}

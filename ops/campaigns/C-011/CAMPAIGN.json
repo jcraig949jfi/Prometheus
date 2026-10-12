@@ -1,0 +1,43 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-011",
+  "thread_id": "TH-P2B-APHRODITE-V2B",
+  "epic_id": "EP-PHASE2B",
+  "status": "CLOSED",
+  "label": "C-P2B-APH-BETA-03",
+  "title": "Aphrodite Beta-03 -- the composition frontier (48 h, 12 windows)",
+  "objective": "Why does first-order improvement stop compounding? E1 saturation/interference/ceiling; E2 g12 endpoint-aligned selector; E3 W5P promotion; E4 second-level ecology; E5 R8 under promotion; E6 attack. Kill criterion -> migrate substrate. Tier 2; no live models; no Campaign 1; no third generation.",
+  "coordinator_role": "Aphrodite",
+  "members": [
+    "Aphrodite"
+  ],
+  "authority": "operator directive 2026-10-08 (roles/Aphrodite/prompts/2026-10-08_beta03/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "sources": "roles/Aphrodite/beta03/STATE.json; roles/Aphrodite/beta03/LEDGER.json",
+  "quality_classes": {
+    "Q1": {
+      "description": "mechanical: reruns of frozen procedures, manifests, fixtures from a settled design",
+      "rank": 1
+    },
+    "Q2": {
+      "description": "substantial: triage judgements, repairs, replay design, residual-science selection",
+      "rank": 2
+    },
+    "Q3": {
+      "description": "scarce deep reasoning / adversarial review of a repair or a surprising replay",
+      "rank": 3
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "created_by": "Aphrodite[harry1-0f14ab93]",
+  "created_at_utc": "2026-10-08T05:05:00Z",
+  "cadence": {
+    "mode": "12 x 4h DEV/EXP windows",
+    "note": "see beta03/STATE.json"
+  },
+  "closed_utc": "2026-10-09T08:40:00Z",
+  "close_report": "roles/Aphrodite/beta03/BETA03_48H_CLOSE_SYNTHESIS.md",
+  "close_summary": "E1 SATURATION_SUPPORTED (R8 failure mostly unequal headroom); E2 g12 INCONCLUSIVE (rejects memorisation without a ban 18/18; inferior to g11); W5P built+qualified; E5-H INSTRUMENT_UNVALIDATED (known-positive control fails; O1 repair 0/3); E5-N R8 under promotion NO (P1 -6 n.s.); W12 oracle selection does not enable. Recommendation MIGRATE_SUBSTRATE (basis Outcome C; s10 kill criterion NOT met). Tier 2."
+}

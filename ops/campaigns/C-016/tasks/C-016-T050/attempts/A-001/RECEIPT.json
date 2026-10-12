@@ -1,0 +1,50 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-016-T050",
+ "campaign_id": "C-016",
+ "attempt_id": "A-001",
+ "role": "Argus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-92a4e0d8",
+ "host": "harry1",
+ "branch": "argus/c016-t050",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c016-t050",
+ "start_sha": "9c4f61e0e50bc6010cb44de48554c26f290be317",
+ "end_sha": "303995b70 (result commit; this receipt and the transition commit follow it)",
+ "dirty": false,
+ "commits": {"claim_main": "1dd345ec3", "result_branch": "303995b70"},
+ "files_changed": [
+  "rso/ensorain/RESULT.md (new)",
+  "rso/ensorain/runs/CONFIRM.json, confirm_stdout.txt, confirm_stderr.txt (new)",
+  "ops/campaigns/C-016/tasks/C-016-T050/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "Qualification Q-a..Q-e all True; run qualified (RESULT.md s1)",
+  "Family P reference REVISION_HISTORY_DEPENDENT: K1f 232:0:168, K1n 230:0:170, K2 183:30:187, Holm K1 1.16e-69, K2 2.84e-28; revised lives [232,0,2,79,43,400]; noswitch 400/400",
+  "Search accessibility: 1 testable (searched_16310006: REVISION_NOT_HISTORY_DEPENDENT, K1 362:0:38 both, K2 36:34:330 Holm 1.0, revised [362,0,0,360,261,400], noswitch 400/400), 7 not (5 NOT_TESTED_PARAMETER_FREE, 2 dead plastic REVISION_NOT_SHOWN)",
+  "L1, L3, L4, L5, O1 and the scope statement carried in RESULT.md s4-s6",
+  "rows_sha256 dcdf8a42ffc10706cf3a8072fed656f43b328c3a445811a53faea53ff79f5d08; CONFIRM.json sha256 f4a3b3f818307d3104092d4eca211d10c076c034a36303e185fa49e6e96766fc"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.ensorain.freeze check", "result": "OK"},
+  {"command": "python -B -m rso.ensorain.assay confirm rso/ensorain/runs/CONFIRM.json --n 400 --subjects rso/ensorain/SUBJECTS.json --cleared-by <T042 ref>", "result": "exit 0, ~255-265 s wall, stderr empty, qualified True"}
+ ],
+ "red_observed": {"observed": false, "detail": "execution of a preregistered experiment; red_required false in TASK.json"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "CPU-seconds and peak memory were not instrumented (wall only, from shell timestamps)"
+ ],
+ "unresolved": [],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 0.08,
+  "processes_max": 1,
+  "peak_working_set_mb": "not measured",
+  "paid_resources": "none",
+  "hosts": ["harry1"]
+ },
+ "cleanup": "no scratch outside the repo",
+ "notes": "Read-only on ensorain/ and roles/Ensorain/; no WTP-05 seed; nothing on ubu006; no re-run, no subject selection, no code or world change. Python 3.12.10 / numpy 2.4.3.",
+ "created_at_utc": "2026-10-11T14:05:37Z"
+}

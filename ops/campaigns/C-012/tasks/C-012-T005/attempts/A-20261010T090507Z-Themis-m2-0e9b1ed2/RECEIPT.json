@@ -1,0 +1,52 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T005",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T090507Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "start_sha": "974275bca69a95470c8e2677cdd20aee53efe3cc",
+ "end_sha": "8078e9a0839909fe43c04fa40f7fb3fe6029ef85",
+ "files_changed": [
+  "moonshot/nf/materialize.py",
+  "moonshot/nf/tests/test_materialize.py",
+  "moonshot/nf/schema.sql",
+  "moonshot/nf/pg.py",
+  "moonshot/nf/INTERFACE_CONTRACT.md",
+  "ops/campaigns/C-012/evidence/LAKE/"
+ ],
+ "evidence_added": [
+  "moonshot/nf/tests/test_materialize.py (12): Pan's own pan.iceberg functions against a throwaway catalog (throwaway Postgres schema + temp warehouse); every table + oracle; Pan's provenance columns; idempotence; watermark resume; crash between commits; settle window; missed row caught and repaired exactly; rogue-writer duplicates detected; one writer; runs logged; catalog_v live-only (overturned epoch excluded)",
+  "ops/campaigns/C-012/evidence/LAKE/mutate_t005.py + MUTATION_TABLE.json (14 mutants)",
+  "ops/campaigns/C-012/evidence/LAKE/D20261010A/ (LAKE_DEMO.json, README.md)"
+ ],
+ "evidence_executed": [
+  "RED at 425c2b261 (M2, lake venv): Ran 10, errors=10",
+  "GREEN at bba336602: lake tests 12 OK; all moonshot/nf suites 84 OK in the lake venv",
+  "mutation table vs bba336602: 14/14 killed (first table 13/14: MM05, the duplicate check, survived -> the rogue-writer test)",
+  "demonstration D20261010A into Pan's lake (namespace moonshot, tables qual_*): crash run left one committed table (23 rows); a fresh run resumed per table (0/69/30/23/2/2), oracle OK x6; a repeat run appended nothing",
+  "Pan's review (#2031, 2026-10-10T10:01Z): interpreter OK, keep the qual_ tables, collector built against catalog_v (22/22), 'Contract review: no change requested to s6'"
+ ],
+ "red_observed": {
+  "observed": true,
+  "sha": "425c2b261f884c12531944316fb3e456a80730e4",
+  "detail": "10 tests against a stub before the materializer"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "the oracle re-reads every table in full on every run and re-maps every source row: fine at 23 publications; Pan's snapshot total-records is the cheap count check, row_filter scans the scaling path (adopted, not built)",
+  "DUPLICATED is detected, not repaired (an append-only lake is repaired by rewriting a table: an owner's decision)",
+  "the settle window bounds, but does not eliminate, the late-commit race; the MISSED oracle and repair=True cover it",
+  "the lake holds history (rejected publications included); current state is Postgres (catalog_v live only)"
+ ],
+ "unresolved": [],
+ "unblocks": [
+  "production lake tables with the first native-world epochs (C-012-T007)"
+ ],
+ "created_at_utc": "2026-10-10T10:28:36Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Lake venv C:/Prometheus-data/moonshot/venv with Pan's pins + tzdata 2026.1 (pyarrow needs a tz database on Windows for timestamptz columns)."
+}

@@ -1,0 +1,79 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T040",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "role": "Pallas",
+ "model": "claude-fable-5-1",
+ "quality_class": "Q3",
+ "instance": "harry1-d78f77ce",
+ "host": "harry1",
+ "branch": "pallas/c018-t040",
+ "worktree_path": "C:/Prometheus-worktrees/pallas-c018-t040",
+ "start_sha": "9e51c80b330156160649695f9e8130f65a54f154",
+ "end_sha": "the commit carrying this file (branch pallas/c018-t040)",
+ "dirty": false,
+ "commits": {
+  "claim_main": "cdea3c8bd (11:12:22Z)",
+  "set_branch": "3cc94b838 (11:39:09Z, before any outcome)",
+  "implementing_main": "0a478e424 (11:39:14Z)",
+  "harness_fix_branch": "d067e1b0d (12:05:41Z; synth.b3 dict merge; red_crlf.py)",
+  "first_results_and_posthoc_predictions_branch": "9160c952e (12:44:37Z; E1h/E3h predictions before they ran)",
+  "report_branch": "the commit carrying this file"
+ },
+ "files_changed": [
+  "rso/aether/challenge/{__init__.py,CHALLENGE_SET.md,EXPOSURE.md,expected.json,edits.json,synth.py,natives.py,altn.py,forge.py,run_edits.py,edits_posthoc.py,red_crlf.py,cases.py} (the set and harness)",
+  "rso/aether/challenge/{rows_natives.jsonl (32 evaluated units), results.jsonl (26 checks), REPORT.md, outcomes/{sound,synth,natives_summary,altn_summary,B5_frozen,B6,red_crlf}.json, outcomes/{edits_rows,edits_posthoc,red_rows}.jsonl}",
+  "roles/Pallas/{WORK_STATE.json,journal/2026-10-12.md,comms/2026-10-12_C-018-T040_{CLAIMED,INTEGRATION_READY}.txt,comms/2026-10-12_HEARTBEAT_T040.txt}",
+  "ops/campaigns/C-018/tasks/C-018-T040/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "NO file in rso/aether/FROZEN.json changed in any commit (mutants and the B6 pin forgery applied to the working copy and restored, sha256 + git diff --quiet verified, freeze check OK after each); Aether/, roles/Aether/ untouched"
+ ],
+ "evidence_added": [
+  "challenge set committed before any outcome (3cc94b838): 6 sound checks, 4 synthetic constructions, 32 challenge natives on Pallas seeds k=0x3000+i, horizon and alternative-N counterfactuals, two forged evidence sets, 5 semantic edits with witnesses; predictions in expected.json; post-hoc E1h/E3h added at 9160c952e before they ran",
+  "EVIDENCE CHAIN NOT CLOSED: B6 analyse() pins the design from FROZEN.json and never runs the freeze check -> a re-sealed 5-shard design analysed COMPLETE and printed ANCESTRY_WITH_CONTENT while freeze.mismatches() said 'design manifest differs'; B5 64 rows / 5 distinct units COMPLETE, only the first-seed replay caught the substituted row, duplicates inflate reach (12 CONFIRMED) and the decoder (0.112 vs 0.012); B1 tree parent/gen/type are producer fields: INSUFFICIENT->CONFIRMED (invariant-respecting, problems []) and NO_CUT->NONSPECIFIC (one type byte); E5/E1h/E3h the analyser's three guards unpinned by the suite (SURVIVES 33/33), witnessed moving under a re-sealed design",
+  "INSTRUMENT NOT CLOSED on the N rule: B8 alternative non-ancestor flips NONSPECIFIC->CONFIRMED in 2 of 4 evaluable units; in both the rule's N diverged at tick 1, before B (tick 4), and removed 100% of targets, the second candidate 0%; B4 late-N vacuity demonstrated synthetically, zero native incidence in 7 units (B4n)",
+  "INFERENCE NOT CLOSED: B2 no status for too few evaluable units (all-NO_CUT -> NEITHER / CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY; need counts NO_CUT); native incidence RX 13 NO_CUT + 4 INSUFFICIENT of 24, V1 6 + 2 of 8 (0 evaluable); B3 radius-only conditioning -> ANCESTRY_WITH_CONTENT with 0.0 excess on the CONFIRMED units",
+  "builder claims verified: S1 32/32 pins from git blobs and disk, design sealed/pinned/re-derived; S2 33 tests OK, 17/21 mutants via run_red on CRLF + 4/4 via red_crlf (21/21 stands); S3 QUALIFICATION and audit re-derived identically; S4 dev RX k=0 and V1 k=0 replay arrays AND tree bit-exactly, clamp-from-first-divergence identical to clamp-from-tick-1; S6 completeness basics incl. UNEXPECTED / COUNT_MISMATCH / smaller-design-refused-only-when-pinned; N1 32 challenge units: 0 problems, light cone 32/32, t0 32/32, invariants 32/32, null -0.0004",
+  "native DEV-class reading on 24 RX: band 2, confirmed_r2 3 (= need at n 24), agreement 0.43 DISAGREE, content 0.012 -> CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT if complete; V1 NEITHER with 0 evaluable; first native CONFIRMED / NONSPECIFIC / NOT_INTERVENTIONAL readings"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.aether.freeze check", "result": "OK before the claim, after every mutant / forgery restore, and at the end"},
+  {"command": "python -B -m rso.aether.challenge.cases sound|synth <scratch>", "result": "S1 S3 S4 S6 AS_EXPECTED, S5 RECORDED, S2 NOT_AS_PREDICTED (CRLF; red_crlf 4/4 KILLED); B1 B2 B3 B4 SURVIVOR"},
+  {"command": "python -B -m rso.aether.challenge.natives <scratch> RX 0 24 / V1 0 8 (2 processes, 6 calls)", "result": "32 units, 2050 s CPU, 0 problems; rows_natives.jsonl"},
+  {"command": "python -B -m rso.aether.challenge.cases natives-summary|altn <scratch>", "result": "N1 NOT_AS_PREDICTED (3-3 modal tie; all else held); B4n NOT_AS_PREDICTED (0 incidence); B7 RECORDED (1 of 7 changes class at H'=200); B8 NOT_AS_PREDICTED (2 of 4 flipped)"},
+  {"command": "python -B -m rso.aether.challenge.cases forge-build|b5|b6 <scratch>", "result": "B5 SURVIVOR (COMPLETE, 64 rows / 5 distinct, 1 replay problem, REFUSED_RECORD_INCONSISTENT; P1 numbers printed); B6 SURVIVOR (COMPLETE, ANCESTRY_WITH_CONTENT on 5 shards; freeze mismatch while mutated; restored)"},
+  {"command": "python -B -m rso.aether.challenge.run_edits <scratch> <dup6>; edits_posthoc", "result": "E1 E2 E3 E5 SURVIVES 33/33, E4 RED test_threshold_edges; E1h E3h SURVIVOR; every restore sha256 + git diff verified, freeze OK"},
+  {"command": "python -B -m rso.aether.challenge.cases score <scratch>", "result": "26 checks: 7 AS_EXPECTED, 3 RECORDED, 9 SURVIVOR, 7 NOT_AS_PREDICTED (results.jsonl)"},
+  {"command": "python -m workgraph validate", "result": "exit 0 before every state push"}
+ ],
+ "red_observed": {
+  "observed": false,
+  "detail": "adversarial review packet (TASK.json red_required false): the RED analogue is the committed prediction set (3cc94b838) preceding every outcome; 7 of 26 checks missed and are reported with their values (REPORT s6)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "one harness crash fixed after the first run (synth.b3 dict merge; d067e1b0d; no prediction involved)",
+  "E1/E3 witnesses blocked by the forged design's source pin (unanticipated, the builder's favour); post-hoc E1h/E3h labelled, predictions committed before they ran",
+  "E2 witness shape mispredicted (re-rooting also moves B/N); S2 CRLF harness portability; N1 modal tie; B4n no native incidence; B8 worse than predicted",
+  "the post-hoc run exceeded one 600 s foreground call (its baseline replayed six shards again); the harness moved it to the background and it completed with every file restored; no run_in_background was requested",
+  "outcomes directory named outcomes/ (results/ is gitignored) -- CHALLENGE_SET.md s4 says results/",
+  "informed review (every frozen file and all 21 builder mutants read), same vendor as the builder, cell member"
+ ],
+ "unresolved": [
+  "owner's one bounded repair round (REPORT s5): analyse() freeze check first; duplicate arrays_sha256 refusal; replay compares the tree; no law summary on refusal; tree invariants; one test per analyser guard; need over evaluable units + ANCESTRY_UNEVALUABLE; N rule ftick(B) <= ftick(N) <= min ftick(targets) or two non-ancestors; CONFIRMED-only conditioned excess reported -- items 5-6 are preregistration changes (re-freeze v1.1.0)",
+  "result text requirements REPORT s4.4 whatever the outcome",
+  "registry proposals REPORT s8 (Palamedes)",
+  "unclosed and unchallenged: graded decoder sensitivity in a noisy medium (PREREG s9)"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 1.1,
+  "processes_max": 2,
+  "wall_minutes": 125,
+  "paid_resources": "none",
+  "hosts": ["harry1"]
+ },
+ "cleanup": "scratch outside the repo at C:/Prometheus-worktrees/pallas-scratch-c018/ (110 MB: 32 unit records, forged sets, stage JSONs); worktree pallas-c018-t040 left for the integrator",
+ "notes": "Read-only on Aether/ and roles/Aether/; nothing on M2; no confirmatory seed; no RELEASE.json; no production file changed in any commit. Python 3.12.10 on harry1. Model continuity: claude-fable-5-1 at boot, no harness report of a change during the session (REPORT s0); the coordinator verifies from the launch log. Q3 reviewer time for ONBOARDING s4: ~125 min wall, ~65 CPU-min.",
+ "created_at_utc": "2026-10-12T13:15:00Z"
+}

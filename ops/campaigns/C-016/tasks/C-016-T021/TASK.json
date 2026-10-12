@@ -1,0 +1,96 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T021",
+  "campaign_id": "C-016",
+  "title": "Third-engine candidate: Z80 Atlas (byte-level heredity) adapter contract + known-answer smoke test (s11)",
+  "objective": "A concrete adapter contract (or a documented incompatibility) for a byte-level hereditary runtime, plus a known-answer smoke test.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/z80/CONTRACT.md",
+    "rso/z80/smoke/"
+  ],
+  "reads": [
+    "z80atlas sources (locate them)",
+    "rso/scale/CHECKPOINT_REPLAY_SURVEY.md",
+    "rso/registry/REGISTRY.json"
+  ],
+  "problem": "Read-only against the Z80 Atlas lane. Question to PREPARE, not run: can a heritable computational structure transmit a functional capability across generations, and can the Observatory tell inheritance from environmental reconstruction or seeded copying? Deliver: owner, pinned SHA, entry points, generation-boundary semantics, what inheritance / reconstruction / seeded-copy controls would look like natively, which registry entries could apply, and a known-answer smoke test (a planted heritable program is transmitted and detected; a non-heritable one is not) in the RSO lane against the pinned code. No large experiment.",
+  "non_goals": [
+    "No large Z80 experiment",
+    "No edit in the Z80 Atlas lane",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "CONTRACT.md",
+    "smoke test committed with its command and result"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/z80/CONTRACT.md",
+    "rso/z80/smoke/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Cadmus[harry1-abbe9ede]",
+      "at_utc": "2026-10-11T10:15:43Z",
+      "note": "claim"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Cadmus[harry1-abbe9ede]",
+      "at_utc": "2026-10-11T10:18:41Z",
+      "note": "contract + smoke committed at 9e8d60967"
+    },
+    {
+      "status": "GREEN",
+      "by": "Cadmus[harry1-abbe9ede]",
+      "at_utc": "2026-10-11T10:18:42Z",
+      "note": "contract + smoke committed at 9e8d60967"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Cadmus[harry1-abbe9ede]",
+      "at_utc": "2026-10-11T10:18:42Z",
+      "note": "contract + smoke committed at 9e8d60967"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "on main (592ef9965; same direct-to-main deviation). smoke_heredity re-run reproduced smoke_result.json exactly; archaeon/ untouched. Contract: archaeon tree, owner Archaeon (activity not checked -- route any engine use through the owner)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:46Z",
+      "note": "third-engine contract + known-answer smoke (directive s16 criterion 7)"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false (Cadmus): contract plus known-answer smoke test; no pre-existing failing test applies. The smoke test failed once during development (copy-noise assertion) and was corrected; this is recorded in the receipt."
+}

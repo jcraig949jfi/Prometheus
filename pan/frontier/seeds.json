@@ -1,0 +1,1357 @@
+{
+ "_provenance": "Generated mechanically from roles/Pan/research/reports/Frontier landscape adjacent to Prometheus.md (sha256 1856cb48e764796d2727f1765d913dc4c2a8ad9ec9260664d8bd3bef0369d1dc, LF) sections (a), (b), (f) on 2026-10-09. Identifiers copied, not retyped. Edit the report or this file, never both silently.",
+ "arxiv_queries": {
+  "Q_LLM_EVOLUTION": "(cat:cs.NE OR cat:cs.AI OR cat:cs.LG) AND (abs:\"AlphaEvolve\" OR abs:\"FunSearch\" OR abs:\"evolutionary coding agent\" OR abs:\"program evolution\" OR abs:\"code evolution\" OR abs:\"LLM-guided evolution\" OR abs:\"evolution through large models\")",
+  "Q_PROGRAM_SYNTHESIS": "(cat:cs.AI OR cat:cs.LG OR cat:cs.PL) AND (abs:\"ARC-AGI\" OR abs:\"refinement loop\" OR abs:\"library learning\" OR abs:\"program synthesis\" OR abs:\"program induction\")",
+  "Q_LEAN_PROVERS": "(cat:cs.LO OR cat:cs.AI OR cat:cs.LG) AND (abs:\"Lean 4\" OR abs:\"theorem prover\" OR abs:\"miniF2F\" OR abs:\"PutnamBench\" OR abs:\"autoformalization\")",
+  "Q_FALSIFICATION_AGENTS": "(cat:cs.AI OR cat:cs.LG OR cat:cs.MA) AND (abs:\"falsification\" OR abs:\"hypothesis validation\" OR abs:\"hypothesis testing\" OR abs:\"AI scientist\" OR abs:\"automated scientific discovery\" OR abs:\"confirmation bias\")",
+  "Q_OPEN_ENDEDNESS": "(cat:cs.NE OR cat:cs.AI OR cat:nlin.AO OR cat:q-bio.PE) AND (abs:\"open-endedness\" OR abs:\"open-ended evolution\" OR abs:\"open-ended learning\" OR abs:\"artificial life\")",
+  "Q_SELF_REPLICATION_ALIFE": "(cat:cs.NE OR cat:nlin.AO OR cat:nlin.CG OR cat:q-bio.PE) AND (abs:\"self-replicator\" OR abs:\"self-replicating\" OR abs:\"primordial soup\" OR abs:\"artificial chemistry\" OR abs:\"evolvability\")",
+  "Q_NCA_LENIA": "(cat:cs.NE OR cat:nlin.CG OR cat:nlin.AO OR cat:cs.LG) AND (abs:\"neural cellular automata\" OR abs:\"Lenia\" OR abs:\"cellular automata\")",
+  "Q_QUALITY_DIVERSITY": "(cat:cs.NE OR cat:cs.LG OR cat:cs.AI) AND (abs:\"quality-diversity\" OR abs:\"MAP-Elites\" OR abs:\"novelty search\" OR abs:\"dominated novelty search\")",
+  "Q_ENV_GENERATION_UED": "(cat:cs.LG OR cat:cs.AI OR cat:cs.NE) AND (abs:\"unsupervised environment design\" OR abs:\"environment generation\" OR abs:\"POET\" OR abs:\"open-ended environment\")",
+  "Q_SELF_MODIFYING": "(cat:cs.AI OR cat:cs.LG OR cat:cs.NE OR cat:math.DS) AND (abs:\"Godel Machine\" OR abs:\"Gödel Machine\" OR abs:\"self-improving agent\" OR abs:\"self-referential\" OR abs:\"autopoiesis\" OR abs:\"autopoietic\")",
+  "Q_WORLD_MODELS": "(cat:cs.LG OR cat:cs.AI) AND (abs:\"JEPA\" OR abs:\"world model\" OR abs:\"Dreamer\")",
+  "Q_LATENT_RECURSIVE": "(cat:cs.LG OR cat:cs.AI) AND (abs:\"recursive reasoning\" OR abs:\"Hierarchical Reasoning Model\" OR abs:\"Tiny Recursive\" OR abs:\"looped language model\" OR abs:\"latent reasoning\" OR abs:\"energy-based transformer\" OR abs:\"Continuous Thought Machine\")",
+  "Q_COGNITIVE_ARCH": "(cat:cs.AI OR cat:q-bio.NC OR cat:cs.LG) AND (abs:\"active inference\" OR abs:\"Thousand Brains\" OR abs:\"OpenCog\" OR abs:\"Hyperon\" OR abs:\"MeTTa\" OR abs:\"NARS\" OR abs:\"cognitive architecture\")"
+ },
+ "arxiv_author_queries": {
+  "AU_CLUNE_LAB": "au:Clune",
+  "AU_SAKANA": "au:Risi OR au:Lange OR au:Darlow",
+  "AU_IMPERIAL": "au:Cully OR au:Faldor",
+  "AU_FLAIR": "au:Foerster",
+  "AU_FLOWERS": "au:Oudeyer OR au:Etcheverry OR au:Plantec OR au:Pourcel",
+  "AU_GOOGLE_POI": "au:Mordvintsev OR au:Randazzo OR au:Niklasson",
+  "AU_LEVIN": "au:Levin AND (cat:q-bio.PE OR cat:cs.NE OR cat:nlin.AO)",
+  "AU_JEPA": "au:LeCun OR au:Balestriero",
+  "AU_DREAMER": "au:Hafner",
+  "AU_RECURSIVE": "au:Jolicoeur-Martineau",
+  "AU_ACTIVE_INF": "au:Friston",
+  "AU_TBP": "au:Leadholm OR au:Hawkins",
+  "AU_ARC": "au:Chollet",
+  "AU_SCHMIDHUBER": "au:Schmidhuber",
+  "AU_SSM": "(au:Gu OR au:Dao) AND cat:cs.LG",
+  "AU_SAYAMA": "au:Sayama"
+ },
+ "hf_orgs": [
+  "SakanaAI",
+  "Goedel-LM",
+  "deepseek-ai",
+  "julien31",
+  "AI-MO",
+  "Pythagoras-LM",
+  "Qwen",
+  "google",
+  "mistralai",
+  "openai",
+  "nvidia",
+  "microsoft",
+  "ByteDance-Seed",
+  "ByteDance",
+  "sapientinc",
+  "facebook",
+  "LiquidAI",
+  "RWKV",
+  "BlinkDL",
+  "fla-hub",
+  "tiiuae",
+  "ibm-granite",
+  "allenai",
+  "JetBrains",
+  "zai-org",
+  "jinaai",
+  "BAAI",
+  "nomic-ai",
+  "Snowflake",
+  "mixedbread-ai",
+  "perplexity-ai",
+  "Alibaba-NLP",
+  "lightonai",
+  "Skywork",
+  "tomg-group-umd",
+  "prism-ml",
+  "openbmb",
+  "WeiboAI",
+  "ServiceNow-AI",
+  "agentica-org",
+  "Kwaipilot",
+  "inclusionAI",
+  "internlm",
+  "GSAI-ML",
+  "Dream-org",
+  "Zyphra",
+  "state-spaces",
+  "apple",
+  "SamsungSAILMontreal"
+ ],
+ "hf_gguf_mirrors": [
+  "unsloth",
+  "bartowski",
+  "ggml-org",
+  "lmstudio-community",
+  "mradermacher"
+ ],
+ "hf_discovery": [
+  {
+   "tag": "hf_trending_textgen_le24b",
+   "params": {
+    "num_parameters": "min:0,max:24B",
+    "pipeline_tag": "text-generation",
+    "sort": "trendingScore",
+    "direction": "-1",
+    "limit": "100"
+   }
+  },
+  {
+   "tag": "hf_trending_embedding",
+   "params": {
+    "pipeline_tag": "feature-extraction",
+    "sort": "trendingScore",
+    "direction": "-1",
+    "limit": "50"
+   }
+  },
+  {
+   "tag": "hf_trending_reranker",
+   "params": {
+    "pipeline_tag": "text-ranking",
+    "sort": "trendingScore",
+    "direction": "-1",
+    "limit": "30"
+   }
+  },
+  {
+   "tag": "hf_evolutionary_tag",
+   "params": {
+    "filter": "evolutionary-algorithms",
+    "sort": "lastModified",
+    "direction": "-1",
+    "limit": "50"
+   }
+  }
+ ],
+ "key_arxiv_ids": [
+  "2506.13131",
+  "2511.02864",
+  "2509.19349",
+  "2510.14150",
+  "2511.17592",
+  "2510.06056",
+  "2511.23473",
+  "2601.16175",
+  "2605.09764",
+  "2602.10233",
+  "2604.18607",
+  "2602.23413",
+  "2604.19440",
+  "2604.24372",
+  "2602.16805",
+  "2605.20086",
+  "2507.19457",
+  "2507.02554",
+  "2309.08532",
+  "2401.02051",
+  "2402.01145",
+  "2405.20132",
+  "2412.17287",
+  "2206.08896",
+  "2505.22954",
+  "2510.21614",
+  "2603.19461",
+  "2408.08435",
+  "2602.07755",
+  "2502.07577",
+  "2507.06466",
+  "2601.04501",
+  "2311.10761",
+  "2601.10904",
+  "2505.11831",
+  "2603.24621",
+  "2412.04604",
+  "2507.14172",
+  "2510.04871",
+  "2506.21734",
+  "2512.06104",
+  "2603.13372",
+  "2504.03048",
+  "2510.02263",
+  "2510.15863",
+  "2605.14477",
+  "2603.23244",
+  "2211.16605",
+  "2310.19791",
+  "2401.16467",
+  "2411.02272",
+  "2509.05249",
+  "2502.03544",
+  "2504.21801",
+  "2504.11354",
+  "2508.03613",
+  "2507.23726",
+  "2512.17260",
+  "2510.01346",
+  "2601.07421",
+  "2606.12594",
+  "2606.05400",
+  "2603.19329",
+  "2502.18864",
+  "2502.09858",
+  "2504.08066",
+  "2408.06292",
+  "2501.04227",
+  "2503.18102",
+  "2505.13400",
+  "2511.02824",
+  "2503.22708",
+  "2604.02485",
+  "2604.18805",
+  "2604.22080",
+  "2608.07437",
+  "2608.22948",
+  "2608.12345",
+  "2609.28850",
+  "2609.18598",
+  "2410.07095",
+  "2506.09050",
+  "2504.20183",
+  "2504.10415",
+  "2610.02588",
+  "2406.04268",
+  "2502.04512",
+  "2505.11581",
+  "2605.23908",
+  "2606.08369",
+  "2607.09560",
+  "2603.01701",
+  "2606.17091",
+  "2603.16910",
+  "2604.19761",
+  "2601.03335",
+  "2604.01658",
+  "2606.13710",
+  "2105.03216",
+  "2406.19108",
+  "2607.01483",
+  "2607.09211",
+  "2412.17799",
+  "2509.22447",
+  "2604.11248",
+  "2505.13058",
+  "2609.36126",
+  "2402.10236",
+  "2607.27402",
+  "2609.01348",
+  "2605.30708",
+  "2604.01932",
+  "2406.04235",
+  "2212.07906",
+  "2410.02651",
+  "2506.15746",
+  "2505.08778",
+  "2506.04912",
+  "2603.10055",
+  "2605.30109",
+  "2605.06746",
+  "2605.16321",
+  "2604.08749",
+  "2401.05375",
+  "2502.00593",
+  "2504.08057",
+  "2504.03715",
+  "2602.00478",
+  "2604.14969",
+  "2410.14735",
+  "2605.27130",
+  "2607.22375",
+  "2308.03665",
+  "2303.00191",
+  "2212.04180",
+  "2302.12600",
+  "2301.12457",
+  "2405.15568",
+  "2410.23208",
+  "2505.20659",
+  "2506.19997",
+  "2511.12706",
+  "2602.09813",
+  "2605.01358",
+  "2512.19682",
+  "2605.09423",
+  "2609.04128",
+  "2608.10299",
+  "2406.04663",
+  "2402.16801",
+  "2312.12044",
+  "2403.13091",
+  "2409.00853",
+  "2311.12716",
+  "2506.09985",
+  "2603.14482",
+  "2512.10942",
+  "2511.08544",
+  "2512.24497",
+  "2603.19312",
+  "2605.26379",
+  "2512.04797",
+  "2511.00062",
+  "2508.13009",
+  "2604.08995",
+  "2301.04104",
+  "2509.24527",
+  "2507.03298",
+  "2605.20613",
+  "2605.19943",
+  "2602.12078",
+  "2608.24136",
+  "2607.16051",
+  "2505.05522",
+  "2502.05171",
+  "2510.25741",
+  "2412.06769",
+  "2512.21711",
+  "2507.06203",
+  "2505.16782",
+  "2507.02092",
+  "2504.10449",
+  "2505.24784",
+  "2407.20292",
+  "2608.09512",
+  "2603.20927",
+  "2307.14145",
+  "2412.18354",
+  "2507.04494",
+  "2310.18318",
+  "2510.09355",
+  "2512.24113",
+  "2506.07807",
+  "2511.23404",
+  "2509.05276",
+  "2506.09849",
+  "2506.09943",
+  "2501.09038",
+  "2606.18943"
+ ],
+ "limits": {
+  "arxiv": {
+   "min_interval_s": 4.0,
+   "basis": "ToU 1 req / 3 s across all machines; 75 percent rule -> 4 s"
+  },
+  "huggingface": {
+   "min_interval_s": 1.0,
+   "window_s": 300,
+   "max_calls_per_window": 375,
+   "basis": "anonymous 500 / 300 s per IP; 75 percent rule -> 375"
+  },
+  "feeds": {
+   "min_interval_s": 2.0,
+   "per_feed_min_age_h": 20.0,
+   "basis": "published feeds, one conditional GET per feed per day (ETag / If-Modified-Since); 2 s between any two calls; HF blog feed shares the HF anonymous bucket (1 call/day)"
+  },
+  "github_api": {
+   "min_interval_s": 2.0,
+   "reserve_remaining": 20,
+   "max_repo_calls_per_run": 8,
+   "basis": "REST core 60/h per public IP anonymous (research report section (e), observed 2026-10-09), SHARED by every host behind the IP: Pan stops when X-RateLimit-Remaining <= 20 and probes /rate_limit (free) first",
+   "observed_2026-10-09": "anonymous 304 responses DO count (CHEAT run: 2x304 + 1x200 took 59 -> 56); counters are not one per host: the first sweep's session read 23 remaining at 20:38:02Z while new sessions from 20:38:11Z read a fresh 60 (IPv4 only). Pan therefore budgets by its OWN count: one sweep per day, <= 38 counted calls, under 75 percent of 60/h whatever the server's counter keying"
+  }
+ },
+ "feeds": [
+  {
+   "feed_id": "deepmind.google",
+   "url": "https://deepmind.google/blog/rss.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "atom:link self-ref wrongly says example.com"
+  },
+  {
+   "feed_id": "openai.com",
+   "url": "https://openai.com/news/rss.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "sakana.ai",
+   "url": "https://sakana.ai/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "mixed Japanese/English entries"
+  },
+  {
+   "feed_id": "research.google",
+   "url": "https://research.google/blog/rss/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "blog.google",
+   "url": "https://blog.google/technology/ai/rss/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "301 -> https://blog.google/innovation-and-ai/technology/ai/rss/"
+  },
+  {
+   "feed_id": "bair.berkeley.edu",
+   "url": "https://bair.berkeley.edu/blog/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "microsoft.com",
+   "url": "https://www.microsoft.com/en-us/research/feed/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "blogs.nvidia.com",
+   "url": "https://blogs.nvidia.com/feed/",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "huggingface.co",
+   "url": "https://huggingface.co/blog/feed.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": "counts against HF \"pages\" bucket (100/5 min anon)"
+  },
+  {
+   "feed_id": "lilianweng.github.io",
+   "url": "https://lilianweng.github.io/index.xml",
+   "kind": "blog",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "jack-clark.net",
+   "url": "https://jack-clark.net/feed/",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "importai.substack.com",
+   "url": "https://importai.substack.com/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "interconnects.ai",
+   "url": "https://www.interconnects.ai/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "latent.space",
+   "url": "https://www.latent.space/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "magazine.sebastianraschka.com",
+   "url": "https://magazine.sebastianraschka.com/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "lastweekin.ai",
+   "url": "https://lastweekin.ai/feed",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "thegradient.pub",
+   "url": "https://thegradient.pub/rss/",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "alignmentforum.org",
+   "url": "https://www.alignmentforum.org/feed.xml",
+   "kind": "newsletter",
+   "verified_live_20261009": true,
+   "note": null
+  },
+  {
+   "feed_id": "alife.org",
+   "url": "https://alife.org/feed/",
+   "kind": "society",
+   "verified_live_20261009": true,
+   "note": "ISAL news/announcements"
+  },
+  {
+   "feed_id": "gh:SakanaAI/AI-Scientist",
+   "url": "https://github.com/SakanaAI/AI-Scientist/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": true,
+   "note": "VERIFIED-LIVE"
+  },
+  {
+   "feed_id": "gh:SakanaAI/ShinkaEvolve",
+   "url": "https://github.com/SakanaAI/ShinkaEvolve/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:adaptive-intelligent-robotics/QDax",
+   "url": "https://github.com/adaptive-intelligent-robotics/QDax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:icaros-usc/pyribs",
+   "url": "https://github.com/icaros-usc/pyribs/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:RobertTLange/evosax",
+   "url": "https://github.com/RobertTLange/evosax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:nnaisense/evotorch",
+   "url": "https://github.com/nnaisense/evotorch/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:EMI-Group/evox",
+   "url": "https://github.com/EMI-Group/evox/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:maxencefaldor/cax",
+   "url": "https://github.com/maxencefaldor/cax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:MichaelTMatthews/Craftax",
+   "url": "https://github.com/MichaelTMatthews/Craftax/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:FLAIROx/Kinetix",
+   "url": "https://github.com/FLAIROx/Kinetix/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:dunnolab/xland-minigrid",
+   "url": "https://github.com/dunnolab/xland-minigrid/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:chrxh/alien",
+   "url": "https://github.com/chrxh/alien/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:opennars/OpenNARS-for-Applications",
+   "url": "https://github.com/opennars/OpenNARS-for-Applications/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:ollama/ollama",
+   "url": "https://github.com/ollama/ollama/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:ggml-org/llama.cpp",
+   "url": "https://github.com/ggml-org/llama.cpp/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  },
+  {
+   "feed_id": "gh:pytorch/pytorch",
+   "url": "https://github.com/pytorch/pytorch/releases.atom",
+   "kind": "releases",
+   "verified_live_20261009": false,
+   "note": null
+  }
+ ],
+ "feeds_provenance": "Copied mechanically from section (c) of the same report (sha256 1856cb48e764796d2727f1765d913dc4c2a8ad9ec9260664d8bd3bef0369d1dc) on 2026-10-09: lab blogs, newsletters, societies, GitHub releases. arXiv RSS rows are omitted (the export API already covers those categories); 'no feed found' rows are omitted (HTML-only).",
+ "github_owners": [
+  {
+   "owner": "google-deepmind",
+   "note": null
+  },
+  {
+   "owner": "SakanaAI",
+   "note": null
+  },
+  {
+   "owner": "facebookresearch",
+   "note": null
+  },
+  {
+   "owner": "arcprize",
+   "note": null
+  },
+  {
+   "owner": "flowersteam",
+   "note": "UNVERIFIED via API (rate-limited); SOAR repo cited under it"
+  },
+  {
+   "owner": "snap-stanford",
+   "note": null
+  },
+  {
+   "owner": "future-house",
+   "note": null
+  },
+  {
+   "owner": "allenai",
+   "note": null
+  },
+  {
+   "owner": "deepseek-ai",
+   "note": null
+  },
+  {
+   "owner": "MoonshotAI",
+   "note": null
+  },
+  {
+   "owner": "Optima-CityU",
+   "note": null
+  },
+  {
+   "owner": "gepa-ai",
+   "note": null
+  },
+  {
+   "owner": "adaptive-intelligent-robotics",
+   "note": null
+  },
+  {
+   "owner": "FLAIROx",
+   "note": null
+  },
+  {
+   "owner": "ucl-dark",
+   "note": null
+  },
+  {
+   "owner": "paradigms-of-intelligence",
+   "note": null
+  },
+  {
+   "owner": "google-research",
+   "note": null
+  },
+  {
+   "owner": "galilai-group",
+   "note": null
+  },
+  {
+   "owner": "thousandbrainsproject",
+   "note": null
+  },
+  {
+   "owner": "trueagi-io",
+   "note": null
+  },
+  {
+   "owner": "sapientinc",
+   "note": null
+  },
+  {
+   "owner": "nvidia-cosmos",
+   "note": null
+  },
+  {
+   "owner": "SkyworkAI",
+   "note": null
+  },
+  {
+   "owner": "infer-actively",
+   "note": null
+  },
+  {
+   "owner": "metauto-ai",
+   "note": null
+  },
+  {
+   "owner": "EMI-Group",
+   "note": null
+  },
+  {
+   "owner": "algorithmicsuperintelligence",
+   "note": null
+  },
+  {
+   "owner": "VersesTech",
+   "note": null
+  },
+  {
+   "owner": "Liquid4All",
+   "note": null
+  }
+ ],
+ "github_repos": [
+  {
+   "repo": "algorithmicsuperintelligence/openevolve",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/ShinkaEvolve",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "inter-co/science-codeevolve",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "AIRI-Institute/gigaevo-core",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": "UNVERIFIED which of these two is current"
+  },
+  {
+   "repo": "FusionBrainLab/gigaevo-core",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "liugangcode/deepevolve",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "ttanv/levi",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "gepa-ai/gepa",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "google-deepmind/funsearch",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "CarperAI/OpenELM",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": "stale (2023)"
+  },
+  {
+   "repo": "beeevita/EvoPrompt",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "FeiLiu36/EoH",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "ai4co/LLM-as-HH",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "Optima-CityU/LLM4AD",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": null
+  },
+  {
+   "repo": "Google-Cloud-AI/alphaevolve-on-googlecloud",
+   "group": "LLM-guided evolution / program synthesis",
+   "note": "UNVERIFIED (named by third-party tutorial)"
+  },
+  {
+   "repo": "jennyzzt/dgm",
+   "group": "Self-improving / self-modifying agents",
+   "note": null
+  },
+  {
+   "repo": "metauto-ai/HGM",
+   "group": "Self-improving / self-modifying agents",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/HyperAgents",
+   "group": "Self-improving / self-modifying agents",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/drq",
+   "group": "Self-improving / self-modifying agents",
+   "note": null
+  },
+  {
+   "repo": "snap-stanford/POPPER",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/AI-Scientist-v2",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/AI-Scientist",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "SamuelSchmidgall/AgentLaboratory",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "future-house/aviary",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "Future-House/paper-qa",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "openai/mle-bench",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "ARA-Labs/oeb",
+   "group": "Automated science / falsification",
+   "note": null
+  },
+  {
+   "repo": "fchollet/ARC-AGI",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "arcprize/ARC-AGI-3-Agents",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "flowersteam/SOAR",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "SamsungSAILMontreal/TinyRecursiveModels",
+   "group": "ARC / program induction / library learning",
+   "note": "archived"
+  },
+  {
+   "repo": "if-ai/TinyRecursiveModels",
+   "group": "ARC / program induction / library learning",
+   "note": "fork with uv setup"
+  },
+  {
+   "repo": "sapientinc/HRM",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "poetiq-ai/poetiq-arc-agi-solver",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "jerber/arc-lang-public",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "ijoffe/ARC-VSA-2025",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "CoreThink-AI/Research-publications",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "mlb2251/stitch",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "MoonshotAI/Kimina-Prover-Preview",
+   "group": "ARC / program induction / library learning",
+   "note": null
+  },
+  {
+   "repo": "leanprover-community/repl",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "project-numina/kimina-lean-server",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "augustepoiroux/LeanInteract",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "oOo0oOo/lean-lsp-mcp",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "lean-dojo/LeanDojo-v2",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "lean-dojo/LeanDojo",
+   "group": "Lean tooling",
+   "note": null
+  },
+  {
+   "repo": "lenianiva/PyPantograph",
+   "group": "Lean tooling",
+   "note": "moved; current location UNVERIFIED"
+  },
+  {
+   "repo": "adaptive-intelligent-robotics/QDax",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "adaptive-intelligent-robotics/Dominated-Novelty-Search",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "icaros-usc/pyribs",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "RobertTLange/evosax",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "nnaisense/evotorch",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "EMI-Group/evox",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "EMI-Group/tensorneat",
+   "group": "QD / evolutionary computation libraries",
+   "note": null
+  },
+  {
+   "repo": "google/evojax",
+   "group": "QD / evolutionary computation libraries",
+   "note": "archived"
+  },
+  {
+   "repo": "maxencefaldor/cax",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/asal",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "SakanaAI/petri-dish-nca",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "arberzela/pbt-nca",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "paradigms-of-intelligence/cubff",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "google-research/self-organising-systems",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "Chakazul/Lenia",
+   "group": "ALife substrates",
+   "note": "dormant"
+  },
+  {
+   "repo": "erwanplantec/FlowLenia",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "maxencefaldor/Leniabreeder",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "chrxh/alien",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "devosoft/avida",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "ChakshuGupta13/lab",
+   "group": "ALife substrates",
+   "note": null
+  },
+  {
+   "repo": "jennyzzt/awesome-open-ended",
+   "group": "ALife substrates",
+   "note": "curated watch-list"
+  },
+  {
+   "repo": "MichaelTMatthews/Craftax",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "FLAIROx/Kinetix",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "dunnolab/xland-minigrid",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "DramaCow/jaxued",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/minimax",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": "stale"
+  },
+  {
+   "repo": "facebookresearch/dcd",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": "archived"
+  },
+  {
+   "repo": "luchris429/JaxLife",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": "stale"
+  },
+  {
+   "repo": "EvolutionGym/evogym",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "maxencefaldor/omni-epic",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "uber-research/poet",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": "dormant since 2022-03-23"
+  },
+  {
+   "repo": "Gen-Verse/GenEnv",
+   "group": "Environment generation / UED / open-ended RL",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/vjepa2",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/jepa-wms",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/nwm",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/coconut",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "facebookresearch/jepa",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "galilai-group/lejepa",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "galilai-group/stable-worldmodel",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "galilai-group/stable-pretraining",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "lucas-maes/le-wm",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "nvidia-cosmos/cosmos-predict2.5",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "nvidia-cosmos/cosmos-reason1",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "SkyworkAI/Matrix-Game",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "eloialonso/diamond",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "danijar/dreamerv3",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "nicklashansen/dreamer4",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": "unofficial"
+  },
+  {
+   "repo": "lucidrains/dreamer4",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": "unofficial"
+  },
+  {
+   "repo": "SakanaAI/continuous-thought-machines",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "seal-rg/recurrent-pretraining",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "alexiglad/EBT",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "VersesTech/axiom",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": "frozen since 2025-06-02"
+  },
+  {
+   "repo": "infer-actively/pymdp",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "ReactiveBayes/RxInfer.jl",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "thousandbrainsproject/tbp.monty",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "trueagi-io/hyperon-experimental",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "trueagi-io/MORK",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "trueagi-io/PeTTa",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "trueagi-io/metta-wam",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "opencog/atomspace",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "opennars/OpenNARS-for-Applications",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "SoarGroup/Soar",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "Liquid4All/cookbook",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "Liquid4All/liquid-audio",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "raminmh/CfC",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "jxiw/M1",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "state-spaces/mamba",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "BICLab/SpikingBrain-7B",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "fangwei123456/spikingjelly",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "synsense/rockpool",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "lava-nc/lava",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": "archived"
+  },
+  {
+   "repo": "google-deepmind/physics-IQ-benchmark",
+   "group": "World models / latent reasoning / cognitive architectures",
+   "note": null
+  },
+  {
+   "repo": "ollama/ollama",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "ggml-org/llama.cpp",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "SystemPanic/vllm-windows",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "vllm-project/vllm",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "Dao-AILab/flash-attention",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "bitsandbytes-foundation/bitsandbytes",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "abetlen/llama-cpp-python",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  },
+  {
+   "repo": "pytorch/pytorch",
+   "group": "Local inference stack (Windows / sm_120)",
+   "note": null
+  }
+ ],
+ "github_provenance": "Copied mechanically from section (d) of the same report (sha256 1856cb48e764796d2727f1765d913dc4c2a8ad9ec9260664d8bd3bef0369d1dc) on 2026-10-09: owners to sweep and owner/repo ids; the report's search-query rows are not used (search API 10/min anonymous)."
+}

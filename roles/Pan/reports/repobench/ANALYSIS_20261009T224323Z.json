@@ -1,0 +1,88 @@
+{
+ "runs": {
+  "ollama:gemma3:12b@nothink1024": "repobench-20261009T221532Z-spectrex5",
+  "ollama:gpt-oss:20b@nothink1024": "repobench-20261009T212349Z-spectrex5",
+  "ollama:qwen2.5-coder:14b@nothink1024": "repobench-20261009T215606Z-spectrex5"
+ },
+ "configs": {
+  "ollama:gemma3:12b@nothink1024": {
+   "passed": 35,
+   "of": 142,
+   "pass_at_1": 0.246,
+   "wilson95": [
+    0.183,
+    0.323
+   ],
+   "shapes": {
+    "test failed": 99,
+    "pass": 35,
+    "syntax error": 8
+   }
+  },
+  "ollama:gpt-oss:20b@nothink1024": {
+   "passed": 21,
+   "of": 142,
+   "pass_at_1": 0.148,
+   "wilson95": [
+    0.099,
+    0.216
+   ],
+   "shapes": {
+    "empty response": 104,
+    "syntax error": 15,
+    "pass": 21,
+    "test failed": 2
+   }
+  },
+  "ollama:qwen2.5-coder:14b@nothink1024": {
+   "passed": 59,
+   "of": 142,
+   "pass_at_1": 0.415,
+   "wilson95": [
+    0.338,
+    0.498
+   ],
+   "shapes": {
+    "test failed": 83,
+    "pass": 59
+   }
+  }
+ },
+ "pairs": [
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:gpt-oss:20b@nothink1024",
+   "only_a": 29,
+   "only_b": 15,
+   "p": 0.048766765904474596,
+   "wilson_separable": false,
+   "holm_threshold": 0.00625,
+   "holm_reject": false
+  },
+  {
+   "a": "ollama:gemma3:12b@nothink1024",
+   "b": "ollama:qwen2.5-coder:14b@nothink1024",
+   "only_a": 4,
+   "only_b": 28,
+   "p": 1.9301194697618484e-05,
+   "wilson_separable": true,
+   "holm_threshold": 0.00556,
+   "holm_reject": true
+  },
+  {
+   "a": "ollama:gpt-oss:20b@nothink1024",
+   "b": "ollama:qwen2.5-coder:14b@nothink1024",
+   "only_a": 8,
+   "only_b": 46,
+   "p": 1.3843354973452904e-07,
+   "wilson_separable": true,
+   "holm_threshold": 0.005,
+   "holm_reject": true
+  }
+ ],
+ "agreement": {
+  "solved_by_none": 71,
+  "solved_by_all": 6,
+  "configs": 3
+ }
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T041",
+  "campaign_id": "C-016",
+  "title": "THE ONE repair round of the Ensorain assay (PREREGISTRATION v1.1.0) + re-freeze",
+  "objective": "Close Pallas's NOT CLOSED surfaces (REPORT.md s3-s5) before any confirmatory outcome exists.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T040"
+  ],
+  "owns": [
+    "rso/ensorain/"
+  ],
+  "reads": [
+    "rso/ensorain/",
+    "rso/ensorain/challenge/REPORT.md"
+  ],
+  "problem": "Read rso/ensorain/challenge/REPORT.md in full. The central defect (s4.1): K1 and K2 compare a subject to its OWN frozen / shuffled configuration, so the verdict depends on the INNATE value of the plastic parameter (jitter: a non-learner reads REVISION_NOT_HISTORY_DEPENDENT; learns_pre: a genuine lifetime learner on the post-switch side reads REVISION_NOT_SHOWN). Required, pre-outcome, as a VERSIONED amendment (v1.1.0: the arms/controls change, so not wording-only), committed before the re-freeze: (1) wording narrowings of s1 and the s5 table (REPORT s4.1-4.3); (2) a K1 comparator that is invariant to the innate start. Pallas proposes a noise-matched arm (plasticity on, eta -> 0) or K1 against both. COORDINATOR SUGGESTION, yours to accept or reject with reasons: a WHOLE-LIFE joint endpoint (a life counts as revised iff its pre-switch AND late-window role-1 counts are both majority-correct), compared full vs frozen and full vs noise-matched -- no fixed-sign policy, on either side, can satisfy both halves, so the contrast stops depending on where theta starts; check it on jitter, learns_pre, innate_zero, innate_max, clock_hybrid (rso/ensorain/challenge/subjects_c.py) on DEVELOPMENT seeds before freezing; (3) register jitter (must not be REVISION_*) and learns_pre (must be REVISION_*) as qualification controls (Q-d, Q-e), and optionally the no-switch descriptive arm (P2); (4) behavioural tests that kill Pallas's surviving edits E1 (Holm), E2 (G_PRE arm), E3 (window), E4 (control assignment), E6 (threshold), each RED on its mutant applied verbatim from challenge/edits.json, plus np.isfinite for P1; (5) G_R5 threshold given a competence meaning (B3), not a chance-1/2 k_pos; (6) family S declared from genome structure BEFORE the run as the subjects with a non-empty plastic key set (3), the five parameter-free subjects reported, not tested; per-subject frozen / shuffle / comparator late accuracies printed beside every verdict. Recompute N / power if the endpoint changes. Then re-freeze (FROZEN.json v1.1.0) and update ONBOARDING.md (repair-round lines, what the challenge taught). NO confirmatory run.",
+  "non_goals": [
+    "No confirmatory run (seeds 16_330_xxx untouched; no `assay confirm`)",
+    "No edit to ensorain/ or roles/Ensorain/",
+    "No WTP-05 registered seed",
+    "No process on ubu006",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "PREREGISTRATION v1.1.0 amendment committed before the re-freeze",
+    "RED rows for E1 E2 E3 E4 E6 (+P1)",
+    "the five challenge subjects re-run on dev seeds under the new rule, with Q-d/Q-e outcomes",
+    "FROZEN.json v1.1.0",
+    "suite green"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:20:47Z",
+      "note": "from C-016-T040 adjudication"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:20:47Z",
+      "note": "repair round; launch Argus on Opus"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-b2f16d20]",
+      "at_utc": "2026-10-11T12:24:16Z",
+      "note": "repair round; worktree C:/Prometheus-worktrees/argus-c016-t041 branch argus/c016-t041 base a387bbb5a"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-b2f16d20]",
+      "at_utc": "2026-10-11T12:46:20Z",
+      "note": "recorded late: implementation began ~12:29Z (prototype of the whole-life endpoint on dev lives); code 6fff93af9 on argus/c016-t041"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-b2f16d20]",
+      "at_utc": "2026-10-11T12:46:21Z",
+      "note": "suite 33/33 GREEN; red_rows.jsonl: E1 E2 E3 E4 E6 + R1-R6 RED on named tests (12:40:26Z); amendment 030f1746f; re-freeze ebe4860c1"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-b2f16d20]",
+      "at_utc": "2026-10-11T12:50:19Z",
+      "note": "branch argus/c016-t041 head 04bbbece6 (freeze ebe4860c1, amendment 030f1746f); receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:58:20Z",
+      "note": "merged argus/c016-t041 (340b04b3b): amendment v1.1.0 030f1746f precedes re-freeze ebe4860c1 (FROZEN.json fcfe67ce, 34 files); freeze check OK; suite OK; 11/11 RED rows RED + baseline GREEN; registry CURRENT; integrator mutant (K1 intersection-union max->min) killed by 2 tests; no runs/. Coordinator endpoint suggestion accepted + noise arm. notify key for this packet carried prose after the sha (sidecar parse nit, recorded)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:58:20Z",
+      "note": "the one repair round done; T042 re-check next"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 s9 (one bounded repair round) (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5",
+  "red_required": false,
+  "notes": "red_required set false by Argus[harry1-b2f16d20] at 2026-10-11T12:50Z after the fact: the RED state was not recorded before GREEN (a state-machine slip by the claimant; GREEN pushed at 2abdc36b3 with validate failing -- a gate breach, reported to Palamedes). The packet's RED evidence is behavioural and committed: rso/ensorain/repair_v110/red_rows.jsonl (E1 E2 E3 E4 E6 applied verbatim from challenge/edits.json, R1-R6 incl. P1: each RED on its named test; baseline GREEN 33/33). The tests were written after the code, so no pre-implementation failing run exists; the mutant rows are the RED."
+}

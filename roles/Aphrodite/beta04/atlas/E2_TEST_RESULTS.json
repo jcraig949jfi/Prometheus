@@ -1,0 +1,181 @@
+{
+ "code_sha256": {
+  "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "arms.py": "5e211abc9619ede6e2ae29e0ad37be33e049fa6d7235431c7def8dbff53fc0d8",
+  "calibration.py": "ff9419a10cba7b4a46ff6effb91b03f6f0fbc7efe774d77a0797c88daa89b7cf",
+  "common.py": "7a7b46eb93231b1952b3bdaecf6c9235766d76fd6609d3108d124d5bd09ff8b4",
+  "costs.py": "08d6268c0c1d332377f21ddd7127f262d6f12beb2d40bea531c511e38d6d9c08",
+  "descriptors.py": "47d24a2d3eeefef6d09d8f3df6d011f7a636b8625bd2bb12aa81729f4c9ad05b",
+  "e2_analyze.py": "b15c93beb56a7f773e05386a145b737a7e96970e988611ad9d245e8b2193ae61",
+  "e2_driver.py": "eedc683a05b74e322d2fbf45c8d8e4a7c8286893134c610fe6544ea7d5c421ac",
+  "e2_project.py": "c8a00a4e48cdc228ae2c6e533d361763d8194765a23b9d4a5c9b0c47947dff16",
+  "measure.py": "ad66c664d8df62eda64be31c8af92649b2483b6f7f2ae194a9812a1fce427f44",
+  "pilot.py": "7f3ce3735cc7a454163efe8c517a3abb75c5e28bc5d335221bd4689edf6c1321",
+  "route.py": "4f9588b686d424719fa9ee331f44617b9a7d685cab72f469924676d7eb00f557",
+  "sample.py": "a32beab32fdfd7f571147c615b8b74d82d3b34741af7fd4bfdb68823c110f33f",
+  "toys.py": "1026b1ef10970a526d1db1208b855ae42c3a961da5d26f6ca993f4cd97c8597e"
+ },
+ "fail": 0,
+ "pass": 13,
+ "results": [
+  {
+   "cpu_s": 72.0,
+   "info": {
+    "cases_identical": 20
+   },
+   "pass": true,
+   "test": "fast_restore_bit_identical"
+  },
+  {
+   "cpu_s": 3.6,
+   "info": {
+    "restores": {
+     "D1-X3": [
+      1497,
+      1497
+     ],
+     "D1-X3G": [
+      1497,
+      1497
+     ],
+     "D1-chain_neutral": [
+      1,
+      1497
+     ]
+    }
+   },
+   "pass": true,
+   "test": "arm_table_at_code_level"
+  },
+  {
+   "cpu_s": 0.0,
+   "info": {
+    "files_read": 2,
+    "slot": "A2998a74232/9a416061f0e3af6e"
+   },
+   "pass": true,
+   "test": "search_sees_arm_view_only"
+  },
+  {
+   "cpu_s": 0.1,
+   "info": {
+    "acquired_term_differs_from_sealed": 6,
+    "families": 7
+   },
+   "pass": true,
+   "test": "library_is_foundry_acquired_constituents"
+  },
+  {
+   "cpu_s": 0.0,
+   "info": "ok",
+   "pass": true,
+   "test": "certifier_task_tribunal_value_or_fail"
+  },
+  {
+   "cpu_s": 0.5,
+   "info": {
+    "after_spurious": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "direct": [
+     true,
+     true,
+     false,
+     true
+    ],
+    "family": "W0467897d-F081-R3"
+   },
+   "pass": true,
+   "test": "endpoint_primary_secondary_and_rederivation"
+  },
+  {
+   "cpu_s": 21.5,
+   "info": {
+    "arms": {
+     "D1-X3": 0,
+     "X3G": 0,
+     "chain_neutral": 1,
+     "chain_strict": 0,
+     "credit_blind": 0,
+     "desert_ref": 0
+    },
+    "exit_codes": {
+     "component": 3,
+     "incomplete": 2,
+     "runner_field": 3
+    },
+    "label": "REACHED"
+   },
+   "pass": true,
+   "test": "screen_resumable_deterministic_and_analyzer_rederives"
+  },
+  {
+   "cpu_s": 0.0,
+   "info": "ok",
+   "pass": true,
+   "test": "labels_known_answers"
+  },
+  {
+   "cpu_s": 0.0,
+   "info": "ok",
+   "pass": true,
+   "test": "frontier_known_answers"
+  },
+  {
+   "cpu_s": 0.1,
+   "info": {
+    "production_clusters": {
+     "fp:filter_of_map": 2,
+     "fp:guard_p": 3,
+     "fp:map_of_filter": 6,
+     "fs:post_fold": 2,
+     "fs:scan_of_map": 2
+    }
+   },
+   "pass": true,
+   "test": "cluster_units_from_witness_skeletons"
+  },
+  {
+   "cpu_s": 0.1,
+   "info": {
+    "desert_ref_droppable": 15
+   },
+   "pass": true,
+   "test": "plan_truncation_and_production_guards"
+  },
+  {
+   "cpu_s": 0.2,
+   "info": {
+    "upper_bound_core_h": [
+     {
+      "core_h": 25.95,
+      "step": "none"
+     },
+     {
+      "core_h": 23.11,
+      "step": "1: drop chain_strict"
+     }
+    ]
+   },
+   "pass": true,
+   "test": "projection_and_power"
+  },
+  {
+   "cpu_s": 69.2,
+   "info": {
+    "certifier_recheck": true,
+    "constant_lookup_control": true,
+    "restoration_receipt": true,
+    "start_at_target": true,
+    "target_blindness": true
+   },
+   "pass": true,
+   "test": "prelaunch_checks_on_exposed_pilot"
+  }
+ ],
+ "suite": "atlas E2 driver tests",
+ "wall_s": 308.0
+}

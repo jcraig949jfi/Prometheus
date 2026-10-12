@@ -1,0 +1,63 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-016-T042",
+ "campaign_id": "C-016",
+ "attempt_id": "A-001",
+ "role": "Pallas",
+ "model": "claude-fable-5-1",
+ "quality_class": "Q3",
+ "instance": "harry1-7368c61b (one headless session: boot, freeze verification, claim, set, execution, report, receipt, state commits; no background job at any point)",
+ "host": "harry1",
+ "branch": "pallas/c016-t042",
+ "worktree_path": "C:/Prometheus-worktrees/pallas-c016-t042",
+ "start_sha": "28b5c5e1c2ad4614cc9dd5af9d580f5c8c03a598",
+ "end_sha": "08b39a3d2dbc2926cc3dbf716251c5557196346c",
+ "dirty": false,
+ "commits": {
+  "claim": "82f3342aa (main, 13:05Z)",
+  "implementing": "f5523168c (main, 13:08Z)",
+  "set_before_outcomes": "ec70e1596 (13:29:48Z): CHALLENGE_SET_R2.md with predictions, expected_r2.json, subjects_r2.py, cases_r2.py, witnesses_r2.py, run_edits_r2.py",
+  "results": "08b39a3d2: results_r2.jsonl, red_rows_r2.jsonl, REPORT.md, run_edits_r2.py E5-prime entry (three lines, REPORT s6.1), WORK_STATE, journal, comms bodies",
+  "origin_main_check": "5520b70a0 fetched at 13:42Z: no change under rso/ensorain, ensorain/wtp5, ensorain/wtp3/collider.py or the four pinned shared files since 28b5c5e1c; no merge needed",
+  "green_and_integration_ready": "the state commits carrying this receipt (main)"
+ },
+ "files_changed": [
+  "rso/ensorain/challenge/R2/ (new: __init__.py, CHALLENGE_SET_R2.md, expected_r2.json, subjects_r2.py, cases_r2.py, witnesses_r2.py, run_edits_r2.py, results_r2.jsonl, red_rows_r2.jsonl, REPORT.md)",
+  "roles/Pallas/{WORK_STATE.json, journal/2026-10-11.md, comms/C016-T042_CLAIMED_2026-10-11.md, comms/C016-HEARTBEAT_2026-10-11_T042_start.md, comms/C016-T042_INTEGRATION_READY_2026-10-11.md, comms/C016-HEARTBEAT_2026-10-11_T042_done.md}",
+  "ops/campaigns/C-016/tasks/C-016-T042/ (state commits on main: LEASE.json, TASK.json, this receipt)",
+  "no file under rso/ensorain/*.py, rso/ensorain/repair_v110/, rso/ensorain/tests/, ensorain/, roles/Ensorain/ or rso/registry/ was changed in any commit; every mutant was applied to the working copy only and restored (sha256 + git diff --quiet + freeze check OK, red_rows_r2.jsonl 12/12)"
+ ],
+ "evidence_added": [
+  "VERIFIED (REPORT s5.1): freeze check OK 34/34 recomputed independently (git blob and disk, LF); FROZEN.json LF sha256 fcfe67ce...; amendment 030f1746f is an ancestor of re-freeze ebe4860c1 (08:43:14 vs 08:45:30 -0400); 11/11 mutants (E1 E2 E3 E4 E6 R1-R6) RED on their named test re-run with -B; E5 verbatim inapplicable to v1.1.0 (find count 0: assay.py:146 arm tuple), E5-prime with the v1.1.0 line KILLED by the two predicted tests; W1-W5 differ 5/5; the 26,400 development rows reproduce bitwise (sha b54c751b..., 242 s); the noise arm shares the world's episodes block for block and moves theta <= 4.2e-9",
+  "REPORT s4.1 CLOSED (REPORT R2 s3): reference / innate_zero / innate_max / learns_pre read one verdict (REVISION_HISTORY_DEPENDENT) with the same full-arm count (121/200); jitter REVISION_NOT_SHOWN with K1n exactly 0:0:200 (all 9 of its revised lives at sw >= 7); B3's 180 zero lives fail G_R5 (220 < 371)",
+  "INFERENCE NOT CLOSED on one bounded point: a law-blind random walk (walker: type-1 s*theta with |theta| >> sigma, type-2 constant) passes both K1 comparators (48:0 vs frozen, 48:0 vs noise), fails K2 (36:31, p .31), noswitch 142/200, theta moves 1.24 per no-switch life -> REVISION_WITHOUT_RETAINED_COMPETENCE; the ratchet (halt-on-success, switch-triggered: noswitch 200/200, theta never moves without a switch) reads REVISION_NOT_HISTORY_DEPENDENT; the K1-only labels do not license the word revises; only K2 and the noswitch column separate drift from a response to the switch (L1). Family P unaffected (K2 96:15)",
+  "INSTRUMENT CLOSED with two recorded limitations: ETA_NOISE is absolute (the reference rescaled by 1e-5 with an amplified readout is its own noise arm: full and noise rows identical on 200/200, REVISION_NOT_SHOWN; at 1e-4 REVISION_NOT_HISTORY_DEPENDENT) -- a false negative only, family S's smallest eta .059 (L3); no drift control among Q-a..Q-e (L5)",
+  "INTERPRETATION NOT CLOSED: family S from structure admits dead plastic nodes -- searched_16310007's plastic LIN feeds no node, searched_16310008's plastic BILIN reaches neither ACT nor WRITE (tape._live); only searched_16310006's plastic parameter reaches ACT; searched_dead admitted; search accessibility must be read as 1 testable and 7 not (L2); the two s5 rows need the clause or-law-blind-drift (L1); G_R5's meaning stated (L4); the reference's revisability depends on the PLASTIC_BOUND clip (O1: unbounded twin revises 8/200, late .066); freeze check ignores added files (O2)",
+  "nothing BLOCKING; nothing in s2-s4, s6-s7, s10 to change; the run may execute on v1.1.0; no further repair round -- REPORT R2 s4 is the text the result must carry"
+ ],
+ "evidence_executed": [
+  {"command": "python -B -m rso.ensorain.freeze check (base; after each of 12 mutant restores and 5 witness restores; after results)", "result": "OK every time; MISMATCH with each mutant in place (hash_guard_fires_on_mutant true x17)"},
+  {"command": "python -B rso/ensorain/challenge/R2/cases_r2.py S1 S2 S3 FS GR5 B3 B1 S5 P3 B2 REF WK RT TN5 TN4 (one process); then S4 alone", "result": "sound 5/5 AS_EXPECTED; re-runs 5/5 AS_EXPECTED; WK SURVIVOR, FS SURVIVOR, TN5 SURVIVOR (as predicted); RT RECORDED (held); TN4 RECORDED (sub-prediction missed); REF RECORDED; ~2.5 min + 242 s"},
+  {"command": "python -B rso/ensorain/challenge/R2/run_edits_r2.py --baseline; --edit <12 ids> --phase suite; --edit E1 E2 E3 E4 E6 --phase witness", "result": "baseline GREEN 33/33; 11 RED + E5-prime KILLED; 5 witnesses differ; every restore verified"},
+  {"command": "git diff --stat 28b5c5e1c origin/main(5520b70a0) -- rso/ensorain ensorain/wtp5 ensorain/wtp3/collider.py rso/witness/ruler.py rso/reach/stats.py rso/slice001/receipt.py rso/registry/registry.py", "result": "empty"},
+  {"command": "python -m workgraph validate (before each push to main)", "result": "OK"},
+  {"command": "python -m comms sync Pallas (boot 13:02Z; 13:42Z; 13:45Z)", "result": "0 new at boot; two Aphrodite broadcasts (Beta-04 E3-R report, Beta-04 CLOSED); nothing addressed to Pallas; queue empty"}
+ ],
+ "red_observed": {"observed": false, "detail": "review packet, red_required false: the set and its predictions were committed before the first outcome; the expected verdicts are the answer key, not a failing test"},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "tooling: the E5 control's T040 find string does not occur in v1.1.0 (the repair changed the arm tuple at assay.py:146); an E5-prime entry with the v1.1.0 line was added to run_edits_r2.py after the set commit (three lines, disclosed REPORT s6.1); every other set file is byte-identical to ec70e1596",
+  "TN4 sub-prediction missed: the noise arm of the 1e-4 rescaled reference revised 0 lives, not > 0 (the unbounded parameter runs away in both arms); the REVISION_* part held",
+  "development outcomes observed: 200 R2 seeds x 9 subjects x 6 arms (+ newlife's second life), 80 no-switch probe lives, 25 draws-check lives, witness lives, the 400-seed development reproduction; no confirmatory seed; no searched-subject lifetime (FS is structural)",
+  "informed re-check, not first-sight; same vendor as the repairer (opus vs fable); cell member; reviewer ~40 min wall",
+  "harness: multi-line heredocs with certain content failed to parse in the shell (three times); the Write tool was used for the R2 modules and this receipt (no effect on the evidence)"
+ ],
+ "unresolved": [
+  "the result must carry REPORT R2 s4 L1-L5 (drift reading of the K1-only labels with the noswitch count printed beside them; family S = 1 live subject, 7 not testable; ETA_NOISE absolute; G_R5's meaning; no drift control) and O1-O2; no repair round remains (PREREGISTRATION s11.12)",
+  "next freeze re-cut: exclude challenge/R2/ from freeze.files() as challenge/ is, or accept that the re-check's files become frozen bytes (O2)"
+ ],
+ "unblocks": ["C-016-T050 (the confirmatory run on v1.1.0; labels read with REPORT R2 s4)"],
+ "resources": {"case_cpu_s": 150, "dev_reproduce_s": 242, "mutation_runs_s": 200, "core_hours_total_estimate": 0.17, "processes_max": 2, "paid_resources": "none", "hosts": "harry1 only (nothing on ubu006; no WTP-05 seed; no confirmatory seed)"},
+ "created_at_utc": "2026-10-11T13:55:00Z",
+ "notes": "Directive s9 step 7 honoured: fresh session, actual claude-fable-5-1 (comms boot tier heavy), no downgrade, no confirmatory outcome seen (none exists), cases and mutations committed before their outcomes were observed. Headless rule applied throughout: no run_in_background; every command foreground with timeout <= 600 s; <= 2 computing processes. Ensorain isolation (directive s3): ensorain/ and roles/Ensorain/ read-only, no WTP-05 registered seed, nothing on ubu006, pinned SHA in my own worktree."
+}

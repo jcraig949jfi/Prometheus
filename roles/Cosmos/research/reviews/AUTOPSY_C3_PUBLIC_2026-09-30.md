@@ -82,16 +82,20 @@ L7 Export choices are free parameters. What a substrate exposes (readout size, e
 ## 4. Evidence hashes (sha256 over LF-normalised bytes unless noted)
 | object | hash | where |
 |---|---|---|
-| withheld Session 1 head | git e73e5eb26aa3edbc786a1941817bce738b4f58ec | local branch cosmos/c3-s1-2026-09-24 |
+| withheld Session 1 head | git e73e5eb26aa3edbc786a1941817bce738b4f58ec | PUBLIC on main since 2026-10-08 (merge d75fb45ef) |
 | withheld autopsy commit | git c9f8aff1777ceec49951bd5ee09ab734caea6370 | local branch cosmos/c3-autopsy-2026-09-30 |
 | AUTOPSY_C3_WITHHELD.md | adc2e8883de11c2ff9d93cfeb88bea79acc3b0afed8955f1bd4edb27152febcc | same |
 | autopsy_c3.py | 12f6733e921a05eb9083c6b7066122b1e5c02ab9bc94253cee85e9ad60ce4ba5 | same |
 | AUTOPSY_DATA.json (re-run byte-identical) | 298ef81696537e474d1427724eb78d9ed197d1a94ae81a1e5859407a870be646 | same |
-| visible-world map store | 28ccb48d81ea10da3c44bfefd79e7b0719637cc06a0cf030230c93c159591ec0 | withheld branch |
-| law-search store | d1d2a5b042d3b70fe1888d704e86ea310b9ab53702d62b744e056fcb7c885eb1 | withheld branch |
-| adversary store | e7c783fd728b7a24649e6ab41e7ec5e82c9b03cbf4358b77e2c460b9bafaa41d | withheld branch |
+| visible-world map store | 28ccb48d81ea10da3c44bfefd79e7b0719637cc06a0cf030230c93c159591ec0 | main (published 2026-10-08) |
+| law-search store | d1d2a5b042d3b70fe1888d704e86ea310b9ab53702d62b744e056fcb7c885eb1 | main (published 2026-10-08) |
+| adversary store | e7c783fd728b7a24649e6ab41e7ec5e82c9b03cbf4358b77e2c460b9bafaa41d | main (published 2026-10-08) |
 | audit bundle manifest / VERIFY.json | 187eebbd...b5be7d5a9 / c294f24788ccfe047a82c273d9691cdc7b8fe6658e9e55e8f63561032f2d6fc5 | M2 cosmos_runs |
 | audit replicas 1 / 2 | e2d43755...f27e88c / 6349aa10...8e4d241e | M2 cosmos_runs |
+
+2026-10-08: the Session 1 rows are now checkable on main (law text in roles/Cosmos/c3/S1_RESULT.md and
+runs/maps_s1/LAW.json; store hashes re-verified at publication). G-0006 stays dead. The autopsy rows stay local:
+the autopsy branch is not covered by the publication authorization.
 
 ## 5. What this does not show
 It does not show that no substrate-independent law of historical accessibility exists. It shows that

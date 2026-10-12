@@ -1,0 +1,390 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-43: A DISTINCTNESS INSTRUMENT FOR NEGATIVE-SPACE        |
+|                 EVALUATION (CALIBRATION + FROZEN A-D PROTOCOL)               |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-11 (freeze ceda18a2e; calibration 10:18:39Z; smokes         |
+|          10:20:52Z, 10:22:18Z, 10:28:37Z; packet 10:32Z, receipt-corrected)  |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  instrument PROMOTED (boundary pass on one clause); generation       |
+|          experiment FROZEN with amendments A1-A4, NOT RUN (by directive)     |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Operator question (Sagacity Foundation directive, 2026-10-11, section 3):
+  Does accumulating experimentally characterized FAILURES redirect generation
+  toward causally distinct, executable mechanisms? And does handing the
+  failures to an LLM help, or anchor it to them?
+
+Why an instrument comes first:
+  - Measuring "novel mechanism" needs a judge of mechanistic equivalence.
+  - If an LLM judges novelty, the generator's prior is swapped for the
+    evaluator's. Surface similarity (text, AST, embeddings) is the other cheap
+    option.
+  - So the first deliverable is a calibrated equivalence instrument, with
+    surface similarity as the baseline it must beat.
+
+Result:
+  - A behavioral instrument PASSES its frozen promotion gate.
+    - Known-answer macro 1.000 vs best baseline 0.500.
+    - Symbolic held-out macro 0.867 vs best baseline 0.442.
+    - One clause (EQUIVALENT answered EQUIVALENT) sits EXACTLY at its
+      analytically set floor of 0.60. That is a boundary pass, not headroom.
+  - All three surface-similarity baselines score BELOW a constant on the
+    known-answer set. Equivalence under representation change is invisible to
+    them.
+  - A tiny plumbing smoke changed the protocol FOUR times before any
+    generation run (A1-A4). Two changes fix real defects:
+    - the primary endpoint counted undecidable cases as novelty;
+    - one arm's counterfeit control was vacuous by construction.
+    The other two precommit how a null and a positive will be read.
+  - No generation result exists. The directive forbids a campaign in this
+    window. Nothing here answers the scientific question.
+
+-----
+1. WHAT WAS BUILT (AND WHAT WAS FROZEN BEFORE ANY SCORE)
+-----
+Frozen at commit ceda18a2e, before any evaluator score:
+  - the prereg (JSON);
+  - the domain;
+  - the known-answer pairs;
+  - the evaluators and the harness.
+The calibration receipt carries the prereg's sha256 (e7cf870c..., LF
+normalized), which equals the committed freeze. The gate ran under the frozen
+rules.
+
+DOMAIN (the smallest one with real interventions)
+  - Mechanism: a Python class Mechanism(world) with step(x) -> int.
+    - x is an int 0..9.
+    - world is a dict owned by the runner.
+  - Contract (the task): delay recall, y_t = x_{t-3} (0 for t < 3). It is
+    judged on 20 short streams with no intervention: 10 random, 3 constant,
+    4 periodic, 3 impulse.
+  - Intervention streams (outside the contract):
+    - 3 "world wipe" streams, where the runner clears world at step 12;
+    - 1 stream of 200 steps.
+    They separate contract-satisfying mechanisms by HOW they work:
+    - environmental storage dies under a wipe;
+    - a horizon cap shows only on the long stream.
+  - Sandbox:
+    - static guard (imports limited to collections/itertools/math/functools;
+      no open/exec/eval/compile/__import__/reflection/dunder attributes);
+    - a separate python -I subprocess with a timeout;
+    - line coverage recorded.
+
+THE CANDIDATE: a behavioral evaluator with an "I do not know" answer
+  - Run both mechanisms on all 24 streams.
+  - Any output difference -> DISTINCT, with a witness (stream, step, a, b).
+  - Identical outputs AND every executable line of BOTH executed ->
+    EQUIVALENT (under the suite).
+  - Identical outputs but some line never ran -> UNKNOWN, with the unexecuted
+    lines and the experiment that would decide.
+  - A crash on one side only -> DISTINCT. Both crash -> UNKNOWN.
+
+BASELINES (cannot answer UNKNOWN, by design)
+  - text: difflib ratio >= 0.80 -> EQUIVALENT.
+  - ast: identical rename-canonical AST -> EQUIVALENT.
+  - embed: bge-small cosine >= 0.95 -> EQUIVALENT.
+  - always_distinct, always_equivalent.
+
+CALIBRATION SETS
+  - Known-answer, 26 pairs; labels known by construction:
+    - EQUIVALENT under representation change (8): list / deque / ring /
+      full history, renaming, an off-by-one in two representations.
+    - DISTINCT but similar (8): a one-token delay change, persistence
+      without use, reset on zero, environmental storage (differs only under
+      a wipe), cap 100 (differs only on the long stream).
+    - Novelty CHEAT (6): renaming plus executed no-op state, helpers, extra
+      world keys, a dead method. Correct = anything but DISTINCT.
+    - UNRESOLVED (4): differs only at t >= 1000, at x >= 10, at step 10^6,
+      or on a wipe after t > 50 (code the suite never executes). Correct =
+      UNKNOWN.
+  - Symbolic held-out, 120 pairs (40 per label), from a five-parameter DSL
+    with ANALYTIC labels (parameters only, no evaluator consulted):
+    - DISTINCT if a suite-visible parameter differs;
+    - UNRESOLVED if only an out-of-suite cap differs (1000 vs none);
+    - else EQUIVALENT.
+
+PROMOTION GATE (frozen)
+  - Known-answer per-category rates: EQ >= 0.9, DIST >= 0.9, CHEAT >= 0.9,
+    UNRES >= 0.75.
+  - Symbolic:
+    - false-DISTINCT <= 0.01;
+    - DISTINCT recall >= 0.95;
+    - UNRESOLVED -> UNKNOWN >= 0.95;
+    - EQUIVALENT -> EQUIVALENT >= 0.60.
+  - Macro over the best baseline +0.20 on BOTH sets.
+  - The 0.60 was set by analysis before the run. Pairs that both carry the
+    same cap 1000 are truly equivalent, but contain lines no suite input
+    executes, so the coverage gate answers UNKNOWN there by design. That is
+    about a third of the EQUIVALENT pairs.
+
+GENERATION EXPERIMENT (frozen; arms at matched proposal budgets)
+  - A: frozen LLM (qwen2.5-coder:14b, local), no failure context.
+  - B: A plus TEXT descriptions of 3 GIVEN failure classes (never code).
+  - C: A plus an external exclusion engine. A proposal behaviorally
+    EQUIVALENT to the library (supported + given failures) or to an earlier
+    accepted proposal is rejected; the model hears only "rejected".
+  - Cx: C with a COUNTERFEIT library (random DSL mechanisms, same size).
+  - D: the DSL sampler with the real exclusion engine.
+  - Dx: D with the counterfeit library.
+  - Two known failure classes are WITHHELD from every prompt and library:
+    environmental storage, and the horizon cap. The endpoint asks whether
+    arms rediscover them.
+  - Budget 100 proposals x 5 replicates. Exact permutation tests; Holm across
+    H1-H4; minimum effect 1 novel class per 100 proposals.
+  - H1: C > A (primary).
+  - H2: B vs A on eq_given (anchoring).
+  - H3: C > Cx (content, not constraint).
+  - H4: D vs C.
+  - H5: transfer, on eq_withheld.
+
+-----
+2. CALIBRATION RESULTS (receipt NEGSPACE_CALIBRATION_20261011T101839Z.json)
+-----
+Known-answer set (correct rate per category):
+
+  evaluator           EQ     DIST   CHEAT  UNRES  macro
+  behavioral          1.000  1.000  1.000  1.000  1.000
+  always_equivalent   1.000  0.000  1.000  0.000  0.500  <- best baseline
+  ast                 0.125  1.000  0.000  0.000  0.281
+  always_distinct     0.000  1.000  0.000  0.000  0.250
+  text                0.375  0.125  0.333  0.000  0.208
+  embed               0.125  0.125  0.167  0.000  0.104
+
+Symbolic held-out set (120 pairs):
+
+  evaluator           EQ->EQ  DIST rec  UNRES->UNK  false-DIST  macro
+  behavioral          0.600   1.000     1.000       0.000       0.867
+  text (best base.)   0.325   1.000     0.000       0.650       0.442
+  embed               0.250   0.775     0.000       0.662       0.342
+  ast/always_dist     0.000   1.000     0.000       1.000       0.333
+  always_equivalent   1.000   0.000     0.000       0.000       0.333
+
+  Behavioral confusion on the 40 EQUIVALENT pairs: 24 EQUIVALENT,
+  16 UNKNOWN, 0 DISTINCT. All 16 UNKNOWNs are the designed both-cap-1000 case
+  (checked against the pair list).
+  Margins over the best baseline: 0.500 (known), 0.425 (symbolic); the gate
+  requires 0.20.
+  Construction checks: the guard rejects os import and open; it passes every
+  calibration source; the contract-satisfying set matches its design.
+
+Gradient, not a verdict line:
+  - EQ->EQ = 0.600 is AT its floor. A domain with more unreachable code would
+    fail this clause. An instrument that answered EQUIVALENT there would be
+    guessing. The clause measures "how often the suite reaches all the code",
+    not evaluator skill.
+  - Every UNRESOLVED pair was answered UNKNOWN. No baseline can do that.
+    text and embed call 38-43% of the UNRESOLVED pairs EQUIVALENT and the rest
+    DISTINCT, so they would turn undecidable cases into confident answers in
+    both directions.
+  - On the symbolic set the similarity baselines call 65-100% of the
+    EQUIVALENT-or-UNRESOLVED pairs DISTINCT. A novelty metric built on them
+    reports representation churn as novelty.
+
+-----
+3. THE PLUMBING SMOKE AND THE FOUR AMENDMENTS (A1-A4)
+-----
+Smoke budgets:
+  - 24 draws for D/Dx and 3 calls per LLM arm, seed 1, qwen2.5-coder:14b.
+  - GPU lease held 10:21:44-10:22:19Z.
+Every proposal source is stored. Every item below was checked by hand against
+those sources. This is NOT a result.
+
+  arm  props  exec  contract  eq_sup  eq_given  eq_with  novel  unres_known
+  D     24     24     7        3       0         0        1      2
+  Dx    24     24     7        3       0         0        1      2
+  A      3      3     0        0       3         0        0      0
+  B      3      3     0        0       2         0        0      0
+  C      3      3     0        0       1         0        0      0
+  Cx     3      3     0        0       3         0        0      0
+  (10:22:18Z run, after A1, before A4)
+
+A1 -- PRIMARY ENDPOINT WAS NOT CONSERVATIVE (defect)
+  - Frozen version: a contract-satisfying proposal counted as novel when it
+    was not EQUIVALENT to a known class.
+  - So an UNKNOWN, i.e. a proposal the instrument could not decide, counted
+    as novelty. The first smoke (10:20:52Z) reported 3 "novel classes" in
+    arm D. Two were cap-1000 mechanisms, UNKNOWN against a known class. The
+    third is the cap-100 variant of A3.
+  - Fixed: novel requires DISTINCT from every known class and from every
+    earlier class representative. UNKNOWNs are tallied separately.
+
+A2 -- FLOOR RULE (reading a null)
+  - 0 of 12 LLM proposals satisfy the contract. 9 of 12 are behaviorally
+    EQUIVALENT to the given failure F-delay-off-by-one.
+  - The model's typical form is deque([0,0,0], maxlen=3), append then return
+    [0], which is delay 2.
+  - Arm B produced it 2 of 3 times WITH that failure described in its prompt.
+  - If this persists, novel_classes = 0 in every LLM arm, and H1/H3/H4 cannot
+    discriminate.
+  - Precommitted:
+    - If BOTH compared arms average < 5 contract-satisfying proposals per
+      replicate, the hypothesis is reported FLOOR (untested), not rejected,
+      and leaves the Holm family.
+    - Contract counts are read before any novel_classes value.
+    - A redesign that raises the contract rate (contract feedback, another
+      model or prompt) is a NEW prereg.
+  - 0/12 is compatible with a contract rate up to ~0.25. The floor is a risk,
+    not a fact.
+
+A3 -- BEHAVIORAL CLASSES ARE FINER THAN FAILURE FAMILIES (claim unit)
+  - Arm D's single "novel class" is an internal buffer with cap 100.
+  - It is DISTINCT from the withheld F-horizon-cap reference only because the
+    two caps behave differently past the horizon:
+    - the DSL cap returns 0 after step 100;
+    - the reference stops storing and repeats a stale value.
+    - Witness: long200, step 100, 0 vs 5.
+  - So parameter or post-horizon variants of a KNOWN family count as novel.
+  - Precommitted:
+    - endpoints() lists every novel representative with its witness against
+      every known class;
+    - before any H1/H3/H4 claim, all arms' representatives are pooled,
+      stripped of arm labels and shuffled;
+    - Hades (failure boundaries) labels each NEW_FAMILY or VARIANT_OF(known),
+      with Harmonia adjudicating;
+    - the claim uses the NEW_FAMILY count; the raw behavioral count is an
+      upper bound only;
+    - Pan does not adjudicate.
+
+A4 -- ARM D's COUNTERFEIT CONTROL WAS VACUOUS BY CONSTRUCTION (defect)
+  - The frozen DSL sampler drew the same shuffled sequence whatever its
+    exclusion engine rejected. D and Dx were identical at ANY budget.
+  - I first wrote "D = Dx" off in the results doc as a small-budget effect.
+    Re-reading run_arm showed it was structural.
+  - Fixed: the sampler skips any candidate the evaluator calls EQUIVALENT to
+    an earlier REJECTED proposal.
+    - Like the LLM arms, it learns only "rejected", never which library entry
+      matched.
+    - Skips are not proposals and consume no budget.
+  - Rerun of D arms only (NEGSPACE_SMOKE_20261011T102837Z.json):
+      D:  contract 5, eq_supported 1, novel 1, unresolved_vs_known 2
+      Dx: contract 6, eq_supported 2, novel 1, unresolved_vs_known 2
+    The real library now suppresses repeats of the supported class. The novel
+    representative is again the horizon-cap variant of A3.
+
+Tests added (pan/tests/test_negspace.py, 7 tests; Pan suite 86 passed):
+  - ENDPOINT POSITIVE: a world-storage + cap-100 mechanism, distinct from
+    every known class, is 1 novel class. Its executed-no-op twin merges
+    (EQUIVALENT) rather than adding a second.
+  - ENDPOINT NEGATIVE: a renamed supported mechanism is eq_supported, not
+    novel.
+  - ENDPOINT CHEAT (A1): the supported mechanism plus an unreachable cap 1000
+    is tallied unresolved_vs_known, never novel.
+  - A3: the horizon-cap variant's witness (long200, step 100, 0 vs 5) is
+    exposed.
+  - A4:
+    - the real library rejects at least once in 30 draws;
+    - a rejected class never reappears;
+    - D and Dx sequences differ.
+
+-----
+4. INCIDENTS AND WHAT THEY VALIDATED
+-----
+  - Two of four amendments are DEFECTS that a 30-second smoke exposed. Both
+    would have produced a publishable-looking false positive:
+    - A1: UNKNOWN counted as novelty, so the "novel" count was inflated by
+      exactly the cases the instrument says it cannot decide.
+    - A4: a control identical to its arm. Any D-vs-Dx null would have been
+      reported as "content does not matter".
+    The freeze-then-smoke order caught both before any generation run. A
+    freeze is still needed, but it is not a review.
+  - Same-designer risk:
+    - Pan built the instrument, the known-answer set and the DSL.
+    - The 1.000 known-answer score is a construction check, not evidence of
+      generality.
+    - The symbolic set is analytic but comes from Pan's own DSL.
+    - Stated in the prereg before any score: a held-out set built by another
+      seat (Nyx or Techne), kept from every generator, must pass the same
+      gate before any Cosmos result is promoted.
+
+-----
+5. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES (measured):
+  - On this toy domain, behavioral differential testing with a coverage gate
+    separates equivalence, distinction, cheats and the undecidable.
+  - It does so far better than surface similarity, and it says UNKNOWN where
+    the suite cannot decide.
+  - The A-D harness runs end to end at matched budgets, with stored
+    proposals and a LIVE counterfeit control for the symbolic arm.
+
+DOES NOT:
+  - Answer the operator's question. There is no generation run, and the
+    smoke is n=3 per LLM arm.
+  - Show anchoring (H2). B's 2/3 off-by-one is a description.
+  - Show that the instrument generalizes:
+    - the domain has four visible behavior axes;
+    - the EQ clause is at its floor;
+    - the same designer built the instrument and its tests.
+  - Make novel_classes a novelty claim. Under A3 it is an upper bound until
+    blind family adjudication.
+
+Conditional: everything above holds "under the 24-stream suite". EQUIVALENT
+means "not distinguished by these interventions with full statement
+coverage", which is not semantic equivalence.
+
+-----
+6. DECISION / RECOMMENDATION (HITL's call; Pan's lean)
+-----
+  Lean:
+  (1) Do NOT run the toy generation experiment at full budget. Its ceiling is
+      low, and A2's floor risk is real. A full run would mostly measure
+      qwen's off-by-one prior.
+  (2) Port the instrument to Cosmos as the first scientific environment.
+      Cosmos supplies:
+      - its mechanism API, contract and intervention suite;
+      - its known failure references;
+      - its own four-category calibration pairs.
+      Nyx or Techne supplies the held-out calibration set. Hades and Harmonia
+      own the A3 family adjudication.
+  (3) If the operator wants the toy run anyway: one pilot replicate of arm A
+      (100 calls, about 10 GPU-min) to estimate the contract rate first.
+      Proceed only if A2's floor is clear.
+  "Stop" is a first-class answer. If Cosmos cannot supply intervention
+  streams that separate mechanisms by HOW they work, this instrument has
+  nothing to measure there, and the line should end at the toy.
+
+-----
+7. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+  Q1  The EQ clause passes at exactly its floor. Was the 0.60 floor itself
+      chosen to be passable? It was set before the run, but by the person
+      who built the evaluator and knew the DSL. Would you have set 0.75?
+  Q2  Is "UNKNOWN when any line is unexecuted" too strict? It makes dead
+      code look like undecidability. A cheat that adds an unreachable branch
+      turns EQUIVALENT into UNKNOWN; it can never make it DISTINCT. Is that
+      asymmetry right?
+  Q3  A3 moves the claim unit to human or agent adjudication. Does this
+      reintroduce the very judge-bias the behavioral instrument was built to
+      remove? What would a mechanical family criterion look like?
+  Q4  A4 gives the symbolic sampler rejection-awareness. Is matching "the
+      LLM hears only 'rejected'" with "the sampler skips equivalents of
+      rejected" a fair parity, or does the sampler get a stronger signal?
+  Q5  Are four amendments after a smoke a sign the freeze was premature? Or
+      is this the system working? What would distinguish the two?
+
+-----
+8. ARTIFACTS (worktree D:\Prometheus-worktrees\pan-base-role-adopt-2026-10-09)
+-----
+  commits: ceda18a2e (freeze), 4289d2581 (calibration receipt, A1-A4, tests,
+    results)
+  prereg: pan/tests/negspace_prereg.json (amendments A1-A4)
+  protocol + results: roles/Pan/docs/sagacity/NEGATIVE_SPACE_EVALUATION.md s6
+  code: pan/negspace/{domain,calibration,dsl,evaluators,harness}.py
+  tests: pan/tests/test_negspace.py
+  receipts (roles/Pan/reports/controls/):
+    NEGSPACE_CALIBRATION_20261011T101839Z.json,
+    NEGSPACE_SMOKE_20261011T102052Z.json (pre-A1),
+    NEGSPACE_SMOKE_20261011T102218Z.json (A1),
+    NEGSPACE_SMOKE_20261011T102837Z.json (A4, D arms)
+  proposals: Pan lake negspace/SMOKE_20261011T102218Z.json and
+    SMOKE_20261011T102837Z.json (C:\Prometheus-data\pan\lake)
+  directive: roles/Pan/prompts/2026-10-11_sagacity_foundation
+
++==============================================================================+
+| END. Reviewer: "not worth continuing" is a first-class answer. So is        |
+| "a behavioral suite this small cannot carry a novelty claim anywhere".      |
++==============================================================================+

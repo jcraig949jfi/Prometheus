@@ -1,0 +1,84 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-014-A",
+  "campaign_id": "C-014",
+  "epic_id": "EP-PHASE2B",
+  "title": "Feedback ingestion: which forensic findings apply to Ensorain WTP-05 / DESERT CROSSING (post-Hestia re-entry)",
+  "objective": "List every forensic finding and historical failure record that names or plausibly affects Ensorain WTP-05 / DESERT CROSSING (post-Hestia re-entry), with its source, and record which ones actually fit the implementation and why.",
+  "owner_role": "Ensorain",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "reads": [
+    "docs/phase3/intake/",
+    "docs/phase3/design/ASTRA-6.0/FAILURE_TO_GATE_MAP.md",
+    "aporia/doctrine/critical_memories.md",
+    "roles/Hestia/audit/2026-10-06/dossiers/ensorain.md",
+    "ensorain/RESULTS_WTP04_MAP.md"
+  ],
+  "owns": [
+    "ops/campaigns/C-014/CAMPAIGN.md"
+  ],
+  "problem": "Sources: docs/phase3/intake/tantalus/seats/Ensorain.md; roles/Hestia/audit/2026-10-06/dossiers/ensorain.md; roles/Hestia/audit/2026-10-06/REPORT.md Part 2 (W1-W4) and Part 5; RESPONSE_TO_EXTERNAL_REVIEWS_2026-10-08.md s6 (M1-M7); ensorain/RESULTS_WTP04_MAP.md; ensorain/ENSORAIN_WTP03_REPORT.md s3; ops/fleet/M1_DRAIN_2026-10-03/P2B_REENTRY_MANIFEST.jsonl.",
+  "non_goals": [
+    "No repairs in this task",
+    "Do not accept an accusation that does not fit the implementation"
+  ],
+  "evidence_required": [
+    "the 'Sources actually used' section of CAMPAIGN.md, each with path and the finding ids it contributes"
+  ],
+  "acceptance": {
+    "condition": "every applicable source listed with path; each finding marked fits / does not fit, with a one-line reason"
+  },
+  "deliverables": [
+    "CAMPAIGN.md 'Sources actually used'"
+  ],
+  "kind": "review",
+  "red_required": false,
+  "status": "INTEGRATED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:13:28Z",
+      "note": "instantiated from P2B-ENGINE-REENTRY; tailor before READY"
+    },
+    {
+      "status": "READY",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:37Z",
+      "note": "tailored to Ensorain WTP-05 (operator directive 2026-10-10)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:41Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:41Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "GREEN",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:41Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:41Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Ensorain[ubu006-4b001784]",
+      "at_utc": "2026-10-10T09:14:41Z",
+      "note": "done in CAMPAIGN.md (sources + triage), 2026-10-10"
+    }
+  ]
+}

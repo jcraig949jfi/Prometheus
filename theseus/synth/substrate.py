@@ -71,9 +71,20 @@ OPS = {
     "drive":     (0, [(-1.0, 1.0, "f"), (2, 32, "i"), (0.0, 0.999, "f")], "forcing"),
     "gate":      (2, [(-1.0, 1.0, "f"), (-1.0, 1.0, "f")], "routing"),
     "lensmap":   (1, [(-1.0, 1.0, "f")], "observation"),
+    # THESEUS-30 CONDITIONAL primitives: inert alone (they read only the memory field, which
+    # only "remember" writes), active only in composition with a writer.
+    "inject":    (0, [(-0.5, 0.5, "f")], "conditional"),       # x += a * M[dst]
+    "modulate":  (1, [(-1.0, 1.0, "f")], "conditional"),       # x += a * M[dst] * S[src]
 }
 OP_NAMES = sorted(OPS)
-BASIC_OPS = [o for o in OP_NAMES if o != "lensmap"]
+COND_OPS = ["inject", "modulate"]
+# The v0 random-op pool, frozen: adding ops to OPS must not change any earlier run's RNG draws.
+BASIC_OPS = [o for o in OP_NAMES if o not in ("lensmap", *COND_OPS)]
+COND_ENABLED = False  # THESEUS-30: when True, random rules may also draw conditional ops
+
+
+def random_op_pool():
+    return BASIC_OPS + COND_OPS if COND_ENABLED else BASIC_OPS
 
 
 # ----------------------------------------------------------------------------
@@ -130,7 +141,8 @@ def rand_params(op, rng, n_src=1):
 
 
 def rand_rule(rng, C, op=None, prov="rand", arity=None):
-    op = op or BASIC_OPS[int(rng.integers(len(BASIC_OPS)))]
+    pool = random_op_pool()
+    op = op or pool[int(rng.integers(len(pool)))]
     ns = OPS[op][0]
     if ns == -1:
         ns = arity if arity else int(rng.integers(1, 4))
@@ -368,6 +380,12 @@ def run(g, seed=0, T=T_DEFAULT, N=N_DEFAULT, opts=None):
             elif op == "gate":
                 cond = S[r["src"][0]]
                 new = S[d] + p[1] * np.where(cond > p[0], S[r["src"][1]] - S[d], 0.0)
+            elif op == "inject":
+                mem = np.zeros(N) if opts.get("no_memory") else M[d]
+                new = S[d] + p[0] * mem
+            elif op == "modulate":
+                mem = np.zeros(N) if opts.get("no_memory") else M[d]
+                new = S[d] + p[0] * mem * S[r["src"][0]]
             elif op == "lensmap":
                 key = id(r)
                 if key not in lens_cache:

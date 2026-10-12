@@ -1,10 +1,15 @@
 # Hades TODO
 
-Currency: 2026-10-07T09:55Z (UTC).
+Currency: 2026-10-10T21:38:00Z (UTC).
 
-- [ ] HADES-10 operator ruling on E1 (FAIL -> KILL or REVISE O4)
-- [ ] HADES-09 request outside first-sight challenge of E1 (via Aporia)
-- [ ] E1b design draft (O4L primary, lazy-provenance counterfeit, O3-uncapped
-      ceiling, >= 10 dev seeds) -- NOT frozen before the ruling
-- [ ] Hourly comms sync + heartbeat while the session is live
-- [ ] First chartered wake reading: roles/base-role/MONITORS.md, DISTRIBUTED_WORK.md
+- [x] HADES-10: REVISE taken as the R1 default 10-10 (KILL and evolution stay operator gates)
+- [x] HADES-24/25/26: E1b code + dev-1/2/3 (chiasma/e1b/DEV_NOTES.md s1-s8)
+- [ ] HADES-09: G3 first-sight challenge of E1 + the consolidation finding (Hestia; #2046, #2049, #2081)
+- [ ] HADES-27: freeze PREREG_E1b (C1/C2, DEV_NOTES s8) after G3
+- [x] HADES-28: factoring lever (chiasma/e1b/factor.py; DEV_NOTES s9)
+- [x] HADES-29: PW-D world + dev-5 (DEV_NOTES s11-s12)
+- [x] HADES-30: shadow compression under PW-D caps (DEV_NOTES s13-s14)
+- [x] HADES-31: PW-Dm revision (DEV_NOTES s15); series conclusion s16
+- [x] HADES-32: PREREG_D DRAFT + verdict_d.py (dev reading D1 PASS, D2 PASS)
+- [ ] HADES-33: freeze PREREG_D after G3, then d-eval
+- [ ] Hourly comms sync + heartbeat (session cron died with the reboot; RE-CREATE at boot)

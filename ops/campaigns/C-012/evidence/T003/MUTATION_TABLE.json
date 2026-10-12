@@ -1,0 +1,234 @@
+{
+ "schema": "moonshot.nf.mutation_table.v1",
+ "head": "798f58456d8dc28cd764c3c1b2f6cd8ad8f832b4",
+ "moonshot_dirty": false,
+ "seconds": 10.8,
+ "results": [
+  {
+   "id": "TM01",
+   "what": "production namespaces honour fault files",
+   "file": "epoch/fabric_exec.py",
+   "targets": [
+    "moonshot.nf.tests.test_fabric_exec.TestNodeLocalFaults.test_production_namespaces_ignore_fault_files"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_production_namespaces_ignore_fault_files (moonshot.nf.tests.test_fabric_exec.TestNodeLocalFaults.test_production_namespaces_ignore_fault_files)"
+  },
+  {
+   "id": "TM02",
+   "what": "a fault applies to every epoch of its chain",
+   "file": "epoch/fabric_exec.py",
+   "targets": [
+    "moonshot.nf.tests.test_fabric_exec.TestNodeLocalFaults.test_a_fault_applies_only_to_its_chain_and_epochs"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_fault_applies_only_to_its_chain_and_epochs (moonshot.nf.tests.test_fabric_exec.TestNodeLocalFaults.test_a_fault_applies_only_to_its_chain_and_epochs)"
+  },
+  {
+   "id": "TM03",
+   "what": "the input hash is not checked",
+   "file": "epoch/fabric_exec.py",
+   "targets": [
+    "moonshot.nf.tests.test_fabric_exec.TestExecutor.test_an_input_that_does_not_match_its_hash_is_refused"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_an_input_that_does_not_match_its_hash_is_refused (moonshot.nf.tests.test_fabric_exec.TestExecutor.test_an_input_that_does_not_match_its_hash_is_refused)"
+  },
+  {
+   "id": "TM04",
+   "what": "no check for existing output before writing",
+   "file": "epoch/fabric_exec.py",
+   "targets": [
+    "moonshot.nf.tests.test_fabric_exec.TestExecutor.test_existing_output_is_never_overwritten"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.1,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_existing_output_is_never_overwritten (moonshot.nf.tests.test_fabric_exec.TestExecutor.test_existing_output_is_never_overwritten)"
+  },
+  {
+   "id": "TM04b",
+   "what": "writes are not exclusive (expected EQUIVALENT: a backstop for a race the tests cannot schedule)",
+   "file": "epoch/fabric_exec.py",
+   "targets": [
+    "moonshot.nf.tests.test_fabric_exec.TestExecutor.test_existing_output_is_never_overwritten"
+   ],
+   "verdict": "SURVIVED",
+   "seconds": 0.2,
+   "tail": [
+    "OK"
+   ],
+   "first_failure": null
+  },
+  {
+   "id": "TM05",
+   "what": "the publisher ignores the module",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestRefusals.test_another_module_is_refused_even_when_its_bytes_are_right"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.6,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_another_module_is_refused_even_when_its_bytes_are_right (moonshot.nf.tests.test_coordinator.TestRefusals.test_another_module_is_refused_even_when_its_bytes_are_right)"
+  },
+  {
+   "id": "TM06",
+   "what": "the publisher ignores the task's base_sha",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestRefusals.test_unapproved_code_is_refused"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_unapproved_code_is_refused (moonshot.nf.tests.test_coordinator.TestRefusals.test_unapproved_code_is_refused)"
+  },
+  {
+   "id": "TM07",
+   "what": "the publisher ignores the namespace",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestRefusals.test_a_test_namespace_task_cannot_publish_into_another_namespace"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.6,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_test_namespace_task_cannot_publish_into_another_namespace (moonshot.nf.tests.test_coordinator.TestRefusals.test_a_test_namespace_task_cannot_publish_into_another_namespace)"
+  },
+  {
+   "id": "TM08",
+   "what": "refusals are recorded but publication goes ahead",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestRefusals"
+   ],
+   "verdict": "KILLED",
+   "seconds": 1.6,
+   "tail": [
+    "FAILED (failures=3)"
+   ],
+   "first_failure": "FAIL: test_a_test_namespace_task_cannot_publish_into_another_namespace (moonshot.nf.tests.test_coordinator.TestRefusals.test_a_test_namespace_task_cannot_publish_into_another_namespace)"
+  },
+  {
+   "id": "TM09",
+   "what": "failed attempts are classified too",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestHappyPath.test_a_failed_execution_is_left_to_fabric_and_retried"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.6,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_failed_execution_is_left_to_fabric_and_retried (moonshot.nf.tests.test_coordinator.TestHappyPath.test_a_failed_execution_is_left_to_fabric_and_retried)"
+  },
+  {
+   "id": "TM10",
+   "what": "validation never finds a mismatch",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestStraggler"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.7,
+   "tail": [
+    "FAILED (errors=1)"
+   ],
+   "first_failure": "ERROR: test_work_from_an_overturned_lineage_is_stale (moonshot.nf.tests.test_coordinator.TestStraggler.test_work_from_an_overturned_lineage_is_stale)"
+  },
+  {
+   "id": "TM11",
+   "what": "dispatch ignores the generation (keys collide across a rewind)",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestStraggler"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.8,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_work_from_an_overturned_lineage_is_stale (moonshot.nf.tests.test_coordinator.TestStraggler.test_work_from_an_overturned_lineage_is_stale)"
+  },
+  {
+   "id": "TM12",
+   "what": "the receipt is not stored",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestHappyPath.test_the_receipt_is_durable_canonical_and_complete"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.7,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_the_receipt_is_durable_canonical_and_complete (moonshot.nf.tests.test_coordinator.TestHappyPath.test_the_receipt_is_durable_canonical_and_complete)"
+  },
+  {
+   "id": "TM13",
+   "what": "the dispatcher sends the wrong input checkpoint",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestHappyPath.test_one_chain_end_to_end_is_the_c008_identity"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (errors=1)"
+   ],
+   "first_failure": "ERROR: test_one_chain_end_to_end_is_the_c008_identity (moonshot.nf.tests.test_coordinator.TestHappyPath.test_one_chain_end_to_end_is_the_c008_identity)"
+  },
+  {
+   "id": "TM14",
+   "what": "accounting is dropped",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator.TestHappyPath.test_accounting_lives_outside_the_trace"
+   ],
+   "verdict": "KILLED",
+   "seconds": 0.5,
+   "tail": [
+    "FAILED (errors=1)"
+   ],
+   "first_failure": "ERROR: test_accounting_lives_outside_the_trace (moonshot.nf.tests.test_coordinator.TestHappyPath.test_accounting_lives_outside_the_trace)"
+  },
+  {
+   "id": "TM15",
+   "what": "resolution trusts the published bytes",
+   "file": "nf/coordinator.py",
+   "targets": [
+    "moonshot.nf.tests.test_coordinator"
+   ],
+   "verdict": "KILLED",
+   "seconds": 8.7,
+   "tail": [
+    "FAILED (failures=1)"
+   ],
+   "first_failure": "FAIL: test_a_publication_that_slipped_past_verification_is_caught_and_overturned (moonshot.nf.tests.test_coordinator.TestDefenceInDepth.test_a_publication_that_slipped_past_verification_is_caught_and_overturned)"
+  }
+ ],
+ "killed": 15,
+ "total": 16
+}

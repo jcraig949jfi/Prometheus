@@ -1,0 +1,103 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-017-T041",
+  "campaign_id": "C-017",
+  "title": "THE ONE repair round of the Z80 attribution assay (PREREGISTRATION v1.1.0) + re-freeze",
+  "objective": "Close Pallas's NOT CLOSED surfaces (rso/z80/challenge/REPORT.md s3-s5) before any confirmatory outcome exists.",
+  "parent_objective": "C-017 RSO-NATIVE-ENGINE-3-Z80ATLAS",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-017-T040"
+  ],
+  "owns": [
+    "rso/z80/"
+  ],
+  "reads": [
+    "rso/z80/",
+    "rso/z80/challenge/REPORT.md"
+  ],
+  "problem": "Read rso/z80/challenge/REPORT.md in full. Required, pre-outcome, as a versioned amendment committed before the re-freeze: (1) P-tag repair for CDIST (REPORT s4.1; Pallas recommends reads_nbr > 0 on res0 -> K for every written byte, keeping the counterfactual), pinned by the CDIST unit answer, with a check that the 4/21 exec_foreign dev cases stay P; (2) COORDINATOR SUGGESTION, yours to accept or reject with reasons: answer the recipe-separability finding (b4: a recipe table makes 0 errors) by REGISTERING a scored arm whose recipe != truth -- a short-horizon CDIST arm under ENDOGENOUS_COPY (truth ENV, recipe looks ENDO) -- and registering b4 (the recipe reader on the blinded record) as a Q4 baseline that must fail; give at least one baseline an ENV output so Q4 can fail through ENV; state that b2's EXT failure rests on the 10-epoch horizon; (3) Q2: either an ARISEN-rich arm so a constant INSERTED fails, or narrow Q2 to 'INSERTED arms only; ARISEN not tested' -- decide before the run; (4) pin E1 (second counterfactual sample), E3 (REFUSED counts as wrong), E5 (input kept), and decide E2 (filler) as pinned or a stated limitation; every new test RED on its mutant applied verbatim from rso/z80/challenge/edits.json; (5) narrowing text per REPORT s4.3 (ENDO, ENV, origin, ATTRIBUTION_QUALIFIED; blinding hides the arm name not the recipe; half-solver per-run bar). Re-check dev evidence under the new rule (dev seeds only), recompute N if arms change, re-freeze (FROZEN.json v1.1.0), update ONBOARDING.md. NO confirmatory run.",
+  "non_goals": [
+    "No confirmatory run (seeds 17_050_xxx untouched; no `assay confirm`)",
+    "No edit to archaeon/, prometheus/z80atlas/ or roles/Archaeon/",
+    "No Archaeon registered seed or evidence bundle",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "PREREGISTRATION v1.1.0 amendment before the re-freeze",
+    "RED rows for every new pin",
+    "CDIST unit + arm under the repaired tag",
+    "FROZEN.json v1.1.0",
+    "suite green"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/z80/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T19:19:15Z",
+      "note": "from C-017-T040 adjudication"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T19:19:15Z",
+      "note": "repair round; launch Argus on Opus"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-0d3b5331]",
+      "at_utc": "2026-10-11T19:22:28Z",
+      "note": "branch argus/c017-t041 from fe5d0d2d1"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-0d3b5331]",
+      "at_utc": "2026-10-11T20:02:30Z",
+      "note": "36/36 mutants RED on named tests (branch 16e249bdc)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-0d3b5331]",
+      "at_utc": "2026-10-11T20:02:30Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-0d3b5331]",
+      "at_utc": "2026-10-11T20:02:30Z",
+      "note": "51/51 GREEN; freeze check OK at fed35e840"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-0d3b5331]",
+      "at_utc": "2026-10-11T20:02:30Z",
+      "note": "branch argus/c017-t041 head b31494c15; PREREG v1.1.0 7ad0131b7; FREEZE v1.1.0 fed35e840"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T20:19:21Z",
+      "note": "merged argus/c017-t041 (b31494c15): amendment v1.1.0 before re-freeze fed35e840; freeze check OK; 51 tests OK; 36/36 RED mutants hit their named test; registry CURRENT; integrator mutant (reads rule threshold > 0 -> > 2) killed by 2 tests. Coordinator suggestion accepted with a mechanistic b4 (reason: a recipe lookup table IS the ground truth table). Q2 narrowed to INSERTED origin. notify key here was prose with no sha (sidecar parse nit, worse case)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T20:19:21Z",
+      "note": "the one repair round done; T042 re-check next"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 s9 (one bounded repair round) (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5"
+}

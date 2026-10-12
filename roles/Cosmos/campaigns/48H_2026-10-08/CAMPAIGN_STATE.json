@@ -1,0 +1,33 @@
+{
+  "schema": "cosmos.campaign_state.v1",
+  "campaign": "48H_2026-10-08",
+  "directive": "roles/Cosmos/prompts/2026-10-08_operator_48h_campaign/DIRECTIVE_VERBATIM.md",
+  "owner_instance": "ubu003-623ec771",
+  "lease": "COSMOS_HOME/LEASE.json via python -m prometheus.cosmos.lease (ttl 7200 s, renewed each round)",
+  "start_utc": "2026-10-08T05:26Z",
+  "hard_stop_utc": "2026-10-10T05:26Z",
+  "window": "CLOSED (hard stop 2026-10-10T05:26Z passed; ~3 h productive; stall incident I-1)",
+  "current_experiment": "none (EXP-04 completed 2026-10-11 in the recovery slice: INCONCLUSIVE by rule)",
+  "hypothesis": "H-LOCAL (prereg roles/Cosmos/c4/prereg/EXP-01_LOCAL_DISCOVERY.md on cosmos/c4-v03): FUNCTIONAL predicted by composing one-step physics; law C4-L-0001 frozen",
+  "last_completed_test": "full suite 165/166 on cosmos/c4-v03 fdd6097f0; failure fixed e030d9276 (research_check 14/14)",
+  "last_receipt": "REVIEW_PACKET_48H_2026-10-08.txt + final receipt in STATUS_LOG.md",
+  "next_action": "4 h reliability test: campaigns/RELIABILITY_4H_2026-10-11/PREREG.md",
+  "active_pids": {},
+  "incidents": [
+    "Cert A seed-unstable on XOR planted (instrument finding)",
+    "R-MECH harness not bit-reproducible (tuple hash seeds)",
+    "I-1 2026-10-08 EXP-04 stdin-spawn crash loop, 58 h undetected (INCIDENT_2026-10-08_EXP04_STALL.md)",
+    "I-2 2026-10-11 ProcessPoolExecutor max_tasks_per_child deadlock, caught by watchdog, auto-recovered",
+    "I-3 2026-10-11 supervise CLI argv bug, failed loudly, fixed",
+    "G-0008 graveyard entry missing fields (suite), fixed"
+  ],
+  "resources": "ubu003 4 cores / 7 GB, no GPU, spend $0",
+  "c3_publication": "DONE d75fb45ef",
+  "branches": {
+    "main": "records",
+    "cosmos/c4-v03": "C4 repairs (merge after final reviews)"
+  },
+  "c4_branch_head": "cosmos/c4-v03 e030d9276",
+  "status": "CLOSED_INCOMPLETE",
+  "closed_utc": "2026-10-11"
+}

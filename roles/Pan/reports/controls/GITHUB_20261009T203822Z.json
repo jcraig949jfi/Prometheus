@@ -1,0 +1,46 @@
+{
+ "POSITIVE": {
+  "owners": 29,
+  "ok": 29,
+  "failing": [],
+  "moved": [],
+  "passed": true
+ },
+ "NEGATIVE": {
+  "state": [
+   404,
+   "HTTP 404"
+  ],
+  "new_items": 0,
+  "failed": [
+   "ghapi:pan-nonexistent-owner-zz9q"
+  ],
+  "passed": true
+ },
+ "CHEAT": {
+  "owners": [
+   "google-deepmind",
+   "SakanaAI",
+   "facebookresearch"
+  ],
+  "new_items": 0,
+  "not_modified_304": 2,
+  "rate_start": 59,
+  "rate_end": 56,
+  "note": "rate_start - rate_end = counted calls; 304s that do not count leave it unchanged",
+  "passed": true
+ },
+ "RATE": {
+  "min_gap_s": 2.124,
+  "pairs": 5,
+  "interval_s": 2.0,
+  "runs_below_reserve_unstopped": 0,
+  "passed": true
+ },
+ "verdict": {
+  "POSITIVE": true,
+  "NEGATIVE": true,
+  "CHEAT": true,
+  "RATE": true
+ }
+}

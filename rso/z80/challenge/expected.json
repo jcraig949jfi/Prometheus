@@ -1,0 +1,115 @@
+{
+ "_what": "C-017-T040 answer key (Pallas), committed before any case runs. `check` is evaluated by cases.judge over the observed dict `o`; the verdict labels are AS_EXPECTED / NOT_AS_PREDICTED for scored cases, SURVIVOR / AS_EXPECTED for broken cases (SURVIVOR = the predicted fault appeared), RECORDED for probes.",
+ "S1": {
+  "what": "freeze hashes recomputed without freeze.py from git HEAD blobs and from disk (LF); FROZEN.json's own sha256; grammar digest; mismatches()",
+  "prediction": "27/27 both ways; cad362fa..; 63ffdeca16db3333; []",
+  "check": "o['n']==27 and o['disk_ok']==[] and o['head_ok']==[] and o['frozen_json_sha_ok'] and o['grammar_ok'] and o['mismatches']==[]",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "S2": {
+  "what": "w_max from first principles (math.comb, Fractions) vs analysis.w_max and PREREGISTRATION s5; the n above which a constant INSERTED origin passes Q2 for every possible confirmatory outcome",
+  "prediction": "agree on every n; s5 table reproduced; n_star <= 200 so at the confirmatory n (240..264, w_max >= 33) a constant INSERTED origin cannot fail Q2 (at most 24 ARISEN rows exist)",
+  "check": "o['agree'] and o['prereg_s5'] and o['n_star_wmax_ge_24'] <= 200",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "S3": {
+  "what": "6 challenge seeds per registered arm at the registered horizon: engine vs observe.replay byte-equal (final population and births); no refusal; the frozen class and origin against the arm's ground truth; record-field audit (stripped record and spec noise leave the classification unchanged) [amended 18:3xZ before the re-run: the 'extra tape' edit is its own check `extratape` -- PLACED (refused) for the 13-tape arms, beyond N (same) for the 128-tape arm; the first harness version wrongly assumed beyond-N for every arm and the instrument's refusals on 20 of 30 records were the instrument being right]",
+  "prediction": "60/60 replay-equal, 0 refused, 0 class errors in ENDO / EXT / ENV / INS and 0 origin errors (unpowered n; counts reported), strip/specnoise invariant on all 60",
+  "check": "o['replay_equal']==o['n'] and o['refused']==0 and all(v[0]==0 for v in o['q1']['q1'].values()) and o['q1']['origin_wrong']==0 and o['strip_equal']==o['n'] and o['specnoise_equal']==o['n'] and set(o['extratape']) <= {'', 'placed:REPLAY_MISMATCH', 'beyondN:same'}",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "S4": {
+  "what": "the five registered forgeries on the first 2 challenge records of their source arms",
+  "prediction": "LABELS 2/2 and PLANT 2/2 invariant; PHYS 4/4, TAPE 2/2, GEN 2/2 refused with REPLAY_MISMATCH",
+  "check": "all(v['bad']==0 for v in o.values()) and o['PHYS']['n']==4 and o['LABELS']['n']==2 and o['PLANT']['n']==2 and o['TAPE']['n']==2 and o['GEN']['n']==2",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "B1": {
+  "what": "CDIST: the counterfactual-invariant reconstructor. Unit: over a kin target its child's bytes 0..1 are IN A / OUT A and tagged P P (the fault); over an empty target they are 0 / 1 (dead), proving the value changes with the target (observe.py:12-14 calls that K). Arm CDIST_ENDO_IMPL (128 planted, ENDOGENOUS_COPY, implicit_survival, 100 epochs: the ENV arm's own settings), 8 challenge seeds",
+  "prediction": "unit: kin_tags[:2]=='PP', kin_child01=[21,22], empty_child01=[0,1], kin_label ENDO; arm: class ENDO in >= 7 of 8 runs (ground truth ENV by the instrument's own definition; RECON at the same settings is ENV 48/48 on dev), n_pp_func > 0 in every run, replay-equal 8/8",
+  "check": "o['unit']['kin_tags'][:2]=='PP' and o['unit']['kin_child01']==[21,22] and o['unit']['empty_child01']==[0,1] and o['unit']['kin_label']=='ENDO' and o['endo_runs']>=7 and all(x>0 for x in o['n_pp_func']) and o['replay_equal']==o['n']",
+  "if_true": "SURVIVOR",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "B5": {
+  "what": "horizon dependence of the constructed ground truth: RECON_ENDO_IMPL at 20 / 40 / 60 epochs (6 seeds), H_ENDO_GATED at 200 epochs (12 seeds), H_EXT_SHORT at 30 epochs (6 seeds)",
+  "prediction": "RECON@20: INS in 6/6 (founders alive, children a minority); RECON@40: INS or MIXED in >= 4/6; RECON@60: ENV in >= 4/6. H_ENDO_GATED@200: >= 1 of 12 not ENDO (dev saw 2/16 kin-dependent reproducers). H_EXT_SHORT@30: instrument EXT 6/6 while b2 is EXT (right by accident) in >= 3/6, against dev's b2 ENDO 7/8 at 10 epochs",
+  "check": "sum(c=='INS' for c in o['RECON_ENDO_IMPL@20']['cls'])==6 and sum(c in ('INS','MIXED') for c in o['RECON_ENDO_IMPL@40']['cls'])>=4 and sum(c=='ENV' for c in o['RECON_ENDO_IMPL@60']['cls'])>=4 and sum(c!='ENDO' for c in o['H_ENDO_GATED@200']['cls'])>=1 and sum(c=='EXT' for c in o['H_EXT_SHORT@30']['cls'])==6 and sum(c=='EXT' for c in o['H_EXT_SHORT@30']['b2'])>=3",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "B6": {
+  "what": "Q4's informativeness: b1 and b2 cannot emit ENV (static), so Q4 fails on ENV whenever RECON has a functional run; a recipe reader b4 (fixed table on the blinded spec's physics / init / planted tape) and a donor-counter reader b3 scored by Q1 on the S3 rows",
+  "prediction": "b1 and b2 never ENV on any row; b4: 0 class errors in all four classes and 0 origin errors; b3: 0 wrong on ENV and INS and EXT, <= 2 wrong of 18 on ENDO",
+  "check": "o['b1']['never_env'] and o['b2']['never_env'] and all(v[0]==0 for v in o['b4']['q1'].values()) and o['b4']['origin_wrong']==0 and o['b3']['q1']['ENV'][0]==0 and o['b3']['q1']['INS'][0]==0 and o['b3']['q1']['EXT'][0]==0 and o['b3']['q1']['ENDO'][0]<=2",
+  "if_true": "SURVIVOR",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "B7": {
+  "what": "a constant INSERTED origin on the S3 rows",
+  "prediction": "wrong = the functional RANDOM_EXT_GATED runs (about 1 in 8 of 6) <= w_max(n) at n ~ 55-60 (w_max 4)",
+  "check": "o['wrong_constant_inserted'] <= (o['w_max'] if o['w_max'] is not None else -1)",
+  "if_true": "SURVIVOR",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "PL": {
+  "what": "probe-case lottery (s11.7): seeds in 17_049_001..999 where the half-solver HALF passes all 8 probe cases; a planted HALF population at a lucky vs an unlucky seed",
+  "prediction": "about 4 lucky seeds of 999 (1/256); at the lucky seed every HALF organism is 'functional' (n_func >= 64, class INS or EXT), at the other n_func = 0 (NONE)",
+  "check": "o['n_lucky']>=1 and o['lucky']['n_func']>=64 and o['other']['n_func']==0",
+  "if_true": "RECORDED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "W1f": {
+  "what": "frozen: XOR writer over a kin target",
+  "prediction": "byte 0 tagged K (the +0x55 sample catches it)",
+  "check": "o['byte0_tag']=='K'",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "W5f": {
+  "what": "frozen: input writer over an empty target",
+  "prediction": "byte 0 tagged P with input 7 and with input 21; with input 21 the child is functional and labelled ENDO (ENV means the target cell, not the environment)",
+  "check": "o['byte0_tag']=='P' and o['byte0_tag_in21']=='P' and o['child_f0_in21'] and o['label_in21']=='ENDO'",
+  "if_true": "RECORDED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "W2f": {
+  "what": "frozen: JR-operand tape with tags PPKPP..",
+  "prediction": "ENDO (the zero filler makes the kept operand a no-op jump)",
+  "check": "o['label']=='ENDO' and o['f0']",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "PD": {
+  "what": "frozen: sufficiency vs expression (first output from K bytes, a dormant-then-executed P copy behind them)",
+  "prediction": "ENDO; P-alone F0 True",
+  "check": "o['label']=='ENDO' and o['p_alone_f0']",
+  "if_true": "RECORDED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "S5": {
+  "what": "development shard 0/2 re-executed in this worktree (python -m rso.z80.assay dev <scratch>/DEV_ROWS 8 0/2)",
+  "prediction": "rows_sha256 equal to the committed DEV_ROWS.0-2 rows",
+  "check": "o['equal']",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "S6": {
+  "what": "red/run_red.py re-executed (27 mutants) in this worktree",
+  "prediction": "baseline 42/42 GREEN, 27/27 RED on the named test, rows identical to red/red_rows.jsonl in (id, red, expected_red, failing)",
+  "check": "o['baseline_green'] and o['all_red'] and o['n']==27 and o['identical_to_committed']",
+  "if_true": "AS_EXPECTED",
+  "if_false": "NOT_AS_PREDICTED"
+ },
+ "B1h": {
+  "what": "POST-HOC probe (added 18:3xZ after the two first shards showed CDIST_ENDO_IMPL NONE at 100 epochs and a replay of seed 17_040_501 showed F0 125/96/38/14 at epochs 1/5/10/20 with head tags PPP on the functional children; the CLASS at 5 and 10 epochs was not observed before this prediction): CDIST_ENDO_IMPL at 5 and 10 epochs, the 8 seeds",
+  "prediction": "class ENDO in 8/8 at 5 epochs and in >= 6/8 at 10 epochs (founders are overwritten within a few epochs; the functional organisms are P-P-headed children), n_pp_func > 0 in every run",
+  "check": "o['CDIST@5']['endo_runs']==8 and o['CDIST@10']['endo_runs']>=6 and all(x>0 for x in o['CDIST@5']['n_pp_func']+o['CDIST@10']['n_pp_func'])",
+  "if_true": "SURVIVOR (post-hoc horizon)",
+  "if_false": "NOT_AS_PREDICTED"
+ }
+}

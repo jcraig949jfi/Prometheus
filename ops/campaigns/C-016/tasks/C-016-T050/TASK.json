@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T050",
+  "campaign_id": "C-016",
+  "title": "Bounded native Ensorain experiment + RESULT (s10)",
+  "objective": "Run the frozen experiment; outcome decided by the registered criteria; self-contained RESULT.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T042"
+  ],
+  "owns": [
+    "rso/ensorain/runs/",
+    "rso/ensorain/RESULT.md"
+  ],
+  "reads": [
+    "rso/ensorain/"
+  ],
+  "problem": "Local CPU on harry1, ONE process (all arms one host and version set), not ubu006. Execute exactly PREREGISTRATION v1.1.0 s10: `python -B -m rso.ensorain.freeze check` (must print OK) then `python -B -m rso.ensorain.assay confirm rso/ensorain/runs/CONFIRM.json --n 400 --subjects rso/ensorain/SUBJECTS.json --cleared-by \"C-016-T042 integrated (Palamedes, merge dfaf48d07; REPORT rso/ensorain/challenge/R2/REPORT.md)\"`. If one call would exceed 600 s, read assay.py for a resumable/sliced mode; if there is none, run it in the foreground with timeout 600000 and, if it times out, record that and STOP (escalate) -- do not change code. Read the output ONLY under PREREGISTRATION s5 and REPORT R2 s4. RESULT.md MUST: (1) state qualification Q-a..Q-e first -- if any fails the run is DETECTION_UNQUALIFIED and no subject verdict is read; (2) give the family-P (reference) verdict with K1f/K1n/K2 W:L:T, Holm p, revised lives per arm, noswitch; (3) report search accessibility as REPORT R2 L2 requires: 1 testable subject (searched_16310006) and 7 not (5 no plastic key, 2 dead plastic: 007, 008), 006 read at the alpha/6 family-S worst case, with its per-arm numbers and noswitch beside its label; (4) carry L1 verbatim in meaning: a K1-only label (REVISION_NOT_HISTORY_DEPENDENT or REVISION_WITHOUT_RETAINED_COMPETENCE) does NOT license 'revises' -- it covers law-blind drift (walker) and halt-on-success search; only REVISION_HISTORY_DEPENDENT excludes drift; (5) carry L3 (absolute eta floor; false negatives only), L4 (G_R5 meaning), L5 (no drift control registered), O1 (the bound is part of the mechanism); (6) restate the scope: revision of a genome-initialised or lifetime-learned plastic parameter; NOT 'learned in life'; NOT retention (no tested Ensorain world demands retention -- a finding); (7) resources: CPU-s, wall, memory, rows_sha256. Commit rows + RESULT.md. No re-run with other seeds, no subject selection, no world change.",
+  "non_goals": [
+    "No edit to ensorain/ or roles/Ensorain/ (frozen WTP-05 code, seeds, runs)",
+    "No use of WTP-05 registered seeds (6_100_000, 9_500_001, 51_000_001..008, 7_000_000+s, 8_800_000, 8_900_000)",
+    "No process on ubu006",
+    "No selection after inspecting the final ruler",
+    "No world change",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "runs committed",
+    "RESULT.md"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/runs/",
+    "rso/ensorain/RESULT.md"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T13:58:08Z",
+      "note": "T042 integrated; cleared for the confirmatory run; Argus on Sonnet"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-92a4e0d8]",
+      "at_utc": "2026-10-11T14:00:13Z",
+      "note": "frozen confirmatory run; worktree C:/Prometheus-worktrees/argus-c016-t050 branch argus/c016-t050 base 9c4f61e0e"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-92a4e0d8]",
+      "at_utc": "2026-10-11T14:05:22Z",
+      "note": "run done"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-92a4e0d8]",
+      "at_utc": "2026-10-11T14:05:36Z",
+      "note": "confirmatory run done; qualified; reference REVISION_HISTORY_DEPENDENT"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-92a4e0d8]",
+      "at_utc": "2026-10-11T14:05:37Z",
+      "note": "RESULT.md + runs/CONFIRM.json; receipt A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:25:07Z",
+      "note": "merged argus/c016-t050 (93a25ff57): freeze OK; independent reproduction rows_sha256 dcdf8a42 identical (all keys equal); measured 266 s wall / ~265 CPU-s / 66 MB; re-analysis reproduces qualified + reference HISTORY_DEPENDENT; integrator mutations (memory_ok tamper -> INSTRUMENT_FAULT + unqualified; dropped row -> refused) caught; newlife prediction scored HELD (.507 < .924); RESULT s4 wording corrected in INTEGRATION.md"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T14:25:08Z",
+      "note": "result preserved: rso/ensorain/RESULT.md + INTEGRATION.md"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: execution of a preregistered experiment"
+}

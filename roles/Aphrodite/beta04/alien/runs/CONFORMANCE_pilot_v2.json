@@ -1,0 +1,161 @@
+{
+ "all_agree": true,
+ "manifest_worlds": [
+  "W0467897d",
+  "W1d5301d0",
+  "Wf294d5d9"
+ ],
+ "n_witnesses": 15,
+ "rows": [
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F006-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 1 + 3 / ]",
+   "tape_len": 6,
+   "witness": "(last (map (lam x (div (add 1 x) 3)) xs))",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F007-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 1 + 3 / ] d [ p A d a < s d n a + A s a * + ]",
+   "tape_len": 24,
+   "witness": "(max (map (lam x (div (add 1 x) 3)) xs))",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F008-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 2 3 + < ? . ]",
+   "tape_len": 9,
+   "witness": "(filter (lam x (lt x (add 2 3))) xs)",
+   "witness_size": 7
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F009-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 2 3 + < a + A ] a",
+   "tape_len": 10,
+   "witness": "(len (filter (lam x (lt x (add 2 3))) xs))",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F010-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "1 A [ a 3 / - A ] a",
+   "tape_len": 10,
+   "witness": "(foldl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F012-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "1 d . A [ a 3 / - d . A ]",
+   "tape_len": 13,
+   "witness": "(scanl (lam a (lam b (sub b (div a 3)))) 1 xs)",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F035-R3",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ a 3 / - A ] a 1 + 3 /",
+   "tape_len": 12,
+   "witness": "(div (add 1 (foldl (lam a (lam b (sub b (div a 3)))) 0 xs)) 3)",
+   "witness_size": 12
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F027-R3",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 1 + 3 / a 3 / - A ] a",
+   "tape_len": 12,
+   "witness": "(foldl (lam a (lam b (sub (div (add 1 b) 3) (div a 3)))) 0 xs)",
+   "witness_size": 12
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F071-R4",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 1 + 3 / d 2 3 + < ? . ]",
+   "tape_len": 13,
+   "witness": "(filter (lam x (lt x (add 2 3))) (map (lam x (div (add 1 x) 3)) xs))",
+   "witness_size": 13
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W1d5301d0-F077-R4",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 2 3 + < A d 1 + 3 / a * s d a * - + . ]",
+   "tape_len": 22,
+   "witness": "(map (lam x (if (lt x (add 2 3)) (div (add 1 x) 3) x)) xs)",
+   "witness_size": 14
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W0467897d-F010-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 2 2 + s < ? . ]",
+   "tape_len": 10,
+   "witness": "(filter (lam x (gt x (add 2 2))) xs)",
+   "witness_size": 7
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W0467897d-F008-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ 2 2 + s < a + A ] a",
+   "tape_len": 11,
+   "witness": "(len (filter (lam x (gt x (add 2 2))) xs))",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W0467897d-F007-R1",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 0 < ? n d d * * ] d [ p A d a < s d n a + A s a * + ]",
+   "tape_len": 29,
+   "witness": "(max (map (lam x (pow (gcd x x) 3)) xs))",
+   "witness_size": 8
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W0467897d-F061-R3",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 2 2 + s < s d 0 < ? n d d * * * a + A ] a",
+   "tape_len": 23,
+   "witness": "(sum (map (lam x (pow (gcd x x) 3)) (filter (lam x (gt x (add 2 2))) xs)))",
+   "witness_size": 14
+  },
+  {
+   "disagreements": 0,
+   "family_id": "W0467897d-F085-R3",
+   "first_bad": null,
+   "n_inputs": 137,
+   "tape": "[ d 2 2 + s < A d d 0 < ? n d d * * a * s d a * - + . ]",
+   "tape_len": 28,
+   "witness": "(map (lam x (if (gt x (add 2 2)) (pow (gcd x x) 3) x)) xs)",
+   "witness_size": 14
+  }
+ ]
+}

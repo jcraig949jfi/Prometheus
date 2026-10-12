@@ -1,0 +1,96 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T040",
+  "campaign_id": "C-018",
+  "title": "Q3 challenge of the frozen Aether assay",
+  "objective": "Independent adversarial qualification; set committed before outcomes.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-018-T030"
+  ],
+  "owns": [
+    "rso/aether/challenge/"
+  ],
+  "reads": [
+    "rso/",
+    "Aether/V2B/"
+  ],
+  "problem": "Claim-critical surfaces only. Model continuity verified across the whole session.",
+  "non_goals": [
+    "No edit to Aether/ or roles/Aether/",
+    "No Aether registered seed or frozen result",
+    "Nothing run on M2",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "challenge set committed first",
+    "REPORT.md per surface"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/challenge/"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T11:08:45Z",
+      "note": "T030 frozen; fresh Pallas on claude-fable-5-1"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-d78f77ce]",
+      "at_utc": "2026-10-12T11:12:07Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-d78f77ce]",
+      "at_utc": "2026-10-12T11:39:13Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-d78f77ce]",
+      "at_utc": "2026-10-12T13:01:26Z",
+      "note": "challenge set run and scored; REPORT.md on pallas/c018-t040"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-d78f77ce]",
+      "at_utc": "2026-10-12T13:01:26Z",
+      "note": "receipt A-001; branch pallas/c018-t040 ee3c3cf7f"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T13:08:40Z",
+      "note": "merged pallas/c018-t040: only rso/aether/challenge/ + seat files; freeze OK; launch log claude-fable-5-1 x178, 0 fallbacks (GENUINE Q3, continuity verified); reproduced synth B1-B4 byte-identical. EVIDENCE CHAIN, INSTRUMENT (B8 N rule), INFERENCE (B2 unevaluable, B3) NOT CLOSED; nothing about native behaviour blocks the run; analyse() as frozen cannot be read -> the one repair round C-018-T041"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T13:08:40Z",
+      "note": "adjudicated; repair round = C-018-T041"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-fable-5-1",
+  "red_required": false,
+  "notes": "red_required false: adversarial review"
+}

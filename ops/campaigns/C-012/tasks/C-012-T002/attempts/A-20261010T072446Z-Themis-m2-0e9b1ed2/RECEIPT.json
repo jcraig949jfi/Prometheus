@@ -1,0 +1,66 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-012-T002",
+ "campaign_id": "C-012",
+ "attempt_id": "A-20261010T072446Z-Themis-m2-0e9b1ed2",
+ "role": "Themis[m2-0e9b1ed2]",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "start_sha": "9e2747413ca067e9e9bac0e23bf3d1b954c44412",
+ "end_sha": "605e18ff3714d528ccf56f14cdb497ef990ed58f",
+ "files_changed": [
+  "moonshot/nf/__init__.py",
+  "moonshot/nf/schema.sql",
+  "moonshot/nf/pg.py",
+  "moonshot/nf/tests/__init__.py",
+  "moonshot/nf/tests/test_pg_publication.py",
+  "moonshot/nf/INTERFACE_CONTRACT.md",
+  "ops/campaigns/C-012/evidence/T002/mutate_pg.py",
+  "ops/campaigns/C-012/evidence/T002/MUTATION_TABLE.json",
+  "ops/campaigns/C-012/evidence/T002/MUTATION_TABLE_r1_vs_f32f4c098.json"
+ ],
+ "evidence_added": [
+  "moonshot/nf/tests/test_pg_publication.py: 41 tests against the canonical cluster in throwaway schemas and NOLOGIN roles -- identity, content addressing, append-only/guards (each refusal must name its guard), guarded publication (generation, parent, input checkpoint, position, every manifest claim), publisher semantic checks (forged identity, look-alike chain), 8 identical racers, mixed racers, child killed in the transaction, lost ack (child process and in-process), backend terminated idle and inside the transaction, rollback, validation (attribution, stale digest), contests (CONTESTED/TAINTED, UPHELD, OVERTURNED at k=1 and k>1, CORRUPT_BYTES, UNRESOLVED then resolved, pending adverse validation), authority (role confinement, PUBLIC has nothing)",
+  "ops/campaigns/C-012/evidence/T002/mutate_pg.py + MUTATION_TABLE.json: 29 planted bugs, each with target tests",
+  "ops/campaigns/C-012/evidence/T002/MUTATION_TABLE_r1_vs_f32f4c098.json: the first table (10/14) as found"
+ ],
+ "evidence_executed": [
+  "RED at f14130971 (M2, EW_DB_HOST=192.168.1.202): Ran 26, errors=26, all NotImplementedError: C-012-T002",
+  "GREEN at f32f4c098 (M2): 26 OK, 17.1 s; C-008 suites 167 OK, skipped=4, 328.3 s",
+  "mutation table r1 vs f32f4c098: 10/14 killed; survivors PM02 (claimed parent untested), PM07 (results guard masked by a foreign key), PM12 (publisher semantic checks untested), PM13 (reconnect path never exercised)",
+  "strengthened suite vs f32f4c098 (tests first): Ran 40, failures=10, errors=8 -- incl. the reconnect defect ('server closed the connection unexpectedly' then 'connection already closed'); after the signature change alone, the fail-open hole observed: 'the pending MISMATCH was dropped: the chain reopened over it'",
+  "hardened ce1b45c00 (M2): 41 OK, 24.1 s; C-008 suites 167 OK, skipped=4, 328.9 s",
+  "merged tree 605e18ff3 (M2): python -m unittest discover -s moonshot/nf/tests -t . -> 41 OK, 23.4 s",
+  "mutation table vs 605e18ff3 (clean): 29/29 killed, 29.7 s",
+  "integrated to main as a fast-forward 48a6c76c4..605e18ff3; ce1b45c00 verified an ancestor of origin/main",
+  "cluster left clean after every run: 0 moonshot_t_* schemas, 0 roles, 0 sessions; production schema 'moonshot' not created"
+ ],
+ "red_observed": {
+  "observed": true,
+  "sha": "f1413097197a1a6911e5fcabc694bbb1b766a699",
+  "detail": "26 tests failing against API stubs before the schema existed (OP-NF2 s3: tests first)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "every PG test ran from M2 (Windows client); no Linux client run yet -- the publisher, validator and resolver run on M2 by design (contract s3); T003 exercises Linux nodes as Fabric workers only",
+  "the lost acknowledgement AFTER COMMIT is injected client-side (the server really commits; the client closes the connection before reading the answer); the two other connection-loss cases are real (pg_terminate_backend while idle and inside the transaction)",
+  "the database cannot recompute canonical-JSON identities: a publisher that skipped verification (verify=False is a test knob) could publish a self-consistent forged identity; the trusted publisher and later replay validation are the defence (contract s4)",
+  "every program login is the postgres superuser: roles and triggers are bug containment, not a boundary (contract s5)",
+  "publish retries on ANY OperationalError (also lock timeout, deadlock, serialization failure) on a fresh connection: correct because idempotent per attempt, heavier than needed",
+  "record_validation and resolve_contest are not retried on connection loss; after a lost acknowledgement the caller reads the state (a retried validation records a second row; a retried resolution is refused as 'not open')",
+  "the generation in a replayed answer is the chain's current generation, not the one at classification",
+  "objects are stored for INVALID attempts too (evidence): storage grows with every attempt; T004 measures it"
+ ],
+ "unresolved": [
+  "evidence_wiki's connection pool returns connections with session state intact (a SET ROLE leaked into the next borrower): worked around in moonshot (dedicated connections); report to the evidence_wiki owner OWED"
+ ],
+ "unblocks": [
+  "C-012-T003",
+  "C-012-T005"
+ ],
+ "created_at_utc": "2026-10-10T08:19:44Z",
+ "host": "SPECTREX5",
+ "branch": "themis/nf2-2026-10-10",
+ "worktree_path": "D:\\Prometheus-worktrees\\themis-nf2",
+ "notes": "Test-harness defect recorded: the first version of the refused() helper skipped its rollback when an assertion failed; against f32f4c098 a DELETE on contests succeeded, held its row lock and wedged the suite on the resolver for 10 min (one idle-in-transaction session terminated by hand, its throwaway schema dropped). Fixed in ce1b45c00 (rollback in finally; lock_timeout 60 s on test sessions)."
+}

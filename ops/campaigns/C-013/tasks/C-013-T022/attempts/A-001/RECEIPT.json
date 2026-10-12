@@ -1,0 +1,101 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T022",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-opus-5-5",
+  "quality_class": "Q2",
+  "start_sha": "ae55dccaa569de1c7265ec2b2fd1001e3bd51980",
+  "end_sha": "e944e7c592449ff42a07d584007a55f35abcb59f",
+  "files_changed": [
+    "rso/scale/runner/__init__.py",
+    "rso/scale/runner/__main__.py",
+    "rso/scale/runner/engine.py",
+    "rso/scale/runner/aether.py",
+    "rso/scale/runner/store.py",
+    "rso/scale/runner/lease.py",
+    "rso/scale/runner/run.py",
+    "rso/scale/runner/resume.py",
+    "rso/scale/runner/worker.py",
+    "rso/scale/runner/supervisor.py",
+    "rso/scale/runner/account.py",
+    "rso/scale/runner/control.py",
+    "rso/scale/runner/fire_test.py",
+    "rso/scale/runner/FIRE_TEST.md",
+    "rso/scale/runner/tests/ (_util, test_engine, test_store, test_run, test_supervisor, mutation_check)",
+    "rso/scale/runner/evidence/ (RED, GREEN, MUTATION_TABLE.json, FIRE_20261010_fire-1/ 23 files)",
+    "roles/Eupalamus/WORK_STATE.json",
+    "roles/Eupalamus/comms/ (claim, Aether notice, heartbeats, INTEGRATION_READY)"
+  ],
+  "evidence_added": [
+    "runtime-agnostic Engine interface init/step/save_state/load_state/digest (+probe) with two engines: toy (tests) and the Aether AETH-01 kernel (read only; gpu_aeth01.py:111, aeth01_run.py:47, aeth01_observatory.py:154)",
+    "epoch identity produced by moonshot.epoch.model itself (make_genesis/derive_spec/execute/verify_epoch/replay_chain): C-012 alignment by construction; format alignment table with divergences in FIRE_TEST.md s5",
+    "run manifest (rso.runner.run_manifest.v1), sha256 object store, generation-CAS publication with DUPLICATE/DISAGREEMENT/STALE/INVALID/HALTED, s3.8 verified resume (bytes, round trip, sampled replay, environment), per-partition append-only event shards, final account with wasted work, enforced CPU cap",
+    "detached host supervisor (intermediary + DETACHED_PROCESS|NEW_PROCESS_GROUP|BREAKAWAY_FROM_JOB), one worker at a time (<= 2 processes)",
+    "fire test PASS 13/13: launch in session 124bd1dc (launcher self-killed), kills by 93a529ba (worker mid-epoch; supervisor + replacement worker mid-epoch), relaunch in session 07fac962; run digest 1ab5132a... == control; 32/32 epochs published once; 2 interrupted attempts (60 ticks, >=1.45 CPU-s) accounted"
+  ],
+  "evidence_executed": [
+    {
+      "command": "python -m unittest discover -s rso/scale/runner/tests -t . (at f669c3806, before the code)",
+      "result": "4 modules ERROR on import (RED): evidence/RED_20261010.txt"
+    },
+    {
+      "command": "python -m unittest discover -s rso/scale/runner/tests -t .",
+      "result": "35 OK (evidence/GREEN_20261010.txt); 35 OK again on the tree merged with origin/main 38e82946a"
+    },
+    {
+      "command": "python rso/scale/runner/tests/mutation_check.py",
+      "result": "13/13 mutants killed (first pass 12/13; survivor 'supervisor ignores live orphan lease' -> test_waits_for_orphan_worker added)"
+    },
+    {
+      "command": "python -m rso.scale.runner.fire_test start|kill|resume|verify --run-dir C:/Prometheus-runs/C-013-T022/fire-1 (pinned worktree d72fb0eb9; start and resume in two separate headless claude-haiku-4-5 helper sessions)",
+      "result": "PASS 13/13 (evidence/FIRE_20261010_fire-1/FIRE_RESULT.json); 285.9 CPU-s total incl. control 109.5"
+    },
+    {
+      "command": "python -m rso.scale.runner.fire_test ... --rehearsal (64x64, one session)",
+      "result": "11/11 mechanical criteria PASS, 2 session criteria FAIL as designed (not committed)"
+    },
+    {
+      "command": "python -m unittest discover -s rso/scale/tests -t .",
+      "result": "OK (merged tree)"
+    },
+    {
+      "command": "python -m workgraph validate",
+      "result": "OK"
+    }
+  ],
+  "red_observed": {
+    "observed": true,
+    "detail": "commit f669c3806: tests committed before rso/scale/runner existed; all four modules failed on import"
+  },
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "the cross-session resumption (worker 15416 at head 4) was not replayed: the first resumption (worker 12864) replayed epoch 4 and the 1-in-4 sample fell elsewhere; it was checked by bytes/round-trip/environment, and final digest == control covers it end to end (FD-T22-4)",
+    "POSIX detach path (start_new_session) written, not exercised (harry1 is Windows)",
+    "no automatic relaunch after host loss: a job stays down until anyone runs launch (idempotent); a host scheduler entry is not built",
+    "single host only (local store/lease/lock); INVALID at resume blocks without rewind; a contest halts without a resolver; no checkpoint retention policy",
+    "Aether GPU/CuPy path not exercised; CPU only",
+    "the two helper sessions were headless claude-haiku-4-5 invocations told to run one command each; they are evidence of session separation, not seats"
+  ],
+  "unresolved": [
+    "move onto NF transport (moonshot.publish / Fabric attempt) now that C-012-T003 has closed -- proposal, not done here",
+    "s3.6 retained remote store (placement: infra owner / Pan Q-003), unchanged from T020"
+  ],
+  "unblocks": [
+    "RSO_SCALING_ASSESSMENT.md s7 B2 ('the job owns its state') now has a working local instance"
+  ],
+  "created_at_utc": "2026-10-10T09:18:11Z",
+  "instance": "harry1-93a529ba",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c-013-t022",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c013-t022",
+  "resources": {
+    "cpu": "fire-1 285.9 CPU-s; rehearsal ~40 CPU-s; test and mutation runs ~7 CPU-min; total < 0.2 core-hour (cap 1)",
+    "validation_launches": 0,
+    "gpu": 0,
+    "cloud_usd": 0,
+    "model": "one Q2 session plus two single-command claude-haiku-4-5 helper sessions (fire test launch and resume)"
+  },
+  "notes": "No Fabric worker, no Fabric restart, no Fabric lease (optional per the escalation response; FD-T22-2). No file in Aether/ or moonshot/ edited; both imported read only. Aether notified (comms #2006). Run directory outside Git: C:/Prometheus-runs/C-013-T022/fire-1."
+}

@@ -1,0 +1,65 @@
+{
+ "n": 440,
+ "voids": 0,
+ "classes": {
+  "NEEDLE": {
+   "precursors": 39,
+   "rate_VLOW": 0.141,
+   "rate_HIGH": 0.776,
+   "mean_diff_HIGH_minus_VLOW": 0.635,
+   "causes": {
+    "VLOW": {
+     "UPTAKE": 10,
+     "MUTATION": 10,
+     "BORN_ASSEMBLY": 1,
+     "SELF_MOVE": 1
+    },
+    "HIGH": {
+     "MUTATION": 97,
+     "BORN_ASSEMBLY": 4,
+     "UPTAKE": 8,
+     "SELF_MOVE": 12
+    }
+   }
+  },
+  "MOVE_RICH": {
+   "precursors": 16,
+   "rate_VLOW": 0.984,
+   "rate_HIGH": 1.0,
+   "mean_diff_HIGH_minus_VLOW": 0.016,
+   "causes": {
+    "VLOW": {
+     "SELF_MOVE": 33,
+     "UPTAKE": 27,
+     "BORN_ASSEMBLY": 3
+    },
+    "HIGH": {
+     "SELF_MOVE": 29,
+     "UPTAKE": 24,
+     "BORN_ASSEMBLY": 2,
+     "MUTATION": 9
+    }
+   }
+  }
+ },
+ "N-P1": {
+  "needle_diff": 0.635,
+  "holds": true
+ },
+ "N-P2": {
+  "diff_of_diffs": 0.619,
+  "ci95": [
+   0.501,
+   0.728
+  ],
+  "holds": true
+ },
+ "N-P3": {
+  "move_rich_VLOW_causes": {
+   "SELF_MOVE": 33,
+   "UPTAKE": 27,
+   "BORN_ASSEMBLY": 3
+  },
+  "holds": true
+ }
+}

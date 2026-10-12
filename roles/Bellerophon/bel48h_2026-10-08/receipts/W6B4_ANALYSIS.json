@@ -1,0 +1,145 @@
+{
+ "U": {
+  "pairs": 800,
+  "voids": 0,
+  "origins": {
+   "normal": 61,
+   "blocked": 84
+  },
+  "wilson": {
+   "normal": [
+    0.0598,
+    0.0967
+   ],
+   "blocked": [
+    0.0856,
+    0.1282
+   ]
+  },
+  "mcnemar": {
+   "normal_only": 32,
+   "blocked_only": 55,
+   "p": 0.017828
+  },
+  "causes": {
+   "normal": {
+    "BORN_ASSEMBLY": 8,
+    "UPTAKE": 9,
+    "MUTATION": 32,
+    "SELF_MOVE": 11,
+    "SELF_CONSTRUCT": 1
+   },
+   "blocked": {
+    "MUTATION": 47,
+    "BORN_ASSEMBLY": 19,
+    "SELF_MOVE": 15,
+    "SELF_CONSTRUCT": 3
+   }
+  },
+  "ablation_acted_runs": 800,
+  "per_cell": {
+   "ENDOGENOUS_PARTIAL/WELL_MIXED": {
+    "normal": 37,
+    "blocked": 49
+   },
+   "PAIR_EXECUTION/WELL_MIXED": {
+    "normal": 24,
+    "blocked": 35
+   }
+  }
+ },
+ "U-P1": {
+  "uptake_origins_blocked": 0,
+  "uptake_origins_normal": 9,
+  "holds": true
+ },
+ "U-P2": {
+  "ratio_blocked_over_normal": 1.377,
+  "holds": true
+ },
+ "U-P3": {
+  "mutation_share": {
+   "normal": 0.525,
+   "blocked": 0.56
+  }
+ },
+ "R": {
+  "replayed": 202,
+  "voids": 0,
+  "checked": 202,
+  "identical": 202,
+  "by_window": {
+   "w1v2": 90,
+   "w2": 32,
+   "w4": 32,
+   "w5": 8,
+   "w6": 40
+  },
+  "mismatch_ids": []
+ },
+ "R-P1": {
+  "holds": true
+ },
+ "X": {
+  "n": 192,
+  "voids": 0,
+  "levels": {
+   "MED": {
+    "seeds": 24,
+    "E_share_ON_mean": 0.073,
+    "E_share_OFF_mean": 0.604,
+    "ON_E_majority": 0,
+    "ON_S_majority": 24,
+    "p_E_favoured_ON": 1.0,
+    "ON_gt_OFF": 0,
+    "ON_lt_OFF": 24,
+    "extinct": {
+     "ON_ES": 0,
+     "ON_SE": 0,
+     "OFF_ES": 0,
+     "OFF_SE": 0
+    }
+   },
+   "HIGH": {
+    "seeds": 24,
+    "E_share_ON_mean": 0.0,
+    "E_share_OFF_mean": null,
+    "ON_E_majority": 0,
+    "ON_S_majority": 4,
+    "p_E_favoured_ON": 1.0,
+    "ON_gt_OFF": 0,
+    "ON_lt_OFF": 0,
+    "extinct": {
+     "ON_ES": 3,
+     "ON_SE": 7,
+     "OFF_ES": 18,
+     "OFF_SE": 15
+    }
+   }
+  },
+  "W5-P6": {
+   "holds": false,
+   "ON_E_majority": 0,
+   "ON_S_majority": 4,
+   "p": 1.0
+  },
+  "W5-P7": {
+   "ON_gt_OFF": 0,
+   "ON_lt_OFF": 24,
+   "p": 1.0,
+   "holds": false
+  }
+ },
+ "X-P6": {
+  "holds": false,
+  "ON_E_majority": 0,
+  "ON_S_majority": 4,
+  "p": 1.0
+ },
+ "X-P7": {
+  "MED_ON_lt_OFF": 24,
+  "MED_ON_gt_OFF": 0,
+  "p": 0.0,
+  "holds": true
+ }
+}

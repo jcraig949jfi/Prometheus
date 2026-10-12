@@ -1,0 +1,213 @@
+{
+ "baselines_passing_q1": [],
+ "confusion": {
+  "CDIST_ENDO_IMPL": {
+   "ENV": 24
+  },
+  "H_ENDO_GATED": {
+   "ENDO": 24
+  },
+  "H_ENDO_IMPL": {
+   "ENDO": 23,
+   "NONE": 1
+  },
+  "H_EXT_GATED": {
+   "EXT": 24
+  },
+  "H_EXT_GATED/TAPE": {
+   "REFUSED": 8
+  },
+  "H_EXT_SHORT": {
+   "EXT": 24
+  },
+  "H_EXT_SHORT/LABELS": {
+   "EXT": 8
+  },
+  "H_EXT_SHORT/PHYS": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT": {
+   "INS": 48
+  },
+  "NH_ENDO_SHORT/GEN": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT/PHYS": {
+   "REFUSED": 8
+  },
+  "NH_ENDO_SHORT/PLANT": {
+   "INS": 8
+  },
+  "NH_EXT_GATED": {
+   "EXT": 24
+  },
+  "RANDOM_ENDO_GATED": {
+   "NONE": 24
+  },
+  "RANDOM_EXT_GATED": {
+   "EXT": 11,
+   "NONE": 13
+  },
+  "RECON_ENDO_IMPL": {
+   "ENDO": 1,
+   "ENV": 47
+  },
+  "SEEDED_ENDO_GATED": {
+   "ENDO": 24
+  }
+ },
+ "failed": [],
+ "q1": {
+  "ENDO": {
+   "n": 71,
+   "pass": true,
+   "powered": true,
+   "w_max": 6,
+   "wrong": 0
+  },
+  "ENV": {
+   "n": 72,
+   "pass": true,
+   "powered": true,
+   "w_max": 6,
+   "wrong": 1
+  },
+  "EXT": {
+   "n": 83,
+   "pass": true,
+   "powered": true,
+   "w_max": 8,
+   "wrong": 0
+  },
+  "INS": {
+   "n": 48,
+   "pass": true,
+   "powered": true,
+   "w_max": 3,
+   "wrong": 0
+  }
+ },
+ "q2": {
+  "n": 274,
+  "pass": true,
+  "powered": true,
+  "w_max": 39,
+  "wrong": 0
+ },
+ "q3": {
+  "GEN": {
+   "bad": 0,
+   "n": 8
+  },
+  "LABELS": {
+   "bad": 0,
+   "n": 8
+  },
+  "PHYS": {
+   "bad": 0,
+   "n": 16
+  },
+  "PLANT": {
+   "bad": 0,
+   "n": 8
+  },
+  "TAPE": {
+   "bad": 0,
+   "n": 8
+  }
+ },
+ "q4": {
+  "b1": {
+   "ENDO": {
+    "n": 71,
+    "pass": true,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 72,
+    "pass": false,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 72
+   },
+   "EXT": {
+    "n": 82,
+    "pass": true,
+    "powered": true,
+    "w_max": 7,
+    "wrong": 0
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
+  },
+  "b2": {
+   "ENDO": {
+    "n": 71,
+    "pass": true,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 72,
+    "pass": false,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 72
+   },
+   "EXT": {
+    "n": 83,
+    "pass": false,
+    "powered": true,
+    "w_max": 8,
+    "wrong": 23
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
+  },
+  "b4": {
+   "ENDO": {
+    "n": 72,
+    "pass": true,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 0
+   },
+   "ENV": {
+    "n": 72,
+    "pass": false,
+    "powered": true,
+    "w_max": 6,
+    "wrong": 24
+   },
+   "EXT": {
+    "n": 96,
+    "pass": true,
+    "powered": true,
+    "w_max": 10,
+    "wrong": 0
+   },
+   "INS": {
+    "n": 48,
+    "pass": true,
+    "powered": true,
+    "w_max": 3,
+    "wrong": 0
+   }
+  }
+ },
+ "unpowered": [],
+ "verdict": "ATTRIBUTION_QUALIFIED"
+}

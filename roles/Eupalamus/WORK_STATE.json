@@ -3,23 +3,23 @@
  "seat": "Eupalamus",
  "mwo_id": "MWO-0004",
  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md)",
- "updated_at_utc": "2026-10-07T08:58:00Z",
+ "updated_at_utc": "2026-10-12T09:14:00Z",
  "state": "READY",
- "branch": "eupalamus/c010-t011",
- "head_sha": "42c7c88371ca055601edeeaac18cff1b54ae5aab",
- "base_sha": "e1a0610916af23d749f9ae48ca48379f5e52c9e2",
- "worktree_path": "C:\\Prometheus-worktrees\\eupalamus-c010-t011",
+ "branch": "eupalamus-c018-t011",
+ "head_sha": "e944e7c592449ff42a07d584007a55f35abcb59f",
+ "base_sha": "3f8cc0150cedbb76c85948ae06aac24a5cc9cfae",
+ "worktree_path": "C:\\Prometheus-worktrees\\eupalamus-c018-t011",
  "model": "claude-sonnet-5-5",
- "capability_class": "Q1",
+ "capability_class": "Q2",
  "host": "harry1 (M4)",
- "instance": "harry1-d0e200cd",
- "session_id": "d0e200cd-b59f-4073-b3a3-2a7ceb920bc7",
- "sole_instance_note": "Operator 2026-10-04: there is only one Eupalamus; this instance (gandalf-ced473bf) is it. The earlier instance harry1-e609b290 (C-004-T003) is superseded and offline.",
- "current_objective": "RSO Builder Cell member, campaign C-004 (RSO-METHODS-SLICE-001)",
- "current_step": "C-010-T011 INTEGRATION_READY (branch eupalamus/c010-t011 code 42c7c8837; state on main 50421890c); no READY work; idle, awaiting Palamedes integration",
+ "instance": "harry1-69b9c667",
+ "session_id": "69b9c667-082f-43f2-ae27-ab5fe4049bf9",
+ "sole_instance_note": "2026-10-12: harry1-69b9c667 (C-018-T011, Sonnet 5.5) wrote this record last.",
+ "current_objective": "RSO Builder Cell member, campaign C-018 (Generation 4)",
+ "current_step": "C-018-T011 INTEGRATION_READY (branch eupalamus-c018-t011); awaiting Palamedes integration",
  "in_flight": [],
  "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
- "next_expected_milestone": "Palamedes integrates C-010-T011",
+ "next_expected_milestone": "Palamedes integrates C-018-T011",
  "expected_next_artifact": "next claimed packet",
  "last_push_sha": "7989b02cc503c61f08d47dca706712be9ce29246",
  "last_push_utc": "2026-10-04T07:14:10Z",
@@ -29,18 +29,20 @@
  "campaigns": [
   "C-004",
   "C-009",
-  "C-010"
+  "C-010",
+  "C-013",
+  "C-018"
  ],
  "experiments": [],
  "fabric_tasks": [],
  "running": [],
  "blocked_on": [],
  "next_actions": [
-  "python -m comms sync Eupalamus; python -m workgraph ready Eupalamus after each integration",
-  "heartbeat Aporia about every 90 minutes while working"
+  "python -m workgraph ready Eupalamus after integration"
  ],
  "operator_decisions_required": [],
  "latest_reports": [
-  "roles/Eupalamus/comms/2026-10-07_T016_INTEGRATION_READY.md"
+  "roles/Eupalamus/comms/2026-10-12_C-018-T011_INTEGRATION_READY.md",
+  "rso/completeness/README.md"
  ]
 }

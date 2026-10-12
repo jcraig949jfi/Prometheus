@@ -1,0 +1,101 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T011",
+  "campaign_id": "C-016",
+  "title": "Integration-notification prototype (s7): durable, idempotent INTEGRATION_READY notice",
+  "objective": "Cut integration latency: when a task enters INTEGRATION_READY a durable notice reaches the integrator once, and the queue is visible.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/scale/notify/"
+  ],
+  "reads": [
+    "workgraph/",
+    "comms/",
+    "rso/scale/RSO_SCALING_ASSESSMENT.md s2"
+  ],
+  "problem": "Sidecar in the RSO lane that READS workgraph task state and comms. workgraph/ (Achilles) and comms/ are NOT edited; if a hook inside workgraph.transition is the right design, write it up as a routed proposal to Achilles and still ship the sidecar. Behaviour: (1) `python -m rso.scale.notify scan` finds INTEGRATION_READY tasks for a coordinator's campaigns; (2) emits ONE comms notice per (task_id, attempt / branch head sha), an idempotency key recorded durably (committed or DB-visible, not a local temp file), so a retry or a second scanner never duplicates; (3) `queue` prints the pending integration queue with age; (4) records the disposition when the task later becomes INTEGRATED / CLOSED or is sent back. It never merges, never changes task state, never bypasses tests. A wake for the coordinator may be a documented command (e.g. a one-shot headless launch); install no OS scheduler task.",
+  "non_goals": [
+    "No new scheduler",
+    "No automatic merge or state change",
+    "No OS scheduler task installed",
+    "No paid compute (s13)",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "tests: a repeated scan or retry emits one notice; a new attempt sha emits a new one; disposition recorded; no write to workgraph state",
+    "a live demonstration against C-016's own packets, with the comms ids",
+    "a short README with the wake command"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/scale/notify/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "C-016 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:07:34Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-33a3708a]",
+      "at_utc": "2026-10-11T10:11:29Z",
+      "note": "claim; sidecar rso/scale/notify"
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[harry1-33a3708a]",
+      "at_utc": "2026-10-11T10:13:54Z",
+      "note": "tests first: evidence/RED.txt"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-33a3708a]",
+      "at_utc": "2026-10-11T10:13:54Z",
+      "note": "notify.py"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-33a3708a]",
+      "at_utc": "2026-10-11T10:13:54Z",
+      "note": "10 OK"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-33a3708a]",
+      "at_utc": "2026-10-11T10:13:55Z",
+      "note": "10 tests OK (RED first); live demo in evidence/DEMO.md; branch eupalamus/c016-t011 at 239a0de6d39592fb9d75a865b0d45a311a38a8e4; receipt attempts/A-001"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:45Z",
+      "note": "merged eupalamus/c016-t011 (44cc011bb): 10 tests OK; integrator mutant (disposition dedupe removed) killed by test_disposition_recorded_once; LIVE: scan posted #2120/#2121 for T020/T021, an immediate re-scan posted nothing (already x3); workgraph/ and comms/ untouched; Achilles hook proposal routed"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T10:20:45Z",
+      "note": "prototype tested (directive s16 criterion 3)"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5"
+}

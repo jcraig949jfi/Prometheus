@@ -1,0 +1,2528 @@
+{
+ "addendum": "E1_V2_RULES.md ADDENDUM D",
+ "admitted": [
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "Wc025415a-F021-R2",
+   "fused_key": "R2|f:base_fold|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 9841,
+    "crn_within_B_small": true,
+    "found": "(sum (scanl (lam a (lam b (f0 b))) 1 xs))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 27213,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 12.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(foldl (lam a (lam b (add b a))) 1 (map (lam x (f0 x)) xs))",
+   "world": "Wc025415a"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "Wc025415a-F041-R4",
+   "fused_key": "R4|MAP(if p f)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 273050,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 288448,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 1.0,
+    "solved": false,
+    "tried": {
+     "E": 30,
+     "F": 450,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fp:guard_p",
+   "witness_esize": 16,
+   "witness_promoted": "(map (lam x (if (p0 x) (f1 x) x)) xs)",
+   "world": "Wc025415a"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "Wc025415a-F044-R4",
+   "fused_key": "R4|FILTER(p) o MAP(f)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 29413,
+    "crn_within_B_small": true,
+    "found": "(filter (lam x (q1 x)) (map (lam x (q0 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 31793,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fp:filter_of_map",
+   "witness_esize": 15,
+   "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (f1 x)) xs))",
+   "world": "Wc025415a"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.65,
+   "family_id": "W2bdef02f-F022-R2",
+   "fused_key": "R2|f:guard|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 368479,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (max (scanl (lam a (lam b x)) (f0 x) xs))) xs)",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 495337,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.3,
+    "solved": false,
+    "tried": {
+     "E": 155,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:guard",
+   "witness_esize": 12,
+   "witness_promoted": "(map (lam x (if (gt 1 x) (f0 x) x)) xs)",
+   "world": "W2bdef02f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W2bdef02f-F024-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 410414,
+    "crn_within_B_small": false,
+    "found": "(pow (sum (filter (lam x (p0 x)) xs)) 2)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 338651,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 12.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 19,
+   "witness_promoted": "(mul (sum (filter (lam x (p0 x)) xs)) (sum (filter (lam x (p0 x)) xs)))",
+   "world": "W2bdef02f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W2bdef02f-F026-R2",
+   "fused_key": "R2|s:base_post|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 90142,
+    "crn_within_B_small": true,
+    "found": "(neg (foldl (lam a (lam b (s1 a b))) 0 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 338651,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 12.3,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_post",
+   "witness_esize": 12,
+   "witness_promoted": "(sub 0 (foldl (lam a (lam b (s1 a b))) 0 xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W2bdef02f-F027-R2",
+   "fused_key": "R2|f:base_fold|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 4853,
+    "crn_within_B_small": true,
+    "found": "(neg (sum (map (lam x (f0 x)) xs)))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 28916,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 12.0,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 12,
+   "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (map (lam x (f0 x)) xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W2bdef02f-F031-R2",
+   "fused_key": "R2|s:base_fold|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 114686,
+    "crn_within_B_small": false,
+    "found": "(sum (scanl (lam a (lam b (s1 a b))) 0 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 338651,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 11.6,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_fold",
+   "witness_esize": 15,
+   "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (scanl (lam a (lam b (s1 a b))) 0 xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.175,
+   "family_id": "W2bdef02f-F042-R3",
+   "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 24088,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 35491,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:map_of_filter",
+   "witness_esize": 14,
+   "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "s0"
+   ],
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.175,
+   "family_id": "W2bdef02f-F048-R4",
+   "fused_key": "R4|f o ACC(s)|f0+s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 114036,
+    "crn_within_B_small": false,
+    "found": "(q0 (foldl (lam a (lam b (q2 a b))) 1 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 196839,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 10.5,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fs",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fs:post_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(f0 (foldl (lam a (lam b (s0 a b))) 1 xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "s0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W2bdef02f-F051-R4",
+   "fused_key": "R4|ACC(s)o MAP(f)|f0+s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 50929,
+    "crn_within_B_small": true,
+    "found": "(scanl (lam a (lam b (q2 a (q0 b)))) 1 xs)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 35491,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.5,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fs",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fs:scan_of_map",
+   "witness_esize": 16,
+   "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))",
+   "world": "W2bdef02f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.3,
+   "family_id": "W09efdf93-F018-R2",
+   "fused_key": "R2|f:base_post|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 3750,
+    "crn_within_B_small": true,
+    "found": "(pow (f0 (head xs)) 2)",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 3503,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.7,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.3,
+   "rung": "R2",
+   "skeleton": "R2:f:base_post",
+   "witness_esize": 21,
+   "witness_promoted": "(mul (head (map (lam x (f0 x)) xs)) (head (map (lam x (f0 x)) xs)))",
+   "world": "W09efdf93"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.05,
+   "family_id": "W09efdf93-F024-R2",
+   "fused_key": "R2|f:base_fold|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 1299,
+    "crn_within_B_small": true,
+    "found": "(sum (map (lam x (f1 x)) xs))",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 3503,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 10.9,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f1 x)) xs))",
+   "world": "W09efdf93"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W09efdf93-F029-R2",
+   "fused_key": "R2|f:extra_p|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 320345,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (f1 x)) (filter (lam x (lt 2 x)) xs))",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 491605,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.4,
+    "solved": false,
+    "tried": {
+     "F": 120,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_p",
+   "witness_esize": 13,
+   "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (lt 2 x)) xs))",
+   "world": "W09efdf93"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.05,
+   "family_id": "Wd1490fbb-F019-R2",
+   "fused_key": "R2|f:base_fold|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 1289,
+    "crn_within_B_small": true,
+    "found": "(sum (map (lam x (f0 x)) xs))",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 3472,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 11.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f0 x)) xs))",
+   "world": "Wd1490fbb"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.15,
+   "family_id": "Wd1490fbb-F021-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 400874,
+    "crn_within_B_small": false,
+    "found": "(pow (sum (filter (lam x (p0 x)) xs)) 2)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 336104,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.0,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 21,
+   "witness_promoted": "(mul (sum (filter (lam x (p0 x)) xs)) (sum (filter (lam x (p0 x)) xs)))",
+   "world": "Wd1490fbb"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "Wd1490fbb-F022-R2",
+   "fused_key": "R2|s:base_fold|s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 533359,
+    "crn_within_B_small": false,
+    "found": "(neg (sum (scanl (lam a (lam b (s0 a b))) 0 xs)))",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 3542000,
+    "order_free_within_budget": false,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.7,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_fold",
+   "witness_esize": 13,
+   "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (scanl (lam a (lam b (s0 a b))) 0 xs))",
+   "world": "Wd1490fbb"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "Wb49b6a5f-F021-R2",
+   "fused_key": "R2|s:base_fold|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 119130,
+    "crn_within_B_small": false,
+    "found": "(sum (scanl (lam a (lam b (s1 a b))) 0 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 352145,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 10.6,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_fold",
+   "witness_esize": 15,
+   "witness_promoted": "(foldl (lam a (lam b (add b a))) 0 (scanl (lam a (lam b (s1 a b))) 0 xs))",
+   "world": "Wb49b6a5f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.275,
+   "family_id": "Wb49b6a5f-F024-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 4855,
+    "crn_within_B_small": true,
+    "found": "(neg (len (filter (lam x (p0 x)) xs)))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 30434,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 13.4,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 6,
+   "regression_selected_best_test_acc": 0.075,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 10,
+   "witness_promoted": "(neg (len (filter (lam x (p0 x)) xs)))",
+   "world": "Wb49b6a5f"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "Wb49b6a5f-F052-R4",
+   "fused_key": "R4|MAP(if p f)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 350078,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (if (q1 x) (q0 x) x)) xs)",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 362075,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.5,
+    "solved": false,
+    "tried": {
+     "E": 122,
+     "F": 122,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fp:guard_p",
+   "witness_esize": 15,
+   "witness_promoted": "(map (lam x (if (p0 x) (f1 x) x)) xs)",
+   "world": "Wb49b6a5f"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "Wb49b6a5f-F055-R4",
+   "fused_key": "R4|MAP(f) o FILTER(p)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 26446,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 38276,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fp:map_of_filter",
+   "witness_esize": 14,
+   "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))",
+   "world": "Wb49b6a5f"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W483b8c31-F022-R2",
+   "fused_key": "R2|p:extra_f|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 498944,
+    "crn_within_B_small": false,
+    "found": "(filter (lam x (p0 x)) (map (lam x (gcd x x)) xs))",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 508565,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:extra_f",
+   "witness_esize": 11,
+   "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (gcd x x)) xs))",
+   "world": "W483b8c31"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.575,
+   "family_id": "W483b8c31-F026-R2",
+   "fused_key": "R2|f:base_fold|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 532052,
+    "crn_within_B_small": false,
+    "found": "(foldl (lam a (lam b (mul a (f1 b)))) 1 xs)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 349404,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 11.2,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(foldl (lam a (lam b (mul b a))) 1 (map (lam x (f1 x)) xs))",
+   "world": "W483b8c31"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.425,
+   "family_id": "W483b8c31-F030-R2",
+   "fused_key": "R2|f:self_compose|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 412,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (f0 (f0 x))) xs)",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 629,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.4,
+    "solved": false,
+    "tried": {
+     "E": 93,
+     "F": 279,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 5,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:self_compose",
+   "witness_esize": 15,
+   "witness_promoted": "(map (lam x (f0 (f0 x))) xs)",
+   "world": "W483b8c31"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.375,
+   "family_id": "W483b8c31-F045-R3",
+   "fused_key": "R3|MAP(if p f)|f0+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 361926,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (if (q2 x) (q0 x) x)) xs)",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 386837,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.3,
+    "solved": false,
+    "tried": {
+     "E": 122,
+     "F": 122,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:guard_p",
+   "witness_esize": 14,
+   "witness_promoted": "(map (lam x (if (p0 x) (f0 x) x)) xs)",
+   "world": "W483b8c31"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W483b8c31-F046-R3",
+   "fused_key": "R3|MAP(f) o FILTER(p)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 27949,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q1 x)) (filter (lam x (q2 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 39197,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:map_of_filter",
+   "witness_esize": 15,
+   "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))",
+   "world": "W483b8c31"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W0321d83c-F024-R2",
+   "fused_key": "R2|s:extra_struct|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 539443,
+    "crn_within_B_small": false,
+    "found": "(foldl (lam a (lam b (s1 a b))) 1 (rev xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 351982,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.7,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:extra_struct",
+   "witness_esize": 11,
+   "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 1 (rev xs))",
+   "world": "W0321d83c"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.075,
+   "family_id": "W0321d83c-F026-R2",
+   "fused_key": "R2|f:extra_struct|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 120223,
+    "crn_within_B_small": false,
+    "found": "(max (take 3 (map (lam x (f1 x)) xs)))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 351982,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.5,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_struct+red",
+   "witness_esize": 12,
+   "witness_promoted": "(max (take 3 (map (lam x (f1 x)) xs)))",
+   "world": "W0321d83c"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.25,
+   "family_id": "W0321d83c-F040-R3",
+   "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 22524,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q0 x)) (filter (lam x (q1 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 31773,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:map_of_filter",
+   "witness_esize": 13,
+   "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))",
+   "world": "W0321d83c"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.375,
+   "family_id": "W3a22e2ee-F024-R2",
+   "fused_key": "R2|f:extra_f|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 4796,
+    "crn_within_B_small": true,
+    "found": "(neg (min (map (lam x (f0 x)) xs)))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 27503,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.5,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.375,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_f+red",
+   "witness_esize": 11,
+   "witness_promoted": "(max (map (lam x (neg x)) (map (lam x (f0 x)) xs)))",
+   "world": "W3a22e2ee"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.475,
+   "family_id": "W3a22e2ee-F025-R2",
+   "fused_key": "R2|f:self_compose|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 10282,
+    "crn_within_B_small": true,
+    "found": "(max (map (lam x (f1 (f1 x))) xs))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 27503,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 12.9,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 6,
+   "regression_selected_best_test_acc": 0.175,
+   "rung": "R2",
+   "skeleton": "R2:f:self_compose+red",
+   "witness_esize": 22,
+   "witness_promoted": "(max (map (lam x (f1 (f1 x))) xs))",
+   "world": "W3a22e2ee"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W3a22e2ee-F028-R2",
+   "fused_key": "R2|s:base_fold|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 111233,
+    "crn_within_B_small": false,
+    "found": "(sum (scanl (lam a (lam b (s1 a b))) 1 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 328632,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 11.7,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_fold",
+   "witness_esize": 15,
+   "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (scanl (lam a (lam b (s1 a b))) 1 xs))",
+   "world": "W3a22e2ee"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 8,
+    "walk_charge": 1000000
+   },
+   "capture": 0.7,
+   "family_id": "W3a22e2ee-F031-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 107783,
+    "crn_within_B_small": false,
+    "found": "(sum (map (lam x 2) (filter (lam x (p0 x)) xs)))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 328632,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.7,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 12,
+   "witness_promoted": "(mul 2 (len (filter (lam x (p0 x)) xs)))",
+   "world": "W3a22e2ee"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.275,
+   "family_id": "W8f6a223e-F017-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 305530,
+    "crn_within_B_small": false,
+    "found": "(pow (len (filter (lam x (p0 x)) xs)) 2)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 269436,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.9,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 19,
+   "witness_promoted": "(mul (len (filter (lam x (p0 x)) xs)) (len (filter (lam x (p0 x)) xs)))",
+   "world": "W8f6a223e"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.35,
+   "family_id": "W8f6a223e-F020-R2",
+   "fused_key": "R2|f:self_compose|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 390,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (f1 (f1 x))) xs)",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 617,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.3,
+    "solved": false,
+    "tried": {
+     "E": 122,
+     "F": 122,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 5,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:self_compose",
+   "witness_esize": 27,
+   "witness_promoted": "(map (lam x (f1 (f1 x))) xs)",
+   "world": "W8f6a223e"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.4,
+   "family_id": "W480ffd54-F023-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 382349,
+    "crn_within_B_small": false,
+    "found": "(pow (len (filter (lam x (p0 x)) xs)) 2)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 324454,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.075,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 19,
+   "witness_promoted": "(mul (len (filter (lam x (p0 x)) xs)) (len (filter (lam x (p0 x)) xs)))",
+   "world": "W480ffd54"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W480ffd54-F024-R2",
+   "fused_key": "R2|s:base_fold|s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 508498,
+    "crn_within_B_small": false,
+    "found": "(neg (sum (scanl (lam a (lam b (s0 a b))) 0 xs)))",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 3371705,
+    "order_free_within_budget": false,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 8.4,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:base_fold",
+   "witness_esize": 15,
+   "witness_promoted": "(foldl (lam a (lam b (sub a b))) 0 (scanl (lam a (lam b (s0 a b))) 0 xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.125,
+   "family_id": "W480ffd54-F026-R2",
+   "fused_key": "R2|f:base_fold|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 1250,
+    "crn_within_B_small": true,
+    "found": "(sum (map (lam x (f0 x)) xs))",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 3375,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.075,
+   "rung": "R2",
+   "skeleton": "R2:f:base_fold",
+   "witness_esize": 14,
+   "witness_promoted": "(foldl (lam a (lam b (add a b))) 0 (map (lam x (f0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W480ffd54-F028-R2",
+   "fused_key": "R2|p:base_fold|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 207709,
+    "crn_within_B_small": false,
+    "found": "(add 1 (sum (filter (lam x (p0 x)) xs)))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 324454,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:base_fold",
+   "witness_esize": 13,
+   "witness_promoted": "(foldl (lam a (lam b (add b a))) 1 (filter (lam x (p0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.35,
+   "family_id": "W480ffd54-F031-R2",
+   "fused_key": "R2|f:extra_struct|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 2186,
+    "crn_within_B_small": true,
+    "found": "(drop 3 (map (lam x (f0 x)) xs))",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 3977,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 6,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_struct",
+   "witness_esize": 11,
+   "witness_promoted": "(drop 3 (map (lam x (f0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.1,
+   "family_id": "W480ffd54-F039-R3",
+   "fused_key": "R3|FILTER(p) o MAP(f)|f0+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 34269,
+    "crn_within_B_small": true,
+    "found": "(filter (lam x (q2 x)) (map (lam x (q0 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 36511,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:filter_of_map",
+   "witness_esize": 16,
+   "witness_promoted": "(filter (lam x (p0 x)) (map (lam x (f0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.05,
+   "family_id": "W480ffd54-F046-R3",
+   "fused_key": "R3|MAP(f) o FILTER(p)|f0+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 25351,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q0 x)) (filter (lam x (q2 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 36511,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fp:map_of_filter",
+   "witness_esize": 16,
+   "witness_promoted": "(map (lam x (f0 x)) (filter (lam x (p0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "acquired_used": [
+    "f1",
+    "p0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W480ffd54-F055-R4",
+   "fused_key": "R4|MAP(f) o FILTER(p)|f1+p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 25433,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (q1 x)) (filter (lam x (q2 x)) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 36511,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.0,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fp",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R4",
+   "skeleton": "R4:fp:map_of_filter",
+   "witness_esize": 16,
+   "witness_promoted": "(map (lam x (f1 x)) (filter (lam x (p0 x)) xs))",
+   "world": "W480ffd54"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.675,
+   "family_id": "W38fc86d7-F025-R2",
+   "fused_key": "R2|f:extra_f|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 5,
+    "crn_rank": 4026,
+    "crn_within_B_small": true,
+    "found": "(map (lam x (add 1 (f1 x))) xs)",
+    "found_esize": 6,
+    "order_free_estimated": true,
+    "order_free_rank": 4362,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.3,
+    "solved": false,
+    "tried": {
+     "E": 122,
+     "F": 122,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_f",
+   "witness_esize": 13,
+   "witness_promoted": "(map (lam x (add x 1)) (map (lam x (f1 x)) xs))",
+   "world": "W38fc86d7"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.45,
+   "family_id": "W38fc86d7-F029-R2",
+   "fused_key": "R2|f:extra_p|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 96447,
+    "crn_within_B_small": true,
+    "found": "(len (filter (lam x (eq 1 (f0 x))) xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 346052,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.2,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 10,
+   "regression_selected_best_test_acc": 0.225,
+   "rung": "R2",
+   "skeleton": "R2:f:extra_p+red",
+   "witness_esize": 14,
+   "witness_promoted": "(sum (filter (lam x (not (gt x 1))) (map (lam x (f0 x)) xs)))",
+   "world": "W38fc86d7"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.15,
+   "family_id": "W38fc86d7-F031-R2",
+   "fused_key": "R2|p:base_post|p0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 229691,
+    "crn_within_B_small": false,
+    "found": "(add 3 (sum (filter (lam x (p0 x)) xs)))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 346052,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.2,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:p:base_post",
+   "witness_esize": 11,
+   "witness_promoted": "(add (sum (filter (lam x (p0 x)) xs)) 3)",
+   "world": "W38fc86d7"
+  },
+  {
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.35,
+   "family_id": "W38fc86d7-F035-R2",
+   "fused_key": "R2|f:guard|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 7,
+    "crn_rank": 379890,
+    "crn_within_B_small": false,
+    "found": "(map (lam x (max (scanl (lam a (lam b x)) (f1 x) xs))) xs)",
+    "found_esize": 8,
+    "order_free_estimated": true,
+    "order_free_rank": 510665,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.4,
+    "solved": false,
+    "tried": {
+     "E": 122,
+     "F": 122,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:guard",
+   "witness_esize": 14,
+   "witness_promoted": "(map (lam x (if (lt x 3) (f1 x) x)) xs)",
+   "world": "W38fc86d7"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.1,
+   "family_id": "W6eb945cc-F023-R2",
+   "fused_key": "R2|s:base_post|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 90993,
+    "crn_within_B_small": true,
+    "found": "(neg (foldl (lam a (lam b (s1 a b))) 1 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 341960,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.0,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 8,
+   "regression_selected_best_test_acc": 0.05,
+   "rung": "R2",
+   "skeleton": "R2:s:base_post",
+   "witness_esize": 12,
+   "witness_promoted": "(sub 0 (foldl (lam a (lam b (s1 a b))) 1 xs))",
+   "world": "W6eb945cc"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.0,
+   "family_id": "W6eb945cc-F024-R2",
+   "fused_key": "R2|f:base_post|f0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 314813,
+    "crn_within_B_small": false,
+    "found": "(div (sum (map (lam x (f0 x)) xs)) 3)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 341960,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 8.7,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:f:base_post",
+   "witness_esize": 10,
+   "witness_promoted": "(div (sum (map (lam x (f0 x)) xs)) 3)",
+   "world": "W6eb945cc"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.5,
+   "family_id": "W6eb945cc-F025-R2",
+   "fused_key": "R2|f:base_post|f1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 4,
+    "crn_rank": 3489,
+    "crn_within_B_small": true,
+    "found": "(gcd 0 (f1 (last xs)))",
+    "found_esize": 5,
+    "order_free_estimated": true,
+    "order_free_rank": 3549,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.5,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 11,
+   "regression_selected_best_test_acc": 0.475,
+   "rung": "R2",
+   "skeleton": "R2:f:base_post",
+   "witness_esize": 21,
+   "witness_promoted": "(gcd (last (map (lam x (f1 x)) xs)) (last (map (lam x (f1 x)) xs)))",
+   "world": "W6eb945cc"
+  },
+  {
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.125,
+   "family_id": "W6eb945cc-F028-R2",
+   "fused_key": "R2|s:extra_struct|s1",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 517885,
+    "crn_within_B_small": false,
+    "found": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 341960,
+    "order_free_within_budget": true,
+    "route": "sealed-oracle KP"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.2,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": null,
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R2",
+   "skeleton": "R2:s:extra_struct",
+   "witness_esize": 11,
+   "witness_promoted": "(foldl (lam a (lam b (s1 a b))) 0 (rev xs))",
+   "world": "W6eb945cc"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "s0"
+   ],
+   "base1e6": {
+    "complete_size": 8,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.025,
+   "family_id": "W6eb945cc-F033-R3",
+   "fused_key": "R3|ACC(s)o MAP(f)|f0+s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 53685,
+    "crn_within_B_small": true,
+    "found": "(scanl (lam a (lam b (q2 a (q0 b)))) 1 xs)",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 37162,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 0.6,
+    "solved": false,
+    "tried": {
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fs",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 9,
+   "regression_selected_best_test_acc": 0.0,
+   "rung": "R3",
+   "skeleton": "R3:fs:scan_of_map",
+   "witness_esize": 14,
+   "witness_promoted": "(scanl (lam a (lam b (s0 a b))) 1 (map (lam x (f0 x)) xs))",
+   "world": "W6eb945cc"
+  },
+  {
+   "acquired_used": [
+    "f0",
+    "s0"
+   ],
+   "base1e6": {
+    "complete_size": 7,
+    "n_dev_consistent": 0,
+    "walk_charge": 1000000
+   },
+   "capture": 0.45,
+   "family_id": "W6eb945cc-F047-R3",
+   "fused_key": "R3|f o ACC(s)|f0+s0",
+   "headroom": {
+    "B_small": 100000,
+    "budget": 1000000,
+    "complete_size": 6,
+    "crn_rank": 118789,
+    "crn_within_B_small": false,
+    "found": "(q0 (foldl (lam a (lam b (q2 a b))) 0 xs))",
+    "found_esize": 7,
+    "order_free_estimated": true,
+    "order_free_rank": 205046,
+    "order_free_within_budget": true,
+    "route": "acquired-library chain (d)"
+   },
+   "hindsight_regression": {
+    "cpu_s": 9.1,
+    "solved": false,
+    "tried": {
+     "P": 1032,
+     "S": 20,
+     "W": 120
+    }
+   },
+   "kind_pair": "fs",
+   "kp_capacity": "SOLVED",
+   "promoted_esize": 7,
+   "regression_selected_best_test_acc": 0.15,
+   "rung": "R3",
+   "skeleton": "R3:fs:post_fold",
+   "witness_esize": 19,
+   "witness_promoted": "(f0 (foldl (lam a (lam b (s0 a b))) 0 xs))",
+   "world": "W6eb945cc"
+  }
+ ],
+ "config_sha": "c199f0ae8845f60fc16303840c25f68df640572bb41ba382dd2c96308da66ddf",
+ "pooled": {
+  "E1": "WORLD_DEMAND_NOT_QUALIFIED (gate PASS 5/12 worlds; 2 mechanism-kind pairings among admitted R3/R4)",
+  "E1_label": "WORLD_DEMAND_NOT_QUALIFIED",
+  "admitted_by_rung": {
+   "R2": 38,
+   "R3": 8,
+   "R4": 7
+  },
+  "gate_pass_worlds": [
+   "W2bdef02f",
+   "W483b8c31",
+   "W0321d83c",
+   "W480ffd54",
+   "W6eb945cc"
+  ],
+  "hindsight_regression_solves_admitted": 0,
+  "hindsight_regression_timeouts": 0,
+  "n_kind_pairings": 2,
+  "r3_admitted": 8,
+  "r3r4_kind_pairings": [
+   "fp",
+   "fs"
+  ],
+  "r5_admitted": 0,
+  "rejection_histogram": {
+   "R0": {
+    "DUPLICATE": 2,
+    "TRIVIAL_BY_LIBRARY": 11,
+    "TRIVIAL_BY_REACTIVE": 45,
+    "TRIVIAL_BY_REGRESSION": 14,
+    "TRIVIAL_BY_SMALL_SEARCH": 2
+   },
+   "R1": {
+    "DEGENERATE": 8,
+    "DUPLICATE": 36,
+    "NEAR_TRIVIAL": 5,
+    "QUALIFIED": 93,
+    "TRIVIAL_BY_LIBRARY": 1,
+    "TRIVIAL_BY_REACTIVE": 8,
+    "TRIVIAL_BY_SMALL_SEARCH": 11
+   },
+   "R2": {
+    "DEGENERATE": 19,
+    "DUPLICATE": 7,
+    "FAIL_PRONE": 4,
+    "KNOWN_POSITIVE_FAIL:DEV_UNDERDETERMINED": 3,
+    "KNOWN_POSITIVE_FAIL:HORIZON": 42,
+    "MOTIF_CAP": 4,
+    "NEAR_TRIVIAL": 8,
+    "QUALIFIED": 38,
+    "SYNTHETIC_DEPTH": 4,
+    "TRIVIAL_BY_BASE_1E6": 4,
+    "TRIVIAL_BY_LIBRARY": 2,
+    "TRIVIAL_BY_REACTIVE": 4,
+    "TRIVIAL_BY_REGRESSION": 11
+   },
+   "R3": {
+    "CHAIN_C_FAIL:f0": 8,
+    "CHAIN_C_FAIL:f0+f1": 1,
+    "CHAIN_C_FAIL:f0+s0": 1,
+    "CHAIN_C_FAIL:f0+s1": 3,
+    "CHAIN_C_FAIL:f1": 21,
+    "CHAIN_C_FAIL:f1+s0": 3,
+    "CHAIN_C_FAIL:f1+s1": 13,
+    "CHAIN_C_FAIL:p0": 1,
+    "CHAIN_C_FAIL:p0+s1": 2,
+    "CHAIN_C_FAIL:s0": 28,
+    "CHAIN_C_FAIL:s0+s1": 5,
+    "CHAIN_C_FAIL:s1": 26,
+    "CHAIN_D_FAIL:HORIZON": 7,
+    "CHAIN_D_FAIL:NOT_FOUND": 2,
+    "CHAIN_D_FAIL:TRIBUNAL": 1,
+    "DEGENERATE": 6,
+    "DUPLICATE": 17,
+    "FAIL_PRONE": 11,
+    "NEAR_TRIVIAL": 4,
+    "QUALIFIED": 8,
+    "SYNTHETIC_DEPTH": 1,
+    "TRIVIAL_BY_BASE_1E6": 2,
+    "TRIVIAL_BY_LOOKUP": 1,
+    "TRIVIAL_BY_REGRESSION": 6
+   },
+   "R4": {
+    "CHAIN_C_FAIL:f0": 9,
+    "CHAIN_C_FAIL:f1": 10,
+    "CHAIN_C_FAIL:f1+p0": 4,
+    "CHAIN_C_FAIL:f1+s0": 2,
+    "CHAIN_C_FAIL:f1+s1": 4,
+    "CHAIN_C_FAIL:p0": 2,
+    "CHAIN_C_FAIL:s0": 5,
+    "CHAIN_C_FAIL:s1": 16,
+    "CHAIN_D_FAIL:HORIZON": 3,
+    "DEGENERATE": 2,
+    "DUPLICATE": 4,
+    "FAIL_PRONE": 16,
+    "QUALIFIED": 7,
+    "SYNTHETIC_DEPTH": 4,
+    "TRIVIAL_BY_LIBRARY": 1,
+    "TRIVIAL_BY_REACTIVE": 2,
+    "TRIVIAL_BY_REGRESSION": 3
+   },
+   "R5": {
+    "CHAIN_C_FAIL:f0": 10,
+    "CHAIN_C_FAIL:f0+s0": 1,
+    "CHAIN_C_FAIL:f0+s1": 2,
+    "CHAIN_C_FAIL:f1": 18,
+    "CHAIN_C_FAIL:f1+s0": 2,
+    "CHAIN_C_FAIL:f1+s1": 13,
+    "CHAIN_C_FAIL:p0": 2,
+    "CHAIN_C_FAIL:s0": 15,
+    "CHAIN_C_FAIL:s0+s1": 3,
+    "CHAIN_C_FAIL:s1": 12,
+    "CHAIN_D_FAIL:HORIZON": 8,
+    "DEGENERATE": 13,
+    "DUPLICATE": 13,
+    "FAIL_PRONE": 1,
+    "NEAR_TRIVIAL": 2,
+    "SYNTHETIC_DEPTH": 2,
+    "TRIVIAL_BY_BASE_1E6": 1,
+    "TRIVIAL_BY_REACTIVE": 2,
+    "TRIVIAL_BY_REGRESSION": 3
+   }
+  },
+  "worlds": 12,
+  "worlds_passing_gate": 5
+ },
+ "qual_config_sha": "22d2c38767a22e3a4ceb34c5f8424be8363cafe18d027c911016afcf97dee089",
+ "regression_bank": "439e168c150d0d7f09d647e6b23c10f015f1c33e5370d879d25ade179b432745",
+ "worlds": {
+  "W0321d83c": {
+   "admitted_by_rung": {
+    "R2": 2,
+    "R3": 1
+   },
+   "commitment_index": 6,
+   "gate": "PASS",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "0321d83c851ec246e31f08539631f4e4fcb69575ed0c36036331689f604cbdcb"
+  },
+  "W09efdf93": {
+   "admitted_by_rung": {
+    "R2": 3
+   },
+   "commitment_index": 2,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "09efdf93d0bdcac5d37fc6222ad5eb4cb697e15a85c4f488fa87c361e1e64578"
+  },
+  "W2bdef02f": {
+   "admitted_by_rung": {
+    "R2": 5,
+    "R3": 1,
+    "R4": 2
+   },
+   "commitment_index": 1,
+   "gate": "PASS",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "2bdef02f3d00793f4dd2bf58d1590fc1996c17bc96fcc04d52b9ae86f8b13b02"
+  },
+  "W38fc86d7": {
+   "admitted_by_rung": {
+    "R2": 4
+   },
+   "commitment_index": 10,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "38fc86d7c239fbcb94b8401c5e1adecbf90373849ab1b0733a0e4b376cd2fb71"
+  },
+  "W3a22e2ee": {
+   "admitted_by_rung": {
+    "R2": 4
+   },
+   "commitment_index": 7,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "3a22e2ee2928080fca44d198d75878cad4c7ca21a60c23d6a23f0df42db19901"
+  },
+  "W480ffd54": {
+   "admitted_by_rung": {
+    "R2": 5,
+    "R3": 2,
+    "R4": 1
+   },
+   "commitment_index": 9,
+   "gate": "PASS",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "480ffd54f9a8672a22dc123b1d0c90305d9075fac61f224b3b527f7fe393d307"
+  },
+  "W483b8c31": {
+   "admitted_by_rung": {
+    "R2": 3,
+    "R3": 2
+   },
+   "commitment_index": 5,
+   "gate": "PASS",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "483b8c31d4753ba4f00dea21ccd1cc52cf919c226daec492aa8bcb35f23f378a"
+  },
+  "W6eb945cc": {
+   "admitted_by_rung": {
+    "R2": 4,
+    "R3": 2
+   },
+   "commitment_index": 11,
+   "gate": "PASS",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "6eb945cc1b436108ded2ed66943d9ef60153f924d40140267eb927b24dcd73c6"
+  },
+  "W8f6a223e": {
+   "admitted_by_rung": {
+    "R2": 2
+   },
+   "commitment_index": 8,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [
+    "f0"
+   ],
+   "world_seed_sha256": "8f6a223e3c67549299f1d3afcdb1ae473e881ae91a30ed1e2dd8ce77f512ea07"
+  },
+  "Wb49b6a5f": {
+   "admitted_by_rung": {
+    "R2": 2,
+    "R4": 2
+   },
+   "commitment_index": 4,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "b49b6a5f79852e442a146493b7e31763494fabc35b22af9d4399babaa0182c6f"
+  },
+  "Wc025415a": {
+   "admitted_by_rung": {
+    "R2": 1,
+    "R4": 2
+   },
+   "commitment_index": 0,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "c025415a636480bdb46504809e61a9e1f97f10987eca8ef9428878f019a0e2fe"
+  },
+  "Wd1490fbb": {
+   "admitted_by_rung": {
+    "R2": 3
+   },
+   "commitment_index": 3,
+   "gate": "FAIL",
+   "mechanisms": [
+    "f0",
+    "f1",
+    "p0",
+    "s0",
+    "s1"
+   ],
+   "unfilled": [],
+   "world_seed_sha256": "d1490fbb9272cff7da4ca1b3c5b716a02329261de6aeba58576f93d845c71ed9"
+  }
+ }
+}

@@ -1,0 +1,331 @@
+{
+ "schema": "aether.reach01.r2.express.v1",
+ "semantics": {
+  "REPLACE": "aeth01.v1",
+  "XOR": "aeth01.op_xor",
+  "ADD": "aeth01.op_add",
+  "AND": "aeth01.op_and",
+  "SPLICE": "aeth01.op_splice",
+  "ROTX": "aeth01.op_rotx"
+ },
+ "inputs": [
+  15,
+  51,
+  85,
+  170
+ ],
+ "results": {
+  "REPLACE": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": false,
+    "dep_s": false,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": false,
+    "dep_a": false,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 1,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 2,
+    "shuffles": 3,
+    "pass": false
+   },
+   "C5": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": false
+   },
+   "env_B_balanced_C3_same_table": true
+  },
+  "XOR": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": true,
+    "dep_s": true,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": true,
+    "dep_a": true,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3,
+    "pass": true
+   },
+   "C5": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": true
+   },
+   "env_B_balanced_C3_same_table": true
+  },
+  "ADD": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": true,
+    "dep_s": true,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": true,
+    "dep_a": true,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3,
+    "pass": true
+   },
+   "C5": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": true
+   },
+   "env_B_balanced_C3_same_table": true
+  },
+  "AND": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": true,
+    "dep_s": true,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": true,
+    "dep_a": true,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3,
+    "pass": false
+   },
+   "C5": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": false
+   },
+   "env_B_balanced_C3_same_table": true
+  },
+  "SPLICE": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": true,
+    "dep_s": true,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": false,
+    "dep_a": false,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 1,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 2,
+    "shuffles": 3,
+    "pass": false
+   },
+   "C5": {
+    "dep_all": false,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": false
+   },
+   "env_B_balanced_C3_same_table": true
+  },
+  "ROTX": {
+   "C0": {
+    "pass": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C1": {
+    "pass": true,
+    "dep_s": true,
+    "dep_a": true
+   },
+   "C2": {
+    "pass": true,
+    "dep_a": true,
+    "ablate_activation_kills": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C3": {
+    "pass": true,
+    "dep_a": true,
+    "dep_b": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3
+   },
+   "C4": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "both_removed_kills_ab": true,
+    "either_part_alone_lacks_capability": true,
+    "translation_invariant": true,
+    "surroundings_invariant": true,
+    "shuffles_breaking": 3,
+    "shuffles": 3,
+    "pass": true
+   },
+   "C5": {
+    "dep_all": true,
+    "P1_removed_kills_ab": true,
+    "P2_removed_kills_ab": true,
+    "P3_removed_kills_abc": true,
+    "pass": true
+   },
+   "env_B_balanced_C3_same_table": true
+  }
+ }
+}

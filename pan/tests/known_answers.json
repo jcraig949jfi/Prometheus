@@ -1,0 +1,50 @@
+{
+  "_prereg": [
+    "PAN-04/PAN-05 retrieval controls, frozen 2026-10-09 BEFORE any search over the catalog was run.",
+    "Catalog SHA: d6b2eeeca. A query passes at k if ANY path in 'answers' appears in the top k artifacts.",
+    "'lexical' queries share key words with their answer; 'paraphrase' queries deliberately do not.",
+    "Thresholds were chosen from downstream need (a seat finds the right file in the first 10 results",
+    "about 4 times in 5), not from any observed result:",
+    "  POSITIVE  hybrid recall@10 >= 0.80 over all queries; fts recall@10 >= 0.60 on lexical;",
+    "            vector recall@10 >= 0.60 on paraphrase.",
+    "  NEGATIVE  fts returns 0 rows for every nonsense query; vector top-1 score for every nonsense",
+    "            query is below the 25th percentile of the positive queries' vector top-1 scores.",
+    "  CHEAT     a planted chunk with a unique marker is rank 1 by fts for the marker and in the vector",
+    "            top 3 for a paraphrase of its content; after removal it is not returned at all.",
+    "  INDETERMINATE if fewer than 15 queries have an answer that is chunked in the catalog.",
+    "Results are written to roles/Pan/reports/ with every row; thresholds are not moved after the run."
+  ],
+  "queries": [
+    {"id": "Q01", "type": "lexical", "q": "work-conserving research loop portfolio READY BLOCKED", "answers": ["roles/base-role/RESPONSIBILITIES.md", "roles/base-role/NORTH_STAR.md"]},
+    {"id": "Q02", "type": "lexical", "q": "seat creation tool new_seat.py one minute", "answers": ["roles/base-role/seat_kit/README.md", "roles/template"]},
+    {"id": "Q03", "type": "lexical", "q": "master work order gate clearance immediate default", "answers": ["ops/work_orders/CURRENT.md"]},
+    {"id": "Q04", "type": "lexical", "q": "system_identifier environment WrongEnvironment identity guard", "answers": ["comms/identity.py", "comms/environments.json"]},
+    {"id": "Q05", "type": "lexical", "q": "pgvector install privileged host change question", "answers": ["roles/Pan/QUESTIONS.md"]},
+    {"id": "Q06", "type": "lexical", "q": "half-open connection keepalive tcp_user_timeout", "answers": ["evidence_wiki/ew/db.py"]},
+    {"id": "Q07", "type": "lexical", "q": "Atlas research-policy layer portfolio propositions primitives", "answers": ["roles/Atlas/RESPONSIBILITIES.md"]},
+    {"id": "Q08", "type": "lexical", "q": "Eos acquisition typing rule ANCHOR ACQUIRE RESOURCE REFUSED", "answers": ["roles/Eos/RESPONSIBILITIES.md"]},
+    {"id": "Q09", "type": "lexical", "q": "backlog schema at least 20 items evidence of done", "answers": ["roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"]},
+    {"id": "Q10", "type": "lexical", "q": "move SFE ledger to NVMe on M2", "answers": ["SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py"]},
+    {"id": "Q11", "type": "lexical", "q": "manifest sha256 LF-normalised bytes write verify", "answers": ["comms/manifest.py"]},
+    {"id": "Q12", "type": "lexical", "q": "registry of standing loops watchdogs dormancy threshold accountable seat", "answers": ["roles/base-role/MONITORS.md"]},
+    {"id": "P01", "type": "paraphrase", "q": "what should an agent do when it is stuck waiting for someone else's decision", "answers": ["roles/base-role/RESPONSIBILITIES.md", "roles/base-role/WORKING_CONTRACT.md"]},
+    {"id": "P02", "type": "paraphrase", "q": "the long-term mission: let reasoning machinery evolve on its own instead of being designed by people", "answers": ["roles/base-role/NORTH_STAR.md", "roles/base-role/RESPONSIBILITIES.md", "CHARTER_AND_CONTINUITY.md"]},
+    {"id": "P03", "type": "paraphrase", "q": "which machine learning provider accounts are wired up and how to call a model", "answers": ["prometheus_llm/registry.py", "prometheus_llm/README.md", "prometheus_llm/MIGRATION.md"]},
+    {"id": "P04", "type": "paraphrase", "q": "a bound on how many useless iterations a scheduled job may run before it stops itself", "answers": ["roles/Atalanta/reference/test_null_bound.py", "roles/base-role/RESPONSIBILITIES.md", "roles/base-role/MONITORS.md"]},
+    {"id": "P05", "type": "paraphrase", "q": "proving a database connection reached the intended server and not a copy", "answers": ["comms/identity.py", "comms/environments.json"]},
+    {"id": "P06", "type": "paraphrase", "q": "who is responsible for scanning outside papers and APIs and how they classify findings", "answers": ["roles/Eos/RESPONSIBILITIES.md", "agents/eos/README.md"]},
+    {"id": "P07", "type": "paraphrase", "q": "relocating the engine's database file off the slow shingled hard drive", "answers": ["SerendipityFoundry/SerendipityFoundryEngine/deploy/move_ledger_to_nvme_m2.py", "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/apply.json", "SerendipityFoundry/SerendipityFoundryEngine/deploy/LEDGER_TO_NVME_2026-09-17/rehearse.json"]},
+    {"id": "P08", "type": "paraphrase", "q": "the format every seat uses to list its upcoming work with proof of completion", "answers": ["roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md"]},
+    {"id": "P09", "type": "paraphrase", "q": "the new data seat's open asks for the human, each with a fallback", "answers": ["roles/Pan/QUESTIONS.md"]},
+    {"id": "P10", "type": "paraphrase", "q": "hashing committed prompt files so line-ending differences cannot change the digest", "answers": ["comms/manifest.py", "roles/base-role/RESPONSIBILITIES.md"]}
+  ],
+  "nonsense": [
+    "zxqvb blorptangle frumious wombatic quazzle lattice",
+    "purple elephant tax refund recipe for banana bread in Paris"
+  ],
+  "plant": {
+    "marker": "panplantmarker7f3k9q",
+    "body": "panplantmarker7f3k9q. The heron counts the river stones each dawn and records how many were moved by the night current, so the colony can tell a flood from an ordinary tide.",
+    "paraphrase": "a bird that tallies pebbles in a stream every morning to distinguish floods from normal tides"
+  }
+}

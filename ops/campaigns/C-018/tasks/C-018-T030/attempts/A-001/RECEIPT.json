@@ -1,0 +1,114 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-018-T030",
+ "campaign_id": "C-018",
+ "attempt_id": "A-001",
+ "created_at_utc": "2026-10-12T11:01:00Z",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-6f7f55db",
+ "host": "harry1",
+ "branch": "argus/c018-t030",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c018-t030",
+ "start_sha": "3f7408d62f773b3d47358180907cbc271b0c6719",
+ "end_sha": "485dc0315af3b5a0934871f0ee5e38d6274fec7e",
+ "dirty": false,
+ "commits": {
+  "claim_main": "2dd047235",
+  "red_branch": "b19935fe0",
+  "adapter_green_and_part1_criteria_branch": "19ff2ab0d",
+  "part1_v1_not_qualified_branch": "e0cfb7ccc",
+  "content_redesign_v2_branch": "678865440",
+  "part1_v2_qualified_audit_red_rows_branch": "f2c336cf5",
+  "preregistration_and_freeze_branch": "f1e65a8ff",
+  "onboarding_state_branch": "485dc0315"
+ },
+ "files_changed": [
+  "rso/aether/adapter.py (recorder over Aether pinned code: prop01_run.py:78 law_step, :119 run_unit, prop01_tree.py:12 choose_cut, r1_test4.py:108 choose_origins, :131 features, :200 plant; clamp semantics prop01_run.py:220-223; non-ancestor rule; fixture / native / graded units)",
+  "rso/aether/evaluate.py (re-derives t0, light cone, ancestry classes, tree cross-check, binding, content via r1_reduce.py:35 decode / :63 stats, reach band, disposition)",
+  "rso/aether/confirm.py (DESIGN manifest, rso/completeness verify wrapper, RELEASE.json-gated runner, analyse: verify first)",
+  "rso/aether/{qualify.py,controls.py,freeze.py}",
+  "rso/aether/{PREREGISTRATION.md,FREEZE.md,FROZEN.json,ONBOARDING.md,manifests/confirm_design.manifest.json}",
+  "rso/aether/qual/{QUALIFICATION.json,QUALIFICATION_v1_48origins.json,FALSIFIABILITY_AUDIT.json,DEV_CHECK.json,REPLAY_DEV.txt,records/ (8.4 MB dev/qualification records)}",
+  "rso/aether/tests/test_adapter.py (33 tests), rso/aether/red/{RED_OUTPUT.txt,run_red.py,red_rows.jsonl}",
+  "roles/Argus/{WORK_STATE.json,journal/2026-10-12.md,comms/2026-10-12_*}",
+  "ops/campaigns/C-018/tasks/C-018-T030/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "demand gate re-run (python -m rso.aether.demand.demand_gate <scratch>): identical to rso/aether/demand/demand_result.json apart from wall_seconds; 4.1 min",
+  "Part I (instrument qualification, dev/qualification data only; criteria committed 19ff2ab0d before any record): ancestry 32/32 as expected incl. near-misses A_wrongB NOT_INTERVENTIONAL, A_misN NONSPECIFIC, A_vacN CONTROL_VACUOUS; locality A/B/G 4/4, dev native 6/6, TELEPORT flagged 4/4; content A,E TRANSMITTED, B,N ABSENT, G to extent 3, null 0.0104",
+  "graded content (required limit (i)): v1 12 origins x 4 seeds FAILED (excess 0.008 at true 0.0525; QUALIFICATION_v1_48origins.json); v2 36 x 20 (matched to RX 48 x 16): 0.002 / 0.019 / 0.049 / 0.101 / 0.218 at p 0 / .03 / .06 / .12 / .25 vs 7p/8; null 0.0011; QUALIFIED with criteria unchanged",
+  "finding: T020's C3 non-ancestor site never diverges, so its clamp is the identity and cannot fail; N must now be a divergent attributed non-ancestor; vacuous N -> CONTROL_VACUOUS (never a pass)",
+  "finding: 3/4 dev RX and 2/2 dev V1 units NO_CUT under Aether's choose_cut (RX k=3: 21-generation tree rooted through a RULE-type child); incidence is a reported quantity",
+  "falsifiability (rso/qualify): 6 audited rows ok on dev data (C1 light cone [sanity guard only], C2/C3 ancestry, C3 alone, C4/C10 t0, C5/C7/C8 content, native tree cross-check); trusts_derived False; table in PREREGISTRATION s4",
+  "completeness (rso/completeness): sealed DESIGN manifest, digests PENDING, sha 0e9519bdc3c27214c6a564cf217422afebbe7df999c41856e520b44945545ea6 pinned in FROZEN.json; verify() runs before any verdict; missing / duplicate / altered / seed / source / smaller-design cases tested",
+  "trust boundary stated (PREREGISTRATION s7): verdicts re-derived from arrays + Aether's tree; arrays bound by sha256, cross-checked site-for-site against Aether's attribution, replayed bit-exactly (dev RX k=0); ancestry needs native replay",
+  "sizing: RX 60.7-76.5 s/unit, V1 57.8-63.3; N = 48 RX + 16 V1, ~1.25 core-h; seeds rng/phys/impulse 0xC30A/0xC30B/0xC30E0000+k, confirmatory k = 0x2000+i, burned 0x1000..0x10FF",
+  "PREREGISTRATION v1.0.0 + FREEZE f1e65a8ff: FROZEN.json 32 files (9 pinned Aether files), Python 3.12; P4 UNSUPPORTED natively, not constructed; TEST-4 preserved"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -m unittest rso.aether.tests.test_adapter",
+   "result": "RED at b19935fe0 (ImportError); 33 tests OK at f1e65a8ff and 485dc0315"
+  },
+  {
+   "command": "python -m rso.aether.red.run_red rso/aether/red/red_rows.jsonl",
+   "result": "baseline GREEN; 21/21 single-line mutants of evaluate/confirm/adapter KILLED (one survivor in the first pass, min->max in the N rule, closed by a two-candidate test); sources restored and sha256-verified"
+  },
+  {
+   "command": "python -m rso.aether.qualify fixtures|content|graded|dev|verdict|devcheck",
+   "result": "QUALIFICATION.json qualified true (v2); DEV_CHECK end-to-end path runs"
+  },
+  {
+   "command": "python -m rso.aether.controls",
+   "result": "6 rows ok, trusts_derived False"
+  },
+  {
+   "command": "python -m rso.aether.freeze write; freeze check",
+   "result": "32 files; OK (also OK after commit)"
+  },
+  {
+   "command": "python -m rso.aether.confirm run RX.0 [--cleared-by not-a-release]",
+   "result": "REFUSED exit 2 (unit test); no RELEASE.json exists"
+  },
+  {
+   "command": "python -m unittest rso.completeness.tests.test_completeness rso.qualify.tests.test_falsifiable",
+   "result": "54 tests OK (shared components unchanged)"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "pre-implementation RED commit b19935fe0 (red/RED_OUTPUT.txt) + 21/21 behavioural mutant rows (red/red_rows.jsonl)"
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "INCIDENT (mine, ~10:52Z, before the preregistration or freeze was committed): exercising the run guard with `--cleared-by test` executed then-confirmatory RX k=0x1000..0x1003 (4 units). Seen: progress lines for 3 (B/N indices: 2 with a cut, 1 NO_CUT) and a file listing; NOT seen: any class, removal, reach, agreement or content value. Files deleted unread; block 0x1000..0x10FF burned; confirmatory range moved to 0x2000; the runner now needs a coordinator RELEASE.json naming the frozen design (test pins that a flag alone is refused). Decision rules were committed before (evaluate.py 19ff2ab0d / 678865440) and not changed after. PREREGISTRATION s5, ONBOARDING s5",
+  "graded criteria passed on the SECOND design (v1 failed); criteria unchanged, the native content design changed to Aether's multi-origin plant; both results committed",
+  "the decision margin 0.05 sits at the v2 detection threshold (true 0.0525 read as 0.049): a native 'without recoverable content' is bounded, not exclusionary, below ~0.10",
+  "P2 and P3 share worlds and radii, not origins: no per-site content claim",
+  "native NONSPECIFIC / NOT_INTERVENTIONAL exercised on fixtures and synthetic records only (dev native units were NO_CUT or INSUFFICIENT)",
+  "the run guard itself is not mutation-tested (a surviving guard mutant would execute confirmatory seeds)"
+ ],
+ "unresolved": [
+  "Pallas Q3 challenge of the frozen assay (directive s9), then at most one repair round; then coordinator RELEASE.json",
+  "the confirmatory run (six shards, ~1.25 core-h) and analysis: a later packet",
+  "registry rows (ONBOARDING s2): experiment-completeness design-manifest scope; control-falsifiability CONTROL_VACUOUS case; new candidate aether-ancestry-content-instrument (AUTHOR_TESTED) -- Palamedes's",
+  "SELECTION.md s4 C3 row says 'impossible by construction? no' -- the T020 site makes it vacuous; Cadmus/Palamedes to note",
+  "secondary B rule for RULE-rooted deep trees: not preregistered"
+ ],
+ "unblocks": [
+  "C-018-T040"
+ ],
+ "resources": {
+  "cpu_core_hours_estimate": 0.8,
+  "processes_max": 2,
+  "peak_working_set_mb": "< 1000 per process",
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ]
+ },
+ "cleanup": "scratch outside the repo under C:/Prometheus-worktrees/argus-scratch/c018t030/ (demand re-run, first dev unit, replay log, incident file listing); the 8 accidental confirmatory files deleted",
+ "notes": "Read-only on Aether/ and roles/Aether/ (pinned 383bb3584); nothing run on M2; no Aether seed or frozen result; 0 requests to Aether; 0 operator interventions. Python 3.12.10 on harry1. Headless; foreground only; <= 2 concurrent processes."
+}

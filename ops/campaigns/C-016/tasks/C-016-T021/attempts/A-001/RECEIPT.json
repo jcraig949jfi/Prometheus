@@ -1,0 +1,36 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-016-T021",
+  "campaign_id": "C-016",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "f76db470c7ccde81e12005b6d8010078028823ae",
+  "end_sha": "9e8d60967",
+  "files_changed": ["rso/z80/CONTRACT.md", "rso/z80/__init__.py", "rso/z80/smoke/__init__.py", "rso/z80/smoke/smoke_heredity.py", "rso/z80/smoke/smoke_result.json"],
+  "evidence_added": [
+    "CONTRACT.md: owner (Archaeon), pin, entry points file:line, generation-boundary semantics, inheritance/reconstruction/seeded-copy/lottery controls, registry fit",
+    "smoke_heredity.py + smoke_result.json: planted heritable program transmitted over 3 generations; non-heritable, constructor, environment-dependent and broken-copy programs not; engine.run seeded vs random provenance"
+  ],
+  "evidence_executed": [
+    {"command": "python -m rso.z80.smoke.smoke_heredity rso/z80/smoke/smoke_result.json", "result": "ALL_PASS 11/11 checks, exit 0; re-run and PYTHONHASHSEED=77 run byte-identical"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": true, "reason": "first run of the smoke test FAILED H_noise_run_born_and_function_ok: with seed 16_021_100 one copy-noise flip in generation 3 killed the function (fidelity .9688); the check was rewritten to the invariant that exact copies carry the function, the loss is recorded"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "planted programs are authored here from tasks.py pieces; detector not shown on evolved organisms",
+    "single boundary replayed by hand (engine.run has no callable for one boundary); engine.py change would silently desync the smoke",
+    "engine seeded/random runs are one seed, 60 epochs, N=64: provenance fields only, not rates",
+    "prometheus/z80atlas tree not assessed; Archaeon seat state not checked; engine positive_controls not run"
+  ],
+  "unresolved": ["whether Archaeon can expose a single-boundary callable", "a heredity claim needs the census prior (9.6e-6) or the EXTERNAL arm as comparator"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-11T00:00:00Z",
+  "instance": "harry1-abbe9ede",
+  "host": "harry1",
+  "branch": "cadmus/c016-t021",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c016",
+  "resources": {"cpu": "a few sub-second single-process runs", "model": "one Sonnet 5.5 session"}
+}

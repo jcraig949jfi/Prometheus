@@ -1,0 +1,97 @@
+"""Controls for the seeded-bug generator (PAN-37 part 2; no sandbox, no database).
+
+POSITIVE  every operator yields a parseable mutant that differs from the original exactly at its site
+NEGATIVE  a function with no applicable site yields no sites
+CHEAT     the mutant differs from the original on ONE line only (no reformatting tell), and the
+          answer key's line points at that line
+"""
+from pan.reviewcal import mutate, sites
+
+FN = '''def pick(xs, k=3):
+    """Return the first k items above zero."""
+    out = []
+    for x in xs:
+        if x > 0 and len(out) < k:
+            out.append(x + 0)
+    return out[:k]
+'''
+
+
+def changed_lines(a, b):
+    return [i + 1 for i, (x, y) in enumerate(zip(a.splitlines(), b.splitlines())) if x != y]
+
+
+def test_positive_every_operator_and_one_line_diff():
+    ss = sites(FN)
+    ops = {op for op, _ in ss}
+    assert ops >= {"cmp_flip", "bool_flip", "arith_flip", "off_by_one", "negate_if", "return_none"}
+    for op, idx in ss:
+        res = mutate(FN, op, idx)
+        assert res is not None, (op, idx)
+        mutant, line, orig, new = res
+        assert mutant != FN and orig != new
+        assert len(mutant.splitlines()) == len(FN.splitlines())
+        assert changed_lines(FN, mutant) == [line], (op, changed_lines(FN, mutant), line)
+
+
+def test_specific_mutations():
+    by = {}
+    for op, idx in sites(FN):
+        by.setdefault(op, mutate(FN, op, idx))
+    assert "x >= 0" in by["cmp_flip"][0] or "len(out) <= k" in by["cmp_flip"][0]
+    assert " or " in by["bool_flip"][0]
+    assert "x - 0" in by["arith_flip"][0]
+    assert "return None" in by["return_none"][0]
+    assert "if not (" in by["negate_if"][0]
+
+
+def test_negative_no_sites():
+    assert sites("def f(name):\n    print(name)\n") == []
+
+
+def test_scoring_rule():
+    from pan.reviewcal import score
+    key = [dict(item="RC-001", kind="mutant", line_in_function=5), dict(item="RC-002", kind="mutant", line_in_function=9),
+           dict(item="RC-003", kind="clean"), dict(item="RC-004", kind="clean")]
+    perfect = {"RC-001": {"bug": True, "line": 6}, "RC-002": {"bug": True, "line": 9}, "RC-003": {"bug": False},
+               "RC-004": {"bug": False}}
+    s = score(perfect, key)
+    assert s["hits"] == 2 and s["recall"] == 1.0 and s["false_alarms"] == 0
+    always = {k: {"bug": True, "line": 1} for k in ("RC-001", "RC-002", "RC-003", "RC-004")}
+    s = score(always, key)                         # flags everything, wrong lines: no hits, all false alarms
+    assert s["hits"] == 0 and s["false_alarms"] == 2 and s["false_alarm_rate"] == 1.0
+    assert score({}, key)["recall"] == 0.0        # silent reviewer
+    near_miss = dict(perfect, **{"RC-001": {"bug": True, "line": 8}})     # 3 lines off: not a hit
+    assert score(near_miss, key)["hits"] == 1
+
+
+def test_packets_hide_paths():
+    import json
+    from pan import reviewcal
+    try:
+        pk = reviewcal.packets()
+    except SystemExit:
+        return                                     # no set generated on this machine
+    items = json.loads(reviewcal.latest("ITEMS").read_text(encoding="utf-8"))
+    for (iid, prompt), it in zip(pk, items):
+        assert it["module"] not in prompt and it["task_id"] not in prompt
+
+
+def test_tell_line_and_site_density_read_only_the_code():
+    from pan import reviewcal
+    code = "def f(xs, k):\n    if not (k > 0):\n        return None\n    return xs[k - 1]\n"
+    assert reviewcal.tell_line(code) == 2
+    assert reviewcal.tell_line("def g(a):\n    return a + 1\n") is None
+    dense = "def h(a, b):\n    c = 1\n    d = 2\n    e = 3\n    f = 4\n    g = 5\n    h = 6\n    if a < b and a + 1 > 2:\n        return a - b\n    return 0\n"
+    assert reviewcal.heuristic_line(dense) in range(6, 11)
+    assert reviewcal.heuristic_line("def k():\n    pass\n") == 1
+
+
+def test_parse_finding_takes_the_first_object_with_a_bug_key():
+    from pan import reviewcal
+    assert reviewcal.parse_finding('Sure. {"note": 1} then {"bug": true, "line": 7, "scenario": "x"}') == dict(
+        bug=True, line=7, parse_error=False)
+    assert reviewcal.parse_finding('<think>{"bug": true, "line": 2}</think>{"bug": false, "line": null}') == dict(
+        bug=False, line=None, parse_error=False)
+    assert reviewcal.parse_finding('{"bug": "yes", "line": true}') == dict(bug=False, line=None, parse_error=False)
+    assert reviewcal.parse_finding("no json here")["parse_error"] is True

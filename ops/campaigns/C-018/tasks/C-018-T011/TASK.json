@@ -1,0 +1,99 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T011",
+  "campaign_id": "C-018",
+  "title": "Shared experiment-completeness contract + Z80 six-shard fixture (directive s2A)",
+  "objective": "A missing, duplicated, substituted or altered shard produces an explicit refusal / INCOMPLETE status, never a smaller experiment.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/completeness/"
+  ],
+  "reads": [
+    "rso/z80/",
+    "rso/registry/",
+    "rso/reach/run_d1.py (resume semantics)"
+  ],
+  "problem": "Build rso/completeness/ (shared, engine-agnostic): a frozen experiment MANIFEST format (expected shard identities; seed / partition assignments; arms; expected execution counts per arm; source + artifact sha256; an optional PREREGISTERED early-stopping rule) and a verifier `verify(manifest, presented_shards) -> COMPLETE | INCOMPLETE(missing) | REFUSED(duplicate / conflicting / substituted / altered / unexpected)` that an analyzer calls BEFORE reading a verdict. A preregistered early stop (declared in the manifest, with its trigger evidence) is distinguishable from unplanned missing evidence. Known-answer fixture: the committed C-017 six shards rso/z80/runs/CONFIRM.{0..5}-6.{jsonl.gz,meta.json} -- derive a manifest from rso/z80/PREREGISTRATION.md s6 + FROZEN.json + the committed metas WITHOUT editing any rso/z80/ file (C-017's frozen result must not change). Tests: the complete set verifies COMPLETE and, fed to the frozen rso.z80.analysis, reproduces CONFIRM.analysis.json exactly; remove one shard -> INCOMPLETE; duplicate one -> REFUSED; substitute a dev or re-run shard with a different rows sha -> REFUSED; alter one row / one meta field -> REFUSED; a shard from another seed partition -> REFUSED; an early stop declared in the manifest -> COMPLETE_EARLY_STOP only with its trigger. A wrapper `python -m rso.completeness.z80 <shards...>` = verify then run the frozen analyzer (a NEW analyzer version; the frozen one is untouched). Registry: propose an entry (stage AUTHOR_TESTED) in your notes; Palamedes owns rso/registry/.",
+  "non_goals": [
+    "No edit to rso/z80/ (frozen C-017)",
+    "No new service or DB schema",
+    "No paid compute"
+  ],
+  "evidence_required": [
+    "RED first",
+    "tests for every corruption kind on the Z80 fixture",
+    "complete set reproduces CONFIRM.analysis.json",
+    "README"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/completeness/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "READY"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Eupalamus[harry1-69b9c667]",
+      "at_utc": "2026-10-12T09:05:32Z",
+      "note": "claim; branch eupalamus-c018-t011 from 3f8cc0150"
+    },
+    {
+      "status": "RED",
+      "by": "Eupalamus[harry1-69b9c667]",
+      "at_utc": "2026-10-12T09:10:22Z",
+      "note": "tests committed first 28252717e"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Eupalamus[harry1-69b9c667]",
+      "at_utc": "2026-10-12T09:10:22Z",
+      "note": "verifier built 8e857e94b"
+    },
+    {
+      "status": "GREEN",
+      "by": "Eupalamus[harry1-69b9c667]",
+      "at_utc": "2026-10-12T09:10:22Z",
+      "note": "40 tests green"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Eupalamus[harry1-69b9c667]",
+      "at_utc": "2026-10-12T09:10:23Z",
+      "note": "receipt A-001; branch eupalamus-c018-t011"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:35:39Z",
+      "note": "merged eupalamus-c018-t011 (1f66219ab): no rso/z80 file changed; z80 freeze OK; 40 tests OK; wrapper: 6 shards COMPLETE + frozen verdict reproduced, 5 shards INCOMPLETE exit 3; integrator mutant (analyse ignores licenses_verdict) killed by 2 tests; registry entry experiment-completeness (AUTHOR_TESTED)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:35:39Z",
+      "note": "directive s16 item 2"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5"
+}

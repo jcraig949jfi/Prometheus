@@ -1,0 +1,50 @@
+{
+ "n": 600,
+ "voids": 0,
+ "K1": {
+  "runs": 300,
+  "competent_machines": 41,
+  "shared": 35,
+  "out_executed_in_child_copy": 1,
+  "budget_classes": {
+   "OTHER_SHARED": 18,
+   "BUDGET_COUPLED": 17,
+   "SEPARATED": 6
+  }
+ },
+ "E-P1": {
+  "shared": [
+   35,
+   41
+  ],
+  "wilson": [
+   0.7156,
+   0.9312
+  ],
+  "holds": true
+ },
+ "E-P2": {
+  "budget_coupled": [
+   17,
+   41
+  ],
+  "wilson": [
+   0.2776,
+   0.5663
+  ],
+  "holds": true
+ },
+ "K2": {
+  "runs": 300,
+  "repaired_machines": 15,
+  "classes": {
+   "OTHER": 6,
+   "SINGLE_LINEAGE_BAD": 8,
+   "SINGLE_LINEAGE_REP": 1
+  }
+ },
+ "E-P3": {
+  "modal": "SINGLE_LINEAGE_BAD",
+  "holds": true
+ }
+}

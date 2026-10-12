@@ -1,0 +1,133 @@
+{
+ "status": {
+  "test_parse_normalise_continuity": "PASS",
+  "test_promotion_semantics": "PASS",
+  "test_serialization_roundtrip": "PASS",
+  "test_transplant_fresh_process": "PASS",
+  "test_dependency_depth_bookkeeping": "PASS",
+  "test_fold_recognition_sound": "PASS",
+  "test_instantiate_and_derive_continuity": "PASS",
+  "test_conformance_fast_paths": "PASS",
+  "test_meter_exact": "PASS"
+ },
+ "results": {
+  "PARSE_NORMALISE_CONTINUITY": {
+   "sources": 10842,
+   "mismatches": 0,
+   "PASS": true
+  },
+  "PROMOTION_SEMANTICS": {
+   "registry": 31,
+   "depths": [
+    1,
+    2,
+    3
+   ],
+   "cases": 15360,
+   "mismatches": 0,
+   "reference_fail_fraction": 0.4981,
+   "guard_cases": [
+    {
+     "case": "fdiv_by_zero -> None",
+     "direct": "None",
+     "expansion": "None"
+    },
+    {
+     "case": "mod_by_zero(last=0) -> None",
+     "direct": "None",
+     "expansion": "None"
+    },
+    {
+     "case": "pow guard b>32 -> 0",
+     "direct": "0",
+     "expansion": "0"
+    },
+    {
+     "case": "pow guard b<0 -> 0",
+     "direct": "0",
+     "expansion": "0"
+    },
+    {
+     "case": "ceiling 1e40 -> None",
+     "direct": "None",
+     "expansion": "None"
+    },
+    {
+     "case": "pow(32,32)=2^160 > 1e40 -> None",
+     "direct": "None",
+     "expansion": "None"
+    }
+   ],
+   "guard_mismatches": 0,
+   "examples": [],
+   "PASS": true
+  },
+  "SERIALIZATION": {
+   "records": 31,
+   "mismatches": 0,
+   "tamper_rejected": true,
+   "rehashed_forgery_rejected": true,
+   "PASS": true
+  },
+  "TRANSPLANT": {
+   "records": 31,
+   "cases": 400,
+   "hash_mismatches": 0,
+   "value_mismatches": 0,
+   "PASS": true
+  },
+  "DEPENDENCY": {
+   "P1": "P_d58d7c2969b5",
+   "derived_plain": [
+    "(first * (acc - {H}))"
+   ],
+   "derived_with_P1": [
+    "(first * P_d58d7c2969b5({H}))"
+   ],
+   "P2": "P_b290c1b3f4ab",
+   "P2_depth": 2,
+   "P2_deps": [
+    "P_d58d7c2969b5"
+   ],
+   "P2_expansion": "(first * (acc - {H}))",
+   "next_gen_registry_depth": 2,
+   "derived_with_P2": [
+    "(P_b290c1b3f4ab({H}) + v)"
+   ],
+   "P3_depth": 3,
+   "P3_lineage": [
+    "P_b290c1b3f4ab",
+    "P_d58d7c2969b5"
+   ],
+   "eval_mismatches": 0,
+   "PASS": true
+  },
+  "RECOGNITION": {
+   "bodies": 3000,
+   "recognised": 2142,
+   "mismatches": 0,
+   "PASS": true
+  },
+  "INSTANTIATE_DERIVE_CONTINUITY": {
+   "schemas": 40,
+   "instantiate_mismatches": 0,
+   "derive_cases": 25,
+   "derive_mismatches": 0,
+   "PASS": true
+  },
+  "CONFORMANCE": {
+   "evaluator_pairs": 18600,
+   "evaluator_mismatches": 0,
+   "walk_pairs": 48,
+   "walk_mismatches": 0,
+   "libraries": 9,
+   "bodies_outside_G5_in_libraries": 941,
+   "PASS": true
+  },
+  "METER_EXACT": {
+   "walks": 12,
+   "mismatches": 0,
+   "PASS": true
+  }
+ }
+}

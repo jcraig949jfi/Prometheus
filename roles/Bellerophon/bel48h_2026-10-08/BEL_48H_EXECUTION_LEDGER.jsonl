@@ -1,0 +1,55 @@
+{"t":"2026-10-08T05:14:07Z","event":"campaign_start","host":"ubu005","instance":"Bellerophon[ubu005-0eb14d49]","start_commit":"22793858f","note":"directive committed 188bc7a37"}
+{"t":"2026-10-08T05:16Z","event":"reviews_launched","what":"Review A (implementation) + Review B (scientific validity) of d36012f0b, independent background agents, read-only scratch exports"}
+{"t":"2026-10-08T05:22:29Z","event":"pilot","runs":44,"voids_first_attempt":44,"cause":"ModuleNotFoundError prometheus (driver sys.path); fixed + all-void abort added","rerun_voids":0,"workdir":"~/bel48h_runs/pilot","excluded":true}
+{"t":"2026-10-08T05:29:27Z","event":"launch","window":"W1","freeze_commit":"5618bd275","pin":"~/bel48h_runs/pins/5618bd275","plan":"~/bel48h_runs/w1_plan.json","plan_sha256":"cd08ec6314484482394f5fba069b99459a7630cdbd94580dc432a98796923e9a","runs":3240,"workers":6,"driver_pid":106742,"workdir":"~/bel48h_runs/w1"}
+{"t":"2026-10-08T05:39:37Z","event":"stop","window":"W1","reason":"Review A: DEF-BEL-008 one-hop provenance defect also in belinst vec; prereg review gate","results_kept":128,"moved_to":"~/bel48h_runs/w1_SUPERSEDED_def008_onehop","excluded":true}
+{"t":"2026-10-08T05:50Z","event":"pilot2","runs":12,"voids":0,"workdir":"~/bel48h_runs/pilot2","excluded":true,"note":"old one-hop code; calibration of H2 fragment arms"}
+{"t":"2026-10-08T05:48Z","event":"repair","commit":"dc1833bc2","what":"multi-hop material origin (vm), validation, written-rule own-position origin; instruments moved to origin map","identity":"478/478 + golden"}
+{"t":"2026-10-08T05:52:58Z","event":"launch_chain","windows":["W2","W1v2"],"freeze_commit":"7133438e5","pin":"~/bel48h_runs/pins/7133438e5","w2_plan_sha256":"47dde14c8c030db8b9fe4edd20c93877358e6cd57abb35ae144e90fafb8d2d84","w1v2_plan_sha256":"2212e6aa5c700b368cadd3529fc1cc17a97547a9dac8a8fab48e8788c246fd1d","workers":6,"script":"~/bel48h_runs/chain_w2_w1v2.sh"}
+{"t":"2026-10-08T05:56:59Z","event":"queue","window":"W4","freeze_commit":"ebc3daaaa","pin":"~/bel48h_runs/pins/ebc3daaaa","plan_sha256":"d2d458f8c8f5402c7e968c7b1925e61d1c8d39678cc4cda219222b7d60d9edba","runs":1050,"starts_after":"CHAIN_DONE (W2, W1v2)"}
+{"t":"2026-10-08T06:02Z","event":"correction","of":"queue W4 row","freeze_commit":"ebc3daaaea3b2770bf9fa9ffbbedf698877cced6","pin":"~/bel48h_runs/pins/ebc3daaae","note":"earlier row typed ebc3daaaa"}
+{"t":"2026-10-08T06:08:26Z","event":"integration","main":"2c6072c9d","how":"origin/main merged into branch, z80atlas 109/109, fast-forward push","reviews":"A PASS_WITH_FIXES (fixed), B SOUND_WITH_LIMITS (disclosed)","nestor_notice":"comms #1884 re #1207"}
+{"t":"2026-10-08T07:59:15Z","event":"complete","window":"W2","runs":1050,"voids":0,"active_s":7560.6,"workdir":"~/bel48h_runs/w2"}
+{"t":"2026-10-08T08:03:32Z","event":"launch","window":"W3a","freeze_commit":"4995e8b45","pin":"~/bel48h_runs/pins/4995e8b45","plan_sha256":"e52ba28da5c0ec69007286bd186cba389dc712b964224c83be8879ecf91b8444","runs":27,"workers":2,"note":"2 extra workers alongside the 6 of the W1v2 chain; host prometheus-worker idle"}
+{"t":"2026-10-08T08:43:03Z","event":"complete","window":"W3a","runs":27,"voids":0,"active_s":2348.3,"replay_identical":"27/27"}
+{"t":"2026-10-08T08:43Z","event":"launch","window":"W3b","label":"EXPLORATORY","plan_sha256":"862114b33e703d53defe288f0ce904e4877bd73b60acb818df2b4c97cbc8a802","runs":75,"workers":2,"pin":"~/bel48h_runs/pins/3f5125ec7"}
+{"t":"2026-10-08T08:45Z","event":"amendment","what":"prereg amendment 2: seeds shared across cells within a lane; distinct-seed unit; W2 report corrected (27 runs = 21 initial populations)","commit":"3f3370188"}
+{"t":"2026-10-08T08:47:47Z","event":"queue","window":"W5-block1","freeze_commit":"9a9b34d6c","plan_sha256":"a35cc27ba461bec4c9b454e15e0444518546a8d12cbbca693ee42fe7ebe9457e","runs":240,"workers":2,"starts_after":"W3b complete"}
+{"t":"2026-10-08T12:01:45Z","event":"complete","window":"W1v2","runs":3240,"voids":0,"active_s":14562.9}
+{"t":"2026-10-08T12:01:45Z","event":"launch","window":"W4","pin":"~/bel48h_runs/pins/ebc3daaae","note":"started automatically after CHAIN_DONE (W2, W1v2)"}
+{"t":"2026-10-08T12:09:23Z","event":"queue","window":"W5-block2","freeze_commit":"da6ddcd29","plan_sha256":"84c0ceda246e08474e64f8560265aa8707450d68bcb242bc531891ffa873f5a8","runs":400,"workers":2,"starts_after":"W5 block 1 complete"}
+{"t":"2026-10-08T12:09:23Z","event":"queue","window":"W6-block1","freeze_commit":"da6ddcd29","plan_sha256":"c1c9c39550f4091f344b36f9e668c20ad5b3aa453bad5360466d1cfadfc5e7fa","runs":1300,"workers":6,"starts_after":"W4_DONE"}
+{"t":"2026-10-08T14:16:49Z","event":"complete","window":"W4","runs":1050,"voids":0,"active_s":8084.3}
+{"t":"2026-10-08T15:21:17Z","event":"complete","window":"W5-block1","runs":240,"voids":0,"active_s":20236.4}
+{"t":"2026-10-08T15:31:36Z","event":"queue","window":"W5-block3","freeze_commit":"f6e3a7810","plan_sha256":"94e7bbd0de22185ea3113de6ddb01a35ed70a52ae731a66cbe56082e0571b7c4","runs":192,"workers":2,"starts_after":"W5 block 2 complete"}
+{"t":"2026-10-08T18:16:33Z","event":"launch","window":"W6-block2","freeze_commit":"aead1e2ab","plan_sha256":"d093d10956b27bbfd2515075bb171c75ace7cbd305af1e2e4258d2b0810a02c1","runs":720,"workers":6}
+{"t":"2026-10-08T18:11:57Z","event":"complete","window":"W6-block1","runs":1300,"voids":0,"active_s":14050.5}
+{"t":"2026-10-08T18:23:43Z","event":"complete","window":"W5-block2","runs":400,"voids":0,"active_s":10911.1}
+{"t":"2026-10-08T18:26:39Z","event":"queue","window":"W6-block3","freeze_commit":"389365826","plan_sha256":"56c76cfb766f947a034b50060207b6d5096eaeb17335160493a91db6e9286b9e","runs":600,"workers":6,"starts_after":"W6 block 2 complete"}
+{"t":"2026-10-08T21:44Z","event":"complete","window":"W6-block2","runs":720,"voids":0,"active_s":7213.0}
+{"t":"2026-10-08T21:44Z","event":"complete","window":"W5-block3","runs":192,"voids":0,"active_s":10035.8}
+{"t":"2026-10-08T21:44Z","event":"complete","what":"post-hoc move-accessibility of 75 W6 precursors (single nice'd process)","output":"receipts/MOVE_ACCESS_POSTHOC.json"}
+{"t":"2026-10-08T21:45Z","event":"complete","window":"W6-block3","runs":600,"voids":0,"active_s":5260.1}
+{"t":"2026-10-08T21:49:09Z","event":"launch","window":"W6-block4","freeze_commit":"5f49a61f4","lanes":{"U":1600,"R":202,"X":192},"workers":"U 6; R then X 2"}
+{"t":"2026-10-08T21:54:19Z","event":"queue","window":"N1","freeze_commit":"cd21605fc","plan_sha256":"7486853d6b9ec202a4c007c56464bcf02b3e9a201219da1744fe2a71ded6b975","runs":440,"workers":2,"starts_after":"W6 block 4 X complete"}
+{"t":"2026-10-09T01:49:39Z","event":"complete","window":"W6-block4 R+X","R":{"runs":202,"voids":0,"identical":202,"active_s":4619.7},"X":{"runs":192,"voids":0,"active_s":9797.7}}
+{"t":"2026-10-09T01:51:40Z","event":"queue","window":"B1","freeze_commit":"6a4ce2120","plan_sha256":"bafb99833cf4facc90ab0ea9ee1722000184fe50a860a06c2a2eacdb7724a945","runs":600,"workers":6,"starts_after":"W6B4_DONE"}
+{"t":"2026-10-09T02:46:17Z","event":"complete","window":"W6-block4 U","runs":1600,"voids":0,"active_s":17812.2}
+{"t":"2026-10-09T02:47:40Z","event":"queue","window":"U2","freeze_commit":"ca62ffcfd","plan":"1600 dbfd56f7dd8e4f5d43a8d947578e8a1e4354b422f8af5d555340321eadf13764 800","workers":6,"starts_after":"B1_DONE"}
+{"t":"2026-10-09T02:48:45Z","event":"incident","what":"wait pattern 'B1_DONE' matched 'W6B1_DONE': U2 started concurrently with B1 (oversubscription 14 workers / 8 cores for ~1 min); U2 driver stopped after 0 results, chain re-queued with '^B1_DONE'. B1 and N1 unaffected (pure-function runs)."}
+{"t":"2026-10-09T04:59:50Z","event":"complete","window":"B1","runs":600,"voids":0,"active_s":7986.2}
+{"t":"2026-10-09T04:59:50Z","event":"complete","window":"N1","runs":440,"voids":0,"active_s":8273.4}
+{"t":"2026-10-09T05:01:45Z","event":"launch","window":"UF","freeze_commit":"857123cbd","plan":"300 c2fa6a5cef8b4c55f4d7f19e7872a8bf4cac3c8470458cb9e59d9731b4201d00","workers":2}
+{"t":"2026-10-09T07:42:21Z","event":"complete","window":"UF","runs":300,"voids":0,"active_s":9621.1}
+{"t":"2026-10-09T07:43:35Z","event":"queue","window":"P1","freeze_commit":"685604387","plan_sha256":"fe53b694843dd3235d80179bca6188591be7fa03550b8bd0e7a688e3e9db2a22","runs":512,"workers":8,"starts_after":"^U2_DONE","note":"8 workers: prometheus-worker service idle (verified load); revert to 6 if it takes jobs"}
+{"t":"2026-10-09T07:43:48Z","event":"host_note","what":"prometheus-worker.service observed ActiveState=inactive (not stopped by this campaign); P1 may use 8 workers without displacing shared work"}
+{"t":"2026-10-09T09:12:51Z","event":"complete","window":"U2","runs":1600,"voids":0,"active_s":15188.9}
+{"t":"2026-10-09T09:34:25Z","event":"queue","window":"S1","freeze_commit":"68f8bf1d7","plan_sha256":"0471ecae666050ff40bc0bed5d2fb7a2b335d93041f5633fab98a57ee27cab35","runs":1760,"workers":8,"starts_after":"^P1_DONE"}
+{"t":"2026-10-09T11:35:29Z","event":"complete","window":"P1","runs":512,"voids":0,"active_s":8536.0}
+{"t":"2026-10-09T12:07:33Z","event":"queue","window":"U3+P2","freeze_commit":"36137b571","runs":{"U3":1800,"P2":512},"workers":8,"starts_after":"^S1_DONE"}
+{"t":"2026-10-09T18:19:03Z","event":"complete","window":"S1","runs":1760,"voids":0,"active_s":24160.5}
+{"t":"2026-10-09T22:28:42Z","event":"complete","window":"U3","runs":1800,"voids":0,"active_s":15020.2}
+{"t":"2026-10-09T23:48:04Z","event":"launch","window":"UF2","freeze_commit":"ce402382c","plan":"450 e6d734034864a57108a2ae569b48c3a714f9ed87c6d75944cc00f2c55426db3b","workers":8}
+{"t":"2026-10-09T23:47:23Z","event":"complete","window":"P2","runs":512,"voids":0,"active_s":4707.6}
+{"t":"2026-10-10T01:26:09Z","event":"complete","window":"UF2","runs":450,"voids":0,"active_s":5864.9}
+{"t":"2026-10-10T01:29:03Z","event":"close","main":"09cf83cee","comms":"report to Aporia,Harmonia,Atlas,Nestor,Techne,Nyx"}

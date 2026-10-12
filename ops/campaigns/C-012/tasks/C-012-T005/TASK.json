@@ -1,0 +1,93 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "campaign_id": "C-012",
+  "epic_id": "EP-MOONSHOT",
+  "owner_role": "Themis",
+  "can_downgrade": false,
+  "escalate_to": "operator",
+  "authority": "operator OP-NF2 2026-10-10 (roles/Themis/prompts/2026-10-10_op_nf2/01_OPERATOR_OP-NF2_verbatim.md)",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:40:00Z",
+      "note": "C-012 opened under OP-NF2"
+    },
+    {
+      "status": "READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T07:24:46Z",
+      "note": "READY by operator authority OP-NF2 (roles/Themis/prompts/2026-10-10_op_nf2/)"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:05:07Z",
+      "note": "Pan answered the lake questions (#2004); design in contract s6; bounded demonstration next"
+    },
+    {
+      "status": "RED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "RED observed at 425c2b261: Ran 10, errors=10 (NotImplementedError: C-012-T005; catalog_v absent)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 IMPLEMENTING: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "GREEN",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 GREEN: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 INTEGRATION_READY: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T09:17:05Z",
+      "note": "T005 INTEGRATED: RED 425c2b261 -> GREEN bba336602 (84 OK in the lake venv; mutation 14/14) -> demo D20261010A: crash-replay and oracle OK on all 6 tables. NOT CLOSED: acceptance also requires Pan's review of the design (contract s6; sent #2010)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Themis[m2-0e9b1ed2]",
+      "at_utc": "2026-10-10T10:28:36Z",
+      "note": "T005 CLOSED: Pan reviewed the design (#2031: no change requested to s6); demonstration D20261010A passed oracle + crash-replay; receipt attempts/A-20261010T090507Z-Themis-m2-0e9b1ed2"
+    }
+  ],
+  "task_id": "C-012-T005",
+  "title": "Parquet/Iceberg evidence materialization (design or bounded demonstration, with Pan)",
+  "objective": "Map Moonshot's canonical artifacts to PostgreSQL metadata, content-addressed objects, Parquet event data and Iceberg history; an idempotent, recoverable materializer that never gates the authoritative publication; lake location agreed with Pan.",
+  "quality_class": "Q2",
+  "kind": "software",
+  "depends_on": [
+    "C-012-T002"
+  ],
+  "problem": "Scientific evidence must be analysable in Pan's lake without the lake becoming a dependency of publication.",
+  "non_goals": [
+    "writes to schema pan / pan_iceberg or the lake before Pan agrees",
+    "bulk migration of historical data"
+  ],
+  "evidence_required": [
+    "design section in the contract; if Pan agrees, a bounded demonstration with a row-count oracle"
+  ],
+  "acceptance": {
+    "condition": "design reviewed by Pan; demonstration (if run) passes its oracle and its crash-replay check"
+  },
+  "deliverables": [
+    "moonshot/nf/materialize.py",
+    "ops/campaigns/C-012/evidence/LAKE/"
+  ],
+  "owns": [
+    "moonshot/"
+  ],
+  "red_required": false
+}

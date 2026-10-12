@@ -100,8 +100,8 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] **CIDATA stick** (32 GB, label CIDATA) holds the Wi-Fi password in plain text. Keep it at home; rebuild it with
       `autoinstall/build_cidata.py` if the Wi-Fi or keys change. Secrets live in `C:\autoinstall_secrets\` on ELSA.
       Rebuilt 2026-10-03 with `shutdown: poweroff` (no reinstall loop when the sticks are left in).
-- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s/M6500 USB enclosures).** Right after the
-      P52s (done) and M6500 installs: rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
+- [ ] **CIDATA stick is built with `--allow-usb-target` (2026-10-04, for the P52s/M6500 USB enclosures).** The M6500 no
+      longer needs it (internal SSD, 2026-10-10), so rebuild before the next install (ubu007 or ubu008): rebuild it WITHOUT the flag (`python infra/ubuntu_nodes/autoinstall/build_cidata.py E:`), so no other
       machine can ever install onto an external disk.
 - [x] **ubu005 = P52s** ONLINE 2026-10-04 at 192.168.1.222 (i5-8350U, 22 GB), worker enabled. Remaining: Claude login,
       DHCP; PM991: see below. Lid closed 2026-10-04: still running (lid ignore works), 49 C. History: the PM991 in the WWAN slot stops it from powering on (fan roars, no POST; BIOS N27ET56P 1.42,
@@ -116,22 +116,18 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [x] **ELSA RAM:** done 2026-10-05, verified 22:57Z. Kit = 16 GB (4x4 GB) PC3-10600U DDR3-1333 UDIMM **2Rx8** 1.5 V
       (Motoeagle; SPD reads Samsung M378B5273DH0-CK0). All 3x2 GB removed. `Get-CimInstance Win32_PhysicalMemory` ->
       DIMM 1-4 x 4 GB, 1333 MT/s; Windows sees 16.0 GB (11.3 GB free after boot). Seat restarted; census task intact.
-- [ ] **Toshiba Satellite A665-S6070** (PSAW3U-04301C, ~2010-11, 19 V 4.74 A brick): offered 2026-10-05. Verdict: OK as a
-      light worker (`ubu008`), not urgent (the queue is empty). Likely 1st-gen Core i5 2C/4T, no AVX (confirm with
-      lscpu); 2 SODIMM slots, 8 GB max. Before use: SATA SSD in place of the HDD, 8 GB RAM, clean the fan and repaste
-      (A665s run hot), remove the battery. Then the normal autoinstall + provision_node.sh.
+- [x] ~~Toshiba Satellite A665~~ not bought (operator 2026-10-11).
 - [ ] **SSH by hostname from ELSA fails** (2026-10-04): `ubuNNN` resolves to IPv6 link-local and known_hosts has only
       IPv4 keys -> "Host key verification failed". Use `jcraig@192.168.1.NNN`, or add a `~/.ssh/config` HostName map.
       ubu004 answers on both .221 and .178.
-- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). Plan (operator
-      2026-10-04): **dual boot by enclosure** -- Ubuntu on an SSD in the second USB-C enclosure, BIOS boot order USB
-      Storage above Internal HDD: enclosure in -> Ubuntu, unplugged -> Windows 7. **Remove the Windows drive(s) (two
-      bays) during the install** (the guard prefers internal disks; this also protects them). Needs the CIDATA stick
-      still built with --allow-usb-target and an SSD >= 200 GB. USB 2.0 only: slow disk, fine for CPU work. Legacy
-      BIOS boot. The Win7 system image to M2 is still wanted, but no longer blocks this.
-
-## Operator (needs hands at a keyboard or the router; not the phone)
-
+- [ ] **ubu007 = Dell Precision M6500** (i7 Q720, 16 GB, Win7 Pro; sentimental, keep Windows intact). **Plan changed
+      2026-10-10 (operator; the USB-enclosure plan of 2026-10-04 is dropped):** Patriot P210 256 GB SATA SSD (on order) in
+      bay HDD 1 for Ubuntu; the Intel 330 180 GB (Win7) back in HDD 2 unmodified; Momentus 500 GB = spare. Install with ONLY
+      the Patriot inside, legacy BIOS, Ethernet. Image the Intel 330 to M2 first. Details: ubuntu_server_machines.md s ubu007.
+      The PM991 and the second USB-C enclosure are now spares.
+- [x] **ubu008 = ThinkPad T490s** ONLINE 2026-10-10 at 192.168.1.231 (wired via dock; Wi-Fi .232). i7-8565U AVX2, 16 GB,
+      512 GB NVMe. Worker active (f78d18e26), Claude token installed. Remaining: DHCP reservation, BIOS AC-attach power-on.
+      ubu009 = IdeaPad Flex 5 (2026-10-11).
 - [ ] **BIOS: Power On with AC Attach = Enabled** on each laptop (F1 at boot → Config → Power; F10 to save). Also
       Config → Network → Wake On LAN = AC only. Without it, a power cut that drains the battery leaves the node off
       until someone presses the button. Each reboot takes that node's phone session down for about 2 min; it comes back by itself.
@@ -149,6 +145,37 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 - [ ] Decide: commit the ubuntu_* docs + setup script to git.
 - [ ] If seats need the M1 database: the operator copies the needed `keys.py` key files to the node with `scp` (Claude doesn't
       handle key files). Set `EW_DB_HOST=192.168.1.202`.
+
+- [ ] OPTION, held (operator 2026-10-12: "not a common problem"): DNS fallback on the Linux nodes (resolved
+      FallbackDNS / netplan nameservers 1.1.1.1, 8.8.8.8 after the router). Do it only if DNS stalls show up beyond
+      ELSA. ELSA already has it (2026-10-11). Context: router DNS timeouts 10-11 17:25-18:06 EDT, correlated with
+      ubu009 hung on the LAN (see machines doc, ubu009).
+
+## Side-project user `mind` (Smuggler's Hole NPC mind hosts) -- 2026-10-12
+
+Operator's browser game (repo jcraig949jfi/smugglers-hole, server on M1:2567), NOT pantheon, possibly throwaway. Agreed
+on comms #2199 / #2201 / #2203 / #2204-ish with session SmugglersHole[m1-smugglershole].
+- Nodes: ubu001-006, ubu008 (wired IPs). ubu007 and ubu009 are off limits.
+- User `mind` uid 1001: no sudo; key smugglers-hole-mind@SKULLPORT only; linger on; /home/jcraig is 750 (tokens unreadable;
+  verified with sudo -u mind). Ceiling for the whole user: /etc/systemd/system/user-1001.slice.d/50-side-project-limits.conf
+  (CPUQuota = 50% of threads, MemoryMax=40%, TasksMax=2048). Their units: nice 10, CPUQuota=150%, MemoryMax=1.5G.
+- Stop on a node: `sudo systemctl stop user@1001.service` (or ask them: systemctl --user stop sh-mind).
+- TEARDOWN per node: `sudo loginctl terminate-user mind; sudo userdel -r mind; sudo rm -rf /etc/systemd/system/user-1001.slice.d; sudo systemctl daemon-reload`.
+
+## Retiring a node (sell / donate / e-waste) -- checklist (2026-10-10, operator: "people need to do better")
+
+Every node holds live secrets in plain files: the shared GitHub token (gh auth + git credential), the Claude OAuth
+token (~/.config/claude-oauth.env), our SSH keys in authorized_keys, the Wi-Fi password (netplan), and on some nodes a
+full Claude login. Before a machine or a disk leaves the house:
+1. Disable its PrometheusWorker first (no half-claimed task left behind).
+2. Wipe the disk: re-run the autoinstall (repartitions and reformats), or for an SSD `blkdiscard -f /dev/<disk>` /
+   the BIOS secure erase. Loose disks (e.g. the M6500's Momentus) get the same.
+3. If a disk leaves UNWIPED (dead, stolen, forgotten): rotate the shared GitHub token on every node
+   (provision_node.sh reinstalls it), revoke the Claude token in claude.ai settings and re-copy a new one, change the
+   Wi-Fi password and rebuild CIDATA.
+4. Mark it RETIRED in ubuntu_server_machines.md (keep the row); drop its DHCP reservation and its known_hosts lines.
+Secrets never go in the repo (it is public): they live in C:\autoinstall_secrets on ELSA. Checked 2026-10-11: no token
+or Wi-Fi string in infra/, achilles/ or roles/Achilles/, current tree or history.
 
 ## Claude (can be done over SSH from M2 without the operator)
 
@@ -175,7 +202,7 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
 Before the session:
 - [ ] Have the Verbatim USB stick (already written; reusable) and the ISO (`D:\ISOs\`) on hand.
 - [ ] Collect for each machine: make/model, whether it has an Ethernet port, and whether it has Wi-Fi.
-- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, ... (LIZZIE-42 stays Windows, no ubu number)
+- [ ] Next hostnames: `ubu004` (HP x360), `ubu005` (P52s), `ubu006`, `ubu007` (M6500), `ubu008` (T490s), `ubu009` (IdeaPad Flex 5), `ubu010` next, ... (LIZZIE-42 stays Windows, no ubu number)
 
 Per machine (runbook + plan s10), with the lessons from the guinea pigs:
 1. BIOS: boot **USB HDD**; set **Power On with AC Attach** while you're in there.

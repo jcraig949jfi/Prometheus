@@ -1,0 +1,944 @@
+{
+ "K": 64,
+ "cpu_wall_s": 254.9,
+ "environment": {
+  "host": "harry1",
+  "numpy": "2.4.3",
+  "python": "3.12.10"
+ },
+ "family_s": [
+  "searched_16310006",
+  "searched_16310007",
+  "searched_16310008"
+ ],
+ "n": 400,
+ "power": {
+  "reference_rates": {
+   "frozen": "0/400",
+   "full": "255/400",
+   "newlife": "59/400",
+   "noise": "2/400",
+   "noswitch": "400/400",
+   "shuffle": "79/400"
+  },
+  "rows": [
+   {
+    "P_n400": 1.0,
+    "S_n400": 1.0,
+    "control": "frozen",
+    "p_ctrl": 0.0,
+    "p_full": 0.6375
+   },
+   {
+    "P_n400": 1.0,
+    "S_n400": 1.0,
+    "control": "noise",
+    "p_ctrl": 0.005,
+    "p_full": 0.6375
+   },
+   {
+    "P_n400": 1.0,
+    "S_n400": 1.0,
+    "control": "shuffle",
+    "p_ctrl": 0.1975,
+    "p_full": 0.6375
+   },
+   {
+    "P_n200": 0.8286,
+    "P_n400": 0.9872,
+    "S_n400": 0.9636,
+    "control": "sensitivity",
+    "p_ctrl": 0.45,
+    "p_full": 0.6
+   },
+   {
+    "P_n200": 0.9751,
+    "P_n400": 0.9999,
+    "S_n400": 0.9994,
+    "control": "sensitivity",
+    "p_ctrl": 0.4,
+    "p_full": 0.6
+   },
+   {
+    "P_n200": 1.0,
+    "P_n400": 1.0,
+    "S_n400": 1.0,
+    "control": "sensitivity",
+    "p_ctrl": 0.3,
+    "p_full": 0.6
+   },
+   {
+    "P_n200": 0.8743,
+    "P_n400": 0.9941,
+    "S_n400": 0.9815,
+    "control": "sensitivity",
+    "p_ctrl": 0.25,
+    "p_full": 0.4
+   },
+   {
+    "P_n200": 0.94,
+    "P_n400": 0.999,
+    "S_n400": 0.9961,
+    "control": "sensitivity",
+    "p_ctrl": 0.15,
+    "p_full": 0.3
+   }
+  ]
+ },
+ "qualification": {
+  "Q-a": true,
+  "Q-b": true,
+  "Q-c": true,
+  "Q-d": true,
+  "Q-e": true,
+  "qualified": true
+ },
+ "rows": 26400,
+ "rows_sha256": "b54c751b0796bc58d6dd04f4ddd69deaba879e5f4925757ecf8aab3e85e0f830",
+ "schema": "prometheus.rso.ensorain.dev_check.v1.1",
+ "searched_preflight": {
+  "searched_16310001": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310002": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310003": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310004": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310005": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310006": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310007": {
+   "memory_ok": true,
+   "recompute_ok": true
+  },
+  "searched_16310008": {
+   "memory_ok": true,
+   "recompute_ok": true
+  }
+ },
+ "seeds": [
+  16300001,
+  16300400
+ ],
+ "spec": "C-R2-desert",
+ "task": "C-016-T041",
+ "verdicts": {
+  "clock_hybrid": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1/2582249878086908589655919172003011874329705792829223512830659356540647622016841194629645353280137831435903171972747493376",
+    "p_frozen": "1/2582249878086908589655919172003011874329705792829223512830659356540647622016841194629645353280137831435903171972747493376",
+    "ties": 0,
+    "wins": 400
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1/2582249878086908589655919172003011874329705792829223512830659356540647622016841194629645353280137831435903171972747493376",
+    "ties": 0,
+    "wins": 400
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1/1260864198284623334792929283204595641762551656654894293374345388935863096687910739565256520156317300505812095689818112",
+    "ties": 11,
+    "wins": 389
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "clock_hybrid",
+   "holm": {
+    "K1": 7.745183829698637e-121,
+    "K2": 7.931068241611404e-118
+   },
+   "instrument_ok": true,
+   "late": [
+    37878,
+    0,
+    2564,
+    6734,
+    38080,
+    29527
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    3670,
+    76750
+   ],
+   "noswitch_late_majority_lives": 399,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    400,
+    0,
+    0,
+    11,
+    1,
+    399
+   ],
+   "role5_retained_lives": 376,
+   "verdict": "REVISION_HISTORY_DEPENDENT"
+  },
+  "constant_minus": {
+   "G_PRE": false,
+   "G_R5": false,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "constant_minus",
+   "holm": {
+    "K1": 1.0,
+    "K2": 1.0
+   },
+   "instrument_ok": true,
+   "late": [
+    19018,
+    19018,
+    19018,
+    19018,
+    19018,
+    19318
+   ],
+   "late_n": [
+    38336,
+    38336,
+    38336,
+    38336,
+    38336,
+    38336
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38556,
+    77137
+   ],
+   "noswitch_late_majority_lives": 205,
+   "pre_competent_lives": 192,
+   "revised_lives": [
+    83,
+    83,
+    83,
+    83,
+    83,
+    102
+   ],
+   "role5_retained_lives": 0,
+   "verdict": "REFUSED_FIXED_PRIOR"
+  },
+  "constant_plus": {
+   "G_PRE": false,
+   "G_R5": false,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "constant_plus",
+   "holm": {
+    "K1": 1.0,
+    "K2": 1.0
+   },
+   "instrument_ok": true,
+   "late": [
+    19318,
+    19318,
+    19318,
+    19318,
+    19318,
+    19018
+   ],
+   "late_n": [
+    38336,
+    38336,
+    38336,
+    38336,
+    38336,
+    38336
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38581,
+    77137
+   ],
+   "noswitch_late_majority_lives": 173,
+   "pre_competent_lives": 199,
+   "revised_lives": [
+    98,
+    98,
+    98,
+    98,
+    98,
+    87
+   ],
+   "role5_retained_lives": 0,
+   "verdict": "REFUSED_FIXED_PRIOR"
+  },
+  "innate_max": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "p_frozen": "1/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "ties": 145,
+    "wins": 255
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "ties": 145,
+    "wins": 255
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 22,
+    "p": "12951245629288818703710506594227/3618502788666131106986593281521497120414687020801267626233049500247285301248",
+    "ties": 148,
+    "wins": 230
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "innate_max",
+   "holm": {
+    "K1": 3.454467422037778e-77,
+    "K2": 3.5791724880949904e-45
+   },
+   "instrument_ok": true,
+   "late": [
+    24758,
+    0,
+    927,
+    7023,
+    27418,
+    37475
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38000,
+    76750
+   ],
+   "noswitch_late_majority_lives": 400,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    255,
+    0,
+    0,
+    47,
+    59,
+    400
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_HISTORY_DEPENDENT"
+  },
+  "innate_zero": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 34,
+    "p": "10103441160040803295123681367526740573138825/13803492693581127574869511724554050904902217944340773110325048447598592",
+    "p_frozen": "6997903057836349827056507425352598621535/13479973333575319897333507543509815336818572211270286240551805124608",
+    "ties": 175,
+    "wins": 191
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 37,
+    "p": "10103441160040803295123681367526740573138825/13803492693581127574869511724554050904902217944340773110325048447598592",
+    "ties": 166,
+    "wins": 197
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 24,
+    "p": "341415648427501080912969449660243/28269553036454149273332760011886696253239742350009903329945699220681916416",
+    "ties": 154,
+    "wins": 222
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "innate_zero",
+   "holm": {
+    "K1": 7.319481658971055e-28,
+    "K2": 2.415430113007014e-41
+   },
+   "instrument_ok": true,
+   "late": [
+    24764,
+    19318,
+    19309,
+    19454,
+    27418,
+    37475
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38000,
+    76750
+   ],
+   "noswitch_late_majority_lives": 400,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    255,
+    98,
+    95,
+    57,
+    59,
+    400
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_HISTORY_DEPENDENT"
+  },
+  "jitter": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1/524288",
+    "ties": 381,
+    "wins": 19
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 15,
+    "p": "1564082093/4294967296",
+    "ties": 367,
+    "wins": 18
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "jitter",
+   "holm": {
+    "K1": 1.0,
+    "K2": 0.7283324808813632
+   },
+   "instrument_ok": true,
+   "late": [
+    16226,
+    0,
+    16226,
+    16100,
+    16226,
+    22176
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    44658,
+    76750
+   ],
+   "noswitch_late_majority_lives": 375,
+   "pre_competent_lives": 397,
+   "revised_lives": [
+    19,
+    0,
+    19,
+    16,
+    19,
+    372
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_NOT_SHOWN"
+  },
+  "learns_pre": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1/226156424291633194186662080095093570025917938800079226639565593765455331328",
+    "p_frozen": "1/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "ties": 145,
+    "wins": 255
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 1,
+    "p": "1/226156424291633194186662080095093570025917938800079226639565593765455331328",
+    "ties": 145,
+    "wins": 254
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 17,
+    "p": "87874864441181214392476391/452312848583266388373324160190187140051835877600158453279131187530910662656",
+    "ties": 152,
+    "wins": 231
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "learns_pre",
+   "holm": {
+    "K1": 8.843436600416711e-75,
+    "K2": 1.9427894811394975e-49
+   },
+   "instrument_ok": true,
+   "late": [
+    24759,
+    38336,
+    22318,
+    20877,
+    27418,
+    37475
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38000,
+    76750
+   ],
+   "noswitch_late_majority_lives": 400,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    255,
+    0,
+    2,
+    41,
+    59,
+    400
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_HISTORY_DEPENDENT"
+  },
+  "memoryless_plus": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "memoryless_plus",
+   "holm": {
+    "K1": 1.0,
+    "K2": 1.0
+   },
+   "instrument_ok": true,
+   "late": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    38336
+   ],
+   "late_n": [
+    38336,
+    38336,
+    38336,
+    38336,
+    38336,
+    38336
+   ],
+   "n": 400,
+   "newlife_pre": [
+    77137,
+    77137
+   ],
+   "noswitch_late_majority_lives": 400,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    400
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_NOT_SHOWN"
+  },
+  "reference": {
+   "G_PRE": true,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "16577/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+    "p_frozen": "1/57896044618658097711785492504343953926634992332820282019728792003956564819968",
+    "ties": 145,
+    "wins": 255
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 2,
+    "p": "16577/115792089237316195423570985008687907853269984665640564039457584007913129639936",
+    "ties": 143,
+    "wins": 255
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 28,
+    "p": "297487189572097517906414660075100641/1725436586697640946858688965569256363112777243042596638790631055949824",
+    "ties": 168,
+    "wins": 204
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "P",
+   "holm": {
+    "K1": 2.863235322756012e-73,
+    "K2": 1.7241270520492798e-34
+   },
+   "instrument_ok": true,
+   "late": [
+    24758,
+    0,
+    13352,
+    16285,
+    27418,
+    37475
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    38000,
+    76750
+   ],
+   "noswitch_late_majority_lives": 400,
+   "pre_competent_lives": 400,
+   "revised_lives": [
+    255,
+    0,
+    2,
+    79,
+    59,
+    400
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REVISION_HISTORY_DEPENDENT"
+  },
+  "smuggler": {
+   "G_PRE": false,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "smuggler",
+   "holm": {
+    "K1": 1.0,
+    "K2": 1.0
+   },
+   "instrument_ok": true,
+   "late": [
+    38336,
+    38336,
+    38336,
+    38336,
+    38336,
+    0
+   ],
+   "late_n": [
+    38336,
+    38336,
+    38336,
+    38336,
+    38336,
+    38336
+   ],
+   "n": 400,
+   "newlife_pre": [
+    0,
+    77137
+   ],
+   "noswitch_late_majority_lives": 0,
+   "pre_competent_lives": 0,
+   "revised_lives": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REFUSED_FIXED_PRIOR"
+  },
+  "smuggler_decorative": {
+   "G_PRE": false,
+   "G_R5": true,
+   "K1": {
+    "control": "frozen+noise",
+    "losses": 0,
+    "p": "1",
+    "p_frozen": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K1_noise": {
+    "control": "noise",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "K2": {
+    "control": "shuffle",
+    "losses": 0,
+    "p": "1",
+    "ties": 400,
+    "wins": 0
+   },
+   "arms": [
+    "full",
+    "frozen",
+    "noise",
+    "shuffle",
+    "newlife",
+    "noswitch"
+   ],
+   "family": "smuggler_decorative",
+   "holm": {
+    "K1": 1.0,
+    "K2": 1.0
+   },
+   "instrument_ok": true,
+   "late": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    0
+   ],
+   "late_n": [
+    38402,
+    38336,
+    38402,
+    38369,
+    38402,
+    38402
+   ],
+   "n": 400,
+   "newlife_pre": [
+    0,
+    76750
+   ],
+   "noswitch_late_majority_lives": 0,
+   "pre_competent_lives": 0,
+   "revised_lives": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "role5_retained_lives": 400,
+   "verdict": "REFUSED_FIXED_PRIOR"
+  }
+ }
+}

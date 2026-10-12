@@ -1,0 +1,56 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T050",
+  "campaign_id": "C-018",
+  "title": "Bounded native Aether experiment + RESULT",
+  "objective": "Run the frozen experiment; registered criteria decide.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-018-T042"
+  ],
+  "owns": [
+    "rso/aether/runs/",
+    "rso/aether/RESULT.md"
+  ],
+  "reads": [
+    "rso/",
+    "Aether/V2B/"
+  ],
+  "problem": "harry1 CPU.",
+  "non_goals": [
+    "No edit to Aether/ or roles/Aether/",
+    "No Aether registered seed or frozen result",
+    "Nothing run on M2",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "runs committed",
+    "RESULT.md"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/runs/",
+    "rso/aether/RESULT.md"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: execution of a preregistered experiment"
+}

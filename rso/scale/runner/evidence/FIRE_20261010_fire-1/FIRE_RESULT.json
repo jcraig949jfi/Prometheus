@@ -1,0 +1,133 @@
+{
+ "control": {
+  "fire-p0": {
+   "final_state_digest": "4237ae766263c21706fe1009d30c7c358de014d676f5132a1a85bf80028c6400",
+   "head_epoch_digest": "32454406c0748532169916ae623fca2e9de63469f8311b28a609855608b6f0c7"
+  },
+  "fire-p1": {
+   "final_state_digest": "c38a3107e34636a92b39320cccf704d29427af034a3637da1f1268afe0ff43c8",
+   "head_epoch_digest": "4c06cae429f94db82b030848daed346225468e4ec6efd4dbe2bdc37b33849938"
+  }
+ },
+ "control_cpu_s": 109.453125,
+ "control_run_digest": "1ab5132a36686f6e56591763f2b64c863ff22df0f29079e22746daff2fa4c846",
+ "cpu_s_total": 285.859375,
+ "criteria": {
+  "every_epoch_published_once": true,
+  "every_resume_verified": true,
+  "final_digest_equals_control": true,
+  "final_state_equals_control": true,
+  "launcher_dead_and_job_kept_computing": true,
+  "launching_session_gone": true,
+  "nothing_ran_while_down": true,
+  "resume_in_a_different_session": true,
+  "resumed_from_checkpoint_not_genesis": true,
+  "supervisor_and_worker_killed_mid_epoch": true,
+  "wasted_work_accounted": true,
+  "within_one_core_hour": true,
+  "worker_killed_mid_epoch": true
+ },
+ "driver_cpu_s_by_pid_lower_bound": {
+  "15952": 0.203125,
+  "16636": 0.328125,
+  "16972": 0.515625
+ },
+ "heads_at_resume": {
+  "fire-p0": 4,
+  "fire-p1": 0
+ },
+ "interrupted": [
+  {
+   "chain_id": "fire-p0",
+   "epoch_index": 5,
+   "metered_cpu_s": 1.03125,
+   "metered_ticks": 40,
+   "pid": 14616,
+   "run_id": "fire-p0-e5-7cdd8fed",
+   "unmetered_remainder": true
+  },
+  {
+   "chain_id": "fire-p0",
+   "epoch_index": 5,
+   "metered_cpu_s": 0.421875,
+   "metered_ticks": 20,
+   "pid": 12864,
+   "run_id": "fire-p0-e5-9a677f54",
+   "unmetered_remainder": true
+  }
+ ],
+ "manifest_id": "b472c5f4031c9571937bdc10750c16c62f25ee4761ca7933270f28b2fbe65dbb",
+ "resources": {
+  "artifact_bytes_retained": 2851692,
+  "cloud_usd_billed_reconciled": 0,
+  "cloud_usd_estimated": 0,
+  "cpu_cap_s": 3600,
+  "gpu_s": 0,
+  "interrupted_cpu_s_lower_bound": 1.453125,
+  "productive_cpu_s": 167.34375,
+  "rejected_cpu_s": 0,
+  "total_cpu_s": 174.296875,
+  "verification_cpu_s": 5.5,
+  "within_cpu_cap": true
+ },
+ "resume_checks": [
+  {
+   "at_utc": "2026-10-10T09:08:54.473483Z",
+   "chain_id": "fire-p0",
+   "checks": {
+    "bytes": true,
+    "environment": true,
+    "replay": true,
+    "round_trip": true
+   },
+   "head_index": 4,
+   "host": "harry1",
+   "kind": "RESUME_CHECK",
+   "pid": 12864,
+   "replay_cpu_s": 5.5,
+   "replayed": true,
+   "run_id": "fire-p0-resume-15bd8f46",
+   "verdict": "VALID"
+  },
+  {
+   "at_utc": "2026-10-10T09:09:38.560855Z",
+   "chain_id": "fire-p0",
+   "checks": {
+    "bytes": true,
+    "environment": true,
+    "round_trip": true
+   },
+   "head_index": 4,
+   "host": "harry1",
+   "kind": "RESUME_CHECK",
+   "pid": 15416,
+   "replay_cpu_s": 0.0,
+   "replayed": false,
+   "run_id": "fire-p0-resume-483aef85",
+   "verdict": "VALID"
+  }
+ ],
+ "resumed_from_head": {
+  "fire-p0": true
+ },
+ "run_digest": "1ab5132a36686f6e56591763f2b64c863ff22df0f29079e22746daff2fa4c846",
+ "schema": "rso.runner.fire_result.v1",
+ "sessions": {
+  "KILLED_WORKER": "93a529ba",
+  "LAUNCHER_SELF_KILL": "124bd1dc",
+  "SUPERVISOR_RELAUNCHED": "07fac962"
+ },
+ "supervisor_cpu_s_by_pid": {
+  "2228": 0.796875,
+  "12316": 0.265625
+ },
+ "verdict": "PASS",
+ "wasted": {
+  "cpu_s_lower_bound": 1.453125,
+  "interrupted_attempts": 2,
+  "note": "interrupted attempts are metered to their last PROGRESS row only; ticks and CPU after it are unmetered (a lower bound, never zero)",
+  "rejected_attempts": 0,
+  "rejected_cpu_s": 0.0,
+  "ticks_lower_bound": 60
+ }
+}

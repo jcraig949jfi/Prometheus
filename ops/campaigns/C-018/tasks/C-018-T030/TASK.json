@@ -1,0 +1,102 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T030",
+  "campaign_id": "C-018",
+  "title": "Aether evidence adapter + native spatial assay + preregistration + freeze",
+  "objective": "The smallest adapter for the selected P-question, consuming native execution records; completeness contract and falsifiability checks applied.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-018-T020",
+    "C-018-T011"
+  ],
+  "owns": [
+    "rso/aether/"
+  ],
+  "reads": [
+    "rso/",
+    "Aether/V2B/"
+  ],
+  "problem": "COORDINATOR DECISION (2026-10-12, from rso/aether/SELECTION.md, integrated; demand gate reproduced identical): carrier Aether aeth01.v1 (V1) and recoil+exchange (RX) laws via Aether's own law_step / features / r1_reduce.decode / prop01_run (pinned at 383bb3584), harry1 CPU, 128^2 scale. P1/P2/P3 in scope; P4 UNSUPPORTED natively (REPLACE has no state-dependent combination) -- record it, do not construct it. TEST-4's disposition is preserved and not re-asked. QUESTION: can the Observatory separate interventional causal ancestry (clamp of an intermediate vs a same-distance non-ancestor clamp) from recoverable source content (held-out decoding), and refuse to count either as the other? Two parts, both preregistered before any confirmatory outcome: (I) INSTRUMENT QUALIFICATION on Cadmus's fixtures A (ancestry+content), B (structure without content), E (content without pathway), G (gapped), N (noise), the teleport counterfeit, PLUS a REQUIRED graded-content fixture (label written with probability p) showing decoder sensitivity at a TEST-4-like margin (~0.05 over chance) -- SELECTION.md s4 limit (i); (II) ONE NATIVE CONFIRMATORY QUESTION on RX (V1 as the shallow-tree comparison): on native paired units, how often do the engine's ATTRIBUTED descendants agree with INTERVENTIONAL descendants (clamp removes them, non-ancestor clamp does not), and among interventionally-real descendants is the source content recoverable (P3), i.e. is the native result 'ancestry with content', 'causal propagation without recoverable content', or neither? SELECTION.md s5's probe is a lead, not a result. Size N from measured throughput (~45 s per RX unit pair; budget <= ~1.5 core-h); new seed range declared disjoint from Cadmus's 0xC18A-0xC18E and every Aether range. REQUIRED from C-018: (a) the completeness contract (rso/completeness/, verify() before any verdict; manifest frozen with the preregistration); (b) the falsifiability table (rso/qualify/FALSIFIABILITY.md) for every claim-critical control, with audit() ok on dev data -- note Cadmus's own table already flags C1 locality as unable to fail natively (report as a sanity guard, not evidence) and C5 content-negative by construction; (c) the evaluator re-derives from native records (divergence masks, t0 identity, decode from stored features) and never trusts a derived producer field; ancestry correctness needs native replay -- state that trust boundary. Smallest adapter, ONBOARDING.md with lines reused / new / modified and the 'cost of detecting a false interpretation before the run' measure. Freeze before any confirmatory outcome; NO confirmatory run in this packet.",
+  "non_goals": [
+    "No edit to Aether/ or roles/Aether/",
+    "No Aether registered seed or frozen result",
+    "Nothing run on M2",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "adapter + controls + PREREGISTRATION + FREEZE",
+    "ONBOARDING.md"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/"
+  ],
+  "kind": "software",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:01:50Z",
+      "note": "C-018 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T09:40:31Z",
+      "note": "T011 + T020 integrated; decision in problem; Argus on Opus"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T09:43:59Z",
+      "note": "Argus on claude-opus-5-5 (Q2), harry1; branch argus/c018-t030 from 3f7408d62"
+    },
+    {
+      "status": "RED",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "RED b19935fe0 (rso/aether/red/RED_OUTPUT.txt: ImportError before the adapter existed)"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "adapter 19ff2ab0d; Part I criteria committed first"
+    },
+    {
+      "status": "GREEN",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "33 tests, 21/21 mutants; Part I v2 QUALIFIED f2c336cf5"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Argus[harry1-6f7f55db]",
+      "at_utc": "2026-10-12T11:02:52Z",
+      "note": "receipt A-001; PREREGISTRATION+FREEZE f1e65a8ff, branch head 485dc0315; no confirmatory run (incident disclosed in receipt)"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T11:08:45Z",
+      "note": "merged argus/c018-t030 (485dc0315): only rso/aether/ + seat files; freeze check OK; 33 tests OK; 21/21 RED mutants KILLED + baseline GREEN; registry CURRENT x14; integrator mutant (NONANC_MAX 0.2 -> 1.0) killed by 3 tests; launch log claude-opus-5-5 x198, 0 fallbacks. Graded-content v1 FAILED, v2 qualified (finding). INCIDENT disclosed: 4 then-confirmatory units executed by a guard test before the freeze, unread and deleted; block 0x1000-0x10FF burned; confirmatory moved to 0x2000; guard now needs coordinator RELEASE.json -- accepted (no outcome seen; rules committed earlier)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T11:08:45Z",
+      "note": "frozen surface handed to T040"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5"
+}

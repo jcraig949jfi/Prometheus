@@ -1,0 +1,40 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T023",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Eupalamus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q1",
+  "start_sha": "550540e1f",
+  "end_sha": "81fc07d049d22fd2992bc995a9c18baed8a24c2e",
+  "files_changed": ["rso/slice001/ledger.py", "rso/slice001/tests/test_ledger.py"],
+  "evidence_added": [
+    "Caps(gpu_hours, cloud_usd) optional (None = unenforced); Attempt.finish records them; usage() sums; exhausted()/begin() refuse with typed CapExhausted.cap before the START row (REFUSED row written, as for existing caps); est_gpu_hours/est_cloud_usd on begin() refuse a run that would pass the cap",
+    "inventory emits gpu_micro_hours/cloud_micro_usd integers only on rows that recorded them; old ledgers read unchanged",
+    "7+1 fire tests in TestPaidResourceCaps"
+  ],
+  "evidence_executed": [
+    {"command": "unittest TestPaidResourceCaps against pre-change ledger.py", "result": "RED: 1 failure, 6 errors of 7"},
+    {"command": "unittest TestPaidResourceCaps (final)", "result": "OK"},
+    {"command": "unittest discover rso/slice001/tests", "result": "OK (skipped=1)"},
+    {"command": "unittest discover rso/witness", "result": "149 OK"},
+    {"command": "unittest discover rso/binding", "result": "21 OK"}
+  ],
+  "red_observed": {"observed": true, "detail": "tests written after the first implementation draft; RED observed by stashing ledger.py and running the new class (1 failure, 6 errors), then restored"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "First draft treated the real contract's gpu_hours 0 / cloud_usd 0 as 'used >= limit' and refused every CPU-only run (29 s2_bundle errors); caught by the slice suite and fixed: refusal needs non-zero spend or a declared estimate past the limit. Test test_zero_cap_is_no_paid_compute_not_no_runs pins it",
+    "Callers that do not pass est_* or record spend on finish() are not metered; the ledger only counts what it is told",
+    "One test run was auto-backgrounded by the harness (timeout); no run_in_background was requested"
+  ],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-10T09:11:25Z",
+  "instance": "harry1-f28941a3",
+  "host": "harry1 (M4)",
+  "branch": "eupalamus/c013-t023",
+  "worktree_path": "C:/Prometheus-worktrees/eupalamus-c013-t023",
+  "resources": {"cpu": "about 15 CPU-minutes (suites)", "validation_launches": 0, "gpu": 0, "cloud_usd": 0, "model": "one Q1 session"},
+  "notes": "Field decisions: refusal writes a REFUSED row like existing caps (no START); inventory units are micro-hours / micro-USD integers because canonical bytes refuse floats; check order launches, cpu, bytes, gpu, cloud."
+}

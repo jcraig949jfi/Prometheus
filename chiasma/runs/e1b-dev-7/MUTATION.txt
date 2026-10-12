@@ -1,0 +1,33 @@
+clean suite rc=0
+KILLED       E01 A/B sampler forces only the first pair
+KILLED       E02 exceptions keep f
+KILLED       E03 crit probes use pair 0 for every target
+KILLED       E04 decoys carry f
+KILLED       E05 loads swapped (ydep count = decoy count)
+KILLED       E06 O4LR records the true pruned literal
+KILLED       E07 O4LR draws inside the anchor
+KILLED       E08 O3U keeps the cap
+KILLED       E09 run.py err_CDE drops D
+KILLED       E10 run.py collateral baseline is end of A
+KILLED       E11 C breaks every pair at once
+KILLED       E12 O4LR counterfeit drops entries (fewer U bytes)
+KILLED       E13 weldable flag ignored
+KILLED       E14 weldable arm welds with the stale anchor
+KILLED       E15 binding budget evicts nothing
+KILLED       E16 factoring rules cost nothing
+KILLED       E17 factoring accepts rules that do not pay
+KILLED       E18 factored arm ignores the factor flag
+KILLED       E19 factoring substitutes premises lacking one vertex
+KILLED       E20 PW-D never forces f on whole cores
+KILLED       E21 PW-D becomes the marker variant (f only with whole cores)
+KILLED       E22 PW-D exceptions keep f
+KILLED       E23 PW-D crit probes keep f
+KILLED       E24 PW-D cores are three literals
+KILLED       E25 run.py treats PW-D as PW-H3
+KILLED       E26 factored shadow flag ignored
+KILLED       E27 counterfeit shadow keeps true content
+KILLED       E28 positive-only shadow arm stores raw failures
+KILLED       E29 factored-shadow cap loop evicts nothing
+KILLED       E30 PW-Dm marker flag ignored
+KILLED       E31 counterfeit repair arm uses true provenance
+{"results": [{"mutant": "E01 A/B sampler forces only the first pair", "status": "KILLED"}, {"mutant": "E02 exceptions keep f", "status": "KILLED"}, {"mutant": "E03 crit probes use pair 0 for every target", "status": "KILLED"}, {"mutant": "E04 decoys carry f", "status": "KILLED"}, {"mutant": "E05 loads swapped (ydep count = decoy count)", "status": "KILLED"}, {"mutant": "E06 O4LR records the true pruned literal", "status": "KILLED"}, {"mutant": "E07 O4LR draws inside the anchor", "status": "KILLED"}, {"mutant": "E08 O3U keeps the cap", "status": "KILLED"}, {"mutant": "E09 run.py err_CDE drops D", "status": "KILLED"}, {"mutant": "E10 run.py collateral baseline is end of A", "status": "KILLED"}, {"mutant": "E11 C breaks every pair at once", "status": "KILLED"}, {"mutant": "E12 O4LR counterfeit drops entries (fewer U bytes)", "status": "KILLED"}, {"mutant": "E13 weldable flag ignored", "status": "KILLED"}, {"mutant": "E14 weldable arm welds with the stale anchor", "status": "KILLED"}, {"mutant": "E15 binding budget evicts nothing", "status": "KILLED"}, {"mutant": "E16 factoring rules cost nothing", "status": "KILLED"}, {"mutant": "E17 factoring accepts rules that do not pay", "status": "KILLED"}, {"mutant": "E18 factored arm ignores the factor flag", "status": "KILLED"}, {"mutant": "E19 factoring substitutes premises lacking one vertex", "status": "KILLED"}, {"mutant": "E20 PW-D never forces f on whole cores", "status": "KILLED"}, {"mutant": "E21 PW-D becomes the marker variant (f only with whole cores)", "status": "KILLED"}, {"mutant": "E22 PW-D exceptions keep f", "status": "KILLED"}, {"mutant": "E23 PW-D crit probes keep f", "status": "KILLED"}, {"mutant": "E24 PW-D cores are three literals", "status": "KILLED"}, {"mutant": "E25 run.py treats PW-D as PW-H3", "status": "KILLED"}, {"mutant": "E26 factored shadow flag ignored", "status": "KILLED"}, {"mutant": "E27 counterfeit shadow keeps true content", "status": "KILLED"}, {"mutant": "E28 positive-only shadow arm stores raw failures", "status": "KILLED"}, {"mutant": "E29 factored-shadow cap loop evicts nothing", "status": "KILLED"}, {"mutant": "E30 PW-Dm marker flag ignored", "status": "KILLED"}, {"mutant": "E31 counterfeit repair arm uses true provenance", "status": "KILLED"}], "schema": "chiasma.e1b.mutation.v1", "summary": {"KILLED": 31, "NOT_APPLIED": 0, "SURVIVED": 0}}

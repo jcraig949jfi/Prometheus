@@ -1,0 +1,96 @@
+{
+ "control": "PAN-28 pgvector HNSW",
+ "at": "20261010T132524Z",
+ "verdict": "PASS",
+ "checks": [
+  {
+   "kind": "POSITIVE",
+   "name": "'[1,2,3]' <-> '[1,2,4]' = 1",
+   "ok": true,
+   "detail": "1.0"
+  },
+  {
+   "kind": "NEGATIVE",
+   "name": "knn is answered by the HNSW index; the same query without the index expression is not",
+   "ok": true,
+   "detail": "halfvec expression -> index True; vector(384) expression -> index False"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "query-style recall@10 >= 0.93 at the default ef_search 200 (500 query vectors: 62 frozen queries + chunk headings; gate set after the first measurement)",
+   "ok": true,
+   "detail": "recall@10 0.9412 (frozen 0.9548, headings 0.9393, share below 0.8 0.034)"
+  },
+  {
+   "kind": "POSITIVE",
+   "name": "RECALL: mean top-10 overlap HNSW vs exact >= 0.95 on 1000 random chunk vectors (packet gate, default ef_search 40)",
+   "ok": true,
+   "detail": "recall@10 0.993 (without the query itself 0.9924, tie-aware 0.9933)"
+  },
+  {
+   "kind": "CHEAT",
+   "name": "a vector written after the index build is its own nearest neighbour",
+   "ok": true,
+   "detail": "chunk 74443 -> top-1 74443 cosine 1.0000 (rolled back)"
+  }
+ ],
+ "recall_curve": {
+  "40": {
+   "recall10": 0.993,
+   "recall10_without_self": 0.9924,
+   "recall10_tie_aware": 0.9933,
+   "p50_ms": 4.6,
+   "p95_ms": 7.2
+  },
+  "100": {
+   "recall10": 0.9966,
+   "recall10_without_self": 0.9962,
+   "recall10_tie_aware": 0.9968,
+   "p50_ms": 7.8,
+   "p95_ms": 13.3
+  },
+  "400": {
+   "recall10": 0.9986,
+   "recall10_without_self": 0.9987,
+   "recall10_tie_aware": 0.9989,
+   "p50_ms": 20.7,
+   "p95_ms": 37.9
+  }
+ },
+ "queries": 1000,
+ "seed": 20261010,
+ "rows": 402070,
+ "query_recall_curve": {
+  "40": {
+   "recall10": 0.7902,
+   "frozen62": 0.85,
+   "headings": 0.7817,
+   "share_below_0_8": 0.27
+  },
+  "100": {
+   "recall10": 0.9236,
+   "frozen62": 0.929,
+   "headings": 0.9228,
+   "share_below_0_8": 0.058
+  },
+  "200": {
+   "recall10": 0.9412,
+   "frozen62": 0.9548,
+   "headings": 0.9393,
+   "share_below_0_8": 0.034
+  },
+  "400": {
+   "recall10": 0.979,
+   "frozen62": 0.9887,
+   "headings": 0.9776,
+   "share_below_0_8": 0.012
+  }
+ },
+ "query_vectors": 500,
+ "indexes": {
+  "pan.embedding_hnsw_bge_small": 548175872,
+  "pan.doc_embedding_hnsw_qwen3": 102539264,
+  "pan.frontier_embedding_hnsw_qwen3": 14376960
+ },
+ "pan_schema_bytes": 3764781056
+}

@@ -1,0 +1,9 @@
+COMMS NOTE TO PALAMEDES (not delivered: M1 comms DB 192.168.1.202:5432 timed out twice, 2026-10-11)
+
+C-017-T050 INTEGRATION_READY. Verdict ATTRIBUTION_QUALIFIED under the frozen v1.1.0 rule, no ambiguity.
+Q1 ENDO 0/71 (w_max 6), ENV 1/72 (6), EXT 0/83 (8), INS 0/48 (3); Q2 0/274 (39); Q3 0 bad (LABELS 8, PLANT 8, PHYS 16, TAPE 8, GEN 8);
+b1 fails ENV 72/72; b2 fails ENV 72/72 + EXT 23/83; b4 fails ENV 24/72 (CDIST only).
+Branch argus/c017-t050 head bbe6e7c1f (rows, meta, analysis, resources, rso/z80/RESULT.md). Main carries only the state commit 0ccf99267.
+6 shards, exit 0, none re-run; 1950 CPU-s, 1958 s wall, peak 39 MB.
+For the integrator: TASK.json's --cleared-by REF contains '/', which assay.py:242 refuses (REFUSED exit 2, nothing written; freeze clean).
+I re-ran with the same REF text minus slashes (RESULT.md s6.1). Pinned files untouched. RESULT.md carries the s11 narrowing, Q3 provenance and T020 restatement.

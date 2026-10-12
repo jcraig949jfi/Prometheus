@@ -1,0 +1,69 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-018-T041",
+  "campaign_id": "C-018",
+  "title": "THE ONE repair round of the Aether assay (PREREGISTRATION v1.1.0) + re-freeze",
+  "objective": "Close Pallas's NOT CLOSED surfaces (rso/aether/challenge/REPORT.md s3-s5) before any confirmatory outcome exists.",
+  "parent_objective": "C-018 RSO-GEN4-SPATIAL-AETHER",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-018-T040"
+  ],
+  "owns": [
+    "rso/aether/"
+  ],
+  "reads": [
+    "rso/aether/",
+    "rso/aether/challenge/REPORT.md",
+    "rso/completeness/",
+    "rso/qualify/"
+  ],
+  "problem": "Read rso/aether/challenge/REPORT.md in full. Required, pre-outcome, as a versioned amendment (v1.1.0) committed before the re-freeze. EVIDENCE CHAIN: (B6) analyse() calls freeze.mismatches() first and refuses on any mismatch; (B5) refuse a duplicated arrays_sha256 across rows, and bind EVERY unit to its seed by recomputing its warm snapshot (not only the first per shard) -- state in the result how many units were replay-verified; (B1) compare the replayed tree (meta['tree']) in the replay and add the native tree invariants (4-adjacency, parent earlier, gen = parent + 1) to tree_check; (E5/E1h/E3h) one behavioural test per analyser guard (completeness short-circuit, unit-file binding, replay sample), RED on its mutant verbatim from challenge/edits.json; (P1) a refused analysis prints problems only, nothing verdict-bearing. INSTRUMENT: (B8) the non-ancestor choice must not select an upstream contributor of B: require ftick(B) <= ftick(N) <= min ftick(targets) among candidates, or clamp two non-ancestors, or split NONSPECIFIC -- your choice with reasons -- without reopening B4 (late N), pinned by Pallas's 0x3004/0x3005 shape. INFERENCE: (B2) compute `need` over EVALUABLE units with a preregistered minimum evaluable count and a new status (e.g. ANCESTRY_UNEVALUABLE) below it; print the evaluable count beside every label; V1 at 16 units is likely unevaluable -- decide before the run whether to enlarge V1 within budget or report it as such; (B3) report content excess restricted to the CONFIRMED units' seeds beside the registered one; (B7) report the targets' first-tick distribution per CONFIRMED unit. INTERPRETATION: carry REPORT s4.4 narrowing in the preregistration text. Re-check dev evidence under the new rule (dev seeds only), recompute sizing if the minimum-evaluable rule needs more units (budget <= ~1.5 core-h), re-derive and re-seal the design manifest, re-freeze (FROZEN.json v1.1.0), update ONBOARDING.md (including the 'cost of detecting a false interpretation before the run' measure: what each survivor would have printed on the frozen v1.0.0 analyser). NO confirmatory run.",
+  "non_goals": [
+    "No confirmatory run (k = 0x2000+i untouched; no RELEASE.json; no `confirm run`)",
+    "No edit to Aether/ or roles/Aether/",
+    "Nothing on M2",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "PREREGISTRATION v1.1.0 before the re-freeze",
+    "RED rows for every new pin",
+    "dev evidence under v1.1.0",
+    "FROZEN.json v1.1.0",
+    "suite green"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/"
+  ],
+  "kind": "software",
+  "status": "CLAIMED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T13:08:40Z",
+      "note": "from C-018-T040 adjudication"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T13:08:40Z",
+      "note": "repair round; Argus on Opus"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Argus[harry1-4230902d]",
+      "at_utc": "2026-10-12T13:11:52Z",
+      "note": "repair round v1.1.0; worktree C:/Prometheus-worktrees/argus-c018-t041 branch argus/c018-t041 base 4e3a34f02"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 s9 (one bounded repair round + short re-check)",
+  "preferred_model": "claude-opus-5-5"
+}

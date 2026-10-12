@@ -1,0 +1,89 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-013-T033",
+  "campaign_id": "C-013",
+  "title": "Hestia review request; Fabric defect packet to its maintainer-of-record; Nyx notice",
+  "objective": "Hestia review request; Fabric defect packet to its maintainer-of-record; Nyx notice",
+  "parent_objective": "C-013 RSO-STRATEGIC-EXPANSION-48H",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "roles/Palamedes/comms/"
+  ],
+  "reads": [
+    "roles/Palamedes/prompts/2026-10-10_strategic_expansion/",
+    "roles/Palamedes/notes/2026-10-10_strategic_sources/"
+  ],
+  "problem": "Directive s13/s14/s17; ruling s6, s8, s9, s11.",
+  "non_goals": [
+    "No paid cloud resources (zero-spend authorization only)",
+    "No modification of files in another seat's lane (Nyx, Fable prototype, Fabric)",
+    "No restart or redesign of shared Fabric infrastructure"
+  ],
+  "evidence_required": [
+    "committed with sources"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "roles/Palamedes/comms/"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "C-013 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:50:32Z",
+      "note": "READY at C-013 open"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "Palamedes"
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "bodies"
+    },
+    {
+      "status": "GREEN",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "sent: Fabric defect #1988-#1991 (Odysseus maintainer of record per P2B_INTAKE; cc Themis, Aporia, Achilles); Hestia request #1992 (REVIEW_PENDING); Nyx notice #1993"
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "on main"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "self"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-10T07:54:29Z",
+      "note": "Hestia review REVIEW_PENDING until answered"
+    }
+  ],
+  "authority": "operator Strategic Expansion Directive 2026-10-10 + OPERATOR RULING 2026-10-10 (roles/Palamedes/prompts/2026-10-10_strategic_expansion/01_..., 02_...)",
+  "red_required": false
+}

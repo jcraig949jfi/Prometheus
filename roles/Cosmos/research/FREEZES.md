@@ -26,3 +26,6 @@ is not a failure. Example: a local-only commit checked from another machine.
 - supersedes: -
 - review: PENDING
 - status: ACTIVE
+
+> 2026-10-08 note on F-0000: its target (0ecafed1, ancestor of e73e5eb26) is now PUBLIC on main via the C3 S1
+> publication merge d75fb45ef and is re-checkable by anyone. F-0000 itself is unchanged.

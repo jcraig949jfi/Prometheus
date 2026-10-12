@@ -1,0 +1,36 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-013-T021",
+  "campaign_id": "C-013",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "9b1893d6f335c18041130c1d34f8944a1e02466c",
+  "end_sha": "b6fa8e306",
+  "files_changed": ["rso/scale/CHECKPOINT_REPLAY_SURVEY.md"],
+  "evidence_added": [
+    "survey table for 13 rows (Ares, Ensorain, Ananke, 2x z80atlas, SFE, Proteus, Tyche, Crius, Theseus synth+daemon, Primordial, Aether, wm_mini) with file:line",
+    "7 tiny smoke runs with results; 3 not runnable (torch/sklearn/numba absent) and 2 not attempted, stated as such",
+    "ranked next-runtime list with S/M/L adapter cost"
+  ],
+  "evidence_executed": [
+    {"command": "smoke: Ares/Ensorain/z80atlas x2/Proteus/Crius/Aether double-run or split-run equality (temp dir, outside repo)", "result": "all replayed identically; z80atlas pickle-resume == uninterrupted; Aether split run digest equal"},
+    {"command": "python -m workgraph validate", "result": "OK"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: no failing test applies"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "Ananke, Tyche, wm_mini smoke not run (torch/sklearn/numba missing on harry1); Theseus synth and Primordial not run; their replay claims are by-design from code reading",
+    "most citations come from two read-only inspection passes; about 12 load-bearing ones were re-read by Cadmus, the rest are unchecked and may drift a few lines",
+    "next-runtime rows 3, 7 and the not-assessed list are grep-level only"
+  ],
+  "unresolved": ["verification of the unrun rows needs a host with torch/sklearn/numba/Redis"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-10T00:00:00Z",
+  "instance": "harry1-ec004941",
+  "host": "harry1",
+  "branch": "cadmus-c013-t021",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c013-t021",
+  "resources": {"cpu": "7 tiny single-process smoke runs, each <60 s", "model": "one Sonnet 5.5 session plus 2 read-only subagents"}
+}

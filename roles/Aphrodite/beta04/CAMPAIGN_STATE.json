@@ -1,0 +1,339 @@
+{
+ "schema": "aphrodite.beta04.state.v1",
+ "campaign": "C-015",
+ "label": "C-P2B-APH-BETA-04",
+ "thread": "TH-P2B-APHRODITE-V2B",
+ "authority": "prompts/2026-10-10_beta04/01_OPERATOR_DIRECTIVE_verbatim.md",
+ "activation_utc": "2026-10-10T09:27Z",
+ "hard_stop_utc": "2026-10-13T09:27Z",
+ "starting_sha": "origin/main 5956b542ef11e588c6d82e8049c5ac65b0875063",
+ "inherited": {
+  "BETA03": "MIGRATE_SUBSTRATE",
+  "R8_UNDER_PROMOTION": "NO",
+  "SECOND_ORDER_SAGACITY": "NOT ESTABLISHED",
+  "TFS1": "DESIGN_ONLY",
+  "GLOBAL_BEHAVIOR_IDENTITY": "FAIL"
+ },
+ "phase": "CLOSED",
+ "windows": [
+  {
+   "id": "W01",
+   "kind": "DEV",
+   "start_utc": "2026-10-10T09:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W01_DEV_REPORT.md"
+  },
+  {
+   "id": "W02",
+   "kind": "EXP",
+   "start_utc": "2026-10-10T13:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W02_EXP_REPORT.md"
+  },
+  {
+   "id": "W03",
+   "kind": "DEV",
+   "start_utc": "2026-10-10T17:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W03_DEV_REPORT.md"
+  },
+  {
+   "id": "W04",
+   "kind": "EXP",
+   "start_utc": "2026-10-10T21:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W04_EXP_REPORT.md"
+  },
+  {
+   "id": "W05",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T01:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W05_DEV_REPORT.md"
+  },
+  {
+   "id": "W06",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T05:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W06_HOLD_REPORT.md"
+  },
+  {
+   "id": "W07",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T09:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W07_EXP_REPORT.md"
+  },
+  {
+   "id": "W08",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T13:27Z",
+   "status": "CLOSED",
+   "report": "beta04/windows/W08_CLOSE_REPORT.md"
+  },
+  {
+   "id": "W09",
+   "kind": "DEV",
+   "start_utc": "2026-10-11T17:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W10",
+   "kind": "EXP",
+   "start_utc": "2026-10-11T21:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W11",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T01:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W12",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T05:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W13",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T09:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W14",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T13:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W15",
+   "kind": "DEV",
+   "start_utc": "2026-10-12T17:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W16",
+   "kind": "EXP",
+   "start_utc": "2026-10-12T21:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W17",
+   "kind": "DEV",
+   "start_utc": "2026-10-13T01:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  },
+  {
+   "id": "W18",
+   "kind": "EXP",
+   "start_utc": "2026-10-13T05:27Z",
+   "status": "NOT_NEEDED (campaign closed early)"
+  }
+ ],
+ "active_window": null,
+ "experiments": {
+  "E1": "WORLD_DEMAND_NOT_QUALIFIED (Addendum D strict): per-world gate 5/12 PASS; rule 7 FAIL (2 mechanism-kind pairings fp, fs < 3); admitted R2 38 / R3 8 / R4 7 / R5 0; admitted R3/R4 are demand-genuine (hindsight regression 0/53; from-scratch 0 at 1e6; reachable only via acquired stepping stones). Dominant loss: R1 stepping stones unreachable by base search (112 R3 CHAIN_C_FAIL). Report: beta04/foundry/production/E1_ADDENDUM_D.md",
+  "E2": "PENDING",
+  "E3": "PENDING",
+  "E4": "NOT BEGUN: instruments not passed (E1 not qualified; R5=0 so depth-2 inheritance cannot be demanded)",
+  "E5": "GATED",
+  "ALIEN": "PENDING"
+ },
+ "jobs": {
+  "E2_SCREEN": "DONE 22:5xZ; analysis runs/e2/E2_ANALYSIS.json; committed",
+  "E3KP_PRIMARY": "DONE 2026-10-10 ~18:35Z; runs/kp_production (worktree aph-b04-tfs1)",
+  "E3KP_SECONDARY": "DONE (descriptive): fallback_off 0/15 NO; given_foundry_primitives 14/15 (pooled rule met; descriptive); all_acquired 7/15; seed1 9/15; seed2 8/15; scratch fails 15/15 in every row. A1-C: fallback-off agrees (NO).",
+  "E3ID_BUILD": "SUBSTRATE lead building e3_identifiability.py (pilot_v2; 1 worker); prereg windows/E3ID_PREREG.md DRAFT",
+  "E3ID_PRODUCTION": "DONE ~19:28Z runs/id_production",
+  "ALIEN_AR1": "DONE ~23:15Z; alien/runs/production committed (34912f59a)",
+  "E3R": "DONE 2026-10-11T13:33:05Z; outputs committed (9375eb401)"
+ },
+ "subagents": {
+  "SUBSTRATE": "DELIVERED aphrodite/b04-tfs1 @9b6392d71 (15/15 tests; toy sensitivity 8/8 vs 0/8; ~0.7 core-h); merged; conformance vs interpreter A pending",
+  "FOUNDRY": "DELIVERED aphrodite/b04-foundry @f1fe051c4 (20/20 tests; pilot W1-3: R2 15, R3 17, R4 7 admitted; strictest 19; ~1.4 core-h); merged",
+  "ATLAS": "DELIVERED aphrodite/b04-atlas @82343c31a (14/14; ~2.5 core-h); merged; E2 decisions O1-O12 pending",
+  "SUBSTRATE_KP_ALIGN": "DELIVERED 8d0383ca0 (E3 16/16, TFS1 15/15; ~1.7 core-h); merged to main 19a374fbf; A3 rulings; FREEZE_E3KP",
+  "ATLAS_E2_DRIVER": "DELIVERED 2bfeeda16 (13/13 E2 + 14/14 atlas); merged; FREEZE_E2 written"
+ },
+ "attempts": {
+  "E1": {
+   "v1": "pilot -> NOT_QUALIFIED (red-team)",
+   "v2": "one repair round (pre-registered rules in beta04/windows/E1_V2_RULES.md)"
+  }
+ },
+ "compute": {
+  "cap": "48 core-h / rolling 24h",
+  "ledger": [
+   {
+    "utc": "2026-10-10T13:02Z",
+    "est_core_h_since_activation": 8.0
+   },
+   {
+    "utc": "2026-10-10T15:45Z",
+    "est_core_h_since_activation": 17.0,
+    "note": "incl. foundry production, E3 smoke, two red teams; estimate"
+   },
+   {
+    "utc": "2026-10-10T17:25Z",
+    "est_core_h_since_activation": 19.0
+   },
+   {
+    "utc": "2026-10-10T21:29Z",
+    "est_core_h_since_activation": 33.0
+   }
+  ]
+ },
+ "cloud_spend_usd": 0,
+ "next_action": "Idle; await operator direction for Beta-05.",
+ "outcomes_frozen_labels": {
+  "WORLD_DEMAND_QUALIFIED": "NO (strict; 5/12 worlds pass per-world gate; pairings 2<3)",
+  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE (INCONCLUSIVE_CENSORED; descriptor qualified on 5/15 families, 2/5 clusters; determined pre-outcome 2026-10-10T17:24Z) || direction in both informative clusters: archive arm below both comparators (descriptive)",
+  "TFS1_INSTRUMENT_QUALIFIED": "NO -> TFS1_REACHABILITY_INSTRUMENT = FAIL (primary pooled: chain-qualified 7/15 < 12; scratch fails 15/15; first failing link UNDERDETERMINED_STONE 7, HORIZON_R1 1; OE repair NOT triggered (horizons 1/8, not a strict majority) so no repair permitted; per A3.7 final = primary). Not a scientific rejection of compositional learning. || F4 note (review v1): the pre-data horizon prediction was right in count and mechanism; the label precedence (UD before horizon) kept the A3 OE trigger from firing.",
+  "E3ID (diagnostic; FREEZE_E3ID)": "ID_IDENTIFIABILITY: 4/4 UNDERDETERMINED_STONE units are one-class NOT sealed-equivalent -> UNIQUE_WRONG (ID-A1.4; code printed UNIQUE / interpretation INSTRUMENT, superseded by the frozen ID-A1.4 relabel). In each, TFS-1 enumeration at 1e6 found exactly ONE dev-consistent program on the R1 family and it is not the sealed mechanism (3/4 also pass R1 test+tribunal). ID_RETENTION_REPAIR = NO (designated uncertified RETAIN-4 7/15; CERT secondary RETAIN-4-CERT 9/15, also < 12; agree). Interpretation (frozen map + ID-A1.4): WORLD/RULER-or-HORIZON -- the R1 stepping-stone families do not identify their mechanism over the domain the composite uses, and the sealed stone lies beyond the TFS-1 R1 horizon; retention of hypotheses does not repair. || SUPERSEDED INTERPRETATION (review v1 F2/F3/F7/F8 accepted): 3/4 UD units are extraction mis-cuts of globally correct R1 programs; seed1/seed2 acquire all 4 correctly (order-dependence); RETAIN non-discriminating; world dev-gap 1/4 (Wc025415a p0). First failure = stone ACQUISITION (search horizon + extraction non-invariance).",
+  "REACHABILITY_ATLAS_COMPLETE": "YES (A1-B.9: atlas 53/53; 1x screen 720/720 on the 15 R3/R4; prelaunch PASS; analyzer re-derivation 0 mismatches over 1468 programs) || render: atlas of the composition step given supplied foundry stones on foundry-selected families",
+  "COMPOSITIONAL_DISCOVERY": "INSTRUMENT_UNVALIDATED (Rule G, windows/FINAL_LABEL_RULES.md: gate not met; not run)",
+  "DEVELOPMENTAL_INHERITANCE": "INSTRUMENT_UNVALIDATED (Rule G, windows/FINAL_LABEL_RULES.md: gate not met; not run)",
+  "SECOND_ORDER_ACQUISITION": "INSTRUMENT_UNVALIDATED (Rule G, windows/FINAL_LABEL_RULES.md: gate not met; not run)",
+  "ECONOMIC_ADVANTAGE": "INSTRUMENT_UNVALIDATED (Rule G, windows/FINAL_LABEL_RULES.md: gate not met; not run)"
+ },
+ "contract_decisions_pending": [
+  "scanl includes init (n+1)? (match foundry)",
+  "curried 2-arg lambdas (lam a (lam b BODY))",
+  "exec units on FAIL counted to failure -> compare units only on non-FAIL",
+  "and/or strict",
+  "hit definition for search vs endpoint",
+  "E3 budget/max size (8; 7 with libraries)",
+  "commutative canonicalisation on; CRN slot=family_id"
+ ],
+ "contract_decisions_frozen": {
+  "v0.1-1": "promoted/learned primitives must be CLOSED over their own arguments: no free reference to the task input xs (prevents whole-program memorisation posing as a mechanism)"
+ },
+ "known_answers": {
+  "K_AB_conformance": "PASS: 12,000 terms (138 foundry witnesses + B-sampled), 192,000 runs, 0 value/FAIL/parse mismatches, 0 unit mismatches on 183,575 non-FAIL runs; bool supplement 3,000 terms / 48,000 runs 0 mismatches (runs/K_AB_CONFORMANCE.json)"
+ },
+ "experiments_gate_note": "E3 2x2 lifetime screen NOT RUN (gate: TFS1_INSTRUMENT_QUALIFIED = NO). E4 barred (E1 NO).",
+ "interpretation_current": "First demonstrated failure: stepping-stone ACQUISITION (search horizon at 1e6 + extraction non-invariance; world dev-gap minority). Composition: 14/15 with foundry stones on foundry-selected families (order-fragile). Recommendation leaning CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY pending AR-1 and E2.",
+ "E2_results": {
+  "headline_labels": {
+   "REACHED": 13,
+   "DESERT_OR_HORIZON": 2,
+   "CREDIT_GRADIENT": 0,
+   "CREDIT_MISLEADING": 0,
+   "UNRESOLVED": 0
+  },
+  "co_labels_by_frozen_rule_A2_1 (coordinator-derived from hit table; analyzer lists headline only)": {
+   "CREDIT_GRADIENT": [
+    "W2bdef02f-F051-R4",
+    "W483b8c31-F045-R3",
+    "Wb49b6a5f-F052-R4",
+    "Wc025415a-F041-R4"
+   ],
+   "CREDIT_MISLEADING": [
+    "W483b8c31-F046-R3"
+   ]
+  },
+  "primary_hits_total_of_120": {
+   "credit_blind": 68,
+   "chain_strict": 44,
+   "chain_neutral": 80,
+   "desert_ref": 0
+  },
+  "archive_arms_on_5_qualified_of_40": {
+   "D1-X3": 17,
+   "X3G": 25,
+   "chain_neutral_same_5": 27
+  },
+  "desert_families": [
+   "W2bdef02f-F048-R4 (fs:post_fold)",
+   "W6eb945cc-F047-R3 (fs:post_fold)"
+  ],
+  "4x_escalation": "NOT RUN: eligible (family,arm) pairs are those with >=1 primary hit, and most are at or near ceiling (7-8/8) so 4x cannot change a label; desert families are ineligible by A1-B.7; the directive escalates only when it resolves uncertainty",
+  "screening_caveat": "8 seeds; no significance; P(|d|>=3) ~ 0.21 per family under the null",
+  "library_caveat": "library = foundry-acquired stones (oracle decomposition supplied); not stone discovery"
+ },
+ "AR1_result": "EXPLORATORY (FREEZE_ALIEN_AR1; primary only): 0/15 chain-qualified, scratch fails 15/15; first failing links HORIZON_R1 12, UNDERDETERMINED_STONE 3. Confounded (representation AND search differ from TFS-1). Same failing link as TFS-1 (stone acquisition), more severe; no evidence that this alternative representation escapes it. Qualifier (review v2): acquires 1/17 units vs TFS-1 14/17; composition untested; bears only weakly on MIGRATE.",
+ "operator_guidance_2026_10_11": {
+  "file": "prompts/2026-10-10_beta04/02_OPERATOR_GUIDANCE_2026-10-11_verbatim.md",
+  "directives": [
+   "Run E3-R exactly as frozen at 11:30Z; no intervention",
+   "Preserve Beta-04 historical labels whatever E3-R shows",
+   "Synthesis: report three measurements separately -- mechanism ACQUISITION, UTILIZATION, AUTONOMY (learner vs search infra vs developmental machinery vs certifier)",
+   "Post-E3-R direction map: both -> Beta-05 tests generalized target-blind extraction + improved search on fresh independent families, fallback-off controls, pruning costs; OE alone -> search geometry/reachability, no extra representation complexity; X-ABS alone -> learn invariant boundaries across factorizations; neither -> re-examine dev identifiability + operator reachability, no automatic substrate migration",
+   "X-ABS positive needs independent confirmation on new families; E3-R pass != compositional discovery",
+   "Next major experiment: NOT R8; discover useful stepping stones without being told the decomposition",
+   "Close Beta-04 after E3-R"
+  ]
+ },
+ "E3R_result": {
+  "REPAIR_CLASS": "SEARCH",
+  "stability": "MAJORITY (seed0 SEARCH, seed1 BOTH_REQUIRED, seed2 SEARCH)",
+  "unconditional": true,
+  "censored_scratch": 0,
+  "cells_chain_qualified_of_15": {
+   "seed0": {
+    "off_frozen": 7,
+    "off_xabs": 9,
+    "on_frozen": 12,
+    "on_xabs": 15
+   },
+   "seed1": {
+    "off_frozen": 9,
+    "off_xabs": 10,
+    "on_frozen": 11,
+    "on_xabs": 13
+   },
+   "seed2": {
+    "off_frozen": 8,
+    "off_xabs": 8,
+    "on_frozen": 12,
+    "on_xabs": 13
+   }
+  },
+  "main_effects": {
+   "OE": [
+    5.5,
+    2.5,
+    4.5
+   ],
+   "XABS": [
+    2.5,
+    1.5,
+    0.5
+   ],
+   "interaction": [
+    1,
+    1,
+    1
+   ]
+  },
+  "attribution_seed0": {
+   "OE-only": 3,
+   "X-ABS-only": 0,
+   "both-only": 3,
+   "either": 2,
+   "neither": 0
+  },
+  "margin": "on_frozen sits exactly at the 12/15 bar at seeds 0 and 2 and at 11 at seed 1: one family separates SEARCH from BOTH_REQUIRED",
+  "masking": "X-ABS changed stones in OE cells (W483b8c31/f0, W6eb945cc/f0, Wb49b6a5f/f1; agreement 0.0 -> 1.0): developmental machinery NOT shown fine",
+  "fallback_off_on_xabs_seed0": "9/15 (R1_ACQUISITION 6); A1-C: seed-0 LO label unchanged (agree)",
+  "compute_core_h": 2.84,
+  "reproduction": "off_frozen 7/15 = frozen E3-KP; off_xabs 9/15 reproduced",
+  "claim_limits": "runs/e3r_production/E3R_RESULT.json claim_limits (may_not_claim: TFS1 relabel, E3 gate, COMPOSITIONAL_DISCOVERY, X-ABS generality, 'developmental machinery fine', CHANGE over MIGRATE)"
+ },
+ "closed_utc": "2026-10-11T13:44Z",
+ "close_report": "roles/Aphrodite/beta04/SYNTHESIS.md",
+ "final_labels": {
+  "WORLD_DEMAND_QUALIFIED": "NO",
+  "REACHABILITY_ATLAS_COMPLETE": "YES",
+  "TFS1_INSTRUMENT_QUALIFIED": "NO",
+  "FRONTIER_ARCHIVE_EFFECT": "INCONCLUSIVE",
+  "COMPOSITIONAL_DISCOVERY": "INSTRUMENT_UNVALIDATED",
+  "DEVELOPMENTAL_INHERITANCE": "INSTRUMENT_UNVALIDATED",
+  "SECOND_ORDER_ACQUISITION": "INSTRUMENT_UNVALIDATED",
+  "ECONOMIC_ADVANTAGE": "INSTRUMENT_UNVALIDATED"
+ },
+ "recommendation": "CHANGE_SEARCH_OR_DEVELOPMENTAL_MACHINERY (keep TFS-1). First demonstrated failure: stepping-stone ACQUISITION (search coverage + extraction non-invariance; world dev-gap 1/4). E3-R frozen class SEARCH (MAJORITY, one-family margin); seed-robust qualification needed OE + X-ABS. Next: stone discovery without supplied decomposition (not R8)."
+}

@@ -1,0 +1,18 @@
+C-018-T040 INTEGRATION_READY -- Pallas[harry1-d78f77ce], claude-fable-5-1, 2026-10-12 ~13:15Z
+Branch pallas/c018-t040 (base 9e51c80b3). Report: rso/aether/challenge/REPORT.md. Receipt: ops/campaigns/C-018/tasks/C-018-T040/attempts/A-001/RECEIPT.json.
+
+MODEL CONTINUITY: claude-fable-5-1 at comms boot; no harness message reported a change during the session. Please verify from the launch log (directive s9); I claim nothing beyond that.
+
+Set committed 3cc94b838 (11:39:09Z) before any outcome; post-hoc E1h/E3h predictions 9160c952e before they ran. 26 checks: 7 AS_EXPECTED, 3 RECORDED, 9 SURVIVOR, 7 NOT_AS_PREDICTED (each reported with its value).
+
+CLOSED / NOT CLOSED:
+- EVIDENCE CHAIN NOT CLOSED: (B6) analyse() takes its design pin from FROZEN.json and never runs the freeze check -> a re-sealed 5-shard design with the pin rewritten analysed COMPLETE and printed ANCESTRY_WITH_CONTENT, while freeze.mismatches() said 'design manifest differs'. (B5) 64 rows / 5 distinct units are COMPLETE; only the first-seed replay caught a substituted row; copies inflate the reach count and leak into the decoder's training set (0.112 vs 0.012). (B1) the tree's parent/gen/type are producer fields tree_check never reads and the replay never compares: INSUFFICIENT->CONFIRMED (invariants respected), NO_CUT->NONSPECIFIC (one type byte). (E5/E1h/E3h) the analyser's three guards are unpinned by the suite.
+- INSTRUMENT NOT CLOSED on the N rule (B8): clamping the second-ranked non-ancestor flips NONSPECIFIC->CONFIRMED in 2 of 4 evaluable units; in both the rule's N diverged at tick 1, before B (tick 4), and removed 100% of targets; the next candidate 0%. The rule prefers the site most likely to be an unattributed upstream contributor of B.
+- INFERENCE NOT CLOSED (B2/B3): no status for too few evaluable units (all-NO_CUT -> NEITHER / CONTENT_WITHOUT_INTERVENTIONAL_ANCESTRY; need counts NO_CUT); native incidence on my seeds RX 13 NO_CUT + 4 INSUFFICIENT of 24 (7 evaluable, 3 CONFIRMED at r>=2 = the need at n 24; need is 5 at n 48), V1 0 evaluable of 8; conditioned content is radius-only (5 CONFIRMED at chance + 43 NO_CUT decodable -> ANCESTRY_WITH_CONTENT).
+- Native behaviour of recorder/evaluator SOUND: 32/32 units bound, tree cross-checked, light cone, t0 identity, invariants; replay bit-exact incl. the tree; null -0.0004; the first native CONFIRMED/NONSPECIFIC/NOT_INTERVENTIONAL readings exist.
+
+Repair round (REPORT s5, ranked): analyse() freeze check first; refuse duplicate arrays_sha256 + compare the tree in the replay + no law summary on refusal; tree invariants; one test per guard; need over evaluable units + ANCESTRY_UNEVALUABLE (prereg change); N rule ftick(B) <= ftick(N) <= min ftick(targets) or two non-ancestors (prereg change, re-freeze v1.1.0); report CONFIRMED-only conditioned excess. Result text requirements: REPORT s4.4. Registry proposals: s8.
+
+Misses: S2 (builder red harness line-ending sensitive; the 4 blocked mutants verified KILLED), N1 (3-3 modal tie), B4n (late-N vacuity: no native incidence), B8 (worse than predicted), E1/E3 (witness blocked by the design's source pin, builder's favour; moved post-hoc), E2 (my witness shape). Harness: one crash fixed (d067e1b0d), outcomes/ instead of results/ (gitignored), one call overran 600 s and was backgrounded by the harness (completed, files restored).
+
+Cost: ~125 min wall, ~1.1 core-h, <= 2 processes, 0 paid, 0 Aether requests, nothing on M2, no confirmatory seed, no RELEASE.json. Scratch 110 MB at C:/Prometheus-worktrees/pallas-scratch-c018/.

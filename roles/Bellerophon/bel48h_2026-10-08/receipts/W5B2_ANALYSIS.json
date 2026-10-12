@@ -1,0 +1,65 @@
+{
+ "n": 400,
+ "voids": 0,
+ "pairs": 200,
+ "origin_runs": {
+  "preserve": 9,
+  "zero": 7
+ },
+ "wilson": {
+  "preserve": [
+   0.0239,
+   0.0833
+  ],
+  "zero": [
+   0.0171,
+   0.0705
+  ]
+ },
+ "mcnemar": {
+  "preserve_only": 8,
+  "zero_only": 6,
+  "p": 0.790527
+ },
+ "causes": {
+  "preserve": {
+   "UPTAKE": 4,
+   "BORN_ASSEMBLY": 1,
+   "MUTATION": 3,
+   "SELF_CONSTRUCT": 1
+  },
+  "zero": {
+   "SELF_MOVE": 1,
+   "BORN_ASSEMBLY": 1,
+   "MUTATION": 4,
+   "UPTAKE": 1
+  }
+ },
+ "pathways": {
+  "preserve": {
+   "ASSEMBLY": 5,
+   "INCREMENTAL": 1,
+   "SINGLE_STEP_FROM_NOTHING": 3
+  },
+  "zero": {
+   "ATOMIC": 2,
+   "ASSEMBLY": 2,
+   "SINGLE_STEP_FROM_NOTHING": 2,
+   "INCREMENTAL": 1
+  }
+ },
+ "uptake_bytes_total": {
+  "preserve": 647956,
+  "zero": 195595
+ },
+ "extinct": {
+  "preserve": 142,
+  "zero": 151
+ },
+ "W5-P4": {
+  "holds": false,
+  "preserve_only": 8,
+  "zero_only": 6,
+  "p": 0.790527
+ }
+}

@@ -1,0 +1,290 @@
+[
+ {
+  "id": "O1",
+  "file": "rso/z80/observe.py",
+  "find": "and all(a[\"nbr_mask\"][k] and a[\"nbr_window\"][k] == win[k] for a in alts) else \"K\"",
+  "replace": "else \"K\"",
+  "what": "P ignores the counterfactual",
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
+ },
+ {
+  "id": "O2",
+  "file": "rso/z80/observe.py",
+  "find": "\"P\" if res0[\"nbr_mask\"][k] and all(",
+  "replace": "\"P\" if all(",
+  "what": "unwritten (kept) bytes count as parent-written",
+  "expect": "test_counterfactual_tags_per_byte"
+ },
+ {
+  "id": "O3",
+  "file": "rso/z80/observe.py",
+  "find": "\"M\" if child[k] != win[k] else",
+  "replace": "\"M\" if False else",
+  "what": "copy noise not tagged",
+  "expect": "test_counterfactual_tags_per_byte"
+ },
+ {
+  "id": "O4",
+  "file": "rso/z80/observe.py",
+  "find": "p, \"R\" * G)",
+  "replace": "p, \"P\" * G)",
+  "what": "runner births tagged parent-written",
+  "expect": "test_external_child_is_runner_written"
+ },
+ {
+  "id": "O5",
+  "file": "rso/z80/observe.py",
+  "find": "src = \"S\" if supplied else \"R\"",
+  "replace": "src = \"S\"",
+  "what": "random founders recorded as supplied",
+  "expect": "test_origin_reads_founder_bytes"
+ },
+ {
+  "id": "O6",
+  "file": "rso/z80/observe.py",
+  "find": "bytes(alt(b) for b in nbr)",
+  "replace": "bytes(nbr)",
+  "what": "counterfactual does not alter the pre-window",
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
+ },
+ {
+  "id": "O7",
+  "file": "rso/z80/observe.py",
+  "find": "tags[i] = \"\".join(\"M\" if a != b else t for a, b, t in zip(new, genomes[i], tags[i])); situ[i] = None",
+  "replace": "situ[i] = None",
+  "what": "background mutation not tagged",
+  "expect": "test_background_mutation_is_tagged_where_it_changed_bytes"
+ },
+ {
+  "id": "O8",
+  "file": "rso/z80/observe.py",
+  "find": "situ[i] = touched and all(T.score_case(tname, vm.execute(genomes[i], nbr, c",
+  "replace": "situ[i] = touched and all(T.score_case(tname, vm.execute(genomes[i], bytes(G), c",
+  "what": "situ probed with a zeroed, not the live, neighbour",
+  "expect": "test_situ_is_neighbour_dependence_not_luck"
+ },
+ {
+  "id": "O9",
+  "file": "rso/z80/observe.py",
+  "find": "situ[i] = touched and all(",
+  "replace": "situ[i] = touched and any(",
+  "what": "situ needs one probe case, not all",
+  "expect": "test_situ_is_neighbour_dependence_not_luck"
+ },
+ {
+  "id": "S1",
+  "file": "rso/z80/assay.py",
+  "find": "z = bytes(len(tape))",
+  "replace": "z = S.HOST()",
+  "what": "F0 probe with a live (host) neighbour",
+  "expect": "test_function_only_with_the_neighbour_is_environmental"
+ },
+ {
+  "id": "S2",
+  "file": "rso/z80/assay.py",
+  "find": "return all(T.score_case(S.TASK",
+  "replace": "return any(T.score_case(S.TASK",
+  "what": "F0 needs one case, not all",
+  "expect": "test_nonfunctional_is_unlabelled"
+ },
+ {
+  "id": "S3",
+  "file": "rso/z80/assay.py",
+  "find": "if f0(restrict(tape, tags, letter), cases):",
+  "replace": "if letter in tags:",
+  "what": "writer by presence, not sufficiency",
+  "expect": "test_sufficiency_order"
+ },
+ {
+  "id": "S4",
+  "file": "rso/z80/assay.py",
+  "find": "\"PRIM\"",
+  "replace": "\"PRIMK\"",
+  "what": "environment bytes never needed",
+  "expect": "test_sufficiency_order"
+ },
+ {
+  "id": "S5",
+  "file": "rso/z80/assay.py",
+  "find": "return \"ENV\" if situ else None",
+  "replace": "return \"ENV\"",
+  "what": "every non-F0 organism is ENV",
+  "expect": "test_nonfunctional_is_unlabelled"
+ },
+ {
+  "id": "S6",
+  "file": "rso/z80/assay.py",
+  "find": "2 * labels.count(top) > len(labels)",
+  "replace": "2 * labels.count(top) >= len(labels)",
+  "what": "plurality, not strict majority",
+  "expect": "test_run_class_is_a_strict_majority"
+ },
+ {
+  "id": "S7",
+  "file": "rso/z80/assay.py",
+  "find": "if claimed != [(o[\"cell\"], o[\"tape\"].hex(), o[\"gen\"]) for o in obs[\"final\"]]:",
+  "replace": "if False:",
+  "what": "no replay equality check",
+  "expect": "test_byte_and_physics_forgeries_are_refused"
+ },
+ {
+  "id": "S8",
+  "file": "rso/z80/assay.py",
+  "find": "src == \"S\" and f0(t, cases)",
+  "replace": "f0(t, cases)",
+  "what": "a lucky random founder counts as insertion",
+  "expect": "test_origin_reads_founder_bytes"
+ },
+ {
+  "id": "S9",
+  "file": "rso/z80/assay.py",
+  "find": "cls=run_class(labels), n_func",
+  "replace": "cls=run_class(labels) if rec[\"spec\"].get(\"init\") != \"random\" else \"ENDO\", n_func",
+  "what": "the class reads the spec's init label",
+  "expect": "test_label_forgeries_change_nothing"
+ },
+ {
+  "id": "N1",
+  "file": "rso/z80/analysis.py",
+  "find": "if n <= 0 or tail_le(n, 0, bound) > alpha:",
+  "replace": "if n <= 0:",
+  "what": "no power floor",
+  "expect": "test_w_max_is_the_exact_binomial_threshold"
+ },
+ {
+  "id": "N2",
+  "file": "rso/z80/analysis.py",
+  "find": "and r[key] != \"NONE\"]",
+  "replace": "]",
+  "what": "non-functional runs stay in the denominator",
+  "expect": "test_nonfunctional_runs_leave_the_denominator"
+ },
+ {
+  "id": "N3",
+  "file": "rso/z80/analysis.py",
+  "find": "sum(r[key] != c for r in R)",
+  "replace": "sum(r[key] not in (c, \"MIXED\") for r in R)",
+  "what": "MIXED not counted as wrong",
+  "expect": "test_mixed_counts_as_wrong"
+ },
+ {
+  "id": "N4",
+  "file": "rso/z80/analysis.py",
+  "find": " or r[\"origin\"] != r[\"source_origin\"]",
+  "replace": "",
+  "what": "label forgeries may move the origin",
+  "expect": "test_one_label_forgery_that_moves_the_origin_fails"
+ },
+ {
+  "id": "N5",
+  "file": "rso/z80/analysis.py",
+  "find": "r[\"cls\"] != \"REFUSED\" or r[\"refused\"] != \"REPLAY_MISMATCH\"",
+  "replace": "r[\"refused\"] == \"UNSUPPORTED\"",
+  "what": "an unrefused byte forgery passes",
+  "expect": "test_one_unrefused_forgery_fails"
+ },
+ {
+  "id": "N6",
+  "file": "rso/z80/analysis.py",
+  "find": "if not R or bad:",
+  "replace": "if bad:",
+  "what": "a missing forgery kind passes",
+  "expect": "test_a_missing_forgery_kind_fails"
+ },
+ {
+  "id": "N7",
+  "file": "rso/z80/analysis.py",
+  "find": "baseline_passes = [b for b, q in Q4.items() if all(t[\"pass\"] for t in q.values())]",
+  "replace": "baseline_passes = []",
+  "what": "baselines never checked",
+  "expect": "test_a_baseline_that_passes_q1_makes_the_set_uninformative"
+ },
+ {
+  "id": "N8",
+  "file": "rso/z80/analysis.py",
+  "find": "if failed:",
+  "replace": "if failed and not unpowered:",
+  "what": "underpowered hides a failure",
+  "expect": "test_failure_outranks_underpowered"
+ },
+ {
+  "id": "N9",
+  "file": "rso/z80/analysis.py",
+  "find": "sum(r[\"origin\"] != r[\"origin_gt\"] for r in R2)",
+  "replace": "0",
+  "what": "origin never scored",
+  "expect": "test_origin_errors_fail"
+ },
+ {
+  "id": "R1",
+  "file": "rso/z80/observe.py",
+  "find": "else \"K\" if reads else",
+  "replace": "else",
+  "what": "a parent that read the window may still write P bytes (the v1.0.0 tag)",
+  "expect": "test_a_parent_that_reads_the_window_writes_no_parent_byte"
+ },
+ {
+  "id": "R2",
+  "file": "rso/z80/observe.py",
+  "find": "reads = res0[\"reads_nbr\"] > 0",
+  "replace": "reads = res0[\"reads_nbr\"] > 0 or res0[\"exec_foreign\"] > 0",
+  "what": "foreign execution (a parent running its own fresh copy) forces K",
+  "expect": "test_running_into_its_own_fresh_copy_stays_parent_written"
+ },
+ {
+  "id": "R3",
+  "file": "rso/z80/assay.py",
+  "find": "\"ENDO\" if f0(written, cases) else \"ENV\"",
+  "replace": "\"ENDO\"",
+  "what": "the recipe reader has no ENV output",
+  "expect": "test_recipe_reader_reads_the_construction"
+ },
+ {
+  "id": "R4",
+  "file": "rso/z80/analysis.py",
+  "find": "BASELINES = (\"b1\", \"b2\", \"b4\")",
+  "replace": "BASELINES = (\"b1\", \"b2\")",
+  "what": "the recipe reader is not a Q4 baseline",
+  "expect": "test_the_recipe_reader_is_a_registered_baseline"
+ },
+ {
+  "id": "R5",
+  "file": "rso/z80/subjects.py",
+  "find": "if i < 10 else BASE2[part]",
+  "replace": "if True else BASE2[part]",
+  "what": "arm 10 seeds overlap the next partition",
+  "expect": "test_partitions_are_disjoint_from_every_registered_namespace"
+ },
+ {
+  "id": "E1_ONE_COUNTERFACTUAL",
+  "file": "rso/z80/observe.py",
+  "find": "(lambda b: b ^ 0xFF, lambda b: (b + 0x55) & 255)",
+  "replace": "(lambda b: b ^ 0xFF,)",
+  "what": "the P tag's counterfactual uses the complement pre-window only (the +0x55 sample dropped) (challenge/edits.json, verbatim)",
+  "expect": "test_both_counterfactual_samples_are_load_bearing"
+ },
+ {
+  "id": "E2_NOP_FILLER_0x1E",
+  "file": "rso/z80/assay.py",
+  "find": "return bytes(b if t in letters else 0 for b, t in zip(tape, tags))",
+  "replace": "return bytes(b if t in letters else 0x1E for b, t in zip(tape, tags))",
+  "what": "sufficiency restriction fills non-writer bytes with the other NOP opcode (30) instead of 0 (PREREGISTRATION s11.6: zero = NOP is a choice) (challenge/edits.json, verbatim)",
+  "expect": "test_the_sufficiency_filler_is_zero"
+ },
+ {
+  "id": "E3_REFUSED_LEAVES_DENOMINATOR",
+  "file": "rso/z80/analysis.py",
+  "find": "R = [r for r in rows if not r[\"forgery\"] and r[\"gt\"] == c and r[key] != \"NONE\"]",
+  "replace": "R = [r for r in rows if not r[\"forgery\"] and r[key] not in (\"NONE\", \"REFUSED\") and r[\"gt\"] == c]",
+  "what": "Q1 drops unforged records the instrument REFUSED instead of counting them as wrong (PREREGISTRATION s5: 'MIXED, OTHER, REFUSED included') (challenge/edits.json, verbatim)",
+  "expect": "test_an_unforged_refusal_counts_as_wrong"
+ },
+ {
+  "id": "E5_COUNTERFACTUAL_EMPTY_INPUT",
+  "file": "rso/z80/observe.py",
+  "find": "return [vm.execute(tape, bytes(alt(b) for b in nbr), case, step_cap, copy_prim, -1.0)",
+  "replace": "return [vm.execute(tape, bytes(alt(b) for b in nbr), (), step_cap, copy_prim, -1.0)",
+  "what": "the counterfactual re-executes the parent with an EMPTY input stream as well as an altered pre-window: P would then also require input-independence (challenge/edits.json, verbatim)",
+  "expect": "test_the_counterfactual_keeps_the_parents_input"
+ }
+]

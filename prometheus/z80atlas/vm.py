@@ -78,15 +78,24 @@ class Trace:
     win_prov: Dict[int, Tuple[Optional[int], int, int]] = field(default_factory=dict)
     pcs: Optional[set] = None                                  # executed PCs (only when execute(trace_pcs=True))
     regs_out: Optional[tuple] = None                           # (A, B, C, D, S, T, Z, CF) at exit (register-world axis)
+    # multi-hop material origin (2026-10-08, DEF-BEL-008 repair after adversarial review A; measurement only): origin[addr]
+    # = the PRE-EXECUTION address whose byte addr now holds, None = constructed; absent = untouched (its own byte). A byte
+    # moved by a copy op OR through register A (LD A,(S)/(T) then LD (T)/(S),A) keeps its origin across any number of
+    # moves; any other write constructs. win_origin[offset] = origin of each written window byte at exit.
+    origin: Dict[int, Optional[int]] = field(default_factory=dict)
+    win_origin: Dict[int, Optional[int]] = field(default_factory=dict)
 
 
 COPY_OPS = frozenset((LDI, LDIR, COPYALL))
+_A_LOADS = frozenset((LD_A_pS, LD_A_pT))
+_A_WRITERS = frozenset((LD_A_n, ADD_A_B, SUB_A_B, INC_A, DEC_A, XOR_A_B, AND_A_B, OR_A_B, ADD_A_n, SHL_A, SHR_A,
+                        LD_A_B, LD_A_C, LD_A_S, LD_A_T, LD_A_D, SWAP_A_B, IN_A))
 
 
 def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], region: Optional[Tuple[int, int]] = None,
             allow_copyall: bool = False, cost_per_step: int = 1, strict_budget: bool = False, prov_L: Optional[int] = None,
             ldir: str = "on", undefined: str = "NOP", trace_pcs: bool = False, stop_at_first_out: bool = False,
-            regs: Optional[tuple] = None) -> Trace:
+            regs: Optional[tuple] = None, origin: Optional[Dict[int, Optional[int]]] = None) -> Trace:
     """Run from `entry` for at most `budget` steps. `region` restricts the PC to [lo, hi) (the SEPARATED layout):
     leaving it halts. Undefined opcodes are NOP (1 step). Returns the Trace; `mem` is mutated in place.
     strict_budget (physics v2): COPYALL executes only if its L//8 step cost fits the remaining budget (v1 overran it).
@@ -99,7 +108,9 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
     whose score reads only the first output and the first IN/OUT steps -- all fixed at that point. Never used by the
     world's own executions (default False keeps every historical trace unchanged).
     regs (2026-09-30, register-world axis, E-BEL-REPL-01): entry state (A, B, C, D, S, T, Z, CF); None = all zero, the
-    historical and default behaviour. The exit state is recorded in Trace.regs_out either way."""
+    historical and default behaviour. The exit state is recorded in Trace.regs_out either way.
+    origin (2026-10-08): the origin map left by a previous execution on the SAME memory (the SEPARATED layout's second
+    half), so material origin survives across the two calls; measurement only."""
     if regs is None:
         A = B = C = D = S = T = 0
         Z = False; CF = False
@@ -107,6 +118,10 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
         A, B, C, D, S, T = (int(x) & 0xFF for x in regs[:6]); Z = bool(regs[6]); CF = bool(regs[7])
     pc = entry & 0xFF
     tr = Trace()
+    orig = tr.origin
+    if origin:
+        orig.update(origin)
+    a_orig: Optional[int] = None                                   # origin of the byte register A holds (None = computed)
     if trace_pcs:
         tr.pcs = set()
     inp = list(inputs); ip = 0
@@ -131,8 +146,9 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
         npc = (pc + 1 + n) & 0xFF
         cur_pc = pc
 
-        def W(addr: int, v: int, src: Optional[int] = None) -> None:
+        def W(addr: int, v: int, src: Optional[int] = None, morig: Optional[int] = None) -> None:
             addr &= 0xFF
+            orig[addr] = orig.get(src, src) if src is not None else morig
             if pw <= addr < 2 * pw:
                 tr.win_prov[addr - pw] = (src, cur_pc, op)
             if IN_BASE <= addr < OUT_BASE and mem[addr] != (v & 0xFF):
@@ -158,10 +174,12 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
         elif op == LD_T_n: T = arg
         elif op == LD_A_pS:
             A = mem[S]; tr.neighbour_reads += 1 if nb_lo <= S < nb_hi else 0
+            a_orig = orig.get(S, S)
         elif op == LD_A_pT:
             A = mem[T]; tr.neighbour_reads += 1 if nb_lo <= T < nb_hi else 0
-        elif op == LD_pT_A: W(T, A)
-        elif op == LD_pS_A: W(S, A)
+            a_orig = orig.get(T, T)
+        elif op == LD_pT_A: W(T, A, None, a_orig)
+        elif op == LD_pS_A: W(S, A, None, a_orig)
         elif op == LDI:
             v = mem[S]; W(T, v, S)
             if nb_lo <= T < nb_hi: tr.copy_events += 1
@@ -237,8 +255,11 @@ def execute(mem: bytearray, L: int, entry: int, budget: int, inputs: List[int], 
             elif op == LD_A_D: A = D
             else: A, B = B, A
         # undefined opcode: NOP
+        if op not in _A_LOADS and op in _A_WRITERS:
+            a_orig = None                                          # A now holds a computed value
         pc = npc
     tr.regs_out = (A, B, C, D, S, T, Z, CF)
+    tr.win_origin = {off: orig.get(pw + off, pw + off) for off in tr.win_prov}
     return tr
 
 

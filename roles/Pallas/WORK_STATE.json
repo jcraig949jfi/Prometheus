@@ -2,46 +2,43 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Pallas",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive 2026-10-07 (C-004-OP8, roles/Palamedes/prompts/2026-10-07_rso_completion_push/01_OPERATOR_DIRECTIVE_verbatim.md) s6 and s10 (same-seat relaunch); Palamedes launch note 2026-10-07 13:40Z (roles/Palamedes/prompts/2026-10-07_wake_pallas_c010_t034/WAKE_Pallas.md: C-010-T034, headless, no run_in_background)",
-  "updated_at_utc": "2026-10-07T14:50:00Z",
-  "state": "READY",
-  "branch": "pallas/c010-t034",
-  "base_sha": "8b46e44a5",
-  "head_sha": "the commit carrying this file (branch; merged origin/main 5b4b75247 at f9d3866ee)",
-  "worktree_path": "C:/Prometheus-worktrees/pallas-c010-t034",
-  "model": "claude-fable-5-1",
+  "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); operator directive OBSERVATORY GENERATION 4, 2026-10-12 s9/s13 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md); Palamedes wake note 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/wake_pallas_c-018-t040/WAKE_Pallas.md: headless, no run_in_background, <= 2 processes, Aether/ read-only, branch rule, only state commits to main)",
+  "updated_at_utc": "2026-10-12T13:15:00Z",
+  "state": "INTEGRATION_READY",
+  "branch": "pallas/c018-t040",
+  "base_sha": "9e51c80b330156160649695f9e8130f65a54f154",
+  "head_sha": "the commit carrying this file (branch pallas/c018-t040; set 3cc94b838, harness fix d067e1b0d, first results + post-hoc predictions 9160c952e, report after it)",
+  "worktree_path": "C:/Prometheus-worktrees/pallas-c018-t040",
+  "model": "claude-fable-5-1 recorded at comms boot 11:11Z; no harness message reported a different model during the session (REPORT s0); the coordinator verifies continuity from the launch log",
   "capability_class": "Q3",
   "host": "harry1 (M4; not M1, EW_DB_HOST=192.168.1.202), headless",
-  "instance": "harry1-dc8e608d",
-  "session_start_utc": "2026-10-07T13:36:00Z (comms boot)",
-  "current_objective": "RSO Builder Cell: all three campaigns of the completion push are closed (C-004 incomplete, C-009 scoped, C-010 witness executed). No READY packet exists for this seat.",
-  "current_step": "idle on Opus 5 (Q2). Completion push DONE at about 14.3 h of 72 (#1845). C-010 witness: instrument QUALIFIED, S4 and S15 both NEGATIVE (Palamedes's figures, not this instance's measurement).",
+  "instance": "harry1-d78f77ce",
+  "session_start_utc": "2026-10-12T11:11:00Z (comms boot)",
+  "current_objective": "C-018-T040: Q3 challenge of FREEZE_AETHER_ANCESTRY_CONTENT v1.0.0 -- DONE; report rso/aether/challenge/REPORT.md",
+  "current_step": "INTEGRATION_READY. 26 checks: 7 AS_EXPECTED, 3 RECORDED, 9 SURVIVOR, 7 NOT_AS_PREDICTED (each with its value). EVIDENCE CHAIN NOT CLOSED (B6 analyse never runs the freeze check: re-sealed 5-shard design -> ANCESTRY_WITH_CONTENT; B5 duplicates COMPLETE; B1 tree parent/gen/type trusted; E5/E1h/E3h guards unpinned). INSTRUMENT NOT CLOSED on the N rule (B8: 2 of 4 flip NONSPECIFIC->CONFIRMED under the second-ranked N; the rule's N diverged before B). INFERENCE NOT CLOSED (B2 no unevaluable status; native RX 13 NO_CUT + 4 INSUFFICIENT of 24, V1 0 evaluable; B3 radius-only conditioning). Recorder/evaluator native behaviour sound (32/32 bound, light cone, t0, invariants; replay bit-exact incl. tree). One bounded repair round recommended (REPORT s5).",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
-  "next_expected_milestone": "none. C-010-T040 (positive-candidate replication) is PROPOSED FOR THE OPERATOR, not READY; if the operator opens it, the Pallas challenge that follows would be Q3 and need a Fable instance.",
-  "expected_next_artifact": "none",
-  "threads": [
-    "phase3-rso"
-  ],
-  "campaigns": [
-    "C-004",
-    "C-009",
-    "C-010"
-  ],
+  "next_expected_milestone": "Palamedes integrates C-018-T040; owner's repair round (items 5-6 are preregistration changes -> v1.1.0 re-freeze); short Q3 re-check packet if opened; then RELEASE.json and the confirmatory run (k = 0x2000+i, never by this seat)",
+  "expected_next_artifact": "none from this seat unless a re-check packet is opened",
+  "threads": ["phase3-rso"],
+  "campaigns": ["C-004", "C-009", "C-010", "C-013", "C-016", "C-017", "C-018"],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "hourly: git fetch; MERGE origin/main by SHA; comms sync Pallas; workgraph ready Pallas",
-    "no self-assignment; claim only a packet this runtime meets (Q2)"
+    "none; seat idle after INTEGRATION_READY. A future session boots from roles/Pallas/WAKE.md or a Palamedes wake prompt",
+    "challenge seed ranges used by Pallas: 16_350_001..16_359_999 (C-016-T040), 16_360_001..16_369_999 (C-016-T042), 17_040_001..17_049_999 (C-017-T040), 17_070_001..004 (C-017-T042); Aether adapter k = 0x3000..0x3017 RX, 0x3000..0x3007 V1 executed and 0x3100..0x31FF as label-only names on forged copies (C-018-T040); the next Aether packet declares a fresh disjoint range; never 0x2000..0x202F (confirmatory) or 0x1000..0x10FF (burned)",
+    "tooling: long heredocs fail in the harness shell (a 78-line python heredoc aborted the whole command) -> Write/Edit tools; `results/` is gitignored in this repo; a forged design pins the analyser's own source hash, so a mutated confirm.py is SOURCE_MISMATCH unless the design is re-sealed; keep every foreground call under 600 s by reusing earlier baselines instead of replaying; python -B, purge __pycache__, restore mutants byte for byte (sha256 + git diff --quiet) and freeze check after each"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Pallas/journal/2026-10-06.md",
-    "rso/slice001/challenge/R2/REPORT.md",
-    "roles/Pallas/comms/POLL_ORDER_OBSERVATION_2026-10-07.md"
+    "rso/aether/challenge/REPORT.md",
+    "rso/aether/challenge/CHALLENGE_SET.md",
+    "rso/aether/challenge/results.jsonl",
+    "rso/z80/challenge/R2/REPORT.md",
+    "roles/Pallas/journal/2026-10-12.md"
   ],
-  "last_push_sha": "the commit carrying this file (branch pallas/c010-t034); state commits on main: 27b3d2f82 (claim), 5b4b75247 (IMPLEMENTING), then GREEN and INTEGRATION_READY with receipt A-001",
-  "last_push_utc": "2026-10-07T14:50:00Z"
+  "last_push_sha": "the commit carrying this file (branch pallas/c018-t040); state commits on main: cdea3c8bd (claim), 0a478e424 (IMPLEMENTING), then INTEGRATION_READY with receipt A-001",
+  "last_push_utc": "2026-10-12T13:15:00Z"
 }

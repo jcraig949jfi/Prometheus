@@ -1,0 +1,32 @@
+{
+ "schema": "prometheus.pallas.challenge_expected.v1",
+ "task": "C-016-T042",
+ "surface": "FREEZE_ENSORAIN v1.1.0 (FROZEN.json fcfe67ce, 34 files; code 6fff93af9; amendment 030f1746f; re-freeze ebe4860c1) at base 28b5c5e1c",
+ "seeds": "R2 16_360_001..16_369_999 (subjects_r2.R2_RANGE); scored cases R2_0+0..199; witnesses R2_0+3000..; draws check R2_0+4000..; no-switch probes R2_0+5000..",
+ "cases": {
+  "S1_FREEZE_HASHES_ORDER": {"kind": "sound", "predict": "34/34 pins recomputed equal (blob and disk, LF); FROZEN.json LF sha256 fcfe67ce...; no mismatches; 030f1746f ancestor of ebe4860c1 with an earlier committer time; ebe4860c1 ancestor of HEAD", "scored_if_held": "AS_EXPECTED"},
+  "S2_THRESHOLDS": {"kind": "sound", "predict": "k_pos 217 / 371 at N=400, 113 / 188 at N=200 from first principles = frozen code; edges 216/370 fail; power_revised reproduces DEV_CHECK power within .001", "scored_if_held": "AS_EXPECTED"},
+  "S3_NOISE_ARM_DRAWS": {"kind": "sound", "predict": "reference, 5 seeds: episodes identical block for block between full and noise arms; sw equal; noise theta move <= 1e-6; full theta move >= 0.3", "scored_if_held": "AS_EXPECTED"},
+  "S4_DEV_REPRODUCE": {"kind": "sound", "predict": "26,400 rows, rows_sha256 b54c751b0796bc58d6dd04f4ddd69deaba879e5f4925757ecf8aab3e85e0f830", "scored_if_held": "AS_EXPECTED"},
+  "GR5_BOUND": {"kind": "sound", "predict": "180 zero lives: G_R5 False, REVISION_WITHOUT_RETAINED_COMPETENCE; 30 zero: False; 29 zero: True, REVISION_HISTORY_DEPENDENT; all lives at 178/200: False; at 180/200: True", "scored_if_held": "AS_EXPECTED", "bearing": "NONE (the bound means what s5.2 says)"},
+  "B3_GR5_RERUN": {"kind": "rerun", "predict": "REVISION_WITHOUT_RETAINED_COMPETENCE, G_R5 False, 220 retained", "scored_if_held": "AS_EXPECTED"},
+  "B1_JITTER_RERUN": {"kind": "rerun", "predict": "REVISION_NOT_SHOWN; K1_noise exactly 0:0:200; K1 vs frozen alone p < .05; Holm K2 > .05; G_PRE, G_R5 hold; >= 55% of its full-arm revised lives have sw >= 7", "scored_if_held": "AS_EXPECTED"},
+  "S5_LEARNS_PRE_RERUN": {"kind": "rerun", "predict": "REVISION_HISTORY_DEPENDENT; pre >= 170; K1_noise wins >= 100, losses <= 3", "scored_if_held": "AS_EXPECTED"},
+  "P3_INNATE_ZERO_RERUN": {"kind": "rerun", "predict": "REVISION_HISTORY_DEPENDENT; Holm K2 <= .05", "scored_if_held": "AS_EXPECTED"},
+  "B2_INNATE_MAX_RERUN": {"kind": "rerun", "predict": "REVISION_HISTORY_DEPENDENT", "scored_if_held": "AS_EXPECTED"},
+  "REF200_KNOWN_ANSWER": {"kind": "comparator", "predict": "REVISION_HISTORY_DEPENDENT", "scored_if_held": "RECORDED"},
+  "WK_WALKER": {"kind": "broken", "surface": "inference", "predict": "G_PRE holds (pre >= 140/200); G_R5 fails (retained <= 5); K1 vs frozen and vs noise each >= 25 wins, <= 2 losses; Holm K2 > .05; verdict REVISION_WITHOUT_RETAINED_COMPETENCE; noswitch late-majority lives <= 170; instrument_ok", "scored_if_held": "SURVIVOR (any REVISION_* verdict)", "bearing": "NARROWING: a REVISION_* label without K2 is consistent with law-blind drift; the result must print the noswitch count beside it and must not read 'revises' for such a subject; limitation for family S"},
+  "RT_RATCHET": {"kind": "probe", "surface": "interpretation", "predict": "REVISION_NOT_HISTORY_DEPENDENT; pre >= 195; G_R5 holds; K1 and K1_noise >= 40 wins, 0 losses; Holm K2 > .05; noswitch late-majority >= 195; theta never moves in 40 no-switch lives", "scored_if_held": "RECORDED"},
+  "TN5_REF_TINY_1e-5": {"kind": "semantic", "surface": "instrument", "predict": "full and noise rows identical on all 200 seeds; K1_noise 0:0:200; verdict REVISION_NOT_SHOWN", "scored_if_held": "SURVIVOR", "bearing": "limitation s11.4 restated: ETA_NOISE is absolute, the comparator is not scale-invariant; a false negative only; family S's smallest eta is .059 so it does not bite this run"},
+  "TN4_REF_TINY_1e-4": {"kind": "probe", "surface": "instrument", "predict": "noise arm revised in > 0 lives (a slow learner); verdict still REVISION_*", "scored_if_held": "RECORDED"},
+  "FS_FAMILY_S_STRUCTURE": {"kind": "broken", "surface": "interpretation", "predict": "family_s = [006, 007, 008]; plastic node live from ACT: 006 True, 007 False, 008 False; searched_dead admitted", "scored_if_held": "SURVIVOR", "bearing": "family S has one subject whose plastic parameter reaches its scored action; 007 and 008 are parameter-free in effect; Holm over 6 wastes power; search accessibility must count 1 testable and 7 not; the result must say so"}
+ },
+ "edits": {
+  "baseline": "GREEN, 33 tests",
+  "RED_on_named_test": ["E1_HOLM_BYPASS", "E2_GPRE_ARM", "E3_LATE_WINDOW", "E4_SWAP_CONTROLS", "E6_GATE_MAJORITY", "R1_K1_WITHOUT_NOISE_ARM", "R2_GR5_CHANCE_HALF", "R3_P1_NO_ISFINITE", "R4_ENDPOINT_LATE_ONLY", "R5_FAMILY_S_ALL_SEARCHED", "R6_NOISE_ARM_KEEPS_ETA"],
+  "KILLED_by_suite_control": ["E5_FROZEN_IS_PLASTIC"],
+  "hash_guard_fires_on_every_mutant": true,
+  "freeze_ok_after_every_restore": true,
+  "witnesses_differ": {"E1_HOLM_BYPASS": "W1: original REVISION_NOT_SHOWN (Holm .081), mutant REVISION_NOT_HISTORY_DEPENDENT (raw .040)", "E2_GPRE_ARM": "W2: original G_PRE True, mutant False -> REFUSED_FIXED_PRIOR", "E3_LATE_WINDOW": "W3: (c_early, n_early, c_late, n_late) differ", "E4_SWAP_CONTROLS": "W4: original REVISION_NOT_SHOWN (K1 vs frozen ties), mutant REVISION_NOT_HISTORY_DEPENDENT (K1 vs shuffle 40:0)", "E6_GATE_MAJORITY": "W5: original REFUSED_FIXED_PRIOR (205 < 217), mutant REVISION_HISTORY_DEPENDENT"}
+ }
+}

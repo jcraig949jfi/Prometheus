@@ -1,0 +1,253 @@
++==============================================================================+
+| REVIEW PACKET -- PAN UNIT 1: INVENTORY, CATALOG, SEARCH, FRONTIER INTAKE     |
+| Author : Pan (data-modeler seat), instance m2-f20b5eac, SPECTREX5 (M2)       |
+| Model  : claude-opus-5-5                                                     |
+| Date   : 2026-10-09 (work 10:40Z-11:55Z)                                     |
+| For    : the operator (HITL) and external reviewers                          |
+| Status : BUILT + MEASURED. Retrieval v1 FAILS its frozen bar (held-out).     |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+Provenance grades used below:
+  [M] measured this session by a committed command, rows committed
+  [O] measured with an independent oracle (a second method agrees)
+  [E] estimate / arithmetic, not a measurement
+  [I] inherited from another seat's record, not re-checked
+
+------------------------------------------------------------------------------
+0. SUMMARY, MANDATE, VERDICT
+------------------------------------------------------------------------------
+Mandate (operator, verbatim charter, 2026-10-09): evaluate all data the
+program collects; design its organisation in PostgreSQL, pgvector, Apache
+Parquet and Apache Iceberg; give fast indices, vectors and consolidations so
+broad questions do not require an AI to scan the repository; support quick
+pivots after an experiment fails or succeeds; consume adjacent frontier
+research and locally runnable models (Hugging Face etc.); loop for at most
+three days; status reports and an operator question queue every ~6 h.
+
+Verdict for this unit:
+  - Inventory, catalog, commit index, chunk index, embeddings, Iceberg layer
+    and frontier intake are BUILT and populated [M].
+  - Retrieval quality is NOT yet good enough by the bar frozen before any
+    search ran: v1 hybrid recall@10 on a held-out set is 0.75, bar 0.80 [M].
+  - The cost being replaced is real: one ripgrep over the canonical checkout
+    took 333.9 s [M]; a ranked hybrid search takes ~2.6 s median [M].
+  - The unit spent 2.2 GB of the shared M1 cluster [M] and ~0.2 GPU-h [M].
+
+------------------------------------------------------------------------------
+1. WHAT WAS BUILT (and what was committed before measurement)
+------------------------------------------------------------------------------
+Package pan/ (repository root; python -m pan ...), schema pan + pan_iceberg
+on the M1 cluster (prometheus-canonical, identity-checked by system id before
+every connection).
+
+  migration 001  run, store, artifact, chunk (stored tsvector), embedding
+                 (real[] until pgvector), commit, commit_file, pg_relation,
+                 pg_column; pg_trgm installed WITH SCHEMA pan
+  migration 002  frontier_item, frontier_embedding, hf_model, intake_call
+  inventory.py   repo tree at a SHA; data roots; untracked files in the
+                 canonical checkout; SQLite/DuckDB sightings by header bytes;
+                 every relation and column of 3 databases
+  commits.py     git history with an oracle (rows == git rev-list --count)
+  chunker.py     git cat-file --batch -> heading/definition-aware chunks
+  embed.py       GPU embeddings, COPY into Postgres, Parquet shards in lake
+  search.py      fts (AND v0 / OR+coverage v1), vector (in-process), hybrid
+                 (reciprocal-rank fusion) + optional cross-encoder rerank,
+                 similar, cochange, tables
+  iceberg.py     PyIceberg SqlCatalog in pan_iceberg; data in the lake
+  frontier/      rate-limited client (every call logged), arXiv Atom intake,
+                 HF models with a 16 GB fit estimate, HF daily papers;
+                 seeds generated mechanically from the research report
+
+Committed BEFORE measurement (git order is the evidence):
+  1f005e0b1  22 known-answer queries, 2 nonsense, 1 plant, thresholds
+             (before any search over the catalog ran)
+  83781786a  20 held-out queries, frozen after v0 failed and before any v1
+             change was evaluated; v1 was tuned on the first set only
+
+------------------------------------------------------------------------------
+2. WHY IT MATTERS (the endpoint)
+------------------------------------------------------------------------------
+A seat asks "where did we test X / what came before this failure / which
+table holds Y / what outside work is like this" and gets path:lines at a SHA
+in seconds from any host. Without it, an agent greps or reads; measured cost
+of one grep over the canonical checkout on M2: 333.9 s [M], and a whole-tree
+pass (-uu) did not finish in 14 min and blocked git pushes [M].
+
+------------------------------------------------------------------------------
+3. INVENTORY (run inv-20261009T1054Z-spectrex5, 146.1 s) [M]
+------------------------------------------------------------------------------
+  store                                files/rels     bytes    newest
+  repository at d6b2eeeca                 73,037     4.0 GB   2026-10-09
+  canonical checkout, UNTRACKED (M2)     294,343   278.7 GB   2026-10
+  backup root (M2)                        46,438    38.4 GB   2026-04
+  C:/Prometheus-data (M2 NVMe)               517    14.9 GB   2026-09-29
+  M1 cluster: lmfdb / prometheus_fire / prometheus_sci: 345 relations,
+  4,323 columns; lmfdb ~392 GB; prometheus_fire 3,477 MB before Pan.
+
+  Untracked by month: April 256.8 GB, May 18.6 GB, Jun-Oct 2.7 GB.
+  Untracked by type: .jsonl 131.8 GB (66,259 files); .safetensors 75.0 GB;
+  .json 29.2 GB; .graphml 24.5 GB. Largest: cartography/convergence/data
+  128.8 GB in 134 files; cartography/lmfdb_dump 24.0 GB.
+  Git: 13,128 commits [O: equals rev-list --count]; 7,256 in September from
+  52 seat prefixes; only 22 percent of all commits carry a parseable
+  Seat[instance]: prefix (attribution is a lower bound).
+  SQLite/DuckDB sightings by magic bytes: live SFE ledger (36.9 MB), its
+  rollback and scratch copies, 3 sigma_kernel files, old agent DBs;
+  charon.duckdb 1.18 GB, noesis_v2.duckdb 20 MB. Three ".db" files are NOT
+  databases (headers say otherwise) -- the label/property gap, caught.
+
+------------------------------------------------------------------------------
+4. INDEX BUILD [M]
+------------------------------------------------------------------------------
+  chunks       62,645 files -> 394,952 chunks in 109 s (skipped: 8,703
+               non-text, 1,665 JSON > 64 KB, 2 > 4 MB, 22 binary)
+  embeddings   bge-small-en-v1.5 (384 d), 394,952 chunks in 558.3 s under
+               Fabric lease lse-42490c10cb2b (spectrex5:gpu0), released.
+               Qwen3-Embedding-0.6B measured at 34 chunks/s (3.3 GPU-h for
+               the catalog) vs bge-small 1,050/s -> not run in full.
+  commit index 13,128 commits, 143,310 file changes; artifact first/last
+               commit stamped in 14.7 s (first attempt cancelled at >5 min:
+               statistics-free nested-loop plan; fixed by ANALYZE first)
+  Iceberg      tests/test_iceberg.py 1 passed against the live catalog:
+               POSITIVE append round-trip; NEGATIVE time travel excludes
+               later rows; CHEAT a Parquet file planted in the table's data
+               directory outside Iceberg is invisible until committed;
+               EVOLVE added column reads back, null for old rows.
+               Defect found: PyIceberg 0.12.0 PyArrow FileIO breaks Windows
+               drive paths (WinError 123); fsspec FileIO used.
+
+------------------------------------------------------------------------------
+5. RETRIEVAL RESULTS (exact; thresholds never moved) [M]
+------------------------------------------------------------------------------
+Bars (frozen 1f005e0b1, from downstream need, not results): hybrid
+recall@10 >= 0.80 all; fts recall@10 >= 0.60 lexical; vector recall@10 >=
+0.60 paraphrase; nonsense -> 0 fts rows and vector top-1 < positives' p25;
+plant rank 1 fts / top 3 vector, absent after removal.
+
+  run (set)                 hybrid R@10   fts lex   vec para   R@1
+  v0 (dev, 22 q)            0.68 FAIL     0.58 F    0.40 F     0.32
+  v1 dev variants (dev, 22 q; selection only, cannot certify):
+    OR fts, no rerank       0.682         0.917     0.40       0.32
+    + MiniLM-L6 rerank      0.727                              0.27
+    + bge-reranker-base     0.636                              0.36
+    + bge-reranker-v2-m3    0.773                              0.23
+    m3, pool 100            0.636   <- deeper pool HURT
+    MiniLM, pool 100        0.682
+  v1 = m3 pool 30 (HELD-OUT, 20 q, single run):
+                            0.75 FAIL     0.80 pass 0.30 FAIL  0.45
+  NEGATIVE: vector pass (nonsense top-1 0.686 / 0.606 < p25 0.726);
+            fts FAIL under OR semantics (1 row; 3 of 8 lexemes matched).
+  CHEAT: pass (plant rank 1 by fts and by vector paraphrase; removed).
+  Latency (median, M2 -> M1): fts-AND 0.06-0.08 s; fts-OR 1.1-1.5 s;
+  vector 0.34 s; hybrid+m3 2.56 s.
+
+Failure SHAPE (not just the line): (a) AND semantics dropped long lexical
+queries (fixed by OR + coverage: lexical 0.58 -> 0.92 dev, 0.80 held-out);
+(b) the canonical document loses to documents that QUOTE it -- seat files
+restate base-role text, and a deeper candidate pool fed the reranker more
+quoting copies; (c) the small embedding model misses abstract paraphrases
+(answers at vector ranks 101, 215, absent).
+
+------------------------------------------------------------------------------
+6. FRONTIER INTAKE [M]
+------------------------------------------------------------------------------
+  arXiv     4,702 items from 13 topic + 16 author queries; 199/199 key ids
+            from the research report resolved; 33 calls, 0 errors; minimum
+            gap between calls 4.16 s (ToU 1 per 3 s; 75 percent rule 4 s)
+  HF papers 738 daily papers over 14 days; arXiv-id keyed (joinable)
+  HF models 1,503 from 49 orgs + 5 GGUF mirrors + 4 discovery queries;
+            1,051 estimated to fit 16 GB at Q4 [E]; 373 marked unreliable
+            (quantized packed counts or no count); fit controls 4 passed
+  Anonymous access only; every call in pan.intake_call.
+  Spot check: "self-replicators primordial soup" returns 2607.09211,
+  2609.10817, 2406.19108, 2607.01483 at coverage 6-8 of 9 lexemes.
+
+------------------------------------------------------------------------------
+7. INCIDENTS AND WHAT THEY VALIDATED
+------------------------------------------------------------------------------
+  - Pan's own whole-tree ripgrep on M2's SMR disk starved git push (two
+    timeouts, 90 s and 300 s); after Pan stopped it, push took 1.4 s.
+    Validates the charter's premise; also a process error (ledger entry).
+  - Git Bash rewrote a sparse-checkout pattern '/pan/' into a Windows path
+    (MSYS path conversion); first commit silently skipped the package
+    files; caught by git's warning, fixed with MSYS_NO_PATHCONV=1.
+  - Statistics-free UPDATE (>5 min CPU) -> cancelled by Pan -> ANALYZE first.
+
+------------------------------------------------------------------------------
+8. WHAT THIS DOES AND DOES NOT ESTABLISH
+------------------------------------------------------------------------------
+Establishes: the catalog covers 100 percent of blobs at d6b2eeeca and of
+relations in 3 databases; history is complete by an independent oracle;
+the Iceberg layer reads only committed data; retrieval can see a planted
+document (the channel works); v1 retrieval misses its own bar.
+Does NOT establish: that any other host's data is covered (only M2 + repo +
+M1 DB); that 42 hand-written queries represent real seat questions (they
+were written by Pan, which also built the index -- conflict of interest);
+that the 16 GB fit estimates hold on the card (no model was loaded); that
+the inventory reproduces exactly on a second run (not yet re-run); whether
+the April cold data are duplicates of the backup root (no hashes compared).
+
+------------------------------------------------------------------------------
+9. DECISION / RECOMMENDATION
+------------------------------------------------------------------------------
+Pan's lean: continue, narrowly.
+  (1) v2 retrieval aimed at the measured shape: document-level vectors from
+      a stronger embedding model (Qwen3-Embedding-0.6B over ~62k documents
+      ~30 min GPU [E]) plus a duplicate-aware prior (earliest-committed copy
+      of near-identical text ranks first); judged on a NEW held-out set
+      written before any v2 run, ideally with queries supplied by other
+      seats (removes Pan's conflict of interest).
+  (2) Consolidation recipe for committed result rows (2.6 GB JSON/JSONL)
+      into Parquet + Iceberg with source line counts as the oracle, before
+      touching the 132 GB cold data -- which waits for a consumer.
+  (3) A pan-search skill so other seats can actually use it; incremental
+      refresh as a bounded loop.
+Operator decisions open: Q-001 pgvector on M1 (hard gate); Q-003 lake
+location; Q-007 disk budget (Pan self-caps at 10 GB on M1).
+What should STOP: if v2 also misses 0.80 on fresh held-out queries written
+by other seats, stop tuning retrieval and ship full-text + filters (lexical
+0.80-0.92 is already useful), spending the effort on consolidation instead.
+
+------------------------------------------------------------------------------
+10. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+------------------------------------------------------------------------------
+  Q1 Is recall@10 against 20-22 self-written queries a meaningful bar at
+     all, or would 30 questions actually asked by seats in comms be the only
+     honest test set? (If yes, v1's "0.75" may be over- or under-stated.)
+  Q2 Is putting 2.2 GB (and growing) of derived data on the SHARED program
+     cluster the wrong call? Would a separate database on M1 be safer?
+  Q3 The cold 132 GB of April JSON Lines: is "convert only on a consumer's
+     request" right, or is the inventory itself evidence they should be
+     archived and removed from the working checkout (an operator call)?
+  Q4 Is the minimum-should-match (34 percent) a principled default or a
+     tuned knob that happens to pass one negative and fail the other?
+  Q5 What would falsify the claim that Pan saves agent time? (Proposal: a
+     paired measurement -- the same 10 seat questions answered by an agent
+     with and without pan search, wall time and tokens.)
+
+------------------------------------------------------------------------------
+11. ARTIFACTS (paths at origin/main; commits on main)
+------------------------------------------------------------------------------
+  5947521bc creation   d6b2eeeca charter   a33910a1c pan package v0.1
+  1f005e0b1 prereg     83781786a v0 FAIL + held-out prereg
+  0bb1f3bb9 research   a60e40eca intake + inventory report + design
+  8296601b1 v1 held-out verdict + status report 1
+  roles/Pan/reports/INVENTORY_2026-10-09.md
+  roles/Pan/docs/DATA_ARCHITECTURE.md
+  roles/Pan/reports/controls/CONTROLS_20261009T1117Z.json        (v0)
+  roles/Pan/reports/controls/CONTROLS_20261009T1141Z_v1-HELDOUT-VERDICT.json
+  roles/Pan/reports/STATUS_20261009T1150Z.md
+  roles/Pan/research/reports/Frontier landscape adjacent to Prometheus.md
+  pan/tests/known_answers.json, heldout_answers.json, test_iceberg.py,
+  test_fit.py; lake (M2 NVMe): inventory/, git/, vectors/ (0.6 GB)
+
+Conflicts of interest: Pan wrote the index, the test queries and this
+packet. The queries were frozen before runs, but their author knew the
+corpus. Treat retrieval numbers as an upper bound on self-written queries.
+
++==============================================================================+
+| END. "Not worth continuing" is a first-class answer: if the reviewer judges |
+| that grep plus full-text search is enough for this program, say so, and Pan |
+| will stop retrieval work and move to consolidation or to HOLD.             |
++==============================================================================+

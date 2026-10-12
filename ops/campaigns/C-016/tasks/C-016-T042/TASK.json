@@ -1,0 +1,96 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-016-T042",
+  "campaign_id": "C-016",
+  "title": "Short Q3 re-check of the repaired Ensorain assay (v1.1.0)",
+  "objective": "Confirm the repair closes REPORT s4 without opening a new hole; no new open-ended challenge.",
+  "parent_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
+  "owner_role": "Pallas",
+  "quality_class": "Q3",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-016-T041"
+  ],
+  "owns": [
+    "rso/ensorain/challenge/R2/"
+  ],
+  "reads": [
+    "rso/ensorain/",
+    "rso/ensorain/challenge/REPORT.md"
+  ],
+  "problem": "Re-run W1-W5 and B1 / S5 / P3 / B2 / B3 against the repaired rule; check the amendment preceded the re-freeze; check each new test is RED on its mutant; one new adversarial genome against the repaired K1 comparator. Report CLOSED / NOT CLOSED per surface. No implementation repair.",
+  "non_goals": [
+    "No confirmatory run (seeds 16_330_xxx untouched; no `assay confirm`)",
+    "No edit to ensorain/ or roles/Ensorain/",
+    "No WTP-05 registered seed",
+    "No process on ubu006",
+    "No paid compute",
+    "No second repair round (directive s9)"
+  ],
+  "evidence_required": [
+    "re-check REPORT under rso/ensorain/challenge/R2/"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/ensorain/"
+  ],
+  "kind": "document",
+  "status": "CLOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:20:47Z",
+      "note": "from C-016-T040 adjudication"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T12:58:20Z",
+      "note": "T041 integrated (v1.1.0); fresh Pallas on claude-fable-5-1"
+    },
+    {
+      "status": "CLAIMED",
+      "by": "Pallas[harry1-7368c61b]",
+      "at_utc": "2026-10-11T13:03:34Z",
+      "note": ""
+    },
+    {
+      "status": "IMPLEMENTING",
+      "by": "Pallas[harry1-7368c61b]",
+      "at_utc": "2026-10-11T13:08:04Z",
+      "note": ""
+    },
+    {
+      "status": "GREEN",
+      "by": "Pallas[harry1-7368c61b]",
+      "at_utc": "2026-10-11T13:48:27Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATION_READY",
+      "by": "Pallas[harry1-7368c61b]",
+      "at_utc": "2026-10-11T13:48:30Z",
+      "note": ""
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T13:58:08Z",
+      "note": "merged pallas/c016-t042 (08b39a3d2): only challenge/R2/ added; freeze check OK; suite OK; re-ran R1 (RED) myself, rows restored. Set ec70e1596 committed before runs. INSTRUMENT CLOSED; INFERENCE / INTERPRETATION NOT CLOSED on bounded points -> limitations L1-L5, O1-O2 the RESULT must state (no further repair round)"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-11T13:58:08Z",
+      "note": "cleared for the confirmatory run with REPORT R2 s4 carried"
+    }
+  ],
+  "authority": "operator Continuous Observatory directive 2026-10-11 s9 (one bounded repair round) (roles/Palamedes/prompts/2026-10-11_continuous_observatory/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-fable-5-1",
+  "red_required": false,
+  "notes": "red_required false: adversarial re-check"
+}
