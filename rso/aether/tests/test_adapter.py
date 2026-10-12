@@ -197,9 +197,15 @@ class Binding(unittest.TestCase):
 class Content(unittest.TestCase):
     def test_conditioned_excess(self):
         acc = {0: np.full((4, 6), 0.125), 1: np.full((4, 6), 0.625)}
-        self.assertAlmostEqual(E.conditioned_excess(acc, {0: 3, 1: 1}), 0.0)     # only seed 0 reaches r >= 2
-        self.assertAlmostEqual(E.conditioned_excess(acc, {0: 3, 1: 6}), 0.25)
-        self.assertIsNone(E.conditioned_excess(acc, {0: 1, 1: 0}))
+        acc[0][:, 3:] = 0.625                                              # seed 0 recovers content only at r >= 4
+        self.assertAlmostEqual(E.conditioned_excess(acc, 3), 0.25)         # radii 2..3: seed 0 at chance, seed 1 at +0.5
+        self.assertAlmostEqual(E.conditioned_excess(acc, 6), (0.5 * 3 / 5 + 0.5) / 2)
+        self.assertIsNone(E.conditioned_excess(acc, 1))
+
+    def test_reach_band(self):
+        rows = [{"cls": "CONFIRMED", "r_int": r} for r in (1, 2, 3, 3, 4)] + [{"cls": "NOT_INTERVENTIONAL", "r_int": 6}] * 5
+        self.assertEqual(E.reach_band(rows), 3)                            # need max(3, ceil(1.0)) = 3 units with r_int >= r
+        self.assertEqual(E.reach_band(rows[:2] + rows[5:]), 0)
 
     def test_graded_labels(self):
         L0 = A.graded_labels(0, 12, 0.0)

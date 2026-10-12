@@ -123,8 +123,9 @@ class _Seeds:
 def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
     """One native paired unit. (1) Aether's run_unit: the ATTRIBUTED tree. (2) B = Aether's choose_cut; N = the
     non-ancestor rule. (3) This recorder: CONTROL / IMPULSE (bit 0 of the origin payload, as prop01_run.py:135) / CUT_B /
-    CUT_N in lockstep. (4) Content: 8 branches with the origin payload := V[j] (r1_test4.py:200), Aether's features
-    vs CONTROL at `ts`. The warm-up is recomputed here and must reproduce Aether's warm digest."""
+    CUT_N in lockstep. (4) Content, Aether's r1 decodability design on the same snapshot: 8 branches with payload := V[j]
+    at every r1 grid origin (16 at 128^2; one origin per world was too few to train the decoder at a 0.05 margin,
+    qual/QUALIFICATION_v1_48origins.json), Aether's features vs CONTROL at `ts`. The warm-up is recomputed here and must reproduce Aether's warm digest."""
     with _Seeds():
         u = P.run_unit("cpu", law, k, n, warm, H)
         f0, _ = P.R.build_initial(P.R.SPARSE_SOUP, n, n, P.RNG_SEED_BASE + k, write_density=P.DENSITY,
@@ -148,19 +149,21 @@ def native_unit(law, k, n=128, warm=300, H=400, obs=200, ts=TS):
     ft, dig, kept = pair_run(step, s, imp, H, clamps, keep=set(ts))
     for w in ("cutB", "cutN"):
         ft.setdefault(w, np.full(n * n, -1, np.int16))
-    Hs = np.zeros((8, 1, len(ts), 6, 4, 256), np.uint8)
-    Ds = np.zeros((8, 1, len(ts), 6), np.float32)
+    org = F.T.choose_origins(s, K, n)                  # Aether's r1 origin grid (r1_test4.py:108), 16 at 128^2
+    ys, xs = [o[0] for o in org], [o[1] for o in org]
+    Hs = np.zeros((8, len(org), len(ts), 6, 4, 256), np.uint8)
+    Ds = np.zeros((8, len(org), len(ts), 6), np.float32)
     for j in range(8):
         w = [f.copy() for f in s]
-        w[3][oy, ox] = np.uint8(F.T.V[j])
+        w[3][ys, xs] = np.uint8(F.T.V[j])              # r1_test4.py:200: payload := V[j] at EVERY origin
         for t in range(1, obs + 1):
             w = step(w, t)
             if t in ts:
-                h, d = F.T.features(np, w, kept[t], [oy], [ox], n)
+                h, d = F.T.features(np, w, kept[t], ys, xs, n)
                 Hs[j, :, ts.index(t)], Ds[j, :, ts.index(t)] = h, d
     meta = {"schema": "prometheus.rso.aether.unit.v1", "adapter": ADAPTER, "kind": "native", "law": law,
             "semantics_id": P.LAWS[law], "seed": k, "seeds": {x: hex(v) for x, v in SEEDS.items()}, "n": n, "warm": warm,
-            "H": H, "obs": obs, "ts": list(ts), "V": list(F.T.V), "origin": O, "B": B, "B_tick": bt, "N": Nn,
+            "H": H, "obs": obs, "ts": list(ts), "V": list(F.T.V), "origin": O, "content_origins": [list(o) for o in org], "B": B, "B_tick": bt, "N": Nn,
             "tree": u["tree"], "aether": {k_: u[k_] for k_ in ("runner", "table_hash", "warm_digest", "final_digest_control",
                                                                "final_digest_impulse", "extinct_tick", "ever_sites",
                                                                "max_gen", "unknown_sites")},
@@ -179,11 +182,13 @@ def graded_labels(seedk, n_origins, p):
     return np.where(r < p, np.arange(8)[:, None], u)
 
 
-GRADED_ORIGINS = [(8 + 24 * i, 2 + 24 * j) for i in range(4) for j in range(3)]    # 12 per world, separation 24 > 2 x 6 + 6
+GRADED_ORIGINS = [(8 + 16 * i, 2 + 16 * j) for i in range(6) for j in range(6)]    # Cadmus's 36-origin grid (fixtures.py:144)
 
 
 def graded_unit(seedk, p, n=96, obs=100, ts=(25, 50, 100)):
-    """Graded-content relay (SELECTION.md s4 limit (i)): fixture A at 12 origins; branch j writes label graded_labels[j, i]."""
+    """Graded-content relay (SELECTION.md s4 limit (i)): fixture A at 36 origins; branch j writes label graded_labels[j, i].
+    v1 used 12 origins x 4 seeds (48) and failed the sensitivity criterion; v2 uses 36 x 20 seeds (720), matched to the
+    native RX design (48 worlds x 16 origins = 768)."""
     L = graded_labels(seedk, len(GRADED_ORIGINS), p)
     phys = SEEDS["graded"] + seedk
     ys, xs = [o[0] for o in GRADED_ORIGINS], [o[1] for o in GRADED_ORIGINS]

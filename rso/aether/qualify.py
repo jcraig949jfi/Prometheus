@@ -1,7 +1,8 @@
 """C-018-T030 Part I: INSTRUMENT QUALIFICATION on planted fixtures and development native units (never confirmatory seeds).
 
     python -m rso.aether.qualify fixtures   -> qual/records/fix_*  (ancestry units: A B E G N + near-misses + teleport)
-    python -m rso.aether.qualify content    -> qual/records/content_*.npz, graded_*.npz (Aether features; Cadmus's seeds)
+    python -m rso.aether.qualify content    -> qual/records/content_*.npz (Aether features; Cadmus's fixtures and seeds)
+    python -m rso.aether.qualify graded [p ...] -> qual/records/graded_*.npz (graded-content relay, adapter.graded_unit)
     python -m rso.aether.qualify dev LAW k0 k1  -> qual/records/native_LAW_k (development seeds, adapter.DEV_K)
     python -m rso.aether.qualify verdict    -> qual/QUALIFICATION.json: evaluate.py over the stored records ONLY
 
@@ -39,7 +40,7 @@ CONTENT_EXPECTED = {"A": "CONTENT_TRANSMITTED", "B": "CONTENT_ABSENT", "E": "CON
                     "G": "CONTENT_TRANSMITTED", "N": "CONTENT_ABSENT"}       # demand PREREG; G read to its extent 3
 EXTENT = {"A": 6, "B": 6, "E": 6, "G": 3, "N": 6}
 GRADED_P = (0.0, 0.03, 0.06, 0.12, 0.25)
-GSEEDS = (0, 1, 2, 3)                                               # 4 seeds x 12 origins = 48 origins, the RX unit count
+GSEEDS = tuple(range(20))                                           # v2: 20 seeds x 36 origins = 720 (v1: 4 x 12 = 48, failed)
 CRITERIA = {
     "ancestry": "every ANCESTRY_CASES row classed as expected in 4/4 seeds",
     "locality": "light cone holds for A, B, G (4/4) and every dev native unit; TELEPORT violates it in 4/4",
@@ -66,7 +67,11 @@ def content():
         np.savez_compressed(os.path.join(REC, "content_%s.npz" % kind), H=np.stack([u[2] for u in units]),
                             D=np.stack([u[3] for u in units]))
         print("content", kind, file=sys.stderr, flush=True)
-    for p in GRADED_P:
+
+
+def graded(ps=GRADED_P):
+    os.makedirs(REC, exist_ok=True)
+    for p in ps:
         us = [A.graded_unit(s, p) for s in GSEEDS]
         np.savez_compressed(os.path.join(REC, "graded_%03d.npz" % round(p * 100)), H=np.stack([u[1]["H"] for u in us]),
                             D=np.stack([u[1]["D"] for u in us]),
@@ -149,6 +154,8 @@ if __name__ == "__main__":
         fixtures()
     elif c == "content":
         content()
+    elif c == "graded":
+        graded([float(x) for x in sys.argv[2:]] or GRADED_P)
     elif c == "dev":
         dev(sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
     elif c == "verdict":

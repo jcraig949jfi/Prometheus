@@ -132,11 +132,24 @@ def excess_all(acc):
     return float(np.mean([v["Dstat"] for v in RD.stats(acc).values()])) if acc else None
 
 
-def conditioned_excess(acc, r_int):
-    """Mean over units with interventional reach r_int >= 2 of (accuracy - 1/8) over radii 2..min(r_int, 6), all ticks.
-    The content question is asked only where interventional ancestry reaches. None if no unit qualifies."""
-    vals = [float((acc[s][:, 1:min(r, 6)] - 0.125).mean()) for s, r in r_int.items() if r >= 2 and s in acc]
-    return float(np.mean(vals)) if vals else None
+def reach_band(rows):
+    """Largest radius r (<= 6) such that >= max(3, ceil(10% of units)) units are CONFIRMED with interventional reach >= r;
+    0 if none. P2 at depth means reach_band >= 2."""
+    need = max(3, math.ceil(0.1 * len(rows)))
+    band = 0
+    for r in range(1, 7):
+        if sum(1 for x in rows if x["cls"] == "CONFIRMED" and x["r_int"] >= r) >= need:
+            band = r
+    return band
+
+
+def conditioned_excess(acc, band):
+    """Content asked only where interventional ancestry is demonstrated: mean over held-out seeds of (accuracy - 1/8) over
+    radii 2..min(band, 6) and every tick. None if band < 2. (Ancestry is measured at Aether's impulse origin, content at
+    Aether's r1 grid origins of the same worlds: the joint reading is at the radius-band level, not per site.)"""
+    if band < 2 or not acc:
+        return None
+    return float(np.mean([(np.asarray(a)[:, 1:min(band, 6)] - 0.125).mean() for a in acc.values()]))
 
 
 # ---------------------------------------------------------------- per-law summary and disposition
@@ -145,11 +158,12 @@ def law_summary(rows, acc, acc_null):
     evaluable = [r for r in rows if r["cls"] in ("CONFIRMED", "NONSPECIFIC", "NOT_INTERVENTIONAL")]
     pooled = (sum(r["agreement"] * r["n_targets"] for r in evaluable) / sum(r["n_targets"] for r in evaluable)
               if evaluable else None)
-    r_int = {r["seed"]: (r["r_int"] if r["cls"] == "CONFIRMED" else 0) for r in rows}
-    return {"n_units": len(rows), "classes": cls, "confirmed_r2": sum(1 for v in r_int.values() if v >= 2),
+    band = reach_band(rows)
+    return {"n_units": len(rows), "classes": cls, "reach_band": band,
+            "confirmed_r2": sum(1 for r in rows if r["cls"] == "CONFIRMED" and r["r_int"] >= 2),
             "pooled_agreement": None if pooled is None else round(pooled, 4),
             "agreement_category": agreement_category(pooled),
-            "content_excess_cond": conditioned_excess(acc, r_int), "content_excess_all": excess_all(acc),
+            "content_excess_cond": conditioned_excess(acc, band), "content_excess_all": excess_all(acc),
             "null_excess": excess_all(acc_null),
             "light_cone_violations": sum(1 for r in rows if not r["light_cone_ok"])}
 
