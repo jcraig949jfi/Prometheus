@@ -217,7 +217,7 @@ def b3():
     """Radius-only conditioning: 5 CONFIRMED units (r_int 2) whose held-out accuracy is chance; 43 NO_CUT units whose
     accuracy is 1.0. conditioned_excess averages over ALL seeds at radii 2..band."""
     rows = [row("CONFIRMED", 2, seed=s) for s in range(5)] + [row("NO_CUT", seed=s) for s in range(5, 48)]
-    ac = dict(acc(range(5), 0.125), **acc(range(5, 48), 1.0))
+    ac = {**acc(range(5), 0.125), **acc(range(5, 48), 1.0)}
     d, L = dispo(rows, ac, acc(range(48), 0.125))
     conf_only = float(np.mean([(ac[s][:, 1:2] - 0.125).mean() for s in range(5)]))
     return {"disposition": d, "reach_band": L["reach_band"], "content_excess_cond_all_seeds": round(L["content_excess_cond"], 4),
