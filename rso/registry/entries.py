@@ -297,10 +297,11 @@ ENTRIES = [
                               "engine-specific fixtures (each adapter supplies its own detectors and cases)"],
         "tests": ["rso/qualify/tests/test_falsifiable.py"],
         "evidence": ["rso/qualify/FALSIFIABILITY.md (historical table)"],
-        "counterexamples": [],
+        "counterexamples": ["C-018-T030: a non-ancestor clamp on a site that never diverges is the identity and passes by "
+                            "construction (CONTROL_VACUOUS) -- a sixth historical case for the checklist"],
         "dependencies": [],
         "invalidated_by": ["any byte change to the pinned files"],
-        "users": ["C-018 (required for every preregistration from C-018 on)"],
+        "users": ["C-018 Aether (six audited rows on dev data; trusts_derived False)"],
     },
     {
         "name": "experiment-completeness",
@@ -323,6 +324,40 @@ ENTRIES = [
         "counterexamples": ["frozen rso/z80/analysis.py (C-017) accepts 5 of 6 shards -- the reason this exists; it stays frozen and unchanged"],
         "dependencies": ["receipt-canonical"],
         "invalidated_by": ["any byte change to the pinned files"],
-        "users": ["C-017 fixture (new analyzer version python -m rso.completeness.z80)", "C-018 Aether (required)"],
+        "users": ["C-017 fixture (new analyzer version python -m rso.completeness.z80)", "C-018 Aether (design-manifest form: "
+                  "digests PENDING at freeze, filled from presented shards, verified with the writer's rows digest; a removed shard -> "
+                  "INCOMPLETE rc 3 in 0.3 s, integrator check)"],
+    },
+    {
+        "name": "aether-ancestry-content-instrument",
+        "version": "C-018 FREEZE_AETHER_ANCESTRY_CONTENT v1.1.0",
+        "owner": "Argus (built); Palamedes (coordinator); Aether owns the physics, attribution and decoder it consumes",
+        "files": ["rso/aether/adapter.py", "rso/aether/evaluate.py", "rso/aether/confirm.py", "rso/aether/freeze.py"],
+        "interface": "native_unit(law, k): Aether's prop01 attribution + a lockstep recorder (CONTROL / IMPULSE / CUT_B / CUT_N) + "
+                     "Aether's r1 content branches; evaluate re-derives classes (CONFIRMED / NONSPECIFIC / NOT_INTERVENTIONAL / "
+                     "CONTROL_VACUOUS / INSUFFICIENT / NO_CUT / MULTI_SOURCE), reach band and content with Aether's decoder; confirm "
+                     "analyse = freeze check, completeness, records, per-unit snapshot + tree replay, sampled full replay, qualification, "
+                     "null, ANCESTRY_UNEVALUABLE, then P2 x P3.",
+        "stage": "QUALIFIED_SCOPED",
+        "qualified_scope": "Aether aeth03 RX (recoil + exchange) and aeth01.v1 CPU reference at 128^2, warm 300, H 400, payload-bit-0 "
+                           "impulse, Aether's choose_cut B, the v1.1.0 N window: separates interventional ancestry from recoverable "
+                           "content (fixtures B / E), genuine Q3 challenge + re-check (Pallas, Fable 5.1, continuity verified). C-018 RESULT: "
+                           "RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT, V1 ANCESTRY_UNEVALUABLE.",
+        "not_qualified_for": ["per-site 'this descendant carries the content' claims (P2 and P3 share radii, not origins)",
+                              "a class on a unit whose clamp arrays were not replayed, as proof (58 of 64 rest on producer bytes; R1c)",
+                              "reading NONSPECIFIC as damage spreading without N's distance to the targets (W2)",
+                              "decoder margins below ~0.05-0.10 at 768 training origins", "P4 transformation (unsupported natively)",
+                              "RULE-rooted trees (outside choose_cut)", "the GPU kernel", "TEST-4's 512^2 / warm 1000 scale"],
+        "tests": ["rso/aether/tests/test_adapter.py"],
+        "evidence": ["rso/aether/red/red_rows_v1_1_0.jsonl", "rso/aether/challenge/REPORT.md", "rso/aether/challenge/R2/REPORT.md",
+                     "rso/aether/RESULT.md", "rso/aether/ONBOARDING.md s7.3"],
+        "counterexamples": ["v1.0.0 analyse() trusted a FROZEN.json pin it never checked (B6: re-sealed 5-shard design read COMPLETE + positive)",
+                            "v1.0.0 accepted duplicated units (B5) and producer tree fields (B1)",
+                            "v1.0.0 N rule picked an upstream contributor of B (B8) -- the specificity class was a property of the rule",
+                            "v1.0.0 had no status for an unevaluable population (B2)",
+                            "graded-content v1 FAILED at 48 training origins: decoder sensitivity depends on training size"],
+        "dependencies": ["experiment-completeness", "control-falsifiability-checks"],
+        "invalidated_by": ["any byte change to the pinned files", "a change under Aether/ (re-pin)", "another law, scale or impulse type"],
+        "users": ["C-018 Aether"],
     },
 ]

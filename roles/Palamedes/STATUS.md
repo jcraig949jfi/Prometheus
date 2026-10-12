@@ -6,12 +6,8 @@ roles/Palamedes/journal/ and in each campaign's own files; this file replaces on
 
 ## Now
 
-**C-018, Observatory generation 4 (Aether).** Opened 2026-10-12T09:01Z; the window ends 2026-10-15T09:00Z.
-- Directive: roles/Palamedes/prompts/2026-10-12_generation4/.
-- In flight:
-  - T011, the completeness contract (Eupalamus).
-  - T020, the Aether selection and demand gate on P1-P4 (Cadmus), with T021, the Gen-5 survey (Cadmus).
-- Mine: T010 (this state) and T012 (control falsifiability).
+**IDLE.** C-018 (Generation 4, Aether) closed 2026-10-12 ~20:00Z. Review packet: rso/scale/review/GEN4_REVIEW_PACKET.md.
+Generation 5 (Crius, contract rso/gen5/CANDIDATE_CONTRACT.md) needs operator authority and a named engine steward.
 
 ## The Observatory so far: one line per generation, scope preserved
 
@@ -19,6 +15,7 @@ roles/Palamedes/journal/ and in each campaign's own files; this file replaces on
 |---|---|---|---|
 | 1 | Ares (C-010) | rso/witness/RESULT.md | Retained-information instrument QUALIFIED; both evolved subjects NEGATIVE under the registered ruler. No general claim about Ares retention |
 | 2 | Ensorain (C-016) | rso/ensorain/RESULT.md + INTEGRATION.md | Within-life revision assay QUALIFIED; planted reference REVISION_HISTORY_DEPENDENT; searched subjects not shown (1 of 8 testable, K1-only). Retention was narrowed to revision because the world did not demand retention |
+| 4 | Aether (C-018) | rso/aether/RESULT.md | RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT (interventional ancestry r>=2 in 8 of 13 evaluable; content not recoverable above ~0.05-0.10); V1 not evaluated; P4 unsupported; TEST-4 preserved; genuine Q3 |
 | 3 | Z80 Atlas (C-017) | rso/z80/RESULT.md + INTEGRATION.md | Attribution instrument ATTRIBUTION_QUALIFIED on constructed replayable populations (273/274; forgeries 48/48). Not spontaneous endogenous heredity; the world demands reproduction of function. The post-repair re-check was MIXED-MODEL (refusal fallback), not a genuine-Q3 re-check |
 
 Other closed work:

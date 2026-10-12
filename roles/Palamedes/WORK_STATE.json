@@ -3,19 +3,15 @@
   "seat": "Palamedes",
   "mwo_id": "MWO-0004",
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md); prior: Continuous Observatory 2026-10-11, Strategic Expansion 2026-10-10, RSO completion push 2026-10-07, builder cell 2026-10-03",
-  "updated_at_utc": "2026-10-12T09:04:03Z",
+  "updated_at_utc": "2026-10-12T19:39:10Z",
   "state": "ACTIVE",
   "branch": "state commits from detached worktree C:/Prometheus-worktrees/palamedes-ops (fetch origin, checkout --detach origin/main); canonical C:/Prometheus fetch-only",
   "head_sha": "see git log origin/main",
   "model": "claude-opus-5-5",
   "host": "harry1 (M4), instance harry1-679179c6",
-  "current_objective": "coordinate C-018 (Observatory generation 4: Aether spatial causality vs information; completeness contract; control falsifiability; Gen-5 candidate contract)",
-  "current_step": "C-018 open 2026-10-12T09:01Z; T011 (Eupalamus, completeness) and T020+T021 (Cadmus, Aether selection, Gen-5 survey) launched; T010 (this state) and T012 (falsifiability) mine",
-  "in_flight": [
-    "C-018-T011 Eupalamus",
-    "C-018-T020 Cadmus",
-    "C-018-T021 Cadmus"
-  ],
+  "current_objective": "IDLE between campaigns; C-018 closed; awaiting operator on Generation 5 (Crius needs a steward)",
+  "current_step": "none",
+  "in_flight": [],
   "finish_condition": "directive 2026-10-12 s16 items 1-10, or 2026-10-15T09:00Z",
   "next_expected_milestone": "T020 SELECTION integrated -> decide P-question -> T030 Argus adapter",
   "expected_next_artifact": "rso/aether/SELECTION.md; rso/completeness/",
@@ -29,22 +25,23 @@
     "C-013": "CLOSED early: scaling assessment, D1 under-powered null (N=15, power .49), runner, roadmap, RECOMMENDATION FINAL; Astra/Fable/Hestia reviews PENDING (rso/scale/)",
     "C-016": "CLOSED: Gen 2 Ensorain -- revision assay QUALIFIED; planted reference REVISION_HISTORY_DEPENDENT; searched 1 of 8 testable (K1-only); retention not demanded (rso/ensorain/RESULT.md, INTEGRATION.md, ops/campaigns/C-016/CLOSEOUT.md)",
     "C-017": "CLOSED: Gen 3 Z80 Atlas -- attribution ATTRIBUTION_QUALIFIED 273/274, forgeries 48/48; reproduction of function, not endogenous heredity, demanded; T042 re-check MIXED-MODEL (fable->opus-4-8 refusal fallback), not a full genuine-Q3 re-check; analyzer accepted 5/6 shards (rso/z80/RESULT.md, INTEGRATION.md, ops/campaigns/C-017/CLOSEOUT.md)",
-    "C-018": "OPEN: Gen 4 Aether (ops/campaigns/C-018/)"
+    "C-018": "CLOSED: Gen 4 Aether -- RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT; V1 unevaluable; P4 unsupported; review packet rso/scale/review/GEN4_REVIEW_PACKET.md"
   },
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "integrate T011/T020/T021 as they land (notify scan + hourly poll)",
-    "write T012 falsifiability checklist (rso/qualify/)",
-    "decide the Aether P-question from SELECTION.md -> T030"
+    "Generation 5 only on operator authority",
+    "hourly idle check"
   ],
   "operator_decisions_required": [
     "Astra / Fable external reviews of C-013 packets (rso/scale/review/) not yet performed",
     "Generation 5 campaign needs separate authority"
   ],
   "latest_reports": [
+    "rso/scale/review/GEN4_REVIEW_PACKET.md",
+    "ops/campaigns/C-018/CLOSEOUT.md",
     "ops/campaigns/C-017/CLOSEOUT.md",
     "ops/campaigns/C-016/CLOSEOUT.md",
     "rso/z80/ONBOARDING.md (three-engine comparison)",
@@ -57,7 +54,7 @@
     "campaign id = max over all remote branches + 1",
     "registry: python -m rso.registry.registry check before integrating any rso change"
   ],
-  "current_focus": "C-018 Gen 4",
+  "current_focus": "IDLE",
   "previous_states": [
     {
       "schema": "prometheus.work_state.v1",

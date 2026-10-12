@@ -40,7 +40,7 @@
     "rso/aether/RESULT.md"
   ],
   "kind": "software",
-  "status": "INTEGRATION_READY",
+  "status": "CLOSED",
   "history": [
     {
       "status": "PROPOSED",
@@ -77,6 +77,18 @@
       "by": "Argus[harry1-b0323ab0]",
       "at_utc": "2026-10-12T19:17:18Z",
       "note": "RESULT rso/aether/RESULT.md on branch argus/c018-t050; RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT [evaluable 13 of 48]; V1 ANCESTRY_UNEVALUABLE"
+    },
+    {
+      "status": "INTEGRATED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T19:36:55Z",
+      "note": "merged argus/c018-t050 (fa0347fd2): only rso/aether/runs + RESULT.md + seat files; freeze OK; launch log claude-sonnet-5-5 x120, 0 fallbacks. Integrator checks: NON-SAMPLED CONFIRMED unit RX 8201 re-executed natively -> arrays_sha256 567d483e equal, B/N equal (clamp arrays reproduced: bears on R1c); tamper (V1.1 shard removed) -> analyse INCOMPLETE rc 3 in 0.3 s, nothing verdict-bearing printed. RESULT: RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT (13 evaluable; 8 CONFIRMED r>=2; reach 6; content 0.0135 / 0.0099 over CONFIRMED seeds); V1 ANCESTRY_UNEVALUABLE; both P2 denominators HELD; TEST-4 preserved"
+    },
+    {
+      "status": "CLOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-12T19:36:55Z",
+      "note": "result preserved: rso/aether/RESULT.md (s16 item 5)"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md)",
