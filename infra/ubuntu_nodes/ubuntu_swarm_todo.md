@@ -151,6 +151,17 @@ Loose ends from adding ubu003 and the ELSA access. Tick with a date.
       ELSA. ELSA already has it (2026-10-11). Context: router DNS timeouts 10-11 17:25-18:06 EDT, correlated with
       ubu009 hung on the LAN (see machines doc, ubu009).
 
+## Side-project user `mind` (Smuggler's Hole NPC mind hosts) -- 2026-10-12
+
+Operator's browser game (repo jcraig949jfi/smugglers-hole, server on M1:2567), NOT pantheon, possibly throwaway. Agreed
+on comms #2199 / #2201 / #2203 / #2204-ish with session SmugglersHole[m1-smugglershole].
+- Nodes: ubu001-006, ubu008 (wired IPs). ubu007 and ubu009 are off limits.
+- User `mind` uid 1001: no sudo; key smugglers-hole-mind@SKULLPORT only; linger on; /home/jcraig is 750 (tokens unreadable;
+  verified with sudo -u mind). Ceiling for the whole user: /etc/systemd/system/user-1001.slice.d/50-side-project-limits.conf
+  (CPUQuota = 50% of threads, MemoryMax=40%, TasksMax=2048). Their units: nice 10, CPUQuota=150%, MemoryMax=1.5G.
+- Stop on a node: `sudo systemctl stop user@1001.service` (or ask them: systemctl --user stop sh-mind).
+- TEARDOWN per node: `sudo loginctl terminate-user mind; sudo userdel -r mind; sudo rm -rf /etc/systemd/system/user-1001.slice.d; sudo systemctl daemon-reload`.
+
 ## Retiring a node (sell / donate / e-waste) -- checklist (2026-10-10, operator: "people need to do better")
 
 Every node holds live secrets in plain files: the shared GitHub token (gh auth + git credential), the Claude OAuth
