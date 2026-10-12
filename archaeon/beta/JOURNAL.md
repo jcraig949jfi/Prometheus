@@ -947,6 +947,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   register latch -- COMPACT_HIGH (B69d CONC 6923, 16 instr, .120), LONG_HIGH (SOLO 6929, 32, .098), LONG_LOW (SOLO
   6924, 46, .053); 6 seeds each, relocating pulse, G=300; B77 parity readout. Smoke test passed (output shown).
   18 cells on 12 procs, est ~15 core-h -> window 6 ~37 of 48.
+- B79 RESULT (04:58Z; lease lse-179da9499b02 RELEASED): populations with >= 5 RESET-like genomes (B77 parity):
+  COMPACT_HIGH (16 instr, plain-pulse reward .120) 4/6 [61/54/54/59/0/0]; LONG_HIGH (32, .098) 6/6 [5/9/26/69/87/93];
+  LONG_LOW (46, .053) 0/6. PREDICTION: COMPACT >= 4/6 MET; LONG_LOW <= 2/6 MET; LONG_HIGH <= 2/6 FAILED.
+  VERDICT: compactness hypothesis KILLED -- a 32-instruction latch converts 6/6. Uniform seeding is not sufficient
+  either (LONG_LOW is uniform and converts 0/6). What separates converting from non-converting starts in this test is
+  the latch's QUALITY as a forager (.098-.120 convert; .053 does not). Consistent with B78, whose evolved latches ended
+  at .021-.055. Caveat: one genome per arm (n = 3 latches); 'quality' is confounded with whatever else differs
+  between these three genomes. Next test (if pursued): several latches per quality band.
+  WINDOW 6 TALLY (wall-clock): B78 ~21 + B79 ~15 (12 procs 03:20-~04:30, tapering) + evals ~0.5 = ~37 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

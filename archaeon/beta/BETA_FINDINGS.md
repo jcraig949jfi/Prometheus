@@ -103,6 +103,9 @@ clock.
    - **A natural curriculum mostly does NOT cross (B78).** Plain pulse first, then relocation: write-once state is
      reached in 10/12 populations and survives the switch, but only 1/12 reach >= 5 RESET-like genomes. Evolved
      latches (16-95 instructions, diverse) are a weaker stepping stone than 200 copies of the compact hand latch.
+   - **What makes a latch a stepping stone (B79):** NOT compactness. Seeded with evolved latches, a 16-instruction
+     (.120) latch converts 4/6, a 32-instruction (.098) latch 6/6, and a 46-instruction (.053) latch 0/6. The latch's
+     QUALITY as a forager tracks conversion (n = 3 latches; tentative).
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
