@@ -106,6 +106,9 @@ clock.
    - **What makes a latch a stepping stone (B79):** NOT compactness. Seeded with evolved latches, a 16-instruction
      (.120) latch converts 4/6, a 32-instruction (.098) latch 6/6, and a 46-instruction (.053) latch 0/6. The latch's
      QUALITY as a forager tracks conversion (n = 3 latches; tentative).
+   - **B80 (4 latches per band x 3 seeds): quality NOT supported as stated.** HIGH-quality latches convert 4/12, LOW
+     1/11. Conversion from a good latch is stochastic (~1/3 per run). The persist mode lines up better (persist 'regs'
+     5/15 vs persist 'all' 0/8, p ~ .08; flagged as a confound before running). Open.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

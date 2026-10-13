@@ -964,6 +964,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   session-only, auto-expires ~2026-10-19); old job 688cbea3 deleted. Next renewal reminder needed before ~2026-10-19.
   Next renewal reminder scheduled (one-shot a1c6ed8a, 2026-10-18 09:41 local).
 - WINDOW 7 OPENED 2026-10-13 00:30Z. B80 LAUNCHED: lease lse-e70b630eefa8 (3 h, token captured), 24 cells, 12 procs.
+- B80 RESULT (05:30Z; 23/24 cells -- L_6931 seed 8002 still running at ~5 h and cannot change any verdict; lease
+  renewed 3x). Populations converting (>= 5 RESET-like, B77 parity):
+  - HIGH 4/12 (H_6923 1/3, H_6913 2/3, H_6911 0/3, H_6929 1/3);
+  - LOW 1/11 (L_6932 1/3 [89 genomes], L_6916 0/3, L_S6913 0/3, L_6931 0/2);
+  - 16-instruction LOW 0/8.
+  PREDICTION: HIGH >= 8/12 FAILED; LOW <= 3/12 MET; 16-instr LOW <= 2/9 MET.
+  VERDICT: 'latch quality decides conversion' is NOT SUPPORTED as stated. High-quality latches convert only ~1/3 of the
+  time (so B76's 6/6 from the hand latch and B79's LONG_HIGH 6/6 are at the lucky end, or depend on the specific
+  genome); low-quality latches rarely convert. CONFOUND (flagged at staging) now looks better aligned than quality:
+  persist 'regs' latches (all HIGH + L_6932) 5/15 vs persist 'all' latches 0/8, Fisher one-sided p ~ .08 --
+  suggestive only. Conversion from a good latch is STOCHASTIC (~1/3 per run at G=300).
+  NEXT (if pursued): persist-matched test -- the same latch genomes with persist forced to 'regs' vs 'all'.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
