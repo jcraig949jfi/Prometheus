@@ -976,6 +976,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   persist 'regs' latches (all HIGH + L_6932) 5/15 vs persist 'all' latches 0/8, Fisher one-sided p ~ .08 --
   suggestive only. Conversion from a good latch is STOCHASTIC (~1/3 per run at G=300).
   NEXT (if pursued): persist-matched test -- the same latch genomes with persist forced to 'regs' vs 'all'.
+- B81 PRE-CHECK (evaluation only): forcing persist regs<->all leaves gen-0 behaviour IDENTICAL (rewards equal to 4 dp in
+  plain and relocating pulse) for 7/8 B80 latches; H_6911 breaks under 'all' (.123 -> .021) and is excluded. So persist
+  can only act through EVOLVABILITY. B81 STAGED (persist swap: LOW->regs x3 latches, HIGH->all x2, 3 seeds = 15 cells;
+  prediction in docstring). Smoke test PASSED (L_6916 forced regs, G=2: best .039, ran cleanly). LAUNCH in window 8 (~2026-10-14
+  00:30Z). WINDOW 7 TALLY: B80 ~24 cells: 12 procs 00:30-~02:30 then 3-1 procs to ~05:45 = ~31 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
