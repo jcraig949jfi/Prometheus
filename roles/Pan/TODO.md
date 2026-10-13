@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-13T02:22Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-13T08:23Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
@@ -12,7 +12,8 @@ date, purged after 24 h (base role s7).
       fires). Loop extended to 2026-10-16T10:40Z.
 - [ ] PAN-26 evidence wiki: still BLOCKED -- PEW port 8377 refused on M2 (127.0.0.1) and timed out on M1
       (192.168.1.202) at 2026-10-12T22:27:59Z; re-check daily
-- [ ] Status report 16 by ~2026-10-13T08:22Z (report 15 written 02:22Z)
+- [ ] Status report 17 by ~2026-10-13T14:23Z (report 16 written 08:23Z)
+- [ ] ubu002 unreachable since 08:24Z (last ok 2026-10-12T22:29Z): re-probe each tick; FYI to Achilles if still down at the ~09:30Z tick
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
 - [ ] Daily intake + digest (next ~2026-10-13T14:30Z; 2026-10-12 done 14:44Z)
 - [ ] Machines/Pantheon tabs (+ per-engine CPU sample in the local probe, for Achilles #2090): re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
