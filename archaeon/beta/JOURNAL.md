@@ -981,6 +981,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   can only act through EVOLVABILITY. B81 STAGED (persist swap: LOW->regs x3 latches, HIGH->all x2, 3 seeds = 15 cells;
   prediction in docstring). Smoke test PASSED (L_6916 forced regs, G=2: best .039, ran cleanly). LAUNCH in window 8 (~2026-10-14
   00:30Z). WINDOW 7 TALLY: B80 ~24 cells: 12 procs 00:30-~02:30 then 3-1 procs to ~05:45 = ~31 of 48.
+- B80 last cell (L_6931 seed 8002) STOPPED at ~08:00Z after ~7.5 h on one process: its outcome cannot change any B80
+  verdict, and it held the whole 12-proc host lease. No orphaned workers remained. Lease lse-e70b630eefa8 RELEASED.
+  B80 is final at 23/24 cells; the per-cell log is saved as results/B80_latch_quality/B80_log.jsonl (no B80_result.json,
+  since main() did not finish). WINDOW 7 TALLY corrected: ~31 + ~2.5 (tail cell 05:45-08:00) = ~34 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
