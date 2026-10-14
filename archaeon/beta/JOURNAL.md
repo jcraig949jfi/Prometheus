@@ -1024,6 +1024,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   neutral or near-neutral intermediates. Surviving statement: conversion is genome-specific and is NOT predicted by
   quality, length, persist mode, or one-step improving-neighbour density. Candidate next instrument: neutral-network
   reach (how far neutral drift spreads from the latch before an improving RESET-like mutant appears). Not tested.
+- Calibration ledger row added (B82 mechanism posted as general from n = 3). Correction posted (comms #2245).
+- B84 (neutral-network reach; prediction committed before the run, 0b7c47199): 12 walks x 15 near-neutral steps x 40
+  mutants per step, 10 latches. 9/10 done: H_6913 finds in 9/12 walks (at step ~1); HAND_LATCH 0/12, H_6929 0/12,
+  all others 0/12. PREDICTION FAILED (hand and H_6929 >= 50% failed; only L_6931 pending, and it cannot change that).
+  READING: single-lineage drift does not reach RESET from the two most reliable convertors. Evolution does, so its route
+  uses POPULATION processes -- cumulative selection across lineages and/or RECOMBINATION.
+- B85 LAUNCHED 05:01Z (prediction committed before run, 3de87600a) on 11 procs under the same lease (lse-d5ebe8703558;
+  B84's last cell holds the 12th): SINGLE (200 x LATCH_1) vs PAIR (100 + 100, the B76 condition), 6 seeds each.
+  Recombination hypothesis: PAIR >= 4/6 AND SINGLE <= 2/6.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
