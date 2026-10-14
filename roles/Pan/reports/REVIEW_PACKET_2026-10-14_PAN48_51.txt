@@ -1,0 +1,196 @@
++==============================================================================+
+| REVIEW PACKET -- PAN-48..51: THREE INDEX DEFECTS FOUND WHILE DIAGNOSING      |
+| SLOW REFRESHES, AND ONE PROPOSAL                                             |
+| Author:  Pan (data layer seat), M2 SPECTREX5, instance m2-f20b5eac           |
+| Date:    2026-10-14 (00:35Z-08:07Z; commits a00c7adda, e08597248,           |
+|          f20b3ef3a)                                                          |
+| For:     the operator (HITL) and external reviewers                          |
+| Status:  PAN-48/49/50 BUILT, controlled, in production; PAN-51 PROPOSED      |
+| Self-contained: every load-bearing number is inline; no repo access needed. |
++==============================================================================+
+
+-----
+0. SUMMARY
+-----
+Trigger: two index refreshes that indexed changes took 1,044.4 s and 806.7 s
+(00:35Z and 01:26Z), against the usual 70-190 s. The loop's own rule is "act
+only if it repeats", and it repeated.
+
+Diagnosis (read-only queries):
+  - Neither run was stuck. Each was active, with no lock waits and no other
+    queries running.
+  - The slowness came from host load across every step, including steps that
+    run only on M2. Pan cannot see that load directly.
+  - The same aggregate ran in 0.7 s by 01:40Z.
+  - The slowness kept recurring through the night, between 66 s and 668.6 s.
+
+Reading the two slow steps closely turned up three real defects and one
+recurring cost:
+
+  PAN-48  The artifact commit stamp was nondeterministic and wasteful.
+            - last_commit_sha flipped between runs for 72 paths whose latest
+              commits share a second.
+            - Every refresh rewrote all 79,730 git rows; only 28-40 differed.
+          FIXED.
+  PAN-49  Full-text search stalled during every refresh.
+            - lexeme_df was rebuilt by truncate + insert in one transaction,
+              so readers waited for the whole rebuild (40 s quiet, up to 363 s
+              loaded).
+          FIXED: built beside the live table, then swapped in.
+  PAN-50  Piped `pan search` crashed on Windows on non-cp1252 snippet
+          characters, after the search had already run. FIXED.
+  PAN-51  The full lexeme_df rebuild on every refresh is a recurring load on the
+          shared M1 cluster. PROPOSED only: the safe fix touches calibrated
+          retrieval.
+
+Verdict, kept separate:
+  instrument  all three fixes have POSITIVE / NEGATIVE / CHEAT controls, and
+              each was checked against live data
+  law         none claimed
+  method      two drafts were rejected on measured cost before shipping
+              (section 3)
+
+-----
+1. WHAT WAS BUILT
+-----
+  pan/commits.py   STAMP_SQL + stamp(): window functions; tip = the tied commit
+                   that is not a parent of another tied commit, then sha desc;
+                   joins on host = 'repo' to use the unique (source, host, path)
+                   index; writes only rows whose values change.
+  pan/refresh.py   rebuild_lexeme_df():
+                     - builds lexeme_df_new, then renames under lock_timeout
+                       10 s;
+                     - 3 attempts, 10 s apart;
+                     - records lock holders on timeout;
+                     - carries the table comment over.
+                   Refresh reports lexemes, lexdf_swap_attempts and
+                   lexdf_blockers.
+  pan/__main__.py  utf8_stdio() at CLI start; `pan lexdf` uses the swap.
+  tests            test_commit_stamp.py (3), test_lexdf_swap.py (5),
+                   test_utf8_stdio.py (3). All run on session-only TEMP tables
+                   or subprocesses; schema pan is never written by a test.
+
+-----
+2. RESULTS (exact)
+-----
+PAN-48
+  Controls 3/3:
+    POSITIVE  stamp
+    NEGATIVE  a second run writes 0 rows; a non-git row is untouched
+    CHEAT     a same-second parent/child tie picks the child, where "sha desc"
+              would pick the parent; stable over repeated runs
+  The old SQL fails NEGATIVE ("3 == 0") and CHEAT (parent picked).
+  Live read-only check before shipping:
+    - 79,730 matched;
+    - 0 first/last time differences;
+    - 43 sha differences, all inside the 72 tied paths, 0 outside;
+    - 1.0 s.
+  In production:
+    first run  stamped 47 rows (the tie fixes, written once)
+    next run   stamped 4 rows (exactly the changed files)
+    commits step  6.4 s, against 47.7-182.6 s on the runs before
+
+PAN-49
+  Controls 5/5:
+    POSITIVE  ts_stat counts; a retry after one timeout succeeds on attempt 2
+    NEGATIVE  repeatable; no lexeme_df_new / _old left; primary key and comment
+              kept
+    CHEAT     a failed build keeps the old rows; a lock timeout on every attempt
+              keeps the old table and returns None
+  HONEST LIMIT: TEMP tables are invisible to a second connection, so the
+  controls cannot see the improvement itself.
+  Measured live instead: `pan lexdf` at 05:56:53-05:58:22Z (88.2 s) while a
+  probe read pan.lexeme_df with lock_timeout 2 s every second.
+    70 reads, 0 blocked, max 0.024 s.
+  Live table after the swap: 1,421,948 rows, pan.lexeme_df_pkey, comment kept,
+  no leftovers, no non-owner grants.
+  In production:
+    07:41Z  The swap hit its 10 s lock_timeout (one attempt, before the retry
+            existed). The old table was kept, stale by one refresh. No holder
+            was visible when checked afterwards, most likely a long OR search.
+            The retry and the holder record were added because of this.
+    08:07Z  Next refresh: swap on attempt 1, no blockers, 1,421,993 lexemes.
+
+PAN-50
+  Controls 3/3:
+    POSITIVE  a piped child prints U+2011 and exits 0
+    NEGATIVE  without the fix, the same child really crashes here
+    CHEAT     an already-UTF-8 stream is left alone; a StringIO does not raise
+  A piped `pan search` now prints all 10 results.
+
+Pan suite: 107 passed.
+
+-----
+3. WHAT WENT WRONG ON THE WAY (method)
+-----
+  - Draft 1 of PAN-48 (correlated EXISTS) and draft 2 (self-join of the tied
+    candidates) were both planned as nested loops: candidates were estimated at
+    1 row and are ~80k in reality. Both ran past 300 s on live data.
+  - Draft 3 (window functions) was still slow at the final join: tip was
+    estimated at ~370 rows against ~100k real, and without host in the join
+    every lookup scanned all git rows. Adding host = 'repo' made the join use
+    the unique index; 1.0 s.
+  - None of this was committed before the live timing check.
+  - My first PAN-49 probe started after a 16.7 s rebuild had already finished,
+    and saw nothing. It was stopped and rerun with the probe started first.
+  - A smoke test surfaced PAN-50 as a crash. It was a pre-existing defect,
+    unrelated to the swap; I checked that before blaming the new code.
+
+-----
+4. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES:
+  - last_commit_sha is now deterministic across runs.
+  - Refreshes write only the commit stamps that change.
+  - Full-text readers are not blocked during the lexeme rebuild. This was
+    measured once, live.
+  - Piped CLI output survives non-cp1252 characters.
+DOES NOT:
+  - Explain the intermittent slow refreshes. That stays "host load,
+    unattributed".
+  - Prove the tip rule picks the "true" latest commit in every DAG shape. It
+    handles parent/child ties; a tie between unrelated commits falls back to
+    sha, which is deterministic but arbitrary.
+  - Show retrieval quality unchanged by measurement. The search logic is
+    untouched, which is why PAN-51 is only a proposal.
+
+-----
+5. DECISION FOR THE OPERATOR
+-----
+PAN-51 (default: leave as is):
+  (a) Insert only the new chunks' lexemes after chunking, and rebuild fully
+      every ~6 h. Retrieval semantics unchanged except for rarity-order drift.
+  (b) Left-join with missing = rarest. This changes min-should-match and needs
+      the retrieval controls rerun.
+Pan's lean: (a), if you want M1 load cut at all.
+
+-----
+6. QUESTIONS FOR THE REVIEWER
+-----
+  1. Is the 10 s x 3 lock_timeout the right trade? While an exclusive lock
+     request is pending, new readers queue behind it, so each attempt can stall
+     search for up to 10 s.
+  2. Should the tip rule walk the commit DAG instead of taking sha order for
+     unrelated same-second commits, or is determinism enough for a display
+     field?
+  3. Was it right to fix PAN-48/49/50 autonomously overnight, given that each
+     touched production index code? Or should they have waited for a word, as
+     PAN-51 does?
+
+-----
+7. ARTIFACTS
+-----
+  Commits         a00c7adda (PAN-48), e08597248 (PAN-49 + PAN-50),
+                  f20b3ef3a (PAN-49 retry)
+  Code            pan/commits.py, pan/refresh.py, pan/__main__.py
+  Controls        pan/tests/test_commit_stamp.py, test_lexdf_swap.py,
+                  test_utf8_stdio.py
+  Journal         roles/Pan/journal/2026-10-14.md (00:35Z-08:38Z)
+  Backlog         roles/Pan/BACKLOG_H0H5.md, PAN-48..51
+  Status reports  reports/STATUS_20261014T0231Z.md, STATUS_20261014T0839Z.md
+
++==============================================================================+
+| "Not worth continuing" is a first-class answer: if these fixes are judged    |
+| out of lane for an unattended seat, say so and Pan will hold such work for   |
+| an operator word.                                                            |
++==============================================================================+
