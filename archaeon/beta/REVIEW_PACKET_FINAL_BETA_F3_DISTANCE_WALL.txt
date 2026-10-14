@@ -161,6 +161,26 @@ S3 Staged curriculum: random gen 0 in the plain pulse world (where the latch is 
 S4 Keyed memory: apply the same distance test (a precursor start) to the B53-B57 keyed-recall setting.
 
 ------------------------------------------------------------------------------------------
+7b. ADDENDUM 2026-10-14 -- WHAT MAKES A LATCH A STEPPING STONE (B78-B82)
+------------------------------------------------------------------------------------------
+B78  natural curriculum: latch reached 10/12, RESET 1/12. The curriculum mostly fails.
+B79  three evolved latches: 16 instr (.120) 4/6, 32 instr (.098) 6/6, 46 instr (.053) 0/6. Compactness KILLED.
+B80  four latches per quality band: HIGH 4/12, LOW 1/11. Quality NOT supported as stated.
+B81  persist swap: HIGH->all 3/6 (unchanged), LOW->regs 0/7. Persist mode KILLED.
+     Conversion is genome-specific: H_6913 5/6 vs H_6923 1/6 at near-equal quality.
+B82  mutation-neighbourhood census (1000 one-step + 1000 two-step mutants, search's own operator):
+     - H_6913: 15/1000 one-step mutants improve on it, and ALL are RESET-like. One example is a single operand change
+       re-gating a branch (JNZ r0 -> JNZ r6).
+     - H_6923: 0 improving mutants within two steps.
+     - L_6916: 1 improving mutant, not RESET-like.
+READING: a latch is a stepping stone iff RESET is a coupled edit or two away. The density of improving
+update-on-condition mutants in the immediate neighbourhood predicts the conversion rate. This is the B55-B57 wiring
+mechanism, observed in a single genome.
+ATTACKS STILL OPEN:
+- n = 3 latches in B82 (one convertor, two non-convertors);
+- the claim 'neighbourhood density predicts rate' needs more latches with measured densities.
+
+------------------------------------------------------------------------------------------
 8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
 ------------------------------------------------------------------------------------------
 Code
