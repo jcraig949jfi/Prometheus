@@ -1052,6 +1052,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - PIVOT to the KEYED class (B86; prediction committed before run): hand controls under wide jitter, held-out 64 x 4:
   SOLVER 1.000, SLOT_A (SOLVER with slot B's fill NOPed; 2 edits away) .531, SHELF .535 -- equal-fitness precursors
   at different distances. Smoke test passed (3 gens 0.9 s). 16 cells, cheap -> run now inside window 8.
+- B86 RESULT (06:15Z; lease lse-8506514f1b14 RELEASED; ~30 min x 12 procs ~ 4 core-h): KEYED recall (held-out >= .9,
+  64 x 4 wide jitter) SLOT_A 4/8 (held-out 1.000; first training solve at gens 3/4/8/14) vs SHELF 0/8 (all .535).
+  PREDICTION (SLOT_A >= 4/8 AND SHELF <= 1/8) MET, at the bar. The 4 failing SLOT_A runs fell to the SHELF plateau.
+  VERDICT: the DISTANCE WALL CARRIES OVER TO THE KEYED CLASS. Keyed memory, never reached on the stock VM from random
+  or evolved starts (B49-B53), is reached in 4/8 runs from a precursor two edits away with NO fitness gradient (.531 vs
+  .535), and never from the equally fit shelf. CAVEAT: SLOT_A is the hand solution with two instructions NOPed;
+  'reached' means restoring them -- a statement about distance, not open-ended discovery.
+  WINDOW 8 TALLY: ~39 + ~4 = ~43 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

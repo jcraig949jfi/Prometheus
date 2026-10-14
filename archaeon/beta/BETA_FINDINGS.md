@@ -122,6 +122,10 @@ clock.
    - **B84/B85:** short neutral walks do not find RESET from the reliable convertors (probably underpowered). A single
      hand latch converts 6/6 without a second variant (recombination between variants not required). The
      stepping-stone property is real and genome-specific but still unexplained. PARKED.
+7. **The distance wall holds for the KEYED class too (B86).** On the stock VM, keyed two-slot recall is reached in
+   4/8 runs from a precursor two edits from the hand solver (SLOT_A, held-out .531, no fitness gradient). It is reached
+   in 0/8 runs from the equally fit one-value shelf (.535). Caveat: the precursor is the hand solution minus two
+   instructions.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
