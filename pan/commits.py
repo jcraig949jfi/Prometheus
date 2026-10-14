@@ -17,6 +17,41 @@ from . import REPO, host, lake
 FMT = "%x1e%H%x1f%P%x1f%an%x1f%aI%x1f%cI%x1f%s%x1f%b%x1d"
 SUBJ = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*)(?:\[([A-Za-z0-9_.-]+)\])?:")
 
+# Stamp first/last commit time and the last commit's sha onto git artifacts.
+# - Commit times have 1 s resolution, so several commits can share a path's latest time
+#   (72 paths on 2026-10-14). The tip is then the tied commit that is not a parent of another
+#   tied commit, and sha breaks any remaining tie, so the result no longer flips between runs.
+# - Only rows whose values change are written (28-40 of 79,730 on 2026-10-14, instead of all).
+# - Window functions only, no self-join: a self-join of the tied candidates was planned as a
+#   nested loop (estimated 1 row, actually ~80k) and ran past 300 s. A candidate is a parent of
+#   another tied candidate when its sha occurs in the comma-joined parents of the path's tied
+#   candidates; shas are fixed-width hex, so the substring test cannot match across a comma.
+# - host = 'repo' (every git artifact's host; inventory.py relies on it too) lets the join use the
+#   unique (source, host, path) index: tip is underestimated (~370 rows vs ~100k), so the planner
+#   picks a nested loop, which without host scanned every git row per tip row.
+STAMP_SQL = """
+with fc as (select cf.path, c.sha, c.committed_at, c.parents
+              from {s}.commit_file cf join {s}.commit c on c.sha = cf.sha),
+     w as (select path, sha, parents, committed_at,
+                  min(committed_at) over (partition by path) as first,
+                  max(committed_at) over (partition by path) as last
+             from fc),
+     cand as (select path, sha, first, last,
+                     string_agg(array_to_string(parents, ','), ',') over (partition by path) as tied_parents
+                from w where committed_at = last),
+     tip as (select distinct on (path) path, sha, first, last from cand
+              order by path, coalesce(position(sha in tied_parents), 0) > 0, sha desc)
+update {s}.artifact a set first_commit_at = tip.first, last_commit_at = tip.last, last_commit_sha = tip.sha
+  from tip
+ where a.source = 'git' and a.host = 'repo' and a.path = tip.path
+   and (a.first_commit_at, a.last_commit_at, a.last_commit_sha) is distinct from (tip.first, tip.last, tip.sha)"""
+
+
+def stamp(cur, schema="pan"):
+    """Stamp commit times and tip sha onto git artifacts; returns the number of rows that changed."""
+    cur.execute(STAMP_SQL.format(s=schema))
+    return cur.rowcount
+
 
 def parse_log(sha: str):
     out = subprocess.run(["git", "-c", "core.quotepath=off", "log", "--no-renames", "--name-status",
@@ -89,12 +124,7 @@ def run(sha: str = "origin/main", out=print):
         cur.execute("select count(*) from pan.commit where sha = any(%s)", ([c["sha"] for c in commits],))
         have = cur.fetchone()[0]
         ok = (have == expect == len(commits))
-        cur.execute("""update pan.artifact a set first_commit_at = x.first, last_commit_at = x.last, last_commit_sha = x.sha
-                       from (select cf.path, min(c.committed_at) as first, max(c.committed_at) as last,
-                                    (array_agg(c.sha order by c.committed_at desc))[1] as sha
-                             from pan.commit_file cf join pan.commit c on c.sha = cf.sha group by cf.path) x
-                       where a.source = 'git' and a.path = x.path""")
-        stamped = cur.rowcount
+        stamped = stamp(cur)    # rows that changed (before 2026-10-14: every matched row)
         counts = dict(commits=len(commits), file_changes=len(files), rev_list=expect, present=have,
                       oracle_ok=ok, artifacts_stamped=stamped, with_seat=sum(1 for c in commits if c["seat"]),
                       seconds=round(time.time() - t0, 1))
