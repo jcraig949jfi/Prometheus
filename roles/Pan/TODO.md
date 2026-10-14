@@ -13,7 +13,6 @@ date, purged after 24 h (base role s7).
 - [ ] PAN-26 evidence wiki: still BLOCKED -- PEW port 8377 refused on M2 (127.0.0.1) and timed out on M1
       (192.168.1.202) at 2026-10-12T22:27:59Z; re-check daily
 - [ ] Status report 23 by ~2026-10-15T02:45Z (report 22 written 20:45Z)
-- [ ] PAN-52: Machines-tab labels for hosts skipped by ruling (ubu007 HOLD, ubu009 SOAK) -- controls, then republish
 - [ ] ubu002 off the LAN since 08:24Z (last ok 2026-10-12T22:29Z); FYI posted #2241 (Achilles + operator, 09:30:01Z):
       re-check each tick; post again only when it comes back
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
@@ -32,6 +31,7 @@ MONITORS row, pgvector packet, retrieval verdicts (stopped), duplication,
 model smoke tests, code benchmark (PAN-33), data map dashboard, feed intake
 (PAN-35: 35 feeds, controls 4/4), GitHub watch (PAN-36: 29 owners, 4/4).
 Closed 2026-10-11: PAN-34 (report + packet).
+Closed 2026-10-14: PAN-52 Machines-tab labels for hosts skipped by ruling (datasets v12, 20:48:51Z).
 Closed 2026-10-12: stale "review packet for PAN-27 + PAN-28" line (REVIEW_PACKET_2026-10-10_PAN27_28.txt s5.1 already records
 the too-easy recall gate); stale "PAN-46 design note next" (designed 2026-10-11).
 Closed 2026-10-10: PAN-38 fleet tabs; PAN-27 atlas copy (7/7); PAN-28 pgvector (5/5); Atlas's two

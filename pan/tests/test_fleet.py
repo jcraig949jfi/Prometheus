@@ -162,3 +162,37 @@ def test_probe_targets_skip_owner_excluded_nodes():
     t = fleet.probe_targets(ms, out=said.append)
     assert t == {"UBU001": "192.168.1.218"}
     assert len(said) == 2 and all("#2215" in x for x in said)
+
+
+def test_probe_labels_list_ruled_hosts_apart():
+    """PAN-52. POSITIVE: a host skipped by ruling whose newest probe failed (before the ruling) leaves both failure
+    lists and is listed by ruling. NEGATIVE: hosts not skipped keep their labels; a host whose newest probe succeeded
+    or that was never probed is in no list. CHEAT: a ruled host may not simply vanish -- it must be listed by ruling
+    even with no probe at all."""
+    from pan import fleet
+    ex = {"UBU007": "HOLD", "UBU009": "SOAK", "UBU010": "SOAK"}
+    newest = {"UBU002": (False, "ssh: connect to host 192.168.1.219 port 22: Connection timed out"),
+              "UBU004": (False, "Host key verification failed."),
+              "UBU001": (True, ""),
+              "UBU007": (False, "ssh: connect to host 192.168.1.3 port 22: No route to host"),
+              "UBU009": (False, "Host key verification failed.")}
+    hosts = {"UBU001", "UBU002", "UBU004", "UBU007", "UBU009", "UBU010", "UBU011"}
+    no_key, unreachable, ruled = fleet.probe_labels(hosts, newest, excluded=ex)
+    assert no_key == ["UBU004"]
+    assert unreachable == ["UBU002"]
+    assert ruled == ["UBU007", "UBU009", "UBU010"]
+    # the default exclusions are the module's own
+    assert fleet.probe_labels({"UBU007"}, {})[2] == ["UBU007"]
+
+
+def test_with_rulings_puts_the_ruling_in_the_notes_without_touching_the_input():
+    """PAN-52. POSITIVE: a ruled host's notes start with the ruling, keeping what was there. NEGATIVE: other rows are
+    unchanged and the input rows are not mutated."""
+    from pan import fleet
+    ex = {"UBU007": "HOLD: bad RAM (Achilles, comms #2215, 2026-10-12)"}
+    ms = [dict(host="UBU007", notes="no AVX"), dict(host="UBU008", notes=None), dict(host="UBU001", notes="Ready")]
+    out = fleet.with_rulings(ms, excluded=ex)
+    assert out[0]["notes"] == "NOT PROBED: HOLD: bad RAM (Achilles, comms #2215, 2026-10-12); no AVX"
+    assert out[1] == {"host": "UBU008", "notes": None} and out[2] == {"host": "UBU001", "notes": "Ready"}
+    assert ms[0]["notes"] == "no AVX"
+    assert fleet.with_rulings([dict(host="UBU007", notes=None)], excluded=ex)[0]["notes"].startswith("NOT PROBED: HOLD")

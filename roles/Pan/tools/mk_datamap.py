@@ -233,7 +233,7 @@ def fleet_tabs():
             "cpu", "cores", "threads", "ram_gb", "gpu", "vram_gb", "cuda", "disk", "disk_total_gb", "free_gb",
             "free_where", "ip", "tags", "seats_7d", "n_seats_7d", "fabric_workers", "specs", "checked_at", "mismatch",
             "notes")
-    dump("machines", [{k: m.get(k) for k in keep} for m in ms])
+    dump("machines", [{k: m.get(k) for k in keep} for m in fleet.with_rulings(ms)])
     rows, meta = fleet.seats()
     for r in rows:
         r["last_machine"] = names.get(r["last_machine"], r["last_machine"])
@@ -247,16 +247,18 @@ def fleet_tabs():
         meta["last_probe_at"] = fleet._iso(t)
     meta["register_changed"] = subprocess.run(
         ["git", "-C", W, "log", "-1", "--format=%cs", "HEAD", "--", fleet.DOC], capture_output=True, text=True).stdout.strip()
-    # from each host's NEWEST ssh probe (not from a label): failed for want of a stored host key, or unreachable
+    # from each host's NEWEST ssh probe (not from a label): failed for want of a stored host key, or unreachable;
+    # hosts skipped by ruling are listed apart, since their newest probe predates the ruling (PAN-52)
     with db.cursor() as cur:
         cur.execute("""select distinct on (host) host, ok, coalesce(error, '') from pan.host_probe where method = 'ssh'
                        order by host, probed_at desc""")
         newest = {h: (ok, err) for h, ok, err in cur.fetchall()}
     linux = {m["host"] for m in ms if m["family"] == "Linux"}
-    meta["machines_unprobed_no_hostkey"] = ", ".join(
-        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" in newest[h][1])
-    meta["machines_unreachable"] = ", ".join(
-        h.lower() for h in sorted(linux) if h in newest and not newest[h][0] and "Host key verification" not in newest[h][1])
+    no_key, unreachable, ruled = fleet.probe_labels(linux, newest)
+    meta["machines_unprobed_no_hostkey"] = ", ".join(h.lower() for h in no_key)
+    meta["machines_unreachable"] = ", ".join(h.lower() for h in unreachable)
+    meta["machines_not_probed_by_ruling"] = "; ".join(
+        "{} ({})".format(h.lower(), fleet.PROBE_EXCLUDED[h]) for h in ruled)
     meta["hardware_table_read"] = fleet.parse_hw(fleet.git_show(fleet.HW_DOC))[1]
     dump("fleet_meta", [meta])
 

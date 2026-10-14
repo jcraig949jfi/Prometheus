@@ -369,6 +369,32 @@ def probe_targets(machines, out=print):
     return targets
 
 
+def probe_labels(linux_hosts, newest, excluded=None):
+    """(no_hostkey, unreachable, by_ruling) host lists for the Machines tab, from each host's NEWEST ssh probe
+    ({host: (ok, error)}). A host skipped by ruling goes only under by_ruling: its newest probe predates the ruling,
+    so it says nothing about the host now (PAN-52)."""
+    excluded = PROBE_EXCLUDED if excluded is None else excluded
+    no_key, unreachable, ruled = [], [], []
+    for h in sorted(linux_hosts):
+        if h in excluded:
+            ruled.append(h)
+        elif h in newest and not newest[h][0]:
+            (no_key if "Host key verification" in newest[h][1] else unreachable).append(h)
+    return no_key, unreachable, ruled
+
+
+def with_rulings(machines, excluded=None):
+    """Copies of the machine rows, each host skipped by ruling with the ruling at the front of its notes (PAN-52)."""
+    excluded = PROBE_EXCLUDED if excluded is None else excluded
+    out = []
+    for m in machines:
+        m = dict(m)
+        if m.get("host") in excluded:
+            m["notes"] = "; ".join(x for x in ("NOT PROBED: " + excluded[m["host"]], m.get("notes")) if x)
+        out.append(m)
+    return out
+
+
 def probe(out=print, addresses=None):
     """Probe every Linux node in the register (ssh, read-only) and the local host if it is in the register; one
     pan.host_probe row per attempt, failures included. `addresses` ({host: address}) overrides the targets."""
