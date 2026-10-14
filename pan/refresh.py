@@ -21,18 +21,31 @@ import time
 from . import REPO
 
 
-def rebuild_lexeme_df(conn=None, schema="pan", lock_timeout="10s"):
+HOLDERS_SQL = """select a.application_name, coalesce(host(a.client_addr), 'local'), a.state,
+                         extract(epoch from now() - a.xact_start)::int,
+                         left(regexp_replace(a.query, '\\s+', ' ', 'g'), 120)
+                    from pg_locks l join pg_stat_activity a on a.pid = l.pid
+                   where l.relation = '{s}.lexeme_df'::regclass and l.granted and a.pid <> pg_backend_pid()"""
+
+
+def rebuild_lexeme_df(conn=None, schema="pan", lock_timeout="10s", attempts=3, pause_s=10, report=None):
     """Rebuild {schema}.lexeme_df beside the live table, then swap it in.
 
     Before 2026-10-14 this was truncate + insert in one transaction, so every full-text search
     waited for the whole rebuild (40 s normally, 130-165 s on a loaded host). Now only the
-    renames take the exclusive lock. lock_timeout bounds the swap: a pending exclusive lock
-    would also queue new readers, so if a long reader holds the table the swap gives up and the
-    old table stays until the next refresh. The table comment is carried over (LIKE does not
-    copy it); the table has no grants beyond its owner (checked 2026-10-14).
-    Returns the number of lexemes, or None if the swap timed out."""
+    renames take the exclusive lock. lock_timeout bounds each swap attempt: a pending exclusive
+    lock would also queue new readers, so if a long reader holds the table the attempt gives up,
+    the holders are recorded, and the swap is retried after pause_s; after `attempts` failures
+    the old table stays until the next refresh (one swap timed out on 2026-10-14 07:41Z, holder
+    unknown -- hence the record). The table comment is carried over (LIKE does not copy it); the
+    table has no grants beyond its owner (checked 2026-10-14).
+    Returns the number of lexemes, or None if every swap attempt timed out. If `report` is a
+    dict it receives swap_attempts and blockers (application, client, state, xact age s, query)."""
+    import time
     from psycopg2.errors import LockNotAvailable
     from . import db
+    report = report if report is not None else {}
+    report.update(swap_attempts=0, blockers=[])
     own = conn is None
     conn = conn or db.connect(statement_timeout_ms=1800000)
     s = schema
@@ -46,20 +59,28 @@ def rebuild_lexeme_df(conn=None, schema="pan", lock_timeout="10s"):
                     .format(s=s))
         n = cur.rowcount
         conn.commit()
-        try:
-            cur.execute("set local lock_timeout = %s", (lock_timeout,))
-            cur.execute("alter table {s}.lexeme_df rename to lexeme_df_old".format(s=s))
-            cur.execute("alter table {s}.lexeme_df_new rename to lexeme_df".format(s=s))
-            cur.execute("drop table {s}.lexeme_df_old".format(s=s))
-            cur.execute("alter index if exists {s}.lexeme_df_new_pkey rename to lexeme_df_pkey".format(s=s))
-            if comment:
-                cur.execute("comment on table {s}.lexeme_df is %s".format(s=s), (comment,))
-            conn.commit()
-        except LockNotAvailable:
-            conn.rollback()
-            cur.execute("drop table if exists {s}.lexeme_df_new".format(s=s))
-            conn.commit()
-            return None
+        for attempt in range(1, attempts + 1):
+            report["swap_attempts"] = attempt
+            try:
+                cur.execute("set local lock_timeout = %s", (lock_timeout,))
+                cur.execute("alter table {s}.lexeme_df rename to lexeme_df_old".format(s=s))
+                cur.execute("alter table {s}.lexeme_df_new rename to lexeme_df".format(s=s))
+                cur.execute("drop table {s}.lexeme_df_old".format(s=s))
+                cur.execute("alter index if exists {s}.lexeme_df_new_pkey rename to lexeme_df_pkey".format(s=s))
+                if comment:
+                    cur.execute("comment on table {s}.lexeme_df is %s".format(s=s), (comment,))
+                conn.commit()
+                break
+            except LockNotAvailable:
+                conn.rollback()
+                cur.execute(HOLDERS_SQL.format(s=s))
+                report["blockers"].extend(list(r) for r in cur.fetchall())
+                conn.commit()
+                if attempt == attempts:
+                    cur.execute("drop table if exists {s}.lexeme_df_new".format(s=s))
+                    conn.commit()
+                    return None
+                time.sleep(pause_s)
         cur.execute("analyze {s}.lexeme_df".format(s=s))
         conn.commit()
         return n
@@ -113,7 +134,8 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     ed = embed.run_docs(out=lambda *_: None) if embed_docs else {"embedded": 0}
     # 6b. derived tables that depend on chunks: lexeme frequencies (full-text cap) and links
     lx_t = time.time()
-    lexemes = rebuild_lexeme_df()
+    lx_report = {}
+    lexemes = rebuild_lexeme_df(report=lx_report)
     from . import links
     lk = links.run(out=lambda *_: None)
     derived_s = round(time.time() - lx_t, 1)
@@ -124,7 +146,8 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     res = dict(noop=False, from_sha=cat, to_sha=head, artifacts_changed=changed, artifacts_removed=removed,
                commits_total=c.get("commits"), chunks_new=ch.get("chunks"), files_rechunked=ch.get("files_chunked"),
                chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"), links=lk.get("links"),
-               derived_seconds=derived_s, lexemes=lexemes,
+               derived_seconds=derived_s, lexemes=lexemes, lexdf_swap_attempts=lx_report.get("swap_attempts"),
+               lexdf_blockers=lx_report.get("blockers"),
                access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
                seconds=round(time.time() - t0, 1))
     out(json.dumps(res))

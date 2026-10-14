@@ -102,6 +102,33 @@ class _LockedConn:
 
 
 def test_cheat_swap_timeout_keeps_old(conn):
-    assert rebuild_lexeme_df(_LockedConn(conn), schema=S) is None
+    report = {}
+    assert rebuild_lexeme_df(_LockedConn(conn), schema=S, pause_s=0, report=report) is None
     assert table(conn) == [("stale", 9, 9)]
+    assert leftovers(conn) == []
+    assert report["swap_attempts"] == 3 and report["blockers"] == []    # no other session holds a TEMP table
+
+
+class _LockedOnceCursor(_LockedCursor):
+    """Times out on the first swap attempt only, as a reader that finishes would."""
+    tripped = False
+
+    def execute(self, sql, *a):
+        if "rename to lexeme_df_old" in sql and not _LockedOnceCursor.tripped:
+            _LockedOnceCursor.tripped = True
+            raise LockNotAvailable("canceling statement due to lock timeout")
+        return self._cur.execute(sql, *a)
+
+
+class _LockedOnceConn(_LockedConn):
+    def cursor(self):
+        return _LockedOnceCursor(self._c.cursor())
+
+
+def test_positive_retry_after_one_timeout(conn):
+    _LockedOnceCursor.tripped = False
+    report = {}
+    assert rebuild_lexeme_df(_LockedOnceConn(conn), schema=S, pause_s=0, report=report) == 3
+    assert report["swap_attempts"] == 2
+    assert table(conn) == [("falsifi", 1, 1), ("gate", 2, 4), ("latch", 2, 2)]
     assert leftovers(conn) == []
