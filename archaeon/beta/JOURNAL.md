@@ -1033,6 +1033,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B85 LAUNCHED 05:01Z (prediction committed before run, 3de87600a) on 11 procs under the same lease (lse-d5ebe8703558;
   B84's last cell holds the 12th): SINGLE (200 x LATCH_1) vs PAIR (100 + 100, the B76 condition), 6 seeds each.
   Recombination hypothesis: PAIR >= 4/6 AND SINGLE <= 2/6.
+- B84 FINAL (05:09Z): L_6931 0/12. Spearman(find fraction, rate) = .433 (predicted >= .6): FAILED; hand latch and
+  H_6929 >= .5: FAILED (both 0); zero-rate latches <= .25: MET (all 0). Neutral reach only separates H_6913 from the rest,
+  the same information as B82/B83 one-step density.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
