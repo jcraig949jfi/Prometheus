@@ -1049,6 +1049,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   after five probes (B79-B85). DIMINISHING RETURNS -- park this sub-question and pivot (next update to say so).
   WINDOW 8 TALLY (wall-clock): B81 ~23 + B82/B83 evals ~1 + B84 (10 procs ~35 min) ~6 + B85 (11 procs ~48 min) ~9 =
   ~39 of 48.
+- PIVOT to the KEYED class (B86; prediction committed before run): hand controls under wide jitter, held-out 64 x 4:
+  SOLVER 1.000, SLOT_A (SOLVER with slot B's fill NOPed; 2 edits away) .531, SHELF .535 -- equal-fitness precursors
+  at different distances. Smoke test passed (3 gens 0.9 s). 16 cells, cheap -> run now inside window 8.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
