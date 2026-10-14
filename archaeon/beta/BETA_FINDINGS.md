@@ -119,6 +119,9 @@ clock.
      does not predict conversion (rho .43). The hand latch (6/6) and H_6929 (7/9) have NO improving one-step mutant
      and convert via multi-step paths. Conversion stays genome-specific and unexplained by quality, length, persist
      mode or one-step density.
+   - **B84/B85:** short neutral walks do not find RESET from the reliable convertors (probably underpowered). A single
+     hand latch converts 6/6 without a second variant (recombination between variants not required). The
+     stepping-stone property is real and genome-specific but still unexplained. PARKED.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

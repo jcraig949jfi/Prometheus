@@ -1036,6 +1036,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B84 FINAL (05:09Z): L_6931 0/12. Spearman(find fraction, rate) = .433 (predicted >= .6): FAILED; hand latch and
   H_6929 >= .5: FAILED (both 0); zero-rate latches <= .25: MET (all 0). Neutral reach only separates H_6913 from the rest,
   the same information as B82/B83 one-step density.
+- B85 RESULT (05:49Z; lease lse-d5ebe8703558 RELEASED): converting populations (>= 5 RESET-like) SINGLE (200 x LATCH_1)
+  6/6, PAIR (100 + 100, B76 condition) 6/6; RESET-like genomes per population SINGLE 7-166 (median ~44), PAIR 75-119
+  (median ~114). PREDICTION (PAIR >= 4/6 AND SINGLE <= 2/6) FAILED: recombination between the two latch variants is
+  NOT required; it may raise abundance.
+  SELF-ATTACK on B84: evolution samples ~60,000 offspring under selection (200 x 300 gens, with crossover among drifted
+  copies); B84 sampled 7,200 drift mutants with a strict -.002 neutrality band over 15 steps. B84's null for the hand
+  latch is therefore probably an UNDERPOWERED instrument, not evidence that no drift route exists. Recorded as
+  INSTRUMENT, not law.
+  STATE OF THE STEPPING-STONE QUESTION: conversion is genome-specific; quality, length, persist mode, one-step density
+  and short neutral reach do not predict it; inter-variant recombination is not needed. No simple predictor found
+  after five probes (B79-B85). DIMINISHING RETURNS -- park this sub-question and pivot (next update to say so).
+  WINDOW 8 TALLY (wall-clock): B81 ~23 + B82/B83 evals ~1 + B84 (10 procs ~35 min) ~6 + B85 (11 procs ~48 min) ~9 =
+  ~39 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
