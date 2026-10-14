@@ -21,6 +21,56 @@ import time
 from . import REPO
 
 
+def rebuild_lexeme_df(conn=None, schema="pan", lock_timeout="10s"):
+    """Rebuild {schema}.lexeme_df beside the live table, then swap it in.
+
+    Before 2026-10-14 this was truncate + insert in one transaction, so every full-text search
+    waited for the whole rebuild (40 s normally, 130-165 s on a loaded host). Now only the
+    renames take the exclusive lock. lock_timeout bounds the swap: a pending exclusive lock
+    would also queue new readers, so if a long reader holds the table the swap gives up and the
+    old table stays until the next refresh. The table comment is carried over (LIKE does not
+    copy it); the table has no grants beyond its owner (checked 2026-10-14).
+    Returns the number of lexemes, or None if the swap timed out."""
+    from psycopg2.errors import LockNotAvailable
+    from . import db
+    own = conn is None
+    conn = conn or db.connect(statement_timeout_ms=1800000)
+    s = schema
+    try:
+        cur = conn.cursor()
+        cur.execute("select obj_description('{}.lexeme_df'::regclass)".format(s))
+        comment = cur.fetchone()[0]
+        cur.execute("drop table if exists {s}.lexeme_df_new".format(s=s))
+        cur.execute("create table {s}.lexeme_df_new (like {s}.lexeme_df including all)".format(s=s))
+        cur.execute("insert into {s}.lexeme_df_new select word, ndoc, nentry from ts_stat('select tsv from {s}.chunk')"
+                    .format(s=s))
+        n = cur.rowcount
+        conn.commit()
+        try:
+            cur.execute("set local lock_timeout = %s", (lock_timeout,))
+            cur.execute("alter table {s}.lexeme_df rename to lexeme_df_old".format(s=s))
+            cur.execute("alter table {s}.lexeme_df_new rename to lexeme_df".format(s=s))
+            cur.execute("drop table {s}.lexeme_df_old".format(s=s))
+            cur.execute("alter index if exists {s}.lexeme_df_new_pkey rename to lexeme_df_pkey".format(s=s))
+            if comment:
+                cur.execute("comment on table {s}.lexeme_df is %s".format(s=s), (comment,))
+            conn.commit()
+        except LockNotAvailable:
+            conn.rollback()
+            cur.execute("drop table if exists {s}.lexeme_df_new".format(s=s))
+            conn.commit()
+            return None
+        cur.execute("analyze {s}.lexeme_df".format(s=s))
+        conn.commit()
+        return n
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        if own:
+            conn.close()
+
+
 def run(out=print, embed_chunks=True, embed_docs=True):
     from . import chunker, commits, db, embed, inventory, search
     t0 = time.time()
@@ -63,9 +113,7 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     ed = embed.run_docs(out=lambda *_: None) if embed_docs else {"embedded": 0}
     # 6b. derived tables that depend on chunks: lexeme frequencies (full-text cap) and links
     lx_t = time.time()
-    with db.cursor(statement_timeout_ms=1800000) as cur:
-        cur.execute("truncate pan.lexeme_df")
-        cur.execute("insert into pan.lexeme_df select word, ndoc, nentry from ts_stat('select tsv from pan.chunk')")
+    lexemes = rebuild_lexeme_df()
     from . import links
     lk = links.run(out=lambda *_: None)
     derived_s = round(time.time() - lx_t, 1)
@@ -76,7 +124,7 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     res = dict(noop=False, from_sha=cat, to_sha=head, artifacts_changed=changed, artifacts_removed=removed,
                commits_total=c.get("commits"), chunks_new=ch.get("chunks"), files_rechunked=ch.get("files_chunked"),
                chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"), links=lk.get("links"),
-               derived_seconds=derived_s,
+               derived_seconds=derived_s, lexemes=lexemes,
                access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
                seconds=round(time.time() - t0, 1))
     out(json.dumps(res))

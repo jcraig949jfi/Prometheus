@@ -165,8 +165,24 @@ def build_parser():
     return ap
 
 
+def utf8_stdio(streams=None):
+    """Write UTF-8 (unencodable characters replaced) on streams whose encoding is not UTF-8.
+
+    When a seat pipes `python -m pan search` on Windows, stdout falls back to cp1252 and the
+    first snippet holding e.g. U+2011 raised UnicodeEncodeError after the search had already
+    run (found 2026-10-14). A console attached to a terminal already writes Unicode."""
+    for s in streams if streams is not None else (sys.stdout, sys.stderr):
+        enc = (getattr(s, "encoding", None) or "").lower().replace("-", "")
+        if enc != "utf8" and hasattr(s, "reconfigure"):
+            try:
+                s.reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError):
+                pass
+
+
 def main(argv=None):
     os.environ.setdefault("EW_DB_HOST", "192.168.1.202")
+    utf8_stdio()
     a = build_parser().parse_args(argv)
 
     if a.cmd == "migrate":
@@ -217,13 +233,11 @@ def main(argv=None):
         dictionary.run()
     elif a.cmd == "lexdf":
         import time
-        from . import db
+        from .refresh import rebuild_lexeme_df
         t = time.time()
-        with db.cursor(statement_timeout_ms=1800000) as cur:
-            cur.execute("truncate pan.lexeme_df")
-            cur.execute("insert into pan.lexeme_df select word, ndoc, nentry from ts_stat('select tsv from pan.chunk')")
-            cur.execute("select count(*) from pan.lexeme_df")
-            print("lexemes", cur.fetchone()[0], "in", round(time.time() - t, 1), "s")
+        n = rebuild_lexeme_df()
+        print("lexemes", n if n is not None else "unchanged (swap timed out; old table kept)",
+              "in", round(time.time() - t, 1), "s")
     elif a.cmd == "comms-index":
         from . import comms_index
         comms_index.run()
