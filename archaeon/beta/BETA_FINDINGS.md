@@ -114,7 +114,11 @@ clock.
      H_6923 1/6 at near-equal quality (pooled B80+B81).
    - **Mechanism (B82): distance in mutation space.** In H_6913, 15/1000 one-step mutants improve on the latch, and
      ALL 15 are RESET-like. One example re-gates a single branch onto a different register (JNZ r0 -> JNZ r6). H_6923
-     has no improving mutant within two steps. A latch is a stepping stone iff RESET is a coupled edit or two away.
+     has no improving mutant within two steps.
+   - **RETRACTED (B83): 'stepping stone iff RESET is a coupled edit or two away'.** Over 10 latches, one-step density
+     does not predict conversion (rho .43). The hand latch (6/6) and H_6929 (7/9) have NO improving one-step mutant
+     and convert via multi-step paths. Conversion stays genome-specific and unexplained by quality, length, persist
+     mode or one-step density.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

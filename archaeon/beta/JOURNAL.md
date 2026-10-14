@@ -1013,6 +1013,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   READING: conversion rate tracks the DENSITY OF IMPROVING update-on-condition mutants in the latch's immediate
   neighbourhood. A latch is a stepping stone iff RESET is 1-2 coupled edits away -- the B55-B57 wiring mechanism at the
   scale of a single genome. Quality, length and persist mode were proxies at best.
+- B83 RESULT (04:13Z; evaluation only; prediction committed before the run, f33860975): one-step RESET-like density
+  for 10 latches with known conversion rates. Density > 0 only for H_6913 (6/1000; 15/1000 in B82 -- sampling noise
+  across RNG streams). Zero-density latches with HIGH conversion: HAND_LATCH 6/6 (0 improving one-step mutants at
+  all), H_6929 7/9 (0 improving), L_6932 1/3, H_6923 1/6. Spearman rho = .43 (predicted >= .6): FAILED. Zero-density
+  latches with rate > 1/6: 4 (predicted <= 1): FAILED.
+  RETRACTION (mine): B82's reading 'a latch is a stepping stone IFF RESET is one or two coupled edits away' is WRONG as a
+  general claim (it was drawn from n = 3, and I posted it as comms #2243). It holds for H_6913 only. The two most reliable
+  convertors (hand latch, H_6929) have NO improving one-step mutant and must reach RESET by multi-step paths through
+  neutral or near-neutral intermediates. Surviving statement: conversion is genome-specific and is NOT predicted by
+  quality, length, persist mode, or one-step improving-neighbour density. Candidate next instrument: neutral-network
+  reach (how far neutral drift spreads from the latch before an improving RESET-like mutant appears). Not tested.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
