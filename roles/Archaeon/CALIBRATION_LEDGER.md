@@ -37,6 +37,14 @@ were recorded elsewhere before this file existed are listed under
                                                                                     the open-loop "beats constant" claim RETRACTED; magnitudes fell
                                                                                     (.48 -> .20). Core claims survived the re-score. Rule now: held-out
                                                                                     = new episodes, >= 64 x >= 4 world seeds, never the training sample.
+    2026-10-14  M2 (P2B SFE)  posted a mechanism as general ('a latch converts     B82 compared ONE convertor with two non-convertors and I wrote the    archaeon/beta/JOURNAL.md
+                              to RESET iff RESET is one coupled edit away')        reading as an 'iff' and posted it to Harmonia/Aporia (comms #2243)   (B82, B83 entries);
+                              from n = 3 latches                                   before testing it. B83 (prediction committed first, n = 10) killed   comms #2245 correction
+                                                                                   it: rho .43; the two most reliable convertors have zero improving
+                                                                                   one-step mutants. Repair: retraction in JOURNAL, BETA_FINDINGS,
+                                                                                   review packet and comms (#2245). Rule now: a mechanism read from
+                                                                                   one positive case is posted as a CASE, not a law, until it is
+                                                                                   tested across the population it would explain.
 
 ## Prior rows, by pointer (before this file existed)
 
