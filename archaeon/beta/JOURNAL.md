@@ -987,6 +987,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   since main() did not finish). WINDOW 7 TALLY corrected: ~31 + ~2.5 (tail cell 05:45-08:00) = ~34 of 48.
 - WINDOW 8 OPENED 2026-10-14 00:30Z. B81 LAUNCHED: lease lse-b540b76593b2 (3 h, token captured), 15 cells, 12 procs.
   Tail-cell policy: if one cell runs > 2x the median cell time and cannot change a verdict, stop it and release.
+- B81 RESULT (03:05Z; 13/15 cells; the last 2 L_6931 cells STOPPED under the tail-cell policy once the verdict was
+  fixed; lease lse-b540b76593b2 RELEASED). Converting populations (>= 5 RESET-like, B77 parity):
+  - HIGH->all 3/6 (H_6913 3/3 [124/10/15], H_6923 0/3) -- the same 3/6 as these two latches under 'regs' in B80;
+  - LOW->regs 0/7 (L_6916 0/3, L_S6913 0/3, L_6931 0/1).
+  PREDICTION (persist hypothesis: LOW->regs >= 3/9 AND HIGH->all <= 1/6) FAILED on BOTH parts. Persist mode does not
+  decide conversion (it was behaviourally neutral at gen 0 and stays neutral for evolvability).
+  WHAT DOES: GENOME IDENTITY. Pooled B80+B81 per latch: H_6913 5/6, H_6929 1/3, H_6923 1/6, H_6911 0/3, L_6932 1/3,
+  L_6916 0/6, L_S6913 0/6, L_6931 0/4. Two latches of near-equal plain-pulse quality (H_6913 .139, H_6923 .120)
+  convert 5/6 vs 1/6. The stepping-stone property belongs to SPECIFIC latch genomes, not to quality, length or persist
+  mode. HYPOTHESIS (untested): what matters is how close a latch's code is to RESET in mutation space -- e.g. whether a
+  counter register or a branch to the move block is already present or one mutation away. Test: compute single- and
+  double-mutation neighbourhoods of H_6913 vs H_6923 and count RESET-like neighbours.
+  WINDOW 8 TALLY (wall-clock): 12 procs 00:30-~02:15 then 3 procs to 03:05 = ~23 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
