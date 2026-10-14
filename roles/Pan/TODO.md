@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-14T08:39Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-14T14:44Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
@@ -12,7 +12,7 @@ date, purged after 24 h (base role s7).
       fires). Loop extended to 2026-10-16T10:40Z.
 - [ ] PAN-26 evidence wiki: still BLOCKED -- PEW port 8377 refused on M2 (127.0.0.1) and timed out on M1
       (192.168.1.202) at 2026-10-12T22:27:59Z; re-check daily
-- [ ] Status report 21 by ~2026-10-14T14:39Z (report 20 written 08:39Z)
+- [ ] Status report 22 by ~2026-10-14T20:44Z (report 21 written 14:44Z)
 - [ ] ubu002 off the LAN since 08:24Z (last ok 2026-10-12T22:29Z); FYI posted #2241 (Achilles + operator, 09:30:01Z):
       re-check each tick; post again only when it comes back
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
