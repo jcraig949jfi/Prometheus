@@ -1060,6 +1060,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   .535), and never from the equally fit shelf. CAVEAT: SLOT_A is the hand solution with two instructions NOPed;
   'reached' means restoring them -- a statement about distance, not open-ended discovery.
   WINDOW 8 TALLY: ~39 + ~4 = ~43 of 48.
+- B87 STAGED (graded keyed distance d = 2/4/6/8 NOPed SOLVER instructions; all precursors on the .50-.535 plateau;
+  prediction in docstring; smoke test passed). 32 cells. LAUNCH in window 9 (~2026-10-15 00:30Z).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
