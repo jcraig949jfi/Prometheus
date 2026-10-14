@@ -112,6 +112,9 @@ clock.
    - **B81 persist swap: persist mode is NOT the variable.** HIGH latches forced to 'all' convert 3/6 (same as under
      'regs'); LOW latches forced to 'regs' 0/7. Conversion is a property of SPECIFIC latch genomes: H_6913 5/6 vs
      H_6923 1/6 at near-equal quality (pooled B80+B81).
+   - **Mechanism (B82): distance in mutation space.** In H_6913, 15/1000 one-step mutants improve on the latch, and
+     ALL 15 are RESET-like. One example re-gates a single branch onto a different register (JNZ r0 -> JNZ r6). H_6923
+     has no improving mutant within two steps. A latch is a stepping stone iff RESET is a coupled edit or two away.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

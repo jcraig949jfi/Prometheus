@@ -1000,6 +1000,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   counter register or a branch to the move block is already present or one mutation away. Test: compute single- and
   double-mutation neighbourhoods of H_6913 vs H_6923 and count RESET-like neighbours.
   WINDOW 8 TALLY (wall-clock): 12 procs 00:30-~02:15 then 3 procs to 03:05 = ~23 of 48.
+- B82 RESULT (03:34Z; evaluation only, 1 proc; prediction committed before the run, 11c21dd92): mutation-neighbourhood
+  census with the search's own operator (lineage.descend), 1000 one-step + 1000 two-step mutants per latch, screened in
+  the relocating world, improvers re-scored held-out and classified. Improving / RESET-like mutants:
+  - H_6913: step 1 15/15, step 2 8/8 -- EVERY improving mutant is RESET-like (~1.5% of one-step mutants);
+  - H_6923: step 1 0/0, step 2 0/0 -- no improving mutant within two steps;
+  - L_6916: step 1 1/0, step 2 1/0.
+  PREDICTION (H_6913 > H_6923; L_6916 fewest) MET (L_6916 ties H_6923 at 0 RESET-like).
+  MECHANISM: H_6913 (16 instr, n_regs 7) is ONE MUTATION from RESET. 12 distinct improving one-step mutations, e.g.
+  (i) a single operand change at instruction 3, JNZ r0 -> 15 becomes JNZ r6 -> 15 (the branch is re-gated on a
+  different register: a one-COUPLING rewire); (ii) a 2-instruction deletion that shifts the code.
+  READING: conversion rate tracks the DENSITY OF IMPROVING update-on-condition mutants in the latch's immediate
+  neighbourhood. A latch is a stepping stone iff RESET is 1-2 coupled edits away -- the B55-B57 wiring mechanism at the
+  scale of a single genome. Quality, length and persist mode were proxies at best.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
