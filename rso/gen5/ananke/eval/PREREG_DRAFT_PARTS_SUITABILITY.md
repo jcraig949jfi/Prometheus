@@ -153,12 +153,20 @@ The owner's 12-generation transplant GA is optional and native.
 ## 6. Resources and power (directive s11)
 
 **6.1 Measured throughput.**
-- **Observatory, harry1 CPU (no torch).** The oracle evaluates 2.0-2.9 world-episodes per second per process at
-  N = 64 sites (RELAY1H 132 ticks, GATE 208 ticks), and 0.8-0.9 per second at N = 144. Two processes are allowed on
-  harry1.
-  - Measured over the T040 known-answer run: qual/KA_TABLE.json `throughput`.
-  - One competent champion's Rung-4 battery (12 interventions x 256 worlds) costs about 25-35 min of one process at
-    N = 64.
+- **Observatory, harry1 CPU (no torch).** The oracle runs 15,000-19,700 site-ticks per second per process, with two
+  processes running concurrently (the harry1 limit). Measured over the 14,464 world-episodes of the T040 known-answer
+  run; 6.5 CPU-h in total; qual/KA_TABLE.json `throughput`.
+
+  | cell | GATE / FLIP episode length | world-episodes per second per process |
+  |---|---|---|
+  | FLIP-0000 / FLIP-0004 (N = 64) | 208 ticks | 1.1-1.8 |
+  | FLIP-0167 (N = 100) | 336 ticks | 0.46 |
+  | FLIP-0099 (N = 144) | 336 ticks | 0.31 |
+
+- **Rung-4 battery cost.** One competent champion's battery is 12 interventions x 256 worlds = 3,072
+  world-episodes. That is about 30-45 min of one process at N = 64, and about 2.8 h at N = 144.
+- **What follows.** The Observatory re-evaluates and attributes competent champions plus a sample. It cannot
+  re-evaluate whole populations per generation; per-generation readings must come from the native monitor.
 - **Owner, M1 GPU.** About 14.7 searches per hour at 36 generations, population 96, 3 workers
   (PREREG_PTE_C5T.md s0).
 
@@ -222,7 +230,8 @@ and `access.min_detectable`.
 | SHAM-SCRAMBLED | the specific bytes or op multiset of the REUSE modules help, regardless of their function | SHAM ~ REUSE | REUSE > SHAM | must be checked: the sham is refused if it is functional alone on a half-world | the permutation is drawn from a frozen seed; its output is verified FALSE before use | the KA-style "alone" rows on both half-worlds |
 | COMPUTE-MATCHED | REUSE's advantage is just the generations spent acquiring A | CM ~ REUSE | REUSE > CM | no | none | G_L is reported amortised and unamortised; the label requires the amortised contrast |
 | CONSTRUCTED-POSITIVE | the instrument cannot see an advantage even when the right parts are inserted | CP ~ CONTROL (the calibration gate fails: no reuse reading allowed) | CP > CONTROL | no: C4 arm D reached 2/32 vs 0/32 | CP's parts are designed (calibration, never discovery) | -- |
-| Rung-4 USE-DISABLED | possession, not use: the library bytes help by being there (spacing, sinks, inert lines) | competence kept with the bytes present but their writes dead | competence lost | no: fire-tested both ways on plants (mechanics KA: a dead line use-disabled is IDENTICAL; the plant halves use-disabled are FALSE) | none: it acts on bytes only | dead-line identity control (test_mechanics) |
+| Rung-4 USE-DISABLED | possession, not use: the library bytes help by being there (spacing, sinks, inert lines) | competence kept with the bytes present but their writes dead | competence lost | no: fire-tested both ways on plants (a dead line use-disabled gives IDENTICAL output; the plant halves use-disabled read FALSE at 2 cells, all of P_FLIP reads FALSE; MECHANICS_KA.json 32/32 KNOWN) | none: it acts on bytes only | dead-line identity control (test_mechanics) |
+| Rung-4 TRANSPLANT / any line move | moving or re-inserting lines is semantically neutral | identical output after a move | output changes | **cell-dependent**: at FLIP-0004 (mut_site .001, wimm 1) in-lifetime Kp mutation hits a hashed INSTRUCTION INDEX, so a pure offset move changed the per-trial output (status still TRUE). Library insertion therefore changes the dynamics of the moved lines there, independent of their function | none | MECHANICS_KA_first_reduce_FAIL.json (the T040 expectation that was wrong) |
 | Rung-4 library NOP | the library lines are inert and something else carries B | competence kept | competence lost | no (plant halves NOP: FALSE; a NOP line NOP: identical) | none | as above |
 | Ruler (RELAY-mh on GATE) | a cue-only, context-only or once-per-episode policy is read as GATE | relay_flood / hold_latch / null read TRUE | FALSE | no: all three are FALSE at 4 cells (KA) | none | relay_flood (cue without context), hold_latch (context without cue), latch-once (late half) |
 | Accessibility table | a missing, duplicated or rewritten search changes the rate | analysis reads a verdict | `validate_searches` refuses it | no (adversary target ananke_access: DROP, DUPLICATE, REWRITE, SCRUB all REJECTED) | `hit`/`time` are recomputed from the checkpoint statuses, never read | the kit's four variants |

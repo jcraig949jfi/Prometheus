@@ -1,0 +1,15 @@
+ananke_c4_ka   DROP             row-0                          REJECTED        | MISSING row ADM|FLIP-0000-adbab9bf|RELAY1H|plant
+ananke_c4_ka   DUPLICATE        row-0-over-row-1               REJECTED        | DUPLICATE row ADM|FLIP-0000-adbab9bf|RELAY1H|plant; MISSING row ADM|FLIP-0000-adbab9bf|RELAY1H|null
+ananke_c4_ka   REWRITE_DERIVED  status-FALSE-to-TRUE           REJECTED        | ALONE|FLIP-0000-adbab9bf|GATE|LIB1_RELAY1H: row says status='TRUE', recomputed 'FALSE'
+ananke_c4_ka   REWRITE_DERIVED  arrays-replayed-row            REJECTED        | ALONE|FLIP-0099-df143630|GATE|LIB4_HOLD: ALONE|FLIP-0099-df143630|GATE|LIB4_HOLD: REPLAY MISMATCH: re-executed
+ananke_c4_ka   REWRITE_DERIVED  arrays-unreplayed-row          LIMITATION     argus-c019t040-ka-replay-sample | ALONE|FLIP-0000-adbab9bf|GATE|LIB1_RELAY1H: PASS
+ananke_c4_ka   CONSTANT         ruler-always-TRUE              REJECTED        | constant TRUE ruler: ADM|FLIP-0000-adbab9bf|RELAY1H|plant: row says pass=True, recomputed False; ADM|FLIP-0000
+ananke_c4_ka   CONSTANT         ruler-always-FALSE             REJECTED        | constant FALSE ruler: ADM|FLIP-0000-adbab9bf|RELAY1H|plant: row says status='TRUE', recomputed 'FALSE'; ADM|FL
+ananke_c4_ka   SCRUB_ANSWER     row-per-trial-arrays-removed   REJECTED        | ADM|FLIP-0000-adbab9bf|RELAY1H|plant: per-trial arrays missing or unreadable ('pt')
+ananke_c4_ka   SCRUB_ANSWER     owner-admission-corrupted      REJECTED        | REFUSED: roles/Ananke/pte/c4/admission_R4.json content hashes to blob 80d443574622b4216b4b5fbe0b3c28e0ad556b07
+ananke_access  DROP             search-3                       REJECTED        | search table refused: UNPAIRED ('c0', 1): missing arms ['REUSE']
+ananke_access  DUPLICATE        REUSE-hit-over-REUSE-miss      REJECTED        | search table refused: row 3: DUPLICATE search ('REUSE', 'c0', 0) (also row 1); UNPAIRED ('c0', 1): missing arm
+ananke_access  REWRITE_DERIVED  CONTROL-miss-to-hit            REJECTED        | search table refused: row 0: derived hit/time (True, 6) != recomputed from checkpoints (False, 36)
+ananke_access  CONSTANT         -                              NOT_APPLICABLE  | compare_arms contains no detector: hits are recomputed from checkpoint statuses issued by the ruler, whose CON
+ananke_access  SCRUB_ANSWER     checkpoints-removed            REJECTED        | search table refused: row 1: missing or malformed field ('checkpoints'); UNPAIRED ('c0', 0): missing arms ['RE
+exit 0

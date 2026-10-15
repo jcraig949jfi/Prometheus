@@ -1,0 +1,69 @@
+test_edges (rso.gen5.ananke.eval.tests.test_access.ExactCI.test_edges) ... ok
+test_owner_recorded_bounds (rso.gen5.ananke.eval.tests.test_access.ExactCI.test_owner_recorded_bounds) ... ok
+test_coordination_numbers (rso.gen5.ananke.eval.tests.test_access.Fisher.test_coordination_numbers) ... ok
+test_all_censored_arm_is_finite (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_all_censored_arm_is_finite) ... ok
+test_all_observed (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_all_observed) ... ok
+test_logrank_known (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_logrank_known) ... ok
+test_synthetic_geometric_rate (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_synthetic_geometric_rate) ... ok
+test_textbook_censoring (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_textbook_censoring) ... ok
+test_zero_time_censoring_not_run (rso.gen5.ananke.eval.tests.test_access.KaplanMeier.test_zero_time_censoring_not_run) ... ok
+test_mcnemar_exact (rso.gen5.ananke.eval.tests.test_access.Paired.test_mcnemar_exact) ... ok
+test_paired_times_censoring (rso.gen5.ananke.eval.tests.test_access.Paired.test_paired_times_censoring) ... ok
+test_detectable (rso.gen5.ananke.eval.tests.test_access.Power.test_detectable) ... ok
+test_exact_power_by_enumeration (rso.gen5.ananke.eval.tests.test_access.Power.test_exact_power_by_enumeration) ... ok
+test_power_monotone_and_known (rso.gen5.ananke.eval.tests.test_access.Power.test_power_monotone_and_known) ... ok
+test_not_run_excluded_and_counted (rso.gen5.ananke.eval.tests.test_access.SearchTable.test_not_run_excluded_and_counted) ... ok
+test_refusals (rso.gen5.ananke.eval.tests.test_access.SearchTable.test_refusals) ... ok
+test_valid_table_and_comparison (rso.gen5.ananke.eval.tests.test_access.SearchTable.test_valid_table_and_comparison) ... ok
+test_ka_rows_reduce_pass (rso.gen5.ananke.eval.tests.test_conformance.CommittedEvidence.test_ka_rows_reduce_pass) ... C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\ka_table.py:251: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\runs\\ka\\ka_rows_2_0.jsonl' mode='r' encoding='cp1252'>
+  out += [json.loads(l) for l in open(os.path.join(out_dir, fn)) if l.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\ka_table.py:251: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\runs\\ka\\ka_rows_3_1.jsonl' mode='r' encoding='cp1252'>
+  out += [json.loads(l) for l in open(os.path.join(out_dir, fn)) if l.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_ka_table_json_matches_rows (rso.gen5.ananke.eval.tests.test_conformance.CommittedEvidence.test_ka_table_json_matches_rows) ... C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\tests\test_conformance.py:47: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\qual\\KA_TABLE.json' mode='r' encoding='cp1252'>
+  t = json.load(open(p))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_mechanics_reduce_pass (rso.gen5.ananke.eval.tests.test_conformance.CommittedEvidence.test_mechanics_reduce_pass) ... C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\mechanics_run.py:150: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\runs\\mech\\mech_rows_flip0.jsonl' mode='r' encoding='cp1252'>
+  rows += [json.loads(l) for l in open(os.path.join(out_dir, fn)) if l.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\mechanics_run.py:150: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\runs\\mech\\mech_rows_gate0.jsonl' mode='r' encoding='cp1252'>
+  rows += [json.loads(l) for l in open(os.path.join(out_dir, fn)) if l.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\mechanics_run.py:150: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Prometheus-worktrees\\argus-c019-t040\\rso\\gen5\\ananke\\eval\\runs\\mech\\mech_rows_gate1.jsonl' mode='r' encoding='cp1252'>
+  rows += [json.loads(l) for l in open(os.path.join(out_dir, fn)) if l.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_relay1h_admission_exact (rso.gen5.ananke.eval.tests.test_conformance.Conformance.test_relay1h_admission_exact) ... ok
+test_lesion_reads_zero (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_lesion_reads_zero) ... ok
+test_lines_nop (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_lines_nop) ... ok
+test_rename_identity_and_involution (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_rename_identity_and_involution) ... ok
+test_substitute_size_matched (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_substitute_size_matched) ... ok
+test_transplant_places_and_renames (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_transplant_places_and_renames) ... ok
+test_use_disabled_keeps_bytes_but_dst (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_use_disabled_keeps_bytes_but_dst) ... ok
+test_use_disabled_refuses_when_sink_is_read (rso.gen5.ananke.eval.tests.test_mechanics.GenomeContracts.test_use_disabled_refuses_when_sink_is_read) ... ok
+test_dead_line_use_disabled_is_identity (rso.gen5.ananke.eval.tests.test_mechanics.OracleFireTests.test_dead_line_use_disabled_is_identity) ... ok
+test_reg_zero_hook_after_readout (rso.gen5.ananke.eval.tests.test_mechanics.OracleFireTests.test_reg_zero_hook_after_readout) ... ok
+test_transplant_offset_and_consistent_rename_identical (rso.gen5.ananke.eval.tests.test_mechanics.OracleFireTests.test_transplant_offset_and_consistent_rename_identical) ... ok
+test_zero_comm_gives_exact_chance_pairs (rso.gen5.ananke.eval.tests.test_mechanics.OracleFireTests.test_zero_comm_gives_exact_chance_pairs) ... ok
+test_content_hash_refuses_altered_bytes (rso.gen5.ananke.eval.tests.test_ruler_owner.OwnerCustody.test_content_hash_refuses_altered_bytes) ... ok
+test_pinned_load_and_counts (rso.gen5.ananke.eval.tests.test_ruler_owner.OwnerCustody.test_pinned_load_and_counts) ... ok
+test_refuses_populations_and_unpinned (rso.gen5.ananke.eval.tests.test_ruler_owner.OwnerCustody.test_refuses_populations_and_unpinned) ... ok
+test_boott_point_interval_on_zero_sd (rso.gen5.ananke.eval.tests.test_ruler_owner.Ruler.test_boott_point_interval_on_zero_sd) ... ok
+test_flip_B_copy_policy_at_half (rso.gen5.ananke.eval.tests.test_ruler_owner.Ruler.test_flip_B_copy_policy_at_half) ... ok
+test_late_half_rejects_a_once_per_episode_latch (rso.gen5.ananke.eval.tests.test_ruler_owner.Ruler.test_late_half_rejects_a_once_per_episode_latch) ... ok
+test_margin (rso.gen5.ananke.eval.tests.test_ruler_owner.Ruler.test_margin) ... ok
+test_perfect_and_chance (rso.gen5.ananke.eval.tests.test_ruler_owner.Ruler.test_perfect_and_chance) ... ok
+test_equals_oracle_without_hooks (rso.gen5.ananke.eval.tests.test_runner.RunnerPin.test_equals_oracle_without_hooks) ... ok
+test_hook_sees_every_tick_after_readout (rso.gen5.ananke.eval.tests.test_runner.RunnerPin.test_hook_sees_every_tick_after_readout) ... ok
+test_oracle_source_unchanged (rso.gen5.ananke.eval.tests.test_runner.RunnerPin.test_oracle_source_unchanged) ... C:\Prometheus-worktrees\argus-c019-t040\rso\gen5\ananke\eval\tests\test_runner.py:18: ResourceWarning: unclosed file <_io.BufferedReader name='C:\\Prometheus-worktrees\\argus-c019-t040\\prometheus/ananke/oracle.py'>
+  lines = open(os.path.join(ROOT, runner.ORACLE_SOURCE), "rb").read().replace(b"\r\n", b"\n").split(b"\n")
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 67.634s
+
+OK

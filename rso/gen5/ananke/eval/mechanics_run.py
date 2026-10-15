@@ -70,8 +70,19 @@ def interventions(part, cells, adm, lib):
         add("substitute_ctx_evolved_hold3", "MEASURED", None,
             f"size-matched evolved module: LIBRARY_C4 id {hm['id']} ({hm['task']}, {hm['cell_id']}, 3 lines), identity naming",
             K.substitute(g, CTX, hm["lines"]))
-        add("transplant_offset9", "KNOWN", "IDENTICAL",
-            "program semantics are position-free here (no RAND/WIMM/SETRULE line; mut_site 0)", K.transplant(g[0, :15], ph, 9))
+        # Position-free only if no line reads its own index (RAND draws H(..., i); WIMM / SETRULE) AND in-lifetime site
+        # mutation is off (DESIGN s6 step 8 perturbs Kp at a hashed INSTRUCTION INDEX). CORRECTION 2026-10-15: the first
+        # reduce asserted this in `why` without checking it and failed at FLIP-0004 (mut_site .001, wimm 1); preserved in
+        # qual/MECHANICS_KA_first_reduce_FAIL.json. The precondition is now computed from the physics.
+        pos_free = float(ph["mut_site"]) == 0 and not any(int(op) % 16 in (13, 14, 15) for op in g[0, :, 0])
+        if pos_free:
+            add("transplant_offset9", "KNOWN", "IDENTICAL",
+                "position-free here: mut_site 0 and no RAND/SETRULE/WIMM line (checked from the physics)",
+                K.transplant(g[0, :15], ph, 9))
+        else:
+            add("transplant_offset9", "MEASURED", None,
+                f"NOT position-free: mut_site {ph['mut_site']} perturbs Kp at a hashed instruction index, so moving lines "
+                "changes which constants are perturbed", K.transplant(g[0, :15], ph, 9))
         add("transplant_rename_S1S2", "KNOWN", "IDENTICAL", "consistent renaming of every line, readout register fixed",
             K.transplant(K.rename_state(g[0, :15], ph, [0, 2, 1]), ph, 0))
         add("transplant_rename_S0S1", "KNOWN", "FALSE",
