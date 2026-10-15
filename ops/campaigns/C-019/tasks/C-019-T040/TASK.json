@@ -2,8 +2,8 @@
   "schema": "prometheus.workgraph.task.v1",
   "task_id": "C-019-T040",
   "campaign_id": "C-019",
-  "title": "Gen-5 native evidence adapter + acquisition-to-composition assay + preregistration + freeze",
-  "objective": "The smallest adapter for the selected substrate's ladder; completeness, custody, falsifiability and the adversarial kit applied; known-answer calibration; frozen search comparison.",
+  "title": "Ananke read-only preparation: independent PTE evaluator + Rung-4 attribution mechanics + accessibility statistics + parts-suitability prereg DRAFT (directive s2A fallback; rso/gen5/SELECTION.md s4)",
+  "objective": "The Observatory's half of a jointly specified acquisition-to-composition experiment on Ananke PTE, built and qualified on known answers so a joint run needs no Observatory build time -- without native search, without new worlds, without writing in Ananke's lane, and without evaluating the owner's C4/C5T champion populations.",
   "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
   "owner_role": "Argus",
   "quality_class": "Q2",
@@ -14,43 +14,56 @@
     "C-019-T011"
   ],
   "owns": [
-    "rso/gen5/assay/"
+    "rso/gen5/ananke/eval/"
   ],
   "reads": [
-    "rso/"
+    "rso/",
+    "prometheus/ananke/",
+    "roles/Ananke/ (branch ananke/p2b-2026-10-05 @ f58362c5e via git show)",
+    "rso/gen5/"
   ],
-  "problem": "Per rso/gen5/SELECTION.md (decision written into this field at T030 integration).",
+  "problem": "COORDINATOR DECISION (rso/gen5/SELECTION.md): no Gen-5 substrate is selected in this window (Crius WORLD_DEMAND_NOT_QUALIFIED + DISCOVERY_INACCESSIBLE; Ananke OWNER_UNAVAILABLE + NATIVE_RESULT_PENDING + POWER_PREREQUISITE_UNMET). This packet is the directive's fallback: read-only preparation against a pinned revision. Pin: prometheus/ananke/ at origin/main (unchanged on the owner's branch) and roles/Ananke/pte/c4/ at ananke/p2b-2026-10-05 @ f58362c5e (read via `git show`; copy nothing into the owner's lane). Read first: rso/gen5/ananke/COORDINATION.md; the owner's PREREG_PTE_C4.md, RESULT_PTE_C4.md (sections 1-5), PREREG_PTE_C5T.md, DLIB_C4.json, ASSAY_C4D.json, assay_c4.py, c4_common.py, swap_v2.py; prometheus/ananke/DESIGN reference = roles/Ananke/pte/DESIGN.md; oracle.py (independent pure-Python/NumPy re-implementation written from DESIGN.md alone). BUILD in rso/gen5/ananke/eval/: (1) INDEPENDENT EVALUATOR on oracle.py (no torch; harry1 has none): sense streams and the owner's competence rulers for RELAY1H, HOLD, GATE and FLIP at the admitted cells (admission_R4.json), reproducing the owner's ruler definitions from the prereg text. Conformance: where the owner's committed artifacts give a known value (plant TRUE/FALSE tables, DLIB known-answer checks), match it; if engine conformance needs torch, a PRIVATE CPU venv under C:/Prometheus-worktrees/ is allowed (recorded), never the shared interpreter. (2) KNOWN-ANSWER QUALIFICATION: gate_plant TRUE on GATE; relay_flood and hold_latch each FALSE on GATE; P_FLIP TRUE on FLIP, RELAY_LATCH adversary FALSE on FLIP; null genome FALSE; the two DLIB designed halves each FALSE alone and TRUE together where the owner's checks say so; every single C4 library module FALSE on GATE/FLIP (owner: 56 checks) -- LIBRARY_C4.json is a frozen artifact, not a population, and may be read. (3) RUNG-4 ATTRIBUTION MECHANICS on the oracle (directive s4): library-line ablation (NOP), substitute an incompatible module, transplant into an eligible fresh genome, DISABLE INVOCATION WITHOUT DELETING THE BYTES (e.g. module lines kept but their state registers renamed to ones nothing reads -- define it and show on the plants that bytes-present/use-disabled loses competence), register-zero, zero-communication; each tested on the plants with a known outcome. (4) ACCESSIBILITY STATISTICS (directive s5): per arm P(B within budget) with exact CIs; evaluations/generations to first B as RIGHT-CENSORED data (never infinite; Kaplan-Meier style); paired (cell, idx) comparison; a power calculator (positive rate p, searches per arm -> detectable difference); test on synthetic data with known answers including all-censored arms. (5) PARTS-SUITABILITY PREREGISTRATION DRAFT, status DRAFT -- REQUIRES OWNER SIGN-OFF, never frozen by us: A = GATE's own halves acquired by the owner's search on owner-authored half-task worlds; B = GATE; arms CONTROL (owner arm B), REUSE (library of search-acquired halves), SHAM (C4 RELAY/HOLD library = mismatched, already 0/32; plus a size-matched scrambled-halves library), COMPUTE-MATCHED (generations equal to the L-stage cost of acquiring the halves), CONSTRUCTED-POSITIVE (owner arm D designed halves); the six directive-s3 claims kept separate (expressibility, demand, accessibility, reuse, attribution, discovery); falsifiability table (rso/qualify/FALSIFIABILITY.md) per control; completeness manifest template (rso/completeness); division of labour per directive s2A; resource block per directive s11 (measured oracle evaluations/s on harry1; owner's ~14.7 searches/h on M1 GPU at 36 generations; population and lineage counts; checkpoint/restart; stopping rule; power; why a longer run could change the conclusion). (6) Register the evaluator as an rso.adversary target and run the kit on it. HARD LIMITS: no native search; no new worlds or env families; nothing written under prometheus/ananke/ or roles/Ananke/; do NOT open pops_C4T.tar / pops_C4D.tar / any C5T output (owner consent pending, #2249); harry1 CPU, <= 2 processes. RED first. Write ONBOARDING-style line counts (reused / new) in rso/gen5/ananke/eval/README.md.",
   "non_goals": [
-    "No edit to Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/ or roles/Ananke/",
-    "No change to C-018 frozen files, RESULT.md or decision rule",
+    "No native search; no new worlds/env families",
+    "No edit under prometheus/ananke/ or roles/Ananke/",
+    "No evaluation of the owner's champion populations or C5T output",
+    "No assay freeze (owner sign-off required)",
     "Nothing run on M2",
-    "No paid compute",
-    "No large evolutionary search",
-    "No edit in another seat's lane"
+    "No paid compute"
   ],
   "evidence_required": [
     "RED first",
-    "adapter + controls + PREREGISTRATION + FREEZE",
-    "known-answer calibration",
-    "adversarial kit run",
-    "ONBOARDING.md"
+    "oracle-based evaluator + ruler reproduction",
+    "known-answer table (plants, DLIB halves, 8 library modules)",
+    "Rung-4 mechanics tested on plants incl. bytes-present/use-disabled",
+    "censored accessibility statistics + power calculator with synthetic tests",
+    "parts-suitability prereg DRAFT (owner sign-off required) with falsifiability rows, completeness template, s11 resource block",
+    "adversarial kit run on the evaluator",
+    "README with line counts"
   ],
   "acceptance": {
     "condition": "all evidence_required items; committed with source references"
   },
   "deliverables": [
-    "rso/gen5/assay/"
+    "rso/gen5/ananke/eval/"
   ],
   "kind": "software",
-  "status": "PROPOSED",
+  "status": "READY",
   "history": [
     {
       "status": "PROPOSED",
       "by": "Palamedes[harry1-679179c6]",
       "at_utc": "2026-10-15T09:05:20Z",
       "note": "C-019 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:54:39Z",
+      "note": "re-scoped at T030: Ananke read-only preparation (independent oracle evaluator, Rung-4 mechanics, censored accessibility stats, parts-suitability prereg DRAFT); Argus on Opus"
     }
   ],
   "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
-  "preferred_model": "claude-opus-5-5"
+  "preferred_model": "claude-opus-5-5",
+  "notes": "re-scoped by the coordinator at T030 (rso/gen5/SELECTION.md s4); original scope (full Gen-5 adapter + freeze) not executed: no substrate selected"
 }
