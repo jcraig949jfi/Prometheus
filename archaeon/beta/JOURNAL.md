@@ -1102,6 +1102,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   rate (unlike the keyed d4 precursor, B89). The two walls differ: the keyed d4 wall is drift off a two-edit-close
   precursor; H_6923's low conversion is about where its neighbourhood leads, not about losing it.
   WINDOW 9 TALLY: ~31 + ~5 = ~36 of 48.
+- NEW LANE: COMMUNICATION. B92 hand ladder (prediction committed before the run, c9437a7e0). World: the B71 minimal
+  ecology with locality OFF, concurrent 4-groups, information asymmetry (only agent 0 sees pool words; all see the
+  shared signal). Per-agent rewards:
+  - SCOUT+3 LISTENER .505/.234/.192/.164 (mean .274);
+  - SILENT+3 LISTENER .708/.145/.113/.097 (mean .266); SCOUT+3 BLIND identical to SILENT+3L;
+  - solo SCOUT .969, solo BLIND .361.
+  PREDICTION: 'signal pays the group >= .02' FAILED (+.008); 'signal costs the scout' MET (.708 -> .505).
+  READING: in this world a 'richest pool' signal mostly REDISTRIBUTES (listeners +.07-.09 each, scout -.20): all four
+  converge on one pool and deplete it -- nearly zero-sum. For communication to pay the group it must COORDINATE (e.g.
+  direct listeners to pools the scout is not using). Next: a coordination ladder (signal = a pool the scout is NOT
+  harvesting) before any evolution run.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
