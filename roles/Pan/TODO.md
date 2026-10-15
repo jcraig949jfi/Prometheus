@@ -11,7 +11,7 @@ date, purged after 24 h (base role s7).
       PAN-46 DESIGNED (docs/sagacity/PAN46_CACHE_AND_FABRIC_DESIGN.md: no cache until its precommitted trigger
       fires). Loop extended to 2026-10-16T10:40Z.
 - [ ] PAN-26 evidence wiki: still BLOCKED -- PEW port 8377 refused on M2 (127.0.0.1) and timed out on M1
-      (192.168.1.202) at 2026-10-12T22:27:59Z; re-check daily
+      (192.168.1.202), last re-check 2026-10-15T13:47:20Z; re-check daily
 - [ ] Status report 25 by ~2026-10-15T14:47Z (report 24 written 08:47Z); next fleet re-probe + republish ~20:47Z
 - [ ] ubu002 off the LAN since 08:24Z (last ok 2026-10-12T22:29Z); FYI posted #2241 (Achilles + operator, 09:30:01Z):
       re-check each tick; post again only when it comes back
