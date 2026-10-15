@@ -175,7 +175,7 @@ clock.
    met.
 8. **Limits.** C6-generator worlds only; one VM and one search; no cooperation or communication (signal unused).
 
-## Finding 5 -- communication does not evolve in this search, even one word away (B92-B95b)
+## Finding 5 -- communication is blocked by an ERROR THRESHOLD in this search (B92-B99)
 
 1. **Regeneration-limited worlds are zero-sum for information (B92/B93).** A scout's signal only redistributes reward
    (group +.008) and costs the scout ~.2.
@@ -196,6 +196,9 @@ clock.
    **Revised again (B98/B98b): the dominant term is MUTATIONAL LOAD.** Seeded signallers go extinct even at 20%
    (0/12 runs keep any). One-step children of a full communicator break the signal 31% of the time and listening
    40%, far above s ~ .046. Communication sits above an error threshold under this search's mutation pressure.
+   **Causal test (B99):** making a fraction of offspring exact clones (break rate ~.31 -> ~.06) turns extinction into
+   a SWEEP. Seeded signallers persist in 0/4 runs at c=0 vs 4/4 at c=0.8 and c=0.95, with 10/10 of the top 10
+   signalling. The barrier to communication here is the error threshold of the search's mutation operator.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

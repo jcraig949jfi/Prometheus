@@ -1183,6 +1183,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   dominates. Prediction for a successor: lowering the per-offspring mutation load on the signalling chain (or raising
   s above ~.3) should let a seeded signaller persist. Not tested.
   WINDOW 9 TALLY: ~42 + B98 ~1 + evals ~.2 = ~43 of 48.
+- Revised mechanism posted (comms #2255).
+- B99 RESULT (12:38Z; lease lse-422a6902c57b RELEASED; ~1 core-h): MUTATION-LOAD TEST. Seeded 20% COMPLETE signallers in
+  MUTE_OP, with a fraction c of offspring as exact clones (break rate ~.31 x (1-c)). Populations keeping signalling
+  (>= 5 of top 10): c=0 0/4 (0/10 top signalling each), c=0.8 4/4 (10/10 each), c=0.95 4/4 (10/10 each).
+  PREDICTION (c=.95 >= 3/4, c=0 <= 1/4, monotone) MET.
+  VERDICT: CAUSAL CONFIRMATION of the mutational-load mechanism. With the per-offspring break rate reduced to ~.06,
+  seeded signallers do not merely persist -- they SWEEP (10/10 of the top 10 in every run within 100 gens).
+  Communication fails in this search because it sits above an ERROR THRESHOLD; lowering the mutation load removes
+  the barrier. Open: does signalling then EVOLVE (from one word away, or from scratch) at low load? And does the same
+  lever move the memory-law walls (keyed d6, RESET from random)?
+  WINDOW 9 TALLY: ~43 + ~1 = ~44 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

@@ -151,6 +151,15 @@ selection' account is INCOMPLETE and superseded. Successor S1 should lower the m
 chain.
 
 ------------------------------------------------------------------------------------------
+7c. ADDENDUM 2026-10-15 ~12:40Z -- CAUSAL TEST (B99)
+------------------------------------------------------------------------------------------
+Seeded 20% COMPLETE in MUTE_OP; a fraction c of offspring are exact clones (break rate ~.31 x (1-c)). Prediction
+committed before the run (e195ac13f). Populations keeping signalling: c=0 0/4; c=0.8 4/4; c=0.95 4/4, with 10/10 of
+the top 10 signalling in every low-load run. MET.
+CLAIM CEILING (section 6) REVISED: communication is not 'unable to evolve' in principle. It is held below establishment
+by the search's mutation load (an error threshold). With the load lowered ~5x, a seeded signaller sweeps.
+
+------------------------------------------------------------------------------------------
 8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
 ------------------------------------------------------------------------------------------
 Code
