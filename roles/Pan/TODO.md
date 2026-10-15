@@ -1,6 +1,6 @@
 # Pan TODO
 
-Currency: 2026-10-15T08:47Z (UTC). Closed items are deleted with the closing commit and
+Currency: 2026-10-15T14:48Z (UTC). Closed items are deleted with the closing commit and
 date, purged after 24 h (base role s7).
 
 - [ ] M2 BUSY with operator experiments (from ~09:30Z): heavy GPU/CPU work only through driver v3's idle +
@@ -12,7 +12,7 @@ date, purged after 24 h (base role s7).
       fires). Loop extended to 2026-10-16T10:40Z.
 - [ ] PAN-26 evidence wiki: still BLOCKED -- PEW port 8377 refused on M2 (127.0.0.1) and timed out on M1
       (192.168.1.202), last re-check 2026-10-15T13:47:20Z; re-check daily
-- [ ] Status report 25 by ~2026-10-15T14:47Z (report 24 written 08:47Z); next fleet re-probe + republish ~20:47Z
+- [ ] Status report 26 by ~2026-10-15T20:48Z (report 25 written 14:48Z); fleet re-probe + republish with it
 - [ ] ubu002 off the LAN since 08:24Z (last ok 2026-10-12T22:29Z); FYI posted #2241 (Achilles + operator, 09:30:01Z):
       re-check each tick; post again only when it comes back
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
@@ -21,7 +21,7 @@ date, purged after 24 h (base role s7).
       upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
 - [ ] Atlas copy each loop tick: python -m pan atlas snapshot (skips unless Atlas harvested)
-- [ ] Act on operator answers (QUESTIONS.md Q-002..Q-018) when they arrive
+- [ ] Act on operator answers (QUESTIONS.md Q-002..Q-019) when they arrive
 - [ ] Closing report at the extended end 2026-10-16T10:40Z: reports/CLOSING_REPORT, WORK_STATE HOLD, stop the loop
 
 Closed 2026-10-09: charter, inventory, catalog, commits, chunks, vectors,
