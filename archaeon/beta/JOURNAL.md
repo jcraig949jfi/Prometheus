@@ -1122,6 +1122,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   campaign where honest signalling is free and valuable.
   NEXT: B94 -- does INFORMATIVE signalling evolve under INDIVIDUAL vs SHARED (group-mean) reward? Readout: listener
   signal-word ablation drop, plus scout signal = richest index accuracy. Stage for window 10.
+- B94 RESULT (08:54Z; lease lse-cc3d1269f59e RELEASED; ~1 core-h): signal evolution from random gen 0 (role-agnostic
+  genome, rotating scout, non-rival world), INDIVIDUAL vs SHARED reward, 6 seeds each. Informative signalling 0/6 AND
+  0/6; listening 0 everywhere; own-group mean .858-.872 = the blind level (the genomes do not even scout). PREDICTION
+  (SHARED >= 4/6) FAILED. Reading: no gradient at all from scratch -- signalling needs listeners and vice versa (a
+  two-sided coupling), and even scouting (argmax of three words) is not reached; the headroom is only .13.
+- B95 STAGED + controls: hand COMPLETE (scout-if-visible + signal; listen-if-not) SIGNALS .131 / LISTENS .131 / own
+  group .998; MUTE (signal OUT NOPed, one edit) 0 / .131 / .902. Gen 0 = 200 x MUTE; SHARED vs INDIVIDUAL;
+  prediction in docstring (SHARED restores >= 4/6, INDIVIDUAL <= 2/6).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
