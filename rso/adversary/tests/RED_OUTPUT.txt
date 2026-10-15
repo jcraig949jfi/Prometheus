@@ -1,0 +1,44 @@
+EEE
+======================================================================
+ERROR: test_attacks (unittest.loader._FailedTest.test_attacks)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_attacks
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\tests\test_attacks.py", line 10, in <module>
+    from rso.adversary import attacks as X, core as K, limitations as L
+ImportError: cannot import name 'attacks' from 'rso.adversary' (C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\__init__.py)
+
+
+======================================================================
+ERROR: test_targets (unittest.loader._FailedTest.test_targets)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_targets
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\tests\test_targets.py", line 8, in <module>
+    from rso.adversary import attacks as X, core as K, targets as T
+ImportError: cannot import name 'attacks' from 'rso.adversary' (C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\__init__.py)
+
+
+======================================================================
+ERROR: test_mutants (unittest.loader._FailedTest.test_mutants)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mutants
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\tests\test_mutants.py", line 9, in <module>
+    from rso.adversary import core as K, mutants as MU
+ImportError: cannot import name 'core' from 'rso.adversary' (C:\Prometheus-worktrees\eupalamus-c019-t011\rso\adversary\__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (errors=3)

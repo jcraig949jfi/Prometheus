@@ -1,0 +1,37 @@
+{
+ "schema": "rso.slice001.mutation_edits.v1",
+ "edits": [
+  {
+   "edit_id": "V1-ignore-missing",
+   "path": "rso/completeness/verify.py",
+   "module": "rso.completeness.verify",
+   "find": "missing = [sid for sid in specs if sid not in by_id]",
+   "replace": "missing = []",
+   "intended_fault": "an absent shard is never reported: DROP must then reach a verdict"
+  },
+  {
+   "edit_id": "V2-no-duplicate-finding",
+   "path": "rso/completeness/verify.py",
+   "module": "rso.completeness.verify",
+   "find": "if len(group) > 1:",
+   "replace": "if False:",
+   "intended_fault": "a shard presented twice raises no DUPLICATE / CONFLICTING finding"
+  },
+  {
+   "edit_id": "V3-trust-the-writers-digest",
+   "path": "rso/completeness/verify.py",
+   "module": "rso.completeness.verify",
+   "find": "consistent = native_digest(rows) == meta[\"rows_sha256\"]",
+   "replace": "consistent = True",
+   "intended_fault": "rows are never compared with the digest the writer recorded: an edited row is no longer ALTERED"
+  },
+  {
+   "edit_id": "V4-substituted-reads-as-altered",
+   "path": "rso/completeness/verify.py",
+   "module": "rso.completeness.verify",
+   "find": "SUBSTITUTED if consistent else ALTERED",
+   "replace": "ALTERED",
+   "intended_fault": "an internally consistent rewrite (the REWRITE_DERIVED shape) is reported as a generic edit, losing the reason"
+  }
+ ]
+}

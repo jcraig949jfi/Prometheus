@@ -1,0 +1,60 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-019-T011",
+ "campaign_id": "C-019",
+ "attempt_id": "A-001",
+ "role": "Eupalamus",
+ "model": "claude-sonnet-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-1984bbb6",
+ "host": "harry1",
+ "branch": "eupalamus/c019-t011",
+ "worktree_path": "C:/Prometheus-worktrees/eupalamus-c019-t011",
+ "start_sha": "efe7bddc7c58469507f9623b6800fe758c6d2027",
+ "end_sha": "branch head = this receipt's commit (code at 19d148926)",
+ "dirty": false,
+ "commits": {"claim_main": "03d215c0c", "red_first": "f09232763", "implementation": "19d148926"},
+ "files_changed": [
+  "rso/adversary/{__init__,__main__,attacks,core,limitations,targets,measurement,mutants}.py",
+  "rso/adversary/{README.md,MEASUREMENT.md,RUN_OUTPUT.txt,MUTANT_RUN.json,MUTANT_ROWS.jsonl,mutant_edits.json}",
+  "rso/adversary/tests/{__init__,test_attacks,test_targets,test_mutants,test_measurement}.py, RED_OUTPUT.txt, GREEN_OUTPUT.txt",
+  "ops/campaigns/C-019/tasks/C-019-T011/{TASK.json,LEASE.json,attempts/A-001/RECEIPT.json}",
+  "roles/Eupalamus/comms/2026-10-15_C-019-T011_INTEGRATION_READY.md"
+ ],
+ "evidence_added": [
+  "five attacks as plain functions (rso/adversary/attacks.py); each raises ValueError on a no-op and the runner fingerprints input before/after: 0 VACUOUS in run all",
+  "runner: python -m rso.adversary run <target>|all prints REJECTED | LIMITATION <id> | SURVIVED (plus VACUOUS / ERROR / NOT_APPLICABLE); exit 0/1/2. run all: 21 REJECTED, 3 LIMITATION, 6 NOT_APPLICABLE, 0 SURVIVED, 0 VACUOUS, exit 0 (RUN_OUTPUT.txt)",
+  "known-answer targets from C-013 (reach D1 analyze), C-016/C-017 (rso.qualify miniatures), C-017 (Z80 six-shard completeness), C-018 (Aether confirm.analyse on a temp copy of the committed runs)",
+  "Z80: each of 6 shards dropped -> INCOMPLETE; shard duplicated -> REFUSED DUPLICATE; row duplicated (count kept) -> REFUSED ALTERED; consistent rewrite -> REFUSED SUBSTITUTED; gt scrubbed -> REFUSED ALTERED",
+  "Aether: drop shard / law V1 -> INCOMPLETE; copied unit -> REFUSED; non-sampled unit 8201 clamp rewrite -> verdict printed, class CONFIRMED->NONSPECIFIC -> LIMITATION C018-R1c; sampled unit 8228 rewrite -> REFUSED native replay differs; tree removed -> raised KeyError; B corrupted -> REFUSED",
+  "qualify: always-INSERTED flagged (constant_passes + cannot_discriminate) under loose and tight rules; recipe table flagged by reads_answer; dropping the near-miss set leaves audit() raising. D1: derived-field tamper -> LIMITATION C013-D1-trusts-derived; dropped round-0 cell -> UNDERPOWERED",
+  "mutation-runner (registry entry): 4 single-line mutants of rso/completeness/verify.py, all KILLED by the Z80 attack suite (MUTANT_RUN.json, committed edits file)",
+  "measurement table (MEASUREMENT.md, computed from a runner pass): 18 known historical defects, 13 caught automatically, 2 recorded limitations (no), 3 not covered; Q3 reviewer template included",
+  "README: how a new campaign registers a target; proposed registry entry (AUTHOR_TESTED); states that the kit supplements Q3 review",
+  "66 tests green (python -m unittest discover -s rso/adversary/tests -t .), tests/GREEN_OUTPUT.txt; RED first at f09232763 (tests/RED_OUTPUT.txt, ImportError)"
+ ],
+ "evidence_executed": [
+  {"command": "python -m unittest rso.adversary.tests.test_attacks rso.adversary.tests.test_targets rso.adversary.tests.test_mutants (before implementation)", "result": "RED at f09232763: ImportError, rso.adversary.{core,attacks,...} did not exist"},
+  {"command": "python -m unittest discover -s rso/adversary/tests -t .", "result": "66 tests OK in 94 s at 19d148926"},
+  {"command": "python -m rso.adversary run all", "result": "exit 0; 21 REJECTED, 3 LIMITATION (C018-R1c, C013-D1-trusts-derived x2), 6 NOT_APPLICABLE"},
+  {"command": "python -m rso.adversary mutants", "result": "baseline PASSED; 4 executed, 4 killed, 0 survived"},
+  {"command": "python -m workgraph validate", "result": "OK"}
+ ],
+ "red_observed": {"observed": true, "detail": "tests committed first (f09232763); every module import failed because rso/adversary had no implementation. Per-variant bite shown afterwards by the 4 killed verify.py mutants. A harness bug that the tests exposed (exceptions in the kit read as component refusals: PermissionError on a directory) produced the ERROR verdict and core.call() so a kit bug can never read as a rejection."},
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "the Aether target's 'replay' answers from the original committed bytes (oracle stubs); it does not re-run the pinned native engine (that is the D1 replay audit). Freeze check is stubbed; Aether's content decoder is memoised in-process (pure function, ~17 s per call)",
+  "the measurement table counts defects caught by the kit only; defects found only by a reviewer, reviewer time and cost per new defect class need a Q3 review and are left as a template",
+  "3 historical defects are 'not covered' (b1/b2 cannot_emit, Ensorain self-relative comparator, Aether tree rewrite B1); DUPLICATE on reach_d1_analyze and qualify_falsifiable not exercised (README lists them as untried, not safe)",
+  "mutation-runner cannot tell a behavioural kill from a freeze-hash kill (registry: CHALLENGED); the suite imports no freeze check"
+ ],
+ "unresolved": [
+  "registry entry adversarial-kit is proposed only (README; Palamedes owns rso/registry/)",
+  "kit's first Aether pass costs ~100 s; test suite 94 s"
+ ],
+ "unblocks": [],
+ "resources": {"cpu_core_hours_estimate": 0.15, "processes_max": 1, "paid_resources": "none", "hosts": ["harry1"]},
+ "cleanup": "scratch copies of rso/aether/runs/CONFIRM under the OS temp dir are removed by the target's context manager; no frozen file edited (git diff of rso/z80, rso/aether, rso/completeness, rso/qualify, rso/reach, rso/registry is empty)",
+ "notes": "Headless; foreground only; Aether/, Crius, Ananke not touched; M2 not used.",
+ "created_at_utc": "2026-10-15T00:00:00Z"
+}
