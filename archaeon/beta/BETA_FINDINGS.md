@@ -188,6 +188,11 @@ clock.
 5. **Mechanism (reading).** Two-sided coupling; selection on a signal mutant is weak and diluted (a rotating scout
    signals in 2/8 episodes), while the complementary half is neutral and drifts away. This is unlike single-individual
    structures such as the keyed precursor, where every part is under selection.
+   **Revised (B96/B96b/B97/B97b):** removing dilution (fixed scout) and decay (listener immigration) does not help
+   (0/6 x 3). The measured selection coefficient of a restored signaller is s ~ .019 under BOTH scout schemes, so
+   'dilution' was wrong. Raising the headroom doubles s (.046) and still gives 0/6. A clean one-word restore arises in
+   only ~10^-4 of offspring. The barrier is quantitative: low mutation supply x weak selection, against neutral decay
+   of the listener half.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

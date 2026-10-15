@@ -1158,6 +1158,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   RECEIPT NOTE (mine): the docstring prediction was WRITTEN before s was measured but COMMITTED after; part 1
   (s >= 3x) is therefore not receipted -- and it FAILED anyway (2.4x). Parts 2-3 (SHARED restores >= 3/6, INDIVIDUAL
   <= 1/6) concern unseen evolution outcomes and are kept exactly as written.
+- B97 RESULT (11:08Z; lease lse-3963865d8027 RELEASED; ~1 core-h): SHARED 0/6, INDIVIDUAL 0/6; listening lost again.
+  PREDICTION FAILED on all parts (s 2.4x not 3x; no restoration).
+- B97b MUTATION SUPPLY (evaluation, 20,000 one-step descend children of MUTE_OP): 168 decode OUT at instruction 21
+  (~.008, mostly with collateral changes); 2 are CLEAN restores (10^-4 per offspring; both verified to signal).
+  Expected clean restores in a 200-gen x 200-offspring run ~4; with s ~.02-.05 (relative ~3-6%), a clean restore's
+  fixation chance is a few percent, while listeners decay meanwhile -> expected establishments << 1 per run.
+  VERDICT (communication lane, B92-B97b): signalling does not establish in this search because of LOW MUTATION SUPPLY x
+  WEAK SELECTION against NEUTRAL DECAY of the listening half -- a quantitative, not a principled, barrier.
+  'Dilution' (B96b) was wrong. Doubling s (B97) was not enough. LANE CLOSED for this campaign; the quantified mechanism
+  is recorded in Finding 5.
+  WINDOW 9 TALLY: ~39 + B96 ~1.5 + evals ~.3 + B97 ~1 = ~42 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
