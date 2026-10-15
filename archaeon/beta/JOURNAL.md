@@ -1130,6 +1130,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B95 STAGED + controls: hand COMPLETE (scout-if-visible + signal; listen-if-not) SIGNALS .131 / LISTENS .131 / own
   group .998; MUTE (signal OUT NOPed, one edit) 0 / .131 / .902. Gen 0 = 200 x MUTE; SHARED vs INDIVIDUAL;
   prediction in docstring (SHARED restores >= 4/6, INDIVIDUAL <= 2/6).
+- B95 RESULT (09:11Z; lease lse-871e50e8dedc RELEASED; ~1 core-h): from 200 x MUTE, signal restored SHARED 0/6,
+  INDIVIDUAL 0/6 -- and LISTENING WAS LOST (LISTENS 0 everywhere vs MUTE's .131): with nobody signalling, the listener
+  branch is neutral and decays (chicken-and-egg DECAY). PREDICTION FAILED.
+  DESIGN FLAW (mine): MUTE zeroed all 4 words of the signal OUT, so 'one edit' needed several coordinated word
+  mutations. Repaired as B95b: MUTE_OP NOPs only the opcode word; verified MUTE_OP = MUTE (0/.131/.902) and a ONE-word
+  change restores COMPLETE (.131/.131/.998). Same prediction, new seeds 9511-9516, committed before the run.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

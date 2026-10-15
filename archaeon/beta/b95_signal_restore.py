@@ -12,6 +12,10 @@ Arms:
   INDIVIDUAL  fitness = own reward -- a signal helps only OTHERS, so restoring it is neutral for the signaller
 Readout: the best final genome's SIGNALS score (B94 readout; COMPLETE +.131, MUTE 0).
 PREDICTION (committed before running): SHARED restores the signal (SIGNALS > .05) in >= 4/6; INDIVIDUAL in <= 2/6.
+B95 RESULT: 0/6 and 0/6; listening was LOST too (LISTENS 0 vs MUTE .131) -- chicken-and-egg decay.
+DESIGN FLAW (mine): MUTE zeroed all 4 words of the OUT, so a restore needs several coordinated word mutations.
+B95b (arg op_only): MUTE_OP NOPs only the opcode word (operands kept), so ONE word mutation restores the signal.
+Seeds 9511-9516. SAME prediction, committed before the B95b run.
 """
 import copy
 import json
@@ -41,6 +45,7 @@ COMPLETE = _prog([
     (JZ, 9, 5), (LDC, 7, 1), (SUB, 8, 9, 7), (OUT_, 8, 0), (HALT,),      # 23-27 listener: harvest signal-1
     (OUT_, 0, 0), (HALT,)])                                               # 28-29 default pool 0
 MUTE = list(COMPLETE); MUTE[21 * 4:22 * 4] = [0, 0, 0, 0]
+MUTE_OP = list(COMPLETE); MUTE_OP[21 * 4] = 0          # B95b: only the opcode word -> NOP; operands kept (1-word restore)
 
 
 def cell(job):
@@ -53,7 +58,8 @@ def cell(job):
         return ev
 
     EV.evaluate = ev_fn
-    rec = G.organism_record(B92.man(list(MUTE)), None, 0); rec["origins"] = ["gen0_MUTE"]
+    g0 = MUTE_OP if job.get("op_only") else MUTE
+    rec = G.organism_record(B92.man(list(g0)), None, 0); rec["origins"] = ["gen0_MUTE_OP" if job.get("op_only") else "gen0_MUTE"]
     ev = EV.Evolution(TARGET, REGIMES["E0"], CAMPAIGN_SEED, job["seed"], N=200, E=8, branch="b95", foundry=FOUNDRY_C2,
                       init_pop=[copy.deepcopy(rec) for _ in range(200)], gen0_provenance={"fill": "200 x MUTE", "verified_common": True})
     for g in range(job["G"]):
@@ -79,19 +85,20 @@ def main(argv):
         w, s = world_static(); print(json.dumps({"COMPLETE": readouts(B92.man(list(COMPLETE)), w, s), "MUTE": readouts(B92.man(list(MUTE)), w, s)})); return 0
     rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 12) as ex:
-        futs = {ex.submit(cell, {"arm": a, "seed": 9501 + i, "G": int(argv[0]) if argv else 200}): (a, i) for a in ("SHARED", "INDIVIDUAL") for i in range(6)}
+        op = len(argv) > 2 and argv[2] == "op_only"; base = 9511 if op else 9501
+        futs = {ex.submit(cell, {"arm": a, "seed": base + i, "G": int(argv[0]) if argv else 200, "op_only": op}): (a, i) for a in ("SHARED", "INDIVIDUAL") for i in range(6)}
         for f in as_completed(futs):
             try:
                 r = f.result()
             except Exception as e:                    # noqa: BLE001
                 a, i = futs[f]; r = {"arm": a, "seed": 9501 + i, "error": repr(e)[:300]}
             rows.append(r); print(json.dumps(r), flush=True)
-            with open(OUT / "B95_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B95b_cells.jsonl" if (len(argv) > 2 and argv[2] == "op_only") else "B95_cells.jsonl"), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(r) + chr(10))
     summ = {a: sum(r.get("restored", False) for r in rows if r.get("arm") == a) for a in ("SHARED", "INDIVIDUAL")}
     summ["pred"] = summ["SHARED"] >= 4 and summ["INDIVIDUAL"] <= 2
     print(json.dumps(summ))
-    (OUT / "B95_result.json").write_text(json.dumps({"probe": "B95", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B95b_result.json" if (len(argv) > 2 and argv[2] == "op_only") else "B95_result.json")).write_text(json.dumps({"probe": "B95", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 
