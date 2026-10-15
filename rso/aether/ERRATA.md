@@ -24,3 +24,16 @@ review: one of the eight CONFIRMED units replayed.
 - Seven of the 64 confirmatory units have therefore been fully replayed: the 6 sampled units plus 8201.
 - The other 57 are the subject of the post-confirmation audit, C-019-T020: rso/aether/audit/.
 - The C-018 verdict (RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT; V1 ANCESTRY_UNEVALUABLE) is unchanged.
+
+**Follow-up (C-019-T020, integrated 2026-10-15).** The post-confirmation audit re-executed the remaining 57 units
+natively. All MATCH: arrays_sha256, ftick_cutB and ftick_cutN element for element, tree / B / N / origin / B_tick,
+and the warm and meta digests. All 64 units, and all 8 CONFIRMED units, are therefore now fully replayed. The
+classes and dispositions recomputed from the replayed evidence equal the committed ones (rso/aether/audit/AUDIT.md).
+
+Integrator checks:
+- An independent native re-execution of RX 8219 (CONFIRMED, r_int 6) gave every array equal to the committed npz,
+  with B/N and the tree equal.
+- An R1c-shaped tamper (CUT_N set to 'removed nothing', with the hash rebound) was detected by the audit's
+  comparison: match False, 61 sites differ.
+
+Scope: within the pinned native execution path. This does not prove the native transition physics correct.
