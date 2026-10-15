@@ -1,0 +1,94 @@
+{
+ "schema": "prometheus.workgraph.receipt.v1",
+ "task_id": "C-019-T040",
+ "campaign_id": "C-019",
+ "attempt_id": "A-001",
+ "created_at_utc": "2026-10-15T14:30:00Z",
+ "role": "Argus",
+ "model": "claude-opus-5-5",
+ "quality_class": "Q2",
+ "instance": "harry1-666e5dbc",
+ "host": "harry1",
+ "branch": "argus/c019-t040",
+ "worktree_path": "C:/Prometheus-worktrees/argus-c019-t040",
+ "start_sha": "0546be826",
+ "end_sha": "86f0f4640",
+ "dirty": false,
+ "commits": {
+  "claim_main": "520fd4a61",
+  "wip_branch": "5633ce7e6",
+  "evidence_branch": "86f0f4640"
+ },
+ "files_changed": [
+  "rso/gen5/ananke/eval/runner.py (oracle.run tick loop copied from prometheus/ananke/oracle.py:277-511, sha256-pinned; ARGUS-ADD after_tick hook :242 and zero_comm :213/:226)",
+  "rso/gen5/ananke/eval/worlds.py (sense streams RELAY/HOLD/GATE/FLIP; draw order read from prometheus/ananke/envs.py:121-252, whose bytes equal FREEZE_C4_D's pin 56e0921b; C4 task envs per run_c4.py:52-62)",
+  "rso/gen5/ananke/eval/ruler.py (RELAY-mh / FLIP-B per PREREG_PTE_C4 s2, run_c4.py:6-7, c2a_common.py:243-284; BOOTT per swap_rel.py:79-134)",
+  "rso/gen5/ananke/eval/{evaluate.py, owner.py (blob-pinned git show, content-hashed; refuses pops/C5T), ka_table.py, mechanics.py, mechanics_run.py, access.py, adversary_target.py, prereg_template.py}",
+  "rso/gen5/ananke/eval/PREREG_DRAFT_PARTS_SUITABILITY.md (DRAFT -- REQUIRES OWNER SIGN-OFF; never frozen by the Observatory)",
+  "rso/gen5/ananke/eval/README.md (independence s2, evidence s3, USE-DISABLED definition s4, limitations s5, proposed registrations s6, field decisions s7, line counts s8)",
+  "rso/gen5/ananke/eval/tests/ (5 modules, 43 tests); qual/ (KA_TABLE, MECHANICS_KA + first FAIL reduce, ADVERSARY_RUN, TEST_RUN, RED, MANIFEST_TEMPLATE); runs/ka, runs/mech (rows with per-trial arrays)",
+  "roles/Argus/{WORK_STATE.json, journal/2026-10-15.md, comms/}",
+  "ops/campaigns/C-019/tasks/C-019-T040/{TASK.json, LEASE.json, attempts/A-001/RECEIPT.json}"
+ ],
+ "evidence_added": [
+  "(1) independent evaluator on the CPU oracle, no torch: 40/40 owner admission readings (admission_R4.json @ f58362c5e) reproduced, max |diff| in mean and lo99 = 0.0, statuses identical incl. FLIP-0099 RELAY_LATCH INDETERMINATE; no private venv needed (conformance at the verdict-number level against the owner's engine-produced numbers)",
+  "(2) known-answer table 108/108 PASS (qual/KA_TABLE.json): ADM 40; hold_latch FALSE on GATE x4 (new); DLIB live lines 15/15 x4; plant/reassembled/ctx/cue TRUE/TRUE/FALSE/FALSE with identical reassembled outputs x4; 56/56 LIBRARY_C4 modules alone not TRUE on GATE/FLIP; reduce recomputes from per-trial arrays; 4 plan-fixed rows replayed identically",
+  "(3) Rung-4 mechanics on plants 32/32 KNOWN (qual/MECHANICS_KA.json): NOP halves FALSE; USE-DISABLED (bytes kept and executed, writes to the dead O.chan) on ctx/cue/both halves FALSE at 2 cells and on all of P_FLIP FALSE; dead-line use-disabled IDENTICAL; self-substitution IDENTICAL; lesioned substitutes FALSE; rename S1<->S2 IDENTICAL, S0<->S1 FALSE; reg-zero S2 FALSE (owner KA); zero_comm FALSE; context off FALSE; 22 MEASURED/DESCRIPTIVE rows recorded",
+  "(4) accessibility statistics (access.py): exact CP (owner bounds .109/.142/.038/.050/.008-.208 reproduced), Fisher (5/32 vs 0/32 p=.026), Kaplan-Meier right-censored (all-censored arm finite: NOT_REACHED, rmst = budget), log-rank, exact McNemar on paired (cell, idx), paired first-to-B, exact power / min-detectable / n-per-arm, search-table contract; 17 synthetic known-answer tests",
+  "(5) parts-suitability prereg DRAFT: six claims separated (claim 6 narrowed: designed half-worlds), division of labour s2A, arms CONTROL/REUSE/SHAM-MISMATCH/SHAM-SCRAMBLED/COMPUTE-MATCHED/CONSTRUCTED-POSITIVE, proposed endpoints and labels, falsifiability table (10 rows), completeness manifest template (24 shards, rso.completeness format), s11 resource block with measured harry1 throughput and exact power: detecting the designed-halves rate 2/32 vs 0 needs 107 searches per arm (power .05 at n = 32), so a budget-calibration stage is recommended first",
+  "(6) adversary kit on the evaluator (qual/ADVERSARY_RUN.json): targets ananke_c4_ka + ananke_access registered in memory from rso/gen5/ananke/eval; 12 REJECTED, 1 LIMITATION argus-c019t040-ka-replay-sample, 1 NOT_APPLICABLE, 0 SURVIVED, 0 VACUOUS, exit 0",
+  "measured oracle throughput on harry1: 15,000-19,700 site-ticks/s per process (2 concurrent); GATE 1.1-1.8 world-episodes/s at N=64, 0.46 at N=100, 0.31 at N=144"
+ ],
+ "evidence_executed": [
+  {
+   "command": "python -m rso.gen5.ananke.eval.ka_table run --cells 2,0 | --cells 3,1 --out runs/ka (2 detached processes, 10:20-13:43Z)",
+   "result": "108 rows, 0 FAIL"
+  },
+  {
+   "command": "python -m rso.gen5.ananke.eval.ka_table reduce runs/ka qual/KA_TABLE.json --replay 4",
+   "result": "PASS, problems [], replays identical"
+  },
+  {
+   "command": "python -m rso.gen5.ananke.eval.mechanics_run run --part gate0|gate1|flip0 ; reduce",
+   "result": "first reduce FAIL 32/33 (transplant_offset9 at FLIP-0004: mis-specified precondition; preserved); after the recorded correction PASS 32/32 KNOWN"
+  },
+  {
+   "command": "python -m rso.gen5.ananke.eval.adversary_target --json qual/ADVERSARY_RUN.json",
+   "result": "exit 0"
+  },
+  {
+   "command": "python -B -m unittest discover -v -s rso/gen5/ananke/eval/tests -t .",
+   "result": "43 tests OK (67.6 s)"
+  }
+ ],
+ "red_observed": {
+  "observed": true,
+  "detail": "qual/RED_access_mechanics.txt: test_access and test_mechanics failed on import before access.py / mechanics.py existed; the search-table tests failed (3 errors) before validate_searches / compare_arms existed. The evaluator core (runner, worlds, ruler) was written before its conformance test; its RED-equivalent is that conformance (exact reproduction of the owner's numbers fails for an unconformant evaluator)."
+ },
+ "result": "DONE_CLEAN",
+ "known_escapes": [
+  "LIMITATION argus-c019t040-ka-replay-sample: a consistent rewrite of the per-trial arrays of a non-replayed row whose verdict is unchanged is not detected without replaying it (ADM rows are additionally bound by the owner's numbers); closing it = replay every row (~3 core-h)",
+  "the sense-stream generator is a re-implementation from a reading of envs.py, not independent of the owner's code (README s2)",
+  "module-alone placement (line 0, identity naming) is a choice; the owner's placement is not recorded",
+  "CORRECTION: one mechanics KNOWN expectation was mis-specified (transplant position-invariance at FLIP-0004, mut_site .001); preserved; precondition now computed; the finding is carried into the prereg falsifiability table",
+  "the adversary targets are registered in memory from this package; making them permanent needs a 2-line change by rso/adversary's owner (README s6)"
+ ],
+ "unresolved": [
+  "owner (Ananke) sign-off, amendment or rejection of PREREG_DRAFT_PARTS_SUITABILITY.md; the half-task worlds are the owner's lane",
+  "owner consent to re-evaluate C4/C5T champions on the oracle (#2249): not attempted",
+  "registry entry ananke-c4-independent-evaluator (AUTHOR_TESTED) and rso/adversary registration: proposals in README s6"
+ ],
+ "unblocks": [],
+ "resources": {
+  "cpu_core_hours_estimate": 7.6,
+  "processes_max": 2,
+  "peak_working_set_mb": "< 500 per process",
+  "paid_resources": "none",
+  "hosts": [
+   "harry1"
+  ],
+  "gpu_hours": 0
+ },
+ "cleanup": "scratch outside the repo at C:/tmp/argus40 (bench and smoke scripts; KA attempt-0 rows: 8 rows, all PASS, superseded by rows carrying per-trial arrays)",
+ "notes": "Headless; foreground commands plus detached OS processes for the long jobs (Start-Process, logs and PIDs recorded); one read-only wait loop exceeded 600 s and was moved to the background by the harness, finishing ~20 s later. Nothing written under prometheus/ananke/ or roles/Ananke/; owner files read with git show @ f58362c5e; pops_C4T/C4D/C4L, rows_C4T/C4D (champion genomes) and all C5T output never opened. Nothing run on M2. No native search, no new worlds. 0 operator interventions."
+}
