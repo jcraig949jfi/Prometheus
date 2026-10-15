@@ -133,7 +133,8 @@ clock.
    wall is basin capture, not a waiting time. Pooled reach: d2 9/16, d4 4/16, d6 0/16, d8 0/8.
    **Immigration (B89):** re-seeding 10% fresh precursor copies each generation lifts d4 from 4/16 to 6/8 (p ~ .02)
    and allows late successes (gen 132), but d6 stays 0/8. The wall is basin capture (removable) times distance (not,
-   at this budget).
+   at this budget). **B90:** d6 with immigration at G=900 is still 0/8 (pooled d6 0/32). Six missing coupled
+   instructions are beyond this search; two are easy, four are reachable if the basin is protected.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

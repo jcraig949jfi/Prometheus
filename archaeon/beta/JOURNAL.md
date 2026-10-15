@@ -1088,6 +1088,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   makes LATE successes possible (gen 132; none ever appeared late without immigration, even at G=900). (2) Beyond that,
   DISTANCE itself: at d6 an occupied basin is not enough within G=300. The keyed wall = basin capture x distance.
   WINDOW 9 TALLY: ~24 + ~2 = ~26 of 48.
+- B90 RESULT (05:27Z; lease lse-72982075e1b3 RELEASED; ~40 min x 8 procs ~ 5 core-h): d6 with immigration at G=900,
+  new seeds: keyed 0/8, all at the shelf plateau .535; no training solve at all. PREDICTION (>= 2/8 with a late solve)
+  FAILED. VERDICT: d6 (6 missing instructions from the keyed solver) is BEYOND this search -- an occupied basin plus 3x
+  time gives 0/8 (pooled d6 0/32 across B87/B88/B89/B90). The keyed wall: d2 reachable (9/16), d4 reachable and
+  basin-capture-limited (4/16 -> 6/8 with immigration), d6+ unreachable at these budgets.
+  WINDOW 9 TALLY: ~26 + ~5 = ~31 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
