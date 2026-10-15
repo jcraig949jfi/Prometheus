@@ -3,7 +3,7 @@
   "seat": "Pan",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-10-11T10:54:01Z",
+  "updated_at_utc": "2026-10-15T18:19:04Z",
   "state": "ACTIVE",
   "instance": "spectrex5-f20b5eac (SPECTREX5)",
   "branch": "pan/base-role-adopt-2026-10-09",
@@ -12,13 +12,13 @@
   "model": "claude-opus-5-5",
   "host": "SPECTREX5",
   "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30C. Operator charter (chat, 2026-10-09), verbatim at roles/Pan/prompts/2026-10-09_charter/. Sagacity Learning Foundation directive (operator, 2026-10-11), verbatim at roles/Pan/prompts/2026-10-11_sagacity_foundation.",
-  "current_objective": "Sagacity Foundation: P1 foundation map + schema proposals + access classes (DONE); P2 preregistered negative-space evaluation (DONE: instrument PROMOTED, protocol A1-A4, not run); P3 read-only stdio MCP prototype (DONE); continuity handoff + checkpoint packet at 2026-10-12T10:40Z; then maintenance + PAN-46 design to 2026-10-16T10:40Z.",
-  "current_step": "PAN-45 continuity handoff written; refresh-applies-access-rules gap and atlas --force regression fixed",
+  "current_objective": "Maintenance to the loop hard-end 2026-10-16T10:40Z (Sagacity deliverables P1-P3 + PAN-45 checkpoint delivered 2026-10-12T10:42Z): refresh each ~30-min tick, comms watch, fleet tabs ~12 h, status report ~6 h, daily intake; then CLOSING_REPORT and HOLD.",
+  "current_step": "2026-10-15: PAN-52 Machines-tab labels (DONE), PAN-53 refresh phase timings (DONE), PAN-54 slow refreshes located in git reads on M2 D: (PROPOSED, default leave); daily intake stopped by the session host under memory pressure 14:31Z after its fetch steps (Q-019, not re-run).",
   "in_flight": [],
-  "progress": "inventory, catalog, commits, chunks, chunk+doc embeddings, Iceberg (8 tables), JSONL consolidation 2.25M rows, comms index, frontier intake + vectors, reference graph, data dictionary, pan-search skill, MONITORS row, pgvector packet; retrieval verdicts v0/v1/v2 FAIL on n=20 held-out, CB-200 0.765; 2026-10-11: foundation map, proposals 15/15, access classes 12/12 + RLS proof, negspace instrument PROMOTED (A1-A4), MCP 15/15 + SDK conformance, continuity handoff",
-  "finish_condition": "deliverables + checkpoint packet by 2026-10-12T10:40Z (directive); loop extended to 2026-10-16T10:40Z by the operator note (Claude Code 7-day limit), then CLOSING_REPORT and HOLD",
-  "next_expected_milestone": "Sagacity checkpoint packet at 2026-10-12T10:40Z",
-  "expected_next_artifact": "roles/Pan/reports/CHECKPOINT_PACKET_2026-10-12_SAGACITY.txt",
+  "progress": "inventory, catalog, commits, chunks, chunk+doc embeddings, Iceberg (8 tables), JSONL consolidation 2.25M rows, comms index, frontier intake + vectors, reference graph, data dictionary, pan-search skill, MONITORS row, pgvector packet; retrieval verdicts v0/v1/v2 FAIL on n=20 held-out, CB-200 0.765; 2026-10-11: foundation map, proposals 15/15, access classes 12/12 + RLS proof, negspace instrument PROMOTED (A1-A4), MCP 15/15 + SDK conformance, continuity handoff; 2026-10-12..15: checkpoint packet delivered; PAN-48 commit stamp, PAN-49 lexeme_df swap, PAN-50 UTF-8 stdio, PAN-52 fleet labels, PAN-53 phase timings (suite 113 passed 2026-10-15T12:54:14Z); dashboard datasets v13 (2026-10-15T08:47:43Z)",
+  "finish_condition": "loop hard-end 2026-10-16T10:40Z (operator note): roles/Pan/reports/CLOSING_REPORT, WORK_STATE HOLD, commit + push, stop the loop",
+  "next_expected_milestone": "status report 26 + fleet republish ~2026-10-15T20:48Z; CLOSING_REPORT 2026-10-16T10:40Z",
+  "expected_next_artifact": "roles/Pan/reports/STATUS_20261015T2048Z.md (approx.), then roles/Pan/reports/CLOSING_REPORT",
   "threads": [
     "T-PAN-DATA (inventory, design, catalog, indices)",
     "T-PAN-FRONTIER (intake of adjacent research and local models)"
@@ -27,29 +27,35 @@
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
-  "blocked": [],
-  "blocked_on": [],
-  "resource_status": "no lease held; GPU today ~0.03 h (negspace smoke 10:21:44-10:22:19Z); schema pan 3,590 MB on M1 (cap 10 GB, Q-007); lake 3.5 GB on M2 C:",
-  "last_receipt": "roles/Pan/reports/controls/MCP_20261011T104148Z.json",
+  "blocked": [
+    "PAN-26 evidence wiki: PEW port 8377 down on M2 and M1 (last check 2026-10-15T13:47:20Z)"
+  ],
+  "blocked_on": [
+    "PEW service (Mnemosyne)"
+  ],
+  "resource_status": "no lease held; daily intake 2026-10-15 ran on CPU 4 threads 14:21:03-14:31Z then was stopped (memory pressure from ComfyUI); M2 at 14:48:17Z: 14.5 GB free physical, 10.6 GB free virtual",
+  "last_receipt": "roles/Pan/reports/STATUS_20261015T1448Z.md",
   "last_push_sha": "UNKNOWN (set on the seat's first state commit after the push)",
   "last_push_utc": "UNKNOWN",
   "session_started_utc": "UNKNOWN (not inferred)",
-  "next": "refresh + comms sync each tick; status report 10 by ~16:08Z; daily intake ~14:30Z; checkpoint packet 2026-10-12T10:40Z; PAN-46 design note",
+  "next": "refresh + comms each ~30-min tick; status report 26 + fleet re-probe ~20:48Z; status reports ~02:48Z and ~08:48Z; CLOSING_REPORT + HOLD at 2026-10-16T10:40Z",
   "next_actions": [
-    "status report 10 (~16:08Z)",
-    "daily intake + digest (~14:30Z)",
-    "PAN-46 design note (Redis pointer cache + A2A advertisement, minimal)",
-    "checkpoint packet 2026-10-12T10:40Z",
-    "act on operator ANSWER lines Q-002..Q-016"
+    "status report 26 + fleet republish (~2026-10-15T20:48Z)",
+    "status reports ~2026-10-16T02:48Z and ~08:48Z",
+    "CLOSING_REPORT, WORK_STATE HOLD, stop the loop at 2026-10-16T10:40Z",
+    "act on operator ANSWER lines Q-002..Q-019"
   ],
   "operator_decisions_required": [
-    "Q-001 HARD: install pgvector on M1 (packet: roles/Pan/docs/PGVECTOR_INSTALL_PACKET.md)"
+    "Q-012 adopt known_hosts.fleet for the fleet probe (needs a direct operator word; relayed ruling #2216 not adopted)",
+    "Q-017 rotate credential-shaped secrets in the PUBLIC repo (outside Pan's authority)",
+    "Q-019 re-run the stopped 2026-10-15 intake (default: no)",
+    "PAN-51 cut Pan's M1 load (default: leave as is)"
   ],
   "latest_reports": [
-    "roles/Pan/reports/STATUS_20261009T1150Z.md",
-    "roles/Pan/reports/INVENTORY_2026-10-09.md",
-    "roles/Pan/docs/DATA_ARCHITECTURE.md",
-    "roles/Pan/reports/controls/CONTROLS_20261009T1141Z_v1-HELDOUT-VERDICT.json"
+    "roles/Pan/reports/STATUS_20261015T1448Z.md",
+    "roles/Pan/reports/STATUS_20261015T0847Z.md",
+    "roles/Pan/reports/REVIEW_PACKET_2026-10-14_PAN48_51.txt",
+    "roles/Pan/reports/CHECKPOINT_PACKET_2026-10-12_SAGACITY.txt"
   ],
   "operator_questions_file": "roles/Pan/QUESTIONS.md"
 }
