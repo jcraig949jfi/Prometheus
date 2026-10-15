@@ -129,6 +129,8 @@ clock.
    **Graded (B87):** precursors with d instructions missing, all on the same plateau, reach keyed recall in d2 5/8
    (9/16 with B86), d4 1/8, d6 0/8, d8 0/8. The reach rate falls steeply with edit distance and successes come early or
    not at all: the B55-B57 per-link slope, for a full keyed solver.
+   **Budget (B88):** at 3x the generations (G=900) no success appears after gen 300 (d4 3/8, all by gen 12; d6 0/8). The
+   wall is basin capture, not a waiting time. Pooled reach: d2 9/16, d4 4/16, d6 0/16, d8 0/8.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

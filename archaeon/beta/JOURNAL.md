@@ -1071,6 +1071,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   the reach rate falls ~4.5x from 2 to 4 missing instructions and to 0/16 at 6-8. Successes come early or not at all
   within G=300 -- the same shape as the B55-B57 per-link waiting-time slope, now for a full keyed solver.
   WINDOW 9 TALLY: ~7.5 of 48.
+- B88 RESULT (04:27Z; lease lse-7f0ba11f38af renewed once, RELEASED): keyed reach at G=900 on new seeds -- d4 3/8 (first
+  training solve gens 4/12/4), d6 0/8; ZERO successes after gen 300. PREDICTION (basin capture: d4 <= 2/8 AND d6 = 0/8
+  AND every success by gen 60) FAILED BY THE LETTER on the d4 count (3 vs <= 2); the d6 and timing parts were MET.
+  READING (substance): tripling the budget produced NO late success -- 600 extra generations x 16 runs added nothing --
+  so the keyed distance wall is not a waiting time within reach; successes happen in the first ~40 generations or not
+  at all, consistent with BASIN CAPTURE (the population leaves the precursor's basin for the shelf plateau). The d4
+  count difference (B87 1/8 vs B88 3/8; pooled 4/16) is seed variance. Pooled keyed reach: d2 9/16, d4 4/16, d6 0/16,
+  d8 0/8.
+  WINDOW 9 TALLY: ~7.5 + B88 (12 procs ~1.5 h, tapering to 1 proc to 04:27) ~16 = ~24 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
