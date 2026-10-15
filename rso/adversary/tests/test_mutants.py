@@ -11,11 +11,19 @@ from rso.slice001 import mutation
 
 
 class SuiteZ80Attacks(unittest.TestCase):
-    """The suite the mutation runner executes against each mutant: DROP and DUPLICATE on the Z80 fixture must be REJECTED."""
-    def test_z80_drop_and_duplicate_rejected(self):
-        rows = K.run_target("z80_completeness")
-        bad = [(r["attack"], r["variant"], r["verdict"]) for r in rows
-               if r["attack"] in ("DROP", "DUPLICATE") and r["verdict"] != K.REJECTED]
+    """The suite the mutation runner executes against each mutant: every Z80 attack must be REJECTED for the RIGHT reason
+    (the finding kind the verifier records), so a mutant that still refuses but for a different reason is also caught."""
+    WANT = {("DROP", None): "INCOMPLETE", ("DUPLICATE", "shard"): "DUPLICATE", ("DUPLICATE", "row"): "ALTERED",
+            ("REWRITE_DERIVED", None): "SUBSTITUTED", ("SCRUB_ANSWER", None): "ALTERED"}
+
+    def test_z80_attacks_rejected_for_the_recorded_reason(self):
+        bad = []
+        for r in K.run_target("z80_completeness"):
+            if r["verdict"] == K.NOT_APPLICABLE:
+                continue
+            want = self.WANT.get((r["attack"], r["variant"])) or self.WANT.get((r["attack"], None))
+            if r["verdict"] != K.REJECTED or want not in r["detail"]:
+                bad.append((r["attack"], r["variant"], r["verdict"], r["detail"][:80]))
         self.assertEqual(bad, [])
 
 
@@ -32,8 +40,8 @@ class MutantsAreKilled(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             out = MU.run_mutants(os.path.join(d, "rows.jsonl"), require_committed=False)
         s = out["summary"]
-        self.assertEqual(out["baseline"][0]["status"], "PASSED")
-        self.assertEqual(s["survived"], 0, out["edits"])
+        self.assertEqual(out["baseline"], "PASSED")
+        self.assertEqual(s["survived"], 0, s)
         self.assertEqual(s["killed"], s["executed"])
         self.assertGreaterEqual(s["killed"], 4)
 

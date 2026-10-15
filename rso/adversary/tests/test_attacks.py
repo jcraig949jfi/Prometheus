@@ -107,12 +107,21 @@ class Classification(unittest.TestCase):
 
     def test_run_variants_catches_a_raising_variant_as_rejected_by_exception(self):
         def boom():
-            raise KeyError("tree")
+            K.call(lambda: {}["tree"])
         rows = K.run_variants("syn", [("SCRUB_ANSWER", "v", boom)],
                               not_applicable={a: "n/a" for a in X.ATTACKS if a != "SCRUB_ANSWER"})
         row = [r for r in rows if r["attack"] == "SCRUB_ANSWER"][0]
         self.assertEqual(row["verdict"], K.REJECTED)
         self.assertIn("raised KeyError", row["detail"])
+
+    def test_a_kit_bug_is_an_error_never_a_rejection(self):
+        def kit_bug():
+            raise PermissionError("harness could not open its own scratch file")
+        rows = K.run_variants("syn", [("SCRUB_ANSWER", "v", kit_bug)],
+                              not_applicable={a: "n/a" for a in X.ATTACKS if a != "SCRUB_ANSWER"})
+        row = [r for r in rows if r["attack"] == "SCRUB_ANSWER"][0]
+        self.assertEqual(row["verdict"], K.ERROR)
+        self.assertEqual(K.exit_code(rows), 2)
 
     def test_run_variants_records_every_attack_even_when_not_applicable(self):
         rows = K.run_variants("syn", [("DROP", "v", lambda: K.judge(False, "r", True))],

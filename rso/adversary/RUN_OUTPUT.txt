@@ -1,0 +1,36 @@
+== z80_completeness (C-017) ==
+DROP            shard-0                            REJECTED                 INCOMPLETE missing=['CONFIRM.0-6'] kinds=[]
+DROP            shard-1                            REJECTED                 INCOMPLETE missing=['CONFIRM.1-6'] kinds=[]
+DROP            shard-2                            REJECTED                 INCOMPLETE missing=['CONFIRM.2-6'] kinds=[]
+DROP            shard-3                            REJECTED                 INCOMPLETE missing=['CONFIRM.3-6'] kinds=[]
+DROP            shard-4                            REJECTED                 INCOMPLETE missing=['CONFIRM.4-6'] kinds=[]
+DROP            shard-5                            REJECTED                 INCOMPLETE missing=['CONFIRM.5-6'] kinds=[]
+DUPLICATE       shard                              REJECTED                 REFUSED missing=['CONFIRM.5-6'] kinds=['DUPLICATE']
+DUPLICATE       row                                REJECTED                 REFUSED missing=[] kinds=['ALTERED', 'COUNT_MISMATCH']
+REWRITE_DERIVED n_ENDO+rebound-meta                REJECTED                 REFUSED missing=[] kinds=['SUBSTITUTED']
+CONSTANT        -                                  NOT_APPLICABLE           verify() checks presence, bytes, counts and seed partitions; it contains no detector to replace with a constant
+SCRUB_ANSWER    gt-removed                         REJECTED                 REFUSED missing=[] kinds=['ALTERED']
+== aether_confirm (C-018) ==
+DROP            shard                              REJECTED                 INCOMPLETE missing=['RX.1']
+DROP            law-V1                             REJECTED                 INCOMPLETE missing=['V1.0', 'V1.1']
+DUPLICATE       unit-8192-over-8193                REJECTED                 REFUSED (REFUSED_RECORD_INCONSISTENT) 1 rows share an arrays_sha256 with another row; RX.0 seed 8193: unit meta names RX seed 8192; RX.0 seed 8193: wa
+REWRITE_DERIVED clamp-non-sampled-8201             LIMITATION C018-R1c      verdict printed; unit 8201 class CONFIRMED -> NONSPECIFIC; no check failed
+REWRITE_DERIVED clamp-sampled-8228                 REJECTED                 REFUSED (REFUSED_RECORD_INCONSISTENT) RX.3 seed 8228: native replay differs
+CONSTANT        -                                  NOT_APPLICABLE           confirm.analyse has no detector under attack; Aether's content decoder is audited in rso/aether/qual/FALSIFIABILITY_AUDIT.json with rso.qualify (CONST
+SCRUB_ANSWER    tree-removed                       REJECTED                 raised KeyError: 'tree'
+SCRUB_ANSWER    B-corrupted                        REJECTED                 REFUSED (REFUSED_RECORD_INCONSISTENT) RX.0 seed 8201: recorded B 13015 != choose_cut 13014
+== qualify_falsifiable (C-016/C-017) ==
+DROP            near-miss-set                      REJECTED                 raised ValueError: no near-miss registered: the inference has no demonstrated counterfeit
+DUPLICATE       -                                  NOT_APPLICABLE           audit() takes plain cases and has no count or identity contract to violate
+REWRITE_DERIVED -                                  NOT_APPLICABLE           no derived evidence: the audit's inputs are the cases (the D1 derived-field case is target reach_d1_analyze)
+CONSTANT        always-INSERTED vs loose rule      REJECTED                 audit ok=False; constant_passes=['INSERTED']; cannot_discriminate=['ARISEN']; oracle_fails=False; reads_answer=None; near_miss_wrong=[('ARISEN', 'a mi
+CONSTANT        always-INSERTED vs tight rule      REJECTED                 audit ok=False; constant_passes=[]; cannot_discriminate=['ARISEN']; oracle_fails=False; reads_answer=None; near_miss_wrong=[('ARISEN', 'a minority-cla
+SCRUB_ANSWER    recipe-table-arm-corrupted         REJECTED                 reads_answer flagged cases [0, 1, 2, 3]; audit ok=False; constant_passes=[]; cannot_discriminate=[]; oracle_fails=False; reads_answer=[0, 1, 2, 3]; ne
+== reach_d1_analyze (C-013) ==
+DROP            cell-of-round-0                    REJECTED                 status UNDERPOWERED after the drop (ANALYZED before); rounds_completed 15 -> 0
+DUPLICATE       -                                  NOT_APPLICABLE           not exercised: a duplicated lineage inside one (arm, d) cell is a different question (row identity), see README 'Surfaces not exercised'
+REWRITE_DERIVED certificate-contradicted           LIMITATION C013-D1-trusts-derived analyze output UNCHANGED after the certificate was contradicted while row['discovery'] stayed True
+CONSTANT        -                                  NOT_APPLICABLE           analyze() contains no detector; the certifier is a separate component (rso/reach/certify.py)
+SCRUB_ANSWER    certificate-removed                LIMITATION C013-D1-trusts-derived analyze output UNCHANGED after the certificate was removed while row['discovery'] stayed True
+summary: {'LIMITATION': 3, 'NOT_APPLICABLE': 6, 'REJECTED': 21}
+rc=0
