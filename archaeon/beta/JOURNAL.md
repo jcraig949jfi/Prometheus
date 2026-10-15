@@ -1169,6 +1169,20 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   'Dilution' (B96b) was wrong. Doubling s (B97) was not enough. LANE CLOSED for this campaign; the quantified mechanism
   is recorded in Finding 5.
   WINDOW 9 TALLY: ~39 + B96 ~1.5 + evals ~.3 + B97 ~1 = ~42 of 48.
+- F5 review packet written (REVIEW_PACKET_FINAL_BETA_F5_COMMUNICATION.txt, ce0fa1b77).
+- B98 RESULT (12:13Z; lease lse-ab7a16f90062 RELEASED; ~1 core-h): SEEDED signallers (f = 1/5/20% COMPLETE in MUTE_OP,
+  SHARED, B97 world, G=100) -- top-10 signalling 0 in ALL 12 runs; even 40 founders go extinct. PREDICTION (f=20% >= 3/4)
+  FAILED. Signallers cannot hold their ground even when common.
+- B98b MUTATIONAL LOAD (400 one-step children each): COMPLETE children still signalling .69 -> per-offspring BREAK RATE
+  ~.31; still listening .60 (both genomes) -> listening breaks at ~.40. The break rate is ~7x the selection advantage
+  (s ~ .046).
+  REVISED MECHANISM (Finding 5; mine): the communication system sits far above an ERROR THRESHOLD -- under CMP3's
+  mutation pressure both halves degrade faster than selection can maintain them. This explains: seeded signallers'
+  extinction (B98); the decay of unused AND used listening (B95-B97); and why raising s 2.4x (B97) or protecting
+  listeners (B96) was not enough. The earlier 'low supply x weak selection' account was INCOMPLETE: mutational load
+  dominates. Prediction for a successor: lowering the per-offspring mutation load on the signalling chain (or raising
+  s above ~.3) should let a seeded signaller persist. Not tested.
+  WINDOW 9 TALLY: ~42 + B98 ~1 + evals ~.2 = ~43 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

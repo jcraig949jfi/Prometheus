@@ -193,6 +193,9 @@ clock.
    'dilution' was wrong. Raising the headroom doubles s (.046) and still gives 0/6. A clean one-word restore arises in
    only ~10^-4 of offspring. The barrier is quantitative: low mutation supply x weak selection, against neutral decay
    of the listener half.
+   **Revised again (B98/B98b): the dominant term is MUTATIONAL LOAD.** Seeded signallers go extinct even at 20%
+   (0/12 runs keep any). One-step children of a full communicator break the signal 31% of the time and listening
+   40%, far above s ~ .046. Communication sits above an error threshold under this search's mutation pressure.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
