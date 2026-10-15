@@ -1,0 +1,37 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-019-T021",
+  "campaign_id": "C-019",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "efe7bddc7c58469507f9623b6800fe758c6d2027",
+  "end_sha": "d9cdeced345f115a6da07d3e96c148ea6f4a801f",
+  "files_changed": ["rso/gen5/crius/GATE_RULE.md", "rso/gen5/crius/SELECTION.md", "rso/gen5/crius/adapt.py", "rso/gen5/crius/run_gate.py", "rso/gen5/crius/ladder_probe.py", "rso/gen5/crius/test_semantics.py", "rso/gen5/crius/__init__.py", "rso/gen5/crius/results/gate_results.json", "rso/gen5/crius/results/ladder_probe.json"],
+  "evidence_added": [
+    "GATE_RULE.md committed (18b5f7289) with predictions and frozen margins before any condition ran",
+    "SELECTION.md: disposition WORLD_DEMAND_NOT_QUALIFIED (frozen rule needs 5/5 leak-controlled lifetimes; 4/5 pass in every world); leaks inert for ProcedureReuseC1 (identical numbers, 0 organism label reads); falsifiability rows; ladder answers"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m rso.gen5.crius.run_gate rso/gen5/crius/results/gate_results.json", "result": "6 worlds x 5 seeds x 5 players; W1=W2=W5b=W5c identical; seed 19020001 fails P1/P2 in all worlds; 4/5 pass; probe: 0/30 near-miss-as-positive passes"},
+    {"command": "python -B -m rso.gen5.crius.test_semantics", "result": "OK (filter leaves trajectories byte-identical; hides the label)"},
+    {"command": "python -B -m rso.gen5.crius.ladder_probe rso/gen5/crius/results/ladder_probe.json", "result": "P_REC_INV_PLAN ACC>FRESH +14..+20 in 5/5 seeds; single links +0"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: read-only selection gate"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "positive is hand-built; ablation of its calibration block is recipe-predictable; no native candidate was tested",
+    "W4 filters the observation dict only (vm.py:401 INPUT read not interceptable without editing vm.py)",
+    "per-stream failure on 19020001 was diagnosed from the per-stage table, not tested further",
+    "no search was run (it writes under crius/runs/); Rung-1 answer is from code reading and the 0/36 prior"
+  ],
+  "unresolved": ["Palamedes: treat 4/5 as NARROWED (reuse is rewarded on most streams independent of the leaks) or keep the rule's WORLD_DEMAND_NOT_QUALIFIED"],
+  "unblocks": [],
+  "created_at_utc": "2026-10-15T09:45:00Z",
+  "instance": "harry1-c619844e",
+  "host": "harry1",
+  "branch": "cadmus/c019",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c019",
+  "resources": {"cpu": "one process ~200 s gate + ~1 min probe, concurrent with T020 replay (<=2 processes)", "model": "one Sonnet 5.5 session"}
+}
