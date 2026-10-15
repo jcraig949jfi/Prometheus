@@ -126,6 +126,9 @@ clock.
    4/8 runs from a precursor two edits from the hand solver (SLOT_A, held-out .531, no fitness gradient). It is reached
    in 0/8 runs from the equally fit one-value shelf (.535). Caveat: the precursor is the hand solution minus two
    instructions.
+   **Graded (B87):** precursors with d instructions missing, all on the same plateau, reach keyed recall in d2 5/8
+   (9/16 with B86), d4 1/8, d6 0/8, d8 0/8. The reach rate falls steeply with edit distance and successes come early or
+   not at all: the B55-B57 per-link slope, for a full keyed solver.
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 

@@ -1064,6 +1064,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   prediction in docstring; smoke test passed). 32 cells. LAUNCH in window 9 (~2026-10-15 00:30Z).
 - Campaign update 10 written + posted (CAMPAIGN_UPDATE_2026-10-14.md, 3d0443bb2; comms #2246).
 - WINDOW 9 OPENED 2026-10-15 00:30Z. B87 LAUNCHED: lease lse-9c95117de294 (2 h, token captured), 32 cells, 12 procs.
+- B87 RESULT (01:08Z; lease RELEASED; ~38 min x 12 procs ~ 7.5 core-h): keyed recall (held-out >= .9) by precursor
+  distance -- d2 5/8 (first training solve gens 1/1/3/8/37), d4 1/8 (gen 2), d6 0/8, d8 0/8. Pooled d2 with B86 SLOT_A:
+  9/16. PREDICTION (monotone; d2 >= 3/8; d8 <= 1/8) MET on all three parts.
+  VERDICT: on the stock VM the keyed class shows a GRADED DISTANCE WALL. With all precursors on the same fitness plateau,
+  the reach rate falls ~4.5x from 2 to 4 missing instructions and to 0/16 at 6-8. Successes come early or not at all
+  within G=300 -- the same shape as the B55-B57 per-link waiting-time slope, now for a full keyed solver.
+  WINDOW 9 TALLY: ~7.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
