@@ -1,0 +1,1149 @@
+{
+ "laws": {
+  "RX": {
+   "committed": {
+    "classes": {
+     "CONFIRMED": 8,
+     "CONTROL_VACUOUS": 8,
+     "INSUFFICIENT": 3,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 5,
+     "NO_CUT": 24
+    },
+    "confirmed_r2": 8,
+    "content_excess_cond": 0.013533528645833334,
+    "disposition": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+    "evaluable": 13,
+    "label": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT [evaluable 13 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "null_excess": 0.0002278645833333333,
+    "pooled_agreement": 0.7475,
+    "reach_band": 6
+   },
+   "replayed_post_confirmation": {
+    "classes": {
+     "CONFIRMED": 8,
+     "CONTROL_VACUOUS": 8,
+     "INSUFFICIENT": 3,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 5,
+     "NO_CUT": 24
+    },
+    "confirmed_r2": 8,
+    "content_excess_cond": 0.013533528645833334,
+    "disposition": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT",
+    "evaluable": 13,
+    "label": "CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT [evaluable 13 of 48 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "null_excess": 0.0002278645833333333,
+    "pooled_agreement": 0.7475,
+    "reach_band": 6
+   }
+  },
+  "V1": {
+   "committed": {
+    "classes": {
+     "CONFIRMED": 0,
+     "CONTROL_VACUOUS": 0,
+     "INSUFFICIENT": 3,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 0,
+     "NO_CUT": 13
+    },
+    "confirmed_r2": 0,
+    "content_excess_cond": null,
+    "disposition": "ANCESTRY_UNEVALUABLE",
+    "evaluable": 0,
+    "label": "ANCESTRY_UNEVALUABLE [evaluable 0 of 16 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "null_excess": 9.765625e-05,
+    "pooled_agreement": null,
+    "reach_band": 0
+   },
+   "replayed_post_confirmation": {
+    "classes": {
+     "CONFIRMED": 0,
+     "CONTROL_VACUOUS": 0,
+     "INSUFFICIENT": 3,
+     "MULTI_SOURCE": 0,
+     "NONSPECIFIC": 0,
+     "NOT_INTERVENTIONAL": 0,
+     "NO_CUT": 13
+    },
+    "confirmed_r2": 0,
+    "content_excess_cond": null,
+    "disposition": "ANCESTRY_UNEVALUABLE",
+    "evaluable": 0,
+    "label": "ANCESTRY_UNEVALUABLE [evaluable 0 of 16 units; minimum 8; need 3 CONFIRMED at r >= 2]",
+    "null_excess": 9.765625e-05,
+    "pooled_agreement": null,
+    "reach_band": 0
+   }
+  }
+ },
+ "schema": "prometheus.rso.aether.audit.tables.v1",
+ "summary": {
+  "class_changed": 0,
+  "cpu_s_total": 4671.1,
+  "match": 57,
+  "mismatch": 0,
+  "prior_replays": 7,
+  "replayed_this_audit": 57,
+  "units": 64
+ },
+ "units": [
+  {
+   "committed_arrays_sha256": "c768c674a2054eacf4f70763af31791d5402a725b5b2e3f600d17d5440ef1ff4",
+   "committed_class": "NO_CUT",
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "c768c674a2054eacf4f70763af31791d5402a725b5b2e3f600d17d5440ef1ff4",
+   "replayed_class": "NO_CUT",
+   "seed": 8192,
+   "shard": "RX.0",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "385239de7b4f815d364a0839997224d7aaaabb8cbab7254299e18268f11952cb",
+   "committed_class": "NO_CUT",
+   "cpu_s": 79.3,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "385239de7b4f815d364a0839997224d7aaaabb8cbab7254299e18268f11952cb",
+   "replayed_class": "NO_CUT",
+   "seed": 8193,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "33affdd977704c47dd11de29dfd18953e7810cf8188148cfffb89ab27c60864e",
+   "committed_class": "NO_CUT",
+   "cpu_s": 84.2,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "33affdd977704c47dd11de29dfd18953e7810cf8188148cfffb89ab27c60864e",
+   "replayed_class": "NO_CUT",
+   "seed": 8194,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "46301a64be8c51bf236736ca7aa78b5c0335387ca042686d4ccce701cd6b5148",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 87.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "46301a64be8c51bf236736ca7aa78b5c0335387ca042686d4ccce701cd6b5148",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8195,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "d6e6b1493177731c11b60670f81bf4c3685fa6825dbdab009c0f2d87c15e61b3",
+   "committed_class": "NO_CUT",
+   "cpu_s": 80.1,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "d6e6b1493177731c11b60670f81bf4c3685fa6825dbdab009c0f2d87c15e61b3",
+   "replayed_class": "NO_CUT",
+   "seed": 8196,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "f6bfe2c968166315e65f382bc01a580a403fe7cbf99d624f82e8cf00f849fcdb",
+   "committed_class": "NO_CUT",
+   "cpu_s": 78.6,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "f6bfe2c968166315e65f382bc01a580a403fe7cbf99d624f82e8cf00f849fcdb",
+   "replayed_class": "NO_CUT",
+   "seed": 8197,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "6a52a567a81dc8c27ac8ba59e079726ee425285eccf8c8e03dc53ecd234f7f39",
+   "committed_class": "NO_CUT",
+   "cpu_s": 68.9,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "6a52a567a81dc8c27ac8ba59e079726ee425285eccf8c8e03dc53ecd234f7f39",
+   "replayed_class": "NO_CUT",
+   "seed": 8198,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "e81d7ab93dcf385bfdc7c94693d81713a835ee071448c3e9b0ea62cc5cdfef9e",
+   "committed_class": "NOT_INTERVENTIONAL",
+   "cpu_s": 103.1,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "e81d7ab93dcf385bfdc7c94693d81713a835ee071448c3e9b0ea62cc5cdfef9e",
+   "replayed_class": "NOT_INTERVENTIONAL",
+   "seed": 8199,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "92792ae0ab367751bc58cac192837e8df1b7ceff311cd00a58227f32f4ee510f",
+   "committed_class": "NOT_INTERVENTIONAL",
+   "cpu_s": 115.9,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "92792ae0ab367751bc58cac192837e8df1b7ceff311cd00a58227f32f4ee510f",
+   "replayed_class": "NOT_INTERVENTIONAL",
+   "seed": 8200,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "567d483e33d6b847f8d33049d557ee4d5afc988f208e09c4ecc4b2d5845c5fce",
+   "committed_class": "CONFIRMED",
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "567d483e33d6b847f8d33049d557ee4d5afc988f208e09c4ecc4b2d5845c5fce",
+   "replayed_class": "CONFIRMED",
+   "seed": 8201,
+   "shard": "RX.0",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "020a7f35a8fbabcaa0ba4282c8ca2436b865881abfa1c860853b38596bf898c7",
+   "committed_class": "NOT_INTERVENTIONAL",
+   "cpu_s": 112.4,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "020a7f35a8fbabcaa0ba4282c8ca2436b865881abfa1c860853b38596bf898c7",
+   "replayed_class": "NOT_INTERVENTIONAL",
+   "seed": 8202,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "ecb8788c1cb5d8b5fba4a6740df0e27ed37e5b28f2fb66c3d395d6abcadd964a",
+   "committed_class": "NOT_INTERVENTIONAL",
+   "cpu_s": 92.4,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "ecb8788c1cb5d8b5fba4a6740df0e27ed37e5b28f2fb66c3d395d6abcadd964a",
+   "replayed_class": "NOT_INTERVENTIONAL",
+   "seed": 8203,
+   "shard": "RX.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "dd744dd02b5b0e99b6be0b3ad61de7587a64158bf8931dd8dddb88f04dae0c3e",
+   "committed_class": "NO_CUT",
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "dd744dd02b5b0e99b6be0b3ad61de7587a64158bf8931dd8dddb88f04dae0c3e",
+   "replayed_class": "NO_CUT",
+   "seed": 8204,
+   "shard": "RX.1",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "ad6b818ab113dc4d8b465464f2cd0c083a9d965b8efd08d1f75de82a77e24bd6",
+   "committed_class": "NO_CUT",
+   "cpu_s": 63.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "ad6b818ab113dc4d8b465464f2cd0c083a9d965b8efd08d1f75de82a77e24bd6",
+   "replayed_class": "NO_CUT",
+   "seed": 8205,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "cdf5ec1ea574c48757d84832640e744379e5c92d06d44dd17b6f337f86e7837c",
+   "committed_class": "NO_CUT",
+   "cpu_s": 80.0,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "cdf5ec1ea574c48757d84832640e744379e5c92d06d44dd17b6f337f86e7837c",
+   "replayed_class": "NO_CUT",
+   "seed": 8206,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "33829bbe0a31d3d66922b786e01a5b625e3d160c7f08c34eeeb3823c9cbe6741",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 93.3,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "33829bbe0a31d3d66922b786e01a5b625e3d160c7f08c34eeeb3823c9cbe6741",
+   "replayed_class": "CONFIRMED",
+   "seed": 8207,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "aad8a0b0defdd35fbad21aae5947eac747add5eba4094dbfcb7f5518a964137c",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 79.6,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "aad8a0b0defdd35fbad21aae5947eac747add5eba4094dbfcb7f5518a964137c",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8208,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "8f2ab4c7c6b9971456dd4a000bc16750608e0694549f4709e2b5a9c17f5ae9a6",
+   "committed_class": "NO_CUT",
+   "cpu_s": 65.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "8f2ab4c7c6b9971456dd4a000bc16750608e0694549f4709e2b5a9c17f5ae9a6",
+   "replayed_class": "NO_CUT",
+   "seed": 8209,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "30ae1c64ca0db0cf38dc1504b1197f5e9af2ceecfbe1cafd234f0dc5f3023aa6",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 76.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "30ae1c64ca0db0cf38dc1504b1197f5e9af2ceecfbe1cafd234f0dc5f3023aa6",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8210,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "e6ea6e9b47b2c1b25f4f725bb0774ded31590783cf995ba27430d14c372fcd55",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 75.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "e6ea6e9b47b2c1b25f4f725bb0774ded31590783cf995ba27430d14c372fcd55",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8211,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "c59ffd6913098874a3d43d744160006f5e5327149bb1d88499721531be15263e",
+   "committed_class": "NO_CUT",
+   "cpu_s": 61.3,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "c59ffd6913098874a3d43d744160006f5e5327149bb1d88499721531be15263e",
+   "replayed_class": "NO_CUT",
+   "seed": 8212,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "6cb9114e4770845bc35cde3e2f19a79106bc7b372869eb62316589c71fb37e8a",
+   "committed_class": "NO_CUT",
+   "cpu_s": 60.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "6cb9114e4770845bc35cde3e2f19a79106bc7b372869eb62316589c71fb37e8a",
+   "replayed_class": "NO_CUT",
+   "seed": 8213,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "e7cfa4173db6cbc49e3b7852b9f77775f4d49bfb1650a69d2346aefe120020cf",
+   "committed_class": "INSUFFICIENT",
+   "cpu_s": 74.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "e7cfa4173db6cbc49e3b7852b9f77775f4d49bfb1650a69d2346aefe120020cf",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8214,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "5a03c86d91603e70cbb36530de808880078dcb24a52553ddec6b11bb405f6a64",
+   "committed_class": "NO_CUT",
+   "cpu_s": 62.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "5a03c86d91603e70cbb36530de808880078dcb24a52553ddec6b11bb405f6a64",
+   "replayed_class": "NO_CUT",
+   "seed": 8215,
+   "shard": "RX.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "794f0388bed04f438e55aa531ecbd93a9099825d90e5fd7472f9e55e24ba727c",
+   "committed_class": "CONTROL_VACUOUS",
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "794f0388bed04f438e55aa531ecbd93a9099825d90e5fd7472f9e55e24ba727c",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8216,
+   "shard": "RX.2",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "c40fbe51dfc561478772137aec207c0fc69a5b56f35619ca9c6326f119064013",
+   "committed_class": "NO_CUT",
+   "cpu_s": 62.2,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "c40fbe51dfc561478772137aec207c0fc69a5b56f35619ca9c6326f119064013",
+   "replayed_class": "NO_CUT",
+   "seed": 8217,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "94485042f8062fec0606dec1c94409fd12a602a114023e157152840056810b58",
+   "committed_class": "NO_CUT",
+   "cpu_s": 61.7,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "94485042f8062fec0606dec1c94409fd12a602a114023e157152840056810b58",
+   "replayed_class": "NO_CUT",
+   "seed": 8218,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "f3bd675802e76f2660bdbcf03247487a35e5170b080aff9ec14f599ee56143bd",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 74.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "f3bd675802e76f2660bdbcf03247487a35e5170b080aff9ec14f599ee56143bd",
+   "replayed_class": "CONFIRMED",
+   "seed": 8219,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "a483e53ef55152ef3f03917f73bdc29e4db3f692401db91a5dd280eea2b15c5b",
+   "committed_class": "INSUFFICIENT",
+   "cpu_s": 73.9,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "a483e53ef55152ef3f03917f73bdc29e4db3f692401db91a5dd280eea2b15c5b",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8220,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "4216c50ff758f44c27ee7bb411ff48d9d0788affac15c387afded12133c04396",
+   "committed_class": "NO_CUT",
+   "cpu_s": 64.9,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "4216c50ff758f44c27ee7bb411ff48d9d0788affac15c387afded12133c04396",
+   "replayed_class": "NO_CUT",
+   "seed": 8221,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "caa28e84aa4e78f8b6d48391eb81adf047870a021a9e8181bb653b85defebcef",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 93.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "caa28e84aa4e78f8b6d48391eb81adf047870a021a9e8181bb653b85defebcef",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8222,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "e1e716b3f39a1cde8e5f67bf67be303a00bb9d08fd91214c6d8558955b97751f",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 100.3,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "e1e716b3f39a1cde8e5f67bf67be303a00bb9d08fd91214c6d8558955b97751f",
+   "replayed_class": "CONFIRMED",
+   "seed": 8223,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "c1aef456ce521faa2630724f8c97c159776a842411f3d283fd04b36ae78a7701",
+   "committed_class": "NOT_INTERVENTIONAL",
+   "cpu_s": 90.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "c1aef456ce521faa2630724f8c97c159776a842411f3d283fd04b36ae78a7701",
+   "replayed_class": "NOT_INTERVENTIONAL",
+   "seed": 8224,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "77cddff601d705befe4ab945cdf5b8f901373fbaa631807e87b75295f2e3d324",
+   "committed_class": "NO_CUT",
+   "cpu_s": 82.0,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "77cddff601d705befe4ab945cdf5b8f901373fbaa631807e87b75295f2e3d324",
+   "replayed_class": "NO_CUT",
+   "seed": 8225,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "66b5d4e8c1a76e8e36785b6a9d696c5ab8b301fabde3b43d62b4a11dfc98dfba",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 101.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "66b5d4e8c1a76e8e36785b6a9d696c5ab8b301fabde3b43d62b4a11dfc98dfba",
+   "replayed_class": "CONFIRMED",
+   "seed": 8226,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "9f74ce2e20499bda4f51602163c38958970e6249c88276299eea1ca576850b3d",
+   "committed_class": "NO_CUT",
+   "cpu_s": 69.3,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "9f74ce2e20499bda4f51602163c38958970e6249c88276299eea1ca576850b3d",
+   "replayed_class": "NO_CUT",
+   "seed": 8227,
+   "shard": "RX.2",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "bf58e0eb1414158b3c19d97e14cc29b30555370a4ac9722176bff54573312ff2",
+   "committed_class": "CONFIRMED",
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "bf58e0eb1414158b3c19d97e14cc29b30555370a4ac9722176bff54573312ff2",
+   "replayed_class": "CONFIRMED",
+   "seed": 8228,
+   "shard": "RX.3",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "16766f53f50fe74e1952fad78e38a92acfb447f4248eaba87c20d765c912512e",
+   "committed_class": "NO_CUT",
+   "cpu_s": 65.7,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "16766f53f50fe74e1952fad78e38a92acfb447f4248eaba87c20d765c912512e",
+   "replayed_class": "NO_CUT",
+   "seed": 8229,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "7eea019f29f36302f5cc93303a01c89a2df8b53479f0c332206a23e58d4be598",
+   "committed_class": "NO_CUT",
+   "cpu_s": 66.7,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "7eea019f29f36302f5cc93303a01c89a2df8b53479f0c332206a23e58d4be598",
+   "replayed_class": "NO_CUT",
+   "seed": 8230,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "8ec7b5f3453c229d2a6417f23b93311894709803b281984bf78f3e5706d0653f",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 127.4,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "8ec7b5f3453c229d2a6417f23b93311894709803b281984bf78f3e5706d0653f",
+   "replayed_class": "CONFIRMED",
+   "seed": 8231,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "9da8045ae27cb1be47e5951f347306ef3177d9b54d37f1d4183e2e06047bb95b",
+   "committed_class": "NO_CUT",
+   "cpu_s": 81.5,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "9da8045ae27cb1be47e5951f347306ef3177d9b54d37f1d4183e2e06047bb95b",
+   "replayed_class": "NO_CUT",
+   "seed": 8232,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "17b5406ab7b597fefc6de457f394e5144107f6b979ddcb328027f6a9d038e72c",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 102.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "17b5406ab7b597fefc6de457f394e5144107f6b979ddcb328027f6a9d038e72c",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8233,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "bf2c416e4b003aa4825bf2c227fd2834c5bf1ec3433b5c6f1b955bfd3a789e1a",
+   "committed_class": "NO_CUT",
+   "cpu_s": 73.6,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "bf2c416e4b003aa4825bf2c227fd2834c5bf1ec3433b5c6f1b955bfd3a789e1a",
+   "replayed_class": "NO_CUT",
+   "seed": 8234,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "efa793221027eacf68a4f245a80516af3be1c95cca38e76e3561df54c531df85",
+   "committed_class": "INSUFFICIENT",
+   "cpu_s": 79.8,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "efa793221027eacf68a4f245a80516af3be1c95cca38e76e3561df54c531df85",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8235,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "fa22fa337edb0300702524c04e037a97b5095e08fd168c453d4d0f4fe24d8d4f",
+   "committed_class": "CONTROL_VACUOUS",
+   "cpu_s": 84.6,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "fa22fa337edb0300702524c04e037a97b5095e08fd168c453d4d0f4fe24d8d4f",
+   "replayed_class": "CONTROL_VACUOUS",
+   "seed": 8236,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "e5f9efcf5a37ef6d5149f15845cc9dee8690e86441be20b976b28f62eceed76c",
+   "committed_class": "CONFIRMED",
+   "cpu_s": 79.2,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "e5f9efcf5a37ef6d5149f15845cc9dee8690e86441be20b976b28f62eceed76c",
+   "replayed_class": "CONFIRMED",
+   "seed": 8237,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "145df92bf928628e876973fd0f159edd49cbf1493fccb16a41a1517a5acdcaf6",
+   "committed_class": "NO_CUT",
+   "cpu_s": 67.2,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "145df92bf928628e876973fd0f159edd49cbf1493fccb16a41a1517a5acdcaf6",
+   "replayed_class": "NO_CUT",
+   "seed": 8238,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "a6ebb34d4812bf3472b396b7408556fd6c7029b63554932c94ea24b2e76bae93",
+   "committed_class": "NO_CUT",
+   "cpu_s": 70.4,
+   "law": "RX",
+   "match": true,
+   "replayed_arrays_sha256": "a6ebb34d4812bf3472b396b7408556fd6c7029b63554932c94ea24b2e76bae93",
+   "replayed_class": "NO_CUT",
+   "seed": 8239,
+   "shard": "RX.3",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "6a841d7a4ec57611756110e9205ffe84459268aa5298a7d6ecd20bb86fcc74c6",
+   "committed_class": "INSUFFICIENT",
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "6a841d7a4ec57611756110e9205ffe84459268aa5298a7d6ecd20bb86fcc74c6",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8192,
+   "shard": "V1.0",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "12559787d07f5976d504fcfc6cdf0b1e9958ec94615f11edbd81971c59b583fc",
+   "committed_class": "NO_CUT",
+   "cpu_s": 62.2,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "12559787d07f5976d504fcfc6cdf0b1e9958ec94615f11edbd81971c59b583fc",
+   "replayed_class": "NO_CUT",
+   "seed": 8193,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "d18bbe7ba6ccd94ad1fb06a4d440303091bedae648ddf078a1dad86e2771d749",
+   "committed_class": "INSUFFICIENT",
+   "cpu_s": 84.9,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "d18bbe7ba6ccd94ad1fb06a4d440303091bedae648ddf078a1dad86e2771d749",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8194,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "cf3947ac950e420b01b078fd1ee319850c92029aa1a4f0d18c3573b16195ace9",
+   "committed_class": "NO_CUT",
+   "cpu_s": 88.0,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "cf3947ac950e420b01b078fd1ee319850c92029aa1a4f0d18c3573b16195ace9",
+   "replayed_class": "NO_CUT",
+   "seed": 8195,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "ee07813f5dae8b2a797e833456521db785a10c38ffbc72b26f8db04f5c72ab9a",
+   "committed_class": "NO_CUT",
+   "cpu_s": 95.7,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "ee07813f5dae8b2a797e833456521db785a10c38ffbc72b26f8db04f5c72ab9a",
+   "replayed_class": "NO_CUT",
+   "seed": 8196,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "6a3f346972563b50b32846a499bf27b0f141c625aaa9c67e7c98c8b6c6155460",
+   "committed_class": "NO_CUT",
+   "cpu_s": 88.5,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "6a3f346972563b50b32846a499bf27b0f141c625aaa9c67e7c98c8b6c6155460",
+   "replayed_class": "NO_CUT",
+   "seed": 8197,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "40d72dc3dd8568f5ebc0a062cd4137821a12b83c40be9a0897cb23e57ab3e6b5",
+   "committed_class": "NO_CUT",
+   "cpu_s": 60.3,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "40d72dc3dd8568f5ebc0a062cd4137821a12b83c40be9a0897cb23e57ab3e6b5",
+   "replayed_class": "NO_CUT",
+   "seed": 8198,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "be9f5c16a1a6a2446c016a09a16c8d2028992b320b3d010e5c0f281ee2e880a3",
+   "committed_class": "INSUFFICIENT",
+   "cpu_s": 73.5,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "be9f5c16a1a6a2446c016a09a16c8d2028992b320b3d010e5c0f281ee2e880a3",
+   "replayed_class": "INSUFFICIENT",
+   "seed": 8199,
+   "shard": "V1.0",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "committed_arrays_sha256": "6a985c9c20fd62512b3c3e16a34d4156d0784af7fd76ea2bac62ef2a5186f90a",
+   "committed_class": "NO_CUT",
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "6a985c9c20fd62512b3c3e16a34d4156d0784af7fd76ea2bac62ef2a5186f90a",
+   "replayed_class": "NO_CUT",
+   "seed": 8200,
+   "shard": "V1.1",
+   "source": "C-018 analyse_full.out (6 samples) / C-018-T050 integrator (RX 8201)",
+   "status": "PRIOR_FULL_REPLAY"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "7e6b7e966dfaa1e90f1adf4a2687722a7dcb4f2a4630edc4fe1835bcd7eb72ae",
+   "committed_class": "NO_CUT",
+   "cpu_s": 75.8,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "7e6b7e966dfaa1e90f1adf4a2687722a7dcb4f2a4630edc4fe1835bcd7eb72ae",
+   "replayed_class": "NO_CUT",
+   "seed": 8201,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "f20d2c4b7426d0ff405cb9333f0b73869b70d7e96b416d6b1e7eefae33271727",
+   "committed_class": "NO_CUT",
+   "cpu_s": 92.3,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "f20d2c4b7426d0ff405cb9333f0b73869b70d7e96b416d6b1e7eefae33271727",
+   "replayed_class": "NO_CUT",
+   "seed": 8202,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "2fadbfdeaf29e1df65abedb57515affc33c53db1f9f48924932213f5264512c6",
+   "committed_class": "NO_CUT",
+   "cpu_s": 93.5,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "2fadbfdeaf29e1df65abedb57515affc33c53db1f9f48924932213f5264512c6",
+   "replayed_class": "NO_CUT",
+   "seed": 8203,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "6f2e984d28c275bda71a2ca43b5ab5ebd548905d13cf96b9807e9a2b9134648b",
+   "committed_class": "NO_CUT",
+   "cpu_s": 97.8,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "6f2e984d28c275bda71a2ca43b5ab5ebd548905d13cf96b9807e9a2b9134648b",
+   "replayed_class": "NO_CUT",
+   "seed": 8204,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "3ba83c29b4c25a42716219bf1be5eb50ad2c2412266af9546820e45611c3d9b5",
+   "committed_class": "NO_CUT",
+   "cpu_s": 96.2,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "3ba83c29b4c25a42716219bf1be5eb50ad2c2412266af9546820e45611c3d9b5",
+   "replayed_class": "NO_CUT",
+   "seed": 8205,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "ac0fb9df7d1f567745ac5cfa1ec94f746884e0f5e01bbdfeec4f7a3e2018dced",
+   "committed_class": "NO_CUT",
+   "cpu_s": 97.4,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "ac0fb9df7d1f567745ac5cfa1ec94f746884e0f5e01bbdfeec4f7a3e2018dced",
+   "replayed_class": "NO_CUT",
+   "seed": 8206,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  },
+  {
+   "clamp_equal": {
+    "ftick_cutB": true,
+    "ftick_cutN": true
+   },
+   "class_changed": false,
+   "committed_arrays_sha256": "d3bab517f606c4eb3d40b10ba8b2253c3ba754f92a40c293da5414284de2eee5",
+   "committed_class": "NO_CUT",
+   "cpu_s": 94.9,
+   "law": "V1",
+   "match": true,
+   "replayed_arrays_sha256": "d3bab517f606c4eb3d40b10ba8b2253c3ba754f92a40c293da5414284de2eee5",
+   "replayed_class": "NO_CUT",
+   "seed": 8207,
+   "shard": "V1.1",
+   "status": "REPLAYED_THIS_AUDIT"
+  }
+ ]
+}
