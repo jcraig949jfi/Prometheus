@@ -1194,6 +1194,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   the barrier. Open: does signalling then EVOLVE (from one word away, or from scratch) at low load? And does the same
   lever move the memory-law walls (keyed d6, RESET from random)?
   WINDOW 9 TALLY: ~43 + ~1 = ~44 of 48.
+- B99 posted (comms #2256; flagged as potentially program-level).
+- B100 RESULT (12:47Z; lease lse-f5206a21cd2e RELEASED; ~2 core-h): keyed d6 precursor at reduced mutation load --
+  c=0.5 0/6, c=0.8 1/6 (held-out 1.000, first training solve at gen 135). PREDICTION (>= 2/12) FAILED by one.
+  WEAK SIGNAL: the FIRST d6 keyed success in the campaign (vs 0/32 at c=0 under every condition), and it came LATE
+  (gen 135) -- the timing a lowered error threshold would allow (partial structures survive long enough to be
+  completed). Not significant (1/12 vs 0/32, Fisher p ~ .27). Next (window 10): replicate d6 at c=0.8 with more seeds
+  (and G=600); RESET from random at c=0.8.
+  WINDOW 9 TALLY: ~44 + ~2 = ~46 of 48. No further heavy runs this window.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
