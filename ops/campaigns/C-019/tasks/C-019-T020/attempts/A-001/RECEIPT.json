@@ -1,0 +1,36 @@
+{
+  "schema": "prometheus.workgraph.receipt.v1",
+  "task_id": "C-019-T020",
+  "campaign_id": "C-019",
+  "attempt_id": "A-001",
+  "role": "Cadmus",
+  "model": "claude-sonnet-5-5",
+  "quality_class": "Q2",
+  "start_sha": "efe7bddc7c58469507f9623b6800fe758c6d2027",
+  "end_sha": "4c5163aa62b8f175c3c01f2ddcf0b768129adf48",
+  "files_changed": ["rso/aether/audit/AUDIT.md", "rso/aether/audit/AUDIT_TEMPLATE.md", "rso/aether/audit/TABLES.json", "rso/aether/audit/replay_audit.py", "rso/aether/audit/render_audit.py", "rso/aether/audit/__init__.py", "rso/aether/audit/.gitignore", "rso/aether/audit/replay_run.out", "rso/aether/audit/replay_run.err", "rso/aether/audit/replay/ (57 per-unit records)"],
+  "evidence_added": [
+    "57 per-unit replay records: arrays_sha256, ftick_cutB / ftick_cutN, tree/B/N/origin/B_tick, warm digest, meta digest all MATCH",
+    "AUDIT.md: pins, method, 64-unit table, post-confirmation RX/V1 dispositions (unchanged), outcome sentence, erratum (2 of 8 CONFIRMED replayed earlier; 8 of 8 now), CPU 4671 s"
+  ],
+  "evidence_executed": [
+    {"command": "python -B -m rso.aether.audit.replay_audit run  (detached Start-Process, PID 8916, EW_DB_HOST=192.168.1.202)", "result": "57 units replayed, 57 match=True, mean 82 s CPU/unit"},
+    {"command": "python -B -m rso.aether.audit.replay_audit aggregate", "result": "match 57, mismatch 0, class_changed 0; RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT and V1 ANCESTRY_UNEVALUABLE reproduced from replayed arrays"},
+    {"command": "python -c from rso.aether import freeze; freeze.mismatches()", "result": "[]"}
+  ],
+  "red_observed": {"observed": false, "reason": "kind document: re-execution audit of committed evidence"},
+  "result": "DONE_CLEAN",
+  "known_escapes": [
+    "replay uses the same adapter.native_unit call as C-018; it is reproducibility, not an independent implementation, and does not prove the native transition physics correct",
+    "CPU reference path only; no GPU or cross-platform comparison",
+    "the 7 previously replayed units were not re-run; their classes are taken from committed arrays whose replay digests already matched"
+  ],
+  "unresolved": [],
+  "unblocks": [],
+  "created_at_utc": "2026-10-15T10:45:00Z",
+  "instance": "harry1-c619844e",
+  "host": "harry1",
+  "branch": "cadmus/c019",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c019",
+  "resources": {"cpu": "4671 s process CPU, one detached process", "model": "one Sonnet 5.5 session"}
+}
