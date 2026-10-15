@@ -1094,6 +1094,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   time gives 0/8 (pooled d6 0/32 across B87/B88/B89/B90). The keyed wall: d2 reachable (9/16), d4 reachable and
   basin-capture-limited (4/16 -> 6/8 with immigration), d6+ unreachable at these budgets.
   WINDOW 9 TALLY: ~26 + ~5 = ~31 of 48.
+- Keyed lane consolidated: F3 packet section 7c (ec22223ee); comms #2248.
+- B91 RESULT (05:57Z; lease lse-2da24a442183 RELEASED; ~25 min x 12 procs ~ 5 core-h): latch IMMIGRATION in the
+  relocating pulse world (20 fresh latch copies per generation). Converting populations: H_6923_IMM 1/6 (same as its
+  1/6 baseline), L_6916_IMM 0/6. PREDICTION (H_6923_IMM >= 3/6) FAILED; L_6916 <= 1/6 MET.
+  READING: the genome-specific RESET conversion is NOT basin capture. Keeping H_6923's basin occupied does not raise its
+  rate (unlike the keyed d4 precursor, B89). The two walls differ: the keyed d4 wall is drift off a two-edit-close
+  precursor; H_6923's low conversion is about where its neighbourhood leads, not about losing it.
+  WINDOW 9 TALLY: ~31 + ~5 = ~36 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
