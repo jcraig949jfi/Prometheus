@@ -1080,6 +1080,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   count difference (B87 1/8 vs B88 3/8; pooled 4/16) is seed variance. Pooled keyed reach: d2 9/16, d4 4/16, d6 0/16,
   d8 0/8.
   WINDOW 9 TALLY: ~7.5 + B88 (12 procs ~1.5 h, tapering to 1 proc to 04:27) ~16 = ~24 of 48.
+- B89 RESULT (04:40Z; lease lse-b9ce9c5823a4 RELEASED; ~10 min x 12 procs ~ 2 core-h): precursor IMMIGRATION (20 fresh
+  precursor copies per generation into non-elite slots). Keyed: d4_IMM 6/8 (first training solves 1/10/25/41/47/132) vs
+  4/16 without immigration (Fisher one-sided p ~ .02); d6_IMM 0/8 (one run: training solve at gen 19, held-out .77 --
+  the closest any d6 run has come). PREDICTION: d4_IMM >= 4/8 MET; d6_IMM >= 2/8 FAILED.
+  READING: TWO mechanisms. (1) BASIN CAPTURE limits d4 -- keeping the precursor basin occupied triples the rate and
+  makes LATE successes possible (gen 132; none ever appeared late without immigration, even at G=900). (2) Beyond that,
+  DISTANCE itself: at d6 an occupied basin is not enough within G=300. The keyed wall = basin capture x distance.
+  WINDOW 9 TALLY: ~24 + ~2 = ~26 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

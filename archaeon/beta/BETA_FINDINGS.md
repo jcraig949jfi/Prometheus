@@ -131,6 +131,9 @@ clock.
    not at all: the B55-B57 per-link slope, for a full keyed solver.
    **Budget (B88):** at 3x the generations (G=900) no success appears after gen 300 (d4 3/8, all by gen 12; d6 0/8). The
    wall is basin capture, not a waiting time. Pooled reach: d2 9/16, d4 4/16, d6 0/16, d8 0/8.
+   **Immigration (B89):** re-seeding 10% fresh precursor copies each generation lifts d4 from 4/16 to 6/8 (p ~ .02)
+   and allows late successes (gen 132), but d6 stays 0/8. The wall is basin capture (removable) times distance (not,
+   at this budget).
 
 ## Finding 4 -- concurrent competition evolves negative-frequency-dependent niche partitioning (3/3 worlds)
 
