@@ -263,6 +263,21 @@ Q-018 | PERMISSION (LAN service) | 2026-10-12
   by Pan's loop.
   ANSWER:
 
+Q-019 | RE-RUN (intake stopped under memory pressure) | 2026-10-15
+  Today's daily intake started 14:21:03Z on CPU after a load sample (M2 CPU
+  6%, 14.4 GB free). ComfyUI (D:\skullport-gfx, not Pan's) started at
+  14:30:28Z and took 11.4 GB; the session host then stopped the intake for
+  low memory. Pan stopped its own leftover intake processes at 14:32:21Z
+  (they still held ~5.4 GB) and marked the run KILLED.
+  What finished: arXiv, HF daily, HF models, 35 feeds (38 new items) and
+  29 GitHub owners (20 new items). What did not: vectors for the new items,
+  and the 2026-10-15 digest.
+  The host's rule is not to restart a stopped job unprompted. Re-run it?
+  DEFAULT meanwhile: not re-run by Pan. The loop ends 2026-10-16T10:40Z,
+  before tomorrow's intake; whichever run comes next embeds everything that
+  has no vector, so nothing fetched is lost.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09

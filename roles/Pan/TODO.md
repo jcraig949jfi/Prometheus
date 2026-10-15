@@ -16,7 +16,7 @@ date, purged after 24 h (base role s7).
 - [ ] ubu002 off the LAN since 08:24Z (last ok 2026-10-12T22:29Z); FYI posted #2241 (Achilles + operator, 09:30:01Z):
       re-check each tick; post again only when it comes back
 - [ ] PAN-37: 3 reviewers scored + packet (2026-10-11); dispatch to seats ONLY if the operator answers Q-011
-- [ ] Daily intake + digest (next ~2026-10-15T14:30Z; 2026-10-14 done 15:06Z; when >150 items wait for vectors, prefer the GPU under a gpu0 lease)
+- [ ] Daily intake + digest: 2026-10-15 run STOPPED 14:31Z by the session host under memory pressure (ComfyUI 11.4 GB) after its fetch steps; no vectors/digest for it; not re-run unless the operator answers Q-019
 - [ ] Machines/Pantheon tabs (+ per-engine CPU sample in the local probe, for Achilles #2090): re-probe + rebuild fleet datasets each loop tick (fleet probe; mk_datamap --only fleet;
       upload + dataset url update); Q-012 decides whether ubu004-006 get measured
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
