@@ -360,4 +360,33 @@ ENTRIES = [
         "invalidated_by": ["any byte change to the pinned files", "a change under Aether/ (re-pin)", "another law, scale or impulse type"],
         "users": ["C-018 Aether"],
     },
+    {
+        "name": "adversarial-kit",
+        "version": "C-019-T011",
+        "owner": "Eupalamus (built); Palamedes (coordinator)",
+        "files": ["rso/adversary/attacks.py", "rso/adversary/core.py", "rso/adversary/limitations.py", "rso/adversary/targets.py",
+                  "rso/adversary/measurement.py", "rso/adversary/mutants.py", "rso/adversary/mutant_edits.json"],
+        "interface": "python -m rso.adversary run <target>|all -> per attack REJECTED (refusal quoted) | LIMITATION <owner-recorded id "
+                     "with a live marker> | SURVIVED | VACUOUS | ERROR | NOT_APPLICABLE (reason); attacks.{drop, duplicate, "
+                     "rewrite_derived, constant_detector, scrub_answer} as plain functions; core.judge / core.run_variants.",
+        "stage": "AUTHOR_TESTED",
+        "qualified_scope": "the four registered known-answer targets on committed evidence, offline: C-017 Z80 six shards (rso.completeness), "
+                           "C-018 Aether confirm.analyse on a temp copy, C-016/C-017 rso.qualify miniatures, C-013 D1 analyze. run all: 21 "
+                           "REJECTED, 3 LIMITATION (C018-R1c, C013-D1-trusts-derived x2), 6 NOT_APPLICABLE, 0 SURVIVED, 0 VACUOUS "
+                           "(integrator re-run identical); 66 tests; 4/4 mutation-runner mutants killed; integrator mutant (vacuous "
+                           "DUPLICATE) killed by test and runner (VACUOUS). 13 of 18 historical defects caught automatically.",
+        "not_qualified_for": ["replacing an independent Q3 review (it supplements it; a clean run is not a review)",
+                              "engine re-execution (Aether 'replay' here is a recorded-byte oracle; the native re-run is C-019-T020)",
+                              "any attack not among the five", "surfaces listed as untried in rso/adversary/README.md"],
+        "tests": ["rso/adversary/tests/test_attacks.py", "rso/adversary/tests/test_targets.py", "rso/adversary/tests/test_measurement.py",
+                  "rso/adversary/tests/test_mutants.py"],
+        "evidence": ["rso/adversary/MEASUREMENT.md", "rso/adversary/RUN_OUTPUT.txt", "rso/adversary/tests/RED_OUTPUT.txt",
+                     "rso/adversary/MUTANT_RUN.json"],
+        "counterexamples": ["first pass counted a harness exception as a rejection (caught by its own tests; only exceptions inside "
+                            "core.call() count)"],
+        "dependencies": ["mutation-runner", "experiment-completeness", "control-falsifiability-checks", "aether-ancestry-content-instrument"],
+        "invalidated_by": ["a byte change to any dependency changes what a target is attacking -- re-run the kit",
+                           "an owner rewording a recorded limitation (its marker must stay live)"],
+        "users": ["C-019 (Gen-5 assay; reviewer template in MEASUREMENT.md)"],
+    },
 ]

@@ -30,7 +30,7 @@
    "owner": "Palamedes (coordinator); built by Argus under C-009",
    "qualified_scope": "FLAT inventories only: every RECEIPT row's parent is the anchored launch, every COMPLETED RECEIPT row carries receipt_sha256, no node has two RECEIPT rows (the P-FLAT predicate, C-010 PREREGISTRATION s5). Runtime-agnostic within that scope.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/binding/binding.py": "a5a7af0477253b4ff91b1f4ac639c9ba1229891c6633719f54dc0301e593923a",
      "rso/binding/contract.json": "b122aae4499f1d83abbcaac2166fb5514d55ceffd006ea2b28885c5e5707f6c7"
@@ -72,7 +72,7 @@
    "owner": "Palamedes (coordinator); keeper store shared",
    "qualified_scope": "detects bytes that changed after registration, a missing keeper row, and registration after the first check. Records BYTES, not their truth.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/slice001/evidence.py": "bd4e7bbf338bf30e1b4a2fa5bf68ed2b76db93a669a05d27a63584c6faeb2866"
     }
@@ -117,7 +117,7 @@
    "owner": "Palamedes (coordinator); challenge sets are owned by their reviewer",
    "qualified_scope": "single textual edits against committed Python sources, each run in a fresh -B subprocess; classifies KILLED / SURVIVED / ERROR. Used for 7 Q3 challenges and every integrator mutation in C-004..C-013.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/reach/repair_v101/run_red.py": "5e6bac7ae470d69e94d3788d05e3837fba06089ab234f0758a029cb6e6db0540",
      "rso/slice001/mutation.py": "ce90dd4b61f5d6ceca270961de4e91b44af708a698b6caf92f6dbd40563a215b"
@@ -159,7 +159,7 @@
    "owner": "Palamedes (coordinator)",
    "qualified_scope": "canonical identity of JSON receipts built from ints, strings, lists, dicts.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/slice001/receipt.py": "f0f0d80063d21703b1709c188cad702b189db772bf5ecac404a04c9a56d5725b"
     }
@@ -199,7 +199,7 @@
    "owner": "Eupalamus (T023 caps); Palamedes (coordinator)",
    "qualified_scope": "client-side accounting of declared launches; refuses a launch whose DECLARED estimate would exceed a cap. Cross-checked to the decimal by an independent tool (ledger_numbers).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/slice001/ledger.py": "8f483e05910de587cd58d46ab38c8878679762403129d6816e3172b767b13e52"
     }
@@ -250,7 +250,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "Ares W15 retained-bit witness only. REUSABLE PATTERN (not code): per-launch inventory, P-FLAT gate (evaluate.py:179 p_flat), recompute-from-bytes evaluation, controls launched as their own bundle.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/witness/ares_client.py": "0028f21dcda032ff43876495d492ffe5e2f411afdf1723ac756626ef57adb1ec",
      "rso/witness/evaluate.py": "8bb426dee359ce14df61032a3fa647e689db9576b8f71d0606b9ef70707efdb1",
@@ -291,7 +291,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "a BINARY per-episode correct/wrong endpoint with a known chance bound (W15: 1/2, delta 1/20, alpha 1/100, n = 2048).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/witness/ruler.py": "6b972f9eef3127dc80f66bacfa26d61097304e74f486523ad1c65d7cd31caed8"
     }
@@ -332,7 +332,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "binary success counts per stratum, two-sided stratified exact test, Holm over a fixed family; power by Monte Carlo at the Holm worst-case level. Null size measured <= 0.027.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/reach/analyze.py": "8c9ff6fa4d9f60d437e12205fe7fd582a181712c7f932644d0fd16dad8627f0d",
      "rso/reach/stats.py": "1185ffc430ab54b77e28e47ce313d8b2e23303f3713a8be34c16b28f0666d396"
@@ -379,7 +379,7 @@
    "owner": "Argus (built); Palamedes (coordinator); Ensorain owns the physics it checks",
    "qualified_scope": "Ensorain WTP-05 TAPE genomes at ensorain/ 7b1d549c8 (Q3 C-016-T040 + re-check T042: INSTRUMENT CLOSED; held on 26,400 dev + 10,400 challenge + 38,400 confirmatory rows; NaN fixed).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/ensorain/assay.py": "ce3dc25558a98617a6ab813bd7b51c3932e390827fb272b2e0303a518d9ea482"
     }
@@ -429,7 +429,7 @@
    "owner": "Argus (built); Palamedes (coordinator)",
    "qualified_scope": "within-life revision at a law switch, binary per-life endpoint, paired by seed, one host; REVISION_HISTORY_DEPENDENT excludes law-blind drift (C-016 RESULT, family P).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/ensorain/analysis.py": "5f8215377a11afe4bdf18596d64c7515d58a7cc2251cb4ce78f19663cd5b5eea"
     }
@@ -469,7 +469,7 @@
    "owner": "Eupalamus (built); Palamedes (coordinator, consumer)",
    "qualified_scope": "idempotent notices on the shared comms DB (tests + live C-016 use: #2120-#2152; re-scans posted nothing). Median integration wait C-016 8.8 min vs C-013 31 min.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/scale/notify/__main__.py": "3a77738a81936a7edb8140ed549af59e886bd95c46252814d680510fbcefaf5c",
      "rso/scale/notify/notify.py": "a0c51d170813011c1e7939b2d1b93a92363dac206a0ed77ab965d488b47569c3"
@@ -525,7 +525,7 @@
    "owner": "Argus (built); Palamedes (coordinator); Archaeon owns the engine it replays",
    "qualified_scope": "Z80 Atlas archaeon tree at 863d34a55, well_mixed / unlimited / fixed, vmcopy G=32, ECHO_forced, ENDOGENOUS_COPY or EXTERNAL, records replayable from (spec, seed), constructed arms at the registered 10-200 epoch horizons (C-017 RESULT: ATTRIBUTION_QUALIFIED, 273/274).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/z80/analysis.py": "3d865f95faafbf41d0d6ab2297ec43d629ec8133aa4f931d95a797accfa6e8a8",
      "rso/z80/assay.py": "a0a23118b2b62cc6d310af2bf45a8620b65772cd9fd01b58880a9d628b2f7f72",
@@ -565,7 +565,7 @@
    "owner": "Palamedes (coordinator)",
    "qualified_scope": "detects the five historical non-falsifiable controls (D1 derived field, Ensorain self-relative K1, Z80 b1/b2 no ENV output, Z80 constant origin, recipe lookup table) on miniature fixtures; 14 tests, 3 mutants killed.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/qualify/FALSIFIABILITY.md": "f725d9a38fda464c496aa43bdb16cdc22d2d4a7740f782cee2b545e10ed0bb06",
      "rso/qualify/falsifiable.py": "f5a6c19930f5d8a676f43e81b6467d3e589534ebadd09b60b9fd7258ac7221c9"
@@ -610,7 +610,7 @@
    "owner": "Eupalamus (built); Palamedes (coordinator)",
    "qualified_scope": "the C-017 Z80 six-shard fixture: complete set reproduces CONFIRM.analysis.json exactly; removal, duplication, substitution, alteration, foreign id, seed partition, source change, re-sealed smaller manifest and early stop with/without trigger all detected (40 tests; 12 of 13 mutants killed, 1 equivalent; integrator mutant killed).",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/completeness/manifest.py": "a6209df1971c498cf55c593d938393f3c1cce3913c7750873ec01859a9ea4238",
      "rso/completeness/manifests/z80_confirm.manifest.json": "265cf57a3c9856a234e491e95a059939c3000f9632a0a7c57cf6447394d67b0d",
@@ -673,7 +673,7 @@
    "owner": "Argus (built); Palamedes (coordinator); Aether owns the physics, attribution and decoder it consumes",
    "qualified_scope": "Aether aeth03 RX (recoil + exchange) and aeth01.v1 CPU reference at 128^2, warm 300, H 400, payload-bit-0 impulse, Aether's choose_cut B, the v1.1.0 N window: separates interventional ancestry from recoverable content (fixtures B / E), genuine Q3 challenge + re-check (Pallas, Fable 5.1, continuity verified). C-018 RESULT: RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT, V1 ANCESTRY_UNEVALUABLE.",
    "source": {
-    "commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
     "sha256": {
      "rso/aether/adapter.py": "2427a6132b87113bdc57f0a93bcafbffc6a22759196b372c9f568edf45f83474",
      "rso/aether/confirm.py": "0131874201a76dc0df6e9b5d9e8bb8f3a9b1ec19ef80f3a6a566f8d0e691601d",
@@ -689,8 +689,71 @@
     "C-018 Aether"
    ],
    "version": "C-018 FREEZE_AETHER_ANCESTRY_CONTENT v1.1.0"
+  },
+  {
+   "counterexamples": [
+    "first pass counted a harness exception as a rejection (caught by its own tests; only exceptions inside core.call() count)"
+   ],
+   "dependencies": [
+    "mutation-runner",
+    "experiment-completeness",
+    "control-falsifiability-checks",
+    "aether-ancestry-content-instrument"
+   ],
+   "evidence": [
+    "rso/adversary/MEASUREMENT.md",
+    "rso/adversary/RUN_OUTPUT.txt",
+    "rso/adversary/tests/RED_OUTPUT.txt",
+    "rso/adversary/MUTANT_RUN.json"
+   ],
+   "files": [
+    "rso/adversary/attacks.py",
+    "rso/adversary/core.py",
+    "rso/adversary/limitations.py",
+    "rso/adversary/targets.py",
+    "rso/adversary/measurement.py",
+    "rso/adversary/mutants.py",
+    "rso/adversary/mutant_edits.json"
+   ],
+   "interface": "python -m rso.adversary run <target>|all -> per attack REJECTED (refusal quoted) | LIMITATION <owner-recorded id with a live marker> | SURVIVED | VACUOUS | ERROR | NOT_APPLICABLE (reason); attacks.{drop, duplicate, rewrite_derived, constant_detector, scrub_answer} as plain functions; core.judge / core.run_variants.",
+   "invalidated_by": [
+    "a byte change to any dependency changes what a target is attacking -- re-run the kit",
+    "an owner rewording a recorded limitation (its marker must stay live)"
+   ],
+   "name": "adversarial-kit",
+   "not_qualified_for": [
+    "replacing an independent Q3 review (it supplements it; a clean run is not a review)",
+    "engine re-execution (Aether 'replay' here is a recorded-byte oracle; the native re-run is C-019-T020)",
+    "any attack not among the five",
+    "surfaces listed as untried in rso/adversary/README.md"
+   ],
+   "owner": "Eupalamus (built); Palamedes (coordinator)",
+   "qualified_scope": "the four registered known-answer targets on committed evidence, offline: C-017 Z80 six shards (rso.completeness), C-018 Aether confirm.analyse on a temp copy, C-016/C-017 rso.qualify miniatures, C-013 D1 analyze. run all: 21 REJECTED, 3 LIMITATION (C018-R1c, C013-D1-trusts-derived x2), 6 NOT_APPLICABLE, 0 SURVIVED, 0 VACUOUS (integrator re-run identical); 66 tests; 4/4 mutation-runner mutants killed; integrator mutant (vacuous DUPLICATE) killed by test and runner (VACUOUS). 13 of 18 historical defects caught automatically.",
+   "source": {
+    "commit": "bb51200bbbef6f474be6a950e16baafd02563567",
+    "sha256": {
+     "rso/adversary/attacks.py": "0f1817a0d2ff03e57809a48a895e7fd798ef0aec9abc5c8e77798e55c1238357",
+     "rso/adversary/core.py": "6e264b4d7661ccadff7496f7055d0213c3a4877e987fa4b0d91131a5aedceb8f",
+     "rso/adversary/limitations.py": "5c47016bc3f8ace7b42a33a6b28bc37006ab39f113f0f3e2fe7cb694be698fe8",
+     "rso/adversary/measurement.py": "c34d2503b393b2aaae85c70c03a77ea16167647cbf1ff45fb2874de325a52925",
+     "rso/adversary/mutant_edits.json": "6170c765ef9e4ecacebfa54ccc4e6e0d378649b96916b7f652ce173e5207510e",
+     "rso/adversary/mutants.py": "fd971f08e51f50749709e17a54b503a71d9b6b4bee38d0aa16107d3291b535c8",
+     "rso/adversary/targets.py": "f6098f28e9008de442962ee32d9a042ca64e17e766858cb8d7691db1c0ae2263"
+    }
+   },
+   "stage": "AUTHOR_TESTED",
+   "tests": [
+    "rso/adversary/tests/test_attacks.py",
+    "rso/adversary/tests/test_targets.py",
+    "rso/adversary/tests/test_measurement.py",
+    "rso/adversary/tests/test_mutants.py"
+   ],
+   "users": [
+    "C-019 (Gen-5 assay; reviewer template in MEASUREMENT.md)"
+   ],
+   "version": "C-019-T011"
   }
  ],
- "pinned_at_commit": "2478c7287c16d7d346f32f59567f9d162cc32121",
+ "pinned_at_commit": "bb51200bbbef6f474be6a950e16baafd02563567",
  "schema": "prometheus.rso.registry.v1"
 }
