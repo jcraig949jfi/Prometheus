@@ -22,7 +22,7 @@ date, purged after 24 h (base role s7).
 - [ ] Refresh the index each loop tick; answer seat feedback on pan search
 - [ ] Atlas copy each loop tick: python -m pan atlas snapshot (skips unless Atlas harvested)
 - [ ] Act on operator answers (QUESTIONS.md Q-002..Q-019) when they arrive
-- [ ] Closing report at the extended end 2026-10-16T10:40Z: reports/CLOSING_REPORT, WORK_STATE HOLD, stop the loop
+- [ ] Closing report at the extended end 2026-10-16T10:40Z: reports/CLOSING_REPORT (draft in this session's scratchpad CLOSING_REPORT_draft.txt, written by 2026-10-15T19:19:55Z; re-measure section 4 at close), WORK_STATE HOLD, stop the loop
 
 Closed 2026-10-09: charter, inventory, catalog, commits, chunks, vectors,
 Iceberg (8+ tables), consolidation (rows + docs), comms index, frontier intake
