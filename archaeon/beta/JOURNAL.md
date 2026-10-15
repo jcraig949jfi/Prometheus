@@ -1202,6 +1202,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   completed). Not significant (1/12 vs 0/32, Fisher p ~ .27). Next (window 10): replicate d6 at c=0.8 with more seeds
   (and G=600); RESET from random at c=0.8.
   WINDOW 9 TALLY: ~44 + ~2 = ~46 of 48. No further heavy runs this window.
+- STAGED for window 10 (~2026-10-16 00:30Z), predictions in docstrings, committed before running:
+  B101 = d6 keyed at c=0.8, G=600, 16 new seeds (pred >= 3/16; 3/16 vs 0/32 gives hypergeometric one-sided p = .032);
+  B102 = RESET from random gen 0 at c=0.8, B75 world, 8 seeds (pred >= 2/8 RESET-like populations). B102 smoke test passed.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
