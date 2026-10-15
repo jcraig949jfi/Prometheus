@@ -1145,6 +1145,19 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   unused half. Contrast: the keyed d2 precursor (B86) is restored 4/8 because every one of its parts is under
   selection in the same individual. LANE PARKED as a clean negative.
   WINDOW 9 TALLY: ~36 + B92/B93 evals ~.2 + B94 ~1 + B95 ~1 + B95b ~1 = ~39 of 48.
+- Campaign update 11 written + posted (CAMPAIGN_UPDATE_2026-10-15.md, e93dc2029; comms #2253).
+- B96 RESULT (10:46Z; lease lse-56f8e91fbfc6 RELEASED; ~1.5 core-h): FIXED scout 0/6, listener IMMigration 0/6, BOTH 0/6.
+  PREDICTION (BOTH >= 3/6) FAILED: dilution + decay do not explain the B95b null.
+- B96b (selection coefficient, evaluation): a restored signaller's expected group-mean gain in a MUTE_OP population is
+  s = .019 under BOTH the rotating scout (.022/.011/.025/.017 by position) and the fixed scout (.076/0/0/0). Fixing the
+  scout only CONCENTRATES the gain; it does not raise its expectation, so my 'dilution' mechanism was conceptually
+  wrong (mine). The constraint is a WEAK s (headroom .13: blind listeners already score .869).
+- B97 (raise the headroom: static pools rescaled 1.0-1.75 -> 0.1-3.1, once per shared pool list -- verified; a wrapper-
+  order bug that would have bypassed the rescale was caught before running). Controls: COMPLETE SIGNALS .328 / own
+  group .995; MUTE_OP 0 / .754; BLIND .672. s = .046 (2.4x).
+  RECEIPT NOTE (mine): the docstring prediction was WRITTEN before s was measured but COMMITTED after; part 1
+  (s >= 3x) is therefore not receipted -- and it FAILED anyway (2.4x). Parts 2-3 (SHARED restores >= 3/6, INDIVIDUAL
+  <= 1/6) concern unseen evolution outcomes and are kept exactly as written.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
