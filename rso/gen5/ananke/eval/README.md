@@ -147,6 +147,13 @@ still reads its inputs and still draws its RAND stream. Only its destination is 
   placed from line 0 with identity naming, and every check reads not-TRUE (the owner's reading). A different placement
   is not covered.
 - **The sense-stream generator is not independent** (s2).
+- **Not built here.**
+  - Carrier swaps: `roles/Ananke/pte/c3/swap_v2.py` was located but not re-implemented; packet item 3 does not list
+    it.
+  - ASSAY_C4D.json is blob-pinned but not reproduced: its two subjects are D champions inside pops_C4D, which stays
+    unopened until the owner consents.
+  - The owner's 12-generation transplant GA is native search, so it is not run. The transplant here is a placement
+    with no search.
 - **Scope of the evaluator.** It is qualified at the four C4 cells, R4 physics, tasks RELAY1H / HOLD / GATE / FLIP.
   - Not qualified: other physics, other families (XOR / MAJ raise ValueError), state_dim != 3 for USE-DISABLED's
     plant checks, or channels > 1 (USE-DISABLED refuses).
