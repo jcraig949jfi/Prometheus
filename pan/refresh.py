@@ -21,6 +21,28 @@ import time
 from . import REPO
 
 
+class Phases:
+    """Wall seconds per named refresh phase (PAN-53). pan.run rows carry transaction-start times only (now() is
+    fixed per transaction), so they cannot say which step of a slow refresh took the time; this can. A phase that
+    raises is still timed; a name used twice accumulates."""
+
+    def __init__(self, clock=time.monotonic):
+        self.clock = clock
+        self.seconds = {}
+
+    def __call__(self, name):
+        phases = self
+
+        class _Timer:
+            def __enter__(self):
+                self.t0 = phases.clock()
+
+            def __exit__(self, *exc):
+                phases.seconds[name] = round(phases.seconds.get(name, 0.0) + phases.clock() - self.t0, 1)
+                return False
+        return _Timer()
+
+
 HOLDERS_SQL = """select a.application_name, coalesce(host(a.client_addr), 'local'), a.state,
                          extract(epoch from now() - a.xact_start)::int,
                          left(regexp_replace(a.query, '\\s+', ' ', 'g'), 120)
@@ -95,43 +117,52 @@ def rebuild_lexeme_df(conn=None, schema="pan", lock_timeout="10s", attempts=3, p
 def run(out=print, embed_chunks=True, embed_docs=True):
     from . import chunker, commits, db, embed, inventory, search
     t0 = time.time()
-    subprocess.run(["git", "fetch", "-q", "origin"], cwd=REPO, timeout=120, check=False)
-    head = subprocess.run(["git", "rev-parse", "origin/main"], cwd=REPO, capture_output=True, text=True,
-                          timeout=60, check=True).stdout.strip()
-    with db.cursor() as cur:
+    ph = Phases()
+    with ph("fetch"):
+        subprocess.run(["git", "fetch", "-q", "origin"], cwd=REPO, timeout=120, check=False)
+        head = subprocess.run(["git", "rev-parse", "origin/main"], cwd=REPO, capture_output=True, text=True,
+                              timeout=60, check=True).stdout.strip()
+    with ph("catalog_read"), db.cursor() as cur:
         cur.execute("select max(repo_sha), count(*) from pan.artifact where source='git'")
         cat, n_before = cur.fetchone()
     if cat == head:
         # the comms/Moonshot indexes ran just before this (python -m pan refresh): classify what they added
         from . import access
-        acc = access.apply_rules(out=lambda *_: None)
+        with ph("access"):
+            acc = access.apply_rules(out=lambda *_: None)
         res = dict(noop=True, sha=head, access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
-                   seconds=round(time.time() - t0, 1))
+                   seconds=round(time.time() - t0, 1), phase_seconds=ph.seconds)
         out(json.dumps(res))
         return res
-    with db.cursor() as cur:
+    with ph("catalog_read"), db.cursor() as cur:
         cur.execute("select path, blob_sha from pan.artifact where source='git'")
         before = dict(cur.fetchall())
     # 3. tree -> artifacts, via the inventory's repo writer only (no fs walk, no cluster scan)
     _rows = []
-    for path, bsha, size in inventory.repo_tree(head):
-        kind, seat, top, e = inventory.classify(path, head)
-        _rows.append(dict(path=path, blob_sha=bsha, size_bytes=size, kind=kind, seat=seat, top_dir=top, ext=e))
+    with ph("tree"):
+        for path, bsha, size in inventory.repo_tree(head):
+            kind, seat, top, e = inventory.classify(path, head)
+            _rows.append(dict(path=path, blob_sha=bsha, size_bytes=size, kind=kind, seat=seat, top_dir=top, ext=e))
     changed = sum(1 for r in _rows if before.get(r["path"]) != r["blob_sha"])
     removed = len(set(before) - {r["path"] for r in _rows})
-    _upsert_repo(_rows, head)
+    with ph("upsert"):
+        _upsert_repo(_rows, head)
     # 3b. access rules BEFORE anything reads or indexes a new file (PAN-42/45): a new file matching a CLASSIFY rule
     # would otherwise sit at the default class PROGRAM -- visible at generator clearance -- until someone ran
     # `pan access apply`; REFUSE rules mark refused files indexed so the chunker never opens them
     from . import access
-    acc = access.apply_rules(out=lambda *_: None)
+    with ph("access"):
+        acc = access.apply_rules(out=lambda *_: None)
     # 4. commits
-    c = commits.run(head, out=lambda *_: None)
+    with ph("commits"):
+        c = commits.run(head, out=lambda *_: None)
     # 5. chunks for changed blobs only
-    ch = chunker.run(out=lambda *_: None)
+    with ph("chunk"):
+        ch = chunker.run(out=lambda *_: None)
     # 6. vectors for what has none
-    ev = embed.run(out=lambda *_: None) if embed_chunks else {"embedded": 0}
-    ed = embed.run_docs(out=lambda *_: None) if embed_docs else {"embedded": 0}
+    with ph("embed"):
+        ev = embed.run(out=lambda *_: None) if embed_chunks else {"embedded": 0}
+        ed = embed.run_docs(out=lambda *_: None) if embed_docs else {"embedded": 0}
     # 6b. derived tables that depend on chunks: lexeme frequencies (full-text cap) and links
     lx_t = time.time()
     lx_report = {}
@@ -140,16 +171,17 @@ def run(out=print, embed_chunks=True, embed_docs=True):
     lk = links.run(out=lambda *_: None)
     derived_s = round(time.time() - lx_t, 1)
     # 7. caches rebuilt against the ids that exist now
-    search._CACHE.clear()
-    search._DCACHE.clear()
-    search.load_matrix(embed.default_model(), refresh=True)
+    with ph("caches"):
+        search._CACHE.clear()
+        search._DCACHE.clear()
+        search.load_matrix(embed.default_model(), refresh=True)
     res = dict(noop=False, from_sha=cat, to_sha=head, artifacts_changed=changed, artifacts_removed=removed,
                commits_total=c.get("commits"), chunks_new=ch.get("chunks"), files_rechunked=ch.get("files_chunked"),
                chunk_vectors_new=ev.get("embedded"), doc_vectors_new=ed.get("embedded"), links=lk.get("links"),
                derived_seconds=derived_s, lexemes=lexemes, lexdf_swap_attempts=lx_report.get("swap_attempts"),
                lexdf_blockers=lx_report.get("blockers"),
                access_newly_classified=sum(v.get("newly_classified", 0) for v in acc.values()),
-               seconds=round(time.time() - t0, 1))
+               seconds=round(time.time() - t0, 1), phase_seconds=ph.seconds)
     out(json.dumps(res))
     return res
 
