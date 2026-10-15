@@ -389,4 +389,37 @@ ENTRIES = [
                            "an owner rewording a recorded limitation (its marker must stay live)"],
         "users": ["C-019 (Gen-5 assay; reviewer template in MEASUREMENT.md)"],
     },
+    {
+        "name": "ananke-c4-independent-evaluator",
+        "version": "C-019-T040",
+        "owner": "Argus (built); Palamedes (coordinator); Ananke owns the physics, worlds, search and the oracle it consumes",
+        "files": ["rso/gen5/ananke/eval/evaluate.py", "rso/gen5/ananke/eval/runner.py", "rso/gen5/ananke/eval/ruler.py",
+                  "rso/gen5/ananke/eval/worlds.py", "rso/gen5/ananke/eval/owner.py", "rso/gen5/ananke/eval/mechanics.py",
+                  "rso/gen5/ananke/eval/access.py", "rso/gen5/ananke/eval/ka_table.py"],
+        "interface": "eval_programs(ph, env, seeds, genomes) on prometheus/ananke/oracle.py (pure NumPy, no torch); the owner's C4 "
+                     "competence rulers for RELAY1H / HOLD / GATE / FLIP; Rung-4 mechanics (library NOP, USE-DISABLED via the dead "
+                     "O.chan sink, substitute, transplant placement, register zero, zero communication); access.py: exact CP / "
+                     "Fisher, right-censored Kaplan-Meier, log-rank, paired McNemar, exact power.",
+        "stage": "AUTHOR_TESTED",
+        "qualified_scope": "the four C4 cells at R4 physics, tasks RELAY1H / HOLD / GATE / FLIP: 40/40 owner admission readings "
+                           "reproduced (max |diff| 0.0, statuses incl. FLIP-0099 INDETERMINATE); 108/108 known answers; 32/32 "
+                           "mechanics KNOWN on the plants; 17 synthetic statistics tests; 43 tests; integrator: non-sampled DLIB "
+                           "check re-run bit-identical (pt_sha), USE-DISABLED no-redirect mutant killed.",
+        "not_qualified_for": ["other physics, other families (XOR / MAJ refuse), state_dim != 3 for USE-DISABLED plant checks, channels > 1",
+                              "a row outside the replay sample, as proof (argus-c019t040-ka-replay-sample; ~3 core-h closes it)",
+                              "whole-population per-generation evaluation (throughput 0.3-1.8 world-episodes/s/process)",
+                              "carrier swaps (swap_v2 not re-implemented)", "the owner's champions (pops_C4T / pops_C4D unopened: consent pending)",
+                              "independence of the sense-stream generator (shared with the owner's worlds)"],
+        "tests": ["rso/gen5/ananke/eval/tests/test_access.py", "rso/gen5/ananke/eval/tests/test_conformance.py",
+                  "rso/gen5/ananke/eval/tests/test_mechanics.py", "rso/gen5/ananke/eval/tests/test_ruler_owner.py",
+                  "rso/gen5/ananke/eval/tests/test_runner.py"],
+        "evidence": ["rso/gen5/ananke/eval/qual/KA_TABLE.json", "rso/gen5/ananke/eval/qual/MECHANICS_KA.json",
+                     "rso/gen5/ananke/eval/qual/ADVERSARY_RUN.json", "rso/gen5/ananke/eval/README.md"],
+        "counterexamples": ["first mechanics reduce FAILED one KNOWN row: offset transplant at FLIP-0004 is not identical "
+                            "(mut_site .001 hits a hashed instruction index) -- the expectation was wrong; library insertion moves "
+                            "dynamics at that cell"],
+        "dependencies": ["adversarial-kit", "experiment-completeness"],
+        "invalidated_by": ["any byte change to prometheus/ananke/oracle.py (pinned lines)", "a change to the owner artifacts (blob pins)"],
+        "users": ["C-019 (parts-suitability prereg DRAFT, owner sign-off required)"],
+    },
 ]
