@@ -1,0 +1,132 @@
+{
+ "schema": "argus.c019t040.adversary.v1",
+ "rows": [
+  {
+   "target": "ananke_c4_ka",
+   "attack": "DROP",
+   "variant": "row-0",
+   "verdict": "REJECTED",
+   "detail": "MISSING row ADM|FLIP-0000-adbab9bf|RELAY1H|plant",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "DUPLICATE",
+   "variant": "row-0-over-row-1",
+   "verdict": "REJECTED",
+   "detail": "DUPLICATE row ADM|FLIP-0000-adbab9bf|RELAY1H|plant; MISSING row ADM|FLIP-0000-adbab9bf|RELAY1H|null",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "REWRITE_DERIVED",
+   "variant": "status-FALSE-to-TRUE",
+   "verdict": "REJECTED",
+   "detail": "ALONE|FLIP-0000-adbab9bf|GATE|LIB1_RELAY1H: row says status='TRUE', recomputed 'FALSE'",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "REWRITE_DERIVED",
+   "variant": "arrays-replayed-row",
+   "verdict": "REJECTED",
+   "detail": "ALONE|FLIP-0099-df143630|GATE|LIB4_HOLD: ALONE|FLIP-0099-df143630|GATE|LIB4_HOLD: REPLAY MISMATCH: re-executed per-trial arrays differ from the row",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "REWRITE_DERIVED",
+   "variant": "arrays-unreplayed-row",
+   "verdict": "LIMITATION",
+   "detail": "ALONE|FLIP-0000-adbab9bf|GATE|LIB1_RELAY1H: PASS",
+   "limitation": "argus-c019t040-ka-replay-sample",
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "CONSTANT",
+   "variant": "ruler-always-TRUE",
+   "verdict": "REJECTED",
+   "detail": "constant TRUE ruler: ADM|FLIP-0000-adbab9bf|RELAY1H|plant: row says pass=True, recomputed False; ADM|FLIP-0000-adbab9bf|RELAY1H|plant: known answer FAILED (recomputed); ADM|FLIP-0000-adbab9bf|RELAY1H|null: row says status='FALSE', recomputed 'TRUE'",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "CONSTANT",
+   "variant": "ruler-always-FALSE",
+   "verdict": "REJECTED",
+   "detail": "constant FALSE ruler: ADM|FLIP-0000-adbab9bf|RELAY1H|plant: row says status='TRUE', recomputed 'FALSE'; ADM|FLIP-0000-adbab9bf|RELAY1H|plant: row says pass=True, recomputed False; ADM|FLIP-0000-adbab9bf|RELAY1H|plant: known answer FAILED (recomputed)",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "SCRUB_ANSWER",
+   "variant": "row-per-trial-arrays-removed",
+   "verdict": "REJECTED",
+   "detail": "ADM|FLIP-0000-adbab9bf|RELAY1H|plant: per-trial arrays missing or unreadable ('pt')",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_c4_ka",
+   "attack": "SCRUB_ANSWER",
+   "variant": "owner-admission-corrupted",
+   "verdict": "REJECTED",
+   "detail": "REFUSED: roles/Ananke/pte/c4/admission_R4.json content hashes to blob 80d443574622b4216b4b5fbe0b3c28e0ad556b07 != pinned 2e4a893af8194eaacb3753aca3ebf1107d59aea",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_access",
+   "attack": "DROP",
+   "variant": "search-3",
+   "verdict": "REJECTED",
+   "detail": "search table refused: UNPAIRED ('c0', 1): missing arms ['REUSE']",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_access",
+   "attack": "DUPLICATE",
+   "variant": "REUSE-hit-over-REUSE-miss",
+   "verdict": "REJECTED",
+   "detail": "search table refused: row 3: DUPLICATE search ('REUSE', 'c0', 0) (also row 1); UNPAIRED ('c0', 1): missing arms ['REUSE']",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_access",
+   "attack": "REWRITE_DERIVED",
+   "variant": "CONTROL-miss-to-hit",
+   "verdict": "REJECTED",
+   "detail": "search table refused: row 0: derived hit/time (True, 6) != recomputed from checkpoints (False, 36)",
+   "limitation": null,
+   "fired": true
+  },
+  {
+   "target": "ananke_access",
+   "attack": "CONSTANT",
+   "variant": "-",
+   "verdict": "NOT_APPLICABLE",
+   "detail": "compare_arms contains no detector: hits are recomputed from checkpoint statuses issued by the ruler, whose CONSTANT attack is target ananke_c4_ka",
+   "limitation": null,
+   "fired": false
+  },
+  {
+   "target": "ananke_access",
+   "attack": "SCRUB_ANSWER",
+   "variant": "checkpoints-removed",
+   "verdict": "REJECTED",
+   "detail": "search table refused: row 1: missing or malformed field ('checkpoints'); UNPAIRED ('c0', 0): missing arms ['REUSE']",
+   "limitation": null,
+   "fired": true
+  }
+ ],
+ "exit_code": 0
+}
