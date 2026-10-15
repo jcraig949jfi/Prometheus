@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-019-T010",
+  "campaign_id": "C-019",
+  "title": "Aether replay-count erratum + C-013 external review closures (directive s1, s8)",
+  "objective": "Record that 2 (not 1) of the 8 CONFIRMED units were fully replayed, with commit and digest, preserving RESULT.md provenance; close the C-013 Astra/Fable review requests as NOT PERFORMED -- SUPERSEDED BY LATER EXPERIMENTAL EVIDENCE.",
+  "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "owner_role": "Palamedes",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/aether/ERRATA.md",
+    "roles/Palamedes/notes/2026-10-15_c013_review_closure.md"
+  ],
+  "reads": [
+    "rso/aether/",
+    "ops/campaigns/C-013/",
+    "ops/campaigns/C-018/"
+  ],
+  "problem": "Erratum as a separate file; RESULT.md is not rewritten. Original C-013 packets preserved.",
+  "non_goals": [
+    "No edit to Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/ or roles/Ananke/",
+    "No change to C-018 frozen files, RESULT.md or decision rule",
+    "Nothing run on M2",
+    "No paid compute",
+    "No large evolutionary search",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "ERRATA.md with commit + digest",
+    "closure note"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/ERRATA.md",
+    "roles/Palamedes/notes/2026-10-15_c013_review_closure.md"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "C-019 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5",
+  "red_required": false,
+  "notes": "red_required false: records"
+}

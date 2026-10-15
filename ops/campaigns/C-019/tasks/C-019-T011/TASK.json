@@ -1,0 +1,63 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-019-T011",
+  "campaign_id": "C-019",
+  "title": "Deterministic adversarial kit (directive s7)",
+  "objective": "Five recurring attacks, each shown to be rejected by its target component or to hit a recorded limitation, on known-answer cases from previous generations; supplements Q3, does not replace it.",
+  "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "owner_role": "Eupalamus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/adversary/"
+  ],
+  "reads": [
+    "rso/completeness/",
+    "rso/qualify/",
+    "rso/aether/",
+    "rso/registry/",
+    "rso/z80/",
+    "rso/reach/"
+  ],
+  "problem": "Build rso/adversary/ (small, no framework). Five attacks as plain functions over a target's evidence/inputs: (1) DROP: remove a required shard or condition; (2) DUPLICATE: duplicate rows while preserving apparent counts; (3) REWRITE_DERIVED: rewrite derived evidence while preserving simple invariants (the C-018-T042 R1c shape: an invariant-respecting rewrite of a clamp array); (4) CONSTANT: replace a detector with a constant classifier; (5) SCRUB_ANSWER: remove or corrupt an answer-bearing or recipe-bearing field. A runner `python -m rso.adversary run <target>` applies every attack to a registered target and prints, per attack, REJECTED (with the refusal) | LIMITATION (matches a recorded limitation id, e.g. C-018 R1c) | SURVIVED (a counterfeit got a verdict). Known-answer targets from previous generations, all READ-ONLY (never edit frozen files): rso/completeness (Z80 six-shard fixture: DROP -> INCOMPLETE, DUPLICATE -> REFUSED); rso.aether.confirm analyse on the committed C-018 runs in a scratch copy (DROP -> INCOMPLETE; DUPLICATE -> refused; REWRITE_DERIVED on a non-sampled unit -> LIMITATION R1c, on a sampled unit -> REJECTED); rso/qualify falsifiable.py historical miniatures (CONSTANT -> constant_passes flags it; SCRUB_ANSWER -> reads_answer flags it); the C-013 D1 derived-field case (trusts_derived). Each attack must also be shown to FIRE: an attack that never changes its input is a vacuous test (falsifiability item 4). Use rso mutation-runner (registry entry) for at least one target where practical. Record a measurement table (directive s7): per known historical defect, caught automatically yes/no; and a template the Q3 reviewer fills (defects found only by the reviewer, reviewer time, cost per new defect class). README with how a new campaign registers a target. Propose a registry entry (AUTHOR_TESTED) in your notes; Palamedes owns rso/registry/. Tests RED first.",
+  "non_goals": [
+    "No edit to any frozen file (rso/z80/, rso/aether/ pinned files, C-013 runs)",
+    "No large new framework",
+    "No paid compute",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "five attacks + runner",
+    "known-answer targets from >= 3 previous generations",
+    "every attack shown to fire",
+    "measurement table + reviewer template",
+    "README"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/adversary/"
+  ],
+  "kind": "software",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "C-019 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5"
+}

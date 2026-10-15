@@ -1,0 +1,67 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-019-T021",
+  "campaign_id": "C-019",
+  "title": "Crius selection gate: does constructed reuse survive leak control? (directive s2B; Cadmus = temporary read-only compatibility steward)",
+  "objective": "Decide whether Crius's constructed procedure-reuse advantage survives when the environment's primitive-label assistance and automatic calibration are removed or controlled -- or record WORLD_DEMAND_NOT_QUALIFIED.",
+  "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/gen5/crius/"
+  ],
+  "reads": [
+    "crius/",
+    "roles/Crius/",
+    "rso/gen5/",
+    "rso/qualify/",
+    "rso/registry/",
+    "roles/Hestia/audit/2026-10-06/"
+  ],
+  "problem": "Read rso/gen5/CANDIDATE_CONTRACT.md s3-s7 (your own T021 survey) and the frozen interface: crius/{vm,evaluate,baselines_c1,world_c1,env,streams,tasks_c1,workspace,artifacts}.py, crius/configs/c1.json (fingerprint 32dfb243be9fdec9), roles/Crius/STATUS.md. You are the temporary read-only compatibility steward: you may document, execute and adapt the frozen interface INSIDE rso/gen5/crius/; you may NOT edit crius/ or roles/Crius/, reopen the seat, change native physics, or use the forbidden rescue moves in STATUS (lower E/H, more budget, parts in the population, C3). The two leaks: world_c1.primitive_of_action (:81) exposed through env.py:97 (an OBSERVATION) and the rung-B silent action-id calibration in vm.py:461 (a RUNTIME SEMANTIC). Use the smallest lawful counterfactual and LABEL IT: (a) EXTERNAL_FILTER -- an observation filter applied outside the engine that withholds the primitive label from the organism, with a test that the engine's transition semantics are otherwise byte-identical; (b) COUNTERFACTUAL_RUNTIME -- calibration disabled; this changes runtime semantics, so it is a separate counterfactual world 'Crius-CF-nocal', never reported as the original Crius world; (c) both. For the original world and each counterfactual, compare ACCUMULATED, FRESH, CODE_ONLY, COMPUTE_MATCHED, STORAGE_MATCHED, memorisation (TableMemoC1), ARTIFACT_ABLATION (each block and all), ARTIFACT_TRANSPLANT, plus QuitC1 and the permutation-blind near-miss ProcedureNoCalC1, for the constructed positive ProcedureReuseC1 -- and for a leak-free reuse positive if one is constructible without changing physics (say so if not). BEFORE running: commit PREDICTIONS + a frozen decision rule (margin, seeds: a new range disjoint from 1, 201-203, 301-303 and 18_021_001..003; >= 3 seeds; per-lifetime analysis) in rso/gen5/crius/GATE_RULE.md. Rule: QUALIFIED only if, under leak control, the reuse positive beats every competitor by the frozen margin in >= 3/3 seeds AND per-block ablation removes the gain AND transplant carries it; else WORLD_DEMAND_NOT_QUALIFIED (directive s2B). Apply the falsifiability checklist (rso/qualify/FALSIFIABILITY.md) to each control. Also answer for the ladder (directive s3-s4): what would Capability A and Capability B be in Crius; does native search have ANY Rung-1 path to A (prior: 0/36 runs; read the search code, do not run a large search; a small bounded probe of minutes is allowed with its command committed); distinguish 'search could not find' / 'representation cannot express' / 'world does not reward' / 'instrument would not recognise'. Output rso/gen5/crius/SELECTION.md: disposition (QUALIFIED | WORLD_DEMAND_NOT_QUALIFIED | NARROWED), tables per world, falsifiability rows, ladder answers, resources. Minutes of CPU on harry1, <= 2 processes.",
+  "non_goals": [
+    "No edit to Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/ or roles/Ananke/",
+    "No change to C-018 frozen files, RESULT.md or decision rule",
+    "Nothing run on M2",
+    "No paid compute",
+    "No large evolutionary search",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "GATE_RULE.md + predictions committed BEFORE runs",
+    "counterfactuals labelled, semantics test for the filter",
+    "condition table per world and seed",
+    "falsifiability rows",
+    "ladder answers (A, B, Rung-1 path, failure taxonomy)",
+    "SELECTION.md disposition"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/gen5/crius/"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "C-019 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: read-only selection gate"
+}

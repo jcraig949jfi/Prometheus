@@ -1,0 +1,64 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-019-T020",
+  "campaign_id": "C-019",
+  "title": "Aether post-confirmation replay audit of the 57 remaining units (directive s1, D1)",
+  "objective": "Independent native re-execution of every confirmatory unit not yet fully replayed; per-unit match/mismatch of CUT_B / CUT_N arrays; classes recomputed separately; C-018's verdict and rule untouched.",
+  "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "owner_role": "Cadmus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [],
+  "owns": [
+    "rso/aether/audit/"
+  ],
+  "reads": [
+    "rso/aether/",
+    "Aether/V2B/",
+    "ops/campaigns/C-018/"
+  ],
+  "problem": "POST-CONFIRMATION AUDIT, separate from C-018 (do not modify rso/aether/runs/, RESULT.md, FROZEN.json, any pinned file, or the decision rule; do not replace the result). Pin: rso/aether/FROZEN.json blob 9fe0fcb4 at commit 1f2d2444f (RELEASE.json) and the Aether source pin it names; record both in the audit. Already fully replayed (read their records): the six preregistered sample units RX 8192, 8204, 8216, 8228 and V1 8192, 8200 (rso/aether/runs/meta/analyse_full.out, full_replay_verified) and the integrator's RX 8201 (ops/campaigns/C-018/tasks/C-018-T050/TASK.json history: arrays_sha256 567d483e...). Re-execute the remaining 57 units (64 - 7) with their exact recorded inputs (law, seed, n, warm, H from each unit's committed meta JSON) through the pinned native path (rso.aether.adapter.native_unit, which calls Aether's own law_step / run_unit; the same call `confirm analyse` uses for its sample). For each unit compare the regenerated arrays (arrays_sha256 AND each of CUT_B / CUT_N first-divergence arrays) and the meta fields tree / B / N / origin / warm_digest against the committed evidence; record MATCH or MISMATCH with both digests. Then recompute every unit's class from the REPLAYED arrays with the frozen evaluator (rso.aether.evaluate, imported read-only) and tabulate it beside the committed class; recompute the RX/V1 dispositions from replayed evidence as a SEPARATE table labelled post-confirmation. Outcomes (directive s1): all MATCH -> 'the committed clamp evidence is reproducible under the pinned native execution implementation'; this closes the R1c missing-replay exposure within that trust boundary and does NOT prove the native transition physics correct. Any MISMATCH -> preserve the C-018 verdict, issue a QUALIFICATION WARNING, and state whether the mismatch changes any CONFIRMED / NOT_INTERVENTIONAL class or the RX disposition. Never repair evidence. Execution: ~65 s/unit, about 1 core-hour; NO new native seeds; harry1 CPU, at most two DETACHED OS processes (PowerShell Start-Process, logs redirected, PID recorded) writing one JSON per unit under rso/aether/audit/replay/ so a restart resumes; poll with short foreground checks. Commit the script, per-unit records, AUDIT.md (pins, method, table, outcome sentence, CPU used) and the command lines.",
+  "non_goals": [
+    "No edit to Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/ or roles/Ananke/",
+    "No change to C-018 frozen files, RESULT.md or decision rule",
+    "Nothing run on M2",
+    "No paid compute",
+    "No large evolutionary search",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "pins recorded",
+    "57 per-unit replay records",
+    "match/mismatch table with digests",
+    "classes recomputed separately",
+    "AUDIT.md with the outcome sentence",
+    "CPU used"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/aether/audit/"
+  ],
+  "kind": "document",
+  "status": "READY",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "C-019 open"
+    },
+    {
+      "status": "READY",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "READY"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-sonnet-5-5",
+  "red_required": false,
+  "notes": "red_required false: re-execution audit of committed evidence"
+}

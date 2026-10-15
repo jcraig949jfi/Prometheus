@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.workgraph.campaign.v1",
+  "campaign_id": "C-019",
+  "thread_id": "TH-RSO-BUILD",
+  "epic_id": "EP-PHASE3",
+  "label": "RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "title": "Observatory generation 5: from mechanism attribution to cumulative discovery (Aether replay audit, Ananke/Crius selection gates, acquisition-to-composition assay, adversarial kit)",
+  "objective": "Directive s12 completion items 1-10: Aether post-confirmation replay audit with a bounded result; replay erratum; explicit selection disposition for Ananke and Crius; one selected or both rejected; deterministic adversarial kit tested; any selected assay frozen with controls; independent Q3 challenge or its missing qualification recorded; bounded native pilot if qualification permits; limitations preserved; closeout naming the next decisive experiment.",
+  "coordinator_role": "Palamedes",
+  "members": [
+    "Palamedes",
+    "Argus",
+    "Cadmus",
+    "Eupalamus",
+    "Pallas"
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "predecessor": "C-018",
+  "quality_classes": {
+    "Q1": {
+      "description": "low-ambiguity / mechanical: CI wiring, manifests, schemas following a settled design, repetitive fixtures, generated docs, deterministic wrappers, simple adapters, mechanical refactors under strong tests",
+      "rank": 1,
+      "default_model": "claude-sonnet-5-5",
+      "escalate_to": "Q2"
+    },
+    "Q2": {
+      "description": "substantial engineering: subsystem design inside a frozen contract, complex TDD, state machines, evidence graphs, runtime adapters, reset/restart machinery, integration, complex debugging",
+      "rank": 2,
+      "default_model": "claude-opus-5-5",
+      "escalate_to": "Q3"
+    },
+    "Q3": {
+      "description": "scarce deep reasoning / adversarial: adversarial test design, epistemic ambiguity, counterfeit construction, cross-physics abstraction attacks, difficult first-sight review, failures that survived strong Q2 attempts",
+      "rank": 3,
+      "default_model": "claude-fable-5-1",
+      "escalate_to": "operator"
+    }
+  },
+  "satisfied_states": [
+    "INTEGRATED",
+    "CLOSED"
+  ],
+  "window_end_utc": "2026-10-18T08:30:00Z",
+  "caps": {
+    "cloud_usd": 0,
+    "gpu_hours_paid": 0,
+    "local_compute": "local fleet only; harry1 CPU preferred; do not reserve the M2 GPU; no large evolutionary search; any longer run proposed separately (directive s11)",
+    "isolation": "Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/, roles/Ananke/ read-only; Ananke owns its native search physics and FLIP experiments (coordination required before any experiment that could duplicate or interfere); Crius seat not reopened (Cadmus = temporary read-only compatibility steward); nothing run on M2; pinned SHAs; no change to C-018 frozen files or its decision rule"
+  },
+  "created_by": "Palamedes[harry1-679179c6]",
+  "created_at_utc": "2026-10-15T09:05:20Z"
+}

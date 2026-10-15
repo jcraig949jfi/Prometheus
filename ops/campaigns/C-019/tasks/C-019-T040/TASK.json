@@ -1,0 +1,56 @@
+{
+  "schema": "prometheus.workgraph.task.v1",
+  "task_id": "C-019-T040",
+  "campaign_id": "C-019",
+  "title": "Gen-5 native evidence adapter + acquisition-to-composition assay + preregistration + freeze",
+  "objective": "The smallest adapter for the selected substrate's ladder; completeness, custody, falsifiability and the adversarial kit applied; known-answer calibration; frozen search comparison.",
+  "parent_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "owner_role": "Argus",
+  "quality_class": "Q2",
+  "can_downgrade": false,
+  "escalate_to": "Q3",
+  "depends_on": [
+    "C-019-T030",
+    "C-019-T011"
+  ],
+  "owns": [
+    "rso/gen5/assay/"
+  ],
+  "reads": [
+    "rso/"
+  ],
+  "problem": "Per rso/gen5/SELECTION.md (decision written into this field at T030 integration).",
+  "non_goals": [
+    "No edit to Aether/, roles/Aether/, crius/, roles/Crius/, prometheus/ananke/ or roles/Ananke/",
+    "No change to C-018 frozen files, RESULT.md or decision rule",
+    "Nothing run on M2",
+    "No paid compute",
+    "No large evolutionary search",
+    "No edit in another seat's lane"
+  ],
+  "evidence_required": [
+    "RED first",
+    "adapter + controls + PREREGISTRATION + FREEZE",
+    "known-answer calibration",
+    "adversarial kit run",
+    "ONBOARDING.md"
+  ],
+  "acceptance": {
+    "condition": "all evidence_required items; committed with source references"
+  },
+  "deliverables": [
+    "rso/gen5/assay/"
+  ],
+  "kind": "software",
+  "status": "PROPOSED",
+  "history": [
+    {
+      "status": "PROPOSED",
+      "by": "Palamedes[harry1-679179c6]",
+      "at_utc": "2026-10-15T09:05:20Z",
+      "note": "C-019 open"
+    }
+  ],
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md)",
+  "preferred_model": "claude-opus-5-5"
+}
