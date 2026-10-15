@@ -3,20 +3,20 @@
   "seat": "Cadmus",
   "mwo_id": "MWO-0004",
   "authority": "operator directive 2026-10-03 (roles/Achilles/prompts/2026-10-03_rso_builder_cell/01_OPERATOR_DIRECTIVE_verbatim.md); M1 drain exclusion: roles/Aporia/prompts/2026-10-03_m1_drain_amendment_cadmus/",
-  "updated_at_utc": "2026-10-11T12:00:00Z",
+  "updated_at_utc": "2026-10-15T10:50:00Z",
   "state": "READY",
-  "branch": "cadmus/c016-t021",
-  "head_sha": "fb8a00de125b3cadcbd5d511378d7bde72315d15",
-  "base_sha": "6f57aa7c6",
-  "worktree_path": "C:/Prometheus-worktrees/cadmus-c016",
+  "branch": "cadmus/c019",
+  "head_sha": "4c5163aa62b8f175c3c01f2ddcf0b768129adf48",
+  "base_sha": "efe7bddc7",
+  "worktree_path": "C:/Prometheus-worktrees/cadmus-c019",
   "state_worktree_path": "F:/Prometheus-worktrees/cadmus-ops (detached at origin/main, state commits only)",
   "model": "claude-sonnet-5-5",
   "capability_class": "Q2",
   "host": "harry1",
-  "instance": "harry1-abbe9ede",
+  "instance": "harry1-c619844e",
   "session_start_utc": "2026-10-03T11:25:00Z (comms boot record; harness session start UNKNOWN)",
-  "current_objective": "C-016 RSO-NATIVE-ENGINE-2-ENSORAIN",
-  "current_step": "C-016-T020 and C-016-T021 INTEGRATION_READY (rso/ensorain/COMPATIBILITY.md; rso/z80/CONTRACT.md + smoke)",
+  "current_objective": "C-019 RSO-GEN5-CUMULATIVE-DISCOVERY",
+  "current_step": "C-019-T020 (57/57 MATCH) and C-019-T021 (WORLD_DEMAND_NOT_QUALIFIED, 4/5) INTEGRATION_READY",
   "in_flight": [],
   "finish_condition": "per claimed packet (DISTRIBUTED_WORK.md)",
   "next_expected_milestone": "T023A integrated and records registered (Palamedes -> Aporia); T020 matrix run",
@@ -26,18 +26,19 @@
   ],
   "campaigns": [
     "C-013",
-    "C-016"
+    "C-016",
+    "C-019"
   ],
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "no READY task; poll workgraph ready Cadmus; await integration of T020/T021"
+    "no READY task; poll workgraph ready Cadmus; await integration of C-019-T020/T021"
   ],
   "operator_decisions_required": [],
-  "last_push_sha": "fb8a00de1 (branch cadmus/c004-t023a)",
-  "last_push_utc": "2026-10-04T13:31Z",
+  "last_push_sha": "4c5163aa6 (branch cadmus/c019)",
+  "last_push_utc": "2026-10-15T10:45Z",
   "latest_reports": [
     "ops/campaigns/C-016/tasks/C-016-T020/attempts/A-001/RECEIPT.json",
     "ops/campaigns/C-016/tasks/C-016-T021/attempts/A-001/RECEIPT.json"
