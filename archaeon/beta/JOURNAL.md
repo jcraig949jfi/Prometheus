@@ -1113,6 +1113,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   converge on one pool and deplete it -- nearly zero-sum. For communication to pay the group it must COORDINATE (e.g.
   direct listeners to pools the scout is not using). Next: a coordination ladder (signal = a pool the scout is NOT
   harvesting) before any evolution run.
+- B93 RESULT (coordination signal: scout harvests richest i, signals (i+1) mod 3): group .274 vs SILENT .266; scout
+  .490. Both predictions FAILED. Reason: the world is REGENERATION-LIMITED (fixed regen .247/tick caps the group
+  total), so any information only redistributes; the signal also lags a tick under rotating order.
+- B93b RESULT (NON-RIVAL world: static pools, deplete = regen = 0; prediction committed before the run, fa1629aa6):
+  SCOUT+3L 1.000 x 4 (mean 1.000) vs SILENT+3L 1.000/.869/.869/.869 (mean .902). Both predictions MET: the signal pays
+  the group +.10 and costs the scout nothing. Headroom is modest (blind baseline .869). This is the first world in the
+  campaign where honest signalling is free and valuable.
+  NEXT: B94 -- does INFORMATIVE signalling evolve under INDIVIDUAL vs SHARED (group-mean) reward? Readout: listener
+  signal-word ablation drop, plus scout signal = richest index accuracy. Stage for window 10.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
