@@ -1,0 +1,158 @@
+==========================================================================================
+ARCHAEON PHASE 2-B SFE BETA -- REVIEW PACKET: FINDING 5 (COMMUNICATION DOES NOT EVOLVE)
+probes B92-B97b | 2026-10-15 | branch archaeon/p2b-sfe-2026-10-06 | host M2/spectrex5
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+0. SUMMARY FOR THE HURRIED REVIEWER
+------------------------------------------------------------------------------------------
+VERDICT: in this search (Proteus v0 VM, CMP3 GA), an honest signalling system does NOT evolve or re-establish.
+- It fails from random gen 0, and from one instruction or one word away from full communication.
+- It fails under both individual and shared (group-mean) reward.
+- It fails in a world built so that signalling is free for the signaller and valuable for the group.
+
+MECHANISM (measured, not assumed):
+- the selection coefficient of a restored signaller is s ~ .02-.05;
+- a clean one-word restore arises in ~1e-4 of offspring;
+- the unused listener half decays by neutral drift.
+Expected establishments per run << 1. The barrier is QUANTITATIVE (supply x selection vs decay), not principled.
+
+KILLED along the way:
+- a zero-sum world as a test bed (B92/B93);
+- 'dilution by a rotating scout' as the mechanism (B96b: fixing the scout only concentrates s, it does not raise it);
+- 'decay alone' (B96: listener immigration does not help).
+
+------------------------------------------------------------------------------------------
+1. PROVENANCE / INSTRUMENT
+------------------------------------------------------------------------------------------
+World
+- The B71 minimal procedural ecology (R=3 pools, K=4 channels; channel 3 writes the C6 shared signal word), NoClock,
+  LOCALITY OFF.
+- Concurrent 4-groups (B60 scheme). INFORMATION ASYMMETRY: only the scout sees the pool words; the others see them
+  zeroed; all see the signal.
+- B92/B93: regenerating pools (deplete .489, regen .247).
+- B93b-B96: STATIC pools (deplete = regen = 0; values 1.0-1.75).
+- B97: static pools rescaled to 0.1-3.1 once per shared pool list (verified; a wrapper-order bug that would have bypassed
+  it was caught before running).
+
+Hand programs (B92 / B95)
+- SCOUT: argmax of the 3 pool words, harvest, signal index+1.
+- SILENT: the same, without the signal.
+- LISTENER: harvest signal-1, default pool 0.
+- BLIND: pool 0.
+- COMPLETE: scout-if-visible + listen-if-not.
+- MUTE: COMPLETE with the signal OUT zeroed.
+- MUTE_OP: only the OUT opcode word NOPed (one-word restore).
+
+Readout on the best final genome X
+- SIGNALS: hand listeners' gain when X scouts, vs a SILENT scout.
+- LISTENS: X's gain as listener with a hand SCOUT, vs SILENT.
+- SELF: 4 copies of X with a rotating scout.
+
+------------------------------------------------------------------------------------------
+2. PREREGISTRATION CHAIN (prediction committed before the run unless stated)
+------------------------------------------------------------------------------------------
+  B92   richest-pool signal pays the group >= .02          c9437a7e0   FAILED (+.008); signal costs scout MET (-.20)
+  B93   coordinating signal pays the group                 5d19a7ea1   FAILED (both parts)
+  B93b  non-rival world: signal pays >= .05, free for scout fa1629aa6  MET (+.10; scout unchanged)
+  B94   SHARED evolves signalling >= 4/6 (from random)     170d0ad72   FAILED (0/6, 0/6)
+  B95   SHARED restores >= 4/6 (MUTE, 4-word NOP)          88888c644   FAILED (0/6, 0/6); listening decays
+  B95b  same, one-word restore (MUTE_OP)                   77e833364   FAILED (0/6, 0/6)
+  B96   fixed scout / listener immigration / both          27afa4df8   FAILED (0/6 x 3)
+  B97   s >= 3x; SHARED >= 3/6; INDIVIDUAL <= 1/6          74c9a738f   FAILED. NOTE: written before s was measured but
+                                                                       committed after; the s part is NOT receipted
+                                                                       (and failed: 2.4x). Evolution parts unseen.
+  B96b / B97b  selection coefficient and mutation supply: measurements, no prediction.
+
+------------------------------------------------------------------------------------------
+3. RESULTS (exact numbers)
+------------------------------------------------------------------------------------------
+B92 (regen world)
+- SCOUT+3L .505/.234/.192/.164 (mean .274) vs SILENT+3L .708/.145/.113/.097 (mean .266).
+
+B93 (signal (i+1) mod 3)
+- Mean .274; scout .490.
+
+B93b (static world)
+- SCOUT+3L 1.000 x 4 vs SILENT+3L 1.000/.869/.869/.869.
+
+B94 (random gen 0)
+- SIGNALS 0, LISTENS 0 in all 12 runs; SELF .858-.872 (the blind level).
+
+B95 / B95b
+- SIGNALS 0 in all 24 runs; LISTENS fell from MUTE's .131 to 0.
+
+B96
+- FIXED 0/6, IMM 0/6, BOTH 0/6.
+
+B96b (selection coefficient)
+- Expected group-mean gain s = .019 in both schemes.
+- By position: rotating .022/.011/.025/.017; fixed .076/0/0/0.
+
+B97 (rescaled world)
+- Controls: COMPLETE SIGNALS .328 / SELF .995; MUTE_OP 0 / .754; BLIND .672.
+- s = .046. SHARED 0/6, INDIVIDUAL 0/6.
+
+B97b (mutation supply, 20,000 one-step children of MUTE_OP)
+- 168 decode OUT at the signal slot.
+- 2 are clean restores (1e-4); both verified to signal.
+
+------------------------------------------------------------------------------------------
+4. HOSTILE REVIEW + SELF-ATTACKS
+------------------------------------------------------------------------------------------
+A1 One world family, one VM, one search, 6 seeds per arm, G=200. 'Does not evolve' is bounded to these budgets.
+   CONCEDED.
+A2 The readout uses only the BEST final genome. A minority of signallers in the population could be missed. OPEN, but
+   with 1e-4 supply and decay the minority is expected to be tiny.
+A3 B95's 4-word NOP made 'one edit' several mutations (design flaw, mine); repaired in B95b. The negative held.
+A4 B96's 'dilution' hypothesis was conceptually wrong (mine): a fixed scout concentrates rather than raises s. Recorded
+   by the B96b measurement.
+A5 B97 receipt gap (see section 2).
+A6 The supply x selection account is an ESTIMATE (fixation chance assumed ~2s); not simulated. OPEN.
+
+------------------------------------------------------------------------------------------
+5. WHAT WAS LEARNED (shapes)
+------------------------------------------------------------------------------------------
+1. Whether information pays depends on whether the resource is RIVAL. In regeneration-limited worlds a signal only
+   redistributes.
+2. A two-sided cooperative trait (sender + receiver) is much harder for this search than a single-individual
+   structure. The keyed precursor two edits away is restored 4/8 because every part is selected in one genome. The
+   signal one word away is restored 0/24, because its benefit lands on others and its receiver half is unselected
+   when absent.
+3. The barrier is quantitative. Raising s, raising supply, or protecting the receiver half are the levers, each
+   tested alone here. None was sufficient at these magnitudes.
+
+------------------------------------------------------------------------------------------
+6. CLAIM CEILING
+------------------------------------------------------------------------------------------
+"In Proteus v0 / CMP3 at N=200, G=200, in a non-rival information world, honest signalling does not establish from
+random or from one word away, under individual or shared reward. Measured s ~ .02-.05 and clean-restore supply ~1e-4
+account for it."
+Not claimed: impossibility; other VMs, searches, larger N or G, or kin-structured populations.
+
+------------------------------------------------------------------------------------------
+7. SUCCESSOR PRESCRIPTION
+------------------------------------------------------------------------------------------
+S1 Combine all three levers at once (high-headroom world + listener immigration + higher mutation supply at the signal
+   slot).
+S2 Kin structure: groups of clones (relatedness 1). The signal then benefits copies of the signaller's own genome.
+S3 Simulate fixation directly (seed 1-5% restored mutants into MUTE_OP) to measure establishment probability rather
+   than estimate it.
+
+------------------------------------------------------------------------------------------
+8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
+------------------------------------------------------------------------------------------
+Code
+  b92_signal_ladder.py, b93_coordination_ladder.py, b93b_nonrival_ladder.py, b94_signal_evolution.py,
+  b95_signal_restore.py, b96_signal_mechanism.py, b97_signal_headroom.py
+
+Results
+  B92_result.json, B93_result.json, B93b_result.json, B94_signal_evo/, B95_signal_restore/, B96_signal_mech/
+  (incl. B96b_selection_coeff.json), B97_headroom/
+
+Commits
+  c9437a7e0, 5d19a7ea1, fa1629aa6, 170d0ad72, 88888c644, 77e833364, 27afa4df8, 74c9a738f, 85bf7f8fc
+
+Docs
+  BETA_FINDINGS.md Finding 5; JOURNAL.md B92-B97b; CAMPAIGN_UPDATE_2026-10-15.md
+==========================================================================================
