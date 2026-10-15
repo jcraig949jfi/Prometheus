@@ -2,19 +2,19 @@
   "schema": "prometheus.work_state.v1",
   "seat": "Palamedes",
   "mwo_id": "MWO-0004",
-  "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md); prior: Continuous Observatory 2026-10-11, Strategic Expansion 2026-10-10, RSO completion push 2026-10-07, builder cell 2026-10-03",
-  "updated_at_utc": "2026-10-12T19:39:10Z",
+  "authority": "operator directive OBSERVATORY GENERATION 5, 2026-10-15 (roles/Palamedes/prompts/2026-10-15_generation5/01_OPERATOR_DIRECTIVE_verbatim.md); prior: Generation 4 2026-10-12, Continuous Observatory 2026-10-11, Strategic Expansion",
+  "updated_at_utc": "2026-10-15T14:54:21Z",
   "state": "ACTIVE",
   "branch": "state commits from detached worktree C:/Prometheus-worktrees/palamedes-ops (fetch origin, checkout --detach origin/main); canonical C:/Prometheus fetch-only",
   "head_sha": "see git log origin/main",
   "model": "claude-opus-5-5",
   "host": "harry1 (M4), instance harry1-679179c6",
-  "current_objective": "IDLE between campaigns; C-018 closed; awaiting operator on Generation 5 (Crius needs a steward)",
+  "current_objective": "IDLE between campaigns; C-019 (Generation 5) closed early on the selection gate; awaiting operator / Ananke",
   "current_step": "none",
   "in_flight": [],
-  "finish_condition": "directive 2026-10-12 s16 items 1-10, or 2026-10-15T09:00Z",
-  "next_expected_milestone": "T020 SELECTION integrated -> decide P-question -> T030 Argus adapter",
-  "expected_next_artifact": "rso/aether/SELECTION.md; rso/completeness/",
+  "finish_condition": "n/a (idle)",
+  "next_expected_milestone": "Ananke reply (C5T outcome, consent) or an operator directive",
+  "expected_next_artifact": "none until authorized",
   "threads": [
     "TH-RSO-BUILD"
   ],
@@ -22,30 +22,35 @@
     "C-004": "INCOMPLETE (methods slice; rso/slice001/S5_FINAL_DISPOSITION.md)",
     "C-009": "CLOSED scoped to flat inventories (rso/binding/CLOSURE.md)",
     "C-010": "CLOSED: Gen 1 Ares witness -- instrument QUALIFIED; S4, S15 NEGATIVE; no general claim about Ares retention (rso/witness/RESULT.md)",
-    "C-013": "CLOSED early: scaling assessment, D1 under-powered null (N=15, power .49), runner, roadmap, RECOMMENDATION FINAL; Astra/Fable/Hestia reviews PENDING (rso/scale/)",
+    "C-013": "CLOSED early: scaling assessment, D1 under-powered null (N=15, power .49), runner, roadmap, RECOMMENDATION FINAL; Astra/Fable/Hestia reviews PENDING (rso/scale/) | Astra/Fable reviews NOT PERFORMED -- SUPERSEDED BY LATER EXPERIMENTAL EVIDENCE (D4, 2026-10-15)",
     "C-016": "CLOSED: Gen 2 Ensorain -- revision assay QUALIFIED; planted reference REVISION_HISTORY_DEPENDENT; searched 1 of 8 testable (K1-only); retention not demanded (rso/ensorain/RESULT.md, INTEGRATION.md, ops/campaigns/C-016/CLOSEOUT.md)",
     "C-017": "CLOSED: Gen 3 Z80 Atlas -- attribution ATTRIBUTION_QUALIFIED 273/274, forgeries 48/48; reproduction of function, not endogenous heredity, demanded; T042 re-check MIXED-MODEL (fable->opus-4-8 refusal fallback), not a full genuine-Q3 re-check; analyzer accepted 5/6 shards (rso/z80/RESULT.md, INTEGRATION.md, ops/campaigns/C-017/CLOSEOUT.md)",
-    "C-018": "CLOSED: Gen 4 Aether -- RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT; V1 unevaluable; P4 unsupported; review packet rso/scale/review/GEN4_REVIEW_PACKET.md"
+    "C-018": "CLOSED: Gen 4 Aether -- RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT; V1 unevaluable; P4 unsupported; review packet rso/scale/review/GEN4_REVIEW_PACKET.md",
+    "C-019": "CLOSED early (selection gate): Aether audit 57/57 MATCH; no Gen-5 substrate selected (Crius WORLD_DEMAND_NOT_QUALIFIED + DISCOVERY_INACCESSIBLE; Ananke owner unavailable, C5T pending, power unmet); adversarial kit; Ananke read-only evaluator + prereg DRAFT"
   },
   "experiments": [],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Generation 5 only on operator authority",
-    "hourly idle check"
+    "hourly idle check: comms (Ananke #2249/#2259 replies), notify",
+    "nothing native without the owner; Generation 6 / calibration stage only on operator authority"
   ],
   "operator_decisions_required": [
-    "Astra / Fable external reviews of C-013 packets (rso/scale/review/) not yet performed",
-    "Generation 5 campaign needs separate authority"
+    "Ananke parts-suitability ladder: owner sign-off + budget-calibration stage (~26 GPU-h, owner M1 GPU) -- rso/gen5/ananke/eval/PREREG_DRAFT_PARTS_SUITABILITY.md",
+    "external review of rso/scale/review/GEN5_EXTERNAL_REVIEW_PACKET.md (operator sends)",
+    "Crius: no further work without a new charter"
   ],
   "latest_reports": [
+    "ops/campaigns/C-019/CLOSEOUT.md",
+    "rso/scale/review/GEN5_EXTERNAL_REVIEW_PACKET.md",
+    "rso/gen5/SELECTION.md",
+    "rso/aether/audit/AUDIT.md",
     "rso/scale/review/GEN4_REVIEW_PACKET.md",
     "ops/campaigns/C-018/CLOSEOUT.md",
     "ops/campaigns/C-017/CLOSEOUT.md",
     "ops/campaigns/C-016/CLOSEOUT.md",
-    "rso/z80/ONBOARDING.md (three-engine comparison)",
-    "rso/scale/RECOMMENDATION.md"
+    "rso/z80/ONBOARDING.md (three-engine comparison)"
   ],
   "practices": [
     "gate every push on python -m workgraph validate exit 0; verify with git merge-base --is-ancestor",
@@ -56,6 +61,58 @@
   ],
   "current_focus": "IDLE",
   "previous_states": [
+    {
+      "schema": "prometheus.work_state.v1",
+      "seat": "Palamedes",
+      "mwo_id": "MWO-0004",
+      "authority": "operator directive OBSERVATORY GENERATION 4, 2026-10-12 (roles/Palamedes/prompts/2026-10-12_generation4/01_OPERATOR_DIRECTIVE_verbatim.md); prior: Continuous Observatory 2026-10-11, Strategic Expansion 2026-10-10, RSO completion push 2026-10-07, builder cell 2026-10-03",
+      "updated_at_utc": "2026-10-12T19:39:10Z",
+      "state": "ACTIVE",
+      "branch": "state commits from detached worktree C:/Prometheus-worktrees/palamedes-ops (fetch origin, checkout --detach origin/main); canonical C:/Prometheus fetch-only",
+      "head_sha": "see git log origin/main",
+      "model": "claude-opus-5-5",
+      "host": "harry1 (M4), instance harry1-679179c6",
+      "current_objective": "IDLE between campaigns; C-018 closed; awaiting operator on Generation 5 (Crius needs a steward)",
+      "current_step": "none",
+      "in_flight": [],
+      "finish_condition": "directive 2026-10-12 s16 items 1-10, or 2026-10-15T09:00Z",
+      "next_expected_milestone": "T020 SELECTION integrated -> decide P-question -> T030 Argus adapter",
+      "expected_next_artifact": "rso/aether/SELECTION.md; rso/completeness/",
+      "threads": [
+        "TH-RSO-BUILD"
+      ],
+      "campaigns": {
+        "C-004": "INCOMPLETE (methods slice; rso/slice001/S5_FINAL_DISPOSITION.md)",
+        "C-009": "CLOSED scoped to flat inventories (rso/binding/CLOSURE.md)",
+        "C-010": "CLOSED: Gen 1 Ares witness -- instrument QUALIFIED; S4, S15 NEGATIVE; no general claim about Ares retention (rso/witness/RESULT.md)",
+        "C-013": "CLOSED early: scaling assessment, D1 under-powered null (N=15, power .49), runner, roadmap, RECOMMENDATION FINAL; Astra/Fable/Hestia reviews PENDING (rso/scale/) | Astra/Fable reviews NOT PERFORMED -- SUPERSEDED BY LATER EXPERIMENTAL EVIDENCE (D4, 2026-10-15)",
+        "C-016": "CLOSED: Gen 2 Ensorain -- revision assay QUALIFIED; planted reference REVISION_HISTORY_DEPENDENT; searched 1 of 8 testable (K1-only); retention not demanded (rso/ensorain/RESULT.md, INTEGRATION.md, ops/campaigns/C-016/CLOSEOUT.md)",
+        "C-017": "CLOSED: Gen 3 Z80 Atlas -- attribution ATTRIBUTION_QUALIFIED 273/274, forgeries 48/48; reproduction of function, not endogenous heredity, demanded; T042 re-check MIXED-MODEL (fable->opus-4-8 refusal fallback), not a full genuine-Q3 re-check; analyzer accepted 5/6 shards (rso/z80/RESULT.md, INTEGRATION.md, ops/campaigns/C-017/CLOSEOUT.md)",
+        "C-018": "CLOSED: Gen 4 Aether -- RX CAUSAL_PROPAGATION_WITHOUT_RECOVERABLE_CONTENT; V1 unevaluable; P4 unsupported; review packet rso/scale/review/GEN4_REVIEW_PACKET.md",
+        "C-019": "CLOSED early (selection gate): Aether audit 57/57 MATCH; no Gen-5 substrate selected (Crius WORLD_DEMAND_NOT_QUALIFIED + DISCOVERY_INACCESSIBLE; Ananke owner unavailable, C5T pending, power unmet); adversarial kit; Ananke read-only evaluator + prereg DRAFT"
+      },
+      "experiments": [],
+      "fabric_tasks": [],
+      "running": [],
+      "blocked_on": [],
+      "next_actions": [
+        "Generation 5 only on operator authority",
+        "hourly idle check"
+      ],
+      "operator_decisions_required": [
+        "Astra / Fable external reviews of C-013 packets (rso/scale/review/) not yet performed",
+        "Generation 5 campaign needs separate authority"
+      ],
+      "latest_reports": [
+        "rso/scale/review/GEN4_REVIEW_PACKET.md",
+        "ops/campaigns/C-018/CLOSEOUT.md",
+        "ops/campaigns/C-017/CLOSEOUT.md",
+        "ops/campaigns/C-016/CLOSEOUT.md",
+        "rso/z80/ONBOARDING.md (three-engine comparison)",
+        "rso/scale/RECOMMENDATION.md"
+      ],
+      "current_focus": "IDLE"
+    },
     {
       "schema": "prometheus.work_state.v1",
       "seat": "Palamedes",
