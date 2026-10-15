@@ -175,6 +175,20 @@ clock.
    met.
 8. **Limits.** C6-generator worlds only; one VM and one search; no cooperation or communication (signal unused).
 
+## Finding 5 -- communication does not evolve in this search, even one word away (B92-B95b)
+
+1. **Regeneration-limited worlds are zero-sum for information (B92/B93).** A scout's signal only redistributes reward
+   (group +.008) and costs the scout ~.2.
+2. **A non-rival world makes honest signalling free and valuable (B93b).** With static pools, a hand scout lifts three
+   blind listeners .869 -> 1.000 at zero cost to itself.
+3. **No signalling evolves (B94).** From random gen 0 it is 0/6 under both individual and SHARED (group-mean) reward;
+   genomes do not even scout.
+4. **Even one word from full communication, the signal is not restored (B95/B95b).** It stays 0/6 under both rewards,
+   and the listener half DECAYS when no one signals.
+5. **Mechanism (reading).** Two-sided coupling; selection on a signal mutant is weak and diluted (a rotating scout
+   signals in 2/8 episodes), while the complementary half is neutral and drifts away. This is unlike single-individual
+   structures such as the keyed precursor, where every part is under selection.
+
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
 | claim | what happened |

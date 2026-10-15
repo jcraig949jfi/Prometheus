@@ -1136,6 +1136,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   DESIGN FLAW (mine): MUTE zeroed all 4 words of the signal OUT, so 'one edit' needed several coordinated word
   mutations. Repaired as B95b: MUTE_OP NOPs only the opcode word; verified MUTE_OP = MUTE (0/.131/.902) and a ONE-word
   change restores COMPLETE (.131/.131/.998). Same prediction, new seeds 9511-9516, committed before the run.
+- B95b RESULT (09:31Z; lease lse-5a18deb8f755 RELEASED; ~1 core-h): one-WORD restore precursor. Signal restored SHARED
+  0/6, INDIVIDUAL 0/6; listening lost in every population. PREDICTION FAILED.
+  READING (communication lane, B92-B95b): in this search, signalling does NOT evolve -- not from scratch (B94), and not
+  one word away (B95b), under either individual or SHARED reward. The listener half DECAYS whenever it is unused, so a
+  restoring signal mutation finds no listeners. With a rotating scout, a signalling mutant helps only 2/8 episodes
+  (~+.025 on its group mean) while listening drifts away. Two-sided coupling + weak, diluted selection + decay of the
+  unused half. Contrast: the keyed d2 precursor (B86) is restored 4/8 because every one of its parts is under
+  selection in the same individual. LANE PARKED as a clean negative.
+  WINDOW 9 TALLY: ~36 + B92/B93 evals ~.2 + B94 ~1 + B95 ~1 + B95b ~1 = ~39 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
