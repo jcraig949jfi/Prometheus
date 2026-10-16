@@ -1340,6 +1340,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   not the hand convention (a gate blind spot: predicate 'hand listener gains', direction misses private codes).
 - B112 PREREGISTERED (committed before running): same design as B111, NEW seeds 11201-11206; readout FIXED IN ADVANCE
   = self-ablation drop > .05; controls COMPLETE / MUTE_OP re-scored every run. PREDICTION: communicating >= 2/6.
+- B113 DECODE (descriptive, single process, b113_decode_private.py + ad hoc sequence trace) of the B111 private codes:
+  11101 (and 11105, identical signal table): the scout writes POOL 0's RAW MAGNITUDE (sig == p0 in 64/64 held-out
+  episodes); listeners COPY the signal word into their action. The world maps action -> pool as action % R (R=3,
+  runtime.py:144), and the static rescaled pools take values {100,1100,2100,3000} whose residues mod 3 are {1,2,0,0}.
+  So: p0 high -> listeners go to pool 0 (correct); p0 low -> pool 1 or 2. ~1 bit about the richest pool, consistent
+  with the ablation drop (.11 vs .24 for the hand richest+1 code). 11104: the same code through bitwise NOT
+  (~p0 = 2^32-1-p0 == -p0 mod 3; the low residues are permuted).
+  READING: real causal information transfer (scout observation -> word -> listener behaviour -> reward), but the code
+  exploits a world ENCODING coincidence (mod-R action decoding x the pool-value lattice). It is a convention that
+  would not port to a world with another value lattice. CAVEAT for any 'communication from scratch' claim: name the
+  code (copy-and-hash), not just 'communicates'. Next control for B112: a NO-LATTICE world (pool values jittered off
+  the 1000-grid) -- does the from-scratch route still find a code when copy-and-hash carries no information?
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
