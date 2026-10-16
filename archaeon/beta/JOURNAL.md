@@ -1321,6 +1321,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   restore supply (B108b) and listener decay (B109) are all equal. Unmeasured candidates: world 2's higher MUTE5 baseline
   (.806 vs .754, so less headroom per signal) and lower listener value (.259 vs .328). PARKED as an open, well-bounded
   question (diminishing returns).
+- B110 RESULT (13:43Z; lease lse-b1cfebd0448f RELEASED; ~3 core-h): KIN route in WORLD 2 (clonal groups, normal load,
+  E=8). SEEDED keeps signalling 4/4 (top-10 signalling 10/10/10/10); MUTE restores 1/4 (SIGNALS .179, 10/10 of the top
+  10); two MUTE runs evolved MISLEADING signals (-.08, -.15). PREDICTION (SEEDED >= 3/4, MUTE >= 1/4) MET -- identical to
+  world 1 (B106b: 4/4, 1/4).
+  VERDICT: the KIN route is ENSEMBLE-INVARIANT across the two worlds tested (holding 8/8, restoring 2/8 pooled). The
+  group-reward + low-load route replicates in direction (8/24 vs 0/18) but its rate is world-dependent.
+  WINDOW 10 TALLY: ~28.5 + ~3 = ~31.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

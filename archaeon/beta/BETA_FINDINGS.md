@@ -211,6 +211,8 @@ clock.
    **Kin route (B106b):** in clonal groups at NORMAL mutation load, seeded signallers persist 4/4 (vs 0/4 in random
    groups) and the signal re-evolves from one word away 1/4 (vs 0/12). Kin selection raises the selection on the
    signal (~.22) past the error threshold. (B106 at E=4 was an instrument failure: zero signal value in training.)
+   **World 2 (B110):** the kin route replicates exactly -- seeded signallers persist 4/4 and the signal re-evolves 1/4.
+   The kin route is ensemble-invariant across the two worlds tested.
    **Second world (B107/B107b/B108):** SHARED 1/12 vs INDIVIDUAL 0/6 in world 2. The direction replicates (pooled 8/24 vs
    0/18). The RATE is world-dependent: world 1 7/12 vs world 2 1/12, Fisher one-sided p ~ .015. Seeded signallers hold
    4/4 and restore supply is equal in world 2, so the difference lies in the signal ARISING (unexplained).
