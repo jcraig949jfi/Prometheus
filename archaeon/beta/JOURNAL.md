@@ -1428,7 +1428,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   training set (more episodes) could change the landscape. WINDOW 10 TALLY ~46 of 48 (window 11 from ~00:30Z).
   COMMUNICATION LANE STATUS: the from-scratch question is CLOSED negative for this substrate (group 0/12, kin
   off-lattice 0/5, proto-code static). Remaining open: the world-1 vs world-2 group-reward rate gap (parked).
-- OPEN-QUESTION TRIAGE (~20:35Z): BETA_FINDINGS Q2 (self-modifying code: systematic or accident?) is ANSWERED by
+- OPEN-QUESTION TRIAGE (~20:00Z): BETA_FINDINGS Q2 (self-modifying code: systematic or accident?) is ANSWERED by
   B52 0/8 + B58 0/16 (rare accident) -- list was stale; updated. Picked Q1 for window 11.
 - B117 STAGED (prereg committed before running; launch when window 11 opens ~00:30Z, 8 procs): ORDER-FREE read.
   L3o VM: r0 = the tick's tag at tick start, so the solution is LDK rY, r0; OUT rY (= L2 + one register coupling,
