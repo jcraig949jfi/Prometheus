@@ -9,6 +9,9 @@ World-5 programs: COMPLETE5 / MUTE5 / LISTENER5 read one extra word (the cell) b
 Arms: gen 0 = 200 x MUTE5; rotating scout; CMP3 N=200 E=8 G=300; c=.85; SHARED vs INDIVIDUAL; seeds 10701-10706.
 Readout: the best genome's SIGNALS (world-5 readouts) minus the best constant-signal twin; informative = margin > .05.
 PREDICTION (committed before running): SHARED informative >= 2/6 AND INDIVIDUAL <= 1/6.
+B107 RESULT: SHARED 1/6, INDIVIDUAL 0/6 (FAILED on SHARED). B107b (argv[2]=b): 6 more SHARED seeds (10711-10716).
+PREDICTION (committed before the B107b run): the new seeds give SHARED >= 1/6, AND the pooled world-2 SHARED rate (12 runs)
+is not significantly below world 1 (7/12; Fisher one-sided p > .05).
 """
 import copy
 import json
@@ -118,19 +121,20 @@ def main(argv):
         return 0
     const = max(ctl["const"].values()); rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 12) as ex:
-        futs = {ex.submit(cell, {"arm": a, "seed": 10701 + i, "G": int(argv[0]) if argv else 300, "const": const}): (a, i) for a in ("SHARED", "INDIVIDUAL") for i in range(6)}
+        b = len(argv) > 2 and argv[2] == "b"; base = 10711 if b else 10701; arms = ("SHARED",) if b else ("SHARED", "INDIVIDUAL")
+        futs = {ex.submit(cell, {"arm": a, "seed": base + i, "G": int(argv[0]) if argv else 300, "const": const}): (a, i) for a in arms for i in range(6)}
         for fu in as_completed(futs):
             try:
                 r = fu.result()
             except Exception as e:                    # noqa: BLE001
                 a, i = futs[fu]; r = {"arm": a, "seed": 10701 + i, "error": repr(e)[:300]}
             rows.append(r); print(json.dumps(r), flush=True)
-            with open(OUT / "B107_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B107b_cells.jsonl" if b else "B107_cells.jsonl"), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(r) + chr(10))
-    summ = {a: sum(r.get("informative", False) for r in rows if r.get("arm") == a) for a in ("SHARED", "INDIVIDUAL")}
-    summ["pred"] = summ["SHARED"] >= 2 and summ["INDIVIDUAL"] <= 1
+    summ = {a: sum(r.get("informative", False) for r in rows if r.get("arm") == a) for a in arms}
+    summ["pred"] = (summ["SHARED"] >= 1) if b else (summ["SHARED"] >= 2 and summ["INDIVIDUAL"] <= 1)
     print(json.dumps(summ))
-    (OUT / "B107_result.json").write_text(json.dumps({"probe": "B107", "controls": ctl, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B107b_result.json" if b else "B107_result.json")).write_text(json.dumps({"probe": "B107", "controls": ctl, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 
