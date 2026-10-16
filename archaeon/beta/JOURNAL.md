@@ -1246,6 +1246,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   below the threshold, not even scouting (argmax of 3 words) is reached within G=300 -- the distance wall again (the
   scout + listener code is many coupled instructions from random). Finding 5 claim ceiling stands: from a one-word
   precursor.
+- B104 final: INDIVIDUAL 0/6 too (12/12 null). Lease released (699fe0c74).
+- B105 RESULT (04:54Z; lease lse-a5351a813adb RELEASED; ~2.5 core-h): graded communication distance at c=.85, SHARED.
+  Informative (margin vs constant twin > .05): W1 (1 opcode word) 3/6, W2 (2 words) 1/6, W3 (3 words) 2/6; one W1 run
+  evolved a MISLEADING signal (-.25). PREDICTION: W1 >= 2/6 MET; monotone FAILED (W3 > W2); W3 <= 1/6 FAILED.
+  READING: unlike the keyed class (reach 9/16 -> 0/32 over 2-6 INSTRUCTIONS), communication reach is roughly FLAT over
+  1-3 opcode WORDS (6/18 overall). Plausibly, below the threshold an informative signal arises through SEVERAL
+  alternative code paths (any register/OUT route carrying the argmax), so the exact removed words need not be
+  restored. Caveat: different distance units (words vs instructions); n = 6 per arm.
+  WINDOW 10 TALLY: ~15 + B105 ~2.5 = ~17.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

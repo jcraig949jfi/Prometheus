@@ -205,6 +205,9 @@ clock.
    clone fraction .85, an informative signal re-evolves under SHARED reward in 7/12 runs and 0/12 under individual
    reward (p ~ .002). The evolved signals beat the best constant-signal twin by +.05 to +.29 (B103c). This is the
    textbook result: an honest signal that helps only others needs group-level selection.
+   **Bounds (B104/B105):** from random gen 0 nothing evolves even below the threshold (0/12). From precursors 1/2/3
+   opcode words away it re-evolves 3/6, 1/6, 2/6 -- roughly flat in word distance (unlike keyed memory), consistent
+   with multiple alternative signalling code paths.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
