@@ -1211,6 +1211,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   the mutation load does NOT move the keyed d6 wall. The error-threshold mechanism that explains communication (B99) does
   NOT extend to keyed memory at d6; that wall is distance (B87-B90), as concluded. The cross-lane hypothesis in comms
   #2256 is not supported for keyed d6 (B102 still tests it for RESET).
+- B102 RESULT (01:35Z; lease lse-0a2b8ddb4a7b RELEASED; window-10 tally ~B101 2.5 + B102 6 = ~8.5 of 48): RESET from
+  random gen 0 at c=0.8 (B75 world) -> 0/8 RESET-like populations; best rewards .024-.034. PREDICTION (>= 2/8) FAILED.
+  VERDICT on the B99 cross-lane hypothesis (comms #2256): NOT SUPPORTED for memory. Lowering the mutation load
+  rescues COMMUNICATION (seeded signallers sweep, B99) but moves neither the keyed d6 wall (B100+B101 pooled 1/28 vs
+  0/32) nor the RESET-from-random wall (0/8 vs 0/12). The memory walls are DISTANCE walls (as B75-B90 concluded); the
+  communication wall is an ERROR-THRESHOLD wall. Different mechanisms. Correction to post: comms #2256's implication
+  is withdrawn for memory.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

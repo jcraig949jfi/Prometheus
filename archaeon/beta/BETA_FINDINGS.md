@@ -199,6 +199,8 @@ clock.
    **Causal test (B99):** making a fraction of offspring exact clones (break rate ~.31 -> ~.06) turns extinction into
    a SWEEP. Seeded signallers persist in 0/4 runs at c=0 vs 4/4 at c=0.8 and c=0.95, with 10/10 of the top 10
    signalling. The barrier to communication here is the error threshold of the search's mutation operator.
+   **Scope (B100-B102):** the same lever does NOT move the memory walls -- keyed d6 1/28 at low load (vs 0/32) and
+   RESET from random 0/8 (vs 0/12). Communication is error-threshold-limited; memory is distance-limited.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
