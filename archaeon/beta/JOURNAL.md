@@ -1394,6 +1394,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   information only in the lattice world); 11106 evolved a hash code plus strong dependence.
   Repair: the constant set was the first 12 sorted values; now <= 24 spread over the emitted range (before B112-NL scoring).
   Lease: B111 done; lse-a62fa7828a8d now covers B112-NL (6 procs) only.
+- 18:02Z KIN-RESTORE LATTICE CHECK (no compute): B106b's signalling bests all score hand SIGNALS = .3284 exactly, the
+  hand COMPLETE value -> the restores reconstitute COMPLETE, which keeps .21 off-lattice (B114). B110's world-2
+  restore (.179) passed the hand-listener readout, which lattice-hash codes FAIL (they read negative: B111 -.06 to
+  -.18). So the lattice exploit cannot be what the earlier kin positives are. Residual: B110 MUTE 11003 not
+  directly re-scored off-lattice (genome not dumped); low priority.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
