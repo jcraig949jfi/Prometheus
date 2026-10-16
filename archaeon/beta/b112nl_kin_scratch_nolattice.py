@@ -6,6 +6,9 @@ Design = B111 (random FOUNDRY_C2 gen 0, clonal 4-groups, c=0, E=8, G=300) with w
 Training-side value check (done before writing this): clonal COMPLETE .965 vs MUTE_OP .763 on training seed s, E=8.
 Readout (fixed in advance): self-ablation drop > .05 on held-out jittered seeds s+1000..1003 x 16.
 Instrument checks: COMPLETE and MUTE_OP drops re-scored in the same run.
+SECOND READOUT (declared 17:40Z, after launch but BEFORE any cell result; see b115_info_readout.py): the self-ablation
+drop measures dependence, not information (B111 11106). Every B112-NL best genome is ALSO scored with the B115
+constant-twin info readout (info > .05); the prediction applies to both readouts.
 PREDICTION (committed before running), no-from-scratch hypothesis (B104 0/12 under group reward; the only
 from-scratch 'codes' so far were 1-instruction hash exploits): communicating <= 1/6.
 """
