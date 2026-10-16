@@ -208,6 +208,9 @@ clock.
    **Bounds (B104/B105):** from random gen 0 nothing evolves even below the threshold (0/12). From precursors 1/2/3
    opcode words away it re-evolves 3/6, 1/6, 2/6 -- roughly flat in word distance (unlike keyed memory), consistent
    with multiple alternative signalling code paths.
+   **Kin route (B106b):** in clonal groups at NORMAL mutation load, seeded signallers persist 4/4 (vs 0/4 in random
+   groups) and the signal re-evolves from one word away 1/4 (vs 0/12). Kin selection raises the selection on the
+   signal (~.22) past the error threshold. (B106 at E=4 was an instrument failure: zero signal value in training.)
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

@@ -1270,6 +1270,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   'exactly 4' top-10 signallers were elites in a neutral tie. B103-B105 are VALID: they used E=8 (COMPLETE .995 vs MUTE
   .777; 1C+3M .81 vs 4M .78). Rule: verify the training set's signal value before any evolution run, not only the held-out.
   B106b relaunch at E=8, new seeds, same prediction.
+- B106b RESULT (05:53Z; lease lse-1db9fb37d674 RELEASED; ~2.5 core-h): KIN (clonal) groups, NORMAL mutation load (c=0),
+  E=8. SEEDED (20% COMPLETE) keeps signalling 4/4 (top-10 signalling 10/9/5/10) vs 0/4 under random groups (B98). MUTE
+  restores 1/4 (full .328, 10/10 of the top 10) vs 0/12 under random groups (B95b/B97). PREDICTION (SEEDED >= 3/4, MUTE
+  >= 1/4) MET.
+  VERDICT: KIN STRUCTURE is a second route past the error threshold. When the signal benefits only copies of the
+  signaller, the selection on it (~.22: clonal COMPLETE .995 vs MUTE .777) beats the ~.31 per-offspring break rate in
+  the elitism-plus-offspring dynamics. Three ways the campaign has now made honest communication persist or evolve:
+  (a) lower mutation load + group reward (B103: 7/12);
+  (b) lower mutation load (seeded sweep, B99);
+  (c) kin groups at normal load (B106b).
+  WINDOW 10 TALLY: ~17.5 + B106 ~3 + B106b ~2.5 + evals ~.3 = ~23 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
