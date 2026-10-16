@@ -1371,6 +1371,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   carry information off-lattice. Finding 5's claim that 'earlier positives are unaffected' is now TESTED, not argued.
   Lattice-dependence remains untested for B106b/B110 (kin restores; genomes not dumped).
   B111 lease lse-590f98bd3da1 RENEWED 17:00Z +1 h (renew needs EW_DB_HOST set; first attempt failed on db identity).
+- 17:31Z LEASE SWAP: released lse-590f98bd3da1 (B111) and acquired lse-a62fa7828a8d (spectrex5:cpu12, 4 h; covers
+  B111's tail cell 11106 [1 proc] + B112-NL [6 procs] = 7 <= 12). B112-NL LAUNCHED 17:31Z (seeds 11211-11216).
+  CORRECTION (mine): B111 cost from receipts (worker CPU seconds) is ~6.7 core-h at 17:30Z, not the ~14 I estimated.
+  Cell CPU 1380-6502 s; tail cell 11106 >= 10625 s and still running (CPU-bound, alive). WINDOW 10 TALLY ~38.5 of 48;
+  B112-NL est. ~7.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
