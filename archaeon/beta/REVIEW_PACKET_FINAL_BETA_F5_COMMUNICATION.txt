@@ -222,6 +222,23 @@ decoding admits 1-instruction hash 'codes'; a hand-partner readout misses them (
 readout cannot tell them from real codes without a no-lattice control. Earlier positives passed the hand readout,
 which these fail, so they are unaffected. Successor: B112-NL (kin from scratch, jittered world, prediction <= 1/6).
 
+7h. ADDENDUM 2026-10-16 -- READOUT REPAIR AND THE FROM-SCRATCH TEST OFF-LATTICE (B114b, B115, B112-NL)
+------------------------------------------------------------------------------------------
+  B114b  B103b group-selection signallers off-lattice: restored 10311 .173 / 10312 .058 / 10314 .186; non-restored 0.
+         Earlier positives are NOT lattice exploits (tested, not argued). B106b restores score exactly the hand
+         COMPLETE SIGNALS (.3284), i.e. COMPLETE reconstituted.
+  DEFECT (mine) self-ablation measures DEPENDENCE: B111 11106 off-lattice drops .35, yet full .516 < no-signal .746.
+  B115   constant-twin INFO readout = full - max over constant signal words (emitted values + 0; <= 24 spread).
+         Calibration prereg met: COMPLETE .233 lattice / .210 jitter; MUTE_OP 0; 11106 jitter -.160.
+         B111 on B115: lattice 4/6 (hash family), jitter 0/6.
+  B112-NL kin from scratch, jittered world, seeds 11211-11216 (B115 declared before any cell result).
+         0/5 on ablation AND on info; cell 11216 lost to a host memory reap (not relaunched). Prediction <= 1/6 MET,
+         decided regardless of the lost cell. 11214 sub-threshold (info .046): index-like partial code
+         (signal 0 <-> pool 0 richest 9/11), not a hash. B116 tests whether it sharpens (prereg: it does not).
+VERDICT: communication evolves from precursors under group or kin selection; NOT from random gen 0 (group 0/12, kin
+off-lattice 0/5). Instrument rule: a 'uses the channel' readout needs a constant-channel twin, and communication
+worlds need a no-lattice control.
+
 ------------------------------------------------------------------------------------------
 8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
 ------------------------------------------------------------------------------------------
