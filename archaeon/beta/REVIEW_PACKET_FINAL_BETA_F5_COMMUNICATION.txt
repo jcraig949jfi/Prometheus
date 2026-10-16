@@ -160,6 +160,23 @@ CLAIM CEILING (section 6) REVISED: communication is not 'unable to evolve' in pr
 by the search's mutation load (an error threshold). With the load lowered ~5x, a seeded signaller sweeps.
 
 ------------------------------------------------------------------------------------------
+7d. ADDENDUM 2026-10-16 -- COMMUNICATION EVOLVES BELOW THE THRESHOLD, UNDER GROUP SELECTION (B103/B103b/B103c)
+------------------------------------------------------------------------------------------
+Gen 0 = 200 x MUTE_OP (one word from full communication); clone fraction .85 (break ~.05, near s). B97 world, rotating
+scout, G=300. Predictions committed before each run.
+  B103  (seeds 10301-06): SHARED 4/6 restored, INDIVIDUAL 0/6                       MET
+  B103b (seeds 10311-16): SHARED 3/6, INDIVIDUAL 0/6                                MET (replication)
+        content part (>= .5): 10314 .844; 10312 0 (.418 mod R); 10311 .153          FAILED by its metric
+  B103c constant-signal twin: best constant .011; evolved signallers +.293/+.155/+.054 above it -> informative
+  POOLED: SHARED 7/12 vs INDIVIDUAL 0/12, Fisher one-sided p ~ .002.
+READING: honest, informative signalling that benefits only others evolves under group-level (shared) reward and never
+under individual reward, once the mutation load is below the error threshold. Textbook prediction, reproduced.
+PROCESS (mine):
+- B103 did not save its best genomes (repaired in B103b).
+- The SIGNALS readout lacked a constant-twin control until B103c.
+CLAIM CEILING (updated): one world; from a one-word precursor; 12 runs per arm.
+
+------------------------------------------------------------------------------------------
 8. PRIMARY ARTIFACT INDEX (archaeon/beta/)
 ------------------------------------------------------------------------------------------
 Code
