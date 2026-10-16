@@ -216,6 +216,13 @@ clock.
    **Second world (B107/B107b/B108):** SHARED 1/12 vs INDIVIDUAL 0/6 in world 2. The direction replicates (pooled 8/24 vs
    0/18). The RATE is world-dependent: world 1 7/12 vs world 2 1/12, Fisher one-sided p ~ .015. Seeded signallers hold
    4/4 and restore supply is equal in world 2, so the difference lies in the signal ARISING (unexplained).
+   **From scratch under kin (B111/B113/B114):** NOT established. Prereg (hand-listener SIGNALS) 0/5. 3/5 genomes use
+   the signal word in their own clone groups, but B113 decodes the code as COPY-AND-HASH (copy pool 0's raw value
+   into the action; the world reads action % 3 and the pool values sit on a lattice whose residues happen to carry
+   ~1 bit). Jittering the pools off the lattice (B114, prereg met) removes it (.11 -> .02) while the hand code keeps
+   .21. The earlier positives (B103/B106b/B110) passed the HAND-listener readout, which a hash code fails (it reads
+   negative), so they are not this exploit. Future communication worlds are jittered; B112-NL tests kin-from-scratch
+   there.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
