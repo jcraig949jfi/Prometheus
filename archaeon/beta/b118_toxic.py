@@ -13,6 +13,11 @@ PREDICTION (committed before running):
   (a) the generalist is hurt by toxicity: mean(gen_toxic) < mean(gen_plain), lower in >= 9/12 worlds;
   (b) the type check carries value: mean(chk_toxic - gen_toxic) > .02, positive in >= 9/12 worlds.
 If (b) fails, the semantic version is not a test (the type word carries no usable value) and B118 is not run.
+B118 CONTROLS RESULT (21:32Z): (a) MET (gen .051 -> .012, lower 10/12). (b) FAILED by the letter: mean gain .029 > .02
+but positive in 8/12 (< 9). Two worlds have R = 1 (no choice to inform); two tie. B118 as designed is NOT run.
+B118b (argv[1] = b; NEW design, so a NEW prereg, committed before running): stronger semantic stakes -- worlds with
+R >= 2 only (redraw), P_TOXIC = 1/2, a toxic harvest costs 2x its gain. NEW keys ('b118bctl', i), 12 worlds.
+PREDICTION: same criteria (a) and (b).
 """
 import json
 import sys
@@ -31,8 +36,8 @@ P_TOXIC = 1 / 3
 
 
 class Toxic:
-    def __init__(self, cw):
-        self.w = cw; self.K = cw.K; self.features = cw.features
+    def __init__(self, cw, p=P_TOXIC, cost=1.0):
+        self.w = cw; self.K = cw.K; self.features = cw.features; self.p = p; self.cost = cost
 
     def __getattr__(self, k):
         return getattr(self.w, k)
@@ -40,7 +45,7 @@ class Toxic:
     def reset(self, seed, ep, shared=None):
         st = self.w.reset(seed, ep, shared)
         rng = SplitMix64(seed_from("b118.toxic", seed, ep))
-        st["toxic"] = [rng.randbelow(1000) < int(P_TOXIC * 1000) for _ in range(len(st["pools"]))]
+        st["toxic"] = [rng.randbelow(1000) < int(self.p * 1000) for _ in range(len(st["pools"]))]
         return st
 
     def observe(self, st):
@@ -55,12 +60,15 @@ class Toxic:
         self.w.act(st, outputs)
         gain = st["reward"] - before
         if i is not None and gain > 0 and st["toxic"][i]:
-            st["reward"] = before - gain
+            st["reward"] = before - self.cost * gain
 
 
-def plain_and_toxic(key):
-    w, s = echo_free_world(key)                        # NoClock(ComposedWorld)
-    return w, NoClock(Toxic(w.w)), s
+def plain_and_toxic(key, strong=False):
+    for t in range(20 if strong else 1):
+        w, s = echo_free_world(key + ((t,) if strong else ()))   # NoClock(ComposedWorld)
+        if not strong or w.w.R >= 2:
+            break
+    return w, (NoClock(Toxic(w.w, .5, 2.0)) if strong else NoClock(Toxic(w.w))), s
 
 
 def checker(w, s):
@@ -83,10 +91,10 @@ def lift(m, w, s):
     return score(m, w, s) - max(score(constant_manifest(c, w.K), w, s) for c in CONSTS)
 
 
-def controls(n=12):
+def controls(n=12, strong=False):
     rows = []
     for i in range(n):
-        wp, wt, s = plain_and_toxic(("b118ctl", i)); g = generalist(wp.w.R)
+        wp, wt, s = plain_and_toxic(("b118bctl" if strong else "b118ctl", i), strong); g = generalist(wp.w.R)
         r = {"i": i, "R": wp.w.R, "gen_plain": round(lift(g, wp, s), 4), "gen_toxic": round(lift(g, wt, s), 4),
              "chk_toxic": round(lift(checker(wt, s), wt, s), 4)}
         rows.append(r); print(json.dumps(r), flush=True)
@@ -98,9 +106,9 @@ def controls(n=12):
     summ["pred_b"] = summ["b_mean_gain"] > .02 and summ["b_pos"] >= 9
     print(json.dumps(summ))
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "B118_controls.json").write_text(json.dumps({"rows": rows, "summary": summ}, indent=1), encoding="utf-8")
+    (OUT / ("B118b_controls.json" if strong else "B118_controls.json")).write_text(json.dumps({"rows": rows, "summary": summ}, indent=1), encoding="utf-8")
     return summ
 
 
 if __name__ == "__main__":
-    controls(int(sys.argv[1]) if len(sys.argv) > 1 else 12); sys.exit(0)
+    controls(int(sys.argv[1]) if len(sys.argv) > 1 else 12, len(sys.argv) > 2 and sys.argv[2] == "b"); sys.exit(0)
