@@ -239,7 +239,8 @@ clock.
 
 ## Open questions
 1. Does a representation that removes ORDER coupling as well (e.g. reads addressed by input position) make the 3-link
-   read L2-like?
-2. Is self-modifying code a systematic chain-shortener, or a rare accident?
+   read L2-like? (B117 staged.)
+2. ~~Is self-modifying code a systematic chain-shortener, or a rare accident?~~ ANSWERED: rare accident (B52 0/8,
+   B58 0/16).
 3. Can the invariant foraging rule be pushed beyond the generator family by randomising reward semantics (which pool
    pays) rather than dynamics?
