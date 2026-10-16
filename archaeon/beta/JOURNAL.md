@@ -1301,6 +1301,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   mutations of MUTE5 yield an informative signal -- not about holding it. A cheap follow-up would count MUTE5's one-step
   informative mutants against MUTE_OP's (B97b-style). Not run yet.
   WINDOW 10 TALLY: ~27 of 48.
+- B108b SUPPLY (structural, 20,000 one-step children each): decode-OUT at the signal slot world1 161 vs world2 178; clean
+  restores 1 vs 2. Supply is the SAME in both worlds.
+  CORRECTION (mine) to the B107 verdict: 'the rate does not replicate' over-read the data. 7/12 vs 1/6 is NOT significant
+  (Fisher one-sided p ~ .07); 6 world-2 runs cannot separate a world effect from chance. Corrected verdict: the DIRECTION
+  replicates in both worlds (pooled SHARED 8/18 vs INDIVIDUAL 0/18, p ~ .001); a rate difference between worlds is
+  NOT established. Holding (B108) and supply (B108b) are equal across the two worlds.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
