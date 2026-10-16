@@ -278,6 +278,19 @@ Q-019 | RE-RUN (intake stopped under memory pressure) | 2026-10-15
   has no vector, so nothing fetched is lost.
   ANSWER:
 
+Q-020 | PREF (identity-learning coupling pre-registration) | 2026-10-16
+  In chat before the 06:50Z tick you proposed an Identity-Learning
+  Coupling Invariant (identity anchor, mutable theta, self/other boundary).
+  Pan replied in chat with a minimal door-world design, T1-T6: attribution,
+  same event / different update, contingency degradation, persistence and
+  transplant, a transcript twin (the performative-identity control) and
+  fabricated continuity. Actor labels are stripped so the measurement
+  cannot carry its answer. Should Pan write it as a pre-registration
+  under docs/sagacity before the loop ends at 10:40Z?
+  DEFAULT meanwhile: not written; the design stays in chat. It is outside
+  Pan's backlog, and nothing is run either way.
+  ANSWER:
+
 ## ANSWERED
 
 Q-001 | HARD (privileged host change on M1) | 2026-10-09
