@@ -1437,6 +1437,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   L3 2-3/8 ~44-203.
 - Campaign update 13 written + posted (CAMPAIGN_UPDATE_2026-10-16b.md; comms #2266 to Harmonia, Aporia). Inbox: no new
   operator or peer requests for Archaeon (latest Nestor #2223, FYI).
+- DESIGN NOTE B118 (Finding 2 open question 3; not built; ~20:55Z): in the B32 family, gain = pools[i], so the observed
+  magnitude IS the payoff and 'harvest the non-empty pool' cannot be wrong about meaning. To randomise reward
+  SEMANTICS: wrapper Toxic(ComposedWorld) -- per episode, each pool is independently toxic with p = 1/3 (gain -> -gain
+  at act time); one extra observation word per pool carries its type (0/1). Training: fresh family world per
+  generation (B35 echo-free) + Toxic. Controls first: (1) hand generalist (B29) loses on Toxic (it harvests poison);
+  (2) hand generalist + type check recovers; (3) a type-blind twin of any elite (type words zeroed) must collapse;
+  (4) training-side value check: hand-with-check minus hand-without > .1 on the training worlds. Readout: held-out
+  echo-free family worlds (64 x 4) + B38's named worlds, lift vs best constant, type-blind twin. Prediction to be
+  written with the script. Cost guess ~8-10 core-h (B35-scale). Queued AFTER B117.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
