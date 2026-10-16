@@ -1286,6 +1286,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   static rescaled pools). COMPLETE5 SIGNALS .259 / own group .997; MUTE5 0; best constant twin 0.000. TRAINING SET (seed
   s5, E=8): clonal COMPLETE5 .995 vs MUTE5 .682; 1C+3M .753 vs 4M .682. The signal is valuable on the training set
   (new rule applied). Prediction in docstring: SHARED informative >= 2/6 AND INDIVIDUAL <= 1/6.
+- B107 RESULT (06:48Z; lease lse-bd7430b3a8cb RELEASED; ~3 core-h): world 2 -- SHARED informative 1/6 (SIGNALS .179,
+  LISTENS .167, own group .918), INDIVIDUAL 0/6 (one run signalled misleadingly, -.09). PREDICTION (SHARED >= 2/6) FAILED;
+  INDIVIDUAL <= 1/6 MET. Most world-2 runs ended BELOW MUTE5's own-group level (.65-.74 vs .806): listening decayed
+  while the signal failed to return.
+  VERDICT (ensemble check): the DIRECTION replicates (SHARED > INDIVIDUAL in both worlds; pooled 8/18 vs 0/18, Fisher
+  one-sided p ~ .001) but the RATE does not (world 1 7/12 vs world 2 1/6). Finding 5's evolved-communication claim is
+  qualitatively robust and quantitatively world-dependent. Not ensemble-invariant at the rate level.
+  WINDOW 10 TALLY: ~23 + B107 ~3 + evals ~.2 = ~26 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
