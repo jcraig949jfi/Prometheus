@@ -1446,6 +1446,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (4) training-side value check: hand-with-check minus hand-without > .1 on the training worlds. Readout: held-out
   echo-free family worlds (64 x 4) + B38's named worlds, lift vs best constant, type-blind twin. Prediction to be
   written with the script. Cost guess ~8-10 core-h (B35-scale). Queued AFTER B117.
+- B118 BUILT + CONTROLS (b118_toxic.py; single process; prereg c84ea1877 before running; receipt ~21:32Z): Toxic
+  wrapper (each pool toxic p = 1/3, toxic harvest subtracts its gain; type words appended). 12 echo-free family
+  worlds: (a) generalist hurt, .051 -> .012, lower 10/12 -- MET; (b) hand type-checker gain .029 but positive only
+  8/12 (< 9) -- FAILED by the letter (2 worlds R = 1, 2 ties). Per the prereg, B118 as designed is NOT run.
+- B118b (NEW design, NEW prereg be52d0bfb before running): R >= 2 only, p = 1/2, toxic harvest costs 2x, new keys.
+  Controls (a) lower 9/12 MET; (b) checker gain +.087, positive 12/12 MET. Held-out set ('b118bho', 12 worlds):
+  generalist lift .004 / type use 0; checker .072 / .066 -- the bar (lift >= .03 AND type use >= .02) discriminates.
+  Evolution prereg 22390452b: TOXIC vs PLAIN (p = 0, identical layout), 4 seeds each (11801-11804), B35 scheme,
+  G=300, 8 procs. PREDICTION: TOXIC type-reading >= 2/4; PLAIN 0/4. Smoke test passes.
+  QUEUE for window 11 (~00:30Z): B117 (8 procs) then B118b (8 procs) -- sequential (12-proc cap); memory check first.
+  WINDOW 10 TALLY ~46.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
