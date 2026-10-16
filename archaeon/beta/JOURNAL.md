@@ -1376,6 +1376,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   CORRECTION (mine): B111 cost from receipts (worker CPU seconds) is ~6.7 core-h at 17:30Z, not the ~14 I estimated.
   Cell CPU 1380-6502 s; tail cell 11106 >= 10625 s and still running (CPU-bound, alive). WINDOW 10 TALLY ~38.5 of 48;
   B112-NL est. ~7.
+- QUICK KILL (17:35Z, seconds of CPU, ad hoc): could the pool LATTICE explain the world-1 vs world-2 group-reward rate
+  gap (7/12 vs 1/12)? Both worlds use the same lattice {100,1100,2100,3000}, and the copy-and-hash code
+  (p0 % 3 -> pool) hits the richest pool at .61 (world 1) vs .69 (world 2) on held-out seeds. Same lattice, and
+  the hash path is no less available in world 2 -> the lattice does NOT explain the gap. Gap stays parked.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
