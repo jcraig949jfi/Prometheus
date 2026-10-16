@@ -1294,6 +1294,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   one-sided p ~ .001) but the RATE does not (world 1 7/12 vs world 2 1/6). Finding 5's evolved-communication claim is
   qualitatively robust and quantitatively world-dependent. Not ensemble-invariant at the rate level.
   WINDOW 10 TALLY: ~23 + B107 ~3 + evals ~.2 = ~26 of 48.
+- B108 RESULT (07:04Z; lease lse-8c0f4f731551 RELEASED; ~1 core-h): world 2, seeded 20% COMPLETE5 at c=.85, SHARED -> holds
+  4/4 (top-10 signalling 10/10/9/10). PREDICTION MET.
+  READING: world 2 is NOT more error-threshold-limited; once present, signallers sweep there as in world 1 (B99). Its low
+  B107 rate (1/6 vs 7/12) is about the signal ARISING from MUTE5 -- supply or path availability, i.e. how many single
+  mutations of MUTE5 yield an informative signal -- not about holding it. A cheap follow-up would count MUTE5's one-step
+  informative mutants against MUTE_OP's (B97b-style). Not run yet.
+  WINDOW 10 TALLY: ~27 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
