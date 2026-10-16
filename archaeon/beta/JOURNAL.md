@@ -1406,6 +1406,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   when pool 1 or 2 is richest; a large constant otherwise. An INDEX-LIKE partial code from a comparison, NOT a
   copied magnitude. First non-exploit proto-code from scratch, but sub-threshold: reported as a weak signal, not a
   positive. Follow-up candidate: continue 11214's lineage (G 300 -> 600) to see whether it sharpens.
+- B112-NL STOPPED (~18:35Z) by the HOST (Claude Code reaped the background job: system critically low on memory;
+  4.6 of 32.5 GB free at 18:38Z). Not a script failure; not relaunched (memory may still be short). Cell 11216 LOST;
+  5/6 cells saved. No orphan workers. Lease lse-a62fa7828a8d RELEASED 18:38Z. Cost ~5 core-h (6 procs x ~1.1 h, fewer
+  as cells finished). WINDOW 10 TALLY ~44 of 48.
+  B112-NL RESULT (n = 5 of 6): communicating 0/5 on the prereg ablation readout AND 0/5 on the B115 info readout.
+  PREDICTION (<= 1/6) MET, and decided regardless of the lost cell (at most 1/6 even if 11216 had passed).
+  VERDICT: under kin structure at normal load, communication does NOT evolve from scratch in the no-lattice world.
+  The only signal is 11214's sub-threshold index-like proto-code (info .046). Same as B104 (group reward, 0/12).
+  Finding 5 bound now reads: communication evolves from precursors (1-3 words away) under group or kin selection,
+  not from random gen 0 (0/12 group reward; 0/5 kin off-lattice; B111's 4/6 were lattice-hash exploits).
+  NEXT (not launched; memory): 11214 lineage continuation (G 300 -> 600) as a cheap 1-proc test of whether the
+  proto-code sharpens. Needs memory headroom first.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

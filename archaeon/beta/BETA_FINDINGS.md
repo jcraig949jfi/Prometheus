@@ -221,8 +221,9 @@ clock.
    into the action; the world reads action % 3 and the pool values sit on a lattice whose residues happen to carry
    ~1 bit). Jittering the pools off the lattice (B114, prereg met) removes it (.11 -> .02) while the hand code keeps
    .21. The earlier positives (B103/B106b/B110) passed the HAND-listener readout, which a hash code fails (it reads
-   negative), and B114b confirms the B103b signallers keep their value off-lattice (.17/.06/.19). Future communication worlds are jittered; B112-NL tests kin-from-scratch
-   there.
+   negative), and B114b confirms the B103b signallers keep their value off-lattice (.17/.06/.19). Future communication worlds are jittered; B112-NL (kin from scratch,
+   jittered world): 0/5 on both the ablation and the constant-twin information readouts (one cell lost to a host
+   memory reap; the prediction <= 1/6 is decided regardless). Communication evolves from precursors, not from scratch.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
