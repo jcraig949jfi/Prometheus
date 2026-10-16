@@ -1307,6 +1307,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   (Fisher one-sided p ~ .07); 6 world-2 runs cannot separate a world effect from chance. Corrected verdict: the DIRECTION
   replicates in both worlds (pooled SHARED 8/18 vs INDIVIDUAL 0/18, p ~ .001); a rate difference between worlds is
   NOT established. Holding (B108) and supply (B108b) are equal across the two worlds.
+- B107b RESULT (07:43Z; lease lse-c8442c8a8c1e RELEASED; ~1.5 core-h): 6 more world-2 SHARED seeds -> 0/6. PREDICTION
+  FAILED on both parts. Pooled world 2 SHARED 1/12 vs world 1 7/12: Fisher one-sided p ~ .015 -> the world difference IS
+  significant. This REVERSES my B108b correction: 'not established' was right at n=6 and is superseded at n=12. B107's
+  original reading ('direction replicates, rate is world-dependent') stands, now with adequate n.
+  OPEN: holding (B108 4/4) and structural restore supply (B108b) are EQUAL across the worlds, so the difference is in
+  ARISING -- candidates: faster listener decay in world 2 (most world-2 runs end below MUTE5's own-group level), or
+  fewer alternative informative code paths. Not yet measured.
+  WINDOW 10 TALLY: ~27 + ~1.5 = ~28.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
