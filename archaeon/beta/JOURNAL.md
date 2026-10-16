@@ -1418,6 +1418,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   not from random gen 0 (0/12 group reward; 0/5 kin off-lattice; B111's 4/6 were lattice-hash exploits).
   NEXT (not launched; memory): 11214 lineage continuation (G 300 -> 600) as a cheap 1-proc test of whether the
   proto-code sharpens. Needs memory headroom first.
+- B116 LAUNCHED 19:02Z (lease lse-85ecd4c08c52, 3 h; 2 procs; 16.6 GB free at 19:00Z): restart from best_11214 x 200,
+  kin, jittered world, G=300, seeds 11601-11602. Prereg d75e9a8ec: info < .10 in both (no sharpening). Est ~2-4 core-h.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
