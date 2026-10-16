@@ -1206,6 +1206,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   B101 = d6 keyed at c=0.8, G=600, 16 new seeds (pred >= 3/16; 3/16 vs 0/32 gives hypergeometric one-sided p = .032);
   B102 = RESET from random gen 0 at c=0.8, B75 world, 8 seeds (pred >= 2/8 RESET-like populations). B102 smoke test passed.
 - WINDOW 10 OPENED 2026-10-16 00:30Z. B101 (6 procs) + B102 (6 procs) LAUNCHED under lease lse-0a2b8ddb4a7b (3 h, token captured).
+- B101 RESULT (00:52Z): keyed d6 at c=0.8, G=600, 16 new seeds -> 0/16 (all at the .535 plateau). PREDICTION (>= 3/16)
+  FAILED. B100's single success was a fluke: pooled low-load d6 = 1/28 vs 0/32 at c=0 -- no effect. VERDICT: lowering
+  the mutation load does NOT move the keyed d6 wall. The error-threshold mechanism that explains communication (B99) does
+  NOT extend to keyed memory at d6; that wall is distance (B87-B90), as concluded. The cross-lane hypothesis in comms
+  #2256 is not supported for keyed d6 (B102 still tests it for RESET).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
