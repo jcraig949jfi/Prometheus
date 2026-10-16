@@ -14,6 +14,10 @@ PREDICTION (committed before running), kin-selection hypothesis:
 - SEEDED keeps signalling in >= 3/4 (vs 0/4 in B98);
 - MUTE restores in >= 1/4.
 If SEEDED is 0/4, clonal structure does not lift communication above the error threshold at normal load.
+B106 RESULT = INSTRUMENT FAILURE (mine): with E=4 the four training episodes on world seed s all have pool 0 richest,
+so the listeners default is already right and signalling has ZERO value (clonal COMPLETE = MUTE = 1.000).
+B106b (argv[2] = 8): E=8 (the B103-B105 setting; there COMPLETE .995 vs MUTE .777), seeds 10611-10614. SAME prediction,
+committed before the run.
 """
 import copy
 import json
@@ -38,7 +42,7 @@ def cell(job):
     w, s = sw(); cache = {}
 
     def ev_fn(m, eps, intervention=None, rng_seed=0, reward_mode="per_ask"):
-        ev = evaluate_world(m, w, s, 4, rng_seed=7)
+        ev = evaluate_world(m, w, s, job.get("E", 4), rng_seed=7)
         if id(m) in cache:
             ev["reward"] = ev["reward_per_ask"] = cache[id(m)]
         return ev
@@ -48,14 +52,14 @@ def cell(job):
     rm = G.organism_record(B92.man(list(MUTE_OP)), None, 0); rm["origins"] = ["gen0_MUTE_OP"]
     n_c = 40 if job["arm"] == "SEEDED" else 0
     pop = [copy.deepcopy(rc) for _ in range(n_c)] + [copy.deepcopy(rm) for _ in range(200 - n_c)]
-    ev = EV.Evolution(TARGET, REGIMES["E0"], CAMPAIGN_SEED, job["seed"], N=200, E=4, branch="b106", foundry=FOUNDRY_C2,
+    ev = EV.Evolution(TARGET, REGIMES["E0"], CAMPAIGN_SEED, job["seed"], N=200, E=job.get("E", 4), branch="b106", foundry=FOUNDRY_C2,
                       init_pop=pop, gen0_provenance={"fill": "%d COMPLETE + %d MUTE_OP" % (n_c, 200 - n_c), "verified_common": True})
     for g in range(job["G"]):
         cache.clear()
         for o in ev.pop:
             m = o["manifest"]
             if id(m) not in cache:
-                cache[id(m)] = sum(group_rot([m] * 4, w, s, 4)) / 4
+                cache[id(m)] = sum(group_rot([m] * 4, w, s, job.get("E", 4))) / 4
         ev.evaluate_generation(episodes=[], last=(g == job["G"] - 1))
         if g < job["G"] - 1:
             ev.reproduce()
@@ -69,19 +73,20 @@ def main(argv):
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 8) as ex:
-        futs = {ex.submit(cell, {"arm": a, "seed": 10601 + i, "G": int(argv[0]) if argv else 100}): (a, i) for a in ("SEEDED", "MUTE") for i in range(4)}
+        E_ = int(argv[2]) if len(argv) > 2 else 4; base = 10601 if E_ == 4 else 10611
+        futs = {ex.submit(cell, {"arm": a, "seed": base + i, "G": int(argv[0]) if argv else 100, "E": E_}): (a, i) for a in ("SEEDED", "MUTE") for i in range(4)}
         for fu in as_completed(futs):
             try:
                 r = fu.result()
             except Exception as e:                    # noqa: BLE001
                 a, i = futs[fu]; r = {"arm": a, "seed": 10601 + i, "error": repr(e)[:300]}
             rows.append(r); print(json.dumps(r), flush=True)
-            with open(OUT / "B106_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B106_cells.jsonl" if E_ == 4 else "B106b_cells.jsonl"), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(r) + chr(10))
     summ = {a: sum(r.get("signalling", False) for r in rows if r.get("arm") == a) for a in ("SEEDED", "MUTE")}
     summ["pred"] = summ["SEEDED"] >= 3 and summ["MUTE"] >= 1
     print(json.dumps(summ))
-    (OUT / "B106_result.json").write_text(json.dumps({"probe": "B106", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B106_result.json" if E_ == 4 else "B106b_result.json")).write_text(json.dumps({"probe": "B106", "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 

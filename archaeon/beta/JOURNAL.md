@@ -1265,6 +1265,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   HAND partners. Under clonal evaluation a descendant must keep scouting AND signalling AND listening intact at once
   (joint survival ~.69 x .60 ~ .4), and E=4 deterministic episodes make near-ties strict. Verify before reading further:
   the fraction of COMPLETE children whose CLONAL fitness ties COMPLETE's.
+- B106 VERDICT = INSTRUMENT FAILURE (mine; resolved). B106b check: at E=4 the 4 training episodes on seed s all have pool 0
+  richest (richest per episode 0,0,0,0,2,2,1,1), so clonal COMPLETE = MUTE = 1.000: signalling had ZERO value; the
+  'exactly 4' top-10 signallers were elites in a neutral tie. B103-B105 are VALID: they used E=8 (COMPLETE .995 vs MUTE
+  .777; 1C+3M .81 vs 4M .78). Rule: verify the training set's signal value before any evolution run, not only the held-out.
+  B106b relaunch at E=8, new seeds, same prediction.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
