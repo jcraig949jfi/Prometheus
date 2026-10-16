@@ -1420,6 +1420,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   proto-code sharpens. Needs memory headroom first.
 - B116 LAUNCHED 19:02Z (lease lse-85ecd4c08c52, 3 h; 2 procs; 16.6 GB free at 19:00Z): restart from best_11214 x 200,
   kin, jittered world, G=300, seeds 11601-11602. Prereg d75e9a8ec: info < .10 in both (no sharpening). Est ~2-4 core-h.
+- B116 RESULT (19:52Z; exit 0; lease lse-85ecd4c08c52 RELEASED; ~1.7 core-h): both seeds' final best genomes are
+  BYTE-IDENTICAL to best_11214 (info .0458 unchanged). In 300 gens x 200, no offspring beat 11214 on TRAINING
+  fitness (seed s, E=8); elitism retained it. PREDICTION (no sharpening, info < .10 both) MET in its strongest form:
+  complete stasis. 11214 is a strict local optimum of the kin training objective; the proto-code is NOT a stepping
+  stone that selection climbs at normal load. Caveat: held-out info is not what selection sees; a different
+  training set (more episodes) could change the landscape. WINDOW 10 TALLY ~46 of 48 (window 11 from ~00:30Z).
+  COMMUNICATION LANE STATUS: the from-scratch question is CLOSED negative for this substrate (group 0/12, kin
+  off-lattice 0/5, proto-code static). Remaining open: the world-1 vs world-2 group-reward rate gap (parked).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
