@@ -1328,6 +1328,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   VERDICT: the KIN route is ENSEMBLE-INVARIANT across the two worlds tested (holding 8/8, restoring 2/8 pooled). The
   group-reward + low-load route replicates in direction (8/24 vs 0/18) but its rate is world-dependent.
   WINDOW 10 TALLY: ~28.5 + ~3 = ~31.5 of 48.
+- B111 (launched ~14:00Z; lease lse-590f98bd3da1): KIN route FROM SCRATCH (random FOUNDRY_C2 gen 0, clonal groups,
+  c=0, E=8, G=300, world 1, seeds 11101-11106). PREREGISTERED readout: hand-listener SIGNALS - const .0107 > .05.
+  INTERIM (5/6 cells, 16:30Z): 0/5 informative by the letter -- SIGNALS 0, 0, -.062, -.092, -.141. PREDICTION FAILS
+  by the preregistered readout. But the negatives mean the evolved scouts DO write the signal word, in codes the hand
+  listener misreads. EXPLORATORY readout (defined AFTER seeing the results, so not evidence yet): SELF-ABLATION = the
+  best genome's own-clone-group reward minus the same with the listeners' signal word zeroed (held-out 4 seeds x 16).
+  Instrument: hand COMPLETE drop .241, MUTE_OP 0. B111: 11101 .114, 11104 .071, 11105 .088 (private codes);
+  11102/11103 0 (no signal use). => candidate: PRIVATE-CODE communication evolves from scratch under kin structure
+  in 3/5. Lesson: the SIGNALS readout is a hand-partner readout; it is blind to self-consistent codes that are
+  not the hand convention (a gate blind spot: predicate 'hand listener gains', direction misses private codes).
+- B112 PREREGISTERED (committed before running): same design as B111, NEW seeds 11201-11206; readout FIXED IN ADVANCE
+  = self-ablation drop > .05; controls COMPLETE / MUTE_OP re-scored every run. PREDICTION: communicating >= 2/6.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
