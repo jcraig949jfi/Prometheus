@@ -1380,6 +1380,20 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   gap (7/12 vs 1/12)? Both worlds use the same lattice {100,1100,2100,3000}, and the copy-and-hash code
   (p0 % 3 -> pool) hits the richest pool at .61 (world 1) vs .69 (world 2) on held-out seeds. Same lattice, and
   the hash path is no less available in world 2 -> the lattice does NOT explain the gap. Gap stays parked.
+- B111 COMPLETE (17:36Z; exit 0): 11106 SIGNALS -.182, LISTENS .531, self .783. Prereg (hand SIGNALS) 0/6: FAILED.
+  Self-ablation drops 11101 .114, 11102 0, 11103 0, 11104 .071, 11105 .088, 11106 .584.
+- READOUT DEFECT (mine, 17:38Z): 11106 off-lattice still drops .35 (B114c), but its full reward .516 is BELOW the
+  no-signal baseline (MUTE_OP .746). Self-ablation measures DEPENDENCE (listeners break without the word), not
+  INFORMATION. B112-NL's prereg readout has this defect.
+- B115 (b115_info_readout.py; declared for B112-NL at eb94f2f2e BEFORE any B112-NL cell result): info = full - max over
+  constant signal words v (values the scout emits, plus 0). Calibration prereg MET: COMPLETE .233 lattice / .210
+  jitter; MUTE_OP 0; 11106 jitter -.160.
+  B111 info: lattice 11101 .110, 11104 .063, 11105 .080, 11106 .072 (4/6, all copy-and-hash family);
+  jitter .021/0/0/.011/.016/-.160 (0/6).
+  FINAL B111 VERDICT: no from-scratch communication; 4/6 found the lattice hash exploit (an encoding exploit, real
+  information only in the lattice world); 11106 evolved a hash code plus strong dependence.
+  Repair: the constant set was the first 12 sorted values; now <= 24 spread over the emitted range (before B112-NL scoring).
+  Lease: B111 done; lse-a62fa7828a8d now covers B112-NL (6 procs) only.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

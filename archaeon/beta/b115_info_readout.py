@@ -9,6 +9,9 @@ information about this episode, so info > 0 only if the episode-specific signal 
 Communicating (info) = info > .05.
 DECLARED BEFORE any B112-NL result: B112-NL is reported on BOTH readouts (the prereg drop > .05, and info > .05).
 The prediction (<= 1/6) applies to both.
+B115 RUN 1 (17:39Z): calibration MET (COMPLETE .233 / .210; MUTE_OP 0; 11106 jitter -.160). Constant set was the
+first 12 sorted values (biased toward low values when a genome emits many); REPAIRED to <= 24 spread over the range
+before any B112-NL scoring.
 Calibration (prediction committed before running): hand COMPLETE info > .15 on both worlds (lattice / jittered);
 MUTE_OP info = 0; 11106 jittered info <= 0.
 """
@@ -50,7 +53,8 @@ def run(m, w, s, const=None, collect=None, E=16):
 
 def info(m, w, s):
     vals = set(); full = run(m, w, s, collect=vals); vals.add(0)
-    consts = {v: run(m, w, s, const=v) for v in sorted(vals)[:12]}
+    sv = sorted(vals); pick = sv if len(sv) <= 24 else sorted({sv[round(i * (len(sv) - 1) / 23)] for i in range(24)} | {0})
+    consts = {v: run(m, w, s, const=v) for v in pick}            # <= 24 constants spread over the emitted range
     best = max(consts.values())
     return {"full": round(full, 4), "best_const": round(best, 4), "info": round(full - best, 4), "n_vals": len(vals)}
 
