@@ -1352,6 +1352,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   would not port to a world with another value lattice. CAVEAT for any 'communication from scratch' claim: name the
   code (copy-and-hash), not just 'communicates'. Next control for B112: a NO-LATTICE world (pool values jittered off
   the 1000-grid) -- does the from-scratch route still find a code when copy-and-hash carries no information?
+- B114 RESULT (16:50Z; single process, ~.2 core-h; prereg committed before the run): NO-LATTICE control. Pools
+  jittered by [0,.3) (order kept, residues mod 3 scrambled). Ablation drops: hand COMPLETE .213 (lattice .241);
+  MUTE_OP 0; B111 private codes 11101 .021 (lattice .114), 11104 .014 (.071), 11105 .020 (.088). PREDICTION MET.
+  VERDICT: the B111 from-scratch 'communication' is a COPY-AND-HASH exploit of the world's encoding (mod-R action
+  decoding x pool-value lattice). It is real information transfer in that world but carries ~0 when the lattice is
+  removed. So Finding 5 gains no 'from scratch' clause. B111 stays: prereg FAILED (SIGNALS 0/5); the exploratory
+  positive is downgraded to an encoding exploit (instrument lesson: lattice worlds admit hash codes; future
+  communication worlds must be jittered).
+  B112 REVISION (before any B112 run; the committed B112 is left in place): B112 as written would replicate the
+  exploit, not test communication. The run that matters is B112-NL, kin from scratch in the JITTERED world, with the
+  same self-ablation readout and a training-side value check first (COMPLETE drop on training seed s, E=8). Prediction
+  to be committed with the script.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
