@@ -1238,6 +1238,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   from one word away under SHARED (group-mean) reward in 7/12 runs and never (0/12) under individual reward. Replicated;
   survives the constant twin. Tier: SUPPORTED, one world, from a one-word precursor (not from scratch).
   WINDOW 10 TALLY: ~8.5 + B103 ~2 + B103b ~2 + evals ~.2 = ~13 of 48.
+- Major finding posted (comms #2261). F5 packet addendum 7d (82b559b6b).
+- B104 RESULT (04:00Z; 11/12 cells, verdict fixed): communication FROM SCRATCH below the error threshold (random gen 0,
+  c=.85, B97 world, G=300). SHARED 0/6 informative (all at the blind level, own group .70-.72; one run signalled
+  MISLEADINGLY, -.14); INDIVIDUAL 0/5 so far. PREDICTION (SHARED >= 1/6) FAILED.
+  READING: the evolved-communication result (B103/B103b) is bounded to NEAR-PRECURSOR starts. From random genomes, even
+  below the threshold, not even scouting (argmax of 3 words) is reached within G=300 -- the distance wall again (the
+  scout + listener code is many coupled instructions from random). Finding 5 claim ceiling stands: from a one-word
+  precursor.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
