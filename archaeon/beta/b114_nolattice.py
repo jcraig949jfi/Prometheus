@@ -8,6 +8,10 @@ PREDICTION (committed before running), hash-dependence hypothesis:
 - the hand COMPLETE code (richest+1) keeps an ablation drop > .15 under jitter;
 - MUTE_OP stays at 0;
 - the B111 private-code genomes (11101/11104/11105) drop to <= .03 each.
+B114 RESULT: COMPLETE .213, MUTE_OP 0, B111 .021/.014/.020 -- MET.
+B114b (same script, on the B103b best SHARED genomes): are the EARLIER positives also lattice exploits?
+PREDICTION (committed before running): the three restored signallers (10311/10312/10314; hand SIGNALS .064/.165/.304)
+keep an off-lattice ablation drop > .05 each; the three non-restored (10313/10315/10316) stay <= .03.
 """
 import json
 import sys
