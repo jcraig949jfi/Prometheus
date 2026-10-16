@@ -1226,6 +1226,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   group-level (shared) reward and never under individual reward. PROVISIONAL (positive results are provisional): best
   genomes were not saved (my omission), so the content was not verified. B103b = replication on new seeds with genome
   dumps + signal-content readout (instrument verified: hand COMPLETE content 1.000 on 768 writes).
+- B103b RESULT (02:38Z; lease lse-671f04f8fa99 RELEASED; ~2 core-h): REPLICATION on new seeds -- SHARED 3/6 restored
+  (best SIGNALS .304/.165/.064; top-10 signalling 10/10/10), INDIVIDUAL 0/6. Prediction (SHARED >= 2/6, >= INDIVIDUAL)
+  MET. POOLED B103+B103b: SHARED 7/12 vs INDIVIDUAL 0/12, Fisher one-sided p ~ .002.
+  CONTENT part (restored signallers' content >= .5) FAILED by its metric: 10314 .844, 10312 0 (exact; .418 mod R), 10311
+  .153. The metric (lone-scout writes == richest+1) was narrower than the readout; partial or selective codes score low.
+- B103c CONSTANT-TWIN CONTROL (mine, overdue -- the B94-B103 SIGNALS readout never controlled for a constant redirect):
+  scouts that harvest the richest but signal a CONSTANT 1/2/3 give SIGNALS 0/-.008/.011 (best .011). The evolved
+  signallers beat the best constant by +.293/+.155/+.054. The evolved signals carry INFORMATION.
+  VERDICT (Finding 5 upgraded): below the error threshold (clone fraction .85), an honest, informative signal re-evolves
+  from one word away under SHARED (group-mean) reward in 7/12 runs and never (0/12) under individual reward. Replicated;
+  survives the constant twin. Tier: SUPPORTED, one world, from a one-word precursor (not from scratch).
+  WINDOW 10 TALLY: ~8.5 + B103 ~2 + B103b ~2 + evals ~.2 = ~13 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

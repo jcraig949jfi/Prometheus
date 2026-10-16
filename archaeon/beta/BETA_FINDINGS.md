@@ -175,7 +175,7 @@ clock.
    met.
 8. **Limits.** C6-generator worlds only; one VM and one search; no cooperation or communication (signal unused).
 
-## Finding 5 -- communication is blocked by an ERROR THRESHOLD in this search (B92-B99)
+## Finding 5 -- communication: blocked by an ERROR THRESHOLD; below it, evolves under GROUP selection (B92-B103)
 
 1. **Regeneration-limited worlds are zero-sum for information (B92/B93).** A scout's signal only redistributes reward
    (group +.008) and costs the scout ~.2.
@@ -201,6 +201,10 @@ clock.
    signalling. The barrier to communication here is the error threshold of the search's mutation operator.
    **Scope (B100-B102):** the same lever does NOT move the memory walls -- keyed d6 1/28 at low load (vs 0/32) and
    RESET from random 0/8 (vs 0/12). Communication is error-threshold-limited; memory is distance-limited.
+   **Communication EVOLVES below the threshold, under group-level selection (B103/B103b).** From one word away, at
+   clone fraction .85, an informative signal re-evolves under SHARED reward in 7/12 runs and 0/12 under individual
+   reward (p ~ .002). The evolved signals beat the best constant-signal twin by +.05 to +.29 (B103c). This is the
+   textbook result: an honest signal that helps only others needs group-level selection.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
