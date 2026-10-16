@@ -1255,6 +1255,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   alternative code paths (any register/OUT route carrying the argmax), so the exact removed words need not be
   restored. Caveat: different distance units (words vs instructions); n = 6 per arm.
   WINDOW 10 TALLY: ~15 + B105 ~2.5 = ~17.5 of 48.
+- Campaign update 12 written + posted (CAMPAIGN_UPDATE_2026-10-16.md, 6c0c39094; comms #2263).
+- B106 RESULT (05:36Z; lease lse-eb6e3f9107a2 RELEASED; ~3 core-h): KIN (clonal) groups at NORMAL load (c=0).
+  SEEDED (20% COMPLETE): top-10 signalling = EXACTLY 4 in all 4 runs (best .328); MUTE: 0/4. PREDICTION (SEEDED >= 3/4
+  with >= 5 of the top 10 signalling; MUTE >= 1/4) FAILED.
+  PATTERN TO FLAG: 4 = CMP3's elitism count. Reading (TENTATIVE): kin structure keeps the signaller lineage alive only
+  through the elite-carried EXACT COMPLETE copies (unlike B98, where signallers vanished entirely); every mutated
+  descendant ranks below them. OPEN INSTRUMENT QUESTION: B98b says 69% of COMPLETE's one-step children still signal with
+  HAND partners. Under clonal evaluation a descendant must keep scouting AND signalling AND listening intact at once
+  (joint survival ~.69 x .60 ~ .4), and E=4 deterministic episodes make near-ties strict. Verify before reading further:
+  the fraction of COMPLETE children whose CLONAL fitness ties COMPLETE's.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
