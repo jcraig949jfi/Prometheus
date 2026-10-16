@@ -1352,7 +1352,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   would not port to a world with another value lattice. CAVEAT for any 'communication from scratch' claim: name the
   code (copy-and-hash), not just 'communicates'. Next control for B112: a NO-LATTICE world (pool values jittered off
   the 1000-grid) -- does the from-scratch route still find a code when copy-and-hash carries no information?
-- B114 RESULT (16:50Z; single process, ~.2 core-h; prereg committed before the run): NO-LATTICE control. Pools
+- B114 RESULT (~16:36Z; single process, ~.2 core-h; prereg committed before the run): NO-LATTICE control. Pools
   jittered by [0,.3) (order kept, residues mod 3 scrambled). Ablation drops: hand COMPLETE .213 (lattice .241);
   MUTE_OP 0; B111 private codes 11101 .021 (lattice .114), 11104 .014 (.071), 11105 .020 (.088). PREDICTION MET.
   VERDICT: the B111 from-scratch 'communication' is a COPY-AND-HASH exploit of the world's encoding (mod-R action
