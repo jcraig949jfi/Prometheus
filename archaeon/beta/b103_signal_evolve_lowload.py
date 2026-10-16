@@ -10,6 +10,10 @@ SHARED vs INDIVIDUAL reward.
 Readout: the top 10's SIGNALS; restored = the best genome's SIGNALS > .05.
 PREDICTION (committed before running): SHARED restores >= 2/6 AND SHARED >= INDIVIDUAL.
 If SHARED is 0/6, mutation supply at a sub-threshold load is too low for the signal to re-arise within G=300.
+B103 RESULT: SHARED 4/6, INDIVIDUAL 0/6 (MET). Best genomes were NOT saved (my omission).
+B103b (argv[2] = 10311): REPLICATION on new seeds 10311-10316, best genomes dumped, plus SIGNAL CONTENT (share of
+signal writes = richest index + 1; hand COMPLETE 1.0). SAME prediction, committed before the run; additionally the
+content of restored signallers is >= .5.
 """
 import copy
 import json
@@ -61,26 +65,44 @@ def cell(job):
             ev.reproduce()
     tops = [z[1]["manifest"] for z in ev.scored[:10]]
     sigs = [readouts(m, w, s)[0] for m in tops]
-    return {"arm": arm, "seed": job["seed"], "best_signals": sigs[0], "top10_signalling": sum(x > .05 for x in sigs), "restored": sigs[0] > .05}
+    (OUT / ("best_%s_%d.json" % (arm, job["seed"]))).write_text(json.dumps(tops[0]), encoding="utf-8")
+    return {"arm": arm, "seed": job["seed"], "best_signals": sigs[0], "top10_signalling": sum(x > .05 for x in sigs), "restored": sigs[0] > .05,
+            "signal_content": content(tops[0], w, s)}
+
+
+def content(m, w, s, E=32):
+    """As a lone scout: share of signal writes equal to (index of the richest pool + 1). Hand COMPLETE = 1.0."""
+    from proteus.foundry.prng import SplitMix64 as _S, seed_from as _sf
+    from proteus.foundry.vm import Player as _P
+    p = _P(m); hit = 0; n = 0
+    for ep in range(E):
+        st = w.w.reset(s + 1000 + ep % 4, ep, {}); vm = p.fresh_state(); rng = _S(_sf("wse.vmrng", 7, ep, 0))
+        while not w.done(st):
+            obs = w.observe(st); p.begin_tick(vm); outs, _ = p.run_tick(vm, obs, w.K, rng)
+            if len(outs) > 3 and outs[3]:
+                pools = st["pools"]; n += 1; hit += outs[3][0] == pools.index(max(pools)) + 1
+            w.act(st, outs)
+    return round(hit / n, 3) if n else None
 
 
 def main(argv):
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
     with ProcessPoolExecutor(max_workers=int(argv[1]) if len(argv) > 1 else 12) as ex:
-        futs = {ex.submit(cell, {"arm": a, "seed": 10301 + i, "G": int(argv[0]) if argv else 300}): (a, i) for a in ("SHARED", "INDIVIDUAL") for i in range(6)}
+        base = int(argv[2]) if len(argv) > 2 else 10301
+        futs = {ex.submit(cell, {"arm": a, "seed": base + i, "G": int(argv[0]) if argv else 300}): (a, i) for a in ("SHARED", "INDIVIDUAL") for i in range(6)}
         for fu in as_completed(futs):
             try:
                 r = fu.result()
             except Exception as e:                    # noqa: BLE001
                 a, i = futs[fu]; r = {"arm": a, "seed": 10301 + i, "error": repr(e)[:300]}
             rows.append(r); print(json.dumps(r), flush=True)
-            with open(OUT / "B103_cells.jsonl", "a", encoding="utf-8") as fh:
+            with open(OUT / ("B103_cells.jsonl" if base == 10301 else "B103b_cells.jsonl"), "a", encoding="utf-8") as fh:
                 fh.write(json.dumps(r) + chr(10))
     summ = {a: sum(r.get("restored", False) for r in rows if r.get("arm") == a) for a in ("SHARED", "INDIVIDUAL")}
     summ["pred"] = summ["SHARED"] >= 2 and summ["SHARED"] >= summ["INDIVIDUAL"]
     print(json.dumps(summ))
-    (OUT / "B103_result.json").write_text(json.dumps({"probe": "B103", "c": C_, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
+    (OUT / ("B103_result.json" if base == 10301 else "B103b_result.json")).write_text(json.dumps({"probe": "B103", "c": C_, "summary": summ, "rows": rows}, indent=1), encoding="utf-8")
     return 0
 
 

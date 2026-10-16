@@ -1218,6 +1218,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   0/32) nor the RESET-from-random wall (0/8 vs 0/12). The memory walls are DISTANCE walls (as B75-B90 concluded); the
   communication wall is an ERROR-THRESHOLD wall. Different mechanisms. Correction to post: comms #2256's implication
   is withdrawn for memory.
+- Scope correction posted (comms #2260).
+- B103 RESULT (02:21Z; lease lse-515f4f41866c RELEASED; ~2 core-h): from 200 x MUTE_OP at clone fraction c=0.85 (break
+  rate ~.05, below/near s), the SIGNAL RE-EVOLVED under SHARED reward in 4/6 runs (best SIGNALS .238/.199/.083/.238; top-10
+  signalling 4/5/10/10) vs INDIVIDUAL 0/6 (Fisher one-sided p ~ .03). PREDICTION MET. FIRST EVOLVED COMMUNICATION of the
+  campaign: below the error threshold, an honest signal that benefits only others re-arises by mutation + selection under
+  group-level (shared) reward and never under individual reward. PROVISIONAL (positive results are provisional): best
+  genomes were not saved (my omission), so the content was not verified. B103b = replication on new seeds with genome
+  dumps + signal-content readout (instrument verified: hand COMPLETE content 1.000 on 768 writes).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
