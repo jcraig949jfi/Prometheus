@@ -45,6 +45,12 @@ were recorded elsewhere before this file existed are listed under
                                                                                    review packet and comms (#2245). Rule now: a mechanism read from
                                                                                    one positive case is posted as a CASE, not a law, until it is
                                                                                    tested across the population it would explain.
+    2026-10-16  M2 (P2B SFE)  used SELF-ABLATION (zero the listeners' signal) as   B111 11106 off-lattice dropped .35 under ablation while its full     archaeon/beta/JOURNAL.md
+                              the communication readout and preregistered it for  reward (.516) was below the no-signal baseline (.746): ablation    (B111 COMPLETE, B115);
+                              B112-NL                                              measures dependence, not information. Repair: B115 constant-twin   b115_info_readout.py
+                                                                                   readout (full - best constant word), calibrated, declared for
+                                                                                   B112-NL before any result. Rule now: a 'uses the channel' readout
+                                                                                   needs a constant-channel twin, not only a zeroed channel.
 
 ## Prior rows, by pointer (before this file existed)
 
