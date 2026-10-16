@@ -1315,6 +1315,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   ARISING -- candidates: faster listener decay in world 2 (most world-2 runs end below MUTE5's own-group level), or
   fewer alternative informative code paths. Not yet measured.
   WINDOW 10 TALLY: ~27 + ~1.5 = ~28.5 of 48.
+- B109 (listener decay, evaluation only, 300 one-step children each): the fraction keeping >= half the parent's LISTENS is
+  world 1 .637 vs world 2 .620 -- EQUAL. Listener decay rate does not explain the world difference.
+  STATE: the world-1 vs world-2 evolved-communication rate gap (7/12 vs 1/12, p ~ .015) is REAL, but holding (B108),
+  restore supply (B108b) and listener decay (B109) are all equal. Unmeasured candidates: world 2's higher MUTE5 baseline
+  (.806 vs .754, so less headroom per signal) and lower listener value (.259 vs .328). PARKED as an open, well-bounded
+  question (diminishing returns).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
