@@ -1399,6 +1399,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   restore (.179) passed the hand-listener readout, which lattice-hash codes FAIL (they read negative: B111 -.06 to
   -.18). So the lattice exploit cannot be what the earlier kin positives are. Residual: B110 MUTE 11003 not
   directly re-scored off-lattice (genome not dumped); low priority.
+- B112-NL INTERIM (5/6 cells, 18:30Z): ablation drop (prereg) .000/.000/.049/.001/-.001 -> 0/5; B115 info
+  (declared before results) 11211 .000, 11212 .000, 11213 .000, 11214 .046, 11215 -.004 -> 0/5. Both below .05.
+  11214 is BORDERLINE on every readout (hand SIGNALS margin +.062 vs lattice const; ablation .049; info .046) and
+  emits only 4 values. Decode (jittered held-out): signal 0 almost only when pool 0 is richest (9/11); signal 1
+  when pool 1 or 2 is richest; a large constant otherwise. An INDEX-LIKE partial code from a comparison, NOT a
+  copied magnitude. First non-exploit proto-code from scratch, but sub-threshold: reported as a weak signal, not a
+  positive. Follow-up candidate: continue 11214's lineage (G 300 -> 600) to see whether it sharpens.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
