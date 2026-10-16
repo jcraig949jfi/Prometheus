@@ -221,7 +221,7 @@ clock.
    into the action; the world reads action % 3 and the pool values sit on a lattice whose residues happen to carry
    ~1 bit). Jittering the pools off the lattice (B114, prereg met) removes it (.11 -> .02) while the hand code keeps
    .21. The earlier positives (B103/B106b/B110) passed the HAND-listener readout, which a hash code fails (it reads
-   negative), so they are not this exploit. Future communication worlds are jittered; B112-NL tests kin-from-scratch
+   negative), and B114b confirms the B103b signallers keep their value off-lattice (.17/.06/.19). Future communication worlds are jittered; B112-NL tests kin-from-scratch
    there.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)

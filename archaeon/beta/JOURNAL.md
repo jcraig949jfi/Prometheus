@@ -1364,6 +1364,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   exploit, not test communication. The run that matters is B112-NL, kin from scratch in the JITTERED world, with the
   same self-ablation readout and a training-side value check first (COMPLETE drop on training seed s, E=8). Prediction
   to be committed with the script.
+- B114b RESULT (~17:10Z; single process; prereg committed before the run): off-lattice self-ablation on the B103b best
+  SHARED genomes. Restored 10311 .173, 10312 .058 (marginal), 10314 .186 (> .05 each); non-restored 10313/10315/10316
+  0/0/0. PREDICTION MET (the script's printed 'pred' applies B114's criterion and is n/a here; rows in
+  results/B114_nolattice/B114b_result.json). VERDICT: the group-selection positives are NOT lattice exploits; they
+  carry information off-lattice. Finding 5's claim that 'earlier positives are unaffected' is now TESTED, not argued.
+  Lattice-dependence remains untested for B106b/B110 (kin restores; genomes not dumped).
+  B111 lease lse-590f98bd3da1 RENEWED 17:00Z +1 h (renew needs EW_DB_HOST set; first attempt failed on db identity).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
