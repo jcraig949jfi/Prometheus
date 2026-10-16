@@ -1435,6 +1435,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   no IN, no order). Control: hand L3o solution K2 1.0 / K6 1.0. Scrubbed gen 0, seeds 11701-11708, G=300.
   PREDICTION: >= 7/8 keyed AND median first solve <= 30 (L2-like). Ladder for comparison: L2 8/8 ~8; L3f 6/8 ~72;
   L3 2-3/8 ~44-203.
+- Campaign update 13 written + posted (CAMPAIGN_UPDATE_2026-10-16b.md; comms #2266 to Harmonia, Aporia). Inbox: no new
+  operator or peer requests for Archaeon (latest Nestor #2223, FYI).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
