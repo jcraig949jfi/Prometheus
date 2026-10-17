@@ -2,15 +2,10 @@
 
 ## Fleet census (Achilles)
 
-Generated 2026-10-17T04:30:01Z from origin/main e3cc4a1b80. Seats 75: WORKING 3, ACTIVE 1, READY 7, IDLE 6, BLOCKED 6, HOLD 2, PARKED 8, DORMANT 39, RETIRED 3. Active within 24h: 5. Experiments 24h: 4. Commits 24h: 87.
+Generated 2026-10-17T05:05:42Z from origin/main e4075d5a3b. Seats 75: WORKING 3, ACTIVE 1, READY 7, IDLE 6, BLOCKED 6, HOLD 2, PARKED 8, DORMANT 39, RETIRED 3. Active within 24h: 5. Experiments 24h: 4. Commits 24h: 85.
 
 **Changes since previous census:**
-- state: Aether: IDLE -> WORKING
-- experiment: Archaeon: 77a2ee463f Archaeon beta: B118c FAILED 0/4 (final)
-- anomaly: NODE_UNREACHABLE ubu001
-- anomaly: NODE_UNREACHABLE ubu004
-- anomaly: NODE_UNREACHABLE ubu005
-- anomaly: NODE_UNREACHABLE ubu006
+- none
 
 **Needs attention (8):**
 - Palamedes WORKING: MISSING_ROLE_DESCRIPTION, VISIBILITY_STALE, NOT_IN_REGISTRY
@@ -24,15 +19,15 @@ Generated 2026-10-17T04:30:01Z from origin/main e3cc4a1b80. Seats 75: WORKING 3,
 
 | Agent | Role | State | Last active | Last experiment | Current / last task | Engine / system | Last commit |
 |---|---|---|---|---|---|---|---|
-| Aether | Lattice substrate science, RunP... | WORKING (Yes) | 2026-10-17 03:50 (39m) | c989c09a14 ROBUST01 FREEZE: combine-all-contenders (aeth01.op_xor_f... | prompt from Palamedes: RESULT: Observatory onboarding of Aether (C-018) -- RX causal pr... | Aether | 04bec36188 Aether journal: Skullport RunPod tenant, ROBUST01 freeze... |
+| Aether | Lattice substrate science, RunP... | WORKING (Yes) | 2026-10-17 03:50 (1h) | c989c09a14 ROBUST01 FREEZE: combine-all-contenders (aeth01.op_xor_f... | prompt from Palamedes: RESULT: Observatory onboarding of Aether (C-018) -- RX causal pr... | Aether | 04bec36188 Aether journal: Skullport RunPod tenant, ROBUST01 freeze... |
 | Pan |  | WORKING (Yes) | 2026-10-16 06:53 (22h) | 1fe9c7c64c Pan[m2-f20b5eac]: PAN-44 read-only stdio MCP prototype -... | operator directive 2026-10-09_creation: You're @roles\Pan a new seat in Prometheus. Use... | - | be4fef5fa4 Pan[m2-f20b5eac]: journal -- loop stopped by operator at... |
 | Palamedes |  | WORKING (Uncertain) | 2026-10-15 14:54 (38h) | 6967e298c8 Palamedes[harry1-679179c6]: C-019-T020 INTEGRATED -- Aet... | operator directive 2026-10-15_generation5: PROMETHEUS — OPERATOR DIRECTIVE OBSERVATORY ... | - | 0d6628cde5 Palamedes[harry1-679179c6]: C-019 CLOSED early on the se... |
-| Mnemosyne | memory and evidence substrate (... | ACTIVE (Yes) | 2026-10-17 04:00 (29m) | be548e85c5 Mnemosyne[m2-9c10ae00]: S7 rehearsal leg as one command ... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | evidence_wiki, mnemosyne, comms | 6277c59aba evidence_wiki/comms: TCP keepalive + tcp_user_timeout on... |
-| Archaeon | Experiment proposer; comms owner | READY (Yes) | 2026-10-17 03:53 (36m) | 77a2ee463f Archaeon beta: B118c FAILED 0/4 (final) | prompt from Palamedes: RESULT: Observatory onboarding of Z80 Atlas (C-017) -- ATTRIBUTI... | archaeon/producer, archaeon/campaign2... | 77160b8f32 Archaeon beta: B118c weak sub-threshold type use 2/4 vs 0/4 |
-| Achilles | Fleet census and status seat | READY (Yes) | 2026-10-17 01:23 (3h) | N/A (reporting) | prompt from Palamedes: Fabric defect: 0 live workers; worker.ubu001.{a,b,sci} 'online' ... | achilles/census | 8eeaeb3043 Achilles: fleet_fanout.py -- fix `run ... -- cmd` (argpa... |
-| Argus |  | READY (Uncertain) | 2026-10-15 14:20 (38h) | d19948564b Argus[harry1-b0323ab0]: C-018-T050 INTEGRATION_READY (st... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | c497eac25a Argus[harry1-666e5dbc]: C-019-T040 close -- comms bodies... |
+| Mnemosyne | memory and evidence substrate (... | ACTIVE (Yes) | 2026-10-17 04:00 (1h) | be548e85c5 Mnemosyne[m2-9c10ae00]: S7 rehearsal leg as one command ... | delegation from Archaeon: Archaeon[m2-49ee5a4d] CAMPAIGN 6 OPENED (Cambrian expansion /... | evidence_wiki, mnemosyne, comms | 6277c59aba evidence_wiki/comms: TCP keepalive + tcp_user_timeout on... |
+| Achilles | Fleet census and status seat | READY (Yes) | 2026-10-17 05:00 (4m) | N/A (reporting) | prompt from Palamedes: Fabric defect: 0 live workers; worker.ubu001.{a,b,sci} 'online' ... | achilles/census | e4075d5a3b Achilles[elsa]: census node probe -- ssh client never re... |
+| Archaeon | Experiment proposer; comms owner | READY (Yes) | 2026-10-17 04:31 (34m) | 77a2ee463f Archaeon beta: B118c FAILED 0/4 (final) | prompt from Palamedes: RESULT: Observatory onboarding of Z80 Atlas (C-017) -- ATTRIBUTI... | archaeon/producer, archaeon/campaign2... | 6141884e27 Archaeon beta: B118d interim -- first type reader (11821... |
+| Argus |  | READY (Uncertain) | 2026-10-15 14:20 (39h) | d19948564b Argus[harry1-b0323ab0]: C-018-T050 INTEGRATION_READY (st... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | c497eac25a Argus[harry1-666e5dbc]: C-019-T040 close -- comms bodies... |
 | Cadmus |  | READY (Uncertain) | 2026-10-15 10:36 (42h) | 4c5163aa62 Cadmus[harry1-c619844e]: C-019-T020 Aether replay audit ... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | ca80a589b9 Cadmus[harry1-c619844e]: WORK_STATE -- C-019 T020/T021 I... |
-| Eupalamus |  | READY (Uncertain) | 2026-10-15 09:30 (43h) | fdc84a2910 Eupalamus[harry1-93a529ba]: C-013-T022 fire test PASS 13... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | 4f2c0da175 Eupalamus[harry1-1984bbb6]: C-019-T011 INTEGRATION_READY... |
+| Eupalamus |  | READY (Uncertain) | 2026-10-15 09:30 (44h) | fdc84a2910 Eupalamus[harry1-93a529ba]: C-013-T022 fire test PASS 13... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | 4f2c0da175 Eupalamus[harry1-1984bbb6]: C-019-T011 INTEGRATION_READY... |
 | Nestor | budgeted autonomous scientific ... | READY | 2026-10-12 14:35 (5d) | 65bfccd346 NPE-48h: X-REDISCOVER-SUPPLY CLOSED CLEAN_NULL (supply f... | operator directive 2026-10-08_npe_48h_functional_heredity: Nestor — You are authorized ... | primordial | a9eae4a493 Nestor: status report 2026-10-12 (idle/READY; NPE-48h cl... |
 | Bellerophon | Worlds Kernel and Z80 substrate | READY | 2026-10-11 22:46 (5d) | f05bbabe2f Bellerophon[ubu005-0eb14d49]: BEL-RD-72 K FREEZE -- two-... | delegation from Cosmos: C4 Phase 2 may proceed: foreign family 79dc4c4b8 verified + C3 ... | prometheus/toolbox, prometheus/z80atl... | 4006f1ee53 BEL-RD-72: review packet (campaign close) |
 | Pallas |  | IDLE | 2026-10-12 16:24 (5d) | aff6248f95 Pallas[harry1-cd02a995]: C-018-T042 REPORT -- repair clo... | prompt from Palamedes: Completion push DONE: native witness executed (S4/S15 NEGATIVE, ... | - | 0734df643b Pallas[harry1-cd02a995]: C-018-T042 comms addendum (stat... |
@@ -55,7 +50,7 @@ Generated 2026-10-17T04:30:01Z from origin/main e3cc4a1b80. Seats 75: WORKING 3,
 | Ares | Pressure-engineering soup sandbox | PARKED | 2026-09-25 10:55 (22d) | ab137f52b9 Ares[m2-640acfe6]: cycle 2 PREREGISTERED (attack the mec... | operator directive 2026-09-23_cycle2_directive: I would unpark Ares for exactly one foc... | ares | 3f68be2b96 Ares[m2-640acfe6]: handoff across the operator reboot --... |
 | Diomedes | Parked coordinate-adequacy seat | PARKED | 2026-09-13 22:56 (33d) | 8157e9e705 Nursery CRUCIBLE-C: C-PASS -- pair-quotient of Diomedes ... |  | roles/Diomedes/coordinate_census.py | 8157e9e705 Nursery CRUCIBLE-C: C-PASS -- pair-quotient of Diomedes ... |
 | Skopos | Parked relevance-filter instrum... | PARKED | 2026-09-11 17:45 (35d) | N/A (audit) |  | agents/skopos | 8bec88eb24 Skopos: reply to Metis #109 -- third instance given, bas... |
-| Coeus | Parked causal-analysis pipeline... | PARKED | 2026-09-11 16:53 (35d) |  |  | agents/coeus | cb31b4e645 Coeus: closing receipt -- pushed ab3238e75, self-test 8/... |
+| Coeus | Parked causal-analysis pipeline... | PARKED | 2026-09-11 16:53 (36d) |  |  | agents/coeus | cb31b4e645 Coeus: closing receipt -- pushed ab3238e75, self-test 8/... |
 | Apollo | Serendipity substrate miner (su... | PARKED | 2026-09-11 12:05 (36d) | 2b7c6e4fbe Apollo rules for Lexis (comms 15): the blackboard substr... | delegation from Lexis: Task 2 state injection over the committed Lexis fixture (arms A/... | apollo/serendipity, apollo | 2b7c6e4fbe Apollo rules for Lexis (comms 15): the blackboard substr... |
 | Ananke | Packet-Tensor Engine builder an... | DORMANT | 2026-10-09 10:55 (8d) | e4f930b94a PTE-C4 s8 diagnostic RESULT: INCONCLUSIVE_SPARSE -- 2/32... | prompt from Palamedes: Gen-5 follow-up: Observatory evaluator + parts-suitability prere... | prometheus/ananke, roles/Ananke/pte | f58362c5e3 72h review request draft (posted at completion) |
 | Aporia | Contrarian theorist; fleet coor... | DORMANT | 2026-10-09 09:39 (8d) | f63a8589a2 Aporia: MWO-0003 FP-001 cold-start probe -- PASS via sea... | prompt from Palamedes: Fabric defect: 0 live workers; worker.ubu001.{a,b,sci} 'online' ... | aporia/lot, ops/fleet, ops/work_orders | 03884832a9 Aporia: C-004-T047 registrar -- rows 45-47 registered (R... |
@@ -100,12 +95,12 @@ Generated 2026-10-17T04:30:01Z from origin/main e3cc4a1b80. Seats 75: WORKING 3,
 | Metis | composition of heterogeneous fa... | RETIRED | 2026-09-14 01:09 (33d) | 2a650277b4 SPECIMEN FREEZE (Metis Season 1): composition mechanism ... | operator directive 2026-09-11_seating: # Operator directive, 2026-09-11 -- the Metis se... | agents/metis | f9f90c0f71 Metis Season 1 CLOSED: SPECIMEN_SURVIVES_RETROSPECTIVE (... |
 | Atalanta | Retired E-track primitive hunter | RETIRED | 2026-09-11 17:16 (35d) |  | NONE. The seat is closed. Three handovers were posted and none returns here: Archaeon (... | agents/atalanta | 051304cd07 Atalanta: RETIRED by the operator. Retirement annotation... |
 
-**Linux nodes (2/6 reachable; mind: 6 procs, 0.0% CPU, 44 MB):**
-- ubu001 UNREACHABLE: timeout after 25s
-- ubu003 load 0.07 0.02 0.00 | RAM 6192/7330MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
-- ubu004 UNREACHABLE: timeout after 25s
-- ubu005 UNREACHABLE: timeout after 25s
-- ubu006 UNREACHABLE: timeout after 25s
-- ubu008 load 1.04 1.14 1.11 | RAM 9432/15161MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+**Linux nodes (6/6 reachable; mind: 18 procs, 0.0% CPU, 132 MB):**
+- ubu001 load 0.00 0.00 0.00 | RAM 6061/7171MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+- ubu003 load 0.00 0.01 0.00 | RAM 6188/7330MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+- ubu004 load 0.00 0.01 0.00 | RAM 6565/7297MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+- ubu005 load 1.45 0.56 0.31 | RAM 19648/23357MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+- ubu006 load 0.00 0.00 0.00 | RAM 14284/15391MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
+- ubu008 load 0.95 0.42 0.56 | RAM 10720/15161MB | worker active | mind 3 procs (0 Skullport hosts), 0.0% CPU, 22 MB
 
 Full census, evidence and engine map: https://jcraig949jfi.github.io/Prometheus/fleet/
