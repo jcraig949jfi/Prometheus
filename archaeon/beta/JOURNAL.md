@@ -1562,6 +1562,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   >= 3/8 AND PLAIN <= 1/8.
 - Review packet written: REVIEW_PACKET_BETA_F2Q3_SEMANTICS.txt (claim, readouts, 8 runs, kill controls, 5 named
   weaknesses incl. the seed defect and the untested distance isolation).
+- B120 STAGED + CONTROLS (prereg 4c937c73e before running; ~11:20Z; single process): DISTANCE ISOLATION -- B118g
+  design (seeded working forager, tape 128) but type words at the END of channel 0. Controls MET: GENe info 0, CHKe
+  info .065; training-side CHKe - GENe positive 8/8. (Fix before controls ran: CHKe control genome > 112 words, tape
+  rounded to the next power of two; the seed GENe is 72 words, tape 128.) Evolution 8 cells (seeds 12001-12004 x 2)
+  QUEUED for window 12 after B119. PREDICTION (distance hypothesis): TOXIC semantic <= 1/4, PLAIN 0/4.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
