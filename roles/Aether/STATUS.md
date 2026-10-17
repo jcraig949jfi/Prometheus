@@ -1,5 +1,16 @@
 # Aether status
 
+> **CURRENCY 2026-10-17Z (boot) -- read this first.** Supersedes every block below.
+>
+> seat state: ACTIVE. Host SPECTREX5 (M2), Aether[m2-fa1b3051], worktree
+>   D:/Prometheus-worktrees/aether-m2, branch aether/boot-2026-10-16 from origin/main 0f91d5cbf.
+> governing directive: roles/Aether/prompts/2026-10-04_v2b_directive (autonomous V2-B seat); MWO-0004.
+> last result: REACH01 CLOSED 2026-10-10T22:45Z (Aether/V2B/REACH01/72H_SYNTHESIS.md). Binding
+>   constraint: contest arbitration makes every composition position-fragile.
+> since then: C-018/C-019 Observatory onboarding (Palamedes) ran Aether read-only; TEST-4 preserved.
+> next: ROBUST01 (combine-all-contenders vs frozen XOR law). DEV on CPU now; TEST waits for an idle GPU.
+> resume from: roles/Aether/WORK_STATE.json, then roles/Aether/TODO.md. Journal: journal/2026-10-16.md.
+
 > **CURRENCY 2026-09-27 (research block) -- read this first.**
 >
 > seat state: ACTIVE, not blocked on any other seat. Host BUCKKEEP,

@@ -1,12 +1,34 @@
 # Aether TODO
 
-Currency: **2026-09-27.** Written for the instance that boots after a
+Currency: **2026-10-17Z** (header block only; the body below is 2026-09-27). Written for the instance that boots after a
 context reset, a reboot, or a Claude Code upgrade. Read this AFTER the
 base-role chain and BEFORE starting anything.
 
 Check `git log --oneline origin/main -1` before assuming where main is.
 Cut a fresh task branch from origin/main; the 09-27 research-block branch
 is integrated.
+
+---
+
+## CURRENT STATE (2026-10-17Z boot) -- read first; the 09-27 blocks below are history
+
+The lane moved on after 09-27 without this file being updated. Read the records in this order:
+
+    roles/Aether/prompts/2026-10-04_v2b_directive/   (autonomous V2-B seat; still governing)
+    Aether/V2B/REACH01/72H_SYNTHESIS.md              (last campaign, closed 2026-10-10)
+    Aether/V2B/THREE_FLIGHT_SYNTHESIS_2026-10-07.md  (OFFER01 / PROP01 / ROUTE01)
+    roles/Aether/WORK_STATE.json                     (machine-readable resume state)
+
+Host is M2 (SPECTREX5), not BUCKKEEP. Each experiment gets its own branch from origin/main and is
+integrated after it closes.
+
+**Next: ROBUST01** (72H_SYNTHESIS s10). Test ONE contest-semantics change against the frozen XOR law
+(combine-all-contenders, under its own semantics id). Keep the same planted combiner and the same LADDER01
+G1 search. Questions: is COMPOSE autonomous? Does autonomous discovery rise above 0/40? Does R4c
+necessity clear 0.8? Write the preregistration first, in its own commit.
+
+GPU gate: M2's GPU is shared with the operator's own work (ComfyUI was at ~90% at boot). Before any TEST
+window, check nvidia-smi for about a minute AND take the Fabric lease.
 
 ---
 
