@@ -37,6 +37,8 @@ def main(argv):
     done = {(json.loads(l)["arm"], json.loads(l)["seed"]) for l in open(cf, encoding="utf-8")} if cf.exists() else set()
     jobs = [{"arm": a, "seed": 11841 + i, "G": G_, "gen_lift": hc["GEN3"]["mean_lift"]} for i in range(8) for a in ("TOXIC", "PLAIN")]
     jobs = [j for j in jobs if (j["arm"], j["seed"]) not in done]
+    if len(argv) > 2:
+        jobs = jobs[:int(argv[2])]                     # wave cap (budget windows); jobs alternate TOXIC/PLAIN per seed
     with ProcessPoolExecutor(max_workers=W) as ex:
         futs = {ex.submit(cell, j): j for j in jobs}
         for fu in as_completed(futs):
