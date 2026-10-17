@@ -1,0 +1,40 @@
+{
+  "name": "skullport_sdxl_concepts",
+  "version": "1",
+  "entrypoint": "run.py",
+  "args": [],
+  "description": "Skullport (SmugglersHole) concept images: SDXL base 1.0 from Hugging Face, our own prompt lists, 30 steps DPM++ 2M Karras CFG 6, fixed seeds; PNGs + manifest.jsonl in tars.",
+  "dependencies": {
+    "pip": [
+      "diffusers==0.30.3",
+      "transformers==4.44.2",
+      "accelerate==0.34.2",
+      "safetensors==0.4.5",
+      "huggingface_hub==0.25.2",
+      "hf_transfer==0.1.8"
+    ]
+  },
+  "gpu": {
+    "class": "NVIDIA GeForce RTX 4090",
+    "alternatives": ["NVIDIA A40", "NVIDIA RTX A5000", "NVIDIA RTX A6000"],
+    "count": 1,
+    "cloud": "SECURE",
+    "min_memory_mib": 22000
+  },
+  "disk_gb": 40,
+  "max_runtime_s": 7200,
+  "artifacts": [
+    "images_0.tar",
+    "images_1.tar",
+    "images_2.tar",
+    "images_3.tar",
+    "manifest.jsonl",
+    "timing.json",
+    "telemetry.jsonl"
+  ],
+  "canary": "python3 -c \"import torch, diffusers; assert torch.cuda.is_available()\"",
+  "env_allowlist": ["SKP_LIST", "SKP_OFFSET", "SKP_BATCH"],
+  "env": {"SKP_LIST": "racefaces", "SKP_OFFSET": "0", "SKP_BATCH": "auto"},
+  "telemetry": {"interval_s": 15},
+  "work_units": {"name": "images", "estimate": 528}
+}
