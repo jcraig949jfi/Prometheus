@@ -1,0 +1,22 @@
+{
+ "stage0": {
+  "reproduction_contest": {
+   "planted_certificate": {"COMPOSE": true, "AUTONOMOUS": false, "position_combine_frac": 0.2578125,
+                           "other_seeds_combine": [false, false], "a_only": 13, "b_only": 10, "shared": 0},
+   "transplant_task1": "REACH01/R4/transplant_task1.json, exactly",
+   "discovered": "every D row's COMPOSE, AUTONOMOUS and position_combine_frac equal the REACH01 certificate for that hash"
+  },
+  "planted_autonomous_requires": ["COMPOSE", "AUTONOMOUS"],
+  "transplant_supported": "R4 rule: COMBINE fraction >= 0.2 at >= 2 non-zero offsets"
+ },
+ "stage1": {
+  "seeds": 40,
+  "common_min": 12,
+  "discoverable_min": 2,
+  "heldout_general_min": 2
+ },
+ "stage2": {
+  "r4_rules": "REACH01/R4/RULES.json (seeds_min 6, control_seeds_max 2, cost_ratio_max 0.5, necessity_frac_min 0.8)",
+  "robust_reuse_position_frac_min": 0.9
+ }
+}
