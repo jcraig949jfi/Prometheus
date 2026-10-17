@@ -309,3 +309,28 @@ linger keeps it running without a login). Idle: one sync every 5 minutes, ~23 MB
 - 2026-10-10 ~15:39Z: ubu008 (T490s) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-04 ~14:12Z: ubu005 (P52s, USB-enclosure root) provisioned with the shared token; worker at f78d18e26, enabled, IDLE.
 - 2026-10-03 ~20:05Z: ubu006 (Inspiron 3647) provisioned with the shared token; worker installed at f78d18e26, enabled, IDLE.
+
+## Skullport (M1) side-project access, venvs and Blender (2026-10-17, Achilles from ELSA)
+
+Operator 2026-10-16: give the M1 Claude Code session "Skullport Revive M1 949" all the help it needs to use the Linux
+fleet as it sees fit. Coordination runs over Claude Code cross-session messages (not `python -m comms`).
+
+- **SSH key `jcraig@SKULLPORT`** (M1's own ed25519 key, not the `mind` key) appended to `~jcraig/.ssh/authorized_keys` on
+  ubu001, ubu003, ubu004, ubu005, ubu006, ubu008 (each now 3 keys: `jcraig@M2`, `achilles@elsa`, `jcraig@SKULLPORT`).
+  Only the public line crossed the LAN. M1 confirmed login on .220/.222/.231. ubu002 (offline), ubu007 (HOLD), ubu009
+  (soak) not touched.
+- **ubu005 + ubu008 user-space setup:** `~/skullport/.venv` (Python 3.14.4; pyyaml 6.0.3, pytest 9.1.1, numpy 2.5.4,
+  pillow 13.0.0; 123 MB). M1 scp'd a git bundle and cloned to `~/skullport/repo`; its outfits+minds suites passed on
+  ubu005 (111 tests, 6 s). Sharded pytest over the two nodes is light and needs no GO.
+- **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
+  (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
+  libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
+  libxrender1); `blender-4.5.14-linux-x64.tar.xz` from download.blender.org/release/Blender4.5/, sha256 verified
+  against `blender-4.5.14.sha256`, unpacked to `~jcraig/blender` (1.2 GB, archive deleted). Checks: `~/blender/blender
+  --version` -> "Blender 4.5.14 LTS, build 2026-09-15 01:31:19"; `blender -b --python-expr "import bpy;
+  print(bpy.app.version_string)"` -> `4.5.14 LTS`, hash 62c1db4208e8, clean quit. PrometheusWorker active on both after.
+  Not on PATH; run as `~/blender/blender -b <file> -t 6 ...` under tmux.
+- **Load agreement:** runs of 30-60 min at up to 6 threads per node, leaving 2 for the PrometheusWorker; M1 states node,
+  duration and threads before each run. Sudo, package installs and anything heavier still need an operator GO.
+- Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo apt-get remove libxi6 libxxf86vm1 libxfixes3 libsm6
+  libice6 libgl1` (libxrender1 was pre-existing on ubu005); delete the SKULLPORT line from `authorized_keys`.
