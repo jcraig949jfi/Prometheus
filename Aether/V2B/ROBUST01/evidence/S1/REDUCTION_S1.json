@@ -1,0 +1,7926 @@
+{
+ "schema": "aether.robust01.s1.reduction.v1",
+ "semantics_id": "aeth01.op_xor_fold",
+ "disposition": "ROBUST_COMPOSITION_DISCOVERABLE",
+ "qualifier": "HELDOUT_NOT_GENERAL",
+ "rules": {
+  "seeds": 40,
+  "common_min": 12,
+  "discoverable_min": 2,
+  "heldout_general_min": 2
+ },
+ "reproduction": {
+  "counts": {
+   "C": {
+    "COMBINE": 7,
+    "COMPOSE": 3,
+    "AUTO_COMPOSE": 0,
+    "AUTO_ANY": 1
+   },
+   "A": {
+    "COMBINE": 0,
+    "COMPOSE": 0,
+    "AUTO_COMPOSE": 0,
+    "AUTO_ANY": 0
+   }
+  },
+  "published": {
+   "C": {
+    "COMBINE": 7,
+    "COMPOSE": 3,
+    "AUTO_COMPOSE": 0,
+    "AUTO_ANY": 1
+   },
+   "A": {
+    "COMBINE": 0,
+    "COMPOSE": 0,
+    "AUTO_COMPOSE": 0,
+    "AUTO_ANY": 0
+   }
+  },
+  "ok": true
+ },
+ "missing_units": [],
+ "all_units_stamped": true,
+ "instrument_violations": [],
+ "table": {
+  "fold_C_COMBINE": {
+   "k": 9,
+   "n": 40,
+   "wilson95": [
+    0.1232,
+    0.375
+   ]
+  },
+  "fold_C_COMPOSE": {
+   "k": 4,
+   "n": 40,
+   "wilson95": [
+    0.0396,
+    0.2305
+   ]
+  },
+  "fold_C_AUTO_COMPOSE": {
+   "k": 4,
+   "n": 40,
+   "wilson95": [
+    0.0396,
+    0.2305
+   ]
+  },
+  "fold_C_AUTO_ANY": {
+   "k": 9,
+   "n": 40,
+   "wilson95": [
+    0.1232,
+    0.375
+   ]
+  },
+  "fold_C_GEN_COMPOSE": {
+   "k": 1,
+   "n": 40,
+   "wilson95": [
+    0.0044,
+    0.1288
+   ]
+  },
+  "fold_A_COMBINE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "fold_A_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "fold_A_AUTO_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "fold_A_AUTO_ANY": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "fold_A_GEN_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "contest_C_COMBINE": {
+   "k": 7,
+   "n": 40,
+   "wilson95": [
+    0.0875,
+    0.3195
+   ]
+  },
+  "contest_C_COMPOSE": {
+   "k": 3,
+   "n": 40,
+   "wilson95": [
+    0.0258,
+    0.1986
+   ]
+  },
+  "contest_C_AUTO_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "contest_C_AUTO_ANY": {
+   "k": 1,
+   "n": 40,
+   "wilson95": [
+    0.0044,
+    0.1288
+   ]
+  },
+  "contest_A_COMBINE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "contest_A_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "contest_A_AUTO_COMPOSE": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  },
+  "contest_A_AUTO_ANY": {
+   "k": 0,
+   "n": 40,
+   "wilson95": [
+    -0.0,
+    0.0876
+   ]
+  }
+ },
+ "nonautonomous_with_energy_contests": [
+  0,
+  0
+ ],
+ "fold_seed_flags": {
+  "A_s0": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s1": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s2": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s3": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s4": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s5": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s6": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s7": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s8": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s9": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s10": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s11": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s12": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s13": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s14": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s15": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s16": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s17": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s18": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s19": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s20": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s21": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s22": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s23": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s24": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s25": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s26": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s27": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s28": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s29": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s30": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s31": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s32": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s33": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s34": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s35": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s36": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s37": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s38": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "A_s39": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s0": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s1": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s2": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s3": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s4": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s5": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s6": {
+   "COMBINE": true,
+   "COMPOSE": true,
+   "AUTO_COMPOSE": true,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s7": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s8": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s9": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s10": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s11": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s12": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s13": {
+   "COMBINE": true,
+   "COMPOSE": true,
+   "AUTO_COMPOSE": true,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": true
+  },
+  "C_s14": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s15": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s16": {
+   "COMBINE": true,
+   "COMPOSE": true,
+   "AUTO_COMPOSE": true,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s17": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s18": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s19": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s20": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s21": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s22": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s23": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s24": {
+   "COMBINE": true,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s25": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s26": {
+   "COMBINE": true,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s27": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s28": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s29": {
+   "COMBINE": true,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s30": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s31": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s32": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s33": {
+   "COMBINE": true,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s34": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s35": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s36": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s37": {
+   "COMBINE": true,
+   "COMPOSE": true,
+   "AUTO_COMPOSE": true,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  },
+  "C_s38": {
+   "COMBINE": false,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": false,
+   "GEN_COMPOSE": false
+  },
+  "C_s39": {
+   "COMBINE": true,
+   "COMPOSE": false,
+   "AUTO_COMPOSE": false,
+   "AUTO_ANY": true,
+   "GEN_COMPOSE": false
+  }
+ },
+ "candidates": [
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "33e077d156432b1d",
+   "found_at_eval": 12891,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "19e6c434bcdedc9f",
+   "found_at_eval": 13333,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "db80040407d6a8b7",
+   "found_at_eval": 13352,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "dce1db993c7b1d9c",
+   "found_at_eval": 13391,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "463e803b69addc2e",
+   "found_at_eval": 13394,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "860db7b0e6d3f577",
+   "found_at_eval": 13396,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 627,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "5870fec0b02a4d8e",
+   "found_at_eval": 13399,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 579,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "4a0a854ea4917570",
+   "found_at_eval": 13419,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "d988d2a47a69ebcd",
+   "found_at_eval": 13457,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 6,
+   "hash": "6c2ada3938eb978c",
+   "found_at_eval": 13463,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 2,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 691,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 3
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "a2f1070defb8ea26",
+   "found_at_eval": 5006,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "88052bc1d0297f48",
+   "found_at_eval": 5122,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 1,
+   "shared": 4,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "b623fdaa6066b826",
+   "found_at_eval": 5125,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "0d7a2a19c064f499",
+   "found_at_eval": 5126,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "606f4c5ab0044f66",
+   "found_at_eval": 5127,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "6a466d39e53606e5",
+   "found_at_eval": 5130,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 448,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "fb79d1b938ddb414",
+   "found_at_eval": 5145,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "1de5dfcc61d359e3",
+   "found_at_eval": 5148,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "a4717a0bc7aaa8fd",
+   "found_at_eval": 5149,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 720,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 13,
+   "hash": "3ff38f7fe6740131",
+   "found_at_eval": 5150,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 5,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 928,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "dd773c3ff17177b1",
+   "found_at_eval": 16592,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "2157b2696915ff0f",
+   "found_at_eval": 17428,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "e8710ace7c7fba22",
+   "found_at_eval": 17470,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "492f992b91f1b62c",
+   "found_at_eval": 17500,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "f06b848720741057",
+   "found_at_eval": 17511,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "7bb4f533b49f912b",
+   "found_at_eval": 17530,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "9bd8a63159dc9313",
+   "found_at_eval": 17623,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "851c66ec4a00b40e",
+   "found_at_eval": 17629,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "a235cdb9c2917c82",
+   "found_at_eval": 17641,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 16,
+   "hash": "2d17fdd70659173d",
+   "found_at_eval": 17651,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 5,
+   "b_only": 5,
+   "shared": 1,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 454,
+   "seeds_identical": true,
+   "heldout_rung": 0,
+   "distinct_outputs": 4
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "5dd16dacf60daaec",
+   "found_at_eval": 17913,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "edeb28da705acf48",
+   "found_at_eval": 18440,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "adf7424721bd4e9f",
+   "found_at_eval": 18452,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "9cb5487fb9a04f13",
+   "found_at_eval": 18462,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "e9b3e82e9a98765e",
+   "found_at_eval": 18495,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "a0b21db64718d758",
+   "found_at_eval": 18509,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "3955fb7a57b1ccee",
+   "found_at_eval": 18635,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 488,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "b6744348201cec2c",
+   "found_at_eval": 18657,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "53d7e38009793130",
+   "found_at_eval": 18668,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 24,
+   "hash": "52f7f156fc99de84",
+   "found_at_eval": 18706,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 2,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "Nb": [
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 520,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "018ddafab52cff0b",
+   "found_at_eval": 13316,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "ef9c5418ef832fb4",
+   "found_at_eval": 14354,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "7d80ebdaa54a3888",
+   "found_at_eval": 14359,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "971e08f0346c85bd",
+   "found_at_eval": 14362,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "5595d47c643d3d94",
+   "found_at_eval": 14371,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 52,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "6a695e44b1b32823",
+   "found_at_eval": 14375,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 368,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "b409546732966870",
+   "found_at_eval": 14376,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 192,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "8f2b88802be5b7ca",
+   "found_at_eval": 14412,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "5633a6e27caaf7e8",
+   "found_at_eval": 14415,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 26,
+   "hash": "63e2f1f0ca220e80",
+   "found_at_eval": 14422,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 8,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     3
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 0,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "bdb88441dcf1714a",
+   "found_at_eval": 7859,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "ec043e7834194fb4",
+   "found_at_eval": 8194,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "ac6e1968e32feeff",
+   "found_at_eval": 8197,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "7888bda9607f115b",
+   "found_at_eval": 8202,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "3bb29345870d1f83",
+   "found_at_eval": 8211,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "327cb7f576465331",
+   "found_at_eval": 8213,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "e1630ef0dbe315c6",
+   "found_at_eval": 8265,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "0300ff582bf0768c",
+   "found_at_eval": 8267,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "caa60c4aa009c572",
+   "found_at_eval": 8278,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 48,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 29,
+   "hash": "91fb2f42c110544f",
+   "found_at_eval": 8301,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 1,
+   "b_only": 0,
+   "shared": 8,
+   "Na": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "Nb": [
+    [
+     5,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 32,
+   "template_multi": 155,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 5
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "5db54e0fa2850c0d",
+   "found_at_eval": 12689,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1504,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "2aa3c53706e9b144",
+   "found_at_eval": 13319,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1504,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "1f8f711419723ded",
+   "found_at_eval": 13322,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1200,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "38ac1a488b4aad03",
+   "found_at_eval": 13326,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1504,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "bd5f455cc7d7f50b",
+   "found_at_eval": 13329,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1552,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "76bab82ed45a8082",
+   "found_at_eval": 13337,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1504,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "c30947eb7fdc4c44",
+   "found_at_eval": 13343,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1504,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "dfa5d8b83cd15bd4",
+   "found_at_eval": 13361,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1360,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "6d892f5d8e276c90",
+   "found_at_eval": 13364,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1648,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 33,
+   "hash": "1fc3a5d605ec6f35",
+   "found_at_eval": 13377,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 7,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 1440,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "77f3bfa32456f949",
+   "found_at_eval": 19420,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "8a78a8874f2a95de",
+   "found_at_eval": 19501,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "be30cf8efdec3ff1",
+   "found_at_eval": 19534,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "98904a9e47bb8151",
+   "found_at_eval": 19549,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "af86b82f6bdac557",
+   "found_at_eval": 19613,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "809c8942807556f6",
+   "found_at_eval": 19616,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "4489535fdff29c86",
+   "found_at_eval": 19663,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "3d988cb89c0f850c",
+   "found_at_eval": 19688,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 392,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "4e9ba7569fa34716",
+   "found_at_eval": 19767,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 232,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 37,
+   "hash": "494e5dd2f28aac85",
+   "found_at_eval": 19805,
+   "COMPOSE": true,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 3,
+   "b_only": 2,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "energy_multi": 16,
+   "template_multi": 248,
+   "seeds_identical": true,
+   "heldout_rung": 1,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "5ec831702d929daf",
+   "found_at_eval": 7572,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "8812cff10a769511",
+   "found_at_eval": 8193,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "3c7271758da9f328",
+   "found_at_eval": 8220,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 976,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "39e23d5949d23c38",
+   "found_at_eval": 8222,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 1248,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "23afb749363a43b7",
+   "found_at_eval": 8256,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "ce8ff9ebd949396b",
+   "found_at_eval": 8260,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "5293fc3dc87825e8",
+   "found_at_eval": 8265,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "4f363b58d21f7922",
+   "found_at_eval": 8278,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 1168,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "3116e599e8fded4b",
+   "found_at_eval": 8280,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 944,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  },
+  {
+   "arm": "C",
+   "seed": 39,
+   "hash": "d7ed048be78d11b3",
+   "found_at_eval": 8281,
+   "COMPOSE": false,
+   "AUTONOMOUS": true,
+   "position_combine_frac": 1.0,
+   "a_only": 0,
+   "b_only": 1,
+   "shared": 6,
+   "Na": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ]
+   ],
+   "Nb": [
+    [
+     6,
+     0
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     0
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     0
+    ]
+   ],
+   "energy_multi": 0,
+   "template_multi": 992,
+   "seeds_identical": true,
+   "heldout_rung": 2,
+   "distinct_outputs": 2
+  }
+ ]
+}

@@ -1,0 +1,303 @@
+{
+ "schema": "aether.robust01.s1.describe.v1",
+ "post_hoc": true,
+ "semantics_id": "aeth01.op_xor_fold",
+ "alphabet": [
+  15,
+  51,
+  85,
+  170
+ ],
+ "heldout_alphabet": [
+  18,
+  109,
+  180,
+  233
+ ],
+ "compositions": [
+  {
+   "seed": 6,
+   "hash": "33e077d156432b1d",
+   "AUTONOMOUS": true,
+   "table": [
+    [
+     237,
+     237,
+     24,
+     24
+    ],
+    [
+     237,
+     24,
+     197,
+     24
+    ],
+    [
+     24,
+     24,
+     237,
+     237
+    ],
+    [
+     237,
+     24,
+     24,
+     24
+    ]
+   ],
+   "heldout_table": [
+    [
+     237,
+     24,
+     24,
+     24
+    ],
+    [
+     24,
+     237,
+     237,
+     237
+    ],
+    [
+     24,
+     24,
+     24,
+     24
+    ],
+    [
+     24,
+     237,
+     24,
+     237
+    ]
+   ],
+   "separable": false,
+   "of_xor": false,
+   "heldout_separable": false,
+   "heldout_of_xor": false,
+   "values": [
+    24,
+    197,
+    237
+   ],
+   "heldout_values": [
+    24,
+    237
+   ]
+  },
+  {
+   "seed": 13,
+   "hash": "88052bc1d0297f48",
+   "AUTONOMOUS": true,
+   "table": [
+    [
+     0,
+     100,
+     100,
+     100
+    ],
+    [
+     100,
+     0,
+     100,
+     0
+    ],
+    [
+     100,
+     100,
+     0,
+     100
+    ],
+    [
+     100,
+     0,
+     100,
+     0
+    ]
+   ],
+   "heldout_table": [
+    [
+     0,
+     0,
+     0,
+     100
+    ],
+    [
+     0,
+     0,
+     100,
+     100
+    ],
+    [
+     0,
+     100,
+     0,
+     100
+    ],
+    [
+     100,
+     100,
+     100,
+     0
+    ]
+   ],
+   "separable": false,
+   "of_xor": true,
+   "heldout_separable": false,
+   "heldout_of_xor": true,
+   "values": [
+    0,
+    100
+   ],
+   "heldout_values": [
+    0,
+    100
+   ]
+  },
+  {
+   "seed": 16,
+   "hash": "dd773c3ff17177b1",
+   "AUTONOMOUS": true,
+   "table": [
+    [
+     73,
+     73,
+     18,
+     73
+    ],
+    [
+     73,
+     73,
+     18,
+     73
+    ],
+    [
+     0,
+     0,
+     91,
+     0
+    ],
+    [
+     0,
+     0,
+     91,
+     0
+    ]
+   ],
+   "heldout_table": [
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ]
+   ],
+   "separable": true,
+   "of_xor": false,
+   "heldout_separable": true,
+   "heldout_of_xor": true,
+   "values": [
+    0,
+    18,
+    73,
+    91
+   ],
+   "heldout_values": [
+    0
+   ]
+  },
+  {
+   "seed": 37,
+   "hash": "77f3bfa32456f949",
+   "AUTONOMOUS": true,
+   "table": [
+    [
+     48,
+     48,
+     0,
+     0
+    ],
+    [
+     48,
+     48,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     48,
+     48
+    ],
+    [
+     48,
+     48,
+     0,
+     0
+    ]
+   ],
+   "heldout_table": [
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     48,
+     48,
+     48,
+     48
+    ],
+    [
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     48,
+     48,
+     48,
+     48
+    ]
+   ],
+   "separable": true,
+   "of_xor": false,
+   "heldout_separable": true,
+   "heldout_of_xor": false,
+   "values": [
+    0,
+    48
+   ],
+   "heldout_values": [
+    0,
+    48
+   ]
+  }
+ ],
+ "fisher_one_sided_fold_vs_contest_armC": {
+  "COMBINE": 0.3903056224237289,
+  "COMPOSE": 0.5,
+  "AUTO_COMPOSE": 0.057783988163735,
+  "AUTO_ANY": 0.007157772366817517
+ }
+}
