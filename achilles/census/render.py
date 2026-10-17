@@ -146,7 +146,7 @@ fetch('run_status.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{if(j
 
 NODE_COLS = (("node", "Node"), ("ip", "IP"), ("status", "Status"), ("threads", "Threads"), ("load", "Load 1/5/15"),
              ("mem_avail", "RAM avail/total"), ("disk_free", "Disk free"), ("worker", "PrometheusWorker"),
-             ("mind_procs", "mind procs"), ("skullport_minds", "skullport-mind@*"), ("mind_cpu%", "mind CPU %"),
+             ("mind_procs", "mind procs"), ("skullport_minds", "Skullport mind hosts"), ("mind_cpu%", "mind CPU %"),
              ("mind_rss_mb", "mind RSS MB"))
 
 
@@ -178,7 +178,8 @@ def nodes_block(snap) -> str:
     return ("<h2>Linux nodes ({reach}/{n} reachable){unavailable}</h2>"
             "<div class=\"sub\">Probed {at} over ssh as {user} from the table in <code>{src}</code>; values are what each node printed. "
             "Sandboxed account <code>mind</code> (Skullport, M1) is capped per node at 50% CPU / 40% RAM; "
-            "totals: {mp} mind procs, {sm} skullport-mind@* hosts, {cpu}% CPU, {rss} MB RSS over {thr} threads.</div>"
+            "totals: {mp} mind procs, {sm} Skullport mind host processes (skullport_minds/ or tools/minds/host.py on the command line), "
+            "{cpu}% CPU, {rss} MB RSS over {thr} threads.</div>"
             "<div class=\"wrap\"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>").format(
         reach=t.get("reachable", 0), n=t.get("nodes", 0), unavailable=unavailable, at=_esc(nb.get("probed_at")), user=_esc(nb.get("user")),
         src=_esc(nb.get("source")), mp=t.get("mind_procs", 0), sm=t.get("skullport_minds", 0), cpu=t.get("mind_cpu%", 0),
@@ -394,7 +395,7 @@ def email_block(snap) -> dict:
     for nc in node_rows(snap):
         r = dict(zip([k for k, _ in NODE_COLS], nc))
         if r["status"] == "OK":
-            node_lines.append("{} load {} | RAM {} | worker {} | mind {} procs ({} skullport-mind@*), {}% CPU, {} MB".format(
+            node_lines.append("{} load {} | RAM {} | worker {} | mind {} procs ({} Skullport hosts), {}% CPU, {} MB".format(
                 r["node"], r["load"], r["mem_avail"], r["worker"], r["mind_procs"], r["skullport_minds"], r["mind_cpu%"], r["mind_rss_mb"]))
         else:
             node_lines.append("{} {}".format(r["node"], r["status"]))

@@ -51,7 +51,9 @@ PROBE = (
     'mp=$(ps -u mind -o pid= 2>/dev/null | wc -l); '
     'mc=$(ps -u mind -o %cpu= 2>/dev/null | awk \'{s+=$1} END{print s+0}\'); '
     'mr=$(ps -u mind -o rss= 2>/dev/null | awk \'{s+=$1} END{print int(s/1024)}\'); '
-    'sm=$(ps -u mind -o args= 2>/dev/null | grep -c skullport-mind); '
+    # Skullport mind hosts: the venv python running .../skullport_minds/app/tools/minds/host.py (units are
+    # skullport-mind@<name>.service in mind's own user manager, which jcraig cannot list; so match the command line).
+    'sm=$(ps -u mind -o args= 2>/dev/null | grep -cE "skullport_minds/|tools/minds/host\\.py"); '
     'echo "$h threads=$t load=$l mem_avail=$m disk_free=$d worker=$w '
     'mind_procs=$mp mind_cpu%=$mc mind_rss_mb=$mr skullport_minds=$sm"'
 )
