@@ -16,7 +16,11 @@
   },
   "gpu": {
     "class": "NVIDIA GeForce RTX 4090",
-    "alternatives": ["NVIDIA A40", "NVIDIA RTX A5000", "NVIDIA RTX A6000"],
+    "alternatives": [
+      "NVIDIA A40",
+      "NVIDIA RTX A5000",
+      "NVIDIA RTX A6000"
+    ],
     "count": 1,
     "cloud": "SECURE",
     "min_memory_mib": 22000
@@ -28,13 +32,38 @@
     "images_1.tar",
     "images_2.tar",
     "images_3.tar",
+    "images_4.tar",
+    "images_5.tar",
+    "images_6.tar",
+    "images_7.tar",
+    "images_8.tar",
+    "images_9.tar",
+    "images_10.tar",
+    "images_11.tar",
+    "images_12.tar",
+    "images_13.tar",
+    "images_14.tar",
+    "images_15.tar",
     "manifest.jsonl",
     "timing.json",
     "telemetry.jsonl"
   ],
   "canary": "python3 -c \"import torch, diffusers; assert torch.cuda.is_available()\"",
-  "env_allowlist": ["SKP_LIST", "SKP_OFFSET", "SKP_BATCH"],
-  "env": {"SKP_LIST": "racefaces", "SKP_OFFSET": "0", "SKP_BATCH": "auto"},
-  "telemetry": {"interval_s": 15},
-  "work_units": {"name": "images", "estimate": 528}
+  "env_allowlist": [
+    "SKP_LIST",
+    "SKP_OFFSET",
+    "SKP_BATCH"
+  ],
+  "env": {
+    "SKP_LIST": "racefaces",
+    "SKP_OFFSET": "0",
+    "SKP_BATCH": "auto"
+  },
+  "telemetry": {
+    "interval_s": 15
+  },
+  "work_units": {
+    "name": "images",
+    "estimate": 528
+  }
 }

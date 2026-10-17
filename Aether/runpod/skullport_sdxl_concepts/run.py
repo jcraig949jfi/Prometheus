@@ -12,7 +12,7 @@ Sampler as our local ComfyUI workflow (tools/art/gfx/concept.py): DPM++ 2M Karra
 than one CLIP window are encoded in 75-token chunks and concatenated (as ComfyUI does) rather than truncated.
 One torch.Generator per image, so an image depends on its seed and not on the batch it was made in.
 
-Artifacts: images_0.tar .. images_3.tar (up to 200 PNGs each, plus that tar's manifest lines), manifest.jsonl,
+Artifacts: images_0.tar .. images_15.tar (up to 50 PNGs each, plus that tar's manifest lines), manifest.jsonl,
 timing.json, telemetry.jsonl.
 """
 
@@ -29,8 +29,9 @@ from concurrent.futures import ThreadPoolExecutor
 ORIGIN = time.monotonic()
 FORBIDDEN = ("RUNPOD_API_KEY", "RUNPOD_API_TOKEN", "RUNPOD_TOKEN")
 MODEL = "stabilityai/stable-diffusion-xl-base-1.0"
+REVISION = "462165984030d82259a11f4367a4eed129e94a7b"   # pinned (HF main, last modified 2023-10-30)
 STEPS, CFG = 30, 6.0
-PER_TAR, N_TARS = 200, 4
+PER_TAR, N_TARS = 50, 16   # ~75 MB a tar (Aether review: keep each retrieval small)
 CANDIDATES = (4, 6, 8)
 HERE = os.path.dirname(os.path.abspath(__file__))
 SEQ = [0]
@@ -64,7 +65,7 @@ def download(tel):
 
     def go():
         try:
-            box["path"] = snapshot_download(MODEL, allow_patterns=[
+            box["path"] = snapshot_download(MODEL, revision=REVISION, allow_patterns=[
                 "model_index.json", "*/config.json", "scheduler/*", "tokenizer/*", "tokenizer_2/*",
                 "unet/diffusion_pytorch_model.fp16.safetensors", "text_encoder/model.fp16.safetensors",
                 "text_encoder_2/model.fp16.safetensors", "vae/diffusion_pytorch_model.fp16.safetensors"])
