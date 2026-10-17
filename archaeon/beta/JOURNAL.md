@@ -1544,6 +1544,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   WINDOW 11 TALLY ~44 of 48.
 - B118g WAVE 2b LAUNCHED 09:31Z (lease lse-3839f71f63ad, 2 h; 4 procs; 16.2 GB free): last cells TOXIC/PLAIN
   11847-11848 (~2.5 core-h -> window 11 ~46.5 of 48; fits, so not deferred).
+- B118g FINAL (09:54Z; exit 0; 0 errors; lease lse-3839f71f63ad RELEASED; B118g total ~11.5 core-h): CLEAN single-seed
+  (tape 128) replication. TOXIC semantic 4/8 (11842 .033, 11843 .037, 11844 .023, 11845 .027), PLAIN 0/8.
+  PREDICTION (TOXIC >= 4/8 AND PLAIN <= 1/8) MET (Fisher one-sided p ~ .038). Pooled with B118f: 8/16 vs 0/16
+  (p ~ .001). Behavioural decode (B118h): readers take 10-16% of harvests from toxic pools vs 52% (blind forager).
+  VERDICT -> PROBABLE (within one world family): from a working forager, training on randomised reward SEMANTICS
+  evolves foragers that read the semantic word and avoid the toxic pools, in about half the runs; PLAIN never does
+  (0/24 across B118d/f/g). From random gen 0, not reached (B118b/c). Not yet ensemble-invariant (one family, one
+  layout). WINDOW 11 TALLY ~46.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
