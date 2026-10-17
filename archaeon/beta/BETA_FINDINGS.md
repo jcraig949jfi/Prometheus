@@ -247,3 +247,6 @@ clock.
    B58 0/16).
 3. Can the invariant foraging rule be pushed beyond the generator family by randomising reward semantics (which pool
    pays) rather than dynamics?
+   PARTIAL (POSSIBLE tier): with type words interleaved and gen 0 = a working forager, toxic-semantics training
+   evolves type readers (constant-twin info > .01) in TOXIC 4/8 vs PLAIN 0/8 (B118f, prediction met on a mixed-seed
+   design; the deciding cell was a rerun). From random gen 0: 0/4, 0/4 (B118b/c). Clean replication B118g staged.

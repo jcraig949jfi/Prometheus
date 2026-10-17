@@ -1515,6 +1515,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   PLAIN <= 1/8) now hinges on the TOXIC 11833 rerun (tape 128 seed; flagged). Crash row preserved in
   B118f_cells_wave1_with_crash.jsonl and removed from B118f_cells.jsonl so the resumable script reruns that cell.
   RERUN LAUNCHED 06:41Z, 1 proc, same lease lse-70de0f2c50d3. B118f ~7 core-h so far.
+- B118f FINAL (06:52Z; lease lse-70de0f2c50d3 RELEASED; ~8 core-h): TOXIC semantic 4/8, PLAIN 0/8. PREDICTION
+  (TOXIC >= 4/8 AND PLAIN <= 1/8) MET BY THE LETTER (Fisher one-sided p ~ .038). CAVEAT (mine): the deciding cell,
+  TOXIC 11833 RERUN, used the tape-128 seed (after the tape-100 halving crash) and is the strongest of the series
+  (info .058, lift .085 vs CHK3 .092; const0 .027, const1 -.023). The other 15 cells used tape 100. Excluding it,
+  TOXIC 3/7. So: MET on a MIXED-SEED design -> tier POSSIBLE, not Probable.
+  READING (provisional): starting from a working forager, training on randomised reward semantics evolves foragers
+  that read the semantic word in roughly half the runs (constant-twin info, so information, not dependence); PLAIN
+  never does (0/16 across B118d/B118f). From random gen 0 it does not (B118b 0/4, B118c 0/4, weak sub-threshold hints).
+  Same shape as communication: precursors yes, scratch no.
+- B118g STAGED (prereg committed before running): CLEAN replication, every cell on the tape-128 seed, NEW seeds
+  11841-11848 x 2 arms, same readout and prediction. ~14 core-h -> window 12 (opens 2026-10-18 ~00:30Z).
+  WINDOW 11 TALLY ~35 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
