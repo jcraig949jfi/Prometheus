@@ -143,6 +143,12 @@ CONFLICTING_STATES and cap confidence at MEDIUM; the disagreement is shown.
     ACTIVE_NO_WORK_48H, ASSIGNMENT_NO_PROGRESS, STALE_TASK,
     VISIBILITY_STALE, CONFLICTING_STATES, PARKED_BUT_ACTIVE,
     ACTIVITY_AFTER_RETIREMENT, UNATTRIBUTED_COMMITS, EMAIL_NOT_SENT_72H
+    NODE_UNREACHABLE                 an available Linux node did not answer
+                                     the ssh probe (s9); reason quoted
+    NODE_WORKER_DOWN                 node answered, prometheus-worker.service
+                                     is not 'active'
+    NODE_PROBE_UNAVAILABLE           the probe itself could not run (no node
+                                     table, no ssh); the page says so loudly
 
 ## 7. Freshness of the census itself
 
@@ -162,3 +168,22 @@ Cursors in the snapshot: origin ref tips (git commits are read with
 last deep pass. A deep pass (all history, about 16 s) runs when there is no
 previous snapshot, the roster or registry changed, or 7 days have passed.
 Windowed 24 h counts are recomputed every run.
+
+## 9. Linux nodes (added 2026-10-17; achilles/census/nodes.py)
+
+The available Ubuntu nodes (the ALL_AVAILABLE list in
+infra/ubuntu_nodes/fleet_fanout.py, the fleet's one node table) are probed
+once per run over ssh as jcraig, in parallel, with a 6 s connect / 25 s
+command / 40 s total budget. Each node prints one key=value line (threads,
+load, RAM, disk, prometheus-worker.service state, and for the sandboxed
+side-project account `mind`: process count, processes named
+skullport-mind@*, CPU % and RSS). The snapshot stores exactly what the node
+printed under `nodes`; the page renders a "Linux nodes" table and the email
+a one-line-per-node list. A node that does not answer is UNREACHABLE with the
+ssh error, never carried forward from the previous run. The probe never
+fails the census: when it cannot run at all the section and an anomaly say
+PROBE UNAVAILABLE with the reason. Controls: achilles/census/tests/
+test_nodes.py (positive parse and render, negative old-snapshot render,
+cheat: an unreachable node is never shown OK, a stopped worker shows its
+real state). Requested by the operator and the M1 "Skullport" session so the
+`mind` load on the e-waste fleet is visible on the fleet page.
