@@ -1542,6 +1542,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   not (0); PLAIN 11845/11846 not. RUNNING TALLY (12/16 cells): TOXIC 4/6, PLAIN 0/6. The TOXIC clause (>= 4/8) is MET;
   the PLAIN clause (<= 1/8) holds unless BOTH remaining PLAIN cells (11847, 11848) pass. Wave 2b in window 12.
   WINDOW 11 TALLY ~44 of 48.
+- B118g WAVE 2b LAUNCHED 09:31Z (lease lse-3839f71f63ad, 2 h; 4 procs; 16.2 GB free): last cells TOXIC/PLAIN
+  11847-11848 (~2.5 core-h -> window 11 ~46.5 of 48; fits, so not deferred).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
