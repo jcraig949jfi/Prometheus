@@ -1478,6 +1478,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   forager is about the generalist's length. Controls MET: (a) GEN .097 -> .040 lower 10/12; (b) CHK gain +.050
   positive 10/12. Evolution LAUNCHED 01:55Z (lease lse-ab96faf1c256, 5 h; 8 procs; 9.5 GB free), seeds 11811-11814
   per arm. PREDICTION: TOXIC type-reading >= 2/4; PLAIN 0/4. WINDOW 11 TALLY ~10 of 48 (+~7 est.).
+- B118c INTERIM (7/8 cells, 03:00Z): TOXIC 0/3 type-reading (11811 type use .012, lift .025 -- sub-threshold; first
+  non-zero type use), PLAIN 0/4. PREDICTION (TOXIC >= 2/4) is already FAILED whatever 11813 does (max 1/4). Even PLAIN
+  stays below the hand forager (held-out lifts -.032..+.012 vs GEN .026): basic foraging is rarely found at G=300 in
+  this R >= 2 family -- confound (2) dominates.
+- B118d (prereg 41e57c9e7 before running): PRECURSOR version. R = 3 worlds only; gen 0 = 200 x GEN(3); a one-pool
+  type check is ~3 coupled edits away. Held-out controls: GEN3 lift -.003 / use 0; CHK3 .092 / .095. Training value
+  check: CHK3 - GEN3 +.089, positive 8/8 training worlds. PREDICTION: TOXIC type-reading (lift >= GEN + .02 AND use
+  >= .02) >= 2/4; PLAIN 0/4. LAUNCHED 03:33Z, 8 procs; lease swap: released lse-ab96faf1c256, acquired
+  lse-48b28bf6b859 (covers B118c's tail cell 11813 + B118d = 9 procs). 14.7 GB free.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
