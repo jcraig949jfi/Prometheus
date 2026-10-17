@@ -1482,6 +1482,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   non-zero type use), PLAIN 0/4. PREDICTION (TOXIC >= 2/4) is already FAILED whatever 11813 does (max 1/4). Even PLAIN
   stays below the hand forager (held-out lifts -.032..+.012 vs GEN .026): basic foraging is rarely found at G=300 in
   this R >= 2 family -- confound (2) dominates.
+  FINAL NOTE: TOXIC 11813 type use .013, lift .029 (just under both bars). So TOXIC 2/4 show WEAK non-zero type use
+  (.012, .013) vs PLAIN exactly 0 in 4/4 -- a sub-threshold signal in the predicted direction, not a positive.
 - B118d (prereg 41e57c9e7 before running): PRECURSOR version. R = 3 worlds only; gen 0 = 200 x GEN(3); a one-pool
   type check is ~3 coupled edits away. Held-out controls: GEN3 lift -.003 / use 0; CHK3 .092 / .095. Training value
   check: CHK3 - GEN3 +.089, positive 8/8 training worlds. PREDICTION: TOXIC type-reading (lift >= GEN + .02 AND use
