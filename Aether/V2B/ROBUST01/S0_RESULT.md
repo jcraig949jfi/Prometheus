@@ -73,5 +73,5 @@ The instrument run through the ROBUST01 harness is REACH01's instrument.
 - **Not settled:** whether autonomous composition becomes DISCOVERABLE (S1), and whether reuse solutions become robust
   (S2a, S2b). D only says that the contest-era discoveries cannot stand in for that answer: S1 must rediscover under
   the fold law.
-- **Next:** S1 (80 G1 search units, then certification), once the GPU is free. The operator's skullport-gfx jobs came
-  back at 06:2xZ.
+- **Next:** S1 (80 G1 search units, then certification), once the GPU is free. At the check right after S0 ended, the
+  card was 95-99% busy with three skullport-gfx processes, so the gpu0 lease was released and an idle watch re-armed.
