@@ -1538,6 +1538,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   vs GEN3 170). Behavioural confirmation that the constant-twin info is semantic avoidance, not an artifact.
 - B118g WAVE 2a LAUNCHED 08:31Z (lease lse-55347474eb8b, 2 h; 4 procs; 16.0 GB free): TOXIC/PLAIN 11845-11846
   (~3.2 core-h -> window 11 ~45 of 48). Wave 2b (11847-11848) in window 12.
+- B118g WAVE 2a RESULT (09:08Z; exit 0; lease lse-55347474eb8b RELEASED; ~2.5 core-h): TOXIC 11845 semantic (.027), 11846
+  not (0); PLAIN 11845/11846 not. RUNNING TALLY (12/16 cells): TOXIC 4/6, PLAIN 0/6. The TOXIC clause (>= 4/8) is MET;
+  the PLAIN clause (<= 1/8) holds unless BOTH remaining PLAIN cells (11847, 11848) pass. Wave 2b in window 12.
+  WINDOW 11 TALLY ~44 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
