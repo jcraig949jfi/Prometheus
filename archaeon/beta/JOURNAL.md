@@ -1510,6 +1510,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   power of two (128). Plan: let B118f's other 15 cells finish on the old seed (tape 100), then rerun ONLY TOXIC
   11833 with tape 128, flagged in the result. B118d/B118f gen 0 used tape 100; noted for any re-analysis.
   Interim (6 cells): TOXIC 11832 semantic (info .013); TOXIC 11831 info .003; PLAIN 11831/11832/11833 info ~0.
+- B118f WAVE RESULT (06:40Z; 15 valid cells + 1 crash): TOXIC semantic 3/7 valid (11832 .013, 11835 .021, 11836 .018;
+  11838 .008 just under; 11831 .003; 11834 0; 11837 0). PLAIN 0/8 (max .0055). PREDICTION (TOXIC >= 4/8 AND
+  PLAIN <= 1/8) now hinges on the TOXIC 11833 rerun (tape 128 seed; flagged). Crash row preserved in
+  B118f_cells_wave1_with_crash.jsonl and removed from B118f_cells.jsonl so the resumable script reruns that cell.
+  RERUN LAUNCHED 06:41Z, 1 proc, same lease lse-70de0f2c50d3. B118f ~7 core-h so far.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
