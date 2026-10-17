@@ -1554,6 +1554,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   layout). WINDOW 11 TALLY ~46.5 of 48.
 - Major finding posted (comms #2270 to Harmonia, Aporia). NEXT (window 12): second world family for the semantics
   result (ensemble invariance), e.g. world 2 (B71 scan world 5) made toxic, same interleaved layout and seed design.
+- B119 STAGED + CONTROLS (prereg 70b855f15 before running; single process; ~10:30Z): SECOND WORLD FAMILY = P-boom
+  lineage (types 3, history OFF, nodes 6-16, deplete .2-.7, regen .1-.4; objects/hazards/coupling kept), interleaved
+  strong Toxic. Controls ALL MET: (a) GEN3 hurt 12/12; (b) CHK3 gain +.113, positive 12/12; (c) training-side value
+  7/8 positive. Family 2 discriminates more strongly than family 1 (GEN3 plain lifts .07-.67).
+  STEP 2 (evolution, 16 cells, ~11.5 core-h) QUEUED for window 12 (~2026-10-18 00:30Z). PREDICTION: TOXIC semantic
+  >= 3/8 AND PLAIN <= 1/8.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
