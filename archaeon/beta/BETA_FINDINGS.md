@@ -68,6 +68,9 @@ clock.
    - Waiting time grows ~10x per link.
    - Freeing one REGISTER coupling lifts the 3-link read to 6/8, median gen ~72 (B57). The remaining cost is
      instruction ORDER.
+   - Removing the ORDER coupling instead (B117: the tag is in r0 at tick start, so the read is L2 plus one register
+     coupling) restores L2's reach: 8/8, median gen ~21 (prediction met). Order costs more than one register
+     coupling; couplings are not equal-weight.
    - Every unreached memory solution in this campaign needs a longer coupled chain.
 4. **One rare exception.** A self-modifying-code state machine that rewrites its own genome per tick solved
    two-value memory at .971, and .062 when locked (B51). It was not reproduced in 8 writable runs (B52).
@@ -239,7 +242,7 @@ clock.
 
 ## Open questions
 1. Does a representation that removes ORDER coupling as well (e.g. reads addressed by input position) make the 3-link
-   read L2-like? (B117 staged.)
+   read L2-like? ANSWERED (B117): reach yes (8/8), waiting time ~2.5x L2.
 2. ~~Is self-modifying code a systematic chain-shortener, or a rare accident?~~ ANSWERED: rare accident (B52 0/8,
    B58 0/16).
 3. Can the invariant foraging rule be pushed beyond the generator family by randomising reward semantics (which pool

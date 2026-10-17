@@ -1459,6 +1459,16 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   WINDOW 10 TALLY ~46.5 of 48.
 - 2026-10-17 00:30Z WINDOW 11 OPENS (tally 0 of 48). Memory 16.1 GB free, CPU 30%. Lease lse-3486ca1a34ea
   (spectrex5:cpu12, 4 h). B117 LAUNCHED 00:31Z, 8 procs, seeds 11701-11708 (prereg e5052f539). B118b queued next.
+- B117 RESULT (00:52Z; exit 0; lease lse-3486ca1a34ea RELEASED; ~2.8 core-h): ORDER-FREE read (L3o: r0 = tag at tick
+  start; solution LDK rY, r0; OUT rY). Keyed 8/8 (K2/K3/K6 all 1.000). First train >= .9 at gens 3, 13, 14, 15, 28,
+  65, 71, 90 (true median 21.5; script upper-median 28). PREDICTION (>= 7/8 AND median <= 30) MET.
+  LADDER NOW: L1 8/8 ~1 | L2 8/8 ~8 | L3o (L2 + 1 register coupling, no order) 8/8 ~21 | L3f (register given, order
+  remains) 6/8 ~72 | L3 2-3/8 44-203.
+  READING: removing the ORDER coupling restores L2's REACH (8/8); the one remaining register coupling costs ~2.5x
+  L2's waiting time. Order costs more than one register coupling (L3f 6/8 ~72 vs L3o 8/8 ~21) -- consistent with an
+  order constraint coupling SEVERAL instructions (the tag IN must be last among INs and precede LDK). The read-chain
+  cost is per coupling, and couplings are not equal-weight.
+- B118b LAUNCHED 00:54Z (lease lse-4d4a657fc38c, 5 h; 8 procs; 17.2 GB free). WINDOW 11 TALLY ~2.8 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
