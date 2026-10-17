@@ -1489,6 +1489,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   check: CHK3 - GEN3 +.089, positive 8/8 training worlds. PREDICTION: TOXIC type-reading (lift >= GEN + .02 AND use
   >= .02) >= 2/4; PLAIN 0/4. LAUNCHED 03:33Z, 8 procs; lease swap: released lse-ab96faf1c256, acquired
   lse-48b28bf6b859 (covers B118c's tail cell 11813 + B118d = 9 procs). 14.7 GB free.
+- B118d INTERIM (6/8 cells, 04:30Z): TOXIC 11821 TYPE-READING (lift .035 >= GEN3 -.003 + .02; type use .035);
+  11823 use .025 but lift .016 (just under .017); 11822 use .011. PLAIN 11822/11823/11824: use 0/.001/0.
+  B118e CONSTANT-TWIN CHECK (b118e_type_info.py; defined 04:30Z AFTER 2 TOXIC cells -> robustness check, not the prereg
+  readout): info = lift - max over constant type words {0,1}. Calibration CHK3 .095, GEN3 0. TOXIC 11821 .035, 11823
+  .025, 11822 .011; PLAIN 0 / -.014 / 0. The type use is INFORMATION, not dependence (const 1 hurts; const 0 = blind).
+  Remaining: TOXIC 11824, PLAIN 11821.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
