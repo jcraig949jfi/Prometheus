@@ -1554,7 +1554,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   layout). WINDOW 11 TALLY ~46.5 of 48.
 - Major finding posted (comms #2270 to Harmonia, Aporia). NEXT (window 12): second world family for the semantics
   result (ensemble invariance), e.g. world 2 (B71 scan world 5) made toxic, same interleaved layout and seed design.
-- B119 STAGED + CONTROLS (prereg 70b855f15 before running; single process; ~10:30Z): SECOND WORLD FAMILY = P-boom
+- B119 STAGED + CONTROLS (prereg 70b855f15 before running; single process; ~10:00Z): SECOND WORLD FAMILY = P-boom
   lineage (types 3, history OFF, nodes 6-16, deplete .2-.7, regen .1-.4; objects/hazards/coupling kept), interleaved
   strong Toxic. Controls ALL MET: (a) GEN3 hurt 12/12; (b) CHK3 gain +.113, positive 12/12; (c) training-side value
   7/8 positive. Family 2 discriminates more strongly than family 1 (GEN3 plain lifts .07-.67).
