@@ -1527,6 +1527,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B118g STAGED (prereg committed before running): CLEAN replication, every cell on the tape-128 seed, NEW seeds
   11841-11848 x 2 arms, same readout and prediction. ~14 core-h -> window 12 (opens 2026-10-18 ~00:30Z).
   WINDOW 11 TALLY ~35 of 48.
+- B118g WAVE 1 LAUNCHED 07:01Z (lease lse-0ec0b22be031, 3 h; 8 procs; 17.2 GB free): cells TOXIC/PLAIN 11841-11844
+  (wave cap argv[2]=8; no design change). Wave 2 (11845-11848) in window 12. Est ~7 core-h -> window 11 ~42.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
