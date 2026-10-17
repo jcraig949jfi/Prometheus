@@ -1457,6 +1457,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   G=300, 8 procs. PREDICTION: TOXIC type-reading >= 2/4; PLAIN 0/4. Smoke test passes.
   QUEUE for window 11 (~00:30Z): B117 (8 procs) then B118b (8 procs) -- sequential (12-proc cap); memory check first.
   WINDOW 10 TALLY ~46.5 of 48.
+- 2026-10-17 00:30Z WINDOW 11 OPENS (tally 0 of 48). Memory 16.1 GB free, CPU 30%. Lease lse-3486ca1a34ea
+  (spectrex5:cpu12, 4 h). B117 LAUNCHED 00:31Z, 8 procs, seeds 11701-11708 (prereg e5052f539). B118b queued next.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
