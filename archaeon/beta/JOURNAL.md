@@ -1495,6 +1495,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   readout): info = lift - max over constant type words {0,1}. Calibration CHK3 .095, GEN3 0. TOXIC 11821 .035, 11823
   .025, 11822 .011; PLAIN 0 / -.014 / 0. The type use is INFORMATION, not dependence (const 1 hurts; const 0 = blind).
   Remaining: TOXIC 11824, PLAIN 11821.
+- B118d RESULT (05:08Z; exit 0; lease lse-48b28bf6b859 RELEASED; ~7 core-h): TOXIC 1/4 type-reading (11821), PLAIN 0/4.
+  PREDICTION (>= 2/4) FAILED. TOXIC 11824 use 0; PLAIN 11821 use .004.
+  EXPLORATORY (post hoc threshold + pooling; NOT evidence yet): constant-twin type info > .01 in TOXIC 3/4 (B118d) +
+  2/4 (B118c) = 5/8 vs PLAIN 0/8 (Fisher one-sided p ~ .013). Weak semantic reading appears to be pushed by toxic
+  training, mostly sub-threshold.
+- B118f (prereg committed before running): replication with the readout FIXED: semantic = constant-twin type info
+  > .01; B118d design, NEW seeds 11831-11838 x 2 arms = 16 cells, waves of 8 procs (resumable). PREDICTION: TOXIC
+  >= 4/8 AND PLAIN <= 1/8. WINDOW 11 TALLY ~27 of 48 before B118f (est. +14).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
