@@ -42,7 +42,11 @@ def world_e(key, p):
 
 
 def tape128(m):
-    m = dict(m); assert len(m["genome"]) + 16 <= 128; m["tape_words"] = 128; return m
+    """Power-of-two tape (>= 128): the GA halves/doubles tape_words. GENe fits 128; CHKe (control only) may need 256."""
+    m = dict(m); tw = 128
+    while tw < len(m["genome"]) + 16:
+        tw *= 2
+    m["tape_words"] = tw; return m
 
 
 def gen_e():
