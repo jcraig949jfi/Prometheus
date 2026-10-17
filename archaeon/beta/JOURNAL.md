@@ -1562,7 +1562,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   >= 3/8 AND PLAIN <= 1/8.
 - Review packet written: REVIEW_PACKET_BETA_F2Q3_SEMANTICS.txt (claim, readouts, 8 runs, kill controls, 5 named
   weaknesses incl. the seed defect and the untested distance isolation).
-- B120 STAGED + CONTROLS (prereg 4c937c73e before running; ~11:20Z; single process): DISTANCE ISOLATION -- B118g
+- B120 STAGED + CONTROLS (prereg 4c937c73e before running; ~11:00Z; single process): DISTANCE ISOLATION -- B118g
   design (seeded working forager, tape 128) but type words at the END of channel 0. Controls MET: GENe info 0, CHKe
   info .065; training-side CHKe - GENe positive 8/8. (Fix before controls ran: CHKe control genome > 112 words, tape
   rounded to the next power of two; the seed GENe is 72 words, tape 128.) Evolution 8 cells (seeds 12001-12004 x 2)
