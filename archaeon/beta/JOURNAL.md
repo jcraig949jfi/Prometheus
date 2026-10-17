@@ -1469,6 +1469,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   order constraint coupling SEVERAL instructions (the tag IN must be last among INs and precede LDK). The read-chain
   cost is per coupling, and couplings are not equal-weight.
 - B118b LAUNCHED 00:54Z (lease lse-4d4a657fc38c, 5 h; 8 procs; 17.2 GB free). WINDOW 11 TALLY ~2.8 of 48.
+- B118b RESULT (01:52Z; exit 0; lease lse-4d4a657fc38c RELEASED; ~7 core-h): TOXIC 0/4, PLAIN 0/4 type-reading.
+  PREDICTION (TOXIC >= 2/4) FAILED. Every elite had type use exactly 0; held-out lifts -.054..+.013 (hand generalist
+  .004, checker .072). Two confounds NOT separated: (1) DISTANCE -- type words at the END of channel 0 (~8 words
+  in), a long IN chain (Finding 3 wiring wall); (2) weak foraging overall. The failure is NOT evidence that reward
+  semantics cannot be learned; it is a failed test design (instrument verdict separate from law verdict).
+- B118c (prereg a24b12fca before running): type words INTERLEAVED [p0,t0,p1,t1,...], so the shortest type-aware
+  forager is about the generalist's length. Controls MET: (a) GEN .097 -> .040 lower 10/12; (b) CHK gain +.050
+  positive 10/12. Evolution LAUNCHED 01:55Z (lease lse-ab96faf1c256, 5 h; 8 procs; 9.5 GB free), seeds 11811-11814
+  per arm. PREDICTION: TOXIC type-reading >= 2/4; PLAIN 0/4. WINDOW 11 TALLY ~10 of 48 (+~7 est.).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
