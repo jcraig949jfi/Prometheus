@@ -1,0 +1,854 @@
+{
+ "schema": "aether.robust01.stage0.v1",
+ "law": "contest",
+ "semantics_id": "aeth01.op_xor",
+ "P": {
+  "certificate": {
+   "Na": [
+    [
+     4,
+     0
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     6
+    ],
+    [
+     4,
+     7
+    ],
+    [
+     4,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     4,
+     12
+    ],
+    [
+     4,
+     14
+    ],
+    [
+     4,
+     15
+    ],
+    [
+     5,
+     15
+    ],
+    [
+     6,
+     15
+    ]
+   ],
+   "Nb": [
+    [
+     8,
+     15
+    ],
+    [
+     9,
+     15
+    ],
+    [
+     11,
+     0
+    ],
+    [
+     11,
+     1
+    ],
+    [
+     11,
+     3
+    ],
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     6
+    ],
+    [
+     11,
+     11
+    ],
+    [
+     11,
+     12
+    ],
+    [
+     11,
+     15
+    ]
+   ],
+   "a_only": 13,
+   "b_only": 10,
+   "shared": 0,
+   "COMPOSE": true,
+   "position_combine_frac": 0.2578125,
+   "other_seeds_combine": [
+    false,
+    false
+   ],
+   "AUTONOMOUS": false
+  },
+  "table": [
+   0,
+   60,
+   90,
+   165,
+   60,
+   0,
+   102,
+   153,
+   90,
+   102,
+   0,
+   255,
+   165,
+   153,
+   255,
+   0
+  ],
+  "table_is_a_xor_b": true,
+  "rung": 2,
+  "distinct_outputs": 7,
+  "heldout_rung": 2,
+  "invariance": {
+   "energy_multi": 0,
+   "template_multi": 384,
+   "seeds_identical": false,
+   "table": [
+    0,
+    60,
+    90,
+    165,
+    60,
+    0,
+    102,
+    153,
+    90,
+    102,
+    0,
+    255,
+    165,
+    153,
+    255,
+    0
+   ]
+  }
+ },
+ "T": {
+  "(0, 0)": 0.2578125,
+  "(1, 0)": 0.0,
+  "(0, 1)": 0.0,
+  "(-1, -1)": 0.0,
+  "(2, 2)": 0.0,
+  "(-3, 3)": 0.0
+ },
+ "D": [
+  {
+   "unit": "G1_C_s2.json",
+   "seed": 2,
+   "hash": "0b0511ba31b80149",
+   "certificate": {
+    "Na": [
+     [
+      6,
+      0
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ]
+    ],
+    "Nb": [
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      0
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      0
+     ]
+    ],
+    "a_only": 1,
+    "b_only": 2,
+    "shared": 8,
+    "COMPOSE": true,
+    "position_combine_frac": 0.33203125,
+    "other_seeds_combine": [
+     false,
+     false
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 1,
+   "distinct_outputs": 2,
+   "heldout_rung": 1,
+   "invariance": {
+    "energy_multi": 0,
+    "template_multi": 584,
+    "seeds_identical": false,
+    "table": [
+     119,
+     119,
+     0,
+     0,
+     119,
+     119,
+     0,
+     0,
+     119,
+     119,
+     119,
+     119,
+     0,
+     0,
+     119,
+     119
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": true,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.33203125
+   }
+  },
+  {
+   "unit": "G1_C_s6.json",
+   "seed": 6,
+   "hash": "fc1339086a85ab16",
+   "certificate": {
+    "Na": [
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      1
+     ]
+    ],
+    "Nb": [
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ]
+    ],
+    "a_only": 1,
+    "b_only": 0,
+    "shared": 2,
+    "COMPOSE": false,
+    "position_combine_frac": 0.0390625,
+    "other_seeds_combine": [
+     false,
+     false
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 1,
+   "distinct_outputs": 2,
+   "heldout_rung": 1,
+   "invariance": {
+    "energy_multi": 32,
+    "template_multi": 640,
+    "seeds_identical": false,
+    "table": [
+     237,
+     237,
+     237,
+     237,
+     237,
+     237,
+     237,
+     237,
+     24,
+     24,
+     24,
+     24,
+     237,
+     237,
+     237,
+     237
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": false,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.0390625
+   }
+  },
+  {
+   "unit": "G1_C_s7.json",
+   "seed": 7,
+   "hash": "70558abd1fd3dbd9",
+   "certificate": {
+    "Na": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ]
+    ],
+    "Nb": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      0
+     ]
+    ],
+    "a_only": 0,
+    "b_only": 2,
+    "shared": 5,
+    "COMPOSE": false,
+    "position_combine_frac": 1.0,
+    "other_seeds_combine": [
+     true,
+     true
+    ],
+    "AUTONOMOUS": true
+   },
+   "rung": 2,
+   "distinct_outputs": 4,
+   "heldout_rung": 1,
+   "invariance": {
+    "energy_multi": 16,
+    "template_multi": 240,
+    "seeds_identical": true,
+    "table": [
+     46,
+     46,
+     46,
+     47,
+     46,
+     46,
+     46,
+     47,
+     0,
+     0,
+     0,
+     1,
+     46,
+     46,
+     46,
+     47
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": false,
+    "AUTONOMOUS": true,
+    "position_combine_frac": 1.0
+   }
+  },
+  {
+   "unit": "G1_C_s22.json",
+   "seed": 22,
+   "hash": "71c6683f6e1d6a25",
+   "certificate": {
+    "Na": [
+     [
+      6,
+      0
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ]
+    ],
+    "Nb": [
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      0
+     ]
+    ],
+    "a_only": 1,
+    "b_only": 1,
+    "shared": 4,
+    "COMPOSE": true,
+    "position_combine_frac": 0.1640625,
+    "other_seeds_combine": [
+     false,
+     false
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 1,
+   "distinct_outputs": 2,
+   "heldout_rung": 1,
+   "invariance": {
+    "energy_multi": 80,
+    "template_multi": 406,
+    "seeds_identical": false,
+    "table": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     194,
+     194,
+     0,
+     194,
+     0,
+     0,
+     0,
+     194
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": true,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.1640625
+   }
+  },
+  {
+   "unit": "G1_C_s27.json",
+   "seed": 27,
+   "hash": "530f0bd0a991241f",
+   "certificate": {
+    "Na": [
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ]
+    ],
+    "Nb": [
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ]
+    ],
+    "a_only": 3,
+    "b_only": 1,
+    "shared": 6,
+    "COMPOSE": true,
+    "position_combine_frac": 0.5078125,
+    "other_seeds_combine": [
+     false,
+     true
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 1,
+   "distinct_outputs": 2,
+   "heldout_rung": 0,
+   "invariance": {
+    "energy_multi": 16,
+    "template_multi": 160,
+    "seeds_identical": false,
+    "table": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     157,
+     157,
+     157,
+     157,
+     157,
+     157,
+     157,
+     157
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": true,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.5078125
+   }
+  },
+  {
+   "unit": "G1_C_s28.json",
+   "seed": 28,
+   "hash": "bf6c52b374199618",
+   "certificate": {
+    "Na": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      2
+     ]
+    ],
+    "Nb": [
+     [
+      7,
+      2
+     ]
+    ],
+    "a_only": 4,
+    "b_only": 0,
+    "shared": 1,
+    "COMPOSE": false,
+    "position_combine_frac": 0.1484375,
+    "other_seeds_combine": [
+     false,
+     false
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 0,
+   "distinct_outputs": 1,
+   "heldout_rung": 0,
+   "invariance": {
+    "energy_multi": 16,
+    "template_multi": 728,
+    "seeds_identical": false,
+    "table": [
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89,
+     89
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": false,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.1484375
+   }
+  },
+  {
+   "unit": "G1_C_s30.json",
+   "seed": 30,
+   "hash": "a6eb7e2d6ccb169a",
+   "certificate": {
+    "Na": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      0
+     ]
+    ],
+    "Nb": [
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      0
+     ]
+    ],
+    "a_only": 0,
+    "b_only": 0,
+    "shared": 5,
+    "COMPOSE": false,
+    "position_combine_frac": 0.109375,
+    "other_seeds_combine": [
+     false,
+     false
+    ],
+    "AUTONOMOUS": false
+   },
+   "rung": 0,
+   "distinct_outputs": 1,
+   "heldout_rung": 0,
+   "invariance": {
+    "energy_multi": 0,
+    "template_multi": 342,
+    "seeds_identical": true,
+    "table": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "reach01_certificate": {
+    "COMPOSE": false,
+    "AUTONOMOUS": false,
+    "position_combine_frac": 0.109375
+   }
+  }
+ ],
+ "reproduction": {
+  "checks": {
+   "P": true,
+   "T": true,
+   "D": true
+  },
+  "ok": true
+ }
+}
