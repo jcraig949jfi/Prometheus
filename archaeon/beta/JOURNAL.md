@@ -1529,6 +1529,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   WINDOW 11 TALLY ~35 of 48.
 - B118g WAVE 1 LAUNCHED 07:01Z (lease lse-0ec0b22be031, 3 h; 8 procs; 17.2 GB free): cells TOXIC/PLAIN 11841-11844
   (wave cap argv[2]=8; no design change). Wave 2 (11845-11848) in window 12. Est ~7 core-h -> window 11 ~42.
+- B118g WAVE 1 RESULT (07:49Z; exit 0; 0 errors; lease lse-0ec0b22be031 RELEASED; ~6.4 core-h): TOXIC semantic 3/4
+  (11842 .033, 11843 .037, 11844 .023; 11841 0), PLAIN 0/4. Prediction needs TOXIC >= 4/8 AND PLAIN <= 1/8 -> one more
+  TOXIC pass in wave 2 suffices. WINDOW 11 TALLY ~41.5 of 48; wave 2 (~6.4) would reach ~47.9 -> deferred to window 12.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
