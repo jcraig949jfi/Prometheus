@@ -1532,6 +1532,10 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B118g WAVE 1 RESULT (07:49Z; exit 0; 0 errors; lease lse-0ec0b22be031 RELEASED; ~6.4 core-h): TOXIC semantic 3/4
   (11842 .033, 11843 .037, 11844 .023; 11841 0), PLAIN 0/4. Prediction needs TOXIC >= 4/8 AND PLAIN <= 1/8 -> one more
   TOXIC pass in wave 2 suffices. WINDOW 11 TALLY ~41.5 of 48; wave 2 (~6.4) would reach ~47.9 -> deferred to window 12.
+- B118h DECODE (~08:00Z; single process; descriptive): share of harvests taken from TOXIC pools on the B118d
+  held-out set (12 worlds x 8 eps): GEN3 .518, CHK3 .000, PLAIN 11842 .516; TOXIC readers 11842 .098, 11843 .158,
+  11844 .124. The readers AVOID toxic pools (~70-80% of the way to the hand checker) and move instead (moves 966-1610
+  vs GEN3 170). Behavioural confirmation that the constant-twin info is semantic avoidance, not an artifact.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
