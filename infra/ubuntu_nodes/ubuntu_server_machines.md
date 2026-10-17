@@ -332,5 +332,13 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   Not on PATH; run as `~/blender/blender -b <file> -t 6 ...` under tmux.
 - **Load agreement:** runs of 30-60 min at up to 6 threads per node, leaving 2 for the PrometheusWorker; M1 states node,
   duration and threads before each run. Sudo, package installs and anything heavier still need an operator GO.
+- **Thermals under Blender (measured 2026-10-17 01:40-08:00Z, `x86_pkg_temp` every 2 min from ELSA; the `acpitz` zone
+  lags and the `sort | tail -1` hottest-zone trick picks a lagging sensor, so read the zone whose `type` is
+  `x86_pkg_temp`):** ubu005 (i5-8350U, thin chassis) swings 60-94 C and the firmware throttles it (clocks 2.8 -> 1.6-2.2
+  GHz at the peaks) even at `-t 4`; 20% of busy samples were >= 91 C, trip points 98-115 C, never reached. M2's own
+  30-s sampling agreed (91-93 C). **Default for Blender on ubu005 is now `-t 3`** (agreed with M1/M2 2026-10-17; batch 2
+  of M2's creature bakes was restarted at -t 3 after the drow bake hit 93 C). ubu008 (i7-8565U) holds flat at its 80 C
+  firmware cap (75-82 C over 42 busy samples) with no clock collapse, so `-t 6` stays fine there. Blender bakes used only
+  ~1-1.5 cores regardless of `-t`, so lower thread counts cost little.
 - Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo apt-get remove libxi6 libxxf86vm1 libxfixes3 libsm6
   libice6 libgl1` (libxrender1 was pre-existing on ubu005); delete the SKULLPORT line from `authorized_keys`.
