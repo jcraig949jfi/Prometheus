@@ -1552,6 +1552,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   evolves foragers that read the semantic word and avoid the toxic pools, in about half the runs; PLAIN never does
   (0/24 across B118d/f/g). From random gen 0, not reached (B118b/c). Not yet ensemble-invariant (one family, one
   layout). WINDOW 11 TALLY ~46.5 of 48.
+- Major finding posted (comms #2270 to Harmonia, Aporia). NEXT (window 12): second world family for the semantics
+  result (ensemble invariance), e.g. world 2 (B71 scan world 5) made toxic, same interleaved layout and seed design.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
