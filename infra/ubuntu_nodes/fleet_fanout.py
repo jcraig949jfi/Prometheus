@@ -116,7 +116,10 @@ def main(argv=None) -> int:
     ap.add_argument("--clean", action="store_true", help="push: remove the remote dir first")
     ap.add_argument("--json", action="store_true", help="machine-readable output")
     ap.add_argument("rest", nargs="*", help="run: command (after --); push: LOCAL REMOTE; pull: REMOTE LOCAL")
-    args = ap.parse_args(argv)
+    # parse_intermixed_args: with plain parse_args the trailing positional list is consumed (empty) right after
+    # `mode`, and everything after `--` is rejected as unrecognised.
+    args = ap.parse_intermixed_args(argv)
+    args.rest = [x for x in args.rest if x != "--"]
     targets = resolve(args)
     ips = dict(targets)
 
