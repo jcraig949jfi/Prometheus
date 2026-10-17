@@ -144,6 +144,48 @@ fetch('run_status.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{if(j
 """
 
 
+NODE_COLS = (("node", "Node"), ("ip", "IP"), ("status", "Status"), ("threads", "Threads"), ("load", "Load 1/5/15"),
+             ("mem_avail", "RAM avail/total"), ("disk_free", "Disk free"), ("worker", "PrometheusWorker"),
+             ("mind_procs", "mind procs"), ("skullport_minds", "Skullport mind hosts"), ("mind_cpu%", "mind CPU %"),
+             ("mind_rss_mb", "mind RSS MB"))
+
+
+def node_rows(snap) -> list:
+    """Per-node cells for the page and the email; UNREACHABLE nodes carry their error in the Status cell."""
+    nb = snap.get("nodes") or {}
+    out = []
+    for name, r in (nb.get("nodes") or {}).items():
+        cells = []
+        for key, _label in NODE_COLS:
+            v = r.get(key)
+            if key == "status" and r.get("status") != "OK":
+                v = "{}: {}".format(r.get("status"), r.get("error"))
+            cells.append("" if v is None else str(v))
+        out.append(cells)
+    return out
+
+
+def nodes_block(snap) -> str:
+    """The 'Linux nodes' section of the page. Empty string when the snapshot predates the node probe."""
+    nb = snap.get("nodes")
+    if not nb:
+        return ""
+    t = nb.get("totals") or {}
+    head = "".join("<th>{}</th>".format(_esc(l)) for _, l in NODE_COLS)
+    body = "".join("<tr>" + "".join("<td>{}</td>".format(_esc(c)) for c in cells) + "</tr>" for cells in node_rows(snap)) \
+        or "<tr><td colspan={}>no node answered</td></tr>".format(len(NODE_COLS))
+    unavailable = "" if nb.get("status") == "ok" else " &middot; <b>PROBE {}: {}</b>".format(_esc(nb.get("status")), _esc(nb.get("error")))
+    return ("<h2>Linux nodes ({reach}/{n} reachable){unavailable}</h2>"
+            "<div class=\"sub\">Probed {at} over ssh as {user} from the table in <code>{src}</code>; values are what each node printed. "
+            "Sandboxed account <code>mind</code> (Skullport, M1) is capped per node at 50% CPU / 40% RAM; "
+            "totals: {mp} mind procs, {sm} Skullport mind host processes (skullport_minds/ or tools/minds/host.py on the command line), "
+            "{cpu}% CPU, {rss} MB RSS over {thr} threads.</div>"
+            "<div class=\"wrap\"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>").format(
+        reach=t.get("reachable", 0), n=t.get("nodes", 0), unavailable=unavailable, at=_esc(nb.get("probed_at")), user=_esc(nb.get("user")),
+        src=_esc(nb.get("source")), mp=t.get("mind_procs", 0), sm=t.get("skullport_minds", 0), cpu=t.get("mind_cpu%", 0),
+        rss=t.get("mind_rss_mb", 0), thr=t.get("threads", 0), head=head, body=body)
+
+
 def render_html(snap) -> str:
     rows = table_rows(snap)
     s = snap["summary"]
@@ -256,6 +298,7 @@ Sources: git {git}; comms {comms}; evidence wiki {ew}; legacy agora {agora}. Mai
 <select id="f-age"><option value="">Any activity age</option><option value="6">within 6h</option><option value="24">within 24h</option><option value="72">within 72h</option><option value="168">within 7d</option></select>
 <input id="f-q" placeholder="search (engine, task, ...)"><span class="sub" id="count"></span></div>
 <div class="wrap"><table id="tbl"></table></div>
+{nodes_html}
 <h2>Inconsistencies and anomalies ({nan})</h2>
 <div class="wrap"><table><thead><tr><th>Type</th><th>Subject</th><th>Detail</th></tr></thead><tbody>{an}</tbody></table></div>
 <h2>Engines and subsystems ({neng})</h2>
@@ -272,6 +315,7 @@ Sources: git {git}; comms {comms}; evidence wiki {ew}; legacy agora {agora}. Mai
         git=_esc(src.get("git")), comms=_esc(src.get("comms")), ew=_esc(src.get("ew", "n/a")), agora=_esc(src.get("agora", "n/a")),
         mail_ok=_esc(m.get("last_success")), mail_c=_esc(m.get("census_included_last")),
         prev=_esc(d.get("previous_generated_at") or "none"), delta="".join(delta_items),
+        nodes_html=nodes_block(snap),
         nan=len(snap["anomalies"]), an=an_rows or "<tr><td colspan=3>none</td></tr>", neng=len(snap["engines"]), eng="".join(eng_rows),
         details="".join(details),
         rows=json.dumps(rows).replace("</", "<\\/"), runj=json.dumps(run_embed).replace("</", "<\\/"),
@@ -345,6 +389,20 @@ def email_block(snap) -> dict:
     md += ["| " + " | ".join(hdr) + " |", "|" + "---|" * len(hdr)]
     for r in rows:
         md.append("| " + " | ".join(c.replace("|", "/") for c in cells(r)) + " |")
+    nb = snap.get("nodes") or {}
+    nt = nb.get("totals") or {}
+    node_lines = []
+    for nc in node_rows(snap):
+        r = dict(zip([k for k, _ in NODE_COLS], nc))
+        if r["status"] == "OK":
+            node_lines.append("{} load {} | RAM {} | worker {} | mind {} procs ({} Skullport hosts), {}% CPU, {} MB".format(
+                r["node"], r["load"], r["mem_avail"], r["worker"], r["mind_procs"], r["skullport_minds"], r["mind_cpu%"], r["mind_rss_mb"]))
+        else:
+            node_lines.append("{} {}".format(r["node"], r["status"]))
+    if nb:
+        md += ["", "**Linux nodes ({}/{} reachable; mind: {} procs, {}% CPU, {} MB):**".format(
+            nt.get("reachable", 0), nt.get("nodes", 0), nt.get("mind_procs", 0), nt.get("mind_cpu%", 0), nt.get("mind_rss_mb", 0))]
+        md += ["- " + x for x in node_lines] or ["- no node answered"]
     md += ["", "Full census, evidence and engine map: " + PAGES_URL]
 
     h = ['<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">'] + oq_h + [
@@ -361,7 +419,13 @@ def email_block(snap) -> dict:
          '<tr bgcolor="#f2f2f2">' + "".join("<th align=left>{}</th>".format(_esc(x)) for x in hdr) + "</tr>"]
     for r in rows:
         h.append("<tr valign=top>" + "".join("<td>{}</td>".format(_esc(c)) for c in cells(r)) + "</tr>")
-    h.append('</table><p style="font-size:13px">Full census, evidence and engine map: <a href="{0}">{0}</a></p>'.format(PAGES_URL))
+    h.append("</table>")
+    if nb:
+        h.append('<p style="font-size:13px;margin:10px 0 2px 0"><b>Linux nodes ({}/{} reachable; mind: {} procs, {}% CPU, {} MB):</b></p>'
+                 '<ul style="font-size:12px;margin:2px 0 8px 0">'.format(nt.get("reachable", 0), nt.get("nodes", 0), nt.get("mind_procs", 0),
+                                                                        nt.get("mind_cpu%", 0), nt.get("mind_rss_mb", 0))
+                 + ("".join("<li>{}</li>".format(_esc(x)) for x in node_lines) or "<li>no node answered</li>") + "</ul>")
+    h.append('<p style="font-size:13px">Full census, evidence and engine map: <a href="{0}">{0}</a></p>'.format(PAGES_URL))
     return {"schema": "prometheus.fleet_census_email.v1", "generated_at_utc": snap["generated_at_utc"],
             "base_sha": snap.get("base_sha"), "rows": len(rows), "page_url": PAGES_URL,
             "markdown": "\n".join(md), "html": "\n".join(h)}

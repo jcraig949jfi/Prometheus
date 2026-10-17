@@ -43,6 +43,11 @@ hours on the observability and reporting machinery Prometheus already has.
   ownership drift are flagged automatically). Corrections are annotations
   with a source, never silent rewrites.
 - roles/Achilles/CLASSIFICATION_RULES.md -- how every state is decided.
+- achilles/census/nodes.py -- the per-run ssh probe of the Linux nodes
+  (load, RAM, worker state, `mind` account load), rendered as the page's
+  "Linux nodes" table and the email's node list (rules s9, 2026-10-17). The
+  node table it reads is infra/ubuntu_nodes/fleet_fanout.py, which is also
+  the fleet's parallel run / push / pull tool.
 - The scheduled task PrometheusFleetCensus on ELSA (MONITORS.md row
   "PrometheusFleetCensus / AchillesFleetCensus").
 

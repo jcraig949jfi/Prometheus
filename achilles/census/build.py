@@ -661,6 +661,20 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
                "experiments_24h": exp_24h, "commits_24h": commits_24h,
                "non_seat_entities": len(seats_out) - len(seat_rows)}
 
+    # Linux nodes (operator + M1 "Skullport" request 2026-10-17): one bounded SSH probe per available node,
+    # from infra/ubuntu_nodes/fleet_fanout.py's table. Never fatal; failures are shown, not hidden.
+    from . import nodes as N
+    nodes = N.probe_nodes(root, iso(now))
+    for n in nodes.get("unreachable") or []:
+        anomalies.append({"type": "NODE_UNREACHABLE", "subject": n,
+                          "detail": "ssh {}@{} failed: {}".format(nodes.get("user"), (nodes["nodes"].get(n) or {}).get("ip"),
+                                                                   (nodes["nodes"].get(n) or {}).get("error"))})
+    for n in nodes.get("worker_down") or []:
+        anomalies.append({"type": "NODE_WORKER_DOWN", "subject": n,
+                          "detail": "prometheus-worker.service is '{}' (expected active)".format((nodes["nodes"].get(n) or {}).get("worker"))})
+    if nodes.get("status") != "ok":
+        anomalies.append({"type": "NODE_PROBE_UNAVAILABLE", "subject": "linux-nodes", "detail": str(nodes.get("error"))[:300]})
+
     snap = {
         "schema": SCHEMA,
         "extends": "prometheus.fleet_census.v1 (ops/fleet/CENSUS.json, Aporia, CWO-2026-09-30C); v1 columns kept per seat",
@@ -671,7 +685,9 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
         "current_mwo": ledgers["current_mwo"],
         "latest_cwo": ledgers["latest_cwo"],
         "run": run_info,
-        "sources_status": dict(db_status, git="ok", registry=reg_hash, monitors_rows=len(mons)),
+        "sources_status": dict(db_status, git="ok", registry=reg_hash, monitors_rows=len(mons),
+                               nodes="{} ({}/{} reachable)".format(nodes.get("status"), (nodes.get("totals") or {}).get("reachable", 0),
+                                                                   (nodes.get("totals") or {}).get("nodes", 0))),
         "summary": summary,
         "operator_queue": _operator_queue(root, prev),
         "mailer": mailer,
@@ -683,6 +699,7 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
                     "registry_hash": reg_hash, "last_deep_utc": iso(now) if deep else pc.get("last_deep_utc")},
         "aggregates": aggs,
         "engine_aggregates": eng_aggs,
+        "nodes": nodes,
     }
     snap["delta"] = delta(prev, snap)
     return snap
