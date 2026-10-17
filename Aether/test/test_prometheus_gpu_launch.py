@@ -666,7 +666,8 @@ def test_cost_follows_the_gpu_that_actually_ran(module_dir):
     ctl = controller(fake, module_dir, spec=spec)
     r = ctl.run()
     assert r["gpu_used"] == "NVIDIA A40"
-    assert r["cost"]["hourly_usd"] == 0.49, "priced as the A4000 it never got"
+    from prometheus_gpu import cost as cost_mod
+    assert r["cost"]["hourly_usd"] == cost_mod.HOURLY_USD["NVIDIA A40"],         "priced as the A4000 it never got"
 
 
 def test_no_capacity_anywhere_is_a_named_clean_non_event(module_dir):

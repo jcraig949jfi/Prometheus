@@ -76,9 +76,15 @@ OVERHEAD_PROVENANCE = {
 }
 # Quoted hourly rates. Not authoritative: the provider is.
 #
-# FALLBACK ONLY, used when the provider's live price cannot be read. The
-# platform launches on SECURE cloud, and these are SECURE prices as read
-# from the provider (GraphQL gpuTypes.securePrice) on 2026-09-27.
+# FALLBACK ONLY, used when the provider's live price cannot be read, and by
+# the zero-dollar estimate / dry-run commands, which never read it. A real
+# launch prices from the live read (launch.py run()). The platform launches
+# on SECURE cloud, and these are SECURE prices (GraphQL
+# gpuTypes.securePrice) read 2026-10-17T01:51Z by the Skullport seat's
+# pilot and relayed to Aether, not read by Aether. Prices rose since the
+# 2026-09-27 read: 4090 0.74 -> 0.89, A40 0.49 -> 0.59, L4 0.49 -> 0.59,
+# A6000 0.53 -> 0.59. The 3090 and A100 rows were not in the 10-17 read and
+# keep their 09-27 values.
 #
 # History, because it cost 20% on every receipt through Iteration 4: the
 # previous table mixed COMMUNITY prices (A4000 0.17, 4090 0.34) and stale
@@ -88,17 +94,21 @@ OVERHEAD_PROVENANCE = {
 # 2.18x its quote. Billed SECONDS matched the controller's wall time to
 # 0.93-1.003x; the rate was the whole error.
 HOURLY_USD = {
-    "NVIDIA A40": 0.49,
+    "NVIDIA A40": 0.59,
     "NVIDIA RTX A4000": 0.25,
+    "NVIDIA RTX A4500": 0.25,
     "NVIDIA RTX A5000": 0.27,
-    "NVIDIA GeForce RTX 4090": 0.74,
-    "NVIDIA L4": 0.49,
+    "NVIDIA GeForce RTX 4090": 0.89,
+    "NVIDIA GeForce RTX 5090": 1.19,
+    "NVIDIA L4": 0.59,
+    "NVIDIA L40": 0.82,
+    "NVIDIA L40S": 1.09,
     "NVIDIA RTX 4000 Ada Generation": 0.28,
-    "NVIDIA RTX A6000": 0.53,
-    "NVIDIA GeForce RTX 3090": 0.50,
-    "NVIDIA A100 80GB PCIe": 1.59,
+    "NVIDIA RTX A6000": 0.59,
+    "NVIDIA GeForce RTX 3090": 0.50,      # 2026-09-27 value
+    "NVIDIA A100 80GB PCIe": 1.59,        # 2026-09-27 value
 }
-HOURLY_TABLE_DATE = "2026-09-27"
+HOURLY_TABLE_DATE = "2026-10-17"
 DEFAULT_HOURLY_USD = 0.49
 
 # Live SECURE prices, filled by refresh_quotes(); {gpu_id: usd_per_hour}.

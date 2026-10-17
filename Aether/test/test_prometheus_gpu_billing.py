@@ -19,13 +19,15 @@ if _RUNPOD not in sys.path:
 
 from prometheus_gpu import billing, cost  # noqa: E402
 
-# Observed 2026-09-27 from the provider: (securePrice, communityPrice).
+# Observed from the provider: (securePrice, communityPrice). SECURE values and
+# the 4090 / A5000 / A40 community values are the 2026-10-17T01:51Z read (relayed
+# by the Skullport pilot); the A4000 and L4 community values are from 2026-09-27.
 OBSERVED = {
     "NVIDIA RTX A4000": (0.25, 0.17),
-    "NVIDIA GeForce RTX 4090": (0.74, 0.34),
+    "NVIDIA GeForce RTX 4090": (0.89, 0.34),
     "NVIDIA RTX A5000": (0.27, 0.16),
-    "NVIDIA L4": (0.49, 0.44),
-    "NVIDIA A40": (0.49, 0.35),
+    "NVIDIA L4": (0.59, 0.44),
+    "NVIDIA A40": (0.59, 0.35),
 }
 
 
@@ -52,7 +54,7 @@ def test_live_quote_overrides_the_table_and_is_attributed():
     assert n == 1
     assert cost.hourly_for("NVIDIA RTX A5000") == pytest.approx(0.31)
     assert cost.quote_source("NVIDIA RTX A5000").startswith("provider securePrice")
-    assert cost.hourly_for("NVIDIA L4") == pytest.approx(0.49)
+    assert cost.hourly_for("NVIDIA L4") == pytest.approx(cost.HOURLY_USD["NVIDIA L4"])
     assert "static SECURE table" in cost.quote_source("NVIDIA L4")
     assert "guess" in cost.quote_source("NVIDIA Imaginary 9000")
 
@@ -61,7 +63,7 @@ def test_refresh_never_raises_and_falls_back():
     def boom():
         raise OSError("no network")
     assert cost.refresh_quotes(fetch=boom) == 0
-    assert cost.hourly_for("NVIDIA A40") == pytest.approx(0.49)
+    assert cost.hourly_for("NVIDIA A40") == pytest.approx(cost.HOURLY_USD["NVIDIA A40"])
 
 
 def test_actual_cost_names_its_quote_source():
