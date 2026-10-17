@@ -59,8 +59,11 @@ PROBE = (
 )
 
 
-def ssh_base(user: str, ip: str, connect_timeout: int) -> list:
-    return ["ssh", "-o", "BatchMode=yes", "-o", f"ConnectTimeout={connect_timeout}",
+def ssh_base(user: str, ip: str, connect_timeout: int, stdin_is_data: bool = False) -> list:
+    """-T: never ask for a tty. -n: stdin from the null device, unless stdin carries data (push's tar stream).
+    Both matter on Windows: ssh.exe stalls after authentication when it inherits a hidden console as stdin
+    (seen 2026-10-17 04:30Z from the ELSA scheduled task, 4 of 6 nodes, nodes idle and sshd fine)."""
+    return ["ssh", "-T"] + ([] if stdin_is_data else ["-n"]) + ["-o", "BatchMode=yes", "-o", f"ConnectTimeout={connect_timeout}",
             "-o", "StrictHostKeyChecking=accept-new", f"{user}@{ip}"]
 
 
@@ -84,12 +87,12 @@ def run_one(cmd: list, feeder: list | None, timeout: int) -> dict:
     t0 = time.time()
     try:
         if feeder:
-            p1 = subprocess.Popen(feeder, stdout=subprocess.PIPE)
+            p1 = subprocess.Popen(feeder, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE)
             r = subprocess.run(cmd, stdin=p1.stdout, capture_output=True, text=True, timeout=timeout)
             p1.stdout.close()
             rc = r.returncode or p1.wait(timeout=timeout)
         else:
-            r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+            r = subprocess.run(cmd, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=timeout)
             rc = r.returncode
         return {"rc": rc, "out": r.stdout, "err": r.stderr, "secs": round(time.time() - t0, 1)}
     except subprocess.TimeoutExpired:
@@ -141,7 +144,8 @@ def main(argv=None) -> int:
         pre = f"rm -rf {q} && " if args.clean else ""
         remote_cmd = f"{pre}mkdir -p {q} && tar -C {q} -xf - && echo pushed:{remote} files=$(find {q} -type f | wc -l)"
         for name, ip in targets:
-            jobs[name] = (ssh_base(args.user, ip, args.connect_timeout) + [remote_cmd], ["tar", "-C", local, "-cf", "-", "."])
+            jobs[name] = (ssh_base(args.user, ip, args.connect_timeout, stdin_is_data=True) + [remote_cmd],
+                          ["tar", "-C", local, "-cf", "-", "."])
     elif args.mode == "pull":
         if len(args.rest) != 2:
             sys.exit("pull REMOTE_DIR LOCAL_DIR   (writes LOCAL_DIR/<node>/)")

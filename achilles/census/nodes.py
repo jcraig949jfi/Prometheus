@@ -62,22 +62,42 @@ def parse_probe_line(line: str) -> dict:
     return out
 
 
-def _probe_one(name: str, ip: str, probe_cmd: str, connect_timeout: int, timeout: int) -> dict:
+def ssh_command(ip: str, probe_cmd: str, connect_timeout: int) -> list:
+    """The ssh argv. -n (stdin from the null device) and -T (never a tty) matter on Windows: the scheduled
+    census of 2026-10-17 04:30Z saw 4 of 6 ssh.exe clients stall after authentication (the nodes logged the
+    session opened and then nothing until the client's 25 s cut) while the two others answered in 0.8 s.
+    That is the Windows OpenSSH console-stdin hang; the client must never touch the hidden console."""
+    return ["ssh", "-n", "-T", "-o", "BatchMode=yes", "-o", f"ConnectTimeout={connect_timeout}",
+            "-o", "StrictHostKeyChecking=accept-new", f"{USER}@{ip}", probe_cmd]
+
+
+def _probe_one(name: str, ip: str, probe_cmd: str, connect_timeout: int, timeout: int, attempts: int = 2) -> dict:
+    """One node. `timeout` is the whole allowance for this node; it is split over `attempts` tries so a
+    client that stalls once (see ssh_command) gets a second, independent connection within the budget."""
     t0 = time.time()
-    cmd = ["ssh", "-o", "BatchMode=yes", "-o", f"ConnectTimeout={connect_timeout}",
-           "-o", "StrictHostKeyChecking=accept-new", f"{USER}@{ip}", probe_cmd]
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
-    except subprocess.TimeoutExpired:
-        return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": f"timeout after {timeout}s", "secs": round(time.time() - t0, 1)}
-    except (FileNotFoundError, OSError) as e:
-        return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": str(e)[:200], "secs": round(time.time() - t0, 1)}
-    if r.returncode != 0 or not r.stdout.strip():
-        err = (r.stderr.strip().splitlines() or ["no output"])[-1][:200]
-        return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": f"rc={r.returncode}: {err}", "secs": round(time.time() - t0, 1)}
-    row = {"node": name, "ip": ip, "status": "OK", "error": None, "secs": round(time.time() - t0, 1)}
-    row.update(parse_probe_line(r.stdout.strip().splitlines()[-1]))
-    return row
+    cmd = ssh_command(ip, probe_cmd, connect_timeout)
+    per_try = max(5, timeout // max(1, attempts))
+    last_err = "no attempt made"
+    for n in range(1, attempts + 1):
+        try:
+            r = subprocess.run(cmd, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=per_try)
+        except subprocess.TimeoutExpired as e:
+            partial = ((e.stderr or b"") if isinstance(e.stderr, (bytes, bytearray)) else (e.stderr or "")) or ""
+            partial = partial.decode(errors="replace") if isinstance(partial, (bytes, bytearray)) else partial
+            last_err = f"timeout after {per_try}s on attempt {n}/{attempts}" + (f"; stderr: {partial.strip()[:120]}" if partial.strip() else "")
+            continue
+        except (FileNotFoundError, OSError) as e:
+            return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": str(e)[:200], "secs": round(time.time() - t0, 1), "attempts": n}
+        if r.returncode != 0 or not r.stdout.strip():
+            err = (r.stderr.strip().splitlines() or ["no output"])[-1][:200]
+            last_err = f"rc={r.returncode}: {err}"
+            if r.returncode == 255 and "timed out" not in err.lower():
+                break      # a definite ssh failure (auth, host key, refused) does not improve by retrying
+            continue
+        row = {"node": name, "ip": ip, "status": "OK", "error": None, "secs": round(time.time() - t0, 1), "attempts": n}
+        row.update(parse_probe_line(r.stdout.strip().splitlines()[-1]))
+        return row
+    return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": last_err, "secs": round(time.time() - t0, 1), "attempts": attempts}
 
 
 def probe_nodes(root: Path, now_iso: str, connect_timeout: int = 6, timeout: int = 25, budget_s: int = 40) -> dict:

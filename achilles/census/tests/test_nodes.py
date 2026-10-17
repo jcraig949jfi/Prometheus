@@ -69,6 +69,56 @@ def test_negative_snapshot_without_nodes_still_renders():
     assert "Prometheus Fleet Census" in page and blk["rows"] == 1
 
 
+def test_ssh_client_never_reads_the_console():
+    """The 2026-10-17 04:30Z stall: ssh.exe inheriting a hidden console as stdin. -n, -T and stdin=DEVNULL are the guard."""
+    import subprocess
+    argv = N.ssh_command("192.168.1.220", "echo x", 6)
+    assert argv[0] == "ssh" and "-n" in argv and "-T" in argv and argv.index("-n") < argv.index("jcraig@192.168.1.220")
+    seen = {}
+
+    def fake_run(cmd, **kw):
+        seen.update(kw)
+        return subprocess.CompletedProcess(cmd, 0, stdout=LINE + "\n", stderr="")
+    orig = N.subprocess.run
+    N.subprocess.run = fake_run
+    try:
+        row = N._probe_one("ubu003", "192.168.1.220", "probe", 6, 25)
+    finally:
+        N.subprocess.run = orig
+    assert row["status"] == "OK" and row["attempts"] == 1 and seen["stdin"] is subprocess.DEVNULL
+
+
+def test_probe_retries_once_after_a_stalled_client_and_reports_both_when_it_fails():
+    import subprocess
+    calls = []
+
+    def stall_then_answer(cmd, **kw):
+        calls.append(kw["timeout"])
+        if len(calls) == 1:
+            raise subprocess.TimeoutExpired(cmd, kw["timeout"], stderr="")
+        return subprocess.CompletedProcess(cmd, 0, stdout=LINE + "\n", stderr="")
+
+    def always_stall(cmd, **kw):
+        raise subprocess.TimeoutExpired(cmd, kw["timeout"])
+
+    def auth_fails(cmd, **kw):
+        calls.append("auth")
+        return subprocess.CompletedProcess(cmd, 255, stdout="", stderr="jcraig@192.168.1.220: Permission denied (publickey).\n")
+    orig = N.subprocess.run
+    try:
+        N.subprocess.run = stall_then_answer
+        row = N._probe_one("ubu003", "192.168.1.220", "probe", 6, 25)
+        assert row["status"] == "OK" and row["attempts"] == 2 and calls == [12, 12]   # 25 s split over two tries
+        N.subprocess.run = always_stall
+        row = N._probe_one("ubu003", "192.168.1.220", "probe", 6, 25)
+        assert row["status"] == "UNREACHABLE" and "attempt 2/2" in row["error"] and row["attempts"] == 2
+        calls.clear(); N.subprocess.run = auth_fails
+        row = N._probe_one("ubu003", "192.168.1.220", "probe", 6, 25)
+        assert row["status"] == "UNREACHABLE" and "Permission denied" in row["error"] and calls == ["auth"]   # no retry on a definite failure
+    finally:
+        N.subprocess.run = orig
+
+
 def test_probe_never_raises_without_table(tmp_path, monkeypatch):
     monkeypatch.setattr(N, "CODE_ROOT", tmp_path)     # otherwise the real table is found and a live probe runs
     out = N.probe_nodes(tmp_path, "2026-10-17T01:00:00Z")
