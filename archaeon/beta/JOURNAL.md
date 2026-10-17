@@ -1560,6 +1560,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   7/8 positive. Family 2 discriminates more strongly than family 1 (GEN3 plain lifts .07-.67).
   STEP 2 (evolution, 16 cells, ~11.5 core-h) QUEUED for window 12 (~2026-10-18 00:30Z). PREDICTION: TOXIC semantic
   >= 3/8 AND PLAIN <= 1/8.
+- Review packet written: REVIEW_PACKET_BETA_F2Q3_SEMANTICS.txt (claim, readouts, 8 runs, kill controls, 5 named
+  weaknesses incl. the seed defect and the untested distance isolation).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
