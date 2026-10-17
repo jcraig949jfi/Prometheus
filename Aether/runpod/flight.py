@@ -279,8 +279,13 @@ def save_evidence(ctl, receipt_obj):
                   encoding="utf-8", newline="\n") as fh:
             fh.write(ctl.telemetry_text)
         kept.append("telemetry.jsonl")
-    receipt_obj["evidence_dir"] = os.path.relpath(run_dir, HERE).replace(
-        os.sep, "/")
+    try:
+        evidence_dir = os.path.relpath(run_dir, HERE)
+    except ValueError:
+        # Windows: no relative path between drives (a checkout on D: with
+        # receipts on C:). Record the absolute path rather than lose the run.
+        evidence_dir = os.path.abspath(run_dir)
+    receipt_obj["evidence_dir"] = evidence_dir.replace(os.sep, "/")
     receipt_obj["evidence_kept"] = kept
     path = os.path.join(RECEIPT_DIR, "%s.json" % receipt_obj["run_id"])
     rc.write(receipt_obj, path)
