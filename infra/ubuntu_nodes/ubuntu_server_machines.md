@@ -341,5 +341,10 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   that. **Rule for ubu005 (M1/M2 + Achilles, 2026-10-17): Blender at `-t 2` with a cool-down between bodies, and long
   Blender runs go to ubu008 first.** ubu008 (i7-8565U) holds flat at its 80 C firmware cap (75-82 C over 42 busy
   samples) with no clock collapse, so `-t 6` stays fine there.
+  Update 2026-10-17 ~09:10Z: the operator opened ubu005's lid and removed a laptop that had been stacked on it (also
+  opened the lids of ubu004 and ubu008). Two 25-33 min `-t 2` bake runs afterwards (97 samples at 30 s): mean 74 C,
+  max 93 C once then 88 C, 1% of samples >= 91 C (was 22%), clocks never below 1.9 GHz; the room temperature was not a
+  factor (the idle nodes read the same throughout). So ubu005 must stay lid-open and unstacked; `-t 2` remains the rule
+  until a `-t 3` trial after the planned compressed-air clean. ubu008's 80 C cap is unaffected by its lid, as expected.
 - Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo apt-get remove libxi6 libxxf86vm1 libxfixes3 libsm6
   libice6 libgl1` (libxrender1 was pre-existing on ubu005); delete the SKULLPORT line from `authorized_keys`.
