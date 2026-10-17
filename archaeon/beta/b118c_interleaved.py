@@ -69,7 +69,10 @@ def _man(prog, n_regs=16):
     g = []
     for t in prog:
         g += (list(t) + [0, 0, 0])[:4]
-    return {"schema_version": "proteus.player_manifest.v0", "n_regs": n_regs, "tape_words": max(16, len(g) + 16), "genome": g,
+    tw = 16
+    while tw < len(g) + 16:                       # power of two: config_perturbation halves/doubles tape_words, and
+        tw *= 2                                   # 100 -> 50 is not a multiple of 4 (crashed B118f TOXIC 11833)
+    return {"schema_version": "proteus.player_manifest.v0", "n_regs": n_regs, "tape_words": tw, "genome": g,
             "code_writable": False, "persist": "none", "tick_budget": 256, "out_cap": 1}
 
 

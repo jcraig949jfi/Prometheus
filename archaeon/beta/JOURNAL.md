@@ -1503,6 +1503,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B118f (prereg committed before running): replication with the readout FIXED: semantic = constant-twin type info
   > .01; B118d design, NEW seeds 11831-11838 x 2 arms = 16 cells, waves of 8 procs (resumable). PREDICTION: TOXIC
   >= 4/8 AND PLAIN <= 1/8. WINDOW 11 TALLY ~27 of 48 before B118f (est. +14).
+- B118f INSTRUMENT DEFECT (mine, 05:30Z): TOXIC 11833 crashed, ManifestError 'tape_words must be a multiple of 4'.
+  Cause: my hand GEN/CHK manifests set tape_words = len(genome)+16 = 100; config_perturbation (grammar.py:332)
+  halves/doubles tape_words, and 100 -> 50 is invalid. B118d never drew that mutation (luck). Behaviour is unaffected
+  (GEN/CHK use no LD/ST/JMP), but the seed's mutation landscape is. FIX: b118c._man now rounds tape_words up to a
+  power of two (128). Plan: let B118f's other 15 cells finish on the old seed (tape 100), then rerun ONLY TOXIC
+  11833 with tape 128, flagged in the result. B118d/B118f gen 0 used tape 100; noted for any re-analysis.
+  Interim (6 cells): TOXIC 11832 semantic (info .013); TOXIC 11831 info .003; PLAIN 11831/11832/11833 info ~0.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
