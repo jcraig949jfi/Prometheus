@@ -1,0 +1,673 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.9341,
+        "n": 1,
+        "p50": 0.9341,
+        "p95": 0.9341,
+        "p99": 0.9341
+      }
+    },
+    "fetch": {
+      "calls": 712,
+      "failures": 16,
+      "first_half_failures": 16,
+      "first_half_p50_s": 0.115,
+      "latency_s": {
+        "max": 1.6241,
+        "n": 712,
+        "p50": 0.1177,
+        "p95": 0.1902,
+        "p99": 1.5608
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.1269
+    },
+    "get_pod": {
+      "calls": 34,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.3234,
+      "latency_s": {
+        "max": 1.3653,
+        "n": 34,
+        "p50": 0.3203,
+        "p95": 0.4672,
+        "p99": 1.3653
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.3203
+    },
+    "list_pods": {
+      "calls": 3,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.1774,
+        "n": 3,
+        "p50": 0.173,
+        "p95": 0.1774,
+        "p99": 0.1774
+      }
+    },
+    "terminate_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.5667,
+        "n": 1,
+        "p50": 0.5667,
+        "p95": 0.5667,
+        "p99": 0.5667
+      }
+    }
+  },
+  "args": [],
+  "artifact_bytes_total": 900515678,
+  "artifact_integrity": {
+    "manifest_available": true,
+    "mismatch": [],
+    "unverified": [],
+    "verified": [
+      "images_0.tar",
+      "images_1.tar",
+      "images_2.tar",
+      "images_3.tar",
+      "images_4.tar",
+      "images_5.tar",
+      "images_6.tar",
+      "images_7.tar",
+      "images_8.tar",
+      "images_9.tar",
+      "images_10.tar",
+      "images_11.tar",
+      "images_12.tar",
+      "images_13.tar",
+      "images_14.tar",
+      "images_15.tar",
+      "manifest.jsonl",
+      "timing.json",
+      "telemetry.jsonl"
+    ]
+  },
+  "artifact_transfer": {
+    "bytes": 900515678,
+    "bytes_per_s": 35433145.6,
+    "largest": {
+      "attempts": 1,
+      "bytes": 58480640,
+      "fetch_s": 1.624,
+      "integrity": "verified",
+      "path": "images_0.tar",
+      "sha256": "88da0c3a0a7feeb6b43fce525893368bacd5e2ca99848bd96674bb3bbee1ad56"
+    },
+    "largest_bytes_per_s": 36010246.3,
+    "seconds": 25.4145
+  },
+  "artifacts": [
+    {
+      "attempts": 1,
+      "bytes": 58480640,
+      "fetch_s": 1.624,
+      "integrity": "verified",
+      "path": "images_0.tar",
+      "sha256": "88da0c3a0a7feeb6b43fce525893368bacd5e2ca99848bd96674bb3bbee1ad56"
+    },
+    {
+      "attempts": 1,
+      "bytes": 52674560,
+      "fetch_s": 1.4791,
+      "integrity": "verified",
+      "path": "images_1.tar",
+      "sha256": "86c9d4191de11f9b1c4ffd36c5ec96357b4c461247386329d2f2ba452090274e"
+    },
+    {
+      "attempts": 1,
+      "bytes": 55173120,
+      "fetch_s": 1.5349,
+      "integrity": "verified",
+      "path": "images_2.tar",
+      "sha256": "02cbd89a4c765bc0ce9ce3ffbd6b7dbec7c66353e1e87bb08fef07e7ded3e72a"
+    },
+    {
+      "attempts": 1,
+      "bytes": 57999360,
+      "fetch_s": 1.6022,
+      "integrity": "verified",
+      "path": "images_3.tar",
+      "sha256": "ed381187db5e3e1f32352abf1e7991d339b29e84b7f7f1d7e49da6b1f3e90ae0"
+    },
+    {
+      "attempts": 1,
+      "bytes": 55377920,
+      "fetch_s": 1.5294,
+      "integrity": "verified",
+      "path": "images_4.tar",
+      "sha256": "34275f56e953f9865b30089fead98ac3749c230ec2aa8eab5f632b41d303278a"
+    },
+    {
+      "attempts": 1,
+      "bytes": 57313280,
+      "fetch_s": 1.5862,
+      "integrity": "verified",
+      "path": "images_5.tar",
+      "sha256": "7c5c0dcb226ad496462c69bf5ccb77dedfb6d58d17ba74ee2be2aac1f4d58c12"
+    },
+    {
+      "attempts": 1,
+      "bytes": 55439360,
+      "fetch_s": 1.5425,
+      "integrity": "verified",
+      "path": "images_6.tar",
+      "sha256": "469cca2eb188aebe7add0cc50ce2870f1773777fc83c9fbb61c82d7a80154721"
+    },
+    {
+      "attempts": 1,
+      "bytes": 56647680,
+      "fetch_s": 1.5977,
+      "integrity": "verified",
+      "path": "images_7.tar",
+      "sha256": "7c5bb948b4b11023e34b2afb0d54b552b15d2c5274542edabff0c8ead7d366f0"
+    },
+    {
+      "attempts": 1,
+      "bytes": 58255360,
+      "fetch_s": 1.596,
+      "integrity": "verified",
+      "path": "images_8.tar",
+      "sha256": "f13fea7f0b0948a45a83946c0febb86c57ee764a09e20d99226935a46824ff2f"
+    },
+    {
+      "attempts": 1,
+      "bytes": 54609920,
+      "fetch_s": 1.506,
+      "integrity": "verified",
+      "path": "images_9.tar",
+      "sha256": "0058c647770e2510b5054c335c204cf6b99dcaa1b3e31b8f295641e78dd7614d"
+    },
+    {
+      "attempts": 1,
+      "bytes": 56944640,
+      "fetch_s": 1.6186,
+      "integrity": "verified",
+      "path": "images_10.tar",
+      "sha256": "51fb130ac81f894b821c7bd435414a0e966b884021f3a2b684876592405f22bb"
+    },
+    {
+      "attempts": 1,
+      "bytes": 55787520,
+      "fetch_s": 1.525,
+      "integrity": "verified",
+      "path": "images_11.tar",
+      "sha256": "0a32ceb3a751ef9ba12ce1383c50cdbc0c163e02bc260e8c21060c17adf91718"
+    },
+    {
+      "attempts": 1,
+      "bytes": 54118400,
+      "fetch_s": 1.5277,
+      "integrity": "verified",
+      "path": "images_12.tar",
+      "sha256": "61ea45ac563b730d4772703723e3a777871e5c713a7427cf2b67bc00e70e3a21"
+    },
+    {
+      "attempts": 1,
+      "bytes": 57600000,
+      "fetch_s": 1.6126,
+      "integrity": "verified",
+      "path": "images_13.tar",
+      "sha256": "1ef94bd910703ed0a3caaca1a35babd5036f5ece7c3d3fe571524b587b472d48"
+    },
+    {
+      "attempts": 1,
+      "bytes": 55787520,
+      "fetch_s": 1.5591,
+      "integrity": "verified",
+      "path": "images_14.tar",
+      "sha256": "21278e1a57f824c2eae0f0e02fe522a3fbcf1029f04f75a4bbf8ddbcbfdf7b5a"
+    },
+    {
+      "attempts": 1,
+      "bytes": 57169920,
+      "fetch_s": 1.5605,
+      "integrity": "verified",
+      "path": "images_15.tar",
+      "sha256": "abda03a724e556b37de63942753f860f745bc9f5ff6c2b8481c9c15606a1bda0"
+    },
+    {
+      "attempts": 1,
+      "bytes": 1095221,
+      "fetch_s": 0.2057,
+      "integrity": "verified",
+      "path": "manifest.jsonl",
+      "sha256": "705c2280edd79b2935dec35144c3b22114de2479fb64e14bef388dc471e7c885"
+    },
+    {
+      "attempts": 1,
+      "bytes": 646,
+      "fetch_s": 0.0915,
+      "integrity": "verified",
+      "path": "timing.json",
+      "sha256": "ebb79fea886fc23438603d2f4175da78ce2bc44b2ef98d7c2b98cc52bfc15499"
+    },
+    {
+      "attempts": 1,
+      "bytes": 40611,
+      "fetch_s": 0.1158,
+      "integrity": "verified",
+      "path": "telemetry.jsonl",
+      "sha256": "96691852f407ec3b7b634d868253b2c508656b63bc91c62530ba5863914fa0cf"
+    }
+  ],
+  "artifacts_expected": [
+    "images_0.tar",
+    "images_1.tar",
+    "images_2.tar",
+    "images_3.tar",
+    "images_4.tar",
+    "images_5.tar",
+    "images_6.tar",
+    "images_7.tar",
+    "images_8.tar",
+    "images_9.tar",
+    "images_10.tar",
+    "images_11.tar",
+    "images_12.tar",
+    "images_13.tar",
+    "images_14.tar",
+    "images_15.tar",
+    "manifest.jsonl",
+    "timing.json",
+    "telemetry.jsonl"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "fc17f2a55f5fb5f127e6ebf226395caf649ddb08188e6948fbc025ccfe0c92d7",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0122,
+      "rtt_min_s": 0.0776,
+      "samples": 5,
+      "uncertainty_s": 0.0388
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0212,
+      "rtt_min_s": 0.0877,
+      "samples": 5,
+      "uncertainty_s": 0.0438
+    }
+  },
+  "controller_health": {
+    "loop_s": {
+      "max": 1.5596,
+      "n": 285,
+      "p50": 0.256,
+      "p95": 0.638,
+      "p99": 0.9498
+    },
+    "poll_gap_s": {
+      "max": 11.5611,
+      "n": 284,
+      "p50": 10.2589,
+      "p95": 10.6408,
+      "p99": 10.9522
+    },
+    "polls": 285,
+    "spend_usd_last": 0.729941,
+    "telemetry_bytes_last": 40611
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 2980.0,
+    "hourly_usd": 0.89,
+    "quote_source": "provider securePrice read 2026-10-17T04:58:34Z",
+    "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
+    "usd_estimated": 0.73673,
+    "work_units": {
+      "actual": 800.0,
+      "name": "images",
+      "usd_per_1e9_units": 920914.9433357848,
+      "usd_per_unit": 0.0009209149433357848
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-10-17T04:58:34Z",
+  "disposition": {
+    "cause": "OK",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": "a84hm8i32rdk3a",
+      "result": "OK",
+      "terminate_acknowledged": true
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [
+        "images_0.tar",
+        "images_1.tar",
+        "images_2.tar",
+        "images_3.tar",
+        "images_4.tar",
+        "images_5.tar",
+        "images_6.tar",
+        "images_7.tar",
+        "images_8.tar",
+        "images_9.tar",
+        "images_10.tar",
+        "images_11.tar",
+        "images_12.tar",
+        "images_13.tar",
+        "images_14.tar",
+        "images_15.tar",
+        "manifest.jsonl",
+        "timing.json",
+        "telemetry.jsonl"
+      ],
+      "ledger": true,
+      "platform_samples": 197,
+      "telemetry_complete": true,
+      "telemetry_records": 203
+    },
+    "pod_state": "ABSENT: LIST omits it and GET returns nothing",
+    "provider_believes": {
+      "get_returns_pod": false,
+      "list_contains_pod": false,
+      "reads": 1,
+      "terminate_response": "ACK_204"
+    },
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-10-17T05:48:14Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/skullport_sdxl_concepts-20261017T045834Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "telemetry.jsonl",
+    "timing.json",
+    "controller_health.jsonl",
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "37ff0c46a7a22fc3994f9b92b436da7321f7910c",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA GeForce RTX 4090",
+  "guardrails": {
+    "disk_gb": 40,
+    "max_runtime_s": 7200,
+    "telemetry_interval_s": 15
+  },
+  "large_artifacts": [
+    {
+      "bytes": 58480640,
+      "path": "images_0.tar",
+      "sha256": "88da0c3a0a7feeb6b43fce525893368bacd5e2ca99848bd96674bb3bbee1ad56",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_0.tar"
+    },
+    {
+      "bytes": 52674560,
+      "path": "images_1.tar",
+      "sha256": "86c9d4191de11f9b1c4ffd36c5ec96357b4c461247386329d2f2ba452090274e",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_1.tar"
+    },
+    {
+      "bytes": 56944640,
+      "path": "images_10.tar",
+      "sha256": "51fb130ac81f894b821c7bd435414a0e966b884021f3a2b684876592405f22bb",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_10.tar"
+    },
+    {
+      "bytes": 55787520,
+      "path": "images_11.tar",
+      "sha256": "0a32ceb3a751ef9ba12ce1383c50cdbc0c163e02bc260e8c21060c17adf91718",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_11.tar"
+    },
+    {
+      "bytes": 54118400,
+      "path": "images_12.tar",
+      "sha256": "61ea45ac563b730d4772703723e3a777871e5c713a7427cf2b67bc00e70e3a21",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_12.tar"
+    },
+    {
+      "bytes": 57600000,
+      "path": "images_13.tar",
+      "sha256": "1ef94bd910703ed0a3caaca1a35babd5036f5ece7c3d3fe571524b587b472d48",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_13.tar"
+    },
+    {
+      "bytes": 55787520,
+      "path": "images_14.tar",
+      "sha256": "21278e1a57f824c2eae0f0e02fe522a3fbcf1029f04f75a4bbf8ddbcbfdf7b5a",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_14.tar"
+    },
+    {
+      "bytes": 57169920,
+      "path": "images_15.tar",
+      "sha256": "abda03a724e556b37de63942753f860f745bc9f5ff6c2b8481c9c15606a1bda0",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_15.tar"
+    },
+    {
+      "bytes": 55173120,
+      "path": "images_2.tar",
+      "sha256": "02cbd89a4c765bc0ce9ce3ffbd6b7dbec7c66353e1e87bb08fef07e7ded3e72a",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_2.tar"
+    },
+    {
+      "bytes": 57999360,
+      "path": "images_3.tar",
+      "sha256": "ed381187db5e3e1f32352abf1e7991d339b29e84b7f7f1d7e49da6b1f3e90ae0",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_3.tar"
+    },
+    {
+      "bytes": 55377920,
+      "path": "images_4.tar",
+      "sha256": "34275f56e953f9865b30089fead98ac3749c230ec2aa8eab5f632b41d303278a",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_4.tar"
+    },
+    {
+      "bytes": 57313280,
+      "path": "images_5.tar",
+      "sha256": "7c5c0dcb226ad496462c69bf5ccb77dedfb6d58d17ba74ee2be2aac1f4d58c12",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_5.tar"
+    },
+    {
+      "bytes": 55439360,
+      "path": "images_6.tar",
+      "sha256": "469cca2eb188aebe7add0cc50ce2870f1773777fc83c9fbb61c82d7a80154721",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_6.tar"
+    },
+    {
+      "bytes": 56647680,
+      "path": "images_7.tar",
+      "sha256": "7c5bb948b4b11023e34b2afb0d54b552b15d2c5274542edabff0c8ead7d366f0",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_7.tar"
+    },
+    {
+      "bytes": 58255360,
+      "path": "images_8.tar",
+      "sha256": "f13fea7f0b0948a45a83946c0febb86c57ee764a09e20d99226935a46824ff2f",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_8.tar"
+    },
+    {
+      "bytes": 54609920,
+      "path": "images_9.tar",
+      "sha256": "0058c647770e2510b5054c335c204cf6b99dcaa1b3e31b8f295641e78dd7614d",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/images_9.tar"
+    },
+    {
+      "bytes": 1095221,
+      "path": "manifest.jsonl",
+      "sha256": "705c2280edd79b2935dec35144c3b22114de2479fb64e14bef388dc471e7c885",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-20261017T045834Z/manifest.jsonl"
+    }
+  ],
+  "last_stage": "module_end",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 0.951,
+      "accepted_to_first_contact_s": 17.696,
+      "accepted_to_first_telemetry_s": 17.696,
+      "artifact_transfer_s": 26.892,
+      "create_call_s": 0.934,
+      "teardown_total_s": 28.28,
+      "terminate_ack_s": 0.567,
+      "total_wall_s": 2980.989
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 1.826
+    },
+    "module_reported_elapsed_s": 2938.487,
+    "pod_clock": {
+      "bootstrap_total_s": 9.64,
+      "canary_s": 1.827,
+      "dependency_install_s": 7.626,
+      "execution_s": 2939.25,
+      "fetch_s": 0.163,
+      "unpack_s": 0.007,
+      "verify_s": 0.004
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 11.445,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0212,
+      "provision_s": 1.805,
+      "uncertainty_s": 0.0438
+    }
+  },
+  "module": "skullport_sdxl_concepts@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 7200.0,
+    "gpu_class": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "hourly_usd": 0.89,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0037,
+    "overhead_s": 27.0,
+    "total_s": 7227.0,
+    "usd_compute": 1.78,
+    "usd_overhead": 0.0067,
+    "usd_per_pod_minute": 0.014833,
+    "usd_total": 1.7867,
+    "work_units": {
+      "estimate": 800.0,
+      "name": "images",
+      "units_per_usd": 447.7591056011866,
+      "usd_per_1e9_units": 2233343.7499999995,
+      "usd_per_unit": 0.0022333437499999997
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 889126161.0,
+    "disk_free_b_min": 34924269568.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 24564.0,
+    "gpu_mem_used_mib_peak": 15076.0,
+    "gpu_names": [
+      "NVIDIA GeForce RTX 4090"
+    ],
+    "gpu_power_w_mean": 434.9115,
+    "gpu_power_w_peak": 460.08,
+    "gpu_temp_c_peak": 75.0,
+    "gpu_util_pct_mean": 97.3858,
+    "gpu_util_pct_peak": 100.0,
+    "host_load1_peak": 22.7421875,
+    "host_mem_used_b_peak": 104114388992.0,
+    "sample_cost_s_mean": 0.0347,
+    "sample_cost_s_peak": 0.2584,
+    "samples": 197,
+    "span_s": 2940.023
+  },
+  "pod_stages": {
+    "boot": 1792213117.58695,
+    "canary": 1792213127.214574,
+    "fetched": 1792213117.749637,
+    "installed": 1792213125.3873527,
+    "module_end": 1792216066.4764996,
+    "module_rc": 0.0,
+    "module_start": 1792213127.2264514,
+    "server_up": 1792213117.5919359,
+    "unpacked": 1792213117.7609363,
+    "verified": 1792213117.7536259
+  },
+  "pods": [
+    {
+      "absence_evidence": {
+        "agree": true,
+        "get_absent": true,
+        "list_omits": true,
+        "reads": 1
+      },
+      "created_utc": "2026-10-17T05:48:15Z",
+      "creation_outcome": "confirmed",
+      "id": "a84hm8i32rdk3a",
+      "observed_absent": true,
+      "terminate_acknowledged": true,
+      "terminate_response": "ACK_204"
+    }
+  ],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "OK",
+  "run_id": "skullport_sdxl_concepts-20261017T045834Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "SmugglersHole",
+  "spec_sha256": "0a715f46d786f840f988fb4c8a4658b805740c7f8e868656d96d2eb2bcec5f4c",
+  "started_utc": "2026-10-17T04:58:34Z",
+  "stock_at_launch": null,
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 2938.487,
+    "errors": 0,
+    "first_utc": "2026-10-17T04:58:47Z",
+    "kinds": {
+      "end": 1,
+      "event": 3,
+      "progress": 198,
+      "start": 1
+    },
+    "last_utc": "2026-10-17T05:47:45Z",
+    "max_gap_s": 29.551,
+    "module_status": "ok",
+    "records": 203,
+    "units_final": 800,
+    "units_per_s": 0.2722,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

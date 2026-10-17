@@ -1,0 +1,593 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.9559,
+        "n": 1,
+        "p50": 0.9559,
+        "p95": 0.9559,
+        "p99": 0.9559
+      }
+    },
+    "fetch": {
+      "calls": 120,
+      "failures": 18,
+      "first_half_failures": 18,
+      "first_half_p50_s": 0.1154,
+      "latency_s": {
+        "max": 1.7868,
+        "n": 120,
+        "p50": 0.1168,
+        "p95": 0.1803,
+        "p99": 0.2396
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.1179
+    },
+    "get_pod": {
+      "calls": 10,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.2602,
+      "latency_s": {
+        "max": 0.4664,
+        "n": 10,
+        "p50": 0.2554,
+        "p95": 0.4664,
+        "p99": 0.4664
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.2554
+    },
+    "list_pods": {
+      "calls": 3,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.2159,
+        "n": 3,
+        "p50": 0.2102,
+        "p95": 0.2159,
+        "p99": 0.2159
+      }
+    },
+    "terminate_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.9933,
+        "n": 1,
+        "p50": 0.9933,
+        "p95": 0.9933,
+        "p99": 0.9933
+      }
+    }
+  },
+  "args": [],
+  "artifact_bytes_total": 62540802,
+  "artifact_integrity": {
+    "manifest_available": true,
+    "mismatch": [],
+    "unverified": [],
+    "verified": [
+      "images_0.tar",
+      "images_1.tar",
+      "images_2.tar",
+      "images_3.tar",
+      "images_4.tar",
+      "images_5.tar",
+      "images_6.tar",
+      "images_7.tar",
+      "images_8.tar",
+      "images_9.tar",
+      "images_10.tar",
+      "images_11.tar",
+      "images_12.tar",
+      "images_13.tar",
+      "images_14.tar",
+      "images_15.tar",
+      "manifest.jsonl",
+      "timing.json",
+      "telemetry.jsonl"
+    ]
+  },
+  "artifact_transfer": {
+    "bytes": 62540802,
+    "bytes_per_s": 16039804.6,
+    "largest": {
+      "attempts": 1,
+      "bytes": 62330880,
+      "fetch_s": 1.7874,
+      "integrity": "verified",
+      "path": "images_0.tar",
+      "sha256": "22f3f6079a39be0b0eacd69013623e4b51b99f32b51d1a958ce4c9170baf98dc"
+    },
+    "largest_bytes_per_s": 34872373.3,
+    "seconds": 3.8991
+  },
+  "artifacts": [
+    {
+      "attempts": 1,
+      "bytes": 62330880,
+      "fetch_s": 1.7874,
+      "integrity": "verified",
+      "path": "images_0.tar",
+      "sha256": "22f3f6079a39be0b0eacd69013623e4b51b99f32b51d1a958ce4c9170baf98dc"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1175,
+      "integrity": "verified",
+      "path": "images_1.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1102,
+      "integrity": "verified",
+      "path": "images_2.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1293,
+      "integrity": "verified",
+      "path": "images_3.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1187,
+      "integrity": "verified",
+      "path": "images_4.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1085,
+      "integrity": "verified",
+      "path": "images_5.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1114,
+      "integrity": "verified",
+      "path": "images_6.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1219,
+      "integrity": "verified",
+      "path": "images_7.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1214,
+      "integrity": "verified",
+      "path": "images_8.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1045,
+      "integrity": "verified",
+      "path": "images_9.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.104,
+      "integrity": "verified",
+      "path": "images_10.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1236,
+      "integrity": "verified",
+      "path": "images_11.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1113,
+      "integrity": "verified",
+      "path": "images_12.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1436,
+      "integrity": "verified",
+      "path": "images_13.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1002,
+      "integrity": "verified",
+      "path": "images_14.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 10240,
+      "fetch_s": 0.1142,
+      "integrity": "verified",
+      "path": "images_15.tar",
+      "sha256": "84ff92691f909a05b224e1c56abb4864f01b4f8e3c854e4bb4c7baf1d3f6d652"
+    },
+    {
+      "attempts": 1,
+      "bytes": 52460,
+      "fetch_s": 0.1472,
+      "integrity": "verified",
+      "path": "manifest.jsonl",
+      "sha256": "3d9d5a7e82ef0bc954792776160f7a3bb5076c50940901b8ab77f369636e7658"
+    },
+    {
+      "attempts": 1,
+      "bytes": 631,
+      "fetch_s": 0.1127,
+      "integrity": "verified",
+      "path": "timing.json",
+      "sha256": "e665ce703a368383ea566928fa562d6f21d004685b03c6f2913da463291849e3"
+    },
+    {
+      "attempts": 1,
+      "bytes": 3231,
+      "fetch_s": 0.1115,
+      "integrity": "verified",
+      "path": "telemetry.jsonl",
+      "sha256": "64b07bc06591777c2a198828440709618bf33a3b9e9fb8c2f6ca073b2f07575b"
+    }
+  ],
+  "artifacts_expected": [
+    "images_0.tar",
+    "images_1.tar",
+    "images_2.tar",
+    "images_3.tar",
+    "images_4.tar",
+    "images_5.tar",
+    "images_6.tar",
+    "images_7.tar",
+    "images_8.tar",
+    "images_9.tar",
+    "images_10.tar",
+    "images_11.tar",
+    "images_12.tar",
+    "images_13.tar",
+    "images_14.tar",
+    "images_15.tar",
+    "manifest.jsonl",
+    "timing.json",
+    "telemetry.jsonl"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "fc17f2a55f5fb5f127e6ebf226395caf649ddb08188e6948fbc025ccfe0c92d7",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0039,
+      "rtt_min_s": 0.0982,
+      "samples": 5,
+      "uncertainty_s": 0.0491
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.004,
+      "rtt_min_s": 0.099,
+      "samples": 5,
+      "uncertainty_s": 0.0495
+    }
+  },
+  "controller_health": {
+    "loop_s": {
+      "max": 0.7098,
+      "n": 30,
+      "p50": 0.259,
+      "p95": 0.5903,
+      "p99": 0.7098
+    },
+    "poll_gap_s": {
+      "max": 10.7114,
+      "n": 29,
+      "p50": 10.2684,
+      "p95": 10.5921,
+      "p99": 10.7114
+    },
+    "polls": 30,
+    "spend_usd_last": 0.053375,
+    "telemetry_bytes_last": 3231
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 330.8,
+    "hourly_usd": 0.59,
+    "quote_source": "provider securePrice read 2026-10-17T02:02:51Z",
+    "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
+    "usd_estimated": 0.05421,
+    "work_units": {
+      "actual": 48.0,
+      "name": "images",
+      "usd_per_1e9_units": 1129357.4374996952,
+      "usd_per_unit": 0.0011293574374996952
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA A40",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-10-17T02:02:51Z",
+  "disposition": {
+    "cause": "OK",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": "ku50srdox2zolv",
+      "result": "OK",
+      "terminate_acknowledged": true
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [
+        "images_0.tar",
+        "images_1.tar",
+        "images_2.tar",
+        "images_3.tar",
+        "images_4.tar",
+        "images_5.tar",
+        "images_6.tar",
+        "images_7.tar",
+        "images_8.tar",
+        "images_9.tar",
+        "images_10.tar",
+        "images_11.tar",
+        "images_12.tar",
+        "images_13.tar",
+        "images_14.tar",
+        "images_15.tar",
+        "manifest.jsonl",
+        "timing.json",
+        "telemetry.jsonl"
+      ],
+      "ledger": true,
+      "platform_samples": 22,
+      "telemetry_complete": true,
+      "telemetry_records": 14
+    },
+    "pod_state": "ABSENT: LIST omits it and GET returns nothing",
+    "provider_believes": {
+      "get_returns_pod": false,
+      "list_contains_pod": false,
+      "reads": 1,
+      "terminate_response": "ACK_204"
+    },
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-10-17T02:08:22Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/skullport_sdxl_concepts-scout-20261017T020251Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "images_1.tar",
+    "images_10.tar",
+    "images_11.tar",
+    "images_12.tar",
+    "images_13.tar",
+    "images_14.tar",
+    "images_15.tar",
+    "images_2.tar",
+    "images_3.tar",
+    "images_4.tar",
+    "images_5.tar",
+    "images_6.tar",
+    "images_7.tar",
+    "images_8.tar",
+    "images_9.tar",
+    "manifest.jsonl",
+    "telemetry.jsonl",
+    "timing.json",
+    "controller_health.jsonl",
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "37ff0c46a7a22fc3994f9b92b436da7321f7910c",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA A40",
+  "guardrails": {
+    "disk_gb": 40,
+    "max_runtime_s": 716,
+    "telemetry_interval_s": 15
+  },
+  "large_artifacts": [
+    {
+      "bytes": 62330880,
+      "path": "images_0.tar",
+      "sha256": "22f3f6079a39be0b0eacd69013623e4b51b99f32b51d1a958ce4c9170baf98dc",
+      "stored_at": "E:/SmugglersHole/build/runpod/skullport_sdxl_concepts-scout-20261017T020251Z/images_0.tar"
+    }
+  ],
+  "last_stage": "module_end",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.406,
+      "accepted_to_first_contact_s": 21.081,
+      "accepted_to_first_telemetry_s": 24.855,
+      "artifact_transfer_s": 4.446,
+      "create_call_s": 0.956,
+      "teardown_total_s": 6.395,
+      "terminate_ack_s": 0.994,
+      "total_wall_s": 332.173
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 1.602
+    },
+    "module_reported_elapsed_s": 304.257,
+    "pod_clock": {
+      "bootstrap_total_s": 12.787,
+      "canary_s": 2.269,
+      "dependency_install_s": 10.338,
+      "execution_s": 305.285,
+      "fetch_s": 0.155,
+      "unpack_s": 0.009,
+      "verify_s": 0.003
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 14.385,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.004,
+      "provision_s": 1.598,
+      "uncertainty_s": 0.0495
+    }
+  },
+  "module": "skullport_sdxl_concepts-scout@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 716.0,
+    "gpu_class": "NVIDIA A40",
+    "gpu_count": 1,
+    "hourly_usd": 0.59,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0363,
+    "overhead_s": 27.0,
+    "total_s": 743.0,
+    "usd_compute": 0.1173,
+    "usd_overhead": 0.0044,
+    "usd_per_pod_minute": 0.009833,
+    "usd_total": 0.1217,
+    "work_units": {
+      "estimate": 48.048,
+      "name": "images",
+      "units_per_usd": 394.58174601364146,
+      "usd_per_1e9_units": 2534329.096829097,
+      "usd_per_unit": 0.002534329096829097
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 49237710.0,
+    "disk_free_b_min": 35767533568.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 46068.0,
+    "gpu_mem_used_mib_peak": 15529.0,
+    "gpu_names": [
+      "NVIDIA A40"
+    ],
+    "gpu_power_w_mean": 260.7786,
+    "gpu_power_w_peak": 301.65,
+    "gpu_temp_c_peak": 73.0,
+    "gpu_util_pct_mean": 85.0455,
+    "gpu_util_pct_peak": 100.0,
+    "host_load1_peak": 44.93701171875,
+    "host_mem_used_b_peak": 84685438976.0,
+    "sample_cost_s_mean": 0.0466,
+    "sample_cost_s_peak": 0.165,
+    "samples": 22,
+    "span_s": 315.002
+  },
+  "pod_stages": {
+    "boot": 1792202574.3442538,
+    "canary": 1792202587.1188903,
+    "fetched": 1792202574.4997153,
+    "installed": 1792202584.8496308,
+    "module_end": 1792202892.416541,
+    "module_rc": 0.0,
+    "module_start": 1792202587.1316397,
+    "server_up": 1792202574.3476598,
+    "unpacked": 1792202574.5116363,
+    "verified": 1792202574.5030265
+  },
+  "pods": [
+    {
+      "absence_evidence": {
+        "agree": true,
+        "get_absent": true,
+        "list_omits": true,
+        "reads": 1
+      },
+      "created_utc": "2026-10-17T02:08:23Z",
+      "creation_outcome": "confirmed",
+      "id": "ku50srdox2zolv",
+      "observed_absent": true,
+      "terminate_acknowledged": true,
+      "terminate_response": "ACK_204"
+    }
+  ],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "OK",
+  "run_id": "skullport_sdxl_concepts-scout-20261017T020251Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "SmugglersHole",
+  "spec_sha256": "0721757e517703a73715551ad6b17fa75679ec5c8aa6c71a1776ea0db796ba6a",
+  "started_utc": "2026-10-17T02:02:51Z",
+  "stock_at_launch": null,
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 304.257,
+    "errors": 0,
+    "first_utc": "2026-10-17T02:03:07Z",
+    "kinds": {
+      "end": 1,
+      "event": 3,
+      "progress": 9,
+      "start": 1
+    },
+    "last_utc": "2026-10-17T02:08:11Z",
+    "max_gap_s": 46.82,
+    "module_status": "ok",
+    "records": 14,
+    "units_final": 48,
+    "units_per_s": 0.1578,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}
