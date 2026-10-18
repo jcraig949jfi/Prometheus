@@ -12,6 +12,12 @@ CONTROLS (step 1, committed before running): GEN1 toxic share ~.5; CHK1 0; train
 training worlds.
 PREDICTION (committed before running), conjecture: TOXIC avoids >= 3/8 AND PLAIN <= 1/8.
 If TOXIC <= 1/8, the conjecture's 'short chain is reachable from scratch' half is wrong (or R = 1 differs otherwise).
+B122 CONTROLS RESULT (~07:20Z): FAILED -- training-side value 0.00 on 8/8 worlds; CHK1 lift = GEN1 lift (-.0009).
+Cause: rewards are clipped at 0 per EPISODE, and with R = 1 a toxic pool is toxic for the whole episode, so harvesting
+and not harvesting both score 0. Avoidance has no value. B122 as designed is NOT run (the training-side rule caught it).
+B122b (NEW design, NEW prereg, argv 'b'): toxicity re-drawn EVERY TICK (p 1/2, cost 2x), so the type word says whether
+harvesting pays NOW; GEN's expected harvest value is negative and CHK harvests only on safe ticks. Same arms, seeds
+12211-12218, readout and PREDICTION as above; controls re-run first with the same criteria.
 """
 import json
 import sys
@@ -30,13 +36,29 @@ from archaeon.wse import evolve as EV
 OUT = Path(__file__).resolve().parent / "results" / "B122_short_chain_scratch"
 
 
+class TickToxic(IToxic):
+    """B122b: re-draw every pool's toxicity on every tick (after the world advances)."""
+
+    def reset(self, seed, ep, shared=None):
+        st = super().reset(seed, ep, shared); st["_tox_key"] = (seed, ep); return st
+
+    def act(self, st, outputs):
+        super().act(st, outputs)
+        from proteus.foundry.prng import SplitMix64, seed_from
+        rng = SplitMix64(seed_from("b122b.tick", *st["_tox_key"], st["tick"]))
+        st["toxic"] = [rng.randbelow(1000) < int(self.p * 1000) for _ in st["toxic"]]
+
+
+MODE = {"tick": False}
+
+
 def world1(key, p):
     for t in range(200):
         w, s = echo_free_world(key + (t,))
         if w.w.R == 1:
             break
     assert w.w.R == 1, key
-    return NoClock(IToxic(w.w, p, 2.0)), s
+    return NoClock((TickToxic if MODE["tick"] else IToxic)(w.w, p, 2.0)), s
 
 
 def heldout(n=12):
@@ -62,6 +84,8 @@ def controls():
 
 
 def cell(job):
+    MODE["tick"] = job.get("tick", False); OUTX = OUT.parent / ("B122b_short_chain_tick" if MODE["tick"] else OUT.name)
+    globals()["OUT"] = OUTX; OUTX.mkdir(parents=True, exist_ok=True)
     state = {"g": 0}; cache = {}
 
     def ev_fn(m, eps, intervention=None, rng_seed=0, reward_mode="per_ask"):
@@ -86,13 +110,18 @@ def cell(job):
 
 
 def main(argv):
+    global OUT
+    tick = "b" in argv; argv = [a for a in argv if a != "b"]; MODE["tick"] = tick
+    if tick:
+        OUT = OUT.parent / "B122b_short_chain_tick"
     OUT.mkdir(parents=True, exist_ok=True)
     if argv and argv[0] == "controls":
         controls(); return 0
     G_ = int(argv[0]) if argv else 300; W = int(argv[1]) if len(argv) > 1 else 8
     cf = OUT / "B122_cells.jsonl"
     done = {(json.loads(l)["arm"], json.loads(l)["seed"]) for l in open(cf, encoding="utf-8")} if cf.exists() else set()
-    jobs = [j for j in ({"arm": a, "seed": 12201 + i, "G": G_} for i in range(8) for a in ("TOXIC", "PLAIN")) if (j["arm"], j["seed"]) not in done]
+    base = 12211 if tick else 12201
+    jobs = [j for j in ({"arm": a, "seed": base + i, "G": G_, "tick": tick} for i in range(8) for a in ("TOXIC", "PLAIN")) if (j["arm"], j["seed"]) not in done]
     with ProcessPoolExecutor(max_workers=W) as ex:
         futs = {ex.submit(cell, j): j for j in jobs}
         for fu in as_completed(futs):
