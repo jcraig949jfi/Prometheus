@@ -1620,6 +1620,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   ensemble-invariant across 2 families (WORKING candidate pending external review). Bounds: not from random gen 0
   (B118b/c); not with distant type words (B120, seeded); accidental PLAIN avoidance ~2/36.
   WINDOW 12 TALLY ~27 of 48.
+- Two-family finding posted (comms #2273 to Harmonia, Aporia). F2Q3 packet section 9 added.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
