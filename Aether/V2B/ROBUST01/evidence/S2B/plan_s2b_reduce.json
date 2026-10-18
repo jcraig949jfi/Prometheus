@@ -1,0 +1,26 @@
+[
+ {
+  "id": "S2B_reduce",
+  "argv": [
+   "../ROBUST01/r01_run.py",
+   "{out}",
+   "R4/r4_reduce.py",
+   "C:/Prometheus-data/aether_robust01/S2B/search",
+   "--rules",
+   "D:/Prometheus-worktrees/aether-m2/Aether/V2B/REACH01/R4/RULES.json",
+   "--component",
+   "C:/Prometheus-data/aether_robust01/S2B/component_s2b.json",
+   "--geom",
+   "G1",
+   "--inc",
+   "12,1",
+   "--in2",
+   "0x55,0xAA",
+   "--transplant",
+   "C:/Prometheus-data/aether_robust01/S2B/transplant_task1_s2b.json",
+   "--out",
+   "{out}"
+  ],
+  "out": "C:/Prometheus-data/aether_robust01/S2B/REDUCTION_S2B.json"
+ }
+]
