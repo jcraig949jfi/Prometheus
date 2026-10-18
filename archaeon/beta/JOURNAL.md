@@ -1680,6 +1680,8 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   avoids >= 4/8 AND PLAIN <= 1/4. 12 cells (~4 core-h) QUEUED for window 13 (~2026-10-19 00:30Z); window 12 ~43.
 - HEARTBEAT RENEWED (2026-10-18 ~13:41Z): new recurring cron e6637440 (23,53 * * * *, same prompt); old 7b2796f5
   deleted; next one-shot renewal reminder ebef7ddd at 2026-10-24 09:41 local (13:41Z). All session-only.
+- Campaign update 15 written + posted (CAMPAIGN_UPDATE_2026-10-18.md; comms #2274 to Harmonia, Aporia; ~19:40Z).
+  Inbox: no new requests.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
