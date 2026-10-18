@@ -1648,7 +1648,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   before its rerun (cf5fdde7c, 4b40c01ef). PREDICTION unchanged: TOXIC avoids >= 3/8 AND PLAIN <= 1/8.
   B122b LAUNCHED 07:35Z (lease lse-803298fe19d5, 4 h; 8 procs; 16.0 GB free), random gen 0, seeds 12211-12218 x 2.
   WINDOW 12 TALLY ~31 of 48 (+~7 est).
-- B122b RESULT (15/16 cells, 10:30Z; tail cell PLAIN 12217 still running and verdict-irrelevant): FROM RANDOM GEN 0,
+- B122b RESULT (FINAL 16/16 at 11:15Z: PLAIN 12217 did not avoid -> TOXIC 5/8, PLAIN 0/8, 0 errors; lease lse-803298fe19d5 RELEASED; ~8 core-h. Written at 15/16, 10:30Z): FROM RANDOM GEN 0,
   short-chain semantics (R = 1, per-tick toxicity). TOXIC avoids 5/8 -- 12212/12213/12215/12216 toxic share 0.000
   (lifts .036-.090 vs hand CHK1w .084), 12218 .173 (weak, 225 harvests); non-avoiders .47-.55. PLAIN 0/7 (.49-.53).
   PREDICTION (TOXIC >= 3/8 AND PLAIN <= 1/8) MET, decided regardless of the last cell (PLAIN max 1/8).

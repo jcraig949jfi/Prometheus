@@ -251,7 +251,7 @@ Falsifier to run: hold the chain length fixed and vary only whether gen 0 is ran
 capability needs a precursor, or a 4-link capability is reached from scratch at normal rates, the conjecture is wrong.
 
 First falsification attempt (B122b, prereg met): reward semantics with a SHORT chain (R = 1, ~4 instructions) is reached
-FROM RANDOM GEN 0 in 5/8 TOXIC runs vs PLAIN 0/7, where the longer-chain version (R = 3) was 0/4 and 0/4. Survived; but R = 1
+FROM RANDOM GEN 0 in 5/8 TOXIC runs vs PLAIN 0/8, where the longer-chain version (R = 3) was 0/4 and 0/4. Survived; but R = 1
 also changes other things (no pool choice, per-tick toxicity, history off), so chain length was not varied alone.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
