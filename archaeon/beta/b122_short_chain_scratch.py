@@ -18,6 +18,10 @@ and not harvesting both score 0. Avoidance has no value. B122 as designed is NOT
 B122b (NEW design, NEW prereg, argv 'b'): toxicity re-drawn EVERY TICK (p 1/2, cost 2x), so the type word says whether
 harvesting pays NOW; GEN's expected harvest value is negative and CHK harvests only on safe ticks. Same arms, seeds
 12211-12218, readout and PREDICTION as above; controls re-run first with the same criteria.
+B122b CONTROLS RESULT (~07:30Z): FAILED -- training value positive 3/8 (< 6). Cause: the hand CHK1 (written for
+R >= 2) MOVES when its only pool is toxic; with locality on, that walks it off the pool node (safe harvests 269 vs
+GEN1 814). Instrument refinement (declared before re-running; criteria unchanged): CHK1w WAITS (halts with no
+output) on a toxic tick, harvests on a safe one, and moves only when the pool is empty.
 """
 import json
 import sys
@@ -65,18 +69,27 @@ def heldout(n=12):
     return [world1(("b122ho", i), .5) for i in range(n)]
 
 
+def chk1w():
+    """Wait-checker for R = 1: harvest if (pool non-empty and safe); halt with no output if non-empty and toxic; move if empty."""
+    from archaeon.beta.b01_w2k2_existence import HALT, IN, JNZ, JZ, LDC, OUT_
+    from archaeon.beta.b118c_interleaved import _man
+    return _man([(IN, 1, 0), (IN, 6, 0), (JZ, 1, 5), (JNZ, 6, 3), (LDC, 12, 0), (OUT_, 12, 0), (HALT,),
+                 (LDC, 14, 1), (OUT_, 0, 14), (HALT,)])
+
+
 def avoids(t):
     return t["toxic_share"] < .25 and t["safe"] + t["toxic"] >= 100
 
 
 def controls():
     ho = heldout()
-    g, c = trace(gen(1), ho), trace(chk(1), ho)
+    C = chk1w() if MODE["tick"] else chk(1)
+    g, c = trace(gen(1), ho), trace(C, ho)
     tr = []
     for gi in range(8):
-        w, s = world1(("b122train", 12201, gi), .5); tr.append(round(lift(chk(1), w, s) - lift(gen(1), w, s), 4))
-    summ = {"GEN1": g, "CHK1": c, "GEN1_lift": round(sum(lift(gen(1), w, s) for w, s in ho) / len(ho), 4),
-            "CHK1_lift": round(sum(lift(chk(1), w, s) for w, s in ho) / len(ho), 4), "train_gain": tr, "train_pos": sum(x > 0 for x in tr)}
+        w, s = world1(("b122train", 12201, gi), .5); tr.append(round(lift(C, w, s) - lift(gen(1), w, s), 4))
+    summ = {"GEN1": g, "CHK1": c, "checker": "CHK1w" if MODE["tick"] else "CHK1", "GEN1_lift": round(sum(lift(gen(1), w, s) for w, s in ho) / len(ho), 4),
+            "CHK1_lift": round(sum(lift(C, w, s) for w, s in ho) / len(ho), 4), "train_gain": tr, "train_pos": sum(x > 0 for x in tr)}
     summ["pred"] = .35 <= g["toxic_share"] <= .65 and c["toxic_share"] < .02 and avoids(c) and summ["train_pos"] >= 6
     print(json.dumps(summ)); OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "B122_controls.json").write_text(json.dumps(summ, indent=1), encoding="utf-8")
