@@ -247,8 +247,11 @@ clock.
    B58 0/16).
 3. Can the invariant foraging rule be pushed beyond the generator family by randomising reward semantics (which pool
    pays) rather than dynamics?
-   ANSWERED (PROBABLE, within one world family): with type words interleaved and gen 0 = a working forager,
-   toxic-semantics training evolves foragers that READ the semantic word (constant-twin info > .01) and AVOID toxic
-   pools (10-16% of harvests vs 52% blind; B118h): B118f 4/8 (mixed seed) + B118g 4/8 (clean, prereg met) vs PLAIN
-   0/16 (pooled p ~ .001). From random gen 0: not reached (B118b/c 0/4, 0/4). Distance matters: with the type words
-   at the END of the observation, 0/4 (B118b). Next: a second world family for ensemble invariance.
+   ANSWERED (PROBABLE; ensemble-invariant across 2 world families on one preregistered readout): with type words
+   interleaved and gen 0 = a working forager, toxic-semantics training evolves foragers that AVOID toxic pools (toxic
+   share of harvests < .25 vs ~.50 blind). Behavioural readout fixed in advance: family 1 (C6 generator) 6/8 vs PLAIN
+   1/8 (B118i); family 2 (P-boom lineage) 6/8 vs 0/8 (B119b); pooled 12/16 vs 1/16. Also B118f/g 8/16 vs 0/16 on the
+   constant-twin readout (family 1). Bounds: not from random gen 0 (B118b/c 0/4, 0/4); not with the type words at the
+   END even from a working forager (B120 0/4: the Finding 3 wiring-distance wall). Instrument: the constant-twin
+   readout gives false positives (B119 PLAIN 2/8) AND misses real avoiders in family 2; behaviour is the faithful
+   readout. Accidental avoidance in PLAIN ~2/36.

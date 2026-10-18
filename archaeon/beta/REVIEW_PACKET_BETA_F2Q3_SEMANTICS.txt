@@ -2,7 +2,8 @@ ARCHAEON P2B SFE BETA -- REVIEW PACKET: FINDING 2 OPEN QUESTION 3 (REWARD SEMANT
 Branch archaeon/p2b-sfe-2026-10-06. Written 2026-10-17. For a reviewer who has not followed the campaign.
 
 ------------------------------------------------------------------------------------------
-1. CLAIM (tier: PROBABLE within one world family; second family B119 queued)
+1. CLAIM (tier: PROBABLE, ensemble-invariant across 2 world families on one preregistered behavioural readout --
+   see section 9, 2026-10-18)
 ------------------------------------------------------------------------------------------
 Start from a working forager that ignores which pools are harmful. Train it on worlds where each pool is toxic with
 p = 1/2 (a toxic harvest costs 2x its value) and a type word says which. In about half the runs, foragers evolve that
@@ -83,3 +84,19 @@ Code     b118_toxic.py, b118b_toxic_evolve.py, b118c_interleaved.py, b118d_seede
 Results  results/B118_toxic/, B118b_toxic_evolve/, B118c_interleaved/, B118d_seeded_forager/, B118f_type_rep/
          (incl. B118f_cells_wave1_with_crash.jsonl), B118g_type_rep_clean/ (incl. B118h_decode.json),
          B119_semantics_family2/B119_controls.json
+
+------------------------------------------------------------------------------------------
+9. ADDENDUM 2026-10-18 -- SECOND FAMILY, READOUT REPAIR, DISTANCE ISOLATION
+------------------------------------------------------------------------------------------
+  B119   family 2 (P-boom lineage), constant-twin readout: TOXIC 3/8, PLAIN 2/8 -- FAILED (PLAIN false positives:
+         an accidental reaction to a non-zero type word, which appears only beside a local toxic pool, is credited)
+  B121   (post hoc) uniform behavioural re-score, toxic share < .25: f1 TOXIC 12/20 vs PLAIN 1/20; f2 7/8 vs 0/8
+  B120   distance isolation (seeded forager, types at END): TOXIC 0/4, PLAIN 0/4 -- prereg MET (weakness 6e closed)
+  B119b  family 2, behavioural readout FIXED in advance: TOXIC 6/8, PLAIN 0/8 -- MET (p ~ .0035)
+  B118i  family 1, behavioural readout FIXED in advance: TOXIC 6/8, PLAIN 1/8 -- MET (p ~ .02)
+  pooled preregistered behavioural: 12/16 vs 1/16.
+INSTRUMENT: the constant-twin readout fails in BOTH directions in family 2 (false positives; two real avoiders,
+11916/11918, scored info ~0). Behaviour is the faithful readout for this claim.
+REMAINING WEAKNESSES: (b) the tape-128 vs 100 seed effect is unexamined; (d) readers are partial in most runs
+(shares .05-.15; some 0); a third family / non-R=3 layouts untested; accidental PLAIN avoiders (2/36) show that a
+single run proves nothing.

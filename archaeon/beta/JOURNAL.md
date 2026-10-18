@@ -1612,6 +1612,14 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B118i (prereg committed before running): family 1 with the behavioural readout, NEW seeds 11851-11858. PREDICTION:
   TOXIC avoids >= 4/8 AND PLAIN <= 1/8 (post-hoc f1 rate 12/20). One readout across both families if met.
   B118i LAUNCHED ~04:30Z (lease lse-90fa9988dd66, 4 h; 8 procs; 16.2 GB free). WINDOW 12 TALLY ~20 of 48.
+- B118i RESULT (05:49Z; exit 0; 0 errors; lease lse-90fa9988dd66 RELEASED; ~7 core-h): family 1, behavioural readout
+  FIXED IN ADVANCE. TOXIC avoids 6/8 (shares 0, .049, .068, .087, .154 + one more), PLAIN 1/8 (11856 .191: accidental
+  avoider, like B118f PLAIN 11837). PREDICTION (TOXIC >= 4/8 AND PLAIN <= 1/8) MET (Fisher one-sided p ~ .02).
+  VERDICT: on ONE fixed behavioural readout, preregistered in BOTH world families: family 1 6/8 vs 1/8 (B118i), family 2
+  6/8 vs 0/8 (B119b); pooled 12/16 vs 1/16. Meets the two-family ensemble-invariance bar. TIER: PROBABLE ->
+  ensemble-invariant across 2 families (WORKING candidate pending external review). Bounds: not from random gen 0
+  (B118b/c); not with distant type words (B120, seeded); accidental PLAIN avoidance ~2/36.
+  WINDOW 12 TALLY ~27 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
