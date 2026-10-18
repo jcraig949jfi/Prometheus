@@ -1657,6 +1657,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   effect follows chain length, not the capability. Caveat: R = 1 also differs in other ways (no pool choice, per-tick
   toxicity, history off), so chain length is not the only thing varied. CONJECTURE stays at CONJECTURE tier with one
   surviving falsification attempt; the clean test (same world, chain length varied alone) is still open.
+- B123 (prereg 91c136730 before running): CLEAN single-variable test of the conjecture -- same family-1 R = 3 worlds,
+  same seeded forager, same search; ONLY the type-word position varies. Dose: interleaved (distance 1; 6/8, 12/16)
+  vs BLOCK [p0,p1,p2,t0,t1,t2] (distance 3; this run) vs END (~7; 0/4). Controls MET: GENb share .528, CHKb 0,
+  training value 8/8. PREDICTION: TOXIC avoids in [1, 5] of 8 AND PLAIN <= 1/4. LAUNCHED 11:32Z (lease lse-e6ebb0e531c6,
+  3 h; 8 procs; 15.4 GB free); 12 cells (TOXIC 12301-12308, PLAIN 12301-12304). WINDOW 12 TALLY ~39 of 48 (+~5.5).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
