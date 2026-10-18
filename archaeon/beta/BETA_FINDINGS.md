@@ -253,6 +253,10 @@ capability needs a precursor, or a 4-link capability is reached from scratch at 
 First falsification attempt (B122b, prereg met): reward semantics with a SHORT chain (R = 1, ~4 instructions) is reached
 FROM RANDOM GEN 0 in 5/8 TOXIC runs vs PLAIN 0/8, where the longer-chain version (R = 3) was 0/4 and 0/4. Survived; but R = 1
 also changes other things (no pool choice, per-tick toxicity, history off), so chain length was not varied alone.
+Second attempt (B123, prereg FAILED low): moving the type words from interleaved to a block after the pools gave 0/8
+(vs 6/8). But the interleaved forager already reads each type word into a dummy register while the block forager does
+not, so edits-from-precursor (~2 vs ~6) changed with distance. Consistent with 'coupled edits from the starting genome';
+not a test of distance per se. A clean test needs a block precursor that already reads the type words.
 
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 

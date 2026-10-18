@@ -1662,6 +1662,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   vs BLOCK [p0,p1,p2,t0,t1,t2] (distance 3; this run) vs END (~7; 0/4). Controls MET: GENb share .528, CHKb 0,
   training value 8/8. PREDICTION: TOXIC avoids in [1, 5] of 8 AND PLAIN <= 1/4. LAUNCHED 11:32Z (lease lse-e6ebb0e531c6,
   3 h; 8 procs; 15.4 GB free); 12 cells (TOXIC 12301-12308, PLAIN 12301-12304). WINDOW 12 TALLY ~39 of 48 (+~5.5).
+- B123 RESULT (12:03Z; exit 0; 0 errors; lease lse-e6ebb0e531c6 RELEASED; ~4 core-h): BLOCK layout (distance 3).
+  TOXIC avoids 0/8 (shares .34-.58; three seeds identical at .491 / 1435 harvests = static GENb), PLAIN 0/4.
+  PREDICTION (TOXIC in [1, 5] AND PLAIN <= 1/4) FAILED on the low side: distance 3 already blocks (dose: interleaved
+  6/8 -> block 0/8 -> end 0/4).
+  CONFOUND (mine, design-level; noticed at 10/12 cells): the interleaved GEN already READS each type word (into a
+  dummy register r13), so its type check is ~2 edits away (retarget one IN, insert one JNZ). The block GENb reads
+  only the 3 pool words, so it needs 3 new INs plus the checks (~6+ coupled edits). B123 varied distance AND edits-
+  from-precursor together. Reading: consistent with the conjecture stated as 'number of coupled edits from the
+  starting genome', NOT evidence about distance per se. The cliff is steep: ~2 edits 75%, ~6 edits 0%.
+  Conjecture stays CONJECTURE (now: 2 tests consistent, 1 confounded). A clean distance test needs a precursor that
+  already reads the block's type words into a dummy register (GENb+), so only the check edits differ.
+  WINDOW 12 TALLY ~43 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
