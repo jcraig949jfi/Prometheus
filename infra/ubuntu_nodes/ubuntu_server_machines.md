@@ -332,5 +332,19 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   Not on PATH; run as `~/blender/blender -b <file> -t 6 ...` under tmux.
 - **Load agreement:** runs of 30-60 min at up to 6 threads per node, leaving 2 for the PrometheusWorker; M1 states node,
   duration and threads before each run. Sudo, package installs and anything heavier still need an operator GO.
+- **Thermals under Blender (measured 2026-10-17 01:40-08:00Z, `x86_pkg_temp` every 2 min from ELSA; the `acpitz` zone
+  lags and the `sort | tail -1` hottest-zone trick picks a lagging sensor, so read the zone whose `type` is
+  `x86_pkg_temp`):** ubu005 (i5-8350U, thin chassis) swings 60-94 C and the firmware throttles it (clocks 2.8 -> 1.6-2.2
+  GHz at the peaks) even at `-t 4`; 20% of busy samples were >= 91 C, trip points 98-115 C, never reached. M2's own
+  30-s sampling agreed (91-93 C). Restarting at `-t 3` did not help: 92-94 C through the next two bakes (peak 94 C at
+  08:08Z, my samples 93/86/93/77/89/93 C), because a bake is ~1-1.5 cores whatever `-t` says and the chassis cannot shed
+  that. **Rule for ubu005 (M1/M2 + Achilles, 2026-10-17): Blender at `-t 2` with a cool-down between bodies, and long
+  Blender runs go to ubu008 first.** ubu008 (i7-8565U) holds flat at its 80 C firmware cap (75-82 C over 42 busy
+  samples) with no clock collapse, so `-t 6` stays fine there.
+  Update 2026-10-17 ~09:10Z: the operator opened ubu005's lid and removed a laptop that had been stacked on it (also
+  opened the lids of ubu004 and ubu008). Two 25-33 min `-t 2` bake runs afterwards (97 samples at 30 s): mean 74 C,
+  max 93 C once then 88 C, 1% of samples >= 91 C (was 22%), clocks never below 1.9 GHz; the room temperature was not a
+  factor (the idle nodes read the same throughout). So ubu005 must stay lid-open and unstacked; `-t 2` remains the rule
+  until a `-t 3` trial after the planned compressed-air clean. ubu008's 80 C cap is unaffected by its lid, as expected.
 - Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo apt-get remove libxi6 libxxf86vm1 libxfixes3 libsm6
   libice6 libgl1` (libxrender1 was pre-existing on ubu005); delete the SKULLPORT line from `authorized_keys`.

@@ -187,5 +187,17 @@ fails the census: when it cannot run at all the section and an anomaly say
 PROBE UNAVAILABLE with the reason. Controls: achilles/census/tests/
 test_nodes.py (positive parse and render, negative old-snapshot render,
 cheat: an unreachable node is never shown OK, a stopped worker shows its
-real state). Requested by the operator and the M1 "Skullport" session so the
+real state; the ssh client never reads the console and retries once after a
+stall). Requested by the operator and the M1 "Skullport" session so the
 `mind` load on the e-waste fleet is visible on the fleet page.
+
+Client hardening (2026-10-17): the first scheduled run (04:30Z) reported 4 of
+6 nodes UNREACHABLE "timeout after 25s" while the nodes' own journals showed
+every session authenticated within 60 ms and then silence from the client
+until its cut; a manual probe seconds later answered 6/6 in 0.8 s. That is
+the Windows OpenSSH client stalling on an inherited hidden-console stdin
+under the scheduled task. ssh now runs with -n -T and stdin from the null
+device, each node gets two independent tries inside its allowance (12 s + 12
+s of 25), a definite ssh failure (rc 255 that is not a timeout) is not
+retried, and the row records `attempts`. A node that is still UNREACHABLE
+after this is reported as before, with the attempt count in the reason.
