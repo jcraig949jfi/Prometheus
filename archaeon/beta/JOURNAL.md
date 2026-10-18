@@ -1624,6 +1624,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B118j (prereg c6298f6bb before running): packet weakness 6b, seed TAPE size. B118i design, TOXIC only, seeds
   11851-11858 paired with B118i, gen 0 tape 96 (all halvings valid). PREDICTION: avoids >= 4/8 (no tape effect).
   LAUNCHED 06:01Z (lease lse-00eaa1c89fef, 3 h; 8 procs; 16.1 GB free). Est ~3.5 core-h.
+- B118j RESULT (06:47Z; exit 0; lease lse-00eaa1c89fef RELEASED; ~3.5 core-h): tape-96 seed, paired with B118i
+  (tape 128): avoids 4/8 vs 6/8. PREDICTION (>= 4/8) MET. Discordant pairs 3 (128 only: 11852, 11856, 11858) vs 1 (96
+  only: 11855); exact McNemar p ~ .63 -> no detectable tape effect (n = 8 pairs; a modest effect not excluded).
+  Weakness 6b largely discharged. Final tapes mostly GREW (192-1536; one stayed 96).
+  ODDITY: 11858 (tape 96, TOXIC-trained) takes .859 of its harvests from TOXIC pools -- it appears to read the type
+  word and act inversely. Not investigated yet (low priority; one genome).
+  WINDOW 12 TALLY ~30.5 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
