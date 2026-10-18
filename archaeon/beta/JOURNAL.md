@@ -1611,7 +1611,7 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   STATUS: met preregs in BOTH families, but on different readouts (f1 constant-twin B118g; f2 behaviour B119b).
 - B118i (prereg committed before running): family 1 with the behavioural readout, NEW seeds 11851-11858. PREDICTION:
   TOXIC avoids >= 4/8 AND PLAIN <= 1/8 (post-hoc f1 rate 12/20). One readout across both families if met.
-  B118i LAUNCHED 04:31Z (lease lse-90fa9988dd66, 4 h; 8 procs; 16.2 GB free). WINDOW 12 TALLY ~20 of 48.
+  B118i LAUNCHED ~04:30Z (lease lse-90fa9988dd66, 4 h; 8 procs; 16.2 GB free). WINDOW 12 TALLY ~20 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
