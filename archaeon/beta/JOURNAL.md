@@ -1589,6 +1589,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - B120 secondary readout declared (ac08f8eb7, BEFORE any B120 cell): toxic share < .25. B120 LAUNCHED 01:33Z (lease
   lse-8470f3a87a3d, 4 h; 8 procs; 14.7 GB free). B121 behavioural re-score (all B118d/f/g + B119 genomes; exploratory)
   launched alongside on 1 proc (9 total). WINDOW 12 TALLY ~7 of 48.
+- B121 RESULT (01:32Z; exploratory; readout chosen after the B119 decode): toxic share of harvests < .25 on the held-out
+  sets. FAMILY 1 (B118d/f/g): TOXIC 12/20 avoid, PLAIN 1/20. FAMILY 2 (B119): TOXIC 7/8 avoid, PLAIN 0/8. On behaviour the
+  semantics result appears in BOTH families (family 2 stronger); the B119 failure was a READOUT failure (constant-twin
+  false positives), not an absence of avoidance. The one PLAIN avoider (B118f PLAIN 11837: 27 toxic of 544 harvests,
+  info .0055) shows ACCIDENTAL avoidance exists (~1/28 PLAIN). TOXIC 11906 (f2) is the one TOXIC non-avoider (.596).
+- B119b (prereg committed before running): family-2 replication, NEW seeds 11911-11918, readout FIXED = toxic share
+  < .25. PREDICTION: TOXIC >= 5/8 AND PLAIN <= 1/8. Queued after B120 (12-proc cap).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
