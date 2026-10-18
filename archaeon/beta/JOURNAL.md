@@ -1637,6 +1637,17 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - CROSS-FINDING NOTE added to BETA_FINDINGS (CONJECTURE): reachability is set by coupled read-chain length; precursors
   help when they pre-build the chain. Counter-instances listed (content sensing, transfer, niches: 1-2 links, reached
   from scratch). Falsifier named: fix chain length, vary only random-vs-precursor gen 0.
+- B122 FALSIFIER (prereg 85211d134): short-chain semantics FROM SCRATCH (R = 1). THREE control failures, all caught by
+  the precommitted training-side check, before any evolution:
+  (1) B122, whole-episode toxicity: value 0/8 -- episode-level reward clip makes harvest and no-harvest both 0.
+      Repair B122b: toxicity re-drawn every tick.
+  (2) B122b with CHK1: value 3/8 -- the R >= 2 checker walks off its only pool. Refinement: CHK1w waits instead.
+  (3) CHK1w: value 3/8 -- the 5 zero worlds are exactly those with 'history' (pool 0 pays only after harvests
+      elsewhere; there is no elsewhere at R = 1). Repair: history OFF.
+  Controls then MET: value 8/8 (+.09..+.18); CHK1w toxic share 0 vs GEN1 .51. Each repair was declared and committed
+  before its rerun (cf5fdde7c, 4b40c01ef). PREDICTION unchanged: TOXIC avoids >= 3/8 AND PLAIN <= 1/8.
+  B122b LAUNCHED 07:35Z (lease lse-803298fe19d5, 4 h; 8 procs; 16.0 GB free), random gen 0, seeds 12211-12218 x 2.
+  WINDOW 12 TALLY ~31 of 48 (+~7 est).
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
