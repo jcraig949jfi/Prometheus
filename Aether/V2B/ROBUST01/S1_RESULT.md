@@ -23,7 +23,7 @@ the contest law. k_gen = 1 (seed 13), short of the frozen bar of 2.
 - INSTRUMENT_DEFECT: 0 violations. Every unit is stamped aeth01.op_xor_fold with fold_physics sha 50aeee33...
   (= FREEZE.sha256).
   - All 90 certified candidates have seed-identical torus tables and position fraction exactly 1.0. That includes the
-    71 that have energy-field contest events, which the gate does not constrain.
+    61 that have energy-field contest events, which the gate does not constrain (29 have none).
 
 ## Counts (Wilson 95%), 40 seeds per cell
 
@@ -51,7 +51,7 @@ the contest law. k_gen = 1 (seed 13), short of the frozen bar of 2.
 | fold arm A finds COMBINE in more than 0/40 seeds, on A's identical candidates | **failed**: 0/40 |
 | disposition ROBUST_COMPOSITION_DISCOVERABLE | held: k = 4 |
 | instrument gate passes (0 violations) | held |
-| not every candidate is autonomous, because energy contests remain | **failed**: 90/90 autonomous, 71 with energy contests |
+| not every candidate is autonomous, because energy contests remain | **failed**: 90/90 autonomous, 61 with energy contests |
 
 ## Reading
 - Under the contest law, discovered composition was never autonomous (0/40). Under the fold law, every composition
@@ -63,7 +63,7 @@ the contest law. k_gen = 1 (seed 13), short of the frozen bar of 2.
   - Arm A evaluates exactly the same 20,480 patches per seed under both laws, and none combines under either.
   - Every gain is in the certificate-guided arm. COMBINE moves only 7 -> 9; what changes is that the structures found
     become autonomous (AUTO_ANY 1 -> 9).
-- Energy-field contests remain in 71 of the 90 candidates, but none reaches the output. The prediction that some
+- Energy-field contests remain in 61 of the 90 candidates, but none reaches the output. The prediction that some
   candidates would stay non-autonomous for that reason was wrong.
 - Generality is weak.
   - Only seed 13's composition still combines on the held-out alphabet IN_H.

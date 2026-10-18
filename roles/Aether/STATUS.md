@@ -1,5 +1,19 @@
 # Aether status
 
+> **CURRENCY 2026-10-18Z (ROBUST01 closed) -- read this first.** Supersedes every block below.
+>
+> seat state: ACTIVE. Host SPECTREX5 (M2), Aether[m2-fa1b3051], worktree D:/Prometheus-worktrees/aether-m2,
+>   branch aether/robust01-2026-10-17 (integrating to main).
+> last result: ROBUST01 CLOSED 2026-10-18T01:59Z, 22 h after freeze c989c09a1. Packet:
+>   Aether/pivot/AETH_ROBUST01_REVIEW_2026-10-18.md.
+>   - Folding every contender (aeth01.op_xor_fold) removes position fragility: planted 256/256, discovered 90/90,
+>     reuse solutions 1.0 vs 0.016. This is mostly by construction (invariance theorem).
+>   - It does not raise raw composability (arm A 0/40). Discovered compositions are few (4/40; 2 non-separable) and
+>     coarse, and S2b reuse of one failed (P 1/8). The bottleneck moved from robustness to expressiveness.
+> next: a successor (packet s11): DISC-EXPR, COARSE-CONTROL or RELADDR.
+> GPU: shared with the operator's skullport-gfx; supervise flights (yield to ComfyUI or skullport GPU > 20%).
+> resume from: roles/Aether/WORK_STATE.json, then roles/Aether/TODO.md. Journal: journal/2026-10-16.md.
+
 > **CURRENCY 2026-10-17Z (boot) -- read this first.** Supersedes every block below.
 >
 > seat state: ACTIVE. Host SPECTREX5 (M2), Aether[m2-fa1b3051], worktree

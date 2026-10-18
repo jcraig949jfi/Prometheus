@@ -1,6 +1,6 @@
 # Aether TODO
 
-Currency: **2026-10-17Z** (header block only; the body below is 2026-09-27). Written for the instance that boots after a
+Currency: **2026-10-18Z** (header blocks only; the body below is 2026-09-27). Written for the instance that boots after a
 context reset, a reboot, or a Claude Code upgrade. Read this AFTER the
 base-role chain and BEFORE starting anything.
 
@@ -9,6 +9,30 @@ Cut a fresh task branch from origin/main; the 09-27 research-block branch
 is integrated.
 
 ---
+
+## CURRENT STATE (2026-10-18Z) -- read first; everything below is history
+
+ROBUST01 is CLOSED (all 4 stages). Start at Aether/pivot/AETH_ROBUST01_REVIEW_2026-10-18.md; per-stage results are
+in Aether/V2B/ROBUST01/S0_RESULT.md, S1_RESULT.md, S2A_RESULT.md and S2B_RESULT.md.
+
+Next, choose one (packet s11). Each gets its own branch from origin/main and a frozen preregistration in its own
+commit:
+  a. DISC-EXPR: discovery under fold that preregisters separability and output information (distinct outputs,
+     held-out rung) as criteria. About 3 GPU-h.
+  b. COARSE-CONTROL: R4c's task with a planted 2-valued component vs planted a ^ b. It tests whether S2b failed
+     because of output coarseness. About 3 GPU-h.
+  c. RELADDR: relative input addressing, so a component can work when moved (the remaining geometric limit). Needs
+     design.
+
+M2 GPU protocol, learned 2026-10-17:
+  - Gate on per-process GPU counters (Get-Counter '\GPU Engine(*)\Utilization Percentage', pid -> path containing
+    skullport), not on nvidia-smi or gfx_batch presence. ComfyUI can run at 97% with no gfx_batch.
+  - Run flights under a supervisor that stops them on any ComfyUI process or on skullport GPU > 20% for 30 s, and
+    relaunches after 2 clean minutes. gfx_batch Blender bakes are ~0% GPU and may share the card.
+  - Coordinate with the local skullport session (smugglershole-10).
+  - After TaskStop on a script task, verify by command line that the script process is gone; never edit a running
+    script. A surviving supervisor once doubled S1.
+  - reach_flight.py creates OUTDIR only; create the plan's subdirectories (e.g. search/) before launching.
 
 ## CURRENT STATE (2026-10-17Z boot) -- read first; the 09-27 blocks below are history
 
