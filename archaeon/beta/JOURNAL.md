@@ -1572,6 +1572,18 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
 - 2026-10-18 00:30Z WINDOW 12 OPENS (tally 0 of 48). Load check: 28 logical cores at 65% (others; only lease held
   is Aether spectrex5:gpu0); 14.1 GB free. Lease lse-239437fc331f (spectrex5:cpu12, 6 h). B119 LAUNCHED 00:32Z,
   8 procs, 16 cells (seeds 11901-11908 x 2). B120 queued after it.
+- B119 INTERIM (15/16 cells, 01:30Z): constant-twin semantic TOXIC 3/8 (11902 .019, 11907 .021, 11908 .052), PLAIN 2/7
+  (11901 .037, 11902 .016). PREDICTION (TOXIC >= 3/8 AND PLAIN <= 1/8) FAILED on the PLAIN clause, whatever 11903 does.
+  Mean info TOXIC .015 vs PLAIN .003.
+  READOUT DEFECT (found here): PLAIN never sees a non-zero type word in training, yet scores info > .01. In this layout a
+  non-zero type word appears ONLY beside a local toxic pool, so any accidental reaction to a non-zero word in that slot
+  (e.g. move instead of harvest) is avoidance-by-accident; the constant twin credits it. Family 1 had 0/24 such PLAIN
+  cases; family 2 has 2/7.
+  EXPLORATORY BEHAVIOURAL DECODE (post hoc; B119_decode.json): toxic share of harvests -- GEN3 .51, CHK3 0; TOXIC
+  11908 0.000 (perfect, = CHK3), 11907 .087, 11902 .126; PLAIN 11901 .379 (partial accident), 11902 .510 (no
+  avoidance at all: its 'info' is not avoidance), 11905 .489. Behaviour SEPARATES the arms where info did not.
+  NEXT: (1) re-score every family-1 and family-2 genome on toxic share (uniform, exploratory); (2) a NEW prereg with the
+  behavioural readout fixed in advance before any claim in family 2.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
