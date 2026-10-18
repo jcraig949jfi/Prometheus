@@ -1584,6 +1584,11 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   avoidance at all: its 'info' is not avoidance), 11905 .489. Behaviour SEPARATES the arms where info did not.
   NEXT: (1) re-score every family-1 and family-2 genome on toxic share (uniform, exploratory); (2) a NEW prereg with the
   behavioural readout fixed in advance before any claim in family 2.
+- B119 FINAL (01:31Z; exit 0; 0 errors; lease lse-239437fc331f RELEASED; ~7 core-h): TOXIC 3/8, PLAIN 2/8 on the
+  constant-twin readout. PREDICTION FAILED (PLAIN clause). Family-2 invariance NOT shown on the prereg readout.
+- B120 secondary readout declared (ac08f8eb7, BEFORE any B120 cell): toxic share < .25. B120 LAUNCHED 01:33Z (lease
+  lse-8470f3a87a3d, 4 h; 8 procs; 14.7 GB free). B121 behavioural re-score (all B118d/f/g + B119 genomes; exploratory)
+  launched alongside on 1 proc (9 total). WINDOW 12 TALLY ~7 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
