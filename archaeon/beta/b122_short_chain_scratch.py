@@ -22,6 +22,10 @@ B122b CONTROLS RESULT (~07:30Z): FAILED -- training value positive 3/8 (< 6). Ca
 R >= 2) MOVES when its only pool is toxic; with locality on, that walks it off the pool node (safe harvests 269 vs
 GEN1 814). Instrument refinement (declared before re-running; criteria unchanged): CHK1w WAITS (halts with no
 output) on a toxic tick, harvests on a safe one, and moves only when the pool is empty.
+CHK1w CONTROLS (~07:35Z): still 3/8. Cause found: the 5 zero-gain training worlds are EXACTLY those with the 'history'
+feature, which makes pool 0 pay only after k harvests ELSEWHERE -- with R = 1 there is no elsewhere, so nothing ever
+pays. Repair (declared before re-running; same criteria): world1 rebuilds each world with history OFF (as family 2
+already does).
 """
 import json
 import sys
@@ -62,7 +66,12 @@ def world1(key, p):
         if w.w.R == 1:
             break
     assert w.w.R == 1, key
-    return NoClock((TickToxic if MODE["tick"] else IToxic)(w.w, p, 2.0)), s
+    cw = w.w
+    if MODE["tick"] and "history" in cw.features:                   # B122b repair: history never pays at R = 1
+        import copy as _c
+        from archaeon.campaign6.worlds.runtime import ComposedWorld
+        q = _c.deepcopy(cw.params); q["history"] = {"on": False}; cw = ComposedWorld(q)
+    return NoClock((TickToxic if MODE["tick"] else IToxic)(cw, p, 2.0)), s
 
 
 def heldout(n=12):
