@@ -1596,6 +1596,13 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   info .0055) shows ACCIDENTAL avoidance exists (~1/28 PLAIN). TOXIC 11906 (f2) is the one TOXIC non-avoider (.596).
 - B119b (prereg committed before running): family-2 replication, NEW seeds 11911-11918, readout FIXED = toxic share
   < .25. PREDICTION: TOXIC >= 5/8 AND PLAIN <= 1/8. Queued after B120 (12-proc cap).
+- B120 RESULT (02:26Z; exit 0; 0 errors; lease lse-8470f3a87a3d RELEASED; ~6 core-h): DISTANCE ISOLATION -- seeded
+  working forager, type words at the END. TOXIC 0/4 on BOTH readouts (info exactly 0; toxic share .43-.54), PLAIN 0/4.
+  PREDICTION (TOXIC <= 1/4, PLAIN 0/4) MET. VERDICT: with the gen-0 forager held fixed, moving the type words from
+  interleaved (8/16 info; 12/20 behaviour) to the END (0/4, 0/4) abolishes type reading. DISTANCE, not gen 0, is what
+  blocked B118b. The reward-semantics result is bounded by the same read-chain wiring wall as memory (Finding 3).
+  Review-packet weakness 6e discharged.
+- B119b LAUNCHED 02:27Z (lease lse-d109598bcf98, 4 h; 8 procs; 16.1 GB free). WINDOW 12 TALLY ~13 of 48.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
