@@ -10,6 +10,9 @@ Readout = constant-twin type info for the END layout (last R words fixed to 0 or
 Seeds 12001-12004 per arm (8 cells).
 STEP 1 CONTROLS (prediction committed before running): CHKe info > .03 and GENe info = 0 on the held-out set
 ('b120ho', 12 worlds); training-side CHKe - GENe > 0 on >= 6/8 training worlds.
+SECONDARY READOUT (declared 01:35Z on 2026-10-18, BEFORE any B120 cell ran; after B119 showed constant-twin false
+positives): behavioural toxic share of harvests on the held-out set; 'avoids' = share < .25 (GEN .51, CHK 0). Both
+readouts are reported; the prediction below applies to each.
 STEP 2 PREDICTION (committed before running), distance hypothesis: TOXIC semantic <= 1/4 (vs B118g 4/8 interleaved);
 PLAIN 0/4. If TOXIC >= 2/4, distance is NOT what blocked B118b (gen 0 was).
 """
@@ -116,9 +119,11 @@ def cell(job):
             ev.reproduce()
     m = ev.scored[0][1]["manifest"]
     (OUT / ("best_%s_%d.json" % (job["arm"], job["seed"]))).write_text(json.dumps(m), encoding="utf-8")
-    i = info(m, heldout())
+    ho = heldout(); i = info(m, ho)
+    from archaeon.beta.b118h_decode import trace
+    tr = trace(m, ho)
     return {"arm": job["arm"], "seed": job["seed"], "mean_lift": i["full"], "type_info": i["info"], "const0": i["const0"], "const1": i["const1"],
-            "semantic": i["info"] > .01}
+            "semantic": i["info"] > .01, "toxic_share": tr["toxic_share"], "avoids": tr["toxic_share"] < .25}
 
 
 def main(argv):
