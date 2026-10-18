@@ -1631,6 +1631,12 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   ODDITY: 11858 (tape 96, TOXIC-trained) takes .859 of its harvests from TOXIC pools -- it appears to read the type
   word and act inversely. Not investigated yet (low priority; one genome).
   WINDOW 12 TALLY ~30.5 of 48.
+- 11858 ODDITY CHECKED (~07:00Z; single process): on its own last training worlds it also harvests toxic .853 (lift
+  -.025): an INVERTED type reader that selection did not correct within G=300 (its population failed; it is the best of
+  a bad lot). Not a held-out artifact. Closed.
+- CROSS-FINDING NOTE added to BETA_FINDINGS (CONJECTURE): reachability is set by coupled read-chain length; precursors
+  help when they pre-build the chain. Counter-instances listed (content sensing, transfer, niches: 1-2 links, reached
+  from scratch). Falsifier named: fix chain length, vary only random-vs-precursor gen 0.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached

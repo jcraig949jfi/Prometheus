@@ -228,6 +228,28 @@ clock.
    jittered world): 0/5 on both the ablation and the constant-twin information readouts (one cell lost to a host
    memory reap; the prediction <= 1/6 is decided regardless). Communication evolves from precursors, not from scratch.
 
+## Cross-finding pattern (CONJECTURE tier, 2026-10-18) -- precursor-reachable, distance-bounded
+
+A pattern across three lanes. It is stated as a conjecture: a handful of instances is not a pattern until counted
+against a base rate.
+
+| capability | from random gen 0 | from a precursor | bounded by read-chain distance? |
+|---|---|---|---|
+| keyed memory (F3) | L3 2-3/8 | L1/L2 8/8; L3o 8/8 | yes: ~10x wait per link; order costs more than a register link (B55-B57, B117) |
+| communication (F5) | 0/12 group, 0/5 kin off-lattice | 7/12 group, kin 8/8 hold | not tested directly |
+| reward semantics (F2 Q3) | 0/4, 0/4 | 12/16 vs 1/16 (2 families) | yes: types at the END abolish it even from a precursor (B120 0/4) |
+
+Counter-instances, which break the 'scratch fails' half:
+- Content sensing (F2.1) and foraging transfer (F2.3) evolve from random gen 0.
+- Niche partitioning (F4) does too.
+These are all 1-2-link readouts (read a word, act on it).
+
+Conjectured law: in this substrate, what decides reachability is the length of the coupled read chain the capability
+needs. 'Precursor' helps exactly when it pre-builds most of that chain.
+
+Falsifier to run: hold the chain length fixed and vary only whether gen 0 is random or a precursor. If a 2-link
+capability needs a precursor, or a 4-link capability is reached from scratch at normal rates, the conjecture is wrong.
+
 ## Retractions (mine; the calibration ledger has rows for the process errors)
 
 | claim | what happened |
