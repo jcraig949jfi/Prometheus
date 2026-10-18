@@ -1648,6 +1648,15 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   before its rerun (cf5fdde7c, 4b40c01ef). PREDICTION unchanged: TOXIC avoids >= 3/8 AND PLAIN <= 1/8.
   B122b LAUNCHED 07:35Z (lease lse-803298fe19d5, 4 h; 8 procs; 16.0 GB free), random gen 0, seeds 12211-12218 x 2.
   WINDOW 12 TALLY ~31 of 48 (+~7 est).
+- B122b RESULT (15/16 cells, 10:30Z; tail cell PLAIN 12217 still running and verdict-irrelevant): FROM RANDOM GEN 0,
+  short-chain semantics (R = 1, per-tick toxicity). TOXIC avoids 5/8 -- 12212/12213/12215/12216 toxic share 0.000
+  (lifts .036-.090 vs hand CHK1w .084), 12218 .173 (weak, 225 harvests); non-avoiders .47-.55. PLAIN 0/7 (.49-.53).
+  PREDICTION (TOXIC >= 3/8 AND PLAIN <= 1/8) MET, decided regardless of the last cell (PLAIN max 1/8).
+  VERDICT on the cross-finding CONJECTURE: its first falsifier did not falsify it. Semantics with R = 3 (longer chain)
+  was 0/4, 0/4 from scratch (B118b/c); with R = 1 (~4-instruction chain) 5/8 from scratch. The 'precursor needed'
+  effect follows chain length, not the capability. Caveat: R = 1 also differs in other ways (no pool choice, per-tick
+  toxicity, history off), so chain length is not the only thing varied. CONJECTURE stays at CONJECTURE tier with one
+  surviving falsification attempt; the clean test (same world, chain length varied alone) is still open.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
