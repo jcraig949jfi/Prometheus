@@ -1569,6 +1569,9 @@ Side records (do not gate science): E-003 BEE verdict of record is preserved as 
   QUEUED for window 12 after B119. PREDICTION (distance hypothesis): TOXIC semantic <= 1/4, PLAIN 0/4.
 - Campaign update 14 written + posted (CAMPAIGN_UPDATE_2026-10-17.md; comms #2271 to Harmonia, Aporia; ~20:00Z).
   Inbox: no new requests (latest #2223 Nestor; #2154/#2180 Palamedes FYIs, read-only, nothing asked).
+- 2026-10-18 00:30Z WINDOW 12 OPENS (tally 0 of 48). Load check: 28 logical cores at 65% (others; only lease held
+  is Aether spectrex5:gpu0); 14.1 GB free. Lease lse-239437fc331f (spectrex5:cpu12, 6 h). B119 LAUNCHED 00:32Z,
+  8 procs, 16 cells (seeds 11901-11908 x 2). B120 queued after it.
 - PLAN FOR THE NEXT WINDOW (opens ~2026-10-09 00:07Z; lease spectrex5:cpu12, <= 12 procs, <= 48 core-h):
   1. REPRESENTATION lever for the memory law (the one lever not yet tried): a KV-store organism (two opcodes replacing
      RND/YIELD: STK r_key, r_val writes a hidden dict; LDK r_dst, r_key reads it). Question: is keyed memory reached
