@@ -346,5 +346,20 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   max 93 C once then 88 C, 1% of samples >= 91 C (was 22%), clocks never below 1.9 GHz; the room temperature was not a
   factor (the idle nodes read the same throughout). So ubu005 must stay lid-open and unstacked; `-t 2` remains the rule
   until a `-t 3` trial after the planned compressed-air clean. ubu008's 80 C cap is unaffected by its lid, as expected.
-- Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo apt-get remove libxi6 libxxf86vm1 libxfixes3 libsm6
-  libice6 libgl1` (libxrender1 was pre-existing on ubu005); delete the SKULLPORT line from `authorized_keys`.
+- **Node, headless Chromium, OpenCV on all six available nodes (2026-10-19, Achilles from ELSA).** GO given by the
+  operator in the M1 session ("Yes to all this", relayed by M1) so 14 browser/audit task types of M1's job queue
+  (tools/fleet/ in the SmugglersHole repo) can leave the Windows PCs. On ubu001/003/004/005/006/008:
+  `sudo apt-get install -y nodejs npm libnss3 libnspr4 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 libdrm2
+  libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64 libpango-1.0-0 libcairo2
+  libatspi2.0-0t64 fonts-liberation libegl1 libgles2` -> Node v22.22.1 (Ubuntu's packaged LTS; the ask said 20 LTS,
+  22 is what the distro ships and no third-party repo was added), npm 9.2.0, plus the Chrome/Playwright runtime
+  library set. `sudo snap install chromium` -> chromium 155.0.8059.79 latest/stable at `/snap/bin/chromium` (Ubuntu
+  ships Chromium only as a snap; `--headless=new --disable-gpu --dump-dom` verified on all six). OpenCV:
+  `~/skullport/.venv` created on the four nodes that lacked it, `opencv-python-headless` 4.14.0 + numpy 2.5.4 installed
+  on all six (`--only-binary`, cp314 wheels; venv 244-284 MB). Side effect: libegl1/libgles2 are in the Chrome library
+  set, so headless Blender Workbench/EEVEE renders now work on ubu005/ubu008 (`-b -E BLENDER_WORKBENCH -f 1` ->
+  1.3 MB PNG on both); this closes the EGL question that had waited since 2026-10-17. PrometheusWorker active on all six
+  after every step. Install time 1-7 min per node (ubu004/ubu006 slowest, HDDs).
+- Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo snap remove chromium`; `sudo apt-get remove
+  nodejs npm libegl1 libgles2 libxi6 libxxf86vm1 libxfixes3 libsm6 libice6 libgl1` (libxrender1 was pre-existing on
+  ubu005; the other Chrome libs are harmless to leave); delete the SKULLPORT line from `authorized_keys`.
