@@ -358,7 +358,8 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   `~/skullport/.venv` created on the four nodes that lacked it, `opencv-python-headless` 4.14.0 + numpy 2.5.4 installed
   on all six (`--only-binary`, cp314 wheels). Same day, after M1's first fleet wave (46 jobs, ~2 CPU-hours, clean):
   pyyaml 6.0.3, pillow 13.0.0, pytest 9.1.1 added on ubu001/003/004/006, so all six venvs are identical (284 MB:
-  pyyaml, pillow, pytest, opencv-python-headless, numpy). Side effect: libegl1/libgles2 are in the Chrome library
+  pyyaml, pillow, pytest, opencv-python-headless, numpy); then websockets 17.2 + scipy 1.18.1 on all six (operator
+  "Yes. Approved" in the Achilles session 2026-10-19; venv 425 MB). Side effect: libegl1/libgles2 are in the Chrome library
   set, so headless Blender Workbench/EEVEE renders now work on ubu005/ubu008 (`-b -E BLENDER_WORKBENCH -f 1` ->
   1.3 MB PNG on both); this closes the EGL question that had waited since 2026-10-17. PrometheusWorker active on all six
   after every step. Install time 1-7 min per node (ubu004/ubu006 slowest, HDDs).
