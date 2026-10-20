@@ -295,8 +295,11 @@ autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
   cycle IDLE (probe: cpu 4, ram_gb_available 6.4, disk_gb_free 198). Same pinned code as the rest of the fleet.
 - **Side project:** `mind` user (uid 1001, CPUQuota 200% of 4 threads, MemoryMax 40%, TasksMax 2048, linger) with the
   `smugglers-hole-mind@SKULLPORT` key, via add_side_project_user.sh; `jcraig@SKULLPORT` appended to jcraig's
-  authorized_keys (now M2, ELSA, SKULLPORT). NOT installed here: the skullport venv, Node, Chromium, Blender (M1 asks if
-  it wants them; same 8 GB class as ubu001/003/004, so no Chromium under M1's own rules).
+  authorized_keys (now M2, ELSA, SKULLPORT). At M1's request (same day, under the operator's 2026-10-19 GO): `sudo
+  apt-get install -y nodejs npm` (Node v22.22.1, npm 9.2.0) and `~/skullport/.venv` with the fleet set (pyyaml 6.0.3,
+  pillow 13.0.0, pytest 9.1.1, opencv-python-headless 4.14.0, numpy 2.5.4, websockets 17.3, scipy 1.18.1; 425 MB).
+  NO Chromium and NO Blender here: M1 classes it with ubu004 (8 GB, 2 usable cores, 2 GB RSS per job, protocol monkeys
+  and tests only). M1 adds it to its dispatcher's machines.json on 2026-10-20.
 - **Claude:** `~/.config/claude-oauth.env` copied node-to-node from ubu006 (piped through ELSA, never written there),
   mode 600, as for ubu007. Full `/login` only if it ever hosts a seat.
 - **Still to do:** DHCP reservation for .235 in the router (operator). Added to fleet_fanout.py ALL_AVAILABLE, so the
