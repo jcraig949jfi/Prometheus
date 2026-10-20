@@ -14,6 +14,7 @@ Don't record passwords here.
 | 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **HOLD -- BAD RAM** (one weak cell, confirmed); worker OFF until a DIMM is pulled/replaced |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
 | 9 | ubu009   | jcraig   | 2026-10-11 | Ubuntu Server 26.04.1 LTS | Kioxia BG5 KBG50ZNT256G NVMe (root 232 GB) | 192.168.1.230 (USB Ethernet enx9cebe80ae6c4) | **SOAK TEST** (freezes); worker DISABLED until 24 h clean |
+| 10 | ubu010  | jcraig   | 2026-10-20 | Ubuntu Server 26.04.1 LTS | WD PC SN730 256 GB NVMe (root 231 GB) | 192.168.1.235 (wired, enp0s31f6; no Wi-Fi) | **Provisioned**, worker active (shared token); `mind` user + SKULLPORT key; Claude OAuth env copied; see section below |
 
 ## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
 
@@ -28,6 +29,7 @@ Don't record passwords here.
 | ubu007 | Dell Precision M6500 | i7 Q720 | 4C/8T | **no AVX** | 16 GB | .3 | F64MDN1 |
 | ubu008 | ThinkPad T490s (20NX0020US) | i7-8565U | 4C/8T | yes | 16 GB | .231 / .232 | PC1AHQQD |
 | ubu009 | IdeaPad Flex 5 14IAU7 (82R7003WUS) | i3-1215U (2P+4E) | 6C/8T | yes | 8 GB LPDDR4X (soldered) | .230 (USB eth) | PW02YB1H |
+| ubu010 | Lenovo ThinkCentre M910q tiny desktop (10MV000NUS) | i5-7500T | 4C/4T | yes | 8 GB (1 DIMM, 1 slot free) | .235 (wired) | MJ073DPV |
 
 Corrections: ubu006 is an i3-4130 (was "Haswell, 4 threads"); ubu005 has 24 GB installed (22 GiB usable).
 Screens: all nodes blank after 5 min idle (consoleblank=300, also set live); a key or Ctrl+Alt+F2, F1 wakes them.
@@ -274,6 +276,32 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
 - Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
   travel machine); not urgent. Pause the worker when travelling.
 
+## ubu010 (machine #10, Lenovo ThinkCentre M910q tiny desktop, 10MV000NUS)
+
+Operator 2026-10-20 ~00:15Z: "New e-waste machine coming online shortly, Lenovo i5, 8GB of RAM"; the operator ran the
+autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
+
+- **Hardware (read live):** i5-7500T, 4C/4T, AVX2; 8 GB in one of two DIMM slots (7.1 GiB usable); WDC PC SN730 256 GB
+  NVMe (root 231 GB, LVM, all space); wired enp0s31f6 only (no Wi-Fi, no battery, no lid). Serial MJ073DPV. Idle 43 C.
+- **Install:** autoinstall from the 2026-10-04 CIDATA stick (internal disk present, so `--allow-usb-target` was moot).
+  The live installer showed on the LAN at .235 with the ISO's sshd (OpenSSH 2ubuntu3.5) refusing our key, powered off
+  ~00:32Z, and the installed system came up at the same DHCP address ~00:40Z with a NEW host key (`ssh-keygen -R
+  192.168.1.235` once, then `accept-new`). The installed system's host key is in known_hosts.fleet.
+- **provision_node.sh 192.168.1.235 ubu010:** 2 min (updates were small): rename, setup script (Claude Code 2.1.304,
+  linger, no battery thresholds), repo at `~/Prometheus` (d56af5024), git identity "James Craig (ubu010)", shared
+  GitHub token, push dry-run OK, no reboot needed. Inventory vs ubu001: only the expected differences (no Claude
+  login, no claude-rc loop).
+- **Worker:** `install_prometheus_worker.sh f78d18e262 --enable` -> PrometheusWorker/ubu010, enabled, active, first
+  cycle IDLE (probe: cpu 4, ram_gb_available 6.4, disk_gb_free 198). Same pinned code as the rest of the fleet.
+- **Side project:** `mind` user (uid 1001, CPUQuota 200% of 4 threads, MemoryMax 40%, TasksMax 2048, linger) with the
+  `smugglers-hole-mind@SKULLPORT` key, via add_side_project_user.sh; `jcraig@SKULLPORT` appended to jcraig's
+  authorized_keys (now M2, ELSA, SKULLPORT). NOT installed here: the skullport venv, Node, Chromium, Blender (M1 asks if
+  it wants them; same 8 GB class as ubu001/003/004, so no Chromium under M1's own rules).
+- **Claude:** `~/.config/claude-oauth.env` copied node-to-node from ubu006 (piped through ELSA, never written there),
+  mode 600, as for ubu007. Full `/login` only if it ever hosts a seat.
+- **Still to do:** DHCP reservation for .235 in the router (operator). Added to fleet_fanout.py ALL_AVAILABLE, so the
+  census probes it from the next run.
+
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
 Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installed by Achilles with
@@ -289,6 +317,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | enabled, active |
+| ubu010 | PrometheusWorker/ubu010/ubu010-svc | f78d18e26 | yes (shared token) | enabled, active (2026-10-20) |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit

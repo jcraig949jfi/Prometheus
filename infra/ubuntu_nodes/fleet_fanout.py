@@ -40,8 +40,9 @@ NODES = {  # name -> canonical IP (infra/ubuntu_nodes/ubuntu_server_machines.md)
     "ubu007": "192.168.1.3",     # HOLD: bad RAM
     "ubu008": "192.168.1.231",
     "ubu009": "192.168.1.230",   # soak test
+    "ubu010": "192.168.1.235",   # ThinkCentre M910q, added 2026-10-20
 }
-ALL_AVAILABLE = ["ubu001", "ubu003", "ubu004", "ubu005", "ubu006", "ubu008"]
+ALL_AVAILABLE = ["ubu001", "ubu003", "ubu004", "ubu005", "ubu006", "ubu008", "ubu010"]
 
 # One line per node, key=value, no secrets. Runs under the remote user's login shell (bash).
 PROBE = (
