@@ -304,6 +304,10 @@ autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
   mode 600, as for ubu007. Full `/login` only if it ever hosts a seat.
 - **Still to do:** DHCP reservation for .235 in the router (operator). Added to fleet_fanout.py ALL_AVAILABLE, so the
   census probes it from the next run.
+- **RAM upgrade option, deferred (operator 2026-10-20):** ChannelB-DIMM0 is empty; a matching 8 GB DDR4-2400 SODIMM
+  (installed: SK Hynix HMA81GS6AFR8N-UH) is about $55 on Amazon and would give 16 GB dual-channel; max 32 GB. Operator:
+  "We're not RAM constrained right now. Our issue is breaking work up into small enough tasks to distribute to the
+  fleet."
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
