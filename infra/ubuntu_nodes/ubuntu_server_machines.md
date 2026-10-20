@@ -307,7 +307,25 @@ autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
 - **RAM upgrade option, deferred (operator 2026-10-20):** ChannelB-DIMM0 is empty; a matching 8 GB DDR4-2400 SODIMM
   (installed: SK Hynix HMA81GS6AFR8N-UH) is about $55 on Amazon and would give 16 GB dual-channel; max 32 GB. Operator:
   "We're not RAM constrained right now. Our issue is breaking work up into small enough tasks to distribute to the
-  fleet."
+  fleet." Later the same day the operator invited hardware proposals ("anything 2x2GB ... 2x4 is still cheap for older
+  e-waste"); the survey below (dmidecode, 2026-10-20) is the basis.
+
+## RAM upgrade candidates (dmidecode survey 2026-10-20, Achilles; operator invited proposals)
+
+| Node | Installed | Slots / max | Upgrade | Amazon search |
+|---|---|---|---|---|
+| ubu007 | 2x 8 GB DDR3-1333 SODIMM, one cell BAD | 4 slots (2 free under keyboard) | replace both with a new kit; returns an 8-thread box now on HOLD | `16GB (2x8GB) DDR3 1333 SODIMM PC3-10600 laptop` |
+| ubu003 | 1x 8 GB DDR3L-1600 | 2 / 16 GB, 1 free | add one stick (16 GB) | `8GB DDR3L 1600 SODIMM PC3L-12800 1.35V` |
+| ubu004 | 1x 8 GB DDR4-2133 | 2 / 32 GB, 1 free | add one stick (16 GB) | `8GB DDR4 2400 SODIMM 260-pin` |
+| ubu010 | 1x 8 GB DDR4-2400 | 2 / 32 GB, 1 free | add one stick (16 GB), ~$55 | `8GB DDR4 2400 SODIMM 260-pin 1.2V` |
+| ubu005 | 8 + 16 GB DDR4-2400 | 2 / 32 GB, full | optional: swap the 8 GB for 16 GB (32 GB) | `16GB DDR4 2400 SODIMM` |
+| ubu008 | 2x 8 GB DDR4 | 2 / 32 GB, full | none needed | |
+| ubu006 | 2x 8 GB DDR3-1600 DIMM | 2 / 16 GB, full | none (at max) | |
+| ubu001, ubu002, ubu009 | soldered LPDDR3 / LPDDR4X | none | cannot be upgraded | |
+
+ubu009 2026-10-20: operator removed its back cover and runs it upside down with no panel (plastic bits fell out, no
+visible damage). Not reachable on .230 that day (no ping/ssh, no ARP entry); likely the USB Ethernet adapter got
+unplugged while it was moved, or it froze again. It is out of the pool, so the census does not probe it.
 
 ## PrometheusWorkers on the Linux nodes (2026-10-03)
 
