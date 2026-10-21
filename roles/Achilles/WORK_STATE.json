@@ -4,32 +4,39 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "fleet_order": "CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md)",
-  "updated_at_utc": "2026-10-05T23:00:00Z",
+  "updated_at_utc": "2026-10-21T01:30:00Z",
   "state": "READY",
-  "current_objective": "none in flight; standing duty: the 6-hourly census (PrometheusFleetCensus on ELSA) per the 2026-09-30 charter",
-  "current_step": "ELSA back up with 16 GB verified; standing census resumes at 04:30Z",
+  "current_objective": "standing duty: 6-hourly census; operate the 7-node Linux pool shared with M1/M2 (Skullport) under the agreed rules",
+  "current_step": "fresh session after operator reset; ubu009 overnight soak (phase 2) running, clean at 01:25Z",
   "in_flight": [],
-  "finish_condition": "met for the first run (census published 189e12502; task registered; Pages live)",
-  "next_expected_milestone": "next census run 2026-10-06T04:30Z",
-  "expected_next_artifact": "docs/fleet/run_status.json refreshed by the 04:30Z run",
+  "finish_condition": "ubu009 soak reaches the 24 h bar clean, or fails with a cause",
+  "next_expected_milestone": "ubu009 soak phase 2 ends ~2026-10-21T07:18Z; next census 2026-10-21T04:30Z",
+  "expected_next_artifact": "ubu009 phase-2 soak result in infra/ubuntu_nodes/ubuntu_server_machines.md",
   "model": "claude-opus-5-5",
-  "branch": "achilles/session-2026-10-05",
+  "branch": "achilles/m1-blender-2026-10-17",
   "head_sha": "(this commit; see git log -1 -- roles/Achilles/WORK_STATE.json)",
   "threads": [],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
   "running": [
-    "PrometheusFleetCensus (ELSA scheduled task, every 6 h)"
+    "PrometheusFleetCensus (ELSA scheduled task, every 6 h)",
+    "ubu009 soak: tmux soak2 + memv2, 21:18Z-07:18Z, self-aborts at 95 C"
   ],
-  "blocked_on": [],
+  "blocked_on": [
+    "Aporia reply to comms #2276 (Sagacity interface question), relay to M1"
+  ],
   "next_actions": [
-    "Read the 04:30Z census; route anomalies in other lanes to owners as reports, never as assignments.",
-    "Run the census every 6 hours (PrometheusFleetCensus on ELSA)."
+    "Read ubu009 soak after 07:18Z; record in the node log.",
+    "Read the 04:30Z census; route anomalies to owners as reports.",
+    "On operator GO gpu: usermod -aG render,video jcraig on ubu004 only; M1 runs one short HW-GL pass with thermal watch."
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "GO gpu (ubu004 render,video groups for M1 HW-GL trial)",
+    "DHCP reservations on router (ubu010 .235 first)"
+  ],
   "latest_reports": [
-    "roles/Achilles/journal/2026-10-05.md",
+    "roles/Achilles/journal/2026-10-20_fleet_handoff_for_next_session.md",
     "https://jcraig949jfi.github.io/Prometheus/fleet/"
   ],
   "last_push_sha": "3e570c4b2"
