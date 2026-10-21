@@ -275,6 +275,15 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   freezes again with no DNS stalls on ELSA, the hypothesis gains support.
 - Plan (operator): add ubuntu-desktop-minimal later and switch netplan to NetworkManager (usable touchscreen laptop /
   travel machine); not urgent. Pause the worker when travelling.
+- **Cover-off soak 2026-10-20/21 (Achilles from ELSA): PASS.** Operator hypothesis: the broken plastic / back cover caused
+  the freezes; machine run with the cover OFF, lid-less, upside down. Booted 2026-10-20 14:28:45Z.
+  Phase 1 19:16-21:16Z (2 h): stress burners + 4 GB write/verify (`~/stress_full.log`, `~/mem_verify.log`), 1,140 rounds,
+  0 bad, peak pkg 72 C. Phase 2 21:18Z-07:18Z (10 h, tmux `soak2` 8 burners with 95 C abort + `memv2`): 5,442 rounds,
+  0 MEMFAIL, peak pkg 73 C (60-72 typical, ~2.1-2.8 GHz). Then idle. Read 2026-10-21 21:20Z: up 30 h 51 min, no freeze,
+  no reboot, 0 kernel err-level lines since 21:00Z on 10-20, no MCE/EDAC/lockup/hung-task messages.
+  12 h under full load and 31 h uptime clear the 24 h bar for the cover-off case. Supports the cover hypothesis but
+  doesn't prove it. Next (operator): refit the cover without the broken pieces and rerun the same soak; the worker stays
+  disabled until that passes.
 
 ## ubu010 (machine #10, Lenovo ThinkCentre M910q tiny desktop, 10MV000NUS)
 
