@@ -417,6 +417,17 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   set, so headless Blender Workbench/EEVEE renders now work on ubu005/ubu008 (`-b -E BLENDER_WORKBENCH -f 1` ->
   1.3 MB PNG on both); this closes the EGL question that had waited since 2026-10-17. PrometheusWorker active on all six
   after every step. Install time 1-7 min per node (ubu004/ubu006 slowest, HDDs).
+- **iGPU (hardware WebGL) trial, ubu004 (2026-10-21, Achilles from ELSA; operator GO typed in the Achilles session).**
+  `sudo usermod -aG render,video jcraig` on ubu004 (Intel HD 620, Kaby Lake GT2). M1 ran the same drone sweep (area
+  sk_lp0s, 8 stills, one snap Chromium on CPUs 2-3) twice; Achilles logged pkg temp / MemAvailable / load /
+  `gt_act_freq_mhz` every 5 s (`~/gpu_trial_watch.log`) and watched dmesg.
+  Pass 1, `--use-angle=gl`: no WebGL, so SwiftShader: area load ~2 m 17 s, ~33 s/still, GPU stayed at 300 MHz idle.
+  Pass 2, `--use-angle=vulkan --enable-features=Vulkan --ignore-gpu-blocklist`: renderer "ANGLE (Intel, Vulkan 1.4.318
+  (Intel(R) HD Graphics 620 (KBL GT2)), Intel open-source Mesa driver)", area load ~34 s, **~1.7 s/still** (8/8, exit 0,
+  same image as pass 1), GPU at 1000 MHz during capture. Both passes: peak pkg 62 C, ~2.1 GB RAM at peak, 0 i915/drm
+  errors, no orphans, worker untouched. dmesg shows harmless AppArmor DENIED for snap.chromium reading
+  /etc/vulkan/{implicit_layer.d,icd.d} (the snap brings its own Mesa ICD). Verdict: clean; Vulkan is the recipe, GL is not.
 - Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo snap remove chromium`; `sudo apt-get remove
   nodejs npm libegl1 libgles2 libxi6 libxxf86vm1 libxfixes3 libsm6 libice6 libgl1` (libxrender1 was pre-existing on
-  ubu005; the other Chrome libs are harmless to leave); delete the SKULLPORT line from `authorized_keys`.
+  ubu005; the other Chrome libs are harmless to leave); delete the SKULLPORT line from `authorized_keys`; `sudo gpasswd -d jcraig render; sudo gpasswd -d jcraig video`
+  on the iGPU-trial nodes.
