@@ -427,7 +427,13 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   same image as pass 1), GPU at 1000 MHz during capture. Both passes: peak pkg 62 C, ~2.1 GB RAM at peak, 0 i915/drm
   errors, no orphans, worker untouched. dmesg shows harmless AppArmor DENIED for snap.chromium reading
   /etc/vulkan/{implicit_layer.d,icd.d} (the snap brings its own Mesa ICD). Verdict: clean; Vulkan is the recipe, GL is not.
+  **ubu004 is the one node open for Vulkan browser jobs** (one Chromium per node, CPUs 0-1 free, 2 GB RSS).
+  ubu006 (Intel HD 4400, Haswell GT2, Mesa hasvk), same day, same pass: renderer "ANGLE (Intel, Vulkan 1.2.318 (Intel(R)
+  HD Graphics 4400 (HSW GT2)), Intel open-source Mesa driver)", 8/8 stills at ~1.7 s, GPU 1150 MHz, peak pkg 46 C,
+  ~2.2 GB, 0 i915 errors: node safe, but **the image is wrong** (streaky roof textures, missing timber framing, blue
+  cast; hasvk's incomplete format support). Verdict: GPU works, renders wrong; not for visual work. Groups reverted
+  (`gpasswd -d jcraig render/video`) the same hour. The other nodes' GPUs are untested; any trial needs a fresh operator GO.
 - Remove cleanly: `rm -rf ~jcraig/blender ~jcraig/skullport`; `sudo snap remove chromium`; `sudo apt-get remove
   nodejs npm libegl1 libgles2 libxi6 libxxf86vm1 libxfixes3 libsm6 libice6 libgl1` (libxrender1 was pre-existing on
   ubu005; the other Chrome libs are harmless to leave); delete the SKULLPORT line from `authorized_keys`; `sudo gpasswd -d jcraig render; sudo gpasswd -d jcraig video`
-  on the iGPU-trial nodes.
+  on ubu004 (ubu006 already reverted).
