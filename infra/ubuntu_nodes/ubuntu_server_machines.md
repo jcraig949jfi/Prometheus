@@ -317,8 +317,14 @@ the first backup verified ok. Achilles read-only check right after: both units a
 RSS ~450 MB, 6.3 GB available, 42 C. **Rollback (M1 side):** M1's untouched world_5760.db is in WSL ~/sh_nwn. If
 ubu010 PROD has run since, copy its db back first. Then delete build/releases/sites/live5760/HOLD, run
 `SK_PROD_ON_M1=1 tools/live.sh start --port 5760 --no-build --no-serve` and
-`tailscale funnel --https=8443 http://127.0.0.1:5760` on M1, and stop skullport-prod on ubu010. Pending: a reboot test
-(needs the operator's GO), which now covers PROD as well as QA.
+`tailscale funnel --https=8443 http://127.0.0.1:5760` on M1, and stop skullport-prod on ubu010.
+
+**Reboot test PASS 2026-10-22 12:30Z** (the operator's GO, "Reboot if m1 agrees"; M1 agreed with PROD idle).
+`sudo systemctl reboot` at 12:30:25Z. Times from when the watcher started: ping back +24s; at +26s ssh, linger user
+manager, tailscaled/tailnet, and skullport-prod, -qa and -qa-lan (socat LAN 192.168.1.235:5785 -> QA 5780, for fleet
+monkeys) all active; HTTP 200 on 5760/5780/LAN 5785 at +30s; tailnet https 8443/9443 and tcp 15760 at +31s. Nothing
+was touched by hand. After boot: no failed units (system or user), OperatorUser=skullport kept, no Funnel on ubu010,
+userns restriction 1, skullport-unshare profile loaded, worker still disabled.
 
 Operator 2026-10-20 ~00:15Z: "New e-waste machine coming online shortly, Lenovo i5, 8GB of RAM"; the operator ran the
 autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
