@@ -324,7 +324,10 @@ ubu010 PROD has run since, copy its db back first. Then delete build/releases/si
 manager, tailscaled/tailnet, and skullport-prod, -qa and -qa-lan (socat LAN 192.168.1.235:5785 -> QA 5780, for fleet
 monkeys) all active; HTTP 200 on 5760/5780/LAN 5785 at +30s; tailnet https 8443/9443 and tcp 15760 at +31s. Nothing
 was touched by hand. After boot: no failed units (system or user), OperatorUser=skullport kept, no Funnel on ubu010,
-userns restriction 1, skullport-unshare profile loaded, worker still disabled.
+userns restriction 1, skullport-unshare profile loaded, worker still disabled. M1's side also passed: PROD through the
+public route (M1 Funnel :8443 -> forwarder -> ubu010 tcp 15760) invite smoke 4/4, and QA over the tailnet 4/4. The M1
+forwarder reconnected on its own. Operator items still open: BIOS "power on after AC loss", Tailscale key expiry
+off for ubu010, DHCP reservation for .235.
 
 Operator 2026-10-20 ~00:15Z: "New e-waste machine coming online shortly, Lenovo i5, 8GB of RAM"; the operator ran the
 autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
