@@ -574,7 +574,7 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
         # registered loops this seat owns (process state, kept apart from productive work)
         seats_out[name]["monitors"] = [{"name": m["name"], "state": m.get("state", "")[:120], "host": m.get("host"),
                                         "kind": m.get("kind")} for m in mons
-                                       if re.search(r"{}".format(re.escape(name)), m.get("owner") or "")]
+                                       if re.search(r"\b{}\b".format(re.escape(name)), m.get("owner") or "")]
 
     # engines
     engines_out = {}

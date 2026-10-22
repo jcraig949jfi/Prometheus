@@ -177,3 +177,12 @@ def test_cheat_unreachable_host_shows_error_not_stale_numbers():
     page = R.render_html(snap)
     assert "UNREACHABLE: rc=255: Connection timed out" in page
     assert "ubu010 (Skullport game host) UNREACHABLE" in R.email_block(snap)["markdown"]
+
+
+def test_cheat_census_sources_have_no_control_bytes():
+    """A heredoc once turned r"\b" into a literal backspace in build.py, so per-seat monitors never matched
+    (2026-09-30 .. 2026-10-22). Any control byte other than tab/newline/CR in the census code is a bug."""
+    import re
+    bad = [str(p) for p in (ROOT / "achilles" / "census").rglob("*.py")
+           if re.search(rb"[\x00-\x08\x0b\x0c\x0e-\x1f]", p.read_bytes())]
+    assert bad == []
