@@ -287,6 +287,19 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
 
 ## ubu010 (machine #10, Lenovo ThinkCentre M910q tiny desktop, 10MV000NUS)
 
+**Skullport GAME HOST since 2026-10-22 (operator GO in the Achilles session: "Approved. ubu010 is now our rust
+server").** Reserved: no fleet dispatch (removed from `ALL_AVAILABLE` in fleet_fanout.py, so not in the census pool),
+PrometheusWorker disabled (`systemctl --user disable --now prometheus-worker`). Installed: socat, tailscale 1.104.2
+(pkgs.tailscale.com apt repo, hostname ubu010; node approval by the operator in the Tailscale admin console;
+`tailscale set --operator=skullport` so the game user can run serve/funnel). Game services run as the unprivileged
+user `skullport` (uid 1002, no sudo, linger on, authorized_keys: jcraig@SKULLPORT + achilles@elsa), not as jcraig,
+because Funnel exposes it to the internet and jcraig has sudo, fleet keys and the worker token. Always on:
+sleep/suspend/hibernate targets masked, /etc/systemd/logind.conf.d/90-gamehost-nosleep.conf; BIOS "power on after
+AC loss" is a physical step for the operator. Undo: `sudo tailscale logout; sudo apt-get remove tailscale socat;
+sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target;
+sudo rm /etc/systemd/logind.conf.d/90-gamehost-nosleep.conf; sudo userdel -r skullport`; re-enable the worker and
+put ubu010 back in ALL_AVAILABLE.
+
 Operator 2026-10-20 ~00:15Z: "New e-waste machine coming online shortly, Lenovo i5, 8GB of RAM"; the operator ran the
 autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
 
