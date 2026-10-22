@@ -674,6 +674,14 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
                           "detail": "prometheus-worker.service is '{}' (expected active)".format((nodes["nodes"].get(n) or {}).get("worker"))})
     if nodes.get("status") != "ok":
         anomalies.append({"type": "NODE_PROBE_UNAVAILABLE", "subject": "linux-nodes", "detail": str(nodes.get("error"))[:300]})
+    # Reserved hosts (ubu010 = Skullport game host since 2026-10-22): health only, never in the job pool.
+    hosts = N.probe_hosts(root, iso(now))
+    for n in hosts.get("unreachable") or []:
+        anomalies.append({"type": "HOST_UNREACHABLE", "subject": n,
+                          "detail": "ssh {}@{} failed: {}".format(hosts.get("user"), (hosts["hosts"].get(n) or {}).get("ip"),
+                                                                   (hosts["hosts"].get(n) or {}).get("error"))})
+    for n, unit, state in hosts.get("units_down") or []:
+        anomalies.append({"type": "HOST_UNIT_DOWN", "subject": n, "detail": "{}.service is enabled but '{}'".format(unit, state)})
 
     snap = {
         "schema": SCHEMA,
@@ -700,6 +708,7 @@ def build(root: Path, prev: dict | None, conn, conn_err: str | None, now, run_in
         "aggregates": aggs,
         "engine_aggregates": eng_aggs,
         "nodes": nodes,
+        "hosts": hosts,
     }
     snap["delta"] = delta(prev, snap)
     return snap

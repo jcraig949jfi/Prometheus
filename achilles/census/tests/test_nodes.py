@@ -123,3 +123,57 @@ def test_probe_never_raises_without_table(tmp_path, monkeypatch):
     monkeypatch.setattr(N, "CODE_ROOT", tmp_path)     # otherwise the real table is found and a live probe runs
     out = N.probe_nodes(tmp_path, "2026-10-17T01:00:00Z")
     assert out["status"] == "UNAVAILABLE" and "not found" in out["error"] and out["nodes"] == {}
+
+
+HOST_LINE = ("ubu010 load=0.07 0.10 0.09 mem_avail=6467/7311MB disk_free=196G pkg_c=43 uptime_h=52.0 sk_procs=12 "
+             "sk_cpu%=5.9 sk_rss_mb=232 units=skullport-qa:enabled/active,skullport-prod:enabled/failed,skullport-old:disabled/inactive")
+
+
+def test_positive_host_line_parses_and_units_split():
+    row = N.parse_probe_line(HOST_LINE, N.HOST_FIELDS)
+    assert row["hostname"] == "ubu010" and row["load"] == "0.07 0.10 0.09" and row["pkg_c"] == 43
+    assert row["uptime_h"] == 52.0 and row["sk_procs"] == 12 and row["sk_cpu%"] == 5.9 and row["sk_rss_mb"] == 232
+    u = N.parse_units(row["units"])
+    assert u == {"skullport-qa": ("enabled", "active"), "skullport-prod": ("enabled", "failed"),
+                 "skullport-old": ("disabled", "inactive")}
+    assert N.parse_units("none") == {} and N.parse_units(None) == {}
+
+
+def test_reserved_hosts_are_out_of_the_job_pool():
+    fan = N.load_fanout(ROOT)
+    assert fan.RESERVED_HOSTS and not (set(fan.RESERVED_HOSTS) & set(fan.ALL_AVAILABLE))
+    assert set(fan.RESERVED_HOSTS) <= set(fan.NODES) and "units=" in fan.HOST_PROBE
+
+
+def _hosts_block(units="skullport-qa:enabled/active,skullport-prod:enabled/failed"):
+    ok = dict(N.parse_probe_line(HOST_LINE.split(" units=")[0] + " units=" + units, N.HOST_FIELDS),
+              node="ubu010", ip="192.168.1.235", status="OK", error=None, role="Skullport game host")
+    down = [["ubu010", u, a] for u, (e, a) in N.parse_units(units).items() if e == "enabled" and a != "active"]
+    return {"status": "ok", "probed_at": "2026-10-22T05:00:00Z", "user": "jcraig", "hosts": {"ubu010": ok},
+            "unreachable": [], "units_down": down}
+
+
+def test_positive_hosts_render_in_page_and_email():
+    snap = _snap()
+    snap["hosts"] = _hosts_block()
+    page = R.render_html(snap)
+    assert "Reserved hosts (1)" in page and "Skullport game host" in page and "1 service(s) down" in page
+    em = R.email_block(snap)
+    assert "Reserved hosts (no fleet jobs)" in em["markdown"] and "skullport-prod:enabled/failed" in em["markdown"]
+    assert "Reserved hosts" in em["html"]
+
+
+def test_negative_snapshot_without_hosts_renders():
+    snap = _snap()
+    snap.pop("hosts", None)
+    assert "Reserved hosts" not in R.render_html(snap) and "Reserved hosts" not in R.email_block(snap)["markdown"]
+
+
+def test_cheat_unreachable_host_shows_error_not_stale_numbers():
+    snap = _snap()
+    snap["hosts"] = {"status": "UNAVAILABLE", "probed_at": "x", "user": "jcraig", "units_down": [], "unreachable": ["ubu010"],
+                     "hosts": {"ubu010": {"node": "ubu010", "ip": "192.168.1.235", "status": "UNREACHABLE",
+                                          "error": "rc=255: Connection timed out", "role": "Skullport game host"}}}
+    page = R.render_html(snap)
+    assert "UNREACHABLE: rc=255: Connection timed out" in page
+    assert "ubu010 (Skullport game host) UNREACHABLE" in R.email_block(snap)["markdown"]

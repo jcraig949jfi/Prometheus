@@ -43,6 +43,25 @@ NODES = {  # name -> canonical IP (infra/ubuntu_nodes/ubuntu_server_machines.md)
     "ubu010": "192.168.1.235",   # Skullport game host since 2026-10-22 (reserved; no fleet jobs, worker off)
 }
 ALL_AVAILABLE = ["ubu001", "ubu003", "ubu004", "ubu005", "ubu006", "ubu008"]
+# Reserved hosts: probed by the census for health, never in ALL_AVAILABLE (no fleet jobs).
+RESERVED_HOSTS = {"ubu010": "Skullport game host"}
+
+# One line per reserved host. Units are skullport's systemd --user services (skullport-*.service), read through
+# jcraig's passwordless sudo because jcraig cannot see another user's manager; each is unit:enabled/active.
+HOST_PROBE = (
+    'h=$(hostname); l=$(cut -d" " -f1-3 /proc/loadavg); '
+    'm=$(free -m | awk \'/Mem:/{print $7"/"$2"MB"}\'); d=$(df -h / | awk \'NR==2{print $4}\'); '
+    'pc=n/a; for z in /sys/class/thermal/thermal_zone*; do [ "$(cat $z/type)" = x86_pkg_temp ] && pc=$(( $(cat $z/temp) / 1000 )); done; '
+    'up=$(awk \'{printf "%.1f", $1/3600}\' /proc/uptime); '
+    'sp=$(ps -u skullport -o pid= 2>/dev/null | wc -l); '
+    'sc=$(ps -u skullport -o %cpu= 2>/dev/null | awk \'{s+=$1} END{print s+0}\'); '
+    'sr=$(ps -u skullport -o rss= 2>/dev/null | awk \'{s+=$1} END{print int(s/1024)}\'); '
+    'su="sudo -n -u skullport XDG_RUNTIME_DIR=/run/user/$(id -u skullport 2>/dev/null)"; '
+    'un=$($su systemctl --user list-unit-files --no-legend "skullport-*.service" 2>/dev/null | awk \'{print $1}\' | '
+    'while read u; do echo "${u%.service}:$($su systemctl --user is-enabled $u 2>/dev/null)/$($su systemctl --user is-active $u 2>/dev/null)"; done | '
+    'paste -sd, -); '
+    'echo "$h load=$l mem_avail=$m disk_free=$d pkg_c=$pc uptime_h=$up sk_procs=$sp sk_cpu%=$sc sk_rss_mb=$sr units=${un:-none}"'
+)
 
 # One line per node, key=value, no secrets. Runs under the remote user's login shell (bash).
 PROBE = (

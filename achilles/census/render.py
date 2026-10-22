@@ -186,6 +186,49 @@ def nodes_block(snap) -> str:
         rss=t.get("mind_rss_mb", 0), thr=t.get("threads", 0), head=head, body=body)
 
 
+HOST_COLS = (("node", "Host"), ("role", "Role"), ("ip", "IP"), ("status", "Status"), ("units", "Services (enabled/active)"),
+             ("load", "Load 1/5/15"), ("mem_avail", "RAM avail/total"), ("disk_free", "Disk free"), ("pkg_c", "Pkg C"),
+             ("uptime_h", "Uptime h"), ("sk_procs", "skullport procs"), ("sk_cpu%", "skullport CPU %"), ("sk_rss_mb", "skullport RSS MB"))
+
+
+def host_lines(snap) -> list:
+    """One plain line per reserved host for the email; UNREACHABLE hosts carry their error."""
+    out = []
+    for name, r in ((snap.get("hosts") or {}).get("hosts") or {}).items():
+        if r.get("status") == "OK":
+            out.append("{} ({}) services {} | load {} | RAM {} | {} C | up {} h | skullport {} procs, {}% CPU, {} MB".format(
+                name, r.get("role"), r.get("units"), r.get("load"), r.get("mem_avail"), r.get("pkg_c"), r.get("uptime_h"),
+                r.get("sk_procs"), r.get("sk_cpu%"), r.get("sk_rss_mb")))
+        else:
+            out.append("{} ({}) {}: {}".format(name, r.get("role"), r.get("status"), r.get("error")))
+    return out
+
+
+def hosts_block(snap) -> str:
+    """The 'Reserved hosts' section: machines out of the job pool (ubu010 = Skullport game host). Empty when none."""
+    hb = snap.get("hosts") or {}
+    hosts = hb.get("hosts") or {}
+    if not hosts:
+        return ""
+    head = "".join("<th>{}</th>".format(_esc(l)) for _, l in HOST_COLS)
+    body = ""
+    for r in hosts.values():
+        cells = []
+        for key, _label in HOST_COLS:
+            v = r.get(key)
+            if key == "status" and r.get("status") != "OK":
+                v = "{}: {}".format(r.get("status"), r.get("error"))
+            cells.append("" if v is None else str(v))
+        body += "<tr>" + "".join("<td>{}</td>".format(_esc(c)) for c in cells) + "</tr>"
+    down = hb.get("units_down") or []
+    flag = " &middot; <b>{} service(s) down</b>".format(len(down)) if down else ""
+    return ("<h2>Reserved hosts ({n}){flag}</h2>"
+            "<div class=\"sub\">Probed {at} over ssh as {user}; health only, these take no fleet jobs. Services are the "
+            "<code>skullport-*</code> systemd --user units; one enabled but not active is an anomaly.</div>"
+            "<div class=\"wrap\"><table><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>").format(
+        n=len(hosts), flag=flag, at=_esc(hb.get("probed_at")), user=_esc(hb.get("user")), head=head, body=body)
+
+
 def render_html(snap) -> str:
     rows = table_rows(snap)
     s = snap["summary"]
@@ -299,6 +342,7 @@ Sources: git {git}; comms {comms}; evidence wiki {ew}; legacy agora {agora}. Mai
 <input id="f-q" placeholder="search (engine, task, ...)"><span class="sub" id="count"></span></div>
 <div class="wrap"><table id="tbl"></table></div>
 {nodes_html}
+{hosts_html}
 <h2>Inconsistencies and anomalies ({nan})</h2>
 <div class="wrap"><table><thead><tr><th>Type</th><th>Subject</th><th>Detail</th></tr></thead><tbody>{an}</tbody></table></div>
 <h2>Engines and subsystems ({neng})</h2>
@@ -315,7 +359,7 @@ Sources: git {git}; comms {comms}; evidence wiki {ew}; legacy agora {agora}. Mai
         git=_esc(src.get("git")), comms=_esc(src.get("comms")), ew=_esc(src.get("ew", "n/a")), agora=_esc(src.get("agora", "n/a")),
         mail_ok=_esc(m.get("last_success")), mail_c=_esc(m.get("census_included_last")),
         prev=_esc(d.get("previous_generated_at") or "none"), delta="".join(delta_items),
-        nodes_html=nodes_block(snap),
+        nodes_html=nodes_block(snap), hosts_html=hosts_block(snap),
         nan=len(snap["anomalies"]), an=an_rows or "<tr><td colspan=3>none</td></tr>", neng=len(snap["engines"]), eng="".join(eng_rows),
         details="".join(details),
         rows=json.dumps(rows).replace("</", "<\\/"), runj=json.dumps(run_embed).replace("</", "<\\/"),
@@ -403,6 +447,9 @@ def email_block(snap) -> dict:
         md += ["", "**Linux nodes ({}/{} reachable; mind: {} procs, {}% CPU, {} MB):**".format(
             nt.get("reachable", 0), nt.get("nodes", 0), nt.get("mind_procs", 0), nt.get("mind_cpu%", 0), nt.get("mind_rss_mb", 0))]
         md += ["- " + x for x in node_lines] or ["- no node answered"]
+    hl = host_lines(snap)
+    if hl:
+        md += ["", "**Reserved hosts (no fleet jobs):**"] + ["- " + x for x in hl]
     md += ["", "Full census, evidence and engine map: " + PAGES_URL]
 
     h = ['<hr style="border:none;border-top:1px solid #ccc;margin:24px 0">'] + oq_h + [
@@ -425,6 +472,9 @@ def email_block(snap) -> dict:
                  '<ul style="font-size:12px;margin:2px 0 8px 0">'.format(nt.get("reachable", 0), nt.get("nodes", 0), nt.get("mind_procs", 0),
                                                                         nt.get("mind_cpu%", 0), nt.get("mind_rss_mb", 0))
                  + ("".join("<li>{}</li>".format(_esc(x)) for x in node_lines) or "<li>no node answered</li>") + "</ul>")
+    if hl:
+        h.append('<p style="font-size:13px;margin:10px 0 2px 0"><b>Reserved hosts (no fleet jobs):</b></p><ul style="font-size:12px;margin:2px 0 8px 0">'
+                 + "".join("<li>{}</li>".format(_esc(x)) for x in hl) + "</ul>")
     h.append('<p style="font-size:13px">Full census, evidence and engine map: <a href="{0}">{0}</a></p>'.format(PAGES_URL))
     return {"schema": "prometheus.fleet_census_email.v1", "generated_at_utc": snap["generated_at_utc"],
             "base_sha": snap.get("base_sha"), "rows": len(rows), "page_url": PAGES_URL,

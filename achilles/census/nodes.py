@@ -18,6 +18,7 @@ FANOUT_REL = Path("infra") / "ubuntu_nodes" / "fleet_fanout.py"
 CODE_ROOT = Path(__file__).resolve().parents[2]   # the pinned code worktree (same rule as run.py)
 USER = "jcraig"
 FIELDS = ("threads", "load", "mem_avail", "disk_free", "worker", "mind_procs", "mind_cpu%", "mind_rss_mb", "skullport_minds")
+HOST_FIELDS = ("load", "mem_avail", "disk_free", "pkg_c", "uptime_h", "sk_procs", "sk_cpu%", "sk_rss_mb", "units")
 
 
 def load_fanout(root: Path):
@@ -32,7 +33,7 @@ def load_fanout(root: Path):
     return mod
 
 
-def parse_probe_line(line: str) -> dict:
+def parse_probe_line(line: str, fields: tuple = FIELDS) -> dict:
     """'ubu003 threads=4 load=0.17 0.06 0.01 mem_avail=6191/7330MB ... skullport_minds=0' -> dict.
 
     `load` is three space-separated numbers, so tokens are re-joined until the next key=.
@@ -43,22 +44,35 @@ def parse_probe_line(line: str) -> dict:
     out = {"hostname": toks[0]}
     key = None
     for t in toks[1:]:
-        if "=" in t and t.split("=", 1)[0] in FIELDS:
+        if "=" in t and t.split("=", 1)[0] in fields:
             key, val = t.split("=", 1)
             out[key] = val
         elif key:
             out[key] = (out[key] + " " + t).strip()
-    for k in ("mind_procs", "skullport_minds", "mind_rss_mb", "threads"):
+    for k in ("mind_procs", "skullport_minds", "mind_rss_mb", "threads", "sk_procs", "sk_rss_mb", "pkg_c"):
         if k in out:
             try:
                 out[k] = int(float(out[k]))
             except ValueError:
                 pass
-    if "mind_cpu%" in out:
-        try:
-            out["mind_cpu%"] = float(out["mind_cpu%"])
-        except ValueError:
-            pass
+    for k in ("mind_cpu%", "sk_cpu%", "uptime_h"):
+        if k in out:
+            try:
+                out[k] = float(out[k])
+            except ValueError:
+                pass
+    return out
+
+
+def parse_units(units: str | None) -> dict:
+    """'skullport-qa:enabled/active,skullport-prod:enabled/failed' -> {unit: (enabled_state, active_state)}."""
+    out = {}
+    for item in (units or "").split(","):
+        if ":" not in item:
+            continue
+        name, st = item.split(":", 1)
+        en, _, act = st.partition("/")
+        out[name] = (en, act)
     return out
 
 
@@ -71,7 +85,8 @@ def ssh_command(ip: str, probe_cmd: str, connect_timeout: int) -> list:
             "-o", "StrictHostKeyChecking=accept-new", f"{USER}@{ip}", probe_cmd]
 
 
-def _probe_one(name: str, ip: str, probe_cmd: str, connect_timeout: int, timeout: int, attempts: int = 2) -> dict:
+def _probe_one(name: str, ip: str, probe_cmd: str, connect_timeout: int, timeout: int, attempts: int = 2,
+               fields: tuple = FIELDS) -> dict:
     """One node. `timeout` is the whole allowance for this node; it is split over `attempts` tries so a
     client that stalls once (see ssh_command) gets a second, independent connection within the budget."""
     t0 = time.time()
@@ -95,7 +110,7 @@ def _probe_one(name: str, ip: str, probe_cmd: str, connect_timeout: int, timeout
                 break      # a definite ssh failure (auth, host key, refused) does not improve by retrying
             continue
         row = {"node": name, "ip": ip, "status": "OK", "error": None, "secs": round(time.time() - t0, 1), "attempts": n}
-        row.update(parse_probe_line(r.stdout.strip().splitlines()[-1]))
+        row.update(parse_probe_line(r.stdout.strip().splitlines()[-1], fields))
         return row
     return {"node": name, "ip": ip, "status": "UNREACHABLE", "error": last_err, "secs": round(time.time() - t0, 1), "attempts": attempts}
 
@@ -137,5 +152,41 @@ def probe_nodes(root: Path, now_iso: str, connect_timeout: int = 6, timeout: int
             out["error"] = "no node answered"
         return out
     except Exception as e:  # the census never fails because of the node probe
+        out["error"] = f"{type(e).__name__}: {str(e)[:200]}"
+        return out
+
+
+def probe_hosts(root: Path, now_iso: str, connect_timeout: int = 6, timeout: int = 25, budget_s: int = 40) -> dict:
+    """Probe the reserved hosts (fleet_fanout.RESERVED_HOSTS: in the table, out of the job pool). Never raises.
+
+    A unit counts as down when it is enabled but not active; a disabled or absent unit is not expected to run.
+    Returns {"status", "probed_at", "user", "source", "hosts": {name: row}, "unreachable": [...], "units_down": [[host, unit, state]]}.
+    """
+    out = {"status": "UNAVAILABLE", "probed_at": now_iso, "user": USER, "source": str(FANOUT_REL).replace("\\", "/"),
+           "hosts": {}, "unreachable": [], "units_down": []}
+    try:
+        fan = load_fanout(root)
+        reserved = getattr(fan, "RESERVED_HOSTS", None) if fan else None
+        if not reserved:
+            out["status"] = "none"
+            return out
+        targets = [(n, fan.NODES[n], role) for n, role in reserved.items() if n in fan.NODES]
+        rows = {}
+        with cf.ThreadPoolExecutor(max_workers=max(1, len(targets))) as ex:
+            futs = [ex.submit(_probe_one, n, ip, fan.HOST_PROBE, connect_timeout, timeout, 2, HOST_FIELDS) for n, ip, _ in targets]
+            for f in cf.as_completed(futs, timeout=budget_s):
+                r = f.result()
+                rows[r["node"]] = r
+        for n, ip, role in targets:
+            rows.setdefault(n, {"node": n, "ip": ip, "status": "UNREACHABLE", "error": f"no answer within {budget_s}s budget"})
+            rows[n]["role"] = role
+            for unit, (en, act) in parse_units(rows[n].get("units")).items():
+                if en == "enabled" and act != "active":
+                    out["units_down"].append([n, unit, act])
+        out["hosts"] = {n: rows[n] for n, _, _ in targets}
+        out["unreachable"] = [n for n, _, _ in targets if rows[n]["status"] != "OK"]
+        out["status"] = "ok" if len(out["unreachable"]) < len(targets) else "UNAVAILABLE"
+        return out
+    except Exception as e:  # the census never fails because of the host probe
         out["error"] = f"{type(e).__name__}: {str(e)[:200]}"
         return out
