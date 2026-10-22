@@ -418,6 +418,15 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
 - **ubu005 + ubu008 user-space setup:** `~/skullport/.venv` (Python 3.14.4; pyyaml 6.0.3, pytest 9.1.1, numpy 2.5.4,
   pillow 13.0.0; 123 MB). M1 scp'd a git bundle and cloned to `~/skullport/repo`; its outfits+minds suites passed on
   ubu005 (111 tests, 6 s). Sharded pytest over the two nodes is light and needs no GO.
+- **Rust toolchain on ubu005 + ubu008 (2026-10-22, operator GO in the Achilles session: "Yes, coordinate with m1").**
+  The reason: M1 hit a low-memory event from parallel Rust builds, and the operator wants all non-graphics work off M1.
+  Installed as jcraig, user-space only, no sudo: rustup with `--profile minimal --default-toolchain stable
+  --no-modify-path` (rustc/cargo 1.99.1), plus target x86_64-unknown-linux-musl; 818 MB in ~/.rustup. Use
+  `PATH=$HOME/.cargo/bin:$PATH`. build-essential and libssl-dev were already present; pkg-config was not. Smoke test
+  passed on both (glibc and static-pie musl builds). A copy installed under `mind` by mistake was uninstalled again.
+  Build limits: `taskset -c 2-3 cargo ... -j 2` on ubu005 and `taskset -c 2-7 ... -j 6` on ubu008; Blender has first
+  claim on ubu008, plus the usual heat/RSS rules. Release builds made here ship to PROD on ubu010, so these two nodes
+  are now on the supply path. Undo: `~/.cargo/bin/rustup self uninstall -y`.
 - **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
   (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
   libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
