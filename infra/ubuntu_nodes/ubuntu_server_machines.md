@@ -14,7 +14,7 @@ Don't record passwords here.
 | 7 | ubu007   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | Patriot P210 256 GB SATA SSD, bay HDD 1 (root 232 GB) | 192.168.1.3 (wired, eno1; no Wi-Fi) | **HOLD -- BAD RAM** (one weak cell, confirmed); worker OFF until a DIMM is pulled/replaced |
 | 8 | ubu008   | jcraig   | 2026-10-10 | Ubuntu Server 26.04.1 LTS | WD PC SN730 512 GB NVMe (root 466 GB) | 192.168.1.231 (wired via dock, enp0s31f6); Wi-Fi .232 (wlp0s20f3) | **Provisioned**, worker active (shared token); Claude token installed 2026-10-10 |
 | 9 | ubu009   | jcraig   | 2026-10-11 | Ubuntu Server 26.04.1 LTS | Kioxia BG5 KBG50ZNT256G NVMe (root 232 GB) | 192.168.1.230 (USB Ethernet enx9cebe80ae6c4) | **SOAK TEST** (freezes); worker DISABLED until 24 h clean |
-| 10 | ubu010  | jcraig   | 2026-10-20 | Ubuntu Server 26.04.1 LTS | WD PC SN730 256 GB NVMe (root 231 GB) | 192.168.1.235 (wired, enp0s31f6; no Wi-Fi) | **Provisioned**, worker active (shared token); `mind` user + SKULLPORT key; Claude OAuth env copied; see section below |
+| 10 | ubu010  | jcraig   | 2026-10-20 | Ubuntu Server 26.04.1 LTS | WD PC SN730 256 GB NVMe (root 231 GB) | 192.168.1.235 (wired, enp0s31f6; no Wi-Fi) | **Skullport game host since 2026-10-22** (PROD + QA; worker disabled, out of pool); `mind` user + SKULLPORT key; Claude OAuth env copied; see section below |
 
 ## Fleet hardware (read live 2026-10-10: lscpu, free, dmidecode, DMI serial)
 
@@ -306,6 +306,20 @@ sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.
 sudo rm /etc/systemd/logind.conf.d/90-gamehost-nosleep.conf; sudo userdel -r skullport`; re-enable the worker and
 put ubu010 back in ALL_AVAILABLE.
 
+**PROD cutover 2026-10-22 ~09:45Z (M1, Skullport).** skullport-prod.service (user unit, rust-only, release
+2026.10.21-6-e27dad9, MemoryMax 1500M, TasksMax 512) is enabled/active on 127.0.0.1:5760, next to skullport-qa (:5780)
+and skullport-logcap.timer (hourly log cap). The world_5760.db was copied from M1 with the sqlite backup API (hash
+checked at both ends, integrity ok). Public route: https://smugglers-hole.tail33be32.ts.net:8443 (M1's Funnel) -> M1
+loopback 127.0.0.1:5765 (TCP forwarder, Windows task SkullportProdForward) -> ubu010 `tailscale serve --tcp 15760`
+(tailnet only) -> 127.0.0.1:5760. Also tailnet-only on ubu010: https :8443 -> 5760 and :9443 -> 5780. **ubu010 itself
+has no Funnel.** Backups: nightly pull to M1 at 04:15 (task SkullportProdBackup, tools/host/pull_backup.sh, keeps 14);
+the first backup verified ok. Achilles read-only check right after: both units active, local :5760 HTTP 200, skullport
+RSS ~450 MB, 6.3 GB available, 42 C. **Rollback (M1 side):** M1's untouched world_5760.db is in WSL ~/sh_nwn. If
+ubu010 PROD has run since, copy its db back first. Then delete build/releases/sites/live5760/HOLD, run
+`SK_PROD_ON_M1=1 tools/live.sh start --port 5760 --no-build --no-serve` and
+`tailscale funnel --https=8443 http://127.0.0.1:5760` on M1, and stop skullport-prod on ubu010. Pending: a reboot test
+(needs the operator's GO), which now covers PROD as well as QA.
+
 Operator 2026-10-20 ~00:15Z: "New e-waste machine coming online shortly, Lenovo i5, 8GB of RAM"; the operator ran the
 autoinstall (typed `yes` ~00:20Z). Achilles (ELSA) provisioned it over SSH.
 
@@ -369,8 +383,8 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
-| ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | enabled, active |
-| ubu010 | PrometheusWorker/ubu010/ubu010-svc | f78d18e26 | yes (shared token) | enabled, active (2026-10-20) |
+| ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | disabled (cover-off soak; re-enable after the rerun passes) |
+| ubu010 | PrometheusWorker/ubu010/ubu010-svc | f78d18e26 | yes (shared token) | disabled 2026-10-22 (game host, out of pool) |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
 (detached, re-synced to origin/main by the worker), ~/prometheus-worker (runs/ and results/), systemd user unit
