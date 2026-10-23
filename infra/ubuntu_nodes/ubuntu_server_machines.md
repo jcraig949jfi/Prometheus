@@ -486,8 +486,11 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   - **Brain server 1 LIVE on ubu005 (2026-10-23, Achilles runs the fleet side; M1 agreed).** Systemd user unit
     `skullport-brain.service` (jcraig): ~/brain/run_server.sh -> llama-server, Qwen3-0.6B Q4_K_M, -t 2 -c 4096 -np 4,
     --reasoning-budget 0, --metrics, bound to 192.168.1.222:18080 (LAN only), `--api-key-file ~/brain/api_keys`
-    (600). LoRAs in ~/brain/adapters/*.gguf are loaded with --lora-init-without-apply (each request picks one via
-    "lora"; restart to pick up new files). Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
+    (600). LoRAs in ~/brain/adapters/*.gguf load with `--lora-init-without-apply --lora-scaled f:0.0,...`: in
+    b115xx, init-without-apply alone leaves every adapter at scale 1.0, so a request with no "lora" field got all of
+    them (M1 found this). Ids follow filename order. Clients name every adapter, the chosen one at 1. Restart to pick
+    up new files. Loaded 2026-10-23: id 0 = expert-ui.gguf (M1, 20261023T112234Z, sha256 a986db3f…7377b). A/B on
+    b11514 at greedy: no-lora == expert-ui@0 (base), expert-ui@1 differs. Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
     The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
     from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
     disable --now skullport-brain; rm -r ~/brain`.
