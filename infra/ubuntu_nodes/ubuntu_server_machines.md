@@ -497,6 +497,18 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     - CPU LoRA sizing: Qwen3-0.6B fp32, r=8 qkvo, batch 4 x about 380 tokens, 6 threads, 40 steps.
       Steady about 6 s/step when uncontended; mid-run steps hit 30-43 s, so other load arrived during the run; mean 30 s.
       Peak RSS 5.0 GB, package 74 C at the end. GGUF conversion OK (9.2 MB). The stand-in adapter is NOT deployed.
+    - The training venv already meets SmugglersHole tools/qa/brain/requirements-train.txt, so no new packages are needed.
+      Nightly window on ubu008: 23:00-04:00Z, kept clear of merge-queue tests and fightsim (M1).
+    Brain pilot explorer (2026-10-23, M1 OK):
+    - ~/skullport/brain_config.json (600) is on ubu001/003/005/006/008/009: server ubu005, adapters {"expert:ui": 0}.
+    - ubu001 runs tmux `explorer-tessaly` (--plan 3 + --brain-config, 8 min runs, CPUs 2-3, nap 300) plus `qa-safety`
+      (cap 2 GiB), from ~/skullport/explorer_wt, a git-archive of SmugglersHole ca9ad1bb8 with a hand patch for
+      SK_BRAIN_CONFIG.
+    - Plan calls take 7-9 s at 2 threads: about 680 prompt tokens at 149 t/s, plus grammar-constrained generation at
+      18 t/s. M1 is moving the plan timeout to 12 s; pick/triage stay at 8 s. No third server thread.
+    - Stop: `tmux kill-session -t explorer-tessaly` (or touch ~/skullport/STOP_ALL).
+    - The governor will move to ELSA, from C:/SmugglersHole-gov, cloned from the ubu005 mirror. Waiting on the
+      operator's GO for PyYAML on ELSA.
     Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
     The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
     from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
