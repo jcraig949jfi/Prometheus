@@ -443,8 +443,9 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   - Per node, at most: ubu001 2 explorers (10 min or less per run); ubu003 2 explorers (5 min or less per run); ubu005
     2 explorers on CPUs 2-3, no Chromium, yields first; ubu006 1 scout (4 GiB PSS cap, yields to pretest) plus 1
     explorer; ubu004 exactly 1 Chromium (drone or scout alternating), 2 GiB PSS, a gap of at least 3 min between
-    runs, at most 45 min of GPU work then a 10 min cool-down. None on ubu008/009/010. Always nice 15 or more, CPUs 0-1
-    untouched.
+    runs, at most 45 min of GPU work then a 10 min cool-down. ubu008: up to 2 explorers, plus 1 scout (4 GiB PSS cap),
+    only while no Blender or cargo job is running (added 2026-10-23 after the operator confirmed continuous testing in
+    the Achilles session). None on ubu009/010. Always nice 15 or more, CPUs 0-1 untouched.
   - The governor adds a loop only when the node is under 70 C, its load5 is under nproc-2, more than 1.5 GB is
     available, and no worker job, pretest or Blender job is running. It removes the newest loop at 80 C or more, when
     such a job starts, or when load goes over nproc-1. Skip at 85 C, pause at 90 C. No new runs between :25 and :40 past
