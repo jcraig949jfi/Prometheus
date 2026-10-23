@@ -520,6 +520,23 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
       - With the walker fix (6f5a9076d: retry after a fight stop, up to 6 times), all 7 tier-3 caves were done
         18:34-19:27Z: 79 pictures, 0 failures, 0 deaths, i915=0, no agent stops. Worst leg used 5 of 6 retries (gumpfish).
       - census_wt is now main 77b4c1827 plus release engine/data. A missing dungeons dir is a warning since 77b4c1827.
+    Nightly brain training (from 2026-10-23): ubu008 user timer brain-nightly at 23:05Z runs ~/brain-train/nightly_train.sh.
+      - It retrains expert:ui, expert:combat, expert:nav, plus one explorer adapter on alternate nights, with
+        keep-only-if-better.
+      - Limits: CPUs 2-7, nice 10, hard stop 04:00Z; it pauses at 88 C and is killed after 2 min at 90 C.
+      - Files: registry ~/brain-train/adapters/registry.json, seeded with M1's expert-ui 20261023T112234Z; logs in
+        ~/brain-train/nightly/. Winners go to ubu005 incoming/ after Achilles checks them.
+      - Stop: touch ~/brain-train/STOP, or `systemctl --user disable --now brain-nightly.timer`.
+    Fleet fightsim sweeps (2026-10-23): ELSA scratch fs_dispatch.py sends 8-cell shards to ubu001/003/006/009.
+      - The gate: < 80 C, no worker/pretest/Blender/cargo, load5 < nproc-1, no STOP_ALL; jobs run at nice 15 on the QA CPUs.
+      - The binary is ~/skullport/bin/fightsim. It reads its data via SK_DATA_ROOT (from ad9efb7bc; build 3eafbb10),
+        or else the compile-time path ~/SmugglersHole, which is present on those nodes.
+      - L1-10 x solo/four x 56 cave kinds = 112k fights in 31 min. Report in ubu005:~/fleet_reports/combat_02a931d62/.
+      - ubu003 reached 81-86 C at 2 processes, so it gets 1 process from now on.
+    Factory jobs (M2 art stages, CPU only): tools/qa/fleet/factory_job.sh, reviewed by Achilles 2026-10-23.
+      - Each node gets a read-only git-archive export per rev at ~/skullport/factory/<rev12> (about 680 MB).
+      - No network isolation: AppArmor blocks unprivileged userns; the import scan is the backstop.
+      - Test: cover_masks alhoon on ubu006 OK.
     ubu008 engine cargo test: ~/brain-train/inns_test.sh <rev> [filters], SK_TEST_TIME_SCALE=4 (the wall-clock caps
       are sized on M1). 77b4c1827 (inns plus dry dock): compiles clean; 488/489 at scale 3, with edge_sim 2% over time
       under parallel load; edge_sim_tests passes alone at scale 4.
