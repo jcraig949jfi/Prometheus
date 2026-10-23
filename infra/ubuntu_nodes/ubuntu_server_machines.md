@@ -517,8 +517,12 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
       d9f6c2b (file-identical). qa-safety runs in gpu mode (cap 2 GiB). Runs are in tmux quality-census-ubu004, output
       to ~/skullport/census_runs/.
       - cv_collapse: done, 11 pictures, 0 failures, 207 s.
-      - cv_crosscut: NOT DONE. The walker stops at the first blow and the census avoids that exit; M1 is porting the
-        page_scout retry. The other tier-3 caves are on hold until that lands.
+      - With the walker fix (6f5a9076d: retry after a fight stop, up to 6 times), all 7 tier-3 caves were done
+        18:34-19:27Z: 79 pictures, 0 failures, 0 deaths, i915=0, no agent stops. Worst leg used 5 of 6 retries (gumpfish).
+      - census_wt is now main 77b4c1827 plus release engine/data. A missing dungeons dir is a warning since 77b4c1827.
+    ubu008 engine cargo test: ~/brain-train/inns_test.sh <rev> [filters], SK_TEST_TIME_SCALE=4 (the wall-clock caps
+      are sized on M1). 77b4c1827 (inns plus dry dock): compiles clean; 488/489 at scale 3, with edge_sim 2% over time
+      under parallel load; edge_sim_tests passes alone at scale 4.
     Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
     The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
     from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
