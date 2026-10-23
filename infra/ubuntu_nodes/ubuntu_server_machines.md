@@ -483,6 +483,22 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     llama-server PSS about 880 MB. A decision call with prompt caching takes 1.0-1.7 s, so one 2-thread server
     serves 5-6 brain explorers at 6 calls/min. Disable Qwen3 thinking (enable_thinking false), or replies come
     back empty.
+  - **Brain server 1 LIVE on ubu005 (2026-10-23, Achilles runs the fleet side; M1 agreed).** Systemd user unit
+    `skullport-brain.service` (jcraig): ~/brain/run_server.sh -> llama-server, Qwen3-0.6B Q4_K_M, -t 2 -c 4096 -np 4,
+    --reasoning-budget 0, --metrics, bound to 192.168.1.222:18080 (LAN only), `--api-key-file ~/brain/api_keys`
+    (600). LoRAs in ~/brain/adapters/*.gguf are loaded with --lora-init-without-apply (each request picks one via
+    "lora"; restart to pick up new files). Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
+    The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
+    from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
+    disable --now skullport-brain; rm -r ~/brain`.
+- **SmugglersHole GitHub repo (2026-10-23).** jcraig949jfi/SmugglersHole is PRIVATE, created by M1 from NWN-stripped
+  history. The old prototype repo smugglers-hole is untouched; the operator may archive it. Read-only deploy keys are
+  made on each node (the private key never leaves it): ubu005 "ubu005 mirror ro 2026-10-23" (id 167415468) and ubu008
+  "ubu008 builds ro 2026-10-23" (id 167415469), at ~/.ssh/smugglershole_deploy_ro, with ssh alias
+  `github-smugglershole` and github.com keys from api.github.com/meta. No write keys anywhere, never on ubu010.
+  ubu005: bare mirror ~/mirrors/SmugglersHole.git (636 MB), with a user timer `smugglershole-mirror.timer` at 05:10Z
+  that writes ~/mirrors/SmugglersHole.last_fetch. ubu008: a build clone at ~/SmugglersHole. Revoke a key: delete it
+  in the repo's deploy-key settings.
 - **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
   (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
   libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
