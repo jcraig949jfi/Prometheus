@@ -490,7 +490,14 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     b115xx, init-without-apply alone leaves every adapter at scale 1.0, so a request with no "lora" field got all of
     them (M1 found this). Ids follow filename order. Clients name every adapter, the chosen one at 1. Restart to pick
     up new files. Loaded 2026-10-23: id 0 = expert-ui.gguf (M1, 20261023T112234Z, sha256 a986db3f…7377b). A/B on
-    b11514 at greedy: no-lora == expert-ui@0 (base), expert-ui@1 differs. Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
+    b11514 at greedy: no-lora == expert-ui@0 (base), expert-ui@1 differs.
+    ubu008 build and sizing (2026-10-23, queue ~/brain-train/queue.sh in tmux achilles-q, idle gate by process name):
+    - fightsim musl static-pie from SmugglersHole 745fa0b0e, rustc 1.99.1, 97 s at -j 6. Binary is
+      ~/skullport/bin/fightsim, sha256 7f8fe02a9ad59ef1cbdea850e006dd6638d96765ca4f9923a9d897572506d882.
+    - CPU LoRA sizing: Qwen3-0.6B fp32, r=8 qkvo, batch 4 x about 380 tokens, 6 threads, 40 steps.
+      Steady about 6 s/step when uncontended; mid-run steps hit 30-43 s, so other load arrived during the run; mean 30 s.
+      Peak RSS 5.0 GB, package 74 C at the end. GGUF conversion OK (9.2 MB). The stand-in adapter is NOT deployed.
+    Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
     The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
     from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
     disable --now skullport-brain; rm -r ~/brain`.
