@@ -436,6 +436,26 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   Build limits: `taskset -c 2-3 cargo ... -j 2` on ubu005 and `taskset -c 2-7 ... -j 6` on ubu008; Blender has first
   claim on ubu008, plus the usual heat/RSS rules. Release builds made here ship to PROD on ubu010, so these two nodes
   are now on the supply path. Undo: `~/.cargo/bin/rustup self uninstall -y`.
+- **Round-the-clock Skullport QA loops (standing OK from Achilles, 2026-10-23).** The owner's policy, as relayed by M1:
+  QA cycles run 24/7 and are throttled back on diminishing returns. The bots are "explorers" (websocket protocol) and
+  "scouts" (browser). They target QA only (ubu010 :5785), never PROD. An M1 governor adds and removes loops itself within
+  these hard limits. Fleet work (worker, pretest, Blender) always takes priority.
+  - Per node, at most: ubu001 2 explorers (10 min or less per run); ubu003 2 explorers (5 min or less per run); ubu005
+    2 explorers on CPUs 2-3, no Chromium, yields first; ubu006 1 scout (4 GiB PSS cap, yields to pretest) plus 1
+    explorer; ubu004 exactly 1 Chromium (drone or scout alternating), 2 GiB PSS, a gap of at least 3 min between
+    runs, at most 45 min of GPU work then a 10 min cool-down. None on ubu008/009/010. Always nice 15 or more, CPUs 0-1
+    untouched.
+  - The governor adds a loop only when the node is under 70 C, its load5 is under nproc-2, more than 1.5 GB is
+    available, and no worker job, pretest or Blender job is running. It removes the newest loop at 80 C or more, when
+    such a job starts, or when load goes over nproc-1. Skip at 85 C, pause at 90 C. No new runs between :25 and :40 past
+    04/10/16/22Z (census).
+  - ubu010 guard: at most 12 QA clients. Thin the loops if skullport-qa uses more than 1 GB or load5 goes over 2. If
+    PROD is not active, all QA load stops.
+  - Stops: on ubu004, any new i915 error or GPU hang halts GPU work until Achilles clears it. Kill switch: if
+    `~/skullport/STOP_ALL` exists on a node, everything there stops within 1 min.
+  - Notify Achilles at once when a stop rule fires or a node joins or leaves the set. Otherwise a daily digest.
+  - PSS counts as memory (the sum of Pss from /proc/<pid>/smaps_rollup), not summed RSS, which overcounts shared pages
+    by about 45% for Chromium.
 - **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
   (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
   libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
