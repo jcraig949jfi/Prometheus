@@ -509,6 +509,16 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     - Stop: `tmux kill-session -t explorer-tessaly` (or touch ~/skullport/STOP_ALL).
     - The governor will move to ELSA, from C:/SmugglersHole-gov, cloned from the ubu005 mirror. Waiting on the
       operator's GO for PyYAML on ELSA.
+    QA seed and entity census (2026-10-23):
+    - ubu010 QA seed: skullport ~/bin/seed_qa_testers.py (d75b39b66). It refuses any db but world_5780.db.
+      TallymanQuill is now level 10 with g3 kit. QA was down 17:26:06-17:26:17Z; PROD untouched. Backup:
+      ~/sh_nwn/world_5780.pre-seed-20261023T1726Z.db. Rerun the seed after any QA reset.
+    - ubu004 census by hand: ~/skullport/census_wt is d75b39b66 tools/tests/web plus engine/data from QA release
+      d9f6c2b (file-identical). qa-safety runs in gpu mode (cap 2 GiB). Runs are in tmux quality-census-ubu004, output
+      to ~/skullport/census_runs/.
+      - cv_collapse: done, 11 pictures, 0 failures, 207 s.
+      - cv_crosscut: NOT DONE. The walker stops at the first blow and the census avoids that exit; M1 is porting the
+        page_scout retry. The other tier-3 caves are on hold until that lands.
     Unit limits: CPUAffinity=2 3, Nice=10, MemoryMax=1536M, TasksMax=64.
     The token is copied to ~/skullport/brain_token (600) on ubu001/003/004/005/006/008/009. No auth -> 401. Measured
     from ubu001: 1.4-2.0 s per call with valid JSON-schema output; cgroup memory about 800 MB. Undo: `systemctl --user
