@@ -285,6 +285,14 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   doesn't prove it. Next (operator): refit the cover without the broken pieces and rerun the same soak; the worker stays
   disabled until that passes.
 
+- **Back in the pool 2026-10-23 (operator, Achilles session: "I think we can use ubu009 now. We just note that it may get
+  pulled if it flakes again").** The cover is still off (the refit and soak rerun were not done first). Probationary:
+  pull it again (disable the worker, drop it from ALL_AVAILABLE) at the first freeze or network drop. State at
+  return: up 2 d 18 h with no freeze, 8 cores, 7 GB, idle pkg 68 C (warm, cover off). It uses a USB NIC (asix
+  enx9cebe80ae6c4, 100 Mb/s) whose journal shows `Failed to enable software MII access` and
+  systemd-networkd-wait-online timeouts, so it is the likely flake point. Worker re-enabled (f78d18e26). M1 key
+  jcraig@SKULLPORT added. Node and Chromium are NOT installed (that needs a GO), so it runs protocol explorers only.
+
 ## ubu010 (machine #10, Lenovo ThinkCentre M910q tiny desktop, 10MV000NUS)
 
 **Skullport GAME HOST since 2026-10-22 (operator GO in the Achilles session: "Approved. ubu010 is now our rust
@@ -392,7 +400,7 @@ Operator: "Yes. The linux fleet for generic workers" (chat 2026-10-03). Installe
 | ubu005 | PrometheusWorker/ubu005/ubu005-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu006 | PrometheusWorker/ubu006/ubu006-svc | f78d18e26 | yes (shared token) | enabled, active |
 | ubu008 | PrometheusWorker/ubu008/ubu008-svc | f78d18e26 | yes (shared token) | enabled, active |
-| ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | disabled (cover-off soak; re-enable after the rerun passes) |
+| ubu009 | PrometheusWorker/ubu009/ubu009-svc | f78d18e26 | yes (shared token) | enabled, active again 2026-10-23 (operator: use it now, pull if it flakes) |
 | ubu010 | PrometheusWorker/ubu010/ubu010-svc | f78d18e26 | yes (shared token) | disabled 2026-10-22 (game host, out of pool) |
 
 Per node: ~/prometheus-worker-code (detached at the pinned SHA; WORKING_CONTRACT s6), ~/prometheus-worker-state
@@ -445,7 +453,8 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     explorer; ubu004 exactly 1 Chromium (drone or scout alternating), 2 GiB PSS, a gap of at least 3 min between
     runs, at most 45 min of GPU work then a 10 min cool-down. ubu008: up to 2 explorers, plus 1 scout (4 GiB PSS cap),
     only while no Blender or cargo job is running (added 2026-10-23 after the operator confirmed continuous testing in
-    the Achilles session). None on ubu009/010. Always nice 15 or more, CPUs 0-1 untouched.
+    the Achilles session). ubu009 (from 2026-10-23, probationary): up to 2 explorers, no Chromium until Node/Chromium
+    are installed there. None on ubu010. Always nice 15 or more, CPUs 0-1 untouched.
   - The governor adds a loop only when the node is under 70 C, its load5 is under nproc-2, more than 1.5 GB is
     available, and no worker job, pretest or Blender job is running. It removes the newest loop at 80 C or more, when
     such a job starts, or when load goes over nproc-1. Skip at 85 C, pause at 90 C. No new runs between :25 and :40 past

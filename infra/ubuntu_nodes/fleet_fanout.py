@@ -39,10 +39,10 @@ NODES = {  # name -> canonical IP (infra/ubuntu_nodes/ubuntu_server_machines.md)
     "ubu006": "192.168.1.225",
     "ubu007": "192.168.1.3",     # HOLD: bad RAM
     "ubu008": "192.168.1.231",
-    "ubu009": "192.168.1.230",   # soak test
+    "ubu009": "192.168.1.230",   # back in pool 2026-10-23 (operator); cover off, USB NIC; pull if it flakes
     "ubu010": "192.168.1.235",   # Skullport game host since 2026-10-22 (reserved; no fleet jobs, worker off)
 }
-ALL_AVAILABLE = ["ubu001", "ubu003", "ubu004", "ubu005", "ubu006", "ubu008"]
+ALL_AVAILABLE = ["ubu001", "ubu003", "ubu004", "ubu005", "ubu006", "ubu008", "ubu009"]
 # Reserved hosts: probed by the census for health, never in ALL_AVAILABLE (no fleet jobs).
 RESERVED_HOSTS = {"ubu010": "Skullport game host"}
 
