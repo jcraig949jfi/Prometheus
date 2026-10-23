@@ -466,6 +466,13 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   - Notify Achilles at once when a stop rule fires or a node joins or leaves the set. Otherwise a daily digest.
   - PSS counts as memory (the sum of Pss from /proc/<pid>/smaps_rollup), not summed RSS, which overcounts shared pages
     by about 45% for Chromium.
+  - **Brain pilot, Plan A (OK 2026-10-23).** Explorers on ubu001/003 call M1's Qwen3-0.6B + LoRA server over the
+    LAN; nothing is installed on the nodes. Limits: 6 calls/min per explorer, 1 in flight, timeouts 2 s connect and
+    8 s total; any failure falls back to the rule planner; a 3-failure circuit breaker gives 5 min rule-based; no
+    stalls. The model only picks from the explorer's action list (its output is never executed). The QA target is
+    hard-coded. No secrets in prompts or journals. The M1 server is LAN/tailnet only, never Funnel, with a bearer
+    token in a 600 file. Brain explorers replace explorer slots, they don't add to them. Plan B (llama.cpp on a
+    node) needs Achilles' sizing and the operator first.
 - **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
   (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
   libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
