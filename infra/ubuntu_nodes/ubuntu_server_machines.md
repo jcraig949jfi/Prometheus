@@ -291,7 +291,10 @@ The **first node built with the autoinstall stick + `provision_node.sh`** (2026-
   return: up 2 d 18 h with no freeze, 8 cores, 7 GB, idle pkg 68 C (warm, cover off). It uses a USB NIC (asix
   enx9cebe80ae6c4, 100 Mb/s) whose journal shows `Failed to enable software MII access` and
   systemd-networkd-wait-online timeouts, so it is the likely flake point. Worker re-enabled (f78d18e26). M1 key
-  jcraig@SKULLPORT added. Node and Chromium are NOT installed (that needs a GO), so it runs protocol explorers only.
+  jcraig@SKULLPORT added. Same day, with the operator's GO ("Go node chromium ubu009"): the same apt set as the other
+  nodes (Node v22.22.1, npm 9.2.0, Chrome runtime libs), `snap install chromium` (156.0.8078.47; headless dump-dom ok),
+  and ~/skullport/.venv (pyyaml, pillow, pytest, opencv-python-headless 5.0.0, numpy 2.5.4, websockets, scipy; 416 MB).
+  It can now run browser scouts under the 2 GiB PSS cap.
 
 ## ubu010 (machine #10, Lenovo ThinkCentre M910q tiny desktop, 10MV000NUS)
 
@@ -473,6 +476,13 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
     hard-coded. No secrets in prompts or journals. The M1 server is LAN/tailnet only, never Funnel, with a bearer
     token in a 600 file. Brain explorers replace explorer slots, they don't add to them. Plan B (llama.cpp on a
     node) needs Achilles' sizing and the operator first.
+  - **Operator 2026-10-23: brains move up in priority and run on the FLEET, not on M1/M2** (their GPUs stay on
+    graphics). Achilles offered to run the fleet side. Sizing on ubu005 (i5-8350U), with llama.cpp b11514 prebuilt
+    CPU (sha256 b2b617fb...) and Qwen3-0.6B (Q8_0 HF-hash verified, Q4_K_M made locally, 397 MB), both in ~/brain:
+    Q4 at 2 threads 157 tok/s prompt and 41 tok/s generation; at 4 threads 277/55 but 84 C, so cap at 2 threads.
+    llama-server PSS about 880 MB. A decision call with prompt caching takes 1.0-1.7 s, so one 2-thread server
+    serves 5-6 brain explorers at 6 calls/min. Disable Qwen3 thinking (enable_thinking false), or replies come
+    back empty.
 - **Blender 4.5.14 LTS (headless CPU bakes/renders) on ubu005 + ubu008.** GO given by the operator in the M1 session
   (relayed verbatim). Steps, identical on both: `sudo apt-get install -y libgl1 libxi6 libxxf86vm1 libxfixes3
   libxrender1 libsm6 libice6` (the Blender binary links these even with `-b`; all were missing, ubu005 already had
