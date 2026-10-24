@@ -212,14 +212,31 @@ def run(a):
     levels = levels_of(a.levels)
     parties = a.parties.split(",")
     cells = [f"{party_spec(p, l)}/{k}" for l in levels for p in parties for k in kinds]
-    shards = [cells[i:i + a.shard] for i in range(0, len(cells), a.shard)]
     slots = []
     for s in a.slots.split(","):
         n, c = s.split(":")
         slots += [(n, i) for i in range(int(c))]
     log(f"run {r12}: {len(kinds)} kinds x {len(levels)} levels x {len(parties)} parties = {len(cells)} cells, "
-        f"{a.seeds} seeds -> {len(cells) * a.seeds} fights in {len(shards)} shards over {len(slots)} slots "
-        f"({a.slots}); out {out}")
+        f"{a.seeds} seeds -> {len(cells) * a.seeds} fights over {len(slots)} slots ({a.slots}); out {out}")
+    # hall groups (name=monsters, e.g. spool_hall=spoolwreck_golem*2,blunderwrought_ogre) fight a party of four at
+    # --group-levels; they stay out of sweep.py's per-kind report (its flagger wants one kind) and get their own table
+    groups = [g.split("=", 1) for g in a.group if "=" in g]
+    gcells = [f"{party_spec('four', l)}/{m}" for l in levels_of(a.group_levels) for _, m in groups]
+    rows = fight_all(a, r12, out, slots, cells, "s")
+    (out / "cells.jsonl").write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+    log(f"cells.jsonl: {len(rows)} fights")
+    grows = []
+    if gcells:
+        grows = fight_all(a, r12, out, slots, gcells, "g")
+        (out / "groups.jsonl").write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in grows), encoding="utf-8")
+        log(f"groups.jsonl: {len(grows)} fights")
+    report(a, full, r12, out, levels, groups, grows)
+
+
+def fight_all(a, r12, out, slots, cells, tag):
+    """Run every cell over the slots (shards of a.shard cells); returns the fight rows, sorted."""
+    shards = [cells[i:i + a.shard] for i in range(0, len(cells), a.shard)]
+    log(f"[{tag}] {len(cells)} cells in {len(shards)} shards")
     queue = list(enumerate(shards))
     qlock = threading.Lock()
     done = {}
@@ -244,7 +261,7 @@ def run(a):
                 err = str(e)
             if r is not None and r.returncode == 0:
                 rows = [ln for ln in r.stdout.splitlines() if ln.strip()]
-                (out / "shards" / f"s{idx:04d}.jsonl").write_text("\n".join(rows) + "\n", encoding="utf-8")
+                (out / "shards" / f"{tag}{idx:04d}.jsonl").write_text("\n".join(rows) + "\n", encoding="utf-8")
                 done[idx] = len(rows)
                 log(f"{node}#{slot} shard {idx + 1}/{len(shards)} ok: {len(rows)} fights in {time.time() - t0:.0f}s "
                     f"({r.stderr.strip().splitlines()[0] if r.stderr.strip() else ''}); {len(queue)} left")
@@ -282,15 +299,45 @@ def run(a):
         if not a.partial:
             sys.exit("incomplete; rerun (finished shards are kept in shards/; use --resume) or pass --partial")
     rows = []
-    for f in sorted((out / "shards").glob("s*.jsonl")):
+    for f in sorted((out / "shards").glob(f"{tag}*.jsonl")):
         rows += [json.loads(x) for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
     rows.sort(key=lambda r: (r["party"], r["monsters"], r["seed"]))
-    (out / "cells.jsonl").write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
-    log(f"cells.jsonl: {len(rows)} fights")
-    report(a, full, r12, out, levels)
+    return rows
 
 
-def report(a, full, r12, out, levels):
+def wilson(w, n, z=1.96):
+    import math
+    if n == 0:
+        return (0.0, 1.0)
+    p = w / n
+    d = 1 + z * z / n
+    c = (p + z * z / (2 * n)) / d
+    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+    return (max(0.0, c - h), min(1.0, c + h))
+
+
+def group_table(groups, grows):
+    """Per hall group and level: win % (Wilson 95 %), ttk p50 of won fights, deaths per fight, max single hit."""
+    if not grows:
+        return ""
+    by = defaultdict(list)
+    for r in grows:
+        by[(r["monsters"], int(r["party"].split(",")[0].split(":")[1]))].append(r)
+    L = ["## Hall groups, party of four (fighter + cleric + wizard + rogue)", "",
+         "| group | monsters | level | win (95 % CI) | ttk p50 s | deaths/fight | max hit % | timeouts |", "|--|--|--|--|--|--|--|--|"]
+    names = {m: n for n, m in groups}
+    for (m, l), rs in sorted(by.items(), key=lambda kv: (names.get(kv[0][0], ""), kv[0][1])):
+        n = len(rs)
+        w = sum(r["win"] for r in rs)
+        lo, hi = wilson(w, n)
+        secs = sorted(r["seconds"] for r in rs if r["win"]) or sorted(r["seconds"] for r in rs)
+        p50 = secs[min(len(secs) - 1, int(round(0.5 * (len(secs) - 1))))]
+        L.append(f"| {names.get(m, '?')} | {m} | {l} | {w / n:.0%} ({lo:.0%}-{hi:.0%}) | {p50:.0f} | "
+                 f"{sum(r['deaths'] for r in rs) / n:.2f} | {max(r['max_hit_pct'] for r in rs):.0f} | {sum(r['timeout'] for r in rs) / n:.0%} |")
+    return "\n".join(L) + "\n\n"
+
+
+def report(a, full, r12, out, levels, groups=(), grows=()):
     build = a.build_host
     log(f"report via tools/combat/sweep.py --report-only on {build}")
     wt = f"~/sh_wt_fs/{r12}"
@@ -301,14 +348,15 @@ def report(a, full, r12, out, levels):
     log("sweep.py: " + r.stdout.strip().replace("\n", " | "))
     scp(f"{USER}@{ip(build)}:sh_wt_fs/{r12}/build/combat/report.md", str(out / "report.md"))
     scp(f"{USER}@{ip(build)}:sh_wt_fs/{r12}/build/combat/report.json", str(out / "report.json"))
-    summary = summarize(out, full, a)
+    summary = summarize(out, full, a) + group_table(groups, grows)
     (out / "summary.md").write_text(summary, encoding="utf-8")
     print(summary)
     if not a.no_publish:
         dest = f"{REPORT_DIR}/combat_{r12}"
         ssh(REPORT_HOST, f"mkdir -p {dest}")
-        for f in ("cells.jsonl", "report.md", "report.json", "summary.md", "run.log"):
-            scp(str(out / f), f"{USER}@{ip(REPORT_HOST)}:fleet_reports/combat_{r12}/{f}")
+        for f in ("cells.jsonl", "report.md", "report.json", "summary.md", "run.log", "groups.jsonl"):
+            if (out / f).exists():
+                scp(str(out / f), f"{USER}@{ip(REPORT_HOST)}:fleet_reports/combat_{r12}/{f}")
         log(f"published to {REPORT_HOST}:{dest}/")
 
 
@@ -368,6 +416,8 @@ def main():
     r.add_argument("--seed-base", type=int, default=0)
     r.add_argument("--cap-s", type=float, default=600.0)
     r.add_argument("--shard", type=int, default=2, help="cells per shard")
+    r.add_argument("--group", action="append", default=[], help="hall group name=monsters (repeatable), party of four")
+    r.add_argument("--group-levels", default="8-11")
     r.add_argument("--slots", default=DEFAULT_SLOTS)
     r.add_argument("--tmax", type=int, default=80)
     r.add_argument("--shard-timeout", type=int, default=3600)

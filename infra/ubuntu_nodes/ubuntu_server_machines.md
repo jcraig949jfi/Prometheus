@@ -551,6 +551,14 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
         the gate paused them. Report: ubu005:~/fleet_reports/combat_b1d4b6405cee/. Solo at L8: iron 40 %, crystal 66 %,
         rune 96 %, rust 98 %, wax/driftwood 100 %; four: 100 % everywhere, maker 84 % at L8. Next: the same sweep with
         spoolwreck_golem + blunderwrought_ogre when M1's fast-wire-constructs commit lands (numbers only, no deploys).
+      - DONE 19:25-19:49Z at f83ff361 (M1's bundle ubu005:~/fleet_reports/fleet_golem_1024j.bundle, sha256 verified;
+        `prepare --bundle` fetches it into the ubu008 clone): 9 kinds x L5-14 x solo+four x 200 seeds = 36,000 fights
+        plus the spool_hall group (spoolwreck_golem*2 + blunderwrought_ogre vs four, L8-11, `--group`), 92/92 shards,
+        24 min on 9 slots. Report ubu005:~/fleet_reports/combat_f83ff361/. Reading sent to M1: spoolwreck ~ rust <
+        blunderwrought ~ rune < crystal < iron (solo L5-8: spoolwreck 22/44/64/98 %, rust 26/43/70/98 %, ogre
+        11/22/41/90 %, rune 8/28/40/96 %); spool_hall 80/88/97/100 % at L8-11 (1.2 deaths per clear at L9, the ogre
+        can one-shot the wizard through L10). ubu003 gated at 80-82 C and ubu008 at its 80 C cap repeatedly with the
+        governor's explorers alongside; consider a per-node tmax (ubu008's cap is firmware, it never collapses).
       QA governor outage 2026-10-24: the ELSA task died at 16:37Z with 0xC000013A (console close, the operator's
       session reset); explorers idle from ~16:52Z. Restarted 18:56Z by `schtasks /run`; single instance, ticking.
     Factory jobs (M2 art stages, CPU only): tools/qa/fleet/factory_job.sh, reviewed by Achilles 2026-10-23.
