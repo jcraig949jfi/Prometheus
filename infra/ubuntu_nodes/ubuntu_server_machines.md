@@ -666,3 +666,28 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
   nodejs npm libegl1 libgles2 libxi6 libxxf86vm1 libxfixes3 libsm6 libice6 libgl1` (libxrender1 was pre-existing on
   ubu005; the other Chrome libs are harmless to leave); delete the SKULLPORT line from `authorized_keys`; `sudo gpasswd -d jcraig render; sudo gpasswd -d jcraig video`
   on ubu004 (ubu006 already reverted).
+
+### Golem-lair entity census by hand on ubu004 (2026-10-24 21:06Z)
+
+M1 asked for a node-mode census of cv_golem_lair (new spoolwreck_golem on body spoolwreck_golem_g0, blunderwrought_ogre
+on blunderwrought_ogre_g0 + wire_ogre_horns) before the PROD decision. The governor only runs the census in quality mode
+and from its own area list (the tier-3 caves), so it ran by hand under the governor's rules:
+
+- `touch ~/skullport/qa_gov/STOP_drone-ubu004` (the drone loop ends after its run; the governor removes the file when
+  it restarts the loop), then `~/skullport/census_lair.sh watch` (kept on ubu004): waits for drone-ubu004 to end, opens
+  tmux `quality-census-ubu004` (the GPU kind for the governor and the safety agent, so no drone start meanwhile) and
+  runs `census_run.sh cv_golem_lair 20` from the governor worktree once the GPU rules pass (3 min gap, 45 min budget,
+  census window, no other Chromium). Started 21:06:05Z, 4 min after the drone's run ended; no race because the
+  governor's own can_add(gpu) needs the same 3 min gap.
+- Result 2026.10.24-2-aea290c (QA moved from -1 to -2 at ~21:05Z, before the launch; the census takes the release from
+  playground.json): walk sk_lh0a2 -> sk_lh0a1 -> cv_northgate -> cv_collapse -> cv_golem_lair, 18 entities, 12 pictures,
+  0 failures, 291 s of the 20 min cap. Both new kinds rendered on their own bodies (sidecar ready.body true, capsule
+  false, key = body id; the ogre's horns visible). Counts seen / max_alive: wax 9/14, driftwood 3/3, rust 2/3,
+  spoolwreck 2/2, ogre 1/1, rune 1/3, crystal 0/3, iron 0/3, golem_maker 0/1 (deep halls thin; for M1 to read).
+- Copies: ubu004 `~/skullport/census_runs/20261024T2106Z-cv_golem_lair/`, ELSA
+  `C:\SmugglersHole-gov\build\qa\governor\census\ubu004\` (the governor fetched it at 21:12Z), ubu005
+  `~/fleet_reports/census_cv_golem_lair_aea290c/`.
+- Governor gap found on the way: at 21:06:14Z it decided "stop now quality-census-ubu004: ubu010 guard 18 QA clients"
+  and ran `bash ~/skullport/qa_gov/bin/qa_safety_agent.sh --kill ...`, but `qa_gov/bin/` exists on no node (the safety
+  agents run from older hand paths, census_wt/ and explorer_wt/), so every governor hard stop is a silent no-op
+  (remote.act does not check rc). The node-local agents still enforce PSS/temps. Reported to M1; their code.
