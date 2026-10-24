@@ -527,6 +527,13 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
       - Files: registry ~/brain-train/adapters/registry.json, seeded with M1's expert-ui 20261023T112234Z; logs in
         ~/brain-train/nightly/. Winners go to ubu005 incoming/ after Achilles checks them.
       - Stop: touch ~/brain-train/STOP, or `systemctl --user disable --now brain-nightly.timer`.
+      - Night 1 (10-23/24) kept nothing. ui tied with M1's adapter at 0.8057; combat scored 1.0 against the base's 1.0;
+        nav lost, 0.737 against 0.794. It hit the 04:00Z stop before the explorer adapter; training ran 13-20 s/example.
+      - From 10-24 (M1 OK): one adapter a night in rotation (ui, combat, nav, tessaly, bramwen), 1 epoch, skipped when
+        the export hash is unchanged (`touch ~/brain-train/FORCE` overrides).
+      - Live data: ELSA task "Skullport brain data pull" (22:30Z) runs C:\SmugglersHole-gov-ops\pull_explorer_runs.py.
+        It copies tester-persona explorer_runs only, drops chat kinds and player entities (no human text), and puts the
+        result in ubu008:~/brain-train/live_runs.
     Fleet fightsim sweeps (2026-10-23): ELSA scratch fs_dispatch.py sends 8-cell shards to ubu001/003/006/009.
       - The gate: < 80 C, no worker/pretest/Blender/cargo, load5 < nproc-1, no STOP_ALL; jobs run at nice 15 on the QA CPUs.
       - The binary is ~/skullport/bin/fightsim. It reads its data via SK_DATA_ROOT (from ad9efb7bc; build 3eafbb10),
