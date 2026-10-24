@@ -537,6 +537,22 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
       - Each node gets a read-only git-archive export per rev at ~/skullport/factory/<rev12> (about 680 MB).
       - No network isolation: AppArmor blocks unprivileged userns; the import scan is the backstop.
       - Test: cover_masks alhoon on ubu006 OK.
+    QA governor LIVE on ELSA from 2026-10-23 21:34Z (operator GO for PyYAML, installed in the C:\SmugglersHole-gov\.venv
+      venv only).
+      - Windows task "Skullport QA governor" runs governor.py run. Its code is pinned detached; the branch main ships.
+      - Windows task "Skullport QA main refresh" (every 15 min) fetches the ubu005 mirror and moves main.
+      - Hold the controller alone by stopping its Windows task; `governor.py stop` also ends every loop.
+      - ubu009 was set up by hand: dirs, an empty repo, and the QA invite (0600).
+    ubu010 keep_logs (2026-10-23): ExecStartPre drop-ins on skullport-qa/prod keep the last 3 playground log sets in
+      ~/sh_nwn/logkeep/<port>/. The 10-22 freeze evidence was lost because each restart rebuilds playground_<port>.
+    Daily QA hitch report: ELSA task "Skullport QA hitch report" at 06:00Z runs C:\SmugglersHole-gov-ops\hitch_daily.sh.
+      Output goes to ubu005:~/fleet_reports/m6_inbox/ for M1 to relay; ELSA cannot write to M6's SPECTREX5 share.
+    QA engine for release 2026.10.23-2-ccfb526: musl skullport-engine built on ubu005 at 6b9e061ca (training was on ubu008).
+      sha256 eb2b02f5...f358; file ~/build_engine/out/.
+    ubu004 wind tunnel (2026-10-23/24), sk_lp0s on the HD 620:
+      - The bare area has 0.5-0.9 s single frames at low and medium. M6's batch 4 halved medium p95 (339 to 149 ms).
+      - igpu=1 does not remove those frames. ANGLE gl falls back to software (about 5 s per frame), so it is unusable here.
+      - A cleared leftover ~/skullport/STOP_night4 (M1's, 10-23 09:06Z) had blocked the drone all day.
     ubu008 engine cargo test: ~/brain-train/inns_test.sh <rev> [filters], SK_TEST_TIME_SCALE=4 (the wall-clock caps
       are sized on M1). 77b4c1827 (inns plus dry dock): compiles clean; 488/489 at scale 3, with edge_sim 2% over time
       under parallel load; edge_sim_tests passes alone at scale 4.
