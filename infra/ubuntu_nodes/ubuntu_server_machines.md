@@ -540,6 +540,19 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
         or else the compile-time path ~/SmugglersHole, which is present on those nodes.
       - L1-10 x solo/four x 56 cave kinds = 112k fights in 31 min. Report in ubu005:~/fleet_reports/combat_02a931d62/.
       - ubu003 reached 81-86 C at 2 processes, so it gets 1 process from now on.
+      - 2026-10-24: dispatcher REBUILT after the reset (the scratch copy was lost) and kept in Prometheus at
+        infra/ubuntu_nodes/skullport_tools/fs_dispatch.py and ubu005:~/fleet_reports/tools/. `prepare <rev>` builds the
+        musl fightsim in a worktree ~/sh_wt_fs/<rev12> on ubu008 (41 s), exports the engine data subset (1 MB) and fans
+        both out via ELSA to ~/fs_shards/<rev12>/ on ubu001/003/006/009/008; `run` shards 2 cells at a time over slots
+        ubu001:2 ubu003:1 ubu006:2 ubu009:2 ubu008:2 (same gate, nice 15, QA CPUs) and reports with the repo's own
+        tools/combat/sweep.py --report-only --golems on ubu008. Keep ubu008 out of the slots 23:00-04:00Z (brain-nightly).
+      - Baseline for M1's Golem-Maker's Lair work (b1d4b6405, 7 lair kinds, L8-14, solo+four, 200 seeds): 19,600 fights
+        in 9 min, 49/49 shards; ubu003 hit 81-82 C and ubu008 its 80 C cap once each with the governor's explorers back,
+        the gate paused them. Report: ubu005:~/fleet_reports/combat_b1d4b6405cee/. Solo at L8: iron 40 %, crystal 66 %,
+        rune 96 %, rust 98 %, wax/driftwood 100 %; four: 100 % everywhere, maker 84 % at L8. Next: the same sweep with
+        spoolwreck_golem + blunderwrought_ogre when M1's fast-wire-constructs commit lands (numbers only, no deploys).
+      QA governor outage 2026-10-24: the ELSA task died at 16:37Z with 0xC000013A (console close, the operator's
+      session reset); explorers idle from ~16:52Z. Restarted 18:56Z by `schtasks /run`; single instance, ticking.
     Factory jobs (M2 art stages, CPU only): tools/qa/fleet/factory_job.sh, reviewed by Achilles 2026-10-23.
       - Each node gets a read-only git-archive export per rev at ~/skullport/factory/<rev12> (about 680 MB).
       - No network isolation: AppArmor blocks unprivileged userns; the import scan is the backstop.
