@@ -691,3 +691,24 @@ and from its own area list (the tier-3 caves), so it ran by hand under the gover
   and ran `bash ~/skullport/qa_gov/bin/qa_safety_agent.sh --kill ...`, but `qa_gov/bin/` exists on no node (the safety
   agents run from older hand paths, census_wt/ and explorer_wt/), so every governor hard stop is a silent no-op
   (remote.act does not check rc). The node-local agents still enforce PSS/temps. Reported to M1; their code.
+
+### Golem-lair rerun on QA -3, cargo test for M1, governor kill path (2026-10-24 21:33-21:50Z)
+
+- M1 raised cv_golem_lair's area cap 18 -> 33 (main 0044d0aa3, QA 2026.10.24-3-daf2b0a). Census rerun by hand the
+  same way (STOP_drone-ubu004 + census_lair.sh watch): opened 21:36:52Z, waited 7 min for the GPU budget to reset
+  (cont_s 2010 + 20 min cap > 45 min; the agent zeroes it after 10 min without Chromium), ran 21:43:31-21:46:25Z,
+  174 s of the cap, 32 entities, 21 pictures, 0 failures: wax 14, driftwood 3, rust 2 (group 2-3), spoolwreck 2,
+  ogre 1, rune 3, crystal 3, iron 3, golem_maker 1. Every hall stocked. The census records no frame times. Copies:
+  ubu004 census_runs/20261024T2143Z-cv_golem_lair, ELSA governor census dir, ubu005 ~/fleet_reports/census_cv_golem_lair/
+  (census_cv_golem_lair_aea290c is now a symlink to it; both runs inside).
+- cargo test at 0044d0aa3 on ubu008 (~/sh_wt_fs/0044d0aa3, CARGO_TARGET_DIR ~/sh_target_test, tmux fj_cargotest_0044*,
+  nice 10): named golem_lair/golems/edge_* then the whole suite --no-fail-fast: 541 passed, 3 failed, 4 ignored. The
+  three failures (tests/golems.rs:228 ogre stand-in look expected; dungeons_tests camps_wake_in_every_zone "Brakk is in
+  the Hole"; character.rs xp1 ogre_lv4 3.5 vs 3.0) fail the same way at the parent 802183a5f: pre-existing, not from
+  the cap change. -j 6 pushed ubu008 to 81 C (its firmware cap); -j 4 on CPUs 2-5 stayed under 70 C: use -j 4 for
+  tests there. Logs ubu005 ~/fleet_reports/cargo_test_0044d0aa3/. The governor's loops on ubu008 yielded to the cargo
+  job (fleet_yield) and came back at 21:46Z. Parent worktree removed; 0044d0aa3 worktree kept.
+- Governor hard-stop gap: `governor.py setup` does NOT ship the agent (it only makes dirs + venv); the files come from
+  push_bin, which runs only when a node's agent is stale. Did what push_bin does: copied tools/qa/fleet/qa_common.sh +
+  qa_safety_agent.sh (C:\SmugglersHole-gov, LF) to ~/skullport/qa_gov/bin/ on ubu001/003/004/005/006/008/009 and
+  proved `qa_safety_agent.sh --kill <session>` returns 0 on each. The rc check in governor.py execute() is M1's fix.
