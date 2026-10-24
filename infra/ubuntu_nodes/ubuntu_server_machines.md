@@ -560,6 +560,11 @@ fleet as it sees fit. Coordination runs over Claude Code cross-session messages 
       - The bare area has 0.5-0.9 s single frames at low and medium. M6's batch 4 halved medium p95 (339 to 149 ms).
       - igpu=1 does not remove those frames. ANGLE gl falls back to software (about 5 s per frame), so it is unusable here.
       - A cleared leftover ~/skullport/STOP_night4 (M1's, 10-23 09:06Z) had blocked the drone all day.
+      - 10-24, after M6's UNIFORMS-1 and FREEZE-3: low p95 fell from 112 to 29 ms uncapped.
+        - The ~1 s spikes are uncapped-only: the CPU outruns the GPU and the driver back-pressures.
+        - With --capped the max frame is 67-100 ms, the GPU is about 22 ms per frame (GPU-bound), p95 50.
+        - Gate iGPU nodes on capped runs. The CDP profiler's own start costs 200-650 ms, so profile outside gated windows.
+        - Tools: wind_tunnel SK_WT_PROFILE (upstream since 6e8e1a60d); ELSA scratch cpuprof_frame.py with SK_PROF_CALLERS.
     ubu008 engine cargo test: ~/brain-train/inns_test.sh <rev> [filters], SK_TEST_TIME_SCALE=4 (the wall-clock caps
       are sized on M1). 77b4c1827 (inns plus dry dock): compiles clean; 488/489 at scale 3, with edge_sim 2% over time
       under parallel load; edge_sim_tests passes alone at scale 4.
