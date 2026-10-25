@@ -748,3 +748,6 @@ sweep, release the drone. The census window held it from 22:30 to 22:40Z; the si
 the important four first because runs.json is only written at the end of an invocation); 43 C idle, 61-70 C measuring, load
 up to 3.0, no PSS/thermal events; drone loop released 22:45:11Z. Results `out_2240/` and `out_2242/` on ubu004 and
 `ubu005:~/fleet_reports/m1_tiers/`. Numbers: low 21.5 ms (new look +0.17 ms, MSAA +4.2 ms), medium 35.5, high 77.8, ultra 165.9.
+Re-run with payload v3 (clutter-culling fix, low look default) 23:08-23:17Z the same way, booked straight away because the drone
+was idle: five runs in 253 s of Chromium, 39 C idle / 59-69 C measuring. Results `out_2313/` (+`out_2315/` ultra) on ubu004 and
+ubu005. Numbers: low 10.0 ms (new look 10.6), medium 24.5, high 60.4, ultra 136.3; triangles 1.35M -> 250k at this camera.
