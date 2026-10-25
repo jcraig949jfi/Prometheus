@@ -751,3 +751,12 @@ up to 3.0, no PSS/thermal events; drone loop released 22:45:11Z. Results `out_22
 Re-run with payload v3 (clutter-culling fix, low look default) 23:08-23:17Z the same way, booked straight away because the drone
 was idle: five runs in 253 s of Chromium, 39 C idle / 59-69 C measuring. Results `out_2313/` (+`out_2315/` ultra) on ubu004 and
 ubu005. Numbers: low 10.0 ms (new look 10.6), medium 24.5, high 60.4, ultra 136.3; triangles 1.35M -> 250k at this camera.
+
+## xatlas in the fleet Blender (2026-10-25 23:51Z, operator GO in session)
+
+M1 asked for xatlas (MIT) so headless bakes can unwrap a lightmap UV set. Installed user-space, no sudo, into Blender 4.5.14's
+bundled Python 3.11 (`~/blender/4.5/python/bin/python3.11 -m pip install --no-deps xatlas==0.0.11`, cp311 manylinux wheel,
+600 KB) via `~/skullport/xatlas_install.sh`, which also runs the smoke test `~/skullport/xatlas_smoke.py` in `blender -b`
+(default cube -> 24 verts / 12 tris unwrapped, "XATLAS_OK"). ubu005 done 23:51Z; ubu008 scheduled by a detached sleep for
+04:05Z (outside its 23:00-04:00Z window), log `~/skullport/xatlas_install.log`. Import: plain `import xatlas` under Blender's
+Python only; `~/skullport/.venv` is Python 3.14 (no wheel) and was left alone. Only ubu005 and ubu008 have Blender.
