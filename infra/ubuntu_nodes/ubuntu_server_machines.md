@@ -712,3 +712,26 @@ and from its own area list (the tier-3 caves), so it ran by hand under the gover
   push_bin, which runs only when a node's agent is stale. Did what push_bin does: copied tools/qa/fleet/qa_common.sh +
   qa_safety_agent.sh (C:\SmugglersHole-gov, LF) to ~/skullport/qa_gov/bin/ on ubu001/003/004/005/006/008/009 and
   proved `qa_safety_agent.sh --kill <session>` returns 0 on each. The rc check in governor.py execute() is M1's fix.
+
+## Census of QA 2026.10.25-1-f2a3a14 for M1, governor swaps, ubu004 incident (2026-10-25 10:48-12:50Z)
+
+M1 asked for census + explorers on QA 2026.10.25-1-f2a3a14 (12 newly wired monster kinds; outdoor-prop areas sk_lp0s,
+sk_si0a1/2, sk_lt0, sk_cp0n/s). Only two of the 12 kinds spawn naturally (gargoyle -> stone_fiend_g0 in seven caves,
+water_weird in cv_gumpfish); M1 said not to summon the other ten. Batch of 8 areas by hand on ubu004 with
+`~/skullport/census_batch.sh super` (supervisor outside tmux reopens quality-census-ubu004 after a kill, skips areas
+with done.txt newer than census_batch.t0): 118 shots, 0 failures, both kinds on their new bodies; per-run 72-606 s;
+PSS peaks 1.4-2.46 GB (city walk accumulates). Copies: ubu005:~/fleet_reports/census_2026.10.25-1-f2a3a14/, ELSA
+build/qa/governor/census/ubu004/.
+
+Three governor swaps on ELSA (clean: checkout --detach, write build/qa/governor/STOP, wait "governor end", schtasks
+/run; loops kept): 28c2b69be (ubu010 guard's thin step spares quality-census-*: it had killed the census twice, 11:01Z
+and 11:35Z), c6624c60b (signal.max_hunters 11: 13 hunters sat on the 12-client guard line; mode log 11:59:38Z shows
+capacity 11), 8777de4bc (gov_rules.HARD ubu004 pss_gib 2 -> 3: the sk_lt0 walk hit 2.3 GB and the agent killed the
+run). The agent on ubu004 was recycled (kill qa-safety, governor recreates it with the new cap).
+
+Incident 11:49Z, my fault: killed pid 1306111 "tmux new -d -s qa-safety ..." as a stale client; it was the tmux
+SERVER (the server keeps the first invocation's command line). qa-safety, drone-ubu004 and the census session died;
+my orphan sweep then also TERMed the legitimate census retry. Governor recreated the agent in 1 min, supervisor reopened
+the census, no lasting harm. Rules from it: never kill a tmux-looking pid by name; `tmux ls` / `tmux kill-session` only;
+a kill pattern with the bracket trick (`pgrep -f "[s]uper"`) so it cannot match the command's own shell (an earlier
+`pgrep -f "census_batch.sh super"` killed my own ssh shell). PSS sampler kept at ~/skullport/pss_sampler.sh (pid file).
