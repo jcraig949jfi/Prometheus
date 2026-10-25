@@ -735,3 +735,16 @@ my orphan sweep then also TERMed the legitimate census retry. Governor recreated
 the census, no lasting harm. Rules from it: never kill a tmux-looking pid by name; `tmux ls` / `tmux kill-session` only;
 a kill pattern with the bracket trick (`pgrep -f "[s]uper"`) so it cannot match the command's own shell (an earlier
 `pgrep -f "census_batch.sh super"` killed my own ssh shell). PSS sampler kept at ~/skullport/pss_sampler.sh (pid file).
+
+## M1 cinematic-tiers shot on ubu004 (2026-10-25 22:30-22:45Z)
+
+One-off HD 620 measurement for M1's cinematic-tiers branch: six runs of a fixed sk_lt0 camera at
+low@lowlook=0, low (new low look), medium, high, low@lowaa=1, ultra; GPU ms by Vulkan timer query, draws, tris, texture MB,
+one PNG each. Payload (static client + area, node http on 127.0.0.1:7861, CDP 7862, no installs) shipped by M1's helper to
+`ubu004:~/skullport/m1_tiers/`. Run by the gated wrapper `~/skullport/m1_tiers/tiers_run.sh super` (scheduled with a
+detached `sleep` + setsid): STOP_drone-ubu004, wait for the drone loop to exit, open tmux `quality-census-ubu004`, wait for
+qa_may_run + 190 s GPU gap + continuity budget, run `run_cmd.sh` under taskset 2,3 with a 22 min timeout and a leftover-Chromium
+sweep, release the drone. The census window held it from 22:30 to 22:40Z; the six runs took 309 s of Chromium (two invocations,
+the important four first because runs.json is only written at the end of an invocation); 43 C idle, 61-70 C measuring, load
+up to 3.0, no PSS/thermal events; drone loop released 22:45:11Z. Results `out_2240/` and `out_2242/` on ubu004 and
+`ubu005:~/fleet_reports/m1_tiers/`. Numbers: low 21.5 ms (new look +0.17 ms, MSAA +4.2 ms), medium 35.5, high 77.8, ultra 165.9.
