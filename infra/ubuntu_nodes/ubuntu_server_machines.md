@@ -760,3 +760,13 @@ bundled Python 3.11 (`~/blender/4.5/python/bin/python3.11 -m pip install --no-de
 (default cube -> 24 verts / 12 tris unwrapped, "XATLAS_OK"). ubu005 done 23:51Z; ubu008 scheduled by a detached sleep for
 04:05Z (outside its 23:00-04:00Z window), log `~/skullport/xatlas_install.log`. Import: plain `import xatlas` under Blender's
 Python only; `~/skullport/.venv` is Python 3.14 (no wheel) and was left alone. Only ubu005 and ubu008 have Blender.
+
+## M1 lightmap-r2 shot on ubu004 (2026-10-26 02:35-02:46Z)
+
+Same gated recipe (`~/skullport/m1_lm/lm_run.sh super`, a copy of tiers_run.sh with D=m1_lm; payload hashes verified against
+M1's sha256). Seven runs in 322 s of Chromium: low 10.5 ms, low@lite=3 10.7, low@lite=0 12.2, low@lightmap=1 11.0,
+medium 24.5, medium@lightmap=1 26.7; the traced cold load gave no trace file ("no trace stream" from the snap Chromium's
+Tracing API) but logged a 951 ms long task after ready. Results `out_0240/`, `out_0244/` on ubu004 and
+`ubu005:~/fleet_reports/m1_lm/`. Two slips, both logged in the run log: the runner copy still launched the old file name
+(session died in 10 s), and a `bash -x` trace of the runner passed the gate and started the shot outside tmux (killed after
+~60 s; the kill sweep inline in an ssh command then matched my own shell, so sweeps now go in a script file).
