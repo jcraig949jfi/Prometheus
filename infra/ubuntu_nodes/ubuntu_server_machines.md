@@ -774,3 +774,12 @@ r3 re-run 03:14-03:24Z (floor pass default at low, parallel lightmap compile + w
 runs in 350 s, trace_first.json.gz captured (9.3 MB, 584k events). low 12.3 ms (expected), low@lite=3 10.7, low@lite=1 10.5,
 low@lightmap=1 12.6, medium 24.5, medium@lightmap=1 26.7; long tasks after ready persist (cold lightmap load 874 ms, measured
 runs 262-731 ms), warmMs 1708 cold / 483 warm. Results `out_0318/`, `out_0322/` on ubu004 and ubu005:~/fleet_reports/m1_lm/.
+v4 (03:54-04:46Z): the v4 payload's trace session (V8 cpu_profiler + gpu + toplevel categories, vsync off) drove ubu004's load1
+to 5 and the node agent's load_thin rule (load5 > nproc-1 = 3, stop our newest session) killed the run twice (04:00, 04:09);
+a third attempt without traces (LM_TRACE=0) completed 04:15-04:19Z: low 12.16 = low@lite=0 12.18 ms, lite=3 10.71, lite=1
+10.55, lightmap=1 11.98, medium 24.47, medium@lightmap=1 25.82; long tasks after ready 318-672 ms on every run. The runner
+gained a load5 <= 1.0 start gate (the drone's run just before had also left load5 at 3.1 for attempt 1). M1's light trace-only
+payload (`~/skullport/m1_lm_trace/`, r3 categories, vsync ON, 1 ms CDP profile) ran 04:44-04:45Z at load ~1.6: trace 4.7 MB,
+228k events, cpuprofile 28.6k samples, and long tasks after ready fell to 70 ms, so the measured sessions' long tasks look like
+an artefact of --disable-frame-rate-limit on a 2-core-pinned Chromium. Results on ubu004 (`m1_lm/out_0415`,
+`m1_lm_trace/out_0444`) and ubu005:~/fleet_reports/m1_lm/{out_0415,trace/out_0444}.
