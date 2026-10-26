@@ -795,3 +795,6 @@ profile samples, worst long task 132 ms). Results on ubu004 `out_0516/` and ubu0
 Auto-quality soak 2 (reworked controller, `~/skullport/m1_autoq2/`, 06:21-06:25Z): from low 97 % of frames on budget (dynres
 0.75, sheds air/far/floor, no level change); from medium 90 % (1 -> 3 at 27 s with a 1.3 s warm pause, dynres 0.65); traced
 cold medium load worst long task 55 ms. Results `out_0621/` on ubu004 and ubu005:~/fleet_reports/m1_autoq2/.
+Auto-quality soak 3 (advance warm, `~/skullport/m1_autoq3/`, 06:43-06:47Z): level-warm pauses down to 77/127 ms (from 1296),
+dynres settles in 1-3 changes; from low 92 % on budget (dynres 0.8); from medium only 21 % (the controller tried
+1 -> 2 and went back "no gain", never dropped to low). Results `out_0643/` on ubu004 and ubu005:~/fleet_reports/m1_autoq3/.
