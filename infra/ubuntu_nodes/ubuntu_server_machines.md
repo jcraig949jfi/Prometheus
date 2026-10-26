@@ -770,3 +770,7 @@ Tracing API) but logged a 951 ms long task after ready. Results `out_0240/`, `ou
 `ubu005:~/fleet_reports/m1_lm/`. Two slips, both logged in the run log: the runner copy still launched the old file name
 (session died in 10 s), and a `bash -x` trace of the runner passed the gate and started the shot outside tmux (killed after
 ~60 s; the kill sweep inline in an ssh command then matched my own shell, so sweeps now go in a script file).
+r3 re-run 03:14-03:24Z (floor pass default at low, parallel lightmap compile + warm-draw, tracing via ReportEvents): seven
+runs in 350 s, trace_first.json.gz captured (9.3 MB, 584k events). low 12.3 ms (expected), low@lite=3 10.7, low@lite=1 10.5,
+low@lightmap=1 12.6, medium 24.5, medium@lightmap=1 26.7; long tasks after ready persist (cold lightmap load 874 ms, measured
+runs 262-731 ms), warmMs 1708 cold / 483 warm. Results `out_0318/`, `out_0322/` on ubu004 and ubu005:~/fleet_reports/m1_lm/.
