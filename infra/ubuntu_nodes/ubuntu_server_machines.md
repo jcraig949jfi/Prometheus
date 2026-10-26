@@ -783,3 +783,8 @@ payload (`~/skullport/m1_lm_trace/`, r3 categories, vsync ON, 1 ms CDP profile) 
 228k events, cpuprofile 28.6k samples, and long tasks after ready fell to 70 ms, so the measured sessions' long tasks look like
 an artefact of --disable-frame-rate-limit on a 2-core-pinned Chromium. Results on ubu004 (`m1_lm/out_0415`,
 `m1_lm_trace/out_0444`) and ubu005:~/fleet_reports/m1_lm/{out_0415,trace/out_0444}.
+vsync-on measured set (04:48-05:00Z): the first attempt (`out_0448`) silently ran with the default flags because run_lm.sh
+uses `${SK_CHROME_FLAGS:-...}` (an empty override is replaced); it reproduced `out_0415` to 0.01 ms. The second
+(`out_0456`, SK_CHROME_FLAGS=--no-first-run) is the real one: GPU medians unchanged (low 12.56, lite=3 10.96, lite=1 10.62,
+lightmap=1 12.52, medium 24.53, medium@lightmap=1 26.25 ms), frame p50 pinned to 16.7/33.3/50 ms, and exactly one long task
+after ready per run, 54-69 ms at low and 110-119 ms at medium: the 300-700 ms tasks were the uncapped-rendering artefact.
