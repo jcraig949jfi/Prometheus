@@ -801,3 +801,6 @@ dynres settles in 1-3 changes; from low 92 % on budget (dynres 0.8); from medium
 Auto-quality soak 4 (`~/skullport/m1_autoq4/`, 07:02-07:06Z): both autoq3 regressions fixed; from low 97 % on budget (dynres
 0.6, one shed, p95 16.7); from medium 1 -> 3 at 28 s with a 37 ms warm, 89 % on budget, dynres 0.6, no restores; traced
 medium load worst long task 95 ms. Results `out_0702/` on ubu004 and ubu005:~/fleet_reports/m1_autoq4/.
+Auto-quality soak 5 (resize-free dynres, 90 s soaks, `~/skullport/m1_autoq5/`, 07:32-07:37Z): steady state from both starts,
+low + dynres 0.6, 97 % / 96 % on budget, p95 16.8 both, reallocs 0, medium start takes one action (1 -> 3 at 26 s, 40 ms
+warm); traced medium load worst long task 51 ms. Results `out_0732/` on ubu004 and ubu005:~/fleet_reports/m1_autoq5/.
