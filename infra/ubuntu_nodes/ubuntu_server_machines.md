@@ -798,3 +798,6 @@ cold medium load worst long task 55 ms. Results `out_0621/` on ubu004 and ubu005
 Auto-quality soak 3 (advance warm, `~/skullport/m1_autoq3/`, 06:43-06:47Z): level-warm pauses down to 77/127 ms (from 1296),
 dynres settles in 1-3 changes; from low 92 % on budget (dynres 0.8); from medium only 21 % (the controller tried
 1 -> 2 and went back "no gain", never dropped to low). Results `out_0643/` on ubu004 and ubu005:~/fleet_reports/m1_autoq3/.
+Auto-quality soak 4 (`~/skullport/m1_autoq4/`, 07:02-07:06Z): both autoq3 regressions fixed; from low 97 % on budget (dynres
+0.6, one shed, p95 16.7); from medium 1 -> 3 at 28 s with a 37 ms warm, 89 % on budget, dynres 0.6, no restores; traced
+medium load worst long task 95 ms. Results `out_0702/` on ubu004 and ubu005:~/fleet_reports/m1_autoq4/.
