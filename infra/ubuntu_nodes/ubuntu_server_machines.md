@@ -792,3 +792,6 @@ Auto-quality soak for M1 (`~/skullport/m1_autoq/`, 05:16-05:20Z, same gated runn
 low + floor shed with 47 % of frames at 60 fps (frame p50 33.3 ms, gpu p50 15 ms, dynres never engaged); from medium it never
 steps down (2.5 % at 60 fps, 30 fps steady); traced cold medium load with the camera move captured (4.6 MB, 220k events, 27.5k
 profile samples, worst long task 132 ms). Results on ubu004 `out_0516/` and ubu005:~/fleet_reports/m1_autoq/.
+Auto-quality soak 2 (reworked controller, `~/skullport/m1_autoq2/`, 06:21-06:25Z): from low 97 % of frames on budget (dynres
+0.75, sheds air/far/floor, no level change); from medium 90 % (1 -> 3 at 27 s with a 1.3 s warm pause, dynres 0.65); traced
+cold medium load worst long task 55 ms. Results `out_0621/` on ubu004 and ubu005:~/fleet_reports/m1_autoq2/.
