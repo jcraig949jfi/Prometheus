@@ -1,34 +1,6 @@
 [
  {
   "admit": false,
-  "change": "Not admitted: it measures the degree of AI involvement in first-order R&D tasks (a capability/automation index), not second-order improvement of an improver, so L2's answer (only Hyperagents imp@k, HGM metaproductivity, AIDE^2) is unchanged; no transplant, compute-matched or evaluator-exploitation data.",
-  "date": "2026-09-17",
-  "dedupe_key": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
-  "first_seen": "2026-09-21",
-  "not_admitted_because": "not proposed for admission",
-  "primary_source_read": true,
-  "summary": "Anthropic (Marina Favaro, Phillie Wright) reports that as of August 2026 Claude 'leads' (Epoch AI scale AL4) 26% of its AI R&D work, up from under 1% in February 2026, that over 90% is at AL3 or above, and that 0% is at AL5 (fully autonomous); online monitors blocked 0.002% of actions with about 30,000 agents deployed. The page itself is dated August 2026 in the fetch; the public disclosure was reported by Bloomberg and others on 2026-09-17, and the authors note Claude helped build the task inventory and scores (correlated-judge risk).",
-  "target_id": "L2",
-  "target_type": "question",
-  "title": "Measurements for understanding the pace of AI development inside frontier labs (Anthropic R&D Automation Index)",
-  "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development"
- },
- {
-  "admit": false,
-  "change": "Not admitted: outside the window (v2 2026-09-09) and the abstract reports no transplant, memory-strip or compute-matched evidence, so nothing in T0, B1 or O1 changes; a future pass could read the body for a meta-policy transfer arm.",
-  "date": "2026-09-06",
-  "dedupe_key": "2609.06396",
-  "first_seen": "2026-09-21",
-  "not_admitted_because": "not proposed for admission",
-  "primary_source_read": true,
-  "summary": "A 31-author paper (first author Zihan Tan; v1 2026-09-06, v2 2026-09-09) composes three typed operators (Data-RSI, Harness-RSI, Model-RSI) under a two-axis optimizer that chooses operator order and proposal policy, with a meta-level policy revising the schedule. Only the abstract page was read; it gives no numbers on transfer of the meta-level policy, compute matching or seeds.",
-  "target_id": "none",
-  "target_type": "none",
-  "title": "MetaRSI / RSI2: A Meta-Recursive Self-Improving System for Recursive Self-Improving Systems Themselves",
-  "url": "https://arxiv.org/abs/2609.06396"
- },
- {
-  "admit": false,
   "change": "Not admitted: relevant in kind to T6 (out-of-support probes) and D6, but only the abstract was read and no numbers were obtained to say whether out-of-distribution counterfactual probes reduced false admissions; worth a full-text read next pass.",
   "date": "2026-09-16",
   "dedupe_key": "2609.18366",
@@ -208,5 +180,47 @@
   "target_type": "none",
   "title": "Know the Shape, Find the Fault: Topology-Conditioned Diagnosis of Multi-Agent LLM Failures",
   "url": "https://arxiv.org/abs/2610.10126"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted. It corroborates T2/G2's exploitable-tail mechanism (a scored selector with a learnable false-positive tail degrades with more optimisation) in the RLVR setting and is a useful reference for P1, but it is a secondary synthesis of 58 studies rather than a new measurement, dated 2026-10-13, and T2 already has LIT support (Stroebl et al.). It does not change a theory's status.",
+  "date": "2026-10-13",
+  "dedupe_key": "2610.17824",
+  "first_seen": "2026-10-26",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Gupta and Joshi survey 58 studies of verifier errors in reinforcement learning with verifiable rewards and conclude that the structure of an error matters more than its rate: random errors mainly slow learning, while false positives the policy can learn to trigger cause plateaus or collapse even at a low initial error rate, and verifier errors shift as the policy improves. They report that most mitigations were tested against only one error type and propose a reporting protocol (abstract read; body not read).",
+  "target_id": "T2",
+  "target_type": "theory",
+  "title": "Checking the Checkers: A Synthesis of Verifier Noise and Robustness in RLVR",
+  "url": "https://arxiv.org/abs/2610.17824"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted. The meta-agent modifies its own harness, so it belongs in the sources/rsi_core.md classification beside Hyperagents as second-order by construction, but there is no transplant, no compute-matched control and no numbers in the abstract, so it neither weakens nor supports T0 beyond what Hyperagents already does.",
+  "date": "2026-10-15",
+  "dedupe_key": "2610.21791",
+  "first_seen": "2026-10-26",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Zhang, Chen, Zhou, Lv, Cui, Wu and Zhou propose a framework in which a meta-agent diagnoses bottlenecks from task-agent trajectories, selects component-specific improvement workflows, distils outcomes into skills and principles, and evolves its own harness. The abstract claims state-of-the-art average performance across six benchmarks and two backbone models with ablations supporting adaptive orchestration and meta-harness evolution; it gives no numeric results, no transfer of the evolved meta-agent and no statement on compute matching (abstract read; body not read).",
+  "target_id": "T0",
+  "target_type": "theory",
+  "title": "RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent",
+  "url": "https://arxiv.org/abs/2610.21791"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted. A small model plus evolved harness plus self-distillation matching larger models bears on G5/G6, but the abstract contains no harness transplant across models, no compute matching, and the gains are on two vertical benchmarks; it does not change the status of any named item.",
+  "date": "2026-10-18",
+  "dedupe_key": "2610.25078",
+  "first_seen": "2026-10-26",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Su, Zhang, Shao, Pang, Yao, Tsang, Yin and Yan frame a brain-body mismatch between evolving harnesses and fixed models and co-evolve both: a meta-agent develops harnesses from a shared archive, selects or merges model checkpoints, and adapts the model by supervised fine-tuning on its own rejection-sampled trajectories. Qwen3.5-9B under this scheme is reported at +14.16 agent accuracy on TraceElephant (surpassing DeepSeek-V4-Pro) and +4.90 success rate on HomeBench VM (surpassing GLM-5.3) (abstract read; body not read).",
+  "target_id": "G5",
+  "target_type": "question",
+  "title": "CoEvo-RSI: When Harnesses Evolve, Which Models Should Follow?",
+  "url": "https://arxiv.org/abs/2610.25078"
  }
 ]
