@@ -788,3 +788,7 @@ uses `${SK_CHROME_FLAGS:-...}` (an empty override is replaced); it reproduced `o
 (`out_0456`, SK_CHROME_FLAGS=--no-first-run) is the real one: GPU medians unchanged (low 12.56, lite=3 10.96, lite=1 10.62,
 lightmap=1 12.52, medium 24.53, medium@lightmap=1 26.25 ms), frame p50 pinned to 16.7/33.3/50 ms, and exactly one long task
 after ready per run, 54-69 ms at low and 110-119 ms at medium: the 300-700 ms tasks were the uncapped-rendering artefact.
+Auto-quality soak for M1 (`~/skullport/m1_autoq/`, 05:16-05:20Z, same gated runner, vsync on): from low the controller ends at
+low + floor shed with 47 % of frames at 60 fps (frame p50 33.3 ms, gpu p50 15 ms, dynres never engaged); from medium it never
+steps down (2.5 % at 60 fps, 30 fps steady); traced cold medium load with the camera move captured (4.6 MB, 220k events, 27.5k
+profile samples, worst long task 132 ms). Results on ubu004 `out_0516/` and ubu005:~/fleet_reports/m1_autoq/.
