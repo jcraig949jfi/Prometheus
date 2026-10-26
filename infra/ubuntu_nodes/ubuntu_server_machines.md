@@ -804,3 +804,7 @@ medium load worst long task 95 ms. Results `out_0702/` on ubu004 and ubu005:~/fl
 Auto-quality soak 5 (resize-free dynres, 90 s soaks, `~/skullport/m1_autoq5/`, 07:32-07:37Z): steady state from both starts,
 low + dynres 0.6, 97 % / 96 % on budget, p95 16.8 both, reallocs 0, medium start takes one action (1 -> 3 at 26 s, 40 ms
 warm); traced medium load worst long task 51 ms. Results `out_0732/` on ubu004 and ubu005:~/fleet_reports/m1_autoq5/.
+Auto-quality soak 6 (`~/skullport/m1_autoq6/`, 08:06-08:11Z): long tasks gone (low soak none, medium one of 54 ms), reallocs 0,
+warmed true; from low 99 % on budget with no controller action; from medium 97 % after the 1 -> 3 drop (129 ms warm) plus
+three sheds. Results `out_0806/` (with soak PNGs) on ubu004 and ubu005:~/fleet_reports/m1_autoq6/. Eleven HD 620 jobs for M1
+between 22:40Z 10-25 and 08:11Z 10-26, all via the gated runner; ubu004 clean and the drone loop back after each.
