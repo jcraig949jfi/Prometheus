@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-10-27 12:15:02 AM UTC*
+*Generated: 2026-10-27 04:15:02 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,15 +7,15 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 215029min (12901790s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 215269min (12916190s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
 
 **Pronoia @ M4, reporting orchestrator (intelligence_loop) — DEAD, daemon stopped**
-No heartbeat for 20min (1223s). Was last ALIVE at 2026-10-26T19:54:19.649085-04:00.
+No heartbeat for 20min (1222s). Was last ALIVE at 2026-10-26T23:54:20.392396-04:00.
 Investigate the process on M4 and restart, or kill watchdog if intentional.
 
 **MachineProbe-M4 @ M4, M4 host resource time-series (60s) — DEAD, daemon stopped**
-No heartbeat for 6min (363s). Was last ALIVE at 2026-10-26T20:08:39.907529-04:00.
+No heartbeat for 6min (361s). Was last ALIVE at 2026-10-27T00:08:41.096233-04:00.
 Investigate the process on M4 and restart, or kill watchdog if intentional.
 
 ## Watch this
