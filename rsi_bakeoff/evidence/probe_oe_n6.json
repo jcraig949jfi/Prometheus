@@ -1,0 +1,574 @@
+{
+ "inputs": [
+  [
+   -3,
+   5,
+   -6,
+   8,
+   -9,
+   -4,
+   9
+  ],
+  [
+   6,
+   -3,
+   6,
+   -6,
+   -1
+  ],
+  [
+   -2,
+   -1,
+   5,
+   2,
+   -9,
+   -8,
+   -9,
+   -2
+  ],
+  [
+   9,
+   8,
+   9,
+   7,
+   -1,
+   7
+  ],
+  [
+   -1,
+   -7,
+   7,
+   -4
+  ],
+  [
+   -7,
+   4,
+   -7,
+   -7,
+   5,
+   1,
+   0
+  ],
+  [
+   -4,
+   -4,
+   1,
+   3,
+   4
+  ],
+  [
+   6,
+   4,
+   7
+  ]
+ ],
+ "max_size": 6,
+ "rows": [
+  {
+   "type": "Int",
+   "size": 1,
+   "syntactic": 4,
+   "comm_canon": 4,
+   "oe_kept": 4
+  },
+  {
+   "type": "Int",
+   "size": 2,
+   "syntactic": 10,
+   "comm_canon": 10,
+   "oe_kept": 9
+  },
+  {
+   "type": "Int",
+   "size": 3,
+   "syntactic": 128,
+   "comm_canon": 110,
+   "oe_kept": 13
+  },
+  {
+   "type": "Int",
+   "size": 4,
+   "syntactic": 796,
+   "comm_canon": 658,
+   "oe_kept": 184
+  },
+  {
+   "type": "Int",
+   "size": 5,
+   "syntactic": 9324,
+   "comm_canon": 6723,
+   "oe_kept": 507
+  },
+  {
+   "type": "Int",
+   "size": 6,
+   "syntactic": 80880,
+   "comm_canon": 55995,
+   "oe_kept": 3927
+  },
+  {
+   "type": "List",
+   "size": 1,
+   "syntactic": 1,
+   "comm_canon": 1,
+   "oe_kept": 1
+  },
+  {
+   "type": "List",
+   "size": 2,
+   "syntactic": 1,
+   "comm_canon": 1,
+   "oe_kept": 1
+  },
+  {
+   "type": "List",
+   "size": 3,
+   "syntactic": 14,
+   "comm_canon": 14,
+   "oe_kept": 11
+  },
+  {
+   "type": "List",
+   "size": 4,
+   "syntactic": 88,
+   "comm_canon": 88,
+   "oe_kept": 51
+  },
+  {
+   "type": "List",
+   "size": 5,
+   "syntactic": 980,
+   "comm_canon": 904,
+   "oe_kept": 244
+  },
+  {
+   "type": "List",
+   "size": 6,
+   "syntactic": 9057,
+   "comm_canon": 8036,
+   "oe_kept": 1452
+  },
+  {
+   "type": "Bool",
+   "size": 1,
+   "syntactic": 0,
+   "comm_canon": 0,
+   "oe_kept": 0
+  },
+  {
+   "type": "Bool",
+   "size": 2,
+   "syntactic": 0,
+   "comm_canon": 0,
+   "oe_kept": 0
+  },
+  {
+   "type": "Bool",
+   "size": 3,
+   "syntactic": 48,
+   "comm_canon": 42,
+   "oe_kept": 2
+  },
+  {
+   "type": "Bool",
+   "size": 4,
+   "syntactic": 288,
+   "comm_canon": 242,
+   "oe_kept": 13
+  },
+  {
+   "type": "Bool",
+   "size": 5,
+   "syntactic": 3660,
+   "comm_canon": 2697,
+   "oe_kept": 31
+  },
+  {
+   "type": "Bool",
+   "size": 6,
+   "syntactic": 30444,
+   "comm_canon": 21357,
+   "oe_kept": 107
+  }
+ ],
+ "oe_stats": {
+  "signature_evals": 340928,
+  "generated": 24770,
+  "kept": 7124,
+  "pruned": 17646,
+  "cpu_s": 0.376
+ },
+ "cpu_s": 0.39,
+ "pruned_pairs_total": 17646,
+ "pruned_pairs_closed_ctx": 16716,
+ "pruned_closed_by_size": {
+  "2": 1,
+  "3": 139,
+  "4": 515,
+  "5": 1794,
+  "6": 14267
+ },
+ "examples_closed": [
+  [
+   "(neg 0)",
+   "0"
+  ],
+  [
+   "(add 0 0)",
+   "0"
+  ],
+  [
+   "(add 0 1)",
+   "1"
+  ],
+  [
+   "(add 0 2)",
+   "2"
+  ],
+  [
+   "(add 0 3)",
+   "3"
+  ],
+  [
+   "(add 1 1)",
+   "2"
+  ],
+  [
+   "(add 1 2)",
+   "3"
+  ],
+  [
+   "(add 2 2)",
+   "(add 1 3)"
+  ],
+  [
+   "(div 0 1)",
+   "0"
+  ],
+  [
+   "(div 0 2)",
+   "0"
+  ],
+  [
+   "(div 0 3)",
+   "0"
+  ],
+  [
+   "(div 1 0)",
+   "(div 0 0)"
+  ],
+  [
+   "(div 1 1)",
+   "1"
+  ],
+  [
+   "(div 1 2)",
+   "0"
+  ],
+  [
+   "(div 1 3)",
+   "0"
+  ],
+  [
+   "(div 2 0)",
+   "(div 0 0)"
+  ],
+  [
+   "(div 2 1)",
+   "2"
+  ],
+  [
+   "(div 2 2)",
+   "1"
+  ],
+  [
+   "(div 2 3)",
+   "0"
+  ],
+  [
+   "(div 3 0)",
+   "(div 0 0)"
+  ],
+  [
+   "(div 3 1)",
+   "3"
+  ],
+  [
+   "(div 3 2)",
+   "1"
+  ],
+  [
+   "(div 3 3)",
+   "1"
+  ],
+  [
+   "(gcd 0 0)",
+   "0"
+  ],
+  [
+   "(gcd 0 1)",
+   "1"
+  ],
+  [
+   "(gcd 0 2)",
+   "2"
+  ],
+  [
+   "(gcd 0 3)",
+   "3"
+  ],
+  [
+   "(gcd 1 1)",
+   "1"
+  ],
+  [
+   "(gcd 1 2)",
+   "1"
+  ],
+  [
+   "(gcd 1 3)",
+   "1"
+  ],
+  [
+   "(gcd 2 2)",
+   "2"
+  ],
+  [
+   "(gcd 2 3)",
+   "1"
+  ],
+  [
+   "(gcd 3 3)",
+   "3"
+  ],
+  [
+   "(head (rev xs))",
+   "(last xs)"
+  ],
+  [
+   "(last (rev xs))",
+   "(head xs)"
+  ],
+  [
+   "(len (rev xs))",
+   "(len xs)"
+  ],
+  [
+   "(max (rev xs))",
+   "(max xs)"
+  ],
+  [
+   "(min (rev xs))",
+   "(min xs)"
+  ],
+  [
+   "(mod 0 0)",
+   "(div 0 0)"
+  ],
+  [
+   "(mod 0 1)",
+   "0"
+  ]
+ ],
+ "examples_binder_ctx": [
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(neg 0)",
+   "0"
+  ],
+  [
+   [
+    "x"
+   ],
+   "(neg 0)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 0)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 1)",
+   "1"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 2)",
+   "2"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 3)",
+   "3"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 a)",
+   "a"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 0 b)",
+   "b"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 1 1)",
+   "2"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 1 2)",
+   "3"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(add 2 2)",
+   "(add 1 3)"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 0 1)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 0 2)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 0 3)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 1 0)",
+   "(div 0 0)"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 1 1)",
+   "1"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 1 2)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 1 3)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 2 0)",
+   "(div 0 0)"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 2 1)",
+   "2"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 2 2)",
+   "1"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 2 3)",
+   "0"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 3 0)",
+   "(div 0 0)"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 3 1)",
+   "3"
+  ],
+  [
+   [
+    "a",
+    "b"
+   ],
+   "(div 3 2)",
+   "1"
+  ]
+ ]
+}
