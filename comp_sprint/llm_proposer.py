@@ -239,6 +239,7 @@ def call_claude_isolated(
     model: str = "opus",
     max_budget_usd: float = 2.0,
     timeout_sec: int = 180,
+    system_prompt: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Run an isolated single-shot `claude -p` call with tools disabled and JSON usage telemetry."""
     with tempfile.TemporaryDirectory(prefix="prom_claude_iso_") as td:
@@ -251,6 +252,8 @@ def call_claude_isolated(
             "--tools", "",
             "--max-budget-usd", str(max_budget_usd),
         ]
+        if system_prompt:
+            cmd.extend(["--system-prompt", system_prompt])
         # Strip any dead ANTHROPIC_API_KEY from env so subscription-billed `claude -p` uses its login,
         # unless the user explicitly sets PROMETHEUS_USE_API_KEY=1.
         env = dict(os.environ)
