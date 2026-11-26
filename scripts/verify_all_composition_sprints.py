@@ -31,6 +31,8 @@ def check_manifests() -> None:
     from comp_sprint4.s4a_bv_benchmarks import build_s4a_bv_benchmarks, s4a_manifest_sha256
     from comp_sprint4.s4b_xag_benchmarks import build_s4b_xag_benchmarks, s4b_manifest_sha256
     from comp_sprint5_quantum.s5q_benchmarks import build_s5q_benchmarks, s5q_manifest_sha256
+    from comp_sprint6_compound.s6_benchmarks import build_s6_benchmarks, s6_manifest_sha256
+    from comp_sprint7_clifford_t.s7_benchmarks import build_s7_benchmarks, s7_manifest_sha256
 
     checks = [
         ("S2-A XAG", build_s2a_benchmarks, s2a_manifest_sha256),
@@ -41,6 +43,8 @@ def check_manifests() -> None:
         ("S4-A Det BV", build_s4a_bv_benchmarks, s4a_manifest_sha256),
         ("S4-B 9-11in XAG", build_s4b_xag_benchmarks, s4b_manifest_sha256),
         ("S5-Q Quantum CNOT", build_s5q_benchmarks, s5q_manifest_sha256),
+        ("S6 Law4b XAG", build_s6_benchmarks, s6_manifest_sha256),
+        ("S7 Clifford+T", build_s7_benchmarks, s7_manifest_sha256),
     ]
     for label, builder, hasher in checks:
         s1 = builder()
