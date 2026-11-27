@@ -83,3 +83,13 @@ def test_law4c_sparse_synthesis_artifact():
     assert not tel["verifier_fallback"]
     assert tel["ops_spent"] > 0
     assert circ.t_count() <= task.tpar_t
+
+
+def test_s8_runner_enforces_toolless_isolated_proposer():
+    """Regression guard: ensure Sprint 8 proposer enforces `--tools ""` inside an isolated TemporaryDirectory."""
+    import inspect
+    from comp_sprint8_science import s8_runner
+    src = inspect.getsource(s8_runner._call_claude_json)
+    assert '"--tools", ""' in src
+    assert "TemporaryDirectory" in src
+

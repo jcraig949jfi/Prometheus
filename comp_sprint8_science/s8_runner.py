@@ -148,10 +148,21 @@ def solve(api, lib, budget):
 # Claude CLI Proposer (100% `claude-opus-5-5`, Explicit Forbidden-Builtins Notice!)
 # ---------------------------------------------------------------------------
 def _call_claude_json(prompt: str, model: str = DEFAULT_MODEL, timeout_s: int = 360) -> Tuple[Dict[str, Any], float, str]:
+    """Isolated tool-less Claude CLI call (`--tools ""` in empty temp dir) — ZERO workspace file/shell access!"""
+    import tempfile
     env = dict(os.environ)
     env.pop("CLAUDECODE", None)
-    cmd = ["claude", "-p", "--model", model, "--output-format", "json", "--no-session-persistence"]
-    proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=timeout_s, env=env, check=False)
+    cmd = [
+        "claude", "-p",
+        "--model", model,
+        "--output-format", "json",
+        "--no-session-persistence",
+        "--tools", "",
+    ]
+    with tempfile.TemporaryDirectory(prefix="prometheus_s8_iso_") as tmpdir:
+        proc = subprocess.run(
+            cmd, input=prompt, capture_output=True, text=True, timeout=timeout_s, env=env, cwd=tmpdir, check=False
+        )
     if proc.returncode != 0:
         raise RuntimeError(f"claude CLI failed (rc={proc.returncode}): {proc.stderr[:400]}")
     meta = json.loads(proc.stdout)

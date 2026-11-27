@@ -5,7 +5,7 @@
 **Builder / Proposer Provenance:** 100% `claude-opus-5-5` (`0` silent fallbacks across Sprints 1–8)  
 **Independent Cross-Family Q3 Adversary:** OpenAI open-weights `groq:openai/gpt-oss-120b` (strictly non-Anthropic; 5 independent closeout audits archived; **Sprint 8 raised Algorithmic Innovation `3.5 → 4.2 / 5` and Wall-Clock Cleanliness `3.0 → 3.5 / 5`; Overall `3.8 / 5` [`B+`]**)  
 **Frozen Integrity Apparatus (`rso/`):** `0` bytes modified (`git diff -- rso/` empty); **`6/6` hardened 3-seed RSO tamper attacks REJECTED** (`0 SURVIVED, 0 VACUOUS`) on every live packet  
-**Total Verified Offline Evidence Base:** **18,450+ verified 100%-offline evaluation rows** (LLM completely unplugged at eval) across **4 independent formal domains**  
+**Total Verified Offline Evidence Base:** **19,050+ verified 100%-offline evaluation rows** (LLM completely unplugged at eval; incl. 600-row post-freeze blind `n = 8..12` replication) across **4 independent formal domains**  
 **Total Cumulative Equivalent Spend (Including ALL Aborted/Erratum/Rejected Runs):** **`~$39.32 / $100.00` (`39.3%`)**
 
 ---
@@ -82,7 +82,7 @@ Every experiment in Sprints 1–8 enforces six non-negotiable methodological inv
 3. **Sprint 6 Law 4c & S4-B `G4` Law 4a Downgrades:** Both permanently classified as meter-loophole exposures (`davio_synth` 180-unit flat fee in S6; 50,000-bit Python int arbitrage in S4-B `G4`), not clean algorithmic wins.
 4. **S5-Q Multiplicity & Container Overhead:** `G2 vs A2` on Quantum CNOT is `p_two = 0.0266` (`p_Holm = 0.133`), while `G2 vs KO_MATCHED_LAST` passed Holm (`p_Holm = 0.00086`).
 5. **Hardest Open Frontiers (Unproven):** (a) **3+ wall-clock-clean compounding generations** (`G0 → G1 → G2 → G3+`) under full Law 4c metering; (b) scaling beyond `n = 11` qubits (`n = 12..20+` using polynomial `O(m · n^3)` algebraic verification) and `N ≥ 500` circuit suites.
-6. **Logged Cognitive Accounting Errata (All Included in `$39.32` Total):** Sprint 1 Phase 2B `$0.1198` `A6` miss; Sprint 3 v1 `$4.13` `MeteredStrashBuilder._gates` bug + `~$0.45` CLI call; Sprint 7 v1 `$2.32` `getattr`-prompt erratum.
+6. **Logged Cognitive Accounting & Protocol Audit Errata (All Included in `$39.32` Total):** Sprint 1 Phase 2B `$0.1198` `A6` miss; Sprint 3 v1 `$4.13` `MeteredStrashBuilder._gates` bug + `~$0.45` CLI call; Sprint 7 v1 `$2.32` `getattr`-prompt erratum; Sprint 8 v1 tool-isolation audit finding (`s8_runner.py` initially omitted `--tools ""`, allowing local `dev_diag` tests in `g0_draft`/`g2_draft` and `val_g3` checks in rejected `g3_draft` — fixed with `--tools ""` + empty `TemporaryDirectory`, draft folders removed, and `S8_G2_FLAT_KICK` independently confirmed on a **100% post-freeze blind 100-circuit `n = 8..12` suite**: `-236` vs `A2_PRIOR_ONLY`, `74W/14L`, `p_Holm < 1e-6`, incl. `-63` at unseen `n = 12`, `p_Holm = 0.0112`; `-295` vs `A5_SHAM`, `p_Holm < 1e-6`; `-211` vs `TODD 2018`, `p_Holm < 1e-6`!).
 
 ---
 
