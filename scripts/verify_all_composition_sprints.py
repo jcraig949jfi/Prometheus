@@ -34,6 +34,8 @@ def check_manifests() -> None:
     from comp_sprint6_compound.s6_benchmarks import build_s6_benchmarks, s6_manifest_sha256
     from comp_sprint7_clifford_t.s7_benchmarks import build_s7_benchmarks, s7_manifest_sha256
     from comp_sprint8_science.s8_benchmarks import build_s8_benchmarks, s8_manifest_sha256
+    from comp_sprint9_poly_scale.s9_benchmarks import build_s9_benchmarks, s9_manifest_sha256
+    from comp_sprint10_alphatensor.s10_benchmarks import build_s10_benchmarks, s10_manifest_sha256
 
     checks = [
         ("S2-A XAG", build_s2a_benchmarks, s2a_manifest_sha256),
@@ -47,6 +49,8 @@ def check_manifests() -> None:
         ("S6 Law4b XAG", build_s6_benchmarks, s6_manifest_sha256),
         ("S7 Clifford+T", build_s7_benchmarks, s7_manifest_sha256),
         ("S8 Science CT", build_s8_benchmarks, s8_manifest_sha256),
+        ("S9 Poly Scale CT", build_s9_benchmarks, s9_manifest_sha256),
+        ("S10 AlphaTensor", build_s10_benchmarks, s10_manifest_sha256),
     ]
     for label, builder, hasher in checks:
         s1 = builder()
@@ -68,7 +72,13 @@ def check_pytest() -> None:
         "rso/adversary/tests/test_mutants.py",
         "rso/completeness/tests",
     ]
-    for opt in ("comp_sprint6_compound/tests", "comp_sprint7_clifford_t/tests", "comp_sprint8_science/tests"):
+    for opt in (
+        "comp_sprint6_compound/tests",
+        "comp_sprint7_clifford_t/tests",
+        "comp_sprint8_science/tests",
+        "comp_sprint9_poly_scale/tests",
+        "comp_sprint10_alphatensor/tests",
+    ):
         if (ROOT / opt).exists():
             test_dirs.append(opt)
     cmd = [sys.executable, "-m", "pytest", "-p", "no:cacheprovider", "-q"] + test_dirs
