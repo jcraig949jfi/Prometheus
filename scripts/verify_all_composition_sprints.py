@@ -36,6 +36,7 @@ def check_manifests() -> None:
     from comp_sprint8_science.s8_benchmarks import build_s8_benchmarks, s8_manifest_sha256
     from comp_sprint9_poly_scale.s9_benchmarks import build_s9_benchmarks, s9_manifest_sha256
     from comp_sprint10_alphatensor.s10_benchmarks import build_s10_benchmarks, s10_manifest_sha256
+    from comp_sprint11_audit.phase_b_attribution import build_s11_attribution_suite, s11_attr_manifest_sha256
 
     checks = [
         ("S2-A XAG", build_s2a_benchmarks, s2a_manifest_sha256),
@@ -51,6 +52,7 @@ def check_manifests() -> None:
         ("S8 Science CT", build_s8_benchmarks, s8_manifest_sha256),
         ("S9 Poly Scale CT", build_s9_benchmarks, s9_manifest_sha256),
         ("S10 AlphaTensor", build_s10_benchmarks, s10_manifest_sha256),
+        ("S11 Attribution", lambda: {"attr": build_s11_attribution_suite()}, lambda d: s11_attr_manifest_sha256(d["attr"])),
     ]
     for label, builder, hasher in checks:
         s1 = builder()
@@ -78,6 +80,7 @@ def check_pytest() -> None:
         "comp_sprint8_science/tests",
         "comp_sprint9_poly_scale/tests",
         "comp_sprint10_alphatensor/tests",
+        "comp_sprint11_audit/tests",
     ):
         if (ROOT / opt).exists():
             test_dirs.append(opt)
